@@ -1,0 +1,12 @@
+DEPARTMENTS = [
+    "FINANZAS",
+    "PROCESOS",
+    "COMERCIAL",
+    "ESTRATÉGIA",
+    "GESTION",
+    "MARCA",
+    "ORGANIZACIONAL",
+    "PERSONAS",
+    "EXPERIENCIA",
+    "EXCELENCIA"
+]

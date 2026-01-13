@@ -1,0 +1,6 @@
+cd C:\Users\Masesora\OneDrive\MASESORA\CLINICA
+uvicorn masesora_backend.main:app --reload
+
+cd C:\Users\Masesora\OneDrive\MASESORA\CLINICA\Masesora_frontend
+npm install
+npm run dev

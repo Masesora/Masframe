@@ -1,0 +1,16 @@
+{
+  "gravity_rules": {
+    "critical": "KPI < thresholds.critical",
+    "recommended": "thresholds.critical <= KPI < thresholds.recommended",
+    "optimizer": "thresholds.recommended <= KPI < thresholds.optimizer",
+    "elite": "KPI >= thresholds.elite"
+  },
+  "activation_logic": {
+    "treatment_required": "KPI < thresholds.recommended",
+    "no_treatment_required": "KPI >= thresholds.recommended"
+  },
+  "notes": {
+    "gravity_is_dynamic": "La gravedad no se asigna al síntoma, se calcula en tiempo real según el KPI.",
+    "treatment_trigger": "Un tratamiento se activa cuando el KPI está por debajo del nivel recomendado."
+  }
+}

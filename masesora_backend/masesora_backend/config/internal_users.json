@@ -1,0 +1,41 @@
+{
+  "users": [
+    {
+      "email": "admin@masframe.com",
+      "password": "admin123",
+      "role": "admin",
+      "is_active": true,
+      "permissions": [
+        "manage_users",
+        "assign_roles",
+        "view_all_clients",
+        "activate_payment",
+        "generate_contract",
+        "view_dashboards"
+      ]
+    },
+    {
+      "email": "cc@masframe.com",
+      "password": "cc123",
+      "role": "cc",
+      "is_active": true,
+      "permissions": [
+        "view_assigned_clients",
+        "view_scanner_results",
+        "view_contracts",
+        "supervise_intake"
+      ]
+    },
+    {
+      "email": "aci@masframe.com",
+      "password": "aci123",
+      "role": "aci",
+      "is_active": true,
+      "permissions": [
+        "execute_intake",
+        "view_assigned_clients",
+        "update_clinical_case"
+      ]
+    }
+  ]
+}

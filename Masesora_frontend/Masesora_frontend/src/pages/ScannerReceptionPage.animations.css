@@ -1,0 +1,81 @@
+/* ================================
+   ANIMACIONES BASE
+================================ */
+
+/* Fade-in general */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Fade-in más lento para narrativa */
+.fadeInSlow {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+/* ================================
+   PUERTA DE COLOR (animación)
+================================ */
+
+@keyframes doorReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-2deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05) rotate(1deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.color-box {
+  animation: doorReveal 0.8s ease-out;
+}
+
+/* ================================
+   ESPECIALIDADES (hover animado)
+================================ */
+
+.especialidad-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.especialidad-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* ================================
+   SÍNTOMAS (microinteracción)
+================================ */
+
+@keyframes symptomSelect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+input[type="checkbox"]:checked {
+  animation: symptomSelect 0.25s ease-out;
+}
+
+/* ================================
+   BOTÓN DE PAGO (pulso clínico)
+================================ */
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
+
+.btn-pago {
+  animation: pulse 2.2s infinite ease-in-out;
+}
