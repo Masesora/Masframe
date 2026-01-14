@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # DATABASE INIT
 # ============================================================
 
-from database.database import init_app
+from masesora_backend.database.database import init_app
 
 
 # ============================================================

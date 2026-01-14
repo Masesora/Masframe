@@ -1,7 +1,7 @@
-services:
+    services:
   - type: web
-    name: masframe-backend
+    name: masesora-backend
     env: python
-    rootDir: masesora_backend
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    rootDir: .
+    buildCommand: pip install -r masesora_backend/requirements.txt
+    startCommand: uvicorn masesora_backend.main:app --host 0.0.0.0 --port $PORT
