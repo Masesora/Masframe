@@ -7,7 +7,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from masesora_backend.database.database import init_app
 
-
 # ============================================================
 # ROUTERS MAS@FRAME® — IMPORTS ORDENADOS POR EPIC
 # ============================================================
@@ -44,7 +43,6 @@ from masesora_backend.routers.catalog import router as catalog_router
 from masesora_backend.routers.clients import router as clients_router
 from masesora_backend.routers.users import router as users_router
 
-
 # ============================================================
 # APP
 # ============================================================
@@ -58,7 +56,6 @@ app = FastAPI(
 # Inicializar Mongo
 init_app(app)
 
-
 # ============================================================
 # CORS (Frontend React)
 # ============================================================
@@ -71,7 +68,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # ============================================================
 # REGISTRO DE ROUTERS — ORDENADOS POR EPIC
 # ============================================================
@@ -83,10 +79,10 @@ app.include_router(auth_router)
 app.include_router(ese_router)
 app.include_router(ese_sync_router)
 
-# EPIC 0.1 — SCANNER (Recepción Clínica MAS@FRAME®)
+# EPIC 0.1 — SCANNER
 app.include_router(scanner_router)
 
-# EPIC 1 — TRIAJE (Puertas de Colores + Presupuesto)
+# EPIC 1 — TRIAJE
 app.include_router(triaje_router)
 
 # EPIC 3 — INTAKE
@@ -108,6 +104,13 @@ app.include_router(catalog_router, prefix="/catalog")
 app.include_router(clients_router)
 app.include_router(users_router)
 
+# ============================================================
+# ROOT (para evitar 404 en "/")
+# ============================================================
+
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "MAS@FRAME® backend running"}
 
 # ============================================================
 # HEALTH CHECK
