@@ -7,3 +7,4 @@ motor
 fpdf
 email-validator
 PyJWT
+python-jose[cryptography]
