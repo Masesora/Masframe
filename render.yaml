@@ -1,7 +1,10 @@
-    services:
+services:
   - type: web
     name: masesora-backend
     env: python
-    rootDir: .
+    region: frankfurt
+    plan: starter
     buildCommand: pip install -r masesora_backend/requirements.txt
     startCommand: uvicorn masesora_backend.main:app --host 0.0.0.0 --port $PORT
+    rootDir: .
+    pythonVersion: 3.10
