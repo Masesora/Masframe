@@ -4,7 +4,7 @@ services:
     env: python
     region: frankfurt
     plan: starter
-    buildCommand: pip install -r masesora_backend/requirements.txt
-    startCommand: uvicorn masesora_backend.main:app --host 0.0.0.0 --port $PORT
-    rootDir: .
+    rootDir: masesora_backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     pythonVersion: 3.10
