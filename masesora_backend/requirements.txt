@@ -6,3 +6,4 @@ requests
 motor
 fpdf
 email-validator
+PyJWT
