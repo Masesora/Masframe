@@ -13,36 +13,36 @@ from database.database import init_app
 # ============================================================
 
 # EPIC 0 — AUTH
-from masesora_backend.routers.auth_router import router as auth_router
+from routers.auth_router import router as auth_router
 
 # EPIC 0.1 — ESE / SYNC SHEET → MONGO
-from masesora_backend.routers.ese_router import router as ese_router
-from masesora_backend.routers.ese_sync_router import router as ese_sync_router
+from routers.ese_router import router as ese_router
+from routers.ese_sync_router import router as ese_sync_router
 
 # EPIC 0.1 — SCANNER (Recepción Clínica MAS@FRAME®)
-from masesora_backend.routers.scanner_router import router as scanner_router
+from routers.scanner_router import router as scanner_router
 
 # EPIC 1 — TRIAJE (Puertas de Colores)
-from masesora_backend.routers.triaje_router import router as triaje_router
+from routers.triaje_router import router as triaje_router
 
 # EPIC 3 — INTAKE
-from masesora_backend.intake.intake_router import router as intake_router
+from intake.intake_router import router as intake_router
 
 # EPIC 4 — TRATAMIENTO / CLÍNICO
-from masesora_backend.routers.clinical_eval import router as clinical_eval_router
-from masesora_backend.routers.symptom_master import router as symptom_master_router
+from routers.clinical_eval import router as clinical_eval_router
+from routers.symptom_master import router as symptom_master_router
 
 # EPIC 5 — PROGRESO / REVIEW / S10
-from masesora_backend.clinical.progress.review_router import router as review_router
-from masesora_backend.clinical.s10.s10_router import router as s10_router
+from clinical.progress.review_router import router as review_router
+from clinical.s10.s10_router import router as s10_router
 
 # EPIC 6 — BATCH / MAPAS / EVALUACIÓN
-from masesora_backend.routers.batch_router import router as batch_router
-from masesora_backend.routers.catalog import router as catalog_router
+from routers.batch_router import router as batch_router
+from routers.catalog import router as catalog_router
 
 # ADMIN / CLIENTES / EMPRESAS
-from masesora_backend.routers.clients import router as clients_router
-from masesora_backend.routers.users import router as users_router
+from routers.clients import router as clients_router
+from routers.users import router as users_router
 
 
 # ============================================================
@@ -84,7 +84,6 @@ app.include_router(ese_router)
 app.include_router(ese_sync_router)
 
 # EPIC 0.1 — SCANNER (Recepción Clínica MAS@FRAME®)
-# IMPORTANTE: SIN PREFIX /onboarding
 app.include_router(scanner_router)
 
 # EPIC 1 — TRIAJE (Puertas de Colores + Presupuesto)
