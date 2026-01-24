@@ -1,0 +1,8 @@
+{
+  "title": "Dashboard de KPIs Financieros",
+  "kpis": [
+    { "id": "ingresos", "label": "Ingresos", "thresholds": { "rojo": 0, "amarillo": 5000, "verde": 10000 } },
+    { "id": "gastos", "label": "Gastos", "thresholds": { "rojo": 10000, "amarillo": 7000, "verde": 5000 } },
+    { "id": "flujo", "label": "Flujo Neto", "thresholds": { "rojo": 0, "amarillo": 2000, "verde": 5000 } }
+  ]
+}

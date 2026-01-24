@@ -1,0 +1,11 @@
+{
+  "title": "Informe Clínico MAS@FRAME",
+  "template": "El síntoma '{nombre_sintoma}' en el dominio '{dominio}' muestra un patrón de '{descripcion}'. Recomendamos: {accion}.",
+  "placeholders": [
+    "nombre_sintoma",
+    "dominio",
+    "descripcion",
+    "accion",
+    "ejemplo"
+  ]
+}

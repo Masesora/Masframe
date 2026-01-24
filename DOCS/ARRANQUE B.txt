@@ -1,0 +1,14 @@
+cd C:\Users\Masesora\OneDrive\MASESORA\CLINICA
+uvicorn masesora_backend.main:app --reload
+
+cd C:\Users\Masesora\OneDrive\MASESORA\CLINICA\Masesora_frontend
+npm install
+npm run dev
+
+GitHub para actualizar carpetas: 
+git add . && git commit -m "update" && git push
+
+o bien: 
+git add .
+git commit -m "Descripción del cambio" (ejemplo:  git commit -m "Move requirements.txt into Masesora_backend")
+git push

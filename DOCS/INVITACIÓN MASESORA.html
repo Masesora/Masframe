@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MASESORA | Dinamismo Empresarial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul-masesora: #0F1A35;
+      --dorado-masesora: #B89D52;
+      --blanco: #fff;
+      --max-width: 1200px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Lato', Arial, sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      color: var(--azul-masesora);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Header Premium */
+    header {
+      background: linear-gradient(135deg, var(--azul-masesora) 0%, #1a2847 100%);
+      color: var(--blanco);
+      padding: 3rem 0 2rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(15,26,53,0.3);
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0L50 50L100 0L100 100L50 50L0 100Z" fill="rgba(184,157,82,0.03)"/></svg>');
+      opacity: 0.5;
+      animation: patternMove 20s linear infinite;
+    }
+    
+    @keyframes patternMove {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(100px) translateY(100px); }
+    }
+    
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 6.5rem;
+      font-weight: 700;
+      letter-spacing: 8px;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      animation: fadeInDown 1s ease-out;
+      color: #D4AF37;
+      text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(212, 175, 55, 0.4),
+        0 0 30px rgba(184, 157, 82, 0.3);
+      filter: brightness(1.15);
+      -webkit-text-fill-color: #D4AF37;
+      paint-order: stroke fill;
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .slogan {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--blanco);
+      letter-spacing: 4px;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 2rem 3rem 2rem;
+    }
+    
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      margin: 2.5rem 0 1.5rem 0;
+      letter-spacing: 1px;
+    }
+    
+    h1 { 
+      font-size: 2.8rem; 
+      color: var(--azul-masesora);
+      background: linear-gradient(135deg, var(--azul-masesora) 0%, var(--dorado-masesora) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    h2 { 
+      font-size: 2rem; 
+      color: var(--dorado-masesora);
+      position: relative;
+      padding-left: 20px;
+    }
+    
+    h2::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 80%;
+      background: linear-gradient(180deg, var(--dorado-masesora) 0%, transparent 100%);
+      border-radius: 3px;
+    }
+    
+    h3 { font-size: 1.3rem; color: var(--azul-masesora);}
+    h4 { font-size: 1.3rem; color: var(--dorado-masesora);}
+    
+    /* Secciones con animación al scroll */
+    section {
+      background: white;
+      border-radius: 20px;
+      margin-bottom: 3rem;
+      padding: 2.5rem;
+      box-shadow: 0 5px 30px rgba(15,26,53,0.08);
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInSection 0.8s ease forwards;
+    }
+    
+    @keyframes fadeInSection {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    section:nth-child(1) { animation-delay: 0.1s; }
+    section:nth-child(2) { animation-delay: 0.2s; }
+    section:nth-child(3) { animation-delay: 0.3s; }
+    section:nth-child(4) { animation-delay: 0.4s; }
+    section:nth-child(5) { animation-delay: 0.5s; }
+    
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 50px rgba(15,26,53,0.15);
+    }
+    
+    .highlight { 
+      color: var(--dorado-masesora); 
+      font-weight: bold;
+      position: relative;
+      display: inline-block;
+    }
+    
+    /* Key Points Premium */
+    .key-point {
+      background: linear-gradient(135deg, var(--azul-masesora) 0%, #1a2847 100%);
+      color: var(--blanco);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      margin: 2rem 0;
+      font-size: 1.15rem;
+      box-shadow: 0 10px 40px rgba(15,26,53,0.2);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(184,157,82,0.2);
+    }
+    
+    .key-point::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(184,157,82,0.1) 0%, transparent 70%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+    
+    .key-point.light {
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      color: var(--azul-masesora);
+      border: 2px solid var(--dorado-masesora);
+    }
+    
+    ul, ol {
+      margin: 1.5rem 0 1.5rem 1.5rem;
+    }
+    
+    li {
+      margin-bottom: 1rem;
+      padding-left: 0.5rem;
+      position: relative;
+    }
+    
+    ul li::marker {
+      color: var(--dorado-masesora);
+    }
+    
+    /* Botones Premium */
+    .cta-btn {
+      background: linear-gradient(135deg, var(--dorado-masesora) 0%, #a08843 100%);
+      color: var(--azul-masesora);
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      text-transform: uppercase;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(184,157,82,0.3);
+      margin-top: 1.5rem;
+      margin-right: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .cta-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .cta-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(184,157,82,0.5);
+      color: var(--blanco);
+    }
+    
+    .cta-btn:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+    
+    /* Servicios Grid Premium */
+    .four-col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .col {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      padding: 2rem;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .col:last-child {
+      grid-column: 1 / -1;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .col::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--dorado-masesora) 0%, var(--azul-masesora) 100%);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+    
+    .col:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .col:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(15,26,53,0.15);
+      border-color: var(--dorado-masesora);
+    }
+    
+    .col h3 {
+      border-bottom: 2px solid var(--dorado-masesora);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    
+    .col ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .col li {
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    
+    .col li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--dorado-masesora);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    /* Timeline Premium */
+    .timeline {
+      list-style: none;
+      padding: 0;
+      position: relative;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 25px;
+      width: 3px;
+      background: linear-gradient(180deg, var(--dorado-masesora) 0%, var(--azul-masesora) 100%);
+      box-shadow: 0 0 10px rgba(184,157,82,0.5);
+    }
+    
+    .timeline-step {
+      margin-bottom: 2rem;
+      position: relative;
+      padding-left: 70px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      padding: 1.5rem 1.5rem 1.5rem 70px;
+      border-radius: 15px;
+      margin-left: 10px;
+      border: 2px solid transparent;
+    }
+    
+    .timeline-step:hover {
+      transform: translateX(10px);
+      box-shadow: 0 10px 30px rgba(15,26,53,0.2);
+      background: white;
+      border-color: var(--dorado-masesora);
+    }
+    
+    .step-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--dorado-masesora) 0%, #a08843 100%);
+      color: var(--blanco);
+      border-radius: 50%;
+      text-align: center;
+      line-height: 50px;
+      font-weight: bold;
+      font-size: 1.4rem;
+      position: absolute;
+      top: 1.5rem;
+      left: 0;
+      border: 4px solid var(--blanco);
+      box-shadow: 0 5px 20px rgba(184,157,82,0.4);
+      transition: all 0.3s ease;
+    }
+    
+    .timeline-step:hover .step-icon {
+      transform: scale(1.2) rotate(360deg);
+      box-shadow: 0 8px 25px rgba(184,157,82,0.6);
+    }
+    
+    .step-content h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      color: var(--azul-masesora);
+      border-bottom: none;
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 1.2rem;
+    }
+    
+    /* Emojis y Badges */
+    .emoji { 
+      font-size: 1.3rem; 
+      margin-right: 0.5rem;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    
+    li:hover .emoji {
+      transform: scale(1.3) rotate(10deg);
+    }
+    
+    .badge { 
+      background: linear-gradient(135deg, var(--dorado-masesora) 0%, #a08843 100%);
+      color: var(--blanco);
+      padding: 0.3em 0.8em;
+      border-radius: 25px;
+      font-size: 0.85em;
+      font-weight: bold;
+      box-shadow: 0 3px 10px rgba(184,157,82,0.3);
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    .badge:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(184,157,82,0.5);
+    }
+    
+    /* Agradecimiento Premium */
+    .agradecimiento {
+      background: linear-gradient(135deg, #fffbf0 0%, #fff9e6 100%);
+      color: #6b5503;
+      border-left: 5px solid var(--dorado-masesora);
+      margin-top: 2rem;
+      padding: 2rem 2.5rem;
+      font-size: 1.15em;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(184,157,82,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .agradecimiento::before {
+      content: '💎';
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 3rem;
+      opacity: 0.1;
+    }
+    
+    a { 
+      color: var(--azul-masesora); 
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    
+    a:hover {
+      color: var(--dorado-masesora);
+      border-bottom-color: var(--dorado-masesora);
+    }
+    
+    /* Responsive */
+    @media (max-width: 850px) {
+      .logo { font-size: 3rem; letter-spacing: 4px; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      .timeline::before { left: 20px; }
+      .timeline-step { padding-left: 60px; }
+      .step-icon { width: 40px; height: 40px; line-height: 40px; font-size: 1.2rem; }
+      .cta-btn { display: block; width: 100%; margin-right: 0; margin-bottom: 1rem; }
+      .four-col { grid-template-columns: 1fr; }
+      .col:last-child { max-width: 100%; }
+      section { padding: 1.5rem; }
+    }
+    
+    /* Scroll suave */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Animación de carga */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    body {
+      animation: fadeIn 0.5s ease-in;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="logo">MASESORA</h1>
+    <div class="slogan">DINAMISMO EMPRESARIAL</div>
+  </header>
+  
+  <main class="container">
+
+    <section>
+      <h1>LA CLINICA DE EMPRESAS</h1>
+      <div class="key-point">
+        En el universo de la pyme, el caos no es un accidente: es el síntoma de una enfermedad estructural. Masesora nace como la primera clínica de empresas: un espacio donde el diagnóstico es riguroso, el tratamiento es quirúrgico y la recuperación es medible.
+        <br><br>
+        Aquí no recetamos parches ni vendemos tiempo: intervenimos para restaurar la vitalidad de la organización, sellando fugas de rentabilidad y devolviendo el control a quienes lo perdieron entre la presión y la soledad del liderazgo empresarial.
+        <br><br>
+        Nuestra visión es ambiciosa: desde Masesora crear LA CLINICA DE EMPRESAS en el estándar de excelencia para el tejido empresarial, empezando desde lo local, con la prueba de fe en empresas reales, hasta escalar hacia una comunidad internacional de organizaciones sanas, rentables y resilientes.
+      </div>
+      <div class="key-point light">
+        <b>PROPÓSITO COMPARTIDO:</b><br><br>
+        No vendemos horas de consultoría, vendemos resultados medibles. Si no logramos el ROI pactado, trabajamos gratis.
+        <br><br>
+        Nuestra misión es transformar la frustración y el agotamiento en control, claridad y crecimiento. La empresa deja de ser un paciente crónico para convertirse en un organismo de alto rendimiento.
+      </div>
+    </section>
+
+    <section>
+      <h2>Visión y Misión</h2>
+      <ul>
+        <li><b>Visión:</b> Convertir Masesora en referente del rescate y excelencia de PYMEs con soluciones clínicas, medibles y escalables.</li>
+        <li><b>Misión:</b> Soluciones rápidas y medibles, garantía de resultados, devolver control y rentabilidad a líderes que apuestan por crecer de verdad.</li>
+        <li><b>Propuesta:</b> No cobramos por horas, solo por resultados.</li>
+        <li><b>Objetivo:</b> Escalar el método a framework internacional con certificación, software propio y Comunidad de Excelencia, con "Personas de Excelencia" en el "Círculo de Innovación Operativa"</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Impacto Real, Historias Vivas</h2>
+      <ul>
+        <li><b>Panadería:</b> "Reducción del desperdicio del 15% al 5%, roles claros, ROI inmediato."</li>
+        <li><b>Taller:</b> "Eliminación de 10 horas semanales de tareas improductivas, optimización de stock, más coches reparados."</li>
+        <li><b>Comerciante minorista:</b> "Identificación de productos lastre, gestión de inventario, rediseño de la matriz de costes, más margen y menos pérdidas."</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Análisis de Mercado</h2>
+      <ul>
+        <li>Las pymes locales, con facturación superior a 10.000€/mes, son el corazón económico de nuestro territorio.</li>
+        <li>Hacemos frente a pérdidas invisibles por desorganización, roles difusos y procesos saturados, y también al desgaste emocional del líder, equipos desmotivados, rentabilidad en fuga.</li>
+        <li>Masesora vende <b>GARANTIA DE BENEFICIO y RESULTADOS REALES</b>. <b>Skin in the game</b> total.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Modelo de Negocio y Servicios</h2>
+      <div class="four-col">
+        <div class="col">
+          <h3><span class="badge">ESCANER DE SALUD EMPRESARIAL (ESE)</span></h3>
+          <ul>
+            <li>Diagnóstico digital inmediato y gratuito con nuestro ESCANER de SALUD EMPRESARIAL (ESE).</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3><span class="badge">Plan Impulso Empresarial (PIE)</span></h3>
+          <ul>
+            <li>Toma de constantes vitales empresariales, localización de la patología y primeras acciones de choque. El ESE es la puerta de entrada. En una semana, medimos, analizamos y entregamos un informe clínico con las tres intervenciones de más alto impacto inmediato.</li>
+            <li>Incluye la hoja de ruta, acciones implementables en 24 horas y seguimiento personalizado. Si no detectamos 3 puntos críticos, devolvemos el 100% de la inversión.</li>
+            <li><b>Precio:</b> 300-950 €</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3><span class="badge">Plan de Rescate Empresarial (PRE)</span></h3>
+          <ul>
+            <li>Es la fase de cirugía mayor. Seis semanas de intervención intensiva, con talleres prácticos, reingeniería de procesos, dashboards de control, coaching y formación de agentes internos.</li>
+            <li>Gracias a la formación del Agente de Cambio Interno (ACI), optimizamos procesos, cohesionamos equipos, consolidamos las nuevas rutinas, además de talleres impacto y gamings, KPIs, dashboards, en sí un plan de generación de ideas eficientes.</li>
+            <li><b>Garantía contractual de ROI:</b> Precio cerrado, con garantía de resultados sobre ROI.</li>
+            <li><b>Precio:</b> 1250-4.500 €</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3><span class="badge">Plan de Acompañamiento</span></h3>
+          <ul>
+            <li>Consultoría mensual, dashboard personalizado, formación agentes de cambio y soporte en urgencia.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Metodología Clínica y Protocolos Específicos</h2>
+      <ul>
+        <li><span class="emoji">💰</span> <b>UCI Financiera:</b> salir del umbral de riesgo y recomponer la rentabilidad.</li>
+        <li><span class="emoji">🕒</span> <b>Unidad de Procesos:</b> liberar el tiempo y la energía de la empresa.</li>
+        <li><span class="emoji">❤️</span> <b>Cardiología Comercial:</b> volver a hacer latir ventas y comunicación.</li>
+        <li><span class="emoji">🧠</span> <b>Neurología Estratégica:</b> activar visión, rentabilidad y liderazgo.</li>
+        <li><span class="emoji">🧬</span> <b>Medicina Evolutiva:</b> equipos que crecen y aprenden.</li>
+        <li><span class="emoji">🔧</span> <b>Rehabilitación Regenerativa:</b> procesos sanos, sin cuellos de botella.</li>
+        <li><span class="emoji">✂️</span> <b>Cirugía de Marca:</b> personas y mercado confían de nuevo.</li>
+        <li><span class="emoji">🧩</span> <b>Psiquiatría Organizacional:</b> cultura y clima corporativo en equilibrio.</li>
+        <li><span class="emoji">🌟</span> <b>Terapia de Experiencia:</b> mejora la vivencia de clientes y equipos.</li>
+        <li><span class="emoji">📈</span> <b>Ingeniería Empresarial:</b> evidencia, narrativa y sostenimiento de la excelencia.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Roadmap y Fases de Crecimiento</h2>
+      
+      <ol class="timeline">
+        <li class="timeline-step">
+          <div class="step-icon">1</div>
+          <div class="step-content">
+            <h3>Fase 1: Prueba de Fe Local (Validación)</h3>
+            <p>3-5 empresas piloto, casos documentados, testimonios y resultados medibles.</p>
+          </div>
+        </li>
+        
+        <li class="timeline-step">
+          <div class="step-icon">2</div>
+          <div class="step-content">
+            <h3>Fase 2: Expansión de Red (Crecimiento)</h3>
+            <p>Alianzas estratégicas, desarrollo de red de consultores certificados y primeros partners tecnológicos.</p>
+          </div>
+        </li>
+        
+        <li class="timeline-step">
+          <div class="step-icon">3</div>
+          <div class="step-content">
+            <h3>Fase 3: Transformación Digital (Escalabilidad)</h3>
+            <p>Digitalización del método (SaaS, comunidad online), y escalabilidad territorial.</p>
+          </div>
+        </li>
+        
+        <li class="timeline-step">
+          <div class="step-icon">4</div>
+          <div class="step-content">
+            <h3>Fase 4: Consolidación Global (Liderazgo)</h3>
+            <p>Expansión nacional/internacional, adaptación sectorial y cultural, y consolidación de la marca Masesora como referente clínico-operativo global.</p>
+          </div>
+        </li>
+      </ol>
+      
+      <h3>Objetivos Financieros y Métricas</h3>
+      <ul>
+        <li><b>Ingresos previstos:</b> 10 PIE (9.500 €), 7 PRE (31.500 €), objetivo mensual: 41.000 €, margen bruto: +60%.</li>
+        <li>Modelo lean: costes mínimos, enfoque en margen y escalabilidad.</li>
+        <li><b>KPIs y métricas de éxito:</b> Conversión PIE→PRE ≥60%, tiempo facturable formación >75%, repetición de clientes ≥30%.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Juntas es Mejor</h2>
+      <div class="agradecimiento">
+        <b>Queridas amigas,</b><br><br>
+        Gracias por vuestro empeño, coraje y confianza en este viaje único. <br>
+        Sois una parte esencial de la visión y el motor para lograrlo. Vuestra fuerza, inteligencia y sentido crítico hacen posible lo que parecía imposible.<br><br>
+        El éxito y la libertad económica son ya un hecho.<br>
+        <b>¿Me acompañáis en el reto de escalar Masesora?</b><br><br>
+      </div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="cta-btn" onclick="window.location.href='mailto:lajefa@masesora.com';">📧 Email: lajefa@masesora.com</button>
+        <button class="cta-btn" onclick="window.open('https://api.whatsapp.com/send?phone=%2B34609987436','_blank');">💬 WhatsApp: 609 987 436</button>
+        <button class="cta-btn" onclick="window.open('https://linkedin.com/in/maite-cabezuelos-morcillo/','_blank');">💼 LinkedIn: Maite Cabezuelos</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

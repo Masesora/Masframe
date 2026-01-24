@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
+requests
+motor
+fpdf
+email-validator
+PyJWT
+python-jose[cryptography]
+google-api-python-client
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-core

@@ -1,0 +1,13 @@
+{
+  "title": "Calculadora de Flujo de Caja",
+  "inputs": [
+    { "id": "ingresos", "label": "Ingresos" },
+    { "id": "gastos", "label": "Gastos" }
+  ],
+  "formula": "ingresos - gastos",
+  "thresholds": {
+    "rojo": 0,
+    "amarillo": 2000,
+    "verde": 5000
+  }
+}

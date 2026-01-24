@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MASESORA - Diagnóstico Empresarial</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <style>
+    body { background: #f6f6f6; font-family: 'Montserrat', Arial, sans-serif; margin:0; padding:0; }
+    .navbar { background-color: #192444; padding:18px 26px; display:flex; align-items:center; }
+    .brand-text { color: #cfb258; font-weight:700; font-size:2.2rem; letter-spacing:2px;}
+    .intro {
+      max-width:820px;
+      margin:40px auto 30px;
+      font-size:1.15rem;
+      text-align:center;
+      font-weight:500;
+      color:#192444;
+      line-height:1.7;
+    }
+    .intro .highlight { color:#fa8128; font-weight:700; }
+    .empresa-box {
+      max-width:600px;
+      margin:0 auto 25px;
+      background:white;
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 2px 15px rgba(0,0,0,0.08);
+    }
+    .empresa-box label { 
+      font-weight:700; 
+      font-size:1.15rem; 
+      margin-bottom:8px;
+      color:#192444;
+      display:block;
+    }
+    .empresa-box input { 
+      font-size:1.15rem; 
+      font-weight:600; 
+      width:100%;
+      border:2px solid #1e4fad; 
+      border-radius:8px; 
+      padding:12px 20px;
+      margin-bottom:20px;
+    }
+    .section { 
+      background:white; 
+      border-radius:10px; 
+      padding:25px 30px; 
+      margin-bottom:20px; 
+      box-shadow:0 2px 13px rgba(0,0,0,0.08); 
+    }
+    .section h4 {
+      color:#192444;
+      font-weight:700;
+      margin-bottom:20px;
+      border-bottom:3px solid #cfb258;
+      padding-bottom:8px;
+    }
+    .charts-container {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px;
+      margin:40px 0;
+    }
+    @media (max-width: 768px) {
+      .charts-container {
+        grid-template-columns:1fr;
+      }
+    }
+    .chart-box {
+      background:white;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 2px 15px rgba(0,0,0,0.08);
+    }
+    .chart-box h5 {
+      text-align:center;
+      color:#192444;
+      font-weight:700;
+      margin-bottom:20px;
+    }
+    #barChartContainer {
+      height:400px;
+    }
+    #radarChartContainer {
+      height:400px;
+    }
+    .dashboard-title {
+      text-align:center;
+      font-size:1.8rem;
+      font-weight:700;
+      color:#192444;
+      margin:30px 0 20px 0;
+    }
+    .especialidad-card {
+      padding:20px;
+      margin-bottom:15px;
+      border-radius:8px;
+      background:#fff;
+      box-shadow:0 2px 10px rgba(0,0,0,0.08);
+      border-left:6px solid;
+    }
+    .especialidad-card.critico { border-left-color:#d90033; }
+    .especialidad-card.recomendado { border-left-color:#fa8128; }
+    .especialidad-card.optimizador { border-left-color:#21ae52; }
+    .especialidad-card.elite { border-left-color:#1e4fad; }
+    .especialidad-nombre {
+      font-weight:700;
+      font-size:1.1rem;
+      margin-bottom:8px;
+    }
+    .especialidad-score {
+      font-size:2rem;
+      font-weight:700;
+      display:inline-block;
+      margin-right:15px;
+    }
+    .especialidad-nivel {
+      display:inline-block;
+      padding:6px 15px;
+      border-radius:20px;
+      font-weight:600;
+      font-size:0.9rem;
+    }
+    .presupuesto-box {
+      background:white;
+      padding:30px;
+      border-radius:15px;
+      margin:30px 0;
+      box-shadow:0 4px 20px rgba(0,0,0,0.1);
+      border:3px solid #cfb258;
+    }
+    .presupuesto-box h3 {
+      margin:0 0 25px 0;
+      font-size:1.8rem;
+      color:#192444;
+      text-align:center;
+    }
+    .presupuesto-categoria {
+      margin-bottom:25px;
+    }
+    .presupuesto-categoria h4 {
+      color:#192444;
+      font-weight:700;
+      font-size:1.2rem;
+      margin-bottom:15px;
+      padding-bottom:10px;
+      border-bottom:2px solid #eee;
+    }
+    .presupuesto-categoria.critico h4 { border-bottom-color:#d90033; }
+    .presupuesto-categoria.recomendado h4 { border-bottom-color:#fa8128; color:#fa8128; }
+    .especialidad-presupuesto {
+      background:#f8f9fa;
+      padding:15px;
+      margin-bottom:10px;
+      border-radius:8px;
+      border-left:4px solid;
+    }
+    .especialidad-presupuesto.critico { border-left-color:#d90033; }
+    .especialidad-presupuesto.recomendado { border-left-color:#fa8128; }
+    .esp-nombre-presupuesto {
+      font-weight:700;
+      font-size:1rem;
+      color:#192444;
+      margin-bottom:5px;
+    }
+    .esp-precios {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .precio-item {
+      font-size:1.1rem;
+      font-weight:600;
+    }
+    .precio-item span {
+      color:#666;
+      font-size:0.85rem;
+      font-weight:400;
+    }
+    .descuento-badge {
+      background:#21ae52;
+      color:white;
+      padding:4px 10px;
+      border-radius:15px;
+      font-size:0.8rem;
+      font-weight:700;
+    }
+    .garantia-box {
+      background:linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+      border:3px solid #21ae52;
+      border-radius:12px;
+      padding:25px;
+      margin-top:30px;
+    }
+    .garantia-box h4 {
+      color:#21ae52;
+      margin:0 0 15px 0;
+      font-size:1.3rem;
+      text-align:center;
+      font-weight:700;
+    }
+    .garantia-box .metodologia {
+      margin:0 0 10px 0;
+      font-weight:700;
+      color:#192444;
+      font-size:1.05rem;
+    }
+    .garantia-box ul {
+      margin:10px 0 0 0;
+      padding-left:25px;
+      color:#192444;
+      line-height:1.8;
+    }
+    .garantia-box li {
+      margin-bottom:10px;
+      font-size:1rem;
+    }
+    .email-box {
+      margin-top:40px;
+      text-align:center;
+      background:#f0f4ff;
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 2px 15px rgba(0,0,0,0.08);
+    }
+    .btn-send {
+      font-weight:700; 
+      font-size:1.05rem; 
+      padding:12px 30px;
+      border-radius:10px; 
+      margin-top:15px;
+      background:#1e4fad;
+      border:none;
+      transition:.3s;
+    }
+    .btn-send:hover {
+      background:#cfb258;
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(207,178,88,0.4);
+    }
+    .activation-code {
+      font-size:1.3rem;
+      letter-spacing:3px;
+      font-weight:bold;
+      color:#d90033;
+      margin-top:20px;
+      padding:15px;
+      background:#fff;
+      border-radius:8px;
+      border:2px dashed #cfb258;
+    }
+    .spinner {
+      display:inline-block;
+      width:20px;
+      height:20px;
+      border:3px solid rgba(255,255,255,.3);
+      border-radius:50%;
+      border-top-color:#fff;
+      animation:spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div style="width:60px;height:60px;background:#cfb258;border-radius:7px;margin-right:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;color:#192444;">M</div>
+  <div class="brand-text">MASESORA</div>
+</nav>
+
+<div class="intro">
+  En Masesora, te invitamos a <span class="highlight">reflexionar</span>.<br>
+  Sabemos que tu tiempo es oro, y con este sencillo cuestionario y gracias a nuestro equipo te facilitaremos el estado de salud de tu empresa.<br>
+  Un descubrimiento real y visual por medio de herramientas prácticas y matrices, que te guiarán para que optimices los principales factores productivos de tu empresa.
+</div>
+
+<div class="empresa-box">
+  <label for="nombreEmpresa">Nombre de la empresa *</label>
+  <input type="text" id="nombreEmpresa" placeholder="Ej: Innovación SL" required>
+  
+  <label for="facturacion">Facturación mensual aproximada (€) *</label>
+  <input type="number" id="facturacion" placeholder="Ej: 15000" min="0" required>
+</div>
+
+<div class="container">
+  <form id="assessmentForm" class="mb-4 mt-3">
+    <!-- RENTABILIDAD -->
+    <div class="section">
+      <h4>RENTABILIDAD (Finanzas y Estrategia)</h4>
+      <label style="font-weight:bold;">¿Sientes que tu empresa realmente tiene el control y claridad sobre dónde está tu dinero y cómo hacerlo crecer sosteniblemente?</label>
+      <select name="rentabilidad1" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">No tengo control</option>
+        <option value="2">Me cuesta entenderlo</option>
+        <option value="3">Parcialmente</option>
+        <option value="4">Totalmente claro</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿Con qué frecuencia revisas tus resultados financieros para tomar decisiones que eviten pérdidas y aprovechen oportunidades?</label>
+      <select name="rentabilidad2" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">Nunca</option>
+        <option value="2">Rara vez</option>
+        <option value="3">Mensualmente</option>
+        <option value="4">Semanalmente</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿Tu negocio tiene una estrategia clara y compartida que guía cada movimiento para asegurar rentabilidad futura?</label>
+      <select name="rentabilidad3" class="form-select mb-2" required>
+        <option value="">Seleccione</option>
+        <option value="1">No existe estrategia</option>
+        <option value="2">Poco definida</option>
+        <option value="3">Algo definida</option>
+        <option value="4">Sí, claramente definida</option>
+      </select>
+    </div>
+
+    <!-- PROCESOS -->
+    <div class="section">
+      <h4>PROCESOS (Gestión, Crisis y Mejora)</h4>
+      <label style="font-weight:bold;">¿Los procesos críticos de tu negocio están documentados, actualizados y preparados para enfrentar imprevistos o crisis?</label>
+      <select name="procesos1" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">Nunca</option>
+        <option value="2">Rara vez</option>
+        <option value="3">Algunas veces</option>
+        <option value="4">Siempre</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿Qué tan efectivo es tu sistema para detectar, corregir errores y mejorar procesos que liberan tiempo y recursos?</label>
+      <select name="procesos2" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">No existe sistema</option>
+        <option value="2">Poco efectivo</option>
+        <option value="3">Moderadamente</option>
+        <option value="4">Muy efectivo</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿Sientes que los procesos actuales te permiten reaccionar rápido y minimizar daños cuando enfrentan problemas serios?</label>
+      <select name="procesos3" class="form-select mb-2" required>
+        <option value="">Seleccione</option>
+        <option value="1">Nunca</option>
+        <option value="2">Rara vez</option>
+        <option value="3">Algunas veces</option>
+        <option value="4">Sí, siempre</option>
+      </select>
+    </div>
+
+    <!-- TIEMPOS -->
+    <div class="section">
+      <h4>TIEMPOS (Productividad y Control)</h4>
+      <label style="font-weight:bold;">¿Crees que tu equipo utiliza el tiempo de manera eficiente y productiva, evitando el estrés y sobrecarga?</label>
+      <select name="tiempo1" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">Muy ineficiente</option>
+        <option value="2">Poco eficiente</option>
+        <option value="3">Regular</option>
+        <option value="4">Totalmente eficiente</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿Están claramente identificados los factores o actividades que consumen tiempo innecesario en tu empresa?</label>
+      <select name="tiempo2" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">No se identifican</option>
+        <option value="2">Se identifican pero no se solucionan</option>
+        <option value="3">Se identifican parcialmente</option>
+        <option value="4">Sí, y se están solucionando</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿Utilizas herramientas o metodologías para asegurar que las tareas y proyectos se completen a tiempo?</label>
+      <select name="tiempo3" class="form-select mb-2" required>
+        <option value="">Seleccione</option>
+        <option value="1">Nunca</option>
+        <option value="2">Rara vez</option>
+        <option value="3">Algunas veces</option>
+        <option value="4">Sí, frecuentemente</option>
+      </select>
+    </div>
+
+    <!-- PERSONAS -->
+    <div class="section">
+      <h4>PERSONAS (Equipo y Cultura)</h4>
+      <label style="font-weight:bold;">¿Tu equipo está motivado, comprometido y entiende claramente su rol en la recuperación y crecimiento del negocio?</label>
+      <select name="personas1" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">Desmotivado</option>
+        <option value="2">Poco motivado</option>
+        <option value="3">Medianamente</option>
+        <option value="4">Muy motivado</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿Se promueve un ambiente laboral que favorece la colaboración, respeto y crecimiento personal?</label>
+      <select name="personas2" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">Nunca</option>
+        <option value="2">Rara vez</option>
+        <option value="3">A veces</option>
+        <option value="4">Siempre</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿Sientes que cuentas con el talento necesario y que las capacitaciones apoyan su desempeño efectivo?</label>
+      <select name="personas3" class="form-select mb-2" required>
+        <option value="">Seleccione</option>
+        <option value="1">No hay</option>
+        <option value="2">Poco</option>
+        <option value="3">Parcialmente</option>
+        <option value="4">Totalmente</option>
+      </select>
+    </div>
+
+    <!-- COMUNICACIÓN -->
+    <div class="section">
+      <h4>COMUNICACIÓN (Interna y Comercial)</h4>
+      <label style="font-weight:bold;">¿La comunicación interna es transparente, clara y constante, ayudando a que todos remen hacia los mismos objetivos?</label>
+      <select name="comunicacion1" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">Nunca</option>
+        <option value="2">Pocas veces</option>
+        <option value="3">A menudo</option>
+        <option value="4">Siempre</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿Las reuniones y canales de comunicación están diseñados para resolver problemas y avanzar rápidamente?</label>
+      <select name="comunicacion2" class="form-select mb-3" required>
+        <option value="">Seleccione</option>
+        <option value="1">Nada</option>
+        <option value="2">Poco</option>
+        <option value="3">Regular</option>
+        <option value="4">Totalmente</option>
+      </select>
+      
+      <label style="font-weight:bold;">¿La comunicación con tus clientes refleja confianza y fortalece la relación para aumentar ventas y fidelización?</label>
+      <select name="comunicacion3" class="form-select mb-2" required>
+        <option value="">Seleccione</option>
+        <option value="1">Inexistente</option>
+        <option value="2">Débil</option>
+        <option value="3">Sólida</option>
+        <option value="4">Muy sólida</option>
+      </select>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-lg w-100 mt-3" onclick="generarDiagnostico()">
+      ¡Ver mi diagnóstico ahora!
+    </button>
+  </form>
+
+  <div id="resultSection" style="display:none;">
+    <div class="dashboard-title" id="dashboardEmpresa"></div>
+    
+    <div class="charts-container">
+      <div class="chart-box">
+        <h5>📊 Puntuación por Especialidad</h5>
+        <div id="barChartContainer">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <h5>🎯 Salud por Área Empresarial</h5>
+        <div id="radarChartContainer">
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div id="presupuestoSection"></div>
+    
+    <h3 style="text-align:center;color:#192444;margin:40px 0 20px;">Diagnóstico Detallado por Especialidad</h3>
+    <div id="especialidadesDetalle"></div>
+
+    <div class="email-box">
+      <h3 style="color:#192444;margin-bottom:20px;">¡Recibe tu informe completo!</h3>
+      <p style="font-size:1.1rem;margin-bottom:20px;">Introduce tu email para recibir el informe detallado y tu código de activación como <strong>Persona de Excelencia del Círculo de Innovación Operativa</strong>.</p>
+      
+      <input type="email" id="emailCliente" class="form-control" placeholder="tu@email.com" style="max-width:400px;margin:15px auto;padding:12px;font-size:1.1rem;border:2px solid #1e4fad;border-radius:8px;">
+      
+      <button class="btn btn-primary btn-send" onclick="enviarDiagnostico()" id="btnEnviar">
+        Quiero recibir mi informe y código de activación
+      </button>
+      
+      <div id="activationBox" style="display:none;margin-top:20px;">
+        <div class="activation-code">Código de Activación:<br><span id="codigoExc"></span></div>
+        <div id="emailAviso" style="margin-top:15px;font-weight:600;color:#192444;"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:50px;padding:35px;background:linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%);border-radius:15px;text-align:center;border:3px solid #cfb258;">
+      <h3 style="color:#192444;font-weight:700;font-size:1.6rem;margin-bottom:20px;">¡Has dado un paso clave hacia la excelencia empresarial!</h3>
+      <p style="font-size:1.05rem;color:#192444;line-height:1.7;">El equipo de Masesora te felicita por llevar tu empresa al siguiente nivel.</p>
+      <div style="margin-top:25px;font-size:1.1rem;font-weight:600;">
+        <a href="mailto:info@masesora.com" style="color:#1e4fad;text-decoration:none;margin:0 10px;">info@masesora.com</a> | 
+        <a href="https://www.masesora.com" target="_blank" style="color:#1e4fad;text-decoration:none;margin:0 10px;">www.masesora.com</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Mapeo de especialidades (10 totales, 2 por área)
+const especialidadesMap = {
+  'Rentabilidad': [
+    { nombre: 'UCI FINANCIERA', descripcion: 'Gestión de crisis financiera' },
+    { nombre: 'NEUROLOGÍA ESTRATÉGICA', descripcion: 'Planificación y visión' }
+  ],
+  'Procesos': [
+    { nombre: 'UNIDAD DE PROCESOS', descripcion: 'Optimización operativa' },
+    { nombre: 'GESTIÓN CLÍNICA', descripcion: 'Sistemas y control' }
+  ],
+  'Tiempos': [
+    { nombre: 'EXCELENCIA OPERATIVA', descripcion: 'Máximo rendimiento' },
+    { nombre: 'RESCATE DE PERSONAS', descripcion: 'Retención de talento' }
+  ],
+  'Personas': [
+    { nombre: 'PSIQUIATRÍA ORGANIZACIONAL', descripcion: 'Cultura y motivación' },
+    { nombre: 'TERAPIA DE EXPERIENCIA', descripcion: 'Experiencia del cliente' }
+  ],
+  'Comunicación': [
+    { nombre: 'CIRUGÍA DE MARCA', descripcion: 'Identidad y posicionamiento' },
+    { nombre: 'CARDIOLOGÍA COMERCIAL', descripcion: 'Ventas y clientes' }
+  ]
+};
+
+function normalizar(score){ return Math.round(score*100/12); }
+
+function getNivel(score) {
+  if (score <= 70) return { nivel: 'CRÍTICO', emoji: '🔴', clase: 'critico', color: '#d90033' };
+  if (score <= 85) return { nivel: 'RECOMENDADO', emoji: '🟠', clase: 'recomendado', color: '#fa8128' };
+  if (score <= 95) return { nivel: 'OPTIMIZADOR', emoji: '🟢', clase: 'optimizador', color: '#21ae52' };
+  return { nivel: 'ÉLITE', emoji: '💎', clase: 'elite', color: '#1e4fad' };
+}
+
+function calcularPresupuesto(facturacion, especialidadesNecesarias) {
+  const umbral = 15000;
+  let precioPIE_base, precioPRE_base;
+  
+  if (facturacion >= umbral) {
+    precioPIE_base = 999;
+    precioPRE_base = 4500;
+  } else {
+    precioPIE_base = 399;
+    precioPRE_base = 1499;
+  }
+  
+  // Separar por criticidad
+  const criticas = especialidadesNecesarias.filter(e => e.nivel.nivel === 'CRÍTICO');
+  const recomendadas = especialidadesNecesarias.filter(e => e.nivel.nivel === 'RECOMENDADO');
+  
+  // Calcular presupuestos con descuento para recomendadas
+  let totalPIE = 0;
+  let totalPRE = 0;
+  
+  let desglose = {
+    criticas: criticas.map(e => ({
+      ...e,
+      precioPIE: precioPIE_base,
+      precioPRE: precioPRE_base,
+      descuento: false
+    })),
+    recomendadas: recomendadas.map(e => ({
+      ...e,
+      precioPIE: Math.round(precioPIE_base * 0.5 * 100) / 100,
+      precioPRE: Math.round(precioPRE_base * 0.5 * 100) / 100,
+      descuento: true
+    }))
+  };
+  
+  // Calcular totales
+  desglose.criticas.forEach(e => {
+    totalPIE += e.precioPIE;
+    totalPRE += e.precioPRE;
+  });
+  
+  desglose.recomendadas.forEach(e => {
+    totalPIE += e.precioPIE;
+    totalPRE += e.precioPRE;
+  });
+  
+  return {
+    desglose,
+    totalPIE: Math.round(totalPIE * 100) / 100,
+    totalPRE: Math.round(totalPRE * 100) / 100,
+    especialidadesCriticas: criticas.length,
+    especialidadesRecomendadas: recomendadas.length,
+    totalEspecialidades: criticas.length + recomendadas.length
+  };
+}
+
+let barChart, radarChart;
+let diagnosticoActual = null;
+
+function generarDiagnostico(){
+  const form = document.getElementById("assessmentForm");
+  const nombre = document.getElementById("nombreEmpresa").value.trim();
+  const facturacion = parseFloat(document.getElementById("facturacion").value) || 0;
+  
+  if(!nombre){
+    alert("Por favor, introduce el nombre de la empresa.");
+    return;
+  }
+  
+  if(facturacion <= 0){
+    alert("Por favor, introduce la facturación mensual.");
+    return;
+  }
+  
+  if(!form.checkValidity()){
+    alert("Por favor, completa todas las preguntas.");
+    return;
+  }
+  
+  const areas = ["Rentabilidad", "Procesos", "Tiempos", "Personas", "Comunicación"];
+  let areaScores = [];
+  let todasEspecialidades = [];
+  
+  // Calcular score por área y asignar a especialidades
+  for(let area of areas){
+    let total = 0;
+    let prefix = area.toLowerCase();
+    if(area === "Tiempos") prefix = "tiempo";
+    if(area === "Comunicación") prefix = "comunicacion";
+    
+    for(let i=1; i<=3; i++){
+      let fieldName = prefix + i;
+      let val = parseInt(form[fieldName]?.value || "1");
+      total += val;
+    }
+    
+    let areaScore = normalizar(total);
+    areaScores.push(areaScore);
+    
+    // Asignar el mismo score a las 2 especialidades de esta área
+    const especialidadesArea = especialidadesMap[area];
+    especialidadesArea.forEach(esp => {
+      todasEspecialidades.push({
+        nombre: esp.nombre,
+        descripcion: esp.descripcion,
+        area: area,
+        score: areaScore,
+        nivel: getNivel(areaScore)
+      });
+    });
+  }
+  
+  // Calcular presupuesto
+  const presupuesto = calcularPresupuesto(facturacion, todasEspecialidades);
+  
+  diagnosticoActual = {
+    nombre: nombre,
+    facturacion: facturacion,
+    areas: areas,
+    areaScores: areaScores,
+    especialidades: todasEspecialidades,
+    presupuesto: presupuesto,
+    timestamp: new Date().toISOString()
+  };
+  
+  // Mostrar resultados
+  document.getElementById("assessmentForm").style.display="none";
+  document.getElementById("resultSection").style.display="block";
+  document.getElementById("dashboardEmpresa").innerHTML="Diagnóstico Empresarial de <b>"+nombre+"</b>";
+  
+  // Gráfico de barras por especialidad
+  if(barChart) barChart.destroy();
+  const ctxBar = document.getElementById('barChart').getContext('2d');
+  barChart = new Chart(ctxBar, {
+    type: "bar",
+    data: {
+      labels: todasEspecialidades.map(e => e.nombre),
+      datasets: [{
+        label: "Salud (%)",
+        data: todasEspecialidades.map(e => e.score),
+        backgroundColor: todasEspecialidades.map(e => e.nivel.color),
+        borderColor: todasEspecialidades.map(e => e.nivel.color),
+        borderWidth: 2
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          min: 0,
+          max: 100,
+          title: {
+            display: true,
+            text: 'Puntuación (%)',
+            font: { size: 14, weight: 'bold' },
+            color: '#192444'
+          },
+          ticks: {
+            callback: function(value) { return value + '%'; },
+            font: { size: 11 }
+          }
+        },
+        y: {
+          ticks: {
+            font: { size: 10, weight: '600' },
+            color: '#192444'
+          }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(25,36,68,0.95)',
+          callbacks: {
+            label: function(context) {
+              return 'Puntuación: ' + context.parsed.x + '%';
+            }
+          }
+        }
+      }
+    }
+  });
+  
+  // Gráfico radar por áreas
+  if(radarChart) radarChart.destroy();
+  const ctxRadar = document.getElementById('radarChart').getContext('2d');
+  radarChart = new Chart(ctxRadar, {
+    type: 'radar',
+    data: {
+      labels: areas,
+      datasets: [{
+        label: 'Salud Empresarial',
+        data: areaScores,
+        backgroundColor: 'rgba(30, 79, 173, 0.2)',
+        borderColor: '#1e4fad',
+        borderWidth: 3,
+        pointBackgroundColor: '#1e4fad',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: '#1e4fad',
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          min: 0,
+          max: 100,
+          beginAtZero: true,
+          ticks: {
+            stepSize: 20,
+            font: { size: 11 },
+            callback: function(value) { return value + '%'; }
+          },
+          pointLabels: {
+            font: { size: 12, weight: '600' },
+            color: '#192444'
+          },
+          grid: {
+            color: 'rgba(0, 0, 0, 0.1)'
+          },
+          angleLines: {
+            color: 'rgba(0, 0, 0, 0.1)'
+          }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(25,36,68,0.95)',
+          callbacks: {
+            label: function(context) {
+              return context.label + ': ' + context.parsed.r + '%';
+            }
+          }
+        }
+      }
+    }
+  });
+  
+  // Mostrar presupuesto desglosado
+  let presupuestoHTML = '<div class="presupuesto-box"><h3>💰 Inversión Recomendada</h3>';
+  
+  if(presupuesto.desglose.criticas.length > 0) {
+    presupuestoHTML += `
+      <div class="presupuesto-categoria critico">
+        <h4>🔴 ESPECIALIDADES CRÍTICAS (${presupuesto.desglose.criticas.length})</h4>`;
+    
+    presupuesto.desglose.criticas.forEach(esp => {
+      presupuestoHTML += `
+        <div class="especialidad-presupuesto critico">
+          <div class="esp-nombre-presupuesto">${esp.nombre} [${esp.score}%]</div>
+          <div class="esp-precios">
+            <div class="precio-item">PIE: <strong>${esp.precioPIE}€</strong></div>
+            <div class="precio-item">PRE: <strong>${esp.precioPRE}€</strong></div>
+          </div>
+        </div>`;
+    });
+    
+    presupuestoHTML += '</div>';
+  }
+  
+  if(presupuesto.desglose.recomendadas.length > 0) {
+    presupuestoHTML += `
+      <div class="presupuesto-categoria recomendado">
+        <h4>🟠 ESPECIALIDADES RECOMENDADAS - 50% DESCUENTO (${presupuesto.desglose.recomendadas.length})</h4>`;
+    
+    presupuesto.desglose.recomendadas.forEach(esp => {
+      presupuestoHTML += `
+        <div class="especialidad-presupuesto recomendado">
+          <div class="esp-nombre-presupuesto">
+            ${esp.nombre} [${esp.score}%]
+            <span class="descuento-badge">-50%</span>
+          </div>
+          <div class="esp-precios">
+            <div class="precio-item">PIE: <strong>${esp.precioPIE}€</strong> <span>(antes ${esp.precioPIE * 2}€)</span></div>
+            <div class="precio-item">PRE: <strong>${esp.precioPRE}€</strong> <span>(antes ${esp.precioPRE * 2}€)</span></div>
+          </div>
+        </div>`;
+    });
+    
+    presupuestoHTML += '</div>';
+  }
+  
+  if(presupuesto.totalEspecialidades === 0) {
+    presupuestoHTML += '<p style="text-align:center;font-size:1.2rem;color:#21ae52;font-weight:600;">¡Excelente! Tu empresa está en óptimas condiciones. Solo se recomienda optimización continua.</p>';
+  }
+  
+  // Añadir garantía
+  presupuestoHTML += `
+    <div class="garantia-box">
+      <h4>✅ Garantía de Implementación</h4>
+      <p class="metodologia">Metodología garantizada:</p>
+      <ul>
+        <li>O el protocolo funciona, o no lo pagas.</li>
+        <li>Si no se alcanza el KPI acordado, suspendemos el PRE y ampliamos el servicio sin coste.</li>
+        <li>Y si aun así no funciona, te devolvemos el PRE.</li>
+      </ul>
+    </div>
+  `;
+  
+  presupuestoHTML += '</div>';
+  document.getElementById("presupuestoSection").innerHTML = presupuestoHTML;
+  
+  // Mostrar detalle de especialidades
+  let especialidadesHTML = '';
+  todasEspecialidades.forEach(esp => {
+    especialidadesHTML += `
+      <div class="especialidad-card ${esp.nivel.clase}">
+        <div class="especialidad-nombre">${esp.nivel.emoji} ${esp.nombre}</div>
+        <div style="color:#666;font-size:0.9rem;margin-bottom:10px;">${esp.descripcion} • Área: ${esp.area}</div>
+        <div>
+          <span class="especialidad-score" style="color:${esp.nivel.color};">${esp.score}%</span>
+          <span class="especialidad-nivel" style="background:${esp.nivel.color};color:white;">${esp.nivel.nivel}</span>
+        </div>
+      </div>
+    `;
+  });
+  document.getElementById("especialidadesDetalle").innerHTML = especialidadesHTML;
+  
+  document.getElementById("resultSection").scrollIntoView({ behavior: 'smooth' });
+}
+
+function enviarDiagnostico(){
+  const email = document.getElementById("emailCliente").value.trim();
+  const btnEnviar = document.getElementById("btnEnviar");
+  
+  if(!/\S+@\S+\.\S+/.test(email)){
+    alert("Por favor, introduce un email válido.");
+    return;
+  }
+  
+  btnEnviar.disabled = true;
+  btnEnviar.innerHTML = '<span class="spinner"></span> Enviando...';
+  
+  const codigo = "MAS-" + Math.random().toString(36).substr(2,8).toUpperCase();
+  
+  const data = {
+    timestamp: diagnosticoActual.timestamp,
+    nombreEmpresa: diagnosticoActual.nombre,
+    facturacion: diagnosticoActual.facturacion,
+    email: email,
+    codigo: codigo,
+    diagnostico: diagnosticoActual
+  };
+  
+  // 🔴 IMPORTANTE: CAMBIA ESTA URL POR LA DE TU GOOGLE APPS SCRIPT
+  // Pasos: 1. Ve a Apps Script → Implementar → Administrar implementaciones
+  //        2. Edita (lápiz) → Nueva versión → Implementar
+  //        3. Copia la URL que termina en /exec
+  //        4. Pégala aquí abajo:
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz7StqiPEISqUiRm5MFbG1pFsJ8G5kIKITgx5Y_oJQC5XMLjUm03n6e54PWN4whKrmN3Q/exec";
+  
+  // Convertir los datos a formato URL encoded
+  const formData = new FormData();
+  formData.append('timestamp', data.timestamp);
+  formData.append('nombreEmpresa', data.nombreEmpresa);
+  formData.append('facturacion', data.facturacion);
+  formData.append('email', data.email);
+  formData.append('codigo', data.codigo);
+  formData.append('diagnostico', JSON.stringify(data.diagnostico));
+  
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log('Respuesta del servidor:', result);
+    
+    if(result.status === 'success') {
+      document.getElementById("activationBox").style.display="block";
+      document.getElementById("codigoExc").innerText=codigo;
+      document.getElementById("emailAviso").innerHTML=`✅ ¡Enviado! Recibirás tu informe completo en: <strong>${email}</strong><br>Tu código de activación: <strong>${codigo}</strong>`;
+      
+      btnEnviar.innerHTML = '✓ Enviado correctamente';
+      btnEnviar.style.background = '#21ae52';
+    } else {
+      throw new Error(result.message || 'Error desconocido');
+    }
+  })
+  .catch((error) => {
+    console.error("Error completo:", error);
+    document.getElementById("activationBox").style.display="block";
+    document.getElementById("codigoExc").innerText=codigo;
+    document.getElementById("emailAviso").innerHTML=`⚠️ Error al enviar. Tu código: <strong>${codigo}</strong><br>Contacta con info@masesora.com con este código.`;
+    
+    btnEnviar.innerHTML = '⚠️ Error - Reintentar';
+    btnEnviar.style.background = '#d90033';
+    btnEnviar.disabled = false;
+  });
+}
+</script>
+</body>
+</html>

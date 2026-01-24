@@ -1,0 +1,28 @@
+cd C:\Users\Masesora\OneDrive\MASESORA\CLINICA
+uvicorn masesora_backend.main:app --reload
+
+cd C:\Users\Masesora\OneDrive\MASESORA\CLINICA\Masesora_frontend
+npm install
+npm run dev
+
+GitHub para actualizar carpetas: 
+git add . && git commit -m "update" && git push
+
+o bien: 
+git add .
+git commit -m "Descripción del cambio" (ejemplo:  git commit -m "Move requirements.txt into Masesora_backend")
+git push
+
+
+⭐ 4. Flujo completo (tu nueva vida técnica)
+1. Editas en tu PC
+Haces cambios en el código.
+2. Subes al repo
+
+3. Render despliega solo
+Sin que tú hagas nada.
+4. El backend se actualiza en producción
+En segundos.
+
+cd C:\Masframe
+uvicorn masesora_backend.main:app --reload
