@@ -1,11 +1,11 @@
 from fastapi import APIRouter
-from schemas.auth_schemas import (
+from masesora_backend.schemas.auth_schemas import (
     ClientLoginRequest,
     InternalLoginRequest,
     LoginResponseCliente,
     LoginResponseInterno,
 )
-from routers.auth_service import AuthService
+from masesora_backend.routers.auth_service import AuthService
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 auth_service = AuthService()

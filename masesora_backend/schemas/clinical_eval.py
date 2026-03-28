@@ -7,7 +7,7 @@ from masesora_backend.models.symptom_master import SymptomMaster
 from masesora_backend.engine.clinical_engine import compute_kpi
 
 # --- NUEVO IMPORTS PARA EL BATCH ---
-from schemas.evaluation_schema import (
+from masesora_backend.schemas.evaluation_schema import (
     BatchEvaluationRequest,
     BatchEvaluationResponse,
     SymptomEvaluationResult,
