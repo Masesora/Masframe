@@ -18,7 +18,7 @@ import random, string
 import os
 import json
 
-from email_service import send_ese_email
+from masesora_backend.email_service import send_ese_email
 
 # Motores clínicos
 from masesora_backend.database.engine.clinical_engine.services.kpi_engine import (
