@@ -22,7 +22,7 @@ from masesora_backend.email_service import send_ese_email
 
 # Motores clínicos
 from masesora_backend.database.engine.clinical_engine.services.kpi_engine import (
-    compute_kpi,
+    calcular_kpi,
     interpretar_kpi,
     evaluar_post_tratamiento,
 )
@@ -255,7 +255,7 @@ async def guardar_diagnostico(codigo: str, data: DiagnosticoRequest):
 
     # Calcular KPI
     try:
-        kpi_value = compute_kpi(
+        kpi_value = calcular_kpi(
             symptom.get("short_code"),
             data.user_inputs.get("a"),
             data.user_inputs.get("b")
