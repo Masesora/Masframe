@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MASESORA · Escáner Clínico Empresarial MAS@FRAME®</title>
+
+  <!-- Tipografía y librerías -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --color-bg: #f5f4f0;
+      --color-navy: #0F1A35;
+      --color-navy-soft: #1a2d5a;
+      --color-gold: #B89D52;
+      --color-accent: #fa8128;
+      --color-danger: #d90033;
+      --color-success: #21ae52;
+      --radius-card: 16px;
+      --shadow-soft: 0 10px 30px rgba(15, 26, 53, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--color-bg);
+      font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--color-navy);
+    }
+
+    /* NAVBAR */
+    .navbar-masesora {
+      background: var(--color-navy);
+      padding: 18px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(184,157,82,0.35);
+    }
+
+    .navbar-brand-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .navbar-logo-box {
+      width: 52px;
+      height: 52px;
+      background: var(--color-gold);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--color-navy);
+    }
+
+    .navbar-text-main {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: 1.5px;
+    }
+
+    .navbar-text-sub {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.65);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 500;
+    }
+
+    .navbar-pill {
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(184,157,82,0.4);
+      color: var(--color-gold);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(184,157,82,0.1);
+    }
+
+    .navbar-pill span {
+      font-size: 1rem;
+    }
+
+    /* HERO INTRO */
+    .hero-intro {
+      background: linear-gradient(135deg, #0F1A35 0%, #192a4f 40%, #1a2d5a 100%);
+      padding: 46px 18px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-intro::before,
+    .hero-intro::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(184,157,82,0.4), transparent 60%);
+      opacity: 0.13;
+    }
+
+    .hero-intro::before {
+      width: 420px;
+      height: 420px;
+      top: -220px;
+      right: -120px;
+    }
+
+    .hero-intro::after {
+      width: 360px;
+      height: 360px;
+      bottom: -220px;
+      left: -100px;
+    }
+
+    .hero-intro-inner {
+      position: relative;
+      max-width: 1060px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.6fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-intro-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .hero-intro-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(184,157,82,0.1);
+      border: 1px solid rgba(184,157,82,0.4);
+      color: var(--color-gold);
+      font-size: 0.78rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .hero-intro-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 3vw, 2.7rem);
+      color: #fff;
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+
+    .hero-intro-highlight {
+      color: var(--color-gold);
+    }
+
+    .hero-intro-subtitle {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.96rem;
+      line-height: 1.8;
+      max-width: 520px;
+    }
+
+    .hero-intro-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.82rem;
+    }
+
+    .hero-pill-meta {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15,26,53,0.5);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .hero-intro-right {
+      background: rgba(15,26,53,0.6);
+      border-radius: 18px;
+      border: 1px solid rgba(184,157,82,0.4);
+      padding: 20px 20px 18px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-intro-right-title {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+      margin: 0 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      font-weight: 600;
+    }
+
+    .hero-intro-right-main {
+      color: #fff;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .hero-intro-right-metric {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .hero-intro-right-metric span:first-child {
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .hero-intro-right-metric span:last-child {
+      font-weight: 700;
+      color: var(--color-gold);
+      font-size: 0.94rem;
+    }
+
+    .hero-intro-money-note {
+      margin-top: 10px;
+      color: rgba(255,255,255,0.68);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    /* MAIN LAYOUT */
+    .page-main {
+      max-width: 1060px;
+      margin: 0 auto 60px;
+      padding: 26px 18px 40px;
+    }
+
+    .layout-main {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.8fr);
+      gap: 26px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 960px) {
+      .layout-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* FORM CARD */
+    .card-form {
+      background: #fff;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 22px 18px;
+      border: 1px solid rgba(15,26,53,0.05);
+    }
+
+    .card-form-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card-form-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-navy);
+    }
+
+    .card-form-step {
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    .form-note-small {
+      font-size: 0.8rem;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .empresa-box label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: var(--color-navy);
+    }
+
+    .empresa-box input {
+      border-radius: 9px;
+      border: 1px solid #d3d7e4;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+    }
+
+    .empresa-box input:focus {
+      border-color: var(--color-navy-soft);
+      box-shadow: 0 0 0 2px rgba(30,79,173,0.15);
+      outline: none;
+    }
+
+    .section {
+      border-radius: 14px;
+      background: #f8f9fb;
+      padding: 16px 16px 14px;
+      margin-bottom: 12px;
+      border: 1px solid #e1e3ec;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .section-header h4 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-navy);
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e6ecff;
+      color: #1e4fad;
+      font-weight: 600;
+    }
+
+    .section-body {
+      margin-top: 6px;
+    }
+
+    .section label {
+      font-weight: 500;
+      font-size: 0.83rem;
+      margin-bottom: 5px;
+    }
+
+    .section select.form-select {
+      font-size: 0.84rem;
+      border-radius: 9px;
+      border-color: #d3d7e4;
+    }
+
+    /* PROGRESS & CTA */
+    .form-progress-bar {
+      height: 6px;
+      background: #e2e4ef;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 12px 0 14px;
+    }
+
+    .form-progress-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--color-gold), var(--color-accent));
+      transition: width 0.25s ease;
+    }
+
+    .form-progress-label {
+      font-size: 0.78rem;
+      color: #777;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn-primary-main {
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #1e4fad, #264fc7);
+      border: none;
+      padding: 11px 18px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 14px 30px rgba(30,79,173,0.35);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    .btn-primary-main:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 34px rgba(30,79,173,0.42);
+      background: linear-gradient(135deg, #264fc7, #1e4fad);
+    }
+
+    .btn-primary-main:disabled {
+      opacity: 0.7;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-icon {
+      font-size: 1.1rem;
+    }
+
+    /* RESULT SIDE PREVIEW (ANTES DE CALCULAR) */
+    .card-preview {
+      background: linear-gradient(135deg, #ffffff, #f5f4f0);
+      border-radius: var(--radius-card);
+      padding: 20px 20px 18px;
+      border: 1px solid rgba(15,26,53,0.06);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card-preview h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .card-preview p {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .preview-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    .preview-badge {
+      font-size: 0.78rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #f0f4ff;
+      color: #1e4fad;
+      font-weight: 600;
+    }
+
+    .preview-meta {
+      font-size: 0.78rem;
+      color: #777;
+    }
+
+    /* RESULT SECTION */
+    #resultSection {
+      margin-top: 30px;
+      display: none;
+    }
+
+    #heroDiagnostico {
+      background: linear-gradient(135deg, #0F1A35 0%, #1a2d5a 100%);
+      padding: 46px 20px 34px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.4);
+      margin-bottom: 20px;
+    }
+
+    #heroDiagnostico::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(184,157,82,0.12), transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(184,157,82,0.08), transparent 55%);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .hero-diag-inner {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.5fr);
+      gap: 22px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-diag-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .hero-diag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(184,157,82,0.5);
+      background: rgba(15,26,53,0.7);
+      color: var(--color-gold);
+      font-size: 0.78rem;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    #heroDashboardTitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      color: #fff;
+      margin: 0 0 10px;
+      line-height: 1.25;
+    }
+
+    #heroDashboardTitle span {
+      color: var(--color-gold);
+    }
+
+    #heroSubtitle {
+      font-size: 0.94rem;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.7;
+      margin: 0 0 14px;
+    }
+
+    .hero-diag-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .hero-diag-tag {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(15,26,53,0.6);
+    }
+
+    .hero-diag-score {
+      text-align: left;
+      background: rgba(15,26,53,0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(184,157,82,0.45);
+      padding: 16px 18px;
+    }
+
+    .hero-diag-score-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .hero-diag-score-main {
+      font-size: 2.1rem;
+      color: var(--color-gold);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .hero-diag-score-sub {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* ALERTA CRITICIDAD */
+    #alertaCriticidad {
+      max-width: 900px;
+      margin: 14px auto 4px;
+      padding: 0 4px;
+    }
+
+    /* RESUMEN CARDS */
+    .resumen-wrapper {
+      max-width: 900px;
+      margin: 22px auto 0;
+      padding: 0 2px;
+    }
+
+    #resumenCards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+      gap: 14px;
+    }
+
+    /* ESPECIALIDADES */
+    .especialidades-wrapper {
+      max-width: 900px;
+      margin: 34px auto 0;
+      padding: 0 2px;
+    }
+
+    .especialidades-header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .especialidades-header span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .especialidades-header p {
+      font-size: 0.86rem;
+      color: #666;
+      margin-top: 6px;
+    }
+
+    #especialidadesDetalle {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.6fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      #especialidadesDetalle {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .especialidad-card {
+      padding: 15px 15px 13px;
+      border-radius: 12px;
+      background: #fff;
+      border-left: 5px solid #ccc;
+      box-shadow: 0 10px 22px rgba(15,26,53,0.06);
+    }
+
+    .especialidad-card.critico { border-left-color: var(--color-danger); }
+    .especialidad-card.recomendado { border-left-color: var(--color-accent); }
+    .especialidad-card.optimizador { border-left-color: var(--color-success); }
+    .especialidad-card.elite { border-left-color: var(--color-gold); }
+
+    .especialidad-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .especialidad-nombre {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .especialidad-tag-area {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #f0f4ff;
+      color: #1e4fad;
+      font-weight: 600;
+    }
+
+    .especialidad-score-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .especialidad-score-main {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .especialidad-nivel-pill {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .especialidad-descripcion {
+      font-size: 0.8rem;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .especialidad-mensaje {
+      font-size: 0.78rem;
+      color: #444;
+    }
+
+    /* RADAR CARD */
+    .radar-wrapper {
+      max-width: 900px;
+      margin: 34px auto 0;
+      padding: 0 2px;
+    }
+
+    .radar-card {
+      background: #fff;
+      border-radius: 18px;
+      border: 1px solid #e8e4dc;
+      padding: 22px 22px 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .radar-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      margin: 0 0 4px;
+    }
+
+    .radar-header p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    .radar-canvas-wrap {
+      max-width: 420px;
+      margin: 0 auto;
+      height: 300px;
+    }
+
+    /* CTA CLÍNICO / CONSULTA */
+    .cta-wrapper {
+      max-width: 900px;
+      margin: 30px auto 0;
+      padding: 0 2px;
+    }
+
+    /* EMAIL & CODIGO */
+    .cta-email-wrapper {
+      max-width: 900px;
+      margin: 28px auto 40px;
+      padding: 0 2px;
+    }
+
+    .cta-email-card {
+      background: linear-gradient(135deg, #0F1A35, #1a2d5a);
+      border-radius: 20px;
+      padding: 34px 24px 26px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.4);
+    }
+
+    .cta-email-card::before,
+    .cta-email-card::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(184,157,82,0.1);
+    }
+
+    .cta-email-card::before {
+      width: 170px; height: 170px;
+      top: -50px; right: -40px;
+    }
+
+    .cta-email-card::after {
+      width: 130px; height: 130px;
+      bottom: -40px; left: -30px;
+    }
+
+    .cta-email-inner {
+      position: relative;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta-email-inner h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      color: #fff;
+      margin: 0 0 10px;
+    }
+
+    .cta-email-inner p {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin: 0 0 20px;
+    }
+
+    .cta-email-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .cta-email-input {
+      flex: 1;
+      min-width: 220px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 2px solid rgba(184,157,82,0.45);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      font-size: 0.92rem;
+      outline: none;
+    }
+
+    .cta-email-input::placeholder {
+      color: rgba(255,255,255,0.55);
+    }
+
+    .cta-email-button {
+      border-radius: 999px;
+      border: none;
+      padding: 12px 20px;
+      font-size: 0.9rem;
+      background: var(--color-gold);
+      color: var(--color-navy);
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    .cta-email-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(184,157,82,0.45);
+      background: #caa955;
+    }
+
+    .cta-email-button:disabled {
+      opacity: 0.7;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    #activationBox {
+      margin-top: 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 14px;
+      padding: 16px 18px 12px;
+    }
+
+    #codigoExc {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 4px;
+      font-family: monospace;
+    }
+
+    #emailAviso {
+      margin-top: 6px;
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.78);
+    }
+
+    /* WHATSAPP CTA FOOTER */
+    .footer-cta {
+      max-width: 900px;
+      margin: 0 auto 32px;
+      padding: 0 2px;
+      text-align: center;
+      font-size: 0.86rem;
+      color: #555;
+    }
+
+    .footer-cta a {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid #25D366;
+      color: #128C7E;
+      font-weight: 600;
+      background: #e7f9f0;
+      margin-top: 4px;
+    }
+
+    .footer-cta a span.icon {
+      font-size: 1.1rem;
+    }
+
+    /* Spinner simple */
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar-masesora">
+    <div class="navbar-brand-block">
+      <div class="navbar-logo-box">M</div>
+      <div>
+        <div class="navbar-text-main">MASESORA</div>
+        <div class="navbar-text-sub">MAS@FRAME® · ESCÁNER CLÍNICO EMPRESARIAL</div>
+      </div>
+    </div>
+    <div class="navbar-pill">
+      <span>⚕</span> Diagnóstico accionable en 5 minutos
+    </div>
+  </nav>
+
+  <!-- HERO INTRO -->
+  <section class="hero-intro">
+    <div class="hero-intro-inner">
+      <div>
+        <div class="hero-intro-badge">
+          <span>✦</span> Escáner Clínico MAS@FRAME®
+        </div>
+        <h1 class="hero-intro-title">
+          Radiografía clínica de tu empresa en <span class="hero-intro-highlight">tiempo real</span>.
+        </h1>
+        <p class="hero-intro-subtitle">
+          Evalúa la salud de tu negocio en Rentabilidad, Procesos, Tiempos, Personas y Comunicación, y obtén un informe clínico con las áreas críticas, riesgos y palancas de mejora.
+        </p>
+        <div class="hero-intro-meta">
+          <div class="hero-pill-meta">Pensado para empresas en fase de crecimiento o tensión de caja</div>
+          <div class="hero-pill-meta">Basado en proyectos reales de consultoría operativa</div>
+        </div>
+      </div>
+
+      <div class="hero-intro-right">
+        <div class="hero-intro-right-title">Qué obtendrás</div>
+        <div class="hero-intro-right-main">
+          Un mapa clínico de tu empresa con un lenguaje claro y accionable, que podrás usar en tu siguiente reunión estratégica o con tu equipo directivo.
+        </div>
+        <div class="hero-intro-right-metric">
+          <span>Tiempo estimado de completado</span>
+          <span>≈ 5 minutos</span>
+        </div>
+        <div class="hero-intro-right-metric">
+          <span>Áreas analizadas</span>
+          <span>5 áreas · 10 especialidades</span>
+        </div>
+        <div class="hero-intro-money-note">
+          El informe completo, junto con tu código de acceso MAS@FRAME®, se enviará a tu email al finalizar el diagnóstico.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="page-main">
+    <div class="layout-main">
+      <!-- FORM SIDE -->
+      <div class="card-form">
+        <div class="card-form-header">
+          <div>
+            <div class="card-form-title">1 · Completa tu cuadro clínico</div>
+            <div class="card-form-step">Datos básicos y 5 bloques clave de preguntas.</div>
+          </div>
+        </div>
+
+        <p class="form-note-small">
+          Las respuestas son <strong>confidenciales</strong> y orientadas a generar tu informe clínico, no a juzgar tu gestión.
+        </p>
+
+        <div class="empresa-box mb-2">
+          <label for="nombreEmpresa">Nombre de la empresa *</label>
+          <input type="text" id="nombreEmpresa" class="form-control" placeholder="Ej: Innovación SL" required>
+
+          <label for="facturacion" class="mt-2">Facturación mensual aproximada (€) *</label>
+          <input type="number" id="facturacion" class="form-control" placeholder="Ej: 15000" min="0" required>
+        </div>
+
+        <form id="assessmentForm" class="mt-2">
+          <!-- RENTABILIDAD -->
+          <div class="section" data-area="Rentabilidad">
+            <div class="section-header">
+              <h4>RENTABILIDAD · Finanzas y Estrategia</h4>
+              <span class="section-tag">Pulsa para revisar</span>
+            </div>
+            <div class="section-body">
+              <label>¿Sientes que tu empresa realmente tiene el control y claridad sobre dónde está tu dinero y cómo hacerlo crecer sosteniblemente?</label>
+              <select name="rentabilidad1" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">No tengo control</option>
+                <option value="2">Me cuesta entenderlo</option>
+                <option value="3">Parcialmente</option>
+                <option value="4">Totalmente claro</option>
+              </select>
+
+              <label>¿Con qué frecuencia revisas tus resultados financieros para tomar decisiones que eviten pérdidas y aprovechen oportunidades?</label>
+              <select name="rentabilidad2" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">Nunca</option>
+                <option value="2">Rara vez</option>
+                <option value="3">Mensualmente</option>
+                <option value="4">Semanalmente</option>
+              </select>
+
+              <label>¿Tu negocio tiene una estrategia clara y compartida que guía cada movimiento para asegurar rentabilidad futura?</label>
+              <select name="rentabilidad3" class="form-select" required>
+                <option value="">Seleccione</option>
+                <option value="1">No existe estrategia</option>
+                <option value="2">Poco definida</option>
+                <option value="3">Algo definida</option>
+                <option value="4">Sí, claramente definida</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- PROCESOS -->
+          <div class="section" data-area="Procesos">
+            <div class="section-header">
+              <h4>PROCESOS · Gestión, Crisis y Mejora</h4>
+              <span class="section-tag">Pulsa para revisar</span>
+            </div>
+            <div class="section-body">
+              <label>¿Los procesos críticos de tu negocio están documentados, actualizados y preparados para enfrentar imprevistos o crisis?</label>
+              <select name="procesos1" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">Nunca</option>
+                <option value="2">Rara vez</option>
+                <option value="3">Algunas veces</option>
+                <option value="4">Siempre</option>
+              </select>
+
+              <label>¿Qué tan efectivo es tu sistema para detectar, corregir errores y mejorar procesos que liberan tiempo y recursos?</label>
+              <select name="procesos2" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">No existe sistema</option>
+                <option value="2">Poco efectivo</option>
+                <option value="3">Moderadamente</option>
+                <option value="4">Muy efectivo</option>
+              </select>
+
+              <label>¿Sientes que los procesos actuales te permiten reaccionar rápido y minimizar daños cuando enfrentan problemas serios?</label>
+              <select name="procesos3" class="form-select" required>
+                <option value="">Seleccione</option>
+                <option value="1">Nunca</option>
+                <option value="2">Rara vez</option>
+                <option value="3">Algunas veces</option>
+                <option value="4">Sí, siempre</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- TIEMPOS -->
+          <div class="section" data-area="Tiempos">
+            <div class="section-header">
+              <h4>TIEMPOS · Productividad y Control</h4>
+              <span class="section-tag">Pulsa para revisar</span>
+            </div>
+            <div class="section-body">
+              <label>¿Crees que tu equipo utiliza el tiempo de manera eficiente y productiva, evitando el estrés y sobrecarga?</label>
+              <select name="tiempo1" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">Muy ineficiente</option>
+                <option value="2">Poco eficiente</option>
+                <option value="3">Regular</option>
+                <option value="4">Totalmente eficiente</option>
+              </select>
+
+              <label>¿Están claramente identificados los factores o actividades que consumen tiempo innecesario en tu empresa?</label>
+              <select name="tiempo2" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">No se identifican</option>
+                <option value="2">Se identifican pero no se solucionan</option>
+                <option value="3">Se identifican parcialmente</option>
+                <option value="4">Sí, y se están solucionando</option>
+              </select>
+
+              <label>¿Utilizas herramientas o metodologías para asegurar que las tareas y proyectos se completen a tiempo?</label>
+              <select name="tiempo3" class="form-select" required>
+                <option value="">Seleccione</option>
+                <option value="1">Nunca</option>
+                <option value="2">Rara vez</option>
+                <option value="3">Algunas veces</option>
+                <option value="4">Sí, frecuentemente</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- PERSONAS -->
+          <div class="section" data-area="Personas">
+            <div class="section-header">
+              <h4>PERSONAS · Equipo y Cultura</h4>
+              <span class="section-tag">Pulsa para revisar</span>
+            </div>
+            <div class="section-body">
+              <label>¿Tu equipo está motivado, comprometido y entiende claramente su rol en la recuperación y crecimiento del negocio?</label>
+              <select name="personas1" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">Desmotivado</option>
+                <option value="2">Poco motivado</option>
+                <option value="3">Medianamente</option>
+                <option value="4">Muy motivado</option>
+              </select>
+
+              <label>¿Se promueve un ambiente laboral que favorece la colaboración, respeto y crecimiento personal?</label>
+              <select name="personas2" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">Nunca</option>
+                <option value="2">Rara vez</option>
+                <option value="3">A veces</option>
+                <option value="4">Siempre</option>
+              </select>
+
+              <label>¿Sientes que cuentas con el talento necesario y que las capacitaciones apoyan su desempeño efectivo?</label>
+              <select name="personas3" class="form-select" required>
+                <option value="">Seleccione</option>
+                <option value="1">No hay</option>
+                <option value="2">Poco</option>
+                <option value="3">Parcialmente</option>
+                <option value="4">Totalmente</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- COMUNICACIÓN -->
+          <div class="section" data-area="Comunicación">
+            <div class="section-header">
+              <h4>COMUNICACIÓN · Interna y Comercial</h4>
+              <span class="section-tag">Pulsa para revisar</span>
+            </div>
+            <div class="section-body">
+              <label>¿La comunicación interna es transparente, clara y constante, ayudando a que todos remen hacia los mismos objetivos?</label>
+              <select name="comunicacion1" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">Nunca</option>
+                <option value="2">Pocas veces</option>
+                <option value="3">A menudo</option>
+                <option value="4">Siempre</option>
+              </select>
+
+              <label>¿Las reuniones y canales de comunicación están diseñados para resolver problemas y avanzar rápidamente?</label>
+              <select name="comunicacion2" class="form-select mb-2" required>
+                <option value="">Seleccione</option>
+                <option value="1">Nada</option>
+                <option value="2">Poco</option>
+                <option value="3">Regular</option>
+                <option value="4">Totalmente</option>
+              </select>
+
+              <label>¿La comunicación con tus clientes refleja confianza y fortalece la relación para aumentar ventas y fidelización?</label>
+              <select name="comunicacion3" class="form-select" required>
+                <option value="">Seleccione</option>
+                <option value="1">Inexistente</option>
+                <option value="2">Débil</option>
+                <option value="3">Sólida</option>
+                <option value="4">Muy sólida</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+        <!-- PROGRESS BAR -->
+        <div class="form-progress-bar">
+          <div class="form-progress-bar-inner" id="progressBar"></div>
+        </div>
+        <div class="form-progress-label">
+          <span id="progressLabel">0/5 áreas completadas</span>
+          <span>Completa para ver tu diagnóstico</span>
+        </div>
+
+        <!-- CTA -->
+        <button type="button" id="btnDiagnostico" class="btn-primary-main mt-1" onclick="generarDiagnostico()">
+          <span class="btn-icon">📊</span> Ver mi diagnóstico ahora
+        </button>
+      </div>
+
+      <!-- RIGHT SIDE PREVIEW / RESULT -->
+      <div class="card-preview">
+        <h3>2 · Visualiza tu mapa clínico</h3>
+        <p>
+          Tras completar el cuestionario, obtendrás una visión ejecutiva de tus áreas críticas, el mapa radar de salud y el impacto potencial de no intervenir.
+        </p>
+        <div class="preview-badges">
+          <div class="preview-badge">Estado clínico global</div>
+          <div class="preview-badge">5 áreas · 10 especialidades</div>
+          <div class="preview-badge">Radar estratégico</div>
+        </div>
+        <p class="preview-meta">
+          El siguiente paso será recibir tu informe clínico profesional por email y, si lo deseas, agendar una consulta de 20 minutos con nuestro equipo para revisar el diagnóstico.
+        </p>
+      </div>
+    </div>
+
+    <!-- RESULTADOS -->
+    <section id="resultSection">
+      <!-- HERO DIAGNÓSTICO -->
+      <div id="heroDiagnostico">
+        <div class="hero-diag-inner">
+          <div>
+            <div class="hero-diag-badge">
+              <span>⚕</span> Resultado clínico MAS@FRAME®
+            </div>
+            <h2 id="heroDashboardTitle"></h2>
+            <p id="heroSubtitle"></p>
+            <div class="hero-diag-tags" id="heroTags"></div>
+          </div>
+          <div class="hero-diag-score" id="heroScoreBox">
+            <div class="hero-diag-score-label">Estado global</div>
+            <div class="hero-diag-score-main" id="heroScoreLabel">–</div>
+            <div class="hero-diag-score-sub" id="heroScoreSub"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALERTA CRITICIDAD -->
+      <div id="alertaCriticidad"></div>
+
+      <!-- RESUMEN VISUAL -->
+      <div class="resumen-wrapper">
+        <div id="resumenCards"></div>
+      </div>
+
+      <!-- ESPECIALIDADES -->
+      <div class="especialidades-wrapper">
+        <div class="especialidades-header">
+          <span>Diagnóstico por especialidad clínica</span>
+          <p>Análisis clínico de las 10 especialidades clave de tu empresa.</p>
+        </div>
+        <div id="especialidadesDetalle"></div>
+      </div>
+
+      <!-- RADAR -->
+      <div class="radar-wrapper">
+        <div class="radar-card">
+          <div class="radar-header">
+            <h3>Mapa de Salud Empresarial</h3>
+            <p>Visión global de tus 5 áreas estratégicas clave.</p>
+          </div>
+          <div class="radar-canvas-wrap">
+            <canvas id="radarChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA CLÍNICO/CONSULTA (SIN PRECIOS) -->
+      <div class="cta-wrapper">
+        <div id="presupuestoSection"></div>
+      </div>
+
+      <!-- CTA EMAIL / INFORME COMPLETO -->
+      <div class="cta-email-wrapper">
+        <div class="cta-email-card">
+          <div class="cta-email-inner">
+            <h3>3 · Recibe tu Informe Clínico Profesional</h3>
+            <p>
+              Te enviaremos tu informe clínico completo MAS@FRAME®, con el detalle de todas las especialidades, riesgos detectados y palancas recomendadas, junto con tu código exclusivo de acceso.
+            </p>
+            <div class="cta-email-form">
+              <input type="email" id="emailCliente" class="cta-email-input" placeholder="tu@empresa.com">
+              <button onclick="enviarDiagnostico()" id="btnEnviar" class="cta-email-button">
+                <span>Enviar mi informe</span> <span>→</span>
+              </button>
+            </div>
+            <div id="activationBox" style="display:none;">
+              <div style="font-size:0.82rem;color:var(--color-gold);font-weight:700;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:4px;">Tu código de acceso MAS@FRAME®</div>
+              <div id="codigoExc"></div>
+              <div id="emailAviso"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER CTA -->
+      <div class="footer-cta">
+        ¿Quieres revisar este diagnóstico con un especialista de MASESORA?
+        <br>
+        <a href="https://wa.me/34609987436" target="_blank" rel="noopener">
+          <span class="icon">💬</span> Hablar ahora por WhatsApp
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Mapeo de especialidades (10 totales, 2 por área)
+    const especialidadesMap = {
+      'Rentabilidad': [
+        { nombre: 'UCI FINANCIERA', descripcion: 'Gestión de crisis financiera' },
+        { nombre: 'NEUROLOGÍA ESTRATÉGICA', descripcion: 'Planificación y visión' }
+      ],
+      'Procesos': [
+        { nombre: 'UNIDAD DE PROCESOS', descripcion: 'Optimización operativa' },
+        { nombre: 'GESTIÓN CLÍNICA', descripcion: 'Sistemas y control' }
+      ],
+      'Tiempos': [
+        { nombre: 'EXCELENCIA OPERATIVA', descripcion: 'Máximo rendimiento' },
+        { nombre: 'RESCATE DE PERSONAS', descripcion: 'Retención de talento' }
+      ],
+      'Personas': [
+        { nombre: 'PSIQUIATRÍA ORGANIZACIONAL', descripcion: 'Cultura y motivación' },
+        { nombre: 'TERAPIA DE EXPERIENCIA', descripcion: 'Experiencia del cliente' }
+      ],
+      'Comunicación': [
+        { nombre: 'CIRUGÍA DE MARCA', descripcion: 'Identidad y posicionamiento' },
+        { nombre: 'CARDIOLOGÍA COMERCIAL', descripcion: 'Ventas y clientes' }
+      ]
+    };
+
+    function normalizar(score){ return Math.round(score*100/12); }
+
+    function getNivel(score) {
+      if (score <= 70) return { nivel: 'CRÍTICO', emoji: '🔴', clase: 'critico', color: '#d90033' };
+      if (score <= 85) return { nivel: 'RECOMENDADO', emoji: '🟠', clase: 'recomendado', color: '#fa8128' };
+      if (score <= 95) return { nivel: 'OPTIMIZADOR', emoji: '🟢', clase: 'optimizador', color: '#21ae52' };
+      return { nivel: 'ÉLITE', emoji: '💎', clase: 'elite', color: '#1e4fad' };
+    }
+
+    function calcularPresupuesto(facturacion, especialidadesNecesarias) {
+      const umbral = 15000;
+      let precioPIE_base, precioPRE_base;
+
+      if (facturacion >= umbral) {
+        precioPIE_base = 999;
+        precioPRE_base = 4500;
+      } else {
+        precioPIE_base = 399;
+        precioPRE_base = 1499;
+      }
+
+      const criticas = especialidadesNecesarias.filter(e => e.nivel.nivel === 'CRÍTICO');
+      const recomendadas = especialidadesNecesarias.filter(e => e.nivel.nivel === 'RECOMENDADO');
+
+      let totalPIE = 0;
+      let totalPRE = 0;
+
+      let desglose = {
+        criticas: criticas.map(e => ({
+          ...e,
+          precioPIE: precioPIE_base,
+          precioPRE: precioPRE_base,
+          descuento: false
+        })),
+        recomendadas: recomendadas.map(e => ({
+          ...e,
+          precioPIE: Math.round(precioPIE_base * 0.5 * 100) / 100,
+          precioPRE: Math.round(precioPRE_base * 0.5 * 100) / 100,
+          descuento: true
+        }))
+      };
+
+      desglose.criticas.forEach(e => {
+        totalPIE += e.precioPIE;
+        totalPRE += e.precioPRE;
+      });
+
+      desglose.recomendadas.forEach(e => {
+        totalPIE += e.precioPIE;
+        totalPRE += e.precioPRE;
+      });
+
+      return {
+        desglose,
+        totalPIE: Math.round(totalPIE * 100) / 100,
+        totalPRE: Math.round(totalPRE * 100) / 100,
+        especialidadesCriticas: criticas.length,
+        especialidadesRecomendadas: recomendadas.length,
+        totalEspecialidades: criticas.length + recomendadas.length
+      };
+    }
+
+    let radarChart;
+    let diagnosticoActual = null;
+
+    // Motor de textos de insight
+    const insightTextos = {
+      global: {
+        'RIESGO CRÍTICO': {
+          resumen: 'Tu empresa presenta un cuadro clínico delicado, con múltiples focos en estado crítico.',
+          riesgo: 'Mantener esta situación 6–12 meses puede comprometer seriamente la liquidez, el margen y la viabilidad.',
+          palanca: 'Requiere un plan de rescate estructurado y focalizado en las áreas UCI en las próximas semanas.'
+        },
+        'ATENCIÓN URGENTE': {
+          resumen: 'Hay señales claras de alerta que no deberían posponerse.',
+          riesgo: 'Sin intervención, las áreas críticas pueden derivar en crisis operativa y financiera.',
+          palanca: 'Es momento de priorizar y abordar los focos críticos con un protocolo guiado.'
+        },
+        'INTERVENCIÓN RECOMENDADA': {
+          resumen: 'Tu empresa tiene una base aceptable, pero hay áreas que ya muestran fatiga.',
+          riesgo: 'La inacción puede llevar a pérdida de oportunidades y erosión de margen.',
+          palanca: 'Una intervención quirúrgica ahora puede evitar escenarios de urgencia futura.'
+        },
+        'SALUD ACEPTABLE': {
+          resumen: 'Tu cuadro clínico actual es estable.',
+          riesgo: 'El riesgo no está en el corto plazo, sino en estancarse y no capturar el potencial.',
+          palanca: 'Trabajar en optimización y crecimiento controlado permitirá consolidar la ventaja competitiva.'
+        }
+      }
+    };
+
+    function generarInsights(areas, areaScores, todasEspecialidades, estadoGlobal) {
+      // Top 2 áreas más débiles
+      const paresAreas = areas.map((a, i) => ({ area: a, score: areaScores[i] || 0 }));
+      paresAreas.sort((a,b) => a.score - b.score);
+      const weakest = paresAreas.slice(0, 2);
+
+      // Top 2 especialidades más débiles
+      const sortedEsp = [...todasEspecialidades].sort((a,b) => a.score - b.score);
+      const weakestEsp = sortedEsp.slice(0, 2);
+
+      const base = insightTextos.global[estadoGlobal] || insightTextos.global['INTERVENCIÓN RECOMENDADA'];
+
+      const hallazgos = [
+        base.resumen,
+        `Las áreas con menor salud son: ${weakest.map(w => w.area + ' (' + w.score + '%)').join(' y ')}.`,
+        `Las especialidades más sensibles ahora mismo son: ${weakestEsp.map(e => e.nombre + ' (' + e.score + '%)').join(' y ')}.`
+      ];
+
+      const riesgos = [
+        base.riesgo,
+        'Las áreas críticas tienden a amplificar errores en decisiones, carga de trabajo y tensión en caja si no se actúa.',
+        'En contextos de incertidumbre, estas debilidades suelen acelerar problemas de rotación, servicio y margen.'
+      ];
+
+      const palancas = [
+        base.palanca,
+        'Prioriza una intervención focalizada en las áreas con menor score antes de ampliar el foco a optimización general.',
+        'Alinea a tu equipo en torno a 3 objetivos clínicos concretos para los próximos 90 días.'
+      ];
+
+      return { hallazgos, riesgos, palancas };
+    }
+
+    function actualizarProgreso() {
+      const form = document.getElementById("assessmentForm");
+      const areas = ["Rentabilidad", "Procesos", "Tiempos", "Personas", "Comunicación"];
+      let completas = 0;
+
+      areas.forEach(area => {
+        let prefix = area.toLowerCase();
+        if (area === "Tiempos") prefix = "tiempo";
+        if (area === "Comunicación") prefix = "comunicacion";
+
+        let filled = true;
+        for (let i=1; i<=3; i++) {
+          let fieldName = prefix + i;
+          if (!form[fieldName] || !form[fieldName].value) {
+            filled = false;
+            break;
+          }
+        }
+        if (filled) completas++;
+      });
+
+      const progressPercent = (completas / areas.length) * 100;
+      document.getElementById("progressBar").style.width = progressPercent + "%";
+      document.getElementById("progressLabel").textContent = completas + "/" + areas.length + " áreas completadas";
+    }
+
+    // Expand/collapse visual simple (no oculto contenido, solo cambia etiqueta)
+    document.querySelectorAll('.section-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const tag = header.querySelector('.section-tag');
+        if (tag) {
+          tag.textContent = tag.textContent.includes('Pulsa') ? 'Revisado' : 'Pulsa para revisar';
+        }
+      });
+    });
+
+    document.getElementById('assessmentForm').addEventListener('change', actualizarProgreso);
+
+    function generarDiagnostico(){
+      const form = document.getElementById("assessmentForm");
+      const nombre = document.getElementById("nombreEmpresa").value.trim();
+      const facturacion = parseFloat(document.getElementById("facturacion").value) || 0;
+      const btn = document.getElementById("btnDiagnostico");
+
+      if(!nombre){
+        alert("Por favor, introduce el nombre de la empresa.");
+        return;
+      }
+
+      if(facturacion <= 0){
+        alert("Por favor, introduce la facturación mensual aproximada.");
+        return;
+      }
+
+      if(!form.checkValidity()){
+        alert("Por favor, completa todas las preguntas del cuestionario.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Calculando diagnóstico…';
+
+      const areas = ["Rentabilidad", "Procesos", "Tiempos", "Personas", "Comunicación"];
+      let areaScores = [];
+      let todasEspecialidades = [];
+
+      for(let area of areas){
+        let total = 0;
+        let prefix = area.toLowerCase();
+        if(area === "Tiempos") prefix = "tiempo";
+        if(area === "Comunicación") prefix = "comunicacion";
+
+        for(let i=1; i<=3; i++){
+          let fieldName = prefix + i;
+          let val = parseInt(form[fieldName]?.value || "1");
+          total += val;
+        }
+
+        let areaScore = normalizar(total);
+        areaScores.push(areaScore);
+
+        const especialidadesArea = especialidadesMap[area];
+        especialidadesArea.forEach(esp => {
+          todasEspecialidades.push({
+            nombre: esp.nombre,
+            descripcion: esp.descripcion,
+            area: area,
+            score: areaScore,
+            nivel: getNivel(areaScore)
+          });
+        });
+      }
+
+      // Calcular presupuesto (aunque ahora CTA es sin precios, mantenemos objeto para backend)
+      const presupuesto = calcularPresupuesto(facturacion, todasEspecialidades);
+
+      // Cálculos de criticidad
+      const criticas_n    = todasEspecialidades.filter(e => e.nivel.nivel === 'CRÍTICO').length;
+      const prioritarias_n = todasEspecialidades.filter(e => e.nivel.nivel === 'RECOMENDADO').length;
+      const saludables_n  = todasEspecialidades.filter(e => e.nivel.nivel === 'OPTIMIZADOR' || e.nivel.nivel === 'ÉLITE').length;
+
+      const estadoGlobal = criticas_n >= 5 ? 'RIESGO CRÍTICO' :
+                           criticas_n >= 3 ? 'ATENCIÓN URGENTE' :
+                           criticas_n >= 1 ? 'INTERVENCIÓN RECOMENDADA' : 'SALUD ACEPTABLE';
+
+      const subtitleMap = {
+        'RIESGO CRÍTICO':            'Tu empresa presenta múltiples áreas en estado crítico. La intervención inmediata es necesaria para estabilizar el cuadro clínico.',
+        'ATENCIÓN URGENTE':          'Tu empresa muestra señales de alerta significativas. Un plan de intervención estructurado es fundamental en este momento.',
+        'INTERVENCIÓN RECOMENDADA':  'Tu empresa tiene áreas que requieren atención. Actuar ahora evitará que el cuadro evolucione a crítico.',
+        'SALUD ACEPTABLE':           'Tu empresa muestra un cuadro clínico estable. Hay oportunidades de optimización que marcarán la diferencia.'
+      };
+
+      // Insights
+      const insights = generarInsights(areas, areaScores, todasEspecialidades, estadoGlobal);
+
+      diagnosticoActual = {
+        nombre: nombre,
+        facturacion: facturacion,
+        areas: areas,
+        areaScores: areaScores,
+        especialidades: todasEspecialidades,
+        presupuesto: presupuesto,
+        estadoGlobal: estadoGlobal,
+        insights: insights,
+        timestamp: new Date().toISOString()
+      };
+
+      // Mostrar resultados
+      document.getElementById("resultSection").style.display = "block";
+
+      // Hero
+      document.getElementById("heroDashboardTitle").innerHTML =
+        nombre + ' · <span>' + estadoGlobal + '</span>';
+      document.getElementById("heroSubtitle").textContent = subtitleMap[estadoGlobal];
+
+      const heroTags = document.getElementById("heroTags");
+      heroTags.innerHTML = `
+        <div class="hero-diag-tag">Áreas críticas: ${criticas_n}</div>
+        <div class="hero-diag-tag">Áreas prioritarias: ${prioritarias_n}</div>
+        <div class="hero-diag-tag">Áreas saludables: ${saludables_n}</div>
+      `;
+
+      const heroScoreLabel = document.getElementById("heroScoreLabel");
+      const heroScoreSub   = document.getElementById("heroScoreSub");
+      heroScoreLabel.textContent = estadoGlobal;
+      heroScoreSub.textContent = insights.hallazgos[0];
+
+      // Alerta criticidad
+      const alertaEl = document.getElementById("alertaCriticidad");
+      if (criticas_n >= 3) {
+        const alertColor = criticas_n >= 5 ? '#d90033' : '#fa8128';
+        const alertBg    = criticas_n >= 5 ? '#fff0f3' : '#fff8f0';
+        alertaEl.style.display = 'block';
+        alertaEl.innerHTML = `
+          <div style="background:${alertBg};border:2px solid ${alertColor};border-radius:14px;padding:18px 22px;display:flex;align-items:flex-start;gap:16px;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+            <div style="font-size:2.1rem;flex-shrink:0;">${criticas_n >= 5 ? '🚨' : '⚠️'}</div>
+            <div>
+              <div style="font-weight:800;font-size:0.98rem;color:${alertColor};margin-bottom:4px;">
+                ${criticas_n >= 5 ? 'Estado clínico crítico: intervención urgente' : 'Alerta clínica: ' + criticas_n + ' áreas en estado crítico'}
+              </div>
+              <div style="color:#555;font-size:0.84rem;line-height:1.7;">
+                ${criticas_n >= 5
+                  ? 'Tu empresa presenta un cuadro clínico de alto riesgo. Cada semana sin intervención tiene un coste real y creciente.'
+                  : 'Las áreas críticas requieren un plan de acción estructurado. Nuestro equipo clínico puede ayudarte a estabilizarlas.'}
+              </div>
+            </div>
+          </div>`;
+      } else {
+        alertaEl.style.display = 'none';
+        alertaEl.innerHTML = '';
+      }
+
+      // Resumen cards
+      document.getElementById("resumenCards").innerHTML = [
+        { n: criticas_n,    label: 'Críticas',    color: '#d90033', bg: '#fff0f3', icon: '🔴' },
+        { n: prioritarias_n, label: 'Prioritarias', color: '#fa8128', bg: '#fff8f0', icon: '🟠' },
+        { n: saludables_n,  label: 'Saludables',  color: '#21ae52', bg: '#f0faf4', icon: '🟢' },
+        { n: todasEspecialidades.length, label: 'Especialidades analizadas', color: '#0F1A35', bg: '#f0f4ff', icon: '⚕' },
+      ].map(c => `
+        <div style="background:${c.bg};border-radius:14px;padding:16px 14px;text-align:center;border:1px solid ${c.color}22;">
+          <div style="font-size:1.4rem;margin-bottom:4px;">${c.icon}</div>
+          <div style="font-size:1.7rem;font-weight:800;color:${c.color};font-family:'Playfair Display',serif;">${c.n}</div>
+          <div style="font-size:0.78rem;font-weight:700;color:#777;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">${c.label}</div>
+        </div>`).join('');
+
+      // Especialidades detalladas
+      const mensajesPorEspecialidad = {
+        'UCI FINANCIERA':             { critico: 'La liquidez de tu empresa está comprometida. Sin intervención, el riesgo de colapso financiero es real y creciente.', recomendado: 'Tus finanzas muestran señales de alerta. Optimizar el flujo de caja ahora evitará problemas mayores.', ok: 'Tu gestión financiera es sólida. Hay margen de optimización para aumentar la rentabilidad.' },
+        'NEUROLOGÍA ESTRATÉGICA':     { critico: 'Tu empresa opera sin una dirección estratégica clara. Esto te expone a decisiones reactivas y pérdida de oportunidades.', recomendado: 'La planificación estratégica necesita estructura. Una hoja de ruta clara multiplicará tus resultados.', ok: 'Tienes visión estratégica. Refinar tu plan puede llevarte al siguiente nivel.' },
+        'UNIDAD DE PROCESOS':         { critico: 'Los procesos internos son un freno para tu empresa. La ineficiencia operativa tiene un coste diario medible.', recomendado: 'Tus procesos tienen áreas de mejora significativas. Optimizarlos libera capacidad y reduce costes.', ok: 'Tus procesos funcionan bien. Pequeños ajustes pueden generar grandes ganancias de eficiencia.' },
+        'GESTIÓN CLÍNICA':            { critico: 'No tienes control real de los indicadores de tu negocio. Lo que no se mide, no se puede mejorar ni corregir.', recomendado: 'El sistema de control y seguimiento necesita refuerzo. Medir mejor es decidir mejor.', ok: 'Tienes buena capacidad de seguimiento. Ampliar tus métricas te dará más palancas de mejora.' },
+        'EXCELENCIA OPERATIVA':       { critico: 'El rendimiento operativo está muy por debajo de su potencial. Esto impacta directamente en costes y capacidad de entrega.', recomendado: 'Hay margen importante para mejorar el rendimiento operativo. La excelencia es un hábito que se construye.', ok: 'Tu operativa es eficiente. Incorporar mejoras continuas mantendrá esta ventaja.' },
+        'RESCATE DE PERSONAS':        { critico: 'La situación del equipo humano es crítica. La rotación, desmotivación o falta de talento están afectando a los resultados.', recomendado: 'Tu equipo necesita atención. Invertir en personas es la palanca de mayor retorno a largo plazo.', ok: 'Tu equipo es un activo. Fortalecer la cultura y el desarrollo los convertirá en ventaja competitiva.' },
+        'PSIQUIATRÍA ORGANIZACIONAL': { critico: 'La cultura actual está generando fricción y resistencia. Esto mina el rendimiento y la adopción de cambios.', recomendado: 'La cultura necesita cuidados específicos. Trabajarla mejorará el clima y el compromiso.', ok: 'Tu cultura tiene una buena base. Consolidarla asegurará la evolución saludable del negocio.' },
+        'TERAPIA DE EXPERIENCIA':     { critico: 'La experiencia de cliente es un punto de dolor que está afectando ventas y reputación.', recomendado: 'Tus clientes están recibiendo una experiencia irregular. Unificarla elevará recomendación y recurrencia.', ok: 'Tu experiencia de cliente es positiva. Convertirla en diferencial consolidará tu marca.' },
+        'CIRUGÍA DE MARCA':           { critico: 'Tu marca está desdibujada en el mercado. Eso dificulta atraer al cliente correcto y justificar tu valor.', recomendado: 'Tu posicionamiento necesita claridad. Un trabajo de marca reforzará todo tu sistema comercial.', ok: 'Tu marca tiene buena base. Afinar el mensaje puede abrir nuevas oportunidades.' },
+        'CARDIOLOGÍA COMERCIAL':      { critico: 'El sistema comercial está en fase crítica. Faltan ritmo, previsión y constancia en ventas.', recomendado: 'Tu área comercial late, pero de forma irregular. Dotarla de método estabilizará el crecimiento.', ok: 'Tu sistema comercial funciona. Afinar el pulso permitirá escalar con menos sobresaltos.' }
+      };
+
+      const contEsp = document.getElementById("especialidadesDetalle");
+      contEsp.innerHTML = todasEspecialidades.map(esp => {
+        const msgMap = mensajesPorEspecialidad[esp.nombre] || { critico: '', recomendado: '', ok: '' };
+        let mensaje;
+        if (esp.nivel.nivel === 'CRÍTICO') mensaje = msgMap.critico;
+        else if (esp.nivel.nivel === 'RECOMENDADO') mensaje = msgMap.recomendado;
+        else mensaje = msgMap.ok;
+
+        return `
+          <div class="especialidad-card ${esp.nivel.clase}">
+            <div class="especialidad-header">
+              <div class="especialidad-nombre">${esp.nombre}</div>
+              <div class="especialidad-tag-area">${esp.area}</div>
+            </div>
+            <div class="especialidad-score-line">
+              <div class="especialidad-score-main" style="color:${esp.nivel.color};">${esp.score}%</div>
+              <div class="especialidad-nivel-pill" style="background:${esp.nivel.color};">
+                <span>${esp.nivel.emoji}</span>
+                <span>${esp.nivel.nivel}</span>
+              </div>
+            </div>
+            <div class="especialidad-descripcion">${esp.descripcion}</div>
+            <div class="especialidad-mensaje">${mensaje}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Radar
+      if(radarChart) radarChart.destroy();
+      const ctxRadar = document.getElementById('radarChart').getContext('2d');
+      radarChart = new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+          labels: areas,
+          datasets: [{
+            label: 'Salud Empresarial',
+            data: areaScores,
+            backgroundColor: 'rgba(30, 79, 173, 0.2)',
+            borderColor: '#1e4fad',
+            borderWidth: 3,
+            pointBackgroundColor: '#1e4fad',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: '#1e4fad',
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              min: 0,
+              max: 100,
+              beginAtZero: true,
+              ticks: {
+                stepSize: 20,
+                font: { size: 11 },
+                callback: function(value) { return value + '%'; }
+              },
+              pointLabels: {
+                font: { size: 11, weight: '600' },
+                color: '#192444'
+              },
+              grid: {
+                color: 'rgba(0, 0, 0, 0.08)'
+              },
+              angleLines: {
+                color: 'rgba(0, 0, 0, 0.08)'
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(25,36,68,0.95)',
+              callbacks: {
+                label: function(context) {
+                  return context.label + ': ' + context.parsed.r + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // CTA clínico (sin precios)
+      let presupuestoHTML = '';
+      const ctaColor = criticas_n >= 5 ? '#d90033' : criticas_n >= 3 ? '#fa8128' : '#0F1A35';
+      const ctaIcon  = criticas_n >= 5 ? '🚨' : criticas_n >= 3 ? '⚠️' : '✦';
+      const ctaTitle = criticas_n >= 5
+        ? 'Tu empresa necesita intervención clínica urgente'
+        : criticas_n >= 1
+        ? 'Hemos identificado áreas que requieren atención especializada'
+        : 'Tu empresa tiene potencial de optimización clínica';
+      const ctaText = criticas_n >= 5
+        ? 'Con ' + criticas_n + ' especialidades en estado crítico, cada semana de inacción tiene un coste real. Nuestro equipo clínico está listo para diseñar tu plan de intervención personalizado.'
+        : criticas_n >= 1
+        ? 'El diagnóstico ha identificado ' + criticas_n + ' áreas críticas y ' + prioritarias_n + ' prioritarias. El siguiente paso es una consulta clínica donde te presentaremos el protocolo de intervención exacto.'
+        : 'Tu empresa está en un punto de inflexión positivo. Una intervención estratégica ahora puede llevarla a un nivel de excelencia sostenible.';
+
+      presupuestoHTML = `
+        <div style="background:white;border-radius:20px;border:1px solid #e8e4dc;overflow:hidden;box-shadow:0 4px 24px rgba(15,26,53,0.06);margin-bottom:24px;">
+          <div style="background:linear-gradient(135deg,${ctaColor}10,${ctaColor}05);padding:22px 22px 18px;border-bottom:1px solid #f0ede8;">
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="font-size:2rem;flex-shrink:0;">${ctaIcon}</div>
+              <div>
+                <h3 style="font-family:'Playfair Display',serif;font-size:1.25rem;color:#0F1A35;margin:0 0 8px;">${ctaTitle}</h3>
+                <p style="color:#555;font-size:0.86rem;line-height:1.7;margin:0;">${ctaText}</p>
+              </div>
+            </div>
+          </div>
+          <div style="padding:18px 22px 20px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:20px;">
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <div style="width:38px;height:38px;background:#f0f4ff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;">🔬</div>
+                <div>
+                  <div style="font-weight:700;color:#0F1A35;font-size:0.9rem;margin-bottom:2px;">PIE — Plan de Impulso</div>
+                  <div style="font-size:0.8rem;color:#666;line-height:1.5;">Diagnóstico clínico profundo y hoja de ruta personalizada.</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <div style="width:38px;height:38px;background:#fff8f0;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;">⚕</div>
+                <div>
+                  <div style="font-weight:700;color:#0F1A35;font-size:0.9rem;margin-bottom:2px;">PAE — Plan de Atención</div>
+                  <div style="font-size:0.8rem;color:#666;line-height:1.5;">Intervención dirigida sobre focos críticos con seguimiento.</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <div style="width:38px;height:38px;background:#fff0f3;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;">🛡</div>
+                <div>
+                  <div style="font-weight:700;color:#0F1A35;font-size:0.9rem;margin-bottom:2px;">PRE — Plan de Rescate</div>
+                  <div style="font-size:0.8rem;color:#666;line-height:1.5;">Intervención de urgencia con <strong>Garantía de Resultado</strong>.</div>
+                </div>
+              </div>
+            </div>
+            <div style="background:#0F1A35;border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+              <div>
+                <div style="color:#B89D52;font-size:0.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;">Próximo paso</div>
+                <div style="color:white;font-size:0.94rem;font-weight:600;">Consulta clínica gratuita con nuestro equipo</div>
+                <div style="color:rgba(255,255,255,0.55);font-size:0.78rem;margin-top:2px;">Sin compromiso · Propuesta personalizada · Plan concreto</div>
+              </div>
+              <a href="https://wa.me/34609987436" target="_blank" style="
+                background:#B89D52;color:#0F1A35;
+                text-decoration:none;border-radius:999px;
+                padding:9px 16px;font-size:0.85rem;font-weight:700;
+                white-space:nowrap;display:inline-flex;align-items:center;gap:6px;
+              ">Hablar con un especialista →</a>
+            </div>
+          </div>
+        </div>`;
+
+      document.getElementById("presupuestoSection").innerHTML = presupuestoHTML;
+
+      // Scroll suave a resultados
+      document.getElementById("resultSection").scrollIntoView({ behavior: 'smooth' });
+
+      btn.disabled = false;
+      btn.innerHTML = '<span class="btn-icon">📊</span> Ver mi diagnóstico ahora';
+    }
+
+    // Exponer global para onclick
+    window.generarDiagnostico = generarDiagnostico;
+
+    function enviarDiagnostico(){
+      const email = document.getElementById("emailCliente").value.trim();
+      const btnEnviar = document.getElementById("btnEnviar");
+
+      if(!/\S+@\S+\.\S+/.test(email)){
+        alert("Por favor, introduce un email válido.");
+        return;
+      }
+
+      if(!diagnosticoActual){
+        alert("Primero completa el cuestionario y genera tu diagnóstico.");
+        return;
+      }
+
+      btnEnviar.disabled = true;
+      btnEnviar.innerHTML = '<span class="spinner"></span> Enviando informe…';
+
+      const codigo = "MAS-" + Math.random().toString(36).substr(2,8).toUpperCase();
+
+      const data = {
+        timestamp: diagnosticoActual.timestamp,
+        nombreEmpresa: diagnosticoActual.nombre,
+        facturacion: diagnosticoActual.facturacion,
+        email: email,
+        codigo: codigo,
+        diagnostico: diagnosticoActual
+      };
+
+      const GOOGLE_SCRIPT_URL = "AQUÍ_PONES_TU_URL_DE_WEB_APP_EXEC";
+
+      const params = new URLSearchParams();
+      params.append('timestamp', data.timestamp);
+      params.append('nombreEmpresa', data.nombreEmpresa);
+      params.append('facturacion', String(data.facturacion));
+      params.append('email', data.email);
+      params.append('codigo', data.codigo);
+      params.append('diagnostico', JSON.stringify(data.diagnostico));
+
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+      })
+      .then(response => response.json())
+      .then(result => {
+        document.getElementById("activationBox").style.display = "block";
+        document.getElementById("codigoExc").innerText = codigo;
+
+        if(result.status === 'success') {
+          document.getElementById("emailAviso").innerHTML =
+            '✅ Informe enviado a <strong>' + email + '</strong>.<br>Tu código de activación: <strong>' + codigo + '</strong>';
+          btnEnviar.innerHTML = '✓ Informe enviado';
+          btnEnviar.style.background = '#21ae52';
+          btnEnviar.style.color = '#ffffff';
+        } else {
+          document.getElementById("emailAviso").innerHTML =
+            '⚠️ No hemos podido confirmar el envío automático. Tu código: <strong>' + codigo + '</strong>.<br>Guárdalo y compártelo con el equipo de MASESORA.';
+          btnEnviar.innerHTML = 'Reintentar envío';
+          btnEnviar.disabled = false;
+        }
+      })
+      .catch((error) => {
+        console.error("Error completo:", error);
+        document.getElementById("activationBox").style.display = "block";
+        document.getElementById("codigoExc").innerText = codigo;
+        document.getElementById("emailAviso").innerHTML =
+          '⚠️ Error de conexión al enviar el informe. Tu código: <strong>' + codigo + '</strong>.<br>Facilítalo manualmente al equipo de MASESORA.';
+        btnEnviar.innerHTML = 'Reintentar envío';
+        btnEnviar.disabled = false;
+      });
+    }
+
+    window.enviarDiagnostico = enviarDiagnostico;
+  </script>
+</body>
+</html>
