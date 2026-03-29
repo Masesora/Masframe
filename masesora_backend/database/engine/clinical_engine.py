@@ -1,8 +1,8 @@
-def compute_kpi():
+def calcular_kpi():
     pass
 
 
-def compute_kpi(department: str, specialty: str, short_code: str, input_a: float, input_b: float):
+def calcular_kpi(department: str, specialty: str, short_code: str, input_a: float, input_b: float):
     """
     Versión mínima del Motor Clínico para TEST 2.
     No depende de specialties.py ni departments.py.
