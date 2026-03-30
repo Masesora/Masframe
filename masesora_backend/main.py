@@ -22,7 +22,7 @@ from masesora_backend.routers.contracts import router as contracts_router
 app = FastAPI(
     title="MASFRAME® API",
     description="Motor clínico y flujo MAS® para clientes y panel interno",
-    version="2026.1"
+    version="2026.1",
     lifespan=lifespan,   # ← AÑADIR ESTA LÍNEA
 )
 
