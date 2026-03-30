@@ -8,13 +8,11 @@ router = APIRouter(prefix="/specialties", tags=["specialties"])
 # CARGA ÚNICA DEL CATÁLOGO CLÍNICO (symptoms.json)
 # ============================================================
 
-RUTA_JSON = os.path.join("data", "symptoms.json")
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # masesora_backend
+SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptoms.json")
 
-with open(RUTA_JSON, "r", encoding="utf-8") as f:
+with open(SYMPTOMS_PATH, "r", encoding="utf-8") as f:
     CATALOGO_CLINICO = json.load(f)
-
-print("PRIMER OBJETO CARGADO:", CATALOGO_CLINICO[0])
-
 
 # ============================================================
 # MAPEO ESPECIALIDAD → DEPARTAMENTO
@@ -33,103 +31,49 @@ SPECIALTY_TO_DEPARTMENT = {
     "EXCELENCIA OPERATIVA": "EXCELENCIA"
 }
 
-DEPARTMENTS = [
-    "FINANZAS",
-    "PROCESOS",
-    "COMERCIAL",
-    "ESTRATÉGIA",
-    "GESTION",
-    "MARCA",
-    "ORGANIZACIONAL",
-    "PERSONAS",
-    "EXPERIENCIA",
-    "EXCELENCIA"
-]
-
+DEPARTMENTS = list(SPECIALTY_TO_DEPARTMENT.values())
 
 # ============================================================
 # HELPERS
 # ============================================================
 
 def get_specialty_by_id(specialty_id: str):
-    """Devuelve una especialidad completa por ID."""
     for s in CATALOGO_CLINICO:
         if s.get("id") == specialty_id:
             return s
     return None
 
-
 # ============================================================
-# 0) /specialties/version — versión del catálogo
+# ENDPOINTS
 # ============================================================
 
 @router.get("/version")
 def get_catalog_version():
-    """
-    Devuelve la versión del catálogo clínico.
-    Útil para frontend y panel interno.
-    """
     return {
         "version": "1.0",
         "total_specialties": len(CATALOGO_CLINICO)
     }
 
-
-# ============================================================
-# 1) /specialties — LISTA DE PUERTAS CLÍNICAS
-# ============================================================
-
 @router.get("/")
 def list_specialties():
-    """
-    Devuelve todas las puertas clínicas (especialidades) en formato ligero
-    para TriagePage.
-    """
     return CATALOGO_CLINICO
-
-
-# ============================================================
-# 2) /specialties/{id} — DETALLE COMPLETO
-# ============================================================
 
 @router.get("/{specialty_id}")
 def get_specialty(specialty_id: str):
-    """
-    Devuelve la especialidad completa (protocolo PIE, KPI, capas, etc.)
-    """
     spec = get_specialty_by_id(specialty_id)
     if not spec:
         raise HTTPException(status_code=404, detail="Especialidad no encontrada")
     return spec
 
-
-# ============================================================
-# 3) /specialties/departments — lista de departamentos
-# ============================================================
-
 @router.get("/departments/list")
 def list_departments():
-    """
-    Devuelve la lista oficial de departamentos MASFRAME®.
-    """
     return {
         "departments": DEPARTMENTS,
         "mapping": SPECIALTY_TO_DEPARTMENT
     }
 
-
-# ============================================================
-# 4) /specialties/scanner/{codigo} — RECEPCIÓN CLÍNICA
-# ============================================================
-
 @router.get("/scanner/{codigo}")
 def scanner_result(codigo: str):
-    """
-    Versión frontend del scanner:
-    - Interpreta 'codigo' como ID de especialidad (UCI-S1, etc.)
-    - Devuelve narrativa de recepción + diagnóstico + especialidad recomendada
-    """
-
     spec = get_specialty_by_id(codigo)
     if not spec:
         raise HTTPException(status_code=404, detail="Código de scanner no válido")
@@ -146,16 +90,14 @@ def scanner_result(codigo: str):
         "descripcion": spec.get("description_symptom", spec.get("explanation", "")),
     }
 
-    especialidades = [
-        {
-            "id": spec.get("id"),
-            "nombre": spec.get("name"),
-            "short_description": spec.get("description_symptom"),
-            "narrative": spec.get("explanation"),
-            "department": spec.get("department"),
-            "plan": spec.get("plan"),
-        }
-    ]
+    especialidades = [{
+        "id": spec.get("id"),
+        "nombre": spec.get("name"),
+        "short_description": spec.get("description_symptom"),
+        "narrative": spec.get("explanation"),
+        "department": spec.get("department"),
+        "plan": spec.get("plan"),
+    }]
 
     return {
         "codigo": codigo,
