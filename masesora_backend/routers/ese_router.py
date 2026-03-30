@@ -46,13 +46,14 @@ def get_collection():
     db = client["masesora"]
     return db["clients"]
 
-# Ruta ABSOLUTA al archivo symptoms.json (funciona en local y en Render)
-CURRENT_DIR = os.path.dirname(__file__)
-ROOT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
-SYMPTOMS_PATH = os.path.join(ROOT_DIR, "data", "symptoms.json")
+# Ruta correcta al symptoms.json (funciona en local y en Render)
+CURRENT_DIR = os.path.dirname(__file__)                     # masesora_backend/routers
+BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "..")) # masesora_backend
+SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptoms.json")
 
 with open(SYMPTOMS_PATH, "r", encoding="utf-8") as f:
     SYMPTOMS = json.load(f)
+
 
 
 # ─────────────────────────────────────────────────────────────
