@@ -192,5 +192,3 @@ def build_triaje_for_code(client_data):
         },
         "presupuesto": presupuesto
     }
-
-    }
