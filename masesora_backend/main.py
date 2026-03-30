@@ -1,8 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from masesora_backend.database.database import lifespan
-    lifespan=lifespan,   # ← AÑADIR ESTA LÍNEA
-
 
 # ============================================================
 # ROUTERS ACTIVOS MASFRAME®
