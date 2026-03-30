@@ -1,41 +1,57 @@
-{
-  "users": [
+import asyncio
+from masesora_backend.database.database import get_database
+
+USERS = [
     {
-      "email": "admin@masframe.com",
-      "password": "admin123",
-      "role": "admin",
-      "is_active": true,
-      "permissions": [
-        "manage_users",
-        "assign_roles",
-        "view_all_clients",
-        "activate_payment",
-        "generate_contract",
-        "view_dashboards"
-      ]
+        "email": "admin@masframe.com",
+        "password_hash": "admin123",
+        "role": "admin",
+        "is_active": True,
+        "permissions": [
+            "manage_users",
+            "assign_roles",
+            "view_all_clients",
+            "activate_payment",
+            "generate_contract",
+            "view_dashboards"
+        ]
     },
     {
-      "email": "cc@masframe.com",
-      "password": "cc123",
-      "role": "cc",
-      "is_active": true,
-      "permissions": [
-        "view_assigned_clients",
-        "view_scanner_results",
-        "view_contracts",
-        "supervise_intake"
-      ]
+        "email": "cc@masframe.com",
+        "password_hash": "cc123",
+        "role": "cc",
+        "is_active": True,
+        "permissions": [
+            "view_assigned_clients",
+            "view_scanner_results",
+            "view_contracts",
+            "supervise_intake"
+        ]
     },
     {
-      "email": "aci@masframe.com",
-      "password": "aci123",
-      "role": "aci",
-      "is_active": true,
-      "permissions": [
-        "execute_intake",
-        "view_assigned_clients",
-        "update_clinical_case"
-      ]
+        "email": "aci@masframe.com",
+        "password_hash": "aci123",
+        "role": "aci",
+        "is_active": True,
+        "permissions": [
+            "execute_intake",
+            "view_assigned_clients",
+            "update_clinical_case"
+        ]
     }
-  ]
-}
+]
+
+async def seed():
+    db = await get_database()
+    collection = db["internal_users"]
+
+    for user in USERS:
+        existing = await collection.find_one({"email": user["email"]})
+        if existing:
+            print(f"Usuario ya existe: {user['email']}")
+        else:
+            await collection.insert_one(user)
+            print(f"Usuario creado: {user['email']}")
+
+if __name__ == "__main__":
+    asyncio.run(seed())
