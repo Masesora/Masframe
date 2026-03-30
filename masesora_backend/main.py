@@ -11,6 +11,9 @@ from masesora_backend.routers.auth_router import router as auth_router
 # FASES 1–6 — Flujo MAS® completo
 from masesora_backend.routers.ese_router import router as ese_router
 
+# Catálogo clínico MASFRAME® (síntomas / especialidades)
+from masesora_backend.routers.symptoms_router import router as symptoms_router
+
 # Contratos
 from masesora_backend.routers.contracts import router as contracts_router
 
@@ -39,6 +42,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(ese_router)
+app.include_router(symptoms_router)
 app.include_router(contracts_router)
 
 # ============================================================
@@ -72,3 +76,4 @@ if __name__ == "__main__":
 
     port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
+
