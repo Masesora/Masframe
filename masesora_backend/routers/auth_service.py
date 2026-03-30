@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from jose import jwt
 import bcrypt
 
-from masesora_backend.database.database import get_database   # ← IMPORT CORREGIDO
+from masesora_backend.database.database import get_collection
 
 
 # ============================================================
@@ -23,11 +23,6 @@ def create_jwt_token(data: dict) -> str:
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    """
-    Soporta dos casos:
-    1. Password hasheado con bcrypt (producción)
-    2. Password en texto plano (desarrollo / usuarios creados sin hash)
-    """
     try:
         return bcrypt.checkpw(plain.encode(), hashed.encode())
     except Exception:
@@ -44,9 +39,9 @@ class AuthService:
     # LOGIN CLIENTE
     # ---------------------------------------------------------
     async def login_cliente(self, email: str, codigo: str) -> dict:
-        db = await get_database()
+        collection = get_collection("clients")
 
-        cliente = await db["clients"].find_one({
+        cliente = await collection.find_one({
             "email":  {"$regex": f"^{email.strip()}$", "$options": "i"},
             "codigo": {"$regex": f"^{codigo.strip()}$", "$options": "i"},
         })
@@ -81,10 +76,9 @@ class AuthService:
     # LOGIN INTERNO
     # ---------------------------------------------------------
     async def login_interno(self, email: str, password: str) -> dict:
-        db = await get_database()
+        collection = get_collection("internal_users")
 
-        # Buscar usuario interno
-        user = await db["internal_users"].find_one({
+        user = await collection.find_one({
             "email": {"$regex": f"^{email.strip()}$", "$options": "i"}
         })
 
@@ -96,7 +90,6 @@ class AuthService:
                 detail="Usuario no encontrado."
             )
 
-        # Verificar contraseña
         if not verify_password(password, user.get("password_hash", "")):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
