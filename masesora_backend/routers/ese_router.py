@@ -13,7 +13,6 @@ from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 from datetime import datetime
-from pymongo import MongoClient
 import random, string
 import os
 import json
@@ -41,10 +40,10 @@ from masesora_backend.database.engine.clinical_engine.build_triaje import (
 
 router = APIRouter(prefix="/ese", tags=["ESE"])
 
+from masesora_backend.database.database import get_collection as _get_col
+
 def get_collection():
-    client = MongoClient(os.environ["MONGO_URI"])
-    db = client["masesora"]
-    return db["clients"]
+    return _get_col("clients")
 
 # Ruta correcta al symptoms.json (funciona en local y en Render)
 CURRENT_DIR = os.path.dirname(__file__)                     # masesora_backend/routers
@@ -134,12 +133,12 @@ def generar_codigo() -> str:
 async def submit_ese(data: EseSubmitRequest):
     col = get_collection()
 
-    existente = col.find_one({"email": data.email})
+    existente = await col.find_one({"email": data.email})
     if existente:
         codigo = existente.get("codigo", generar_codigo())
     else:
         codigo = generar_codigo()
-        while col.find_one({"codigo": codigo}):
+        while await col.find_one({"codigo": codigo}):
             codigo = generar_codigo()
 
     ahora = datetime.utcnow()
@@ -165,7 +164,7 @@ async def submit_ese(data: EseSubmitRequest):
         "updated_at":    ahora,
     }
 
-    col.update_one(
+    await col.update_one(
         {"email": data.email},
         {"$set": doc},
         upsert=True
@@ -200,7 +199,7 @@ async def submit_ese(data: EseSubmitRequest):
 async def actualizar_pago(codigo: str, data: PagoUpdate):
     col = get_collection()
 
-    cliente = col.find_one({"codigo": codigo})
+    cliente = await col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
@@ -215,12 +214,12 @@ async def actualizar_pago(codigo: str, data: PagoUpdate):
         update_data["fase"] = "pago_completado"
         update_data["fecha_activacion"] = ahora.isoformat()
 
-    col.update_one(
+    await col.update_one(
         {"codigo": codigo},
         {"$set": update_data}
     )
 
-    doc = col.find_one({"codigo": codigo}, {"_id": 0})
+    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
     return doc
 
 
@@ -231,7 +230,7 @@ async def actualizar_pago(codigo: str, data: PagoUpdate):
 @router.get("/{codigo}")
 async def get_ese_por_codigo(codigo: str):
     col = get_collection()
-    doc = col.find_one({"codigo": codigo}, {"_id": 0})
+    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Código no encontrado")
     return doc
@@ -250,7 +249,7 @@ class DiagnosticoRequest(BaseModel):
 async def guardar_diagnostico(codigo: str, data: DiagnosticoRequest):
     col = get_collection()
 
-    cliente = col.find_one({"codigo": codigo})
+    cliente = await col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
@@ -283,7 +282,7 @@ async def guardar_diagnostico(codigo: str, data: DiagnosticoRequest):
     ahora = datetime.utcnow().isoformat()
 
     # Guardar en Mongo (estructura PLANA)
-    col.update_one(
+    await col.update_one(
         {"codigo": codigo},
         {"$set": {
             "diagnostico_symptom_id": data.symptom_id,
@@ -313,7 +312,7 @@ async def guardar_diagnostico(codigo: str, data: DiagnosticoRequest):
 async def generar_triaje(codigo: str):
     col = get_collection()
 
-    cliente = col.find_one({"codigo": codigo})
+    cliente = await col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
@@ -323,7 +322,7 @@ async def generar_triaje(codigo: str):
     ahora = datetime.utcnow().isoformat()
 
     # Guardar en Mongo (estructura PLANA)
-    col.update_one(
+    await col.update_one(
         {"codigo": codigo},
         {"$set": {
             "triaje_diagnostico": {
@@ -360,13 +359,13 @@ async def generar_triaje(codigo: str):
 async def firmar_contrato(codigo: str):
     col = get_collection()
 
-    cliente = col.find_one({"codigo": codigo})
+    cliente = await col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
     ahora = datetime.utcnow().isoformat()
 
-    col.update_one(
+    await col.update_one(
         {"codigo": codigo},
         {"$set": {
             "contract_signed": True,
@@ -381,3 +380,158 @@ async def firmar_contrato(codigo: str):
         "contract_signed": True,
         "contract_signed_at": ahora
     }
+
+
+# ═════════════════════════════════════════════════════════════
+# ENDPOINTS DE CLIENTES — panel de control
+# ═════════════════════════════════════════════════════════════
+
+# ─────────────────────────────────────────────────────────────
+# GET /clients — lista de clientes para el panel
+# ─────────────────────────────────────────────────────────────
+
+@router.get("/clients")
+async def get_clients(
+    q: Optional[str] = Query(None, description="Buscar por empresa o email"),
+    fase: Optional[str] = Query(None, description="Filtrar por fase"),
+    limit: int = Query(100, le=500),
+):
+    col = get_collection("clients")
+
+    filtro = {}
+    if q:
+        filtro["$or"] = [
+            {"empresa": {"$regex": q, "$options": "i"}},
+            {"email":   {"$regex": q, "$options": "i"}},
+            {"codigo":  {"$regex": q, "$options": "i"}},
+        ]
+    if fase:
+        filtro["fase"] = fase
+
+    cursor = col.find(filtro, {"_id": 0}).sort("created_at", -1).limit(limit)
+    clientes = await cursor.to_list(length=limit)
+
+    return {
+        "status": "ok",
+        "total":  len(clientes),
+        "data":   clientes,
+    }
+
+
+# ─────────────────────────────────────────────────────────────
+# GET /ese/list — alias de clientes (compatibilidad frontend)
+# ─────────────────────────────────────────────────────────────
+
+@router.get("/ese/list")
+async def get_ese_list(
+    limit: int = Query(100, le=500),
+):
+    col = get_collection("clients")
+    cursor = col.find({}, {"_id": 0}).sort("created_at", -1).limit(limit)
+    clientes = await cursor.to_list(length=limit)
+
+    return {
+        "status": "ok",
+        "total":  len(clientes),
+        "data":   clientes,
+    }
+
+
+# ─────────────────────────────────────────────────────────────
+# GET /acis — lista de usuarios ACI
+# ─────────────────────────────────────────────────────────────
+
+@router.get("/acis")
+async def get_acis():
+    col = get_collection("internal_users")
+
+    cursor = col.find(
+        {"role": "aci"},
+        {"_id": 0, "password": 0, "hashed_password": 0}
+    )
+    acis = await cursor.to_list(length=100)
+
+    return {
+        "status": "ok",
+        "total":  len(acis),
+        "data":   acis,
+    }
+
+
+# ─────────────────────────────────────────────────────────────
+# GET /mensajes/no-leidos — notificaciones del panel
+# ─────────────────────────────────────────────────────────────
+
+@router.get("/mensajes/no-leidos")
+async def get_mensajes_no_leidos(
+    email: Optional[str] = Query(None),
+):
+    # Por ahora devuelve vacío — se implementa en Fase 5
+    return {
+        "status": "ok",
+        "total":  0,
+        "data":   [],
+    }
+
+
+# ─────────────────────────────────────────────────────────────
+# GET /clients/{codigo} — cliente individual
+# ─────────────────────────────────────────────────────────────
+
+@router.get("/clients/{codigo}")
+async def get_client_by_codigo(codigo: str):
+    col = get_collection("clients")
+    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+    return doc
+
+
+# ─────────────────────────────────────────────────────────────
+# POST /clients/{codigo} — guardar datos fiscales pre-pago
+# ─────────────────────────────────────────────────────────────
+
+@router.post("/clients/{codigo}")
+async def save_client_fiscal(codigo: str, payload: dict):
+    col = get_collection("clients")
+
+    cliente = await col.find_one({"codigo": codigo})
+    if not cliente:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+
+    payload["updated_at"] = datetime.utcnow()
+
+    await col.update_one(
+        {"codigo": codigo},
+        {"$set": payload}
+    )
+
+    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
+    return doc
+
+
+# ─────────────────────────────────────────────────────────────
+# PATCH /clients/{codigo} — actualizar cliente (pago, etc.)
+# ─────────────────────────────────────────────────────────────
+
+@router.patch("/clients/{codigo}")
+async def update_client(codigo: str, payload: dict):
+    col = get_collection("clients")
+
+    cliente = await col.find_one({"codigo": codigo})
+    if not cliente:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+
+    payload["updated_at"] = datetime.utcnow()
+
+    if payload.get("pago_confirmado"):
+        payload["fase"] = "pago_completado"
+        payload["fecha_activacion"] = datetime.utcnow().isoformat()
+
+    await col.update_one(
+        {"codigo": codigo},
+        {"$set": payload}
+    )
+
+    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
+    return doc
