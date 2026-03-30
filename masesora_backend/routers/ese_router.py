@@ -383,21 +383,20 @@ async def firmar_contrato(codigo: str):
 
 
 # ═════════════════════════════════════════════════════════════
-# ENDPOINTS DE CLIENTES — panel de control
+# ENDPOINTS DE CLIENTES — panel de control (Fase 1)
 # ═════════════════════════════════════════════════════════════
 
-# ─────────────────────────────────────────────────────────────
-# GET /clients — lista de clientes para el panel
-# ─────────────────────────────────────────────────────────────
+from typing import Optional
+from fastapi import Query
 
-@router.get("/clients")
+# ── GET /clients ──────────────────────────────────────────────
+@router.get("/clients", tags=["clients"])
 async def get_clients(
-    q: Optional[str] = Query(None, description="Buscar por empresa o email"),
-    fase: Optional[str] = Query(None, description="Filtrar por fase"),
+    q: Optional[str] = Query(None),
+    fase: Optional[str] = Query(None),
     limit: int = Query(100, le=500),
 ):
-    col = get_collection("clients")
-
+    col = get_collection()
     filtro = {}
     if q:
         filtro["$or"] = [
@@ -407,131 +406,70 @@ async def get_clients(
         ]
     if fase:
         filtro["fase"] = fase
-
     cursor = col.find(filtro, {"_id": 0}).sort("created_at", -1).limit(limit)
     clientes = await cursor.to_list(length=limit)
-
-    return {
-        "status": "ok",
-        "total":  len(clientes),
-        "data":   clientes,
-    }
+    return {"status": "ok", "total": len(clientes), "data": clientes}
 
 
-# ─────────────────────────────────────────────────────────────
-# GET /ese/list — alias de clientes (compatibilidad frontend)
-# ─────────────────────────────────────────────────────────────
-
-@router.get("/ese/list")
-async def get_ese_list(
-    limit: int = Query(100, le=500),
-):
-    col = get_collection("clients")
+# ── GET /ese/list ─────────────────────────────────────────────
+@router.get("/list", tags=["clients"])
+async def get_ese_list(limit: int = Query(100, le=500)):
+    col = get_collection()
     cursor = col.find({}, {"_id": 0}).sort("created_at", -1).limit(limit)
     clientes = await cursor.to_list(length=limit)
-
-    return {
-        "status": "ok",
-        "total":  len(clientes),
-        "data":   clientes,
-    }
+    return {"status": "ok", "total": len(clientes), "data": clientes}
 
 
-# ─────────────────────────────────────────────────────────────
-# GET /acis — lista de usuarios ACI
-# ─────────────────────────────────────────────────────────────
-
-@router.get("/acis")
+# ── GET /acis ─────────────────────────────────────────────────
+@router.get("/acis", tags=["clients"])
 async def get_acis():
-    col = get_collection("internal_users")
-
+    col = _get_col("internal_users")
     cursor = col.find(
         {"role": "aci"},
         {"_id": 0, "password": 0, "hashed_password": 0}
     )
     acis = await cursor.to_list(length=100)
-
-    return {
-        "status": "ok",
-        "total":  len(acis),
-        "data":   acis,
-    }
+    return {"status": "ok", "total": len(acis), "data": acis}
 
 
-# ─────────────────────────────────────────────────────────────
-# GET /mensajes/no-leidos — notificaciones del panel
-# ─────────────────────────────────────────────────────────────
-
-@router.get("/mensajes/no-leidos")
-async def get_mensajes_no_leidos(
-    email: Optional[str] = Query(None),
-):
-    # Por ahora devuelve vacío — se implementa en Fase 5
-    return {
-        "status": "ok",
-        "total":  0,
-        "data":   [],
-    }
+# ── GET /mensajes/no-leidos ───────────────────────────────────
+@router.get("/mensajes/no-leidos", tags=["clients"])
+async def get_mensajes_no_leidos(email: Optional[str] = Query(None)):
+    return {"status": "ok", "total": 0, "data": []}
 
 
-# ─────────────────────────────────────────────────────────────
-# GET /clients/{codigo} — cliente individual
-# ─────────────────────────────────────────────────────────────
-
-@router.get("/clients/{codigo}")
+# ── GET /clients/{codigo} ─────────────────────────────────────
+@router.get("/clients/{codigo}", tags=["clients"])
 async def get_client_by_codigo(codigo: str):
-    col = get_collection("clients")
+    col = get_collection()
     doc = await col.find_one({"codigo": codigo}, {"_id": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
     return doc
 
 
-# ─────────────────────────────────────────────────────────────
-# POST /clients/{codigo} — guardar datos fiscales pre-pago
-# ─────────────────────────────────────────────────────────────
-
-@router.post("/clients/{codigo}")
+# ── POST /clients/{codigo} — datos fiscales ───────────────────
+@router.post("/clients/{codigo}", tags=["clients"])
 async def save_client_fiscal(codigo: str, payload: dict):
-    col = get_collection("clients")
-
+    col = get_collection()
     cliente = await col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
-
     payload["updated_at"] = datetime.utcnow()
-
-    await col.update_one(
-        {"codigo": codigo},
-        {"$set": payload}
-    )
-
-    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
-    return doc
+    await col.update_one({"codigo": codigo}, {"$set": payload})
+    return await col.find_one({"codigo": codigo}, {"_id": 0})
 
 
-# ─────────────────────────────────────────────────────────────
-# PATCH /clients/{codigo} — actualizar cliente (pago, etc.)
-# ─────────────────────────────────────────────────────────────
-
-@router.patch("/clients/{codigo}")
+# ── PATCH /clients/{codigo} — actualizar ─────────────────────
+@router.patch("/clients/{codigo}", tags=["clients"])
 async def update_client(codigo: str, payload: dict):
-    col = get_collection("clients")
-
+    col = get_collection()
     cliente = await col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
-
     payload["updated_at"] = datetime.utcnow()
-
     if payload.get("pago_confirmado"):
         payload["fase"] = "pago_completado"
         payload["fecha_activacion"] = datetime.utcnow().isoformat()
-
-    await col.update_one(
-        {"codigo": codigo},
-        {"$set": payload}
-    )
-
-    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
-    return doc
+    await col.update_one({"codigo": codigo}, {"$set": payload})
+    return await col.find_one({"codigo": codigo}, {"_id": 0})
