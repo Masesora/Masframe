@@ -1,44 +1,4 @@
-<<<<<<< HEAD
 PRICING_POLICY = {
-    "segments": {
-        "low": {
-            "label": "< 15.000 €/mes",
-            "facturacion_max": 15000
-        },
-        "high": {
-            "label": "15.000–59.999 €/mes",
-            "facturacion_min": 15000,
-            "facturacion_max": 60000
-        },
-        "enterprise": {
-            "label": "≥ 60.000 €/mes",
-            "facturacion_min": 60000
-        }
-    },
-
-    "products": {
-        "PIE": {
-            "code": "PIE",
-            "name": "Plan de Impulso Empresarial",
-            "description": "Diagnóstico profundo por especialidad, identificación de síntomas y hoja de ruta clínica.",
-            "prices": {
-                "low": 399,
-                "high": 999
-            }
-        },
-        "PAE": {
-            "code": "PAE",
-            "name": "Plan de Atención Especializado",
-            "description": "Intervención sobre 6 síntomas, 2 Ciclos de Atención Empresarial, aplicación del protocolo y seguimiento clínico.",
-            "prices": {
-                "low": 999,
-                "high": 2900
-            }
-        },
-        "PRE": {
-            "code": "PRE",
-            "name": "Plan de Rescate Estratégico",
-            "description": "Intervención de urgencia sobre hasta 10 síntPRICING_POLICY = {
     "segments": {
         "low": {
             "label": "< 15.000 €/mes",
