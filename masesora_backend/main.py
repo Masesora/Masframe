@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from masesora_backend.database.database import lifespan
 
 from masesora_backend.routers.auth_router     import router as auth_router
-from masesora_backend.routers.ese_router      import router as ese_router  # incluye clientes
+from masesora_backend.routers.ese_router      import router as ese_router
+from masesora_backend.routers.panel_router    import router as panel_router
 from masesora_backend.routers.symptoms_router import router as symptoms_router
 from masesora_backend.routers.contracts       import router as contracts_router
 
@@ -18,7 +19,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://masfront.onrender.com",
-        "https://ese-cc2u.onrender.com",       # ESE Scanner
+        "https://ese-cc2u.onrender.com",
         "https://masesora.onrender.com",
         "https://www.masesora.com",
         "https://masframelanding.onrender.com",
@@ -32,7 +33,8 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
-app.include_router(ese_router)      # /ese/* + /clients + /acis + /mensajes
+app.include_router(ese_router)
+app.include_router(panel_router)    # /clients, /ese/list, /acis, /mensajes
 app.include_router(symptoms_router)
 app.include_router(contracts_router)
 
