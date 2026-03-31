@@ -1,5 +1,5 @@
 import asyncio
-from masesora_backend.database.database import get_database
+from masesora_backend.database.database import get_collection
 
 USERS = [
     {
@@ -42,7 +42,7 @@ USERS = [
 ]
 
 async def seed():
-    db = await get_database()
+    db = await get_collection()
     collection = db["internal_users"]
 
     for user in USERS:

@@ -132,10 +132,13 @@ def generar_codigo() -> str:
 @router.post("/submit")
 async def submit_ese(data: EseSubmitRequest):
     col = get_collection()
-
     existente = await col.find_one({"email": data.email})
     if existente:
-        codigo = existente.get("codigo", generar_codigo())
+        codigo_existente = existente.get("codigo", "")
+        if codigo_existente.startswith("MAS-"):
+            codigo = codigo_existente
+        else:
+            codigo = generar_codigo()
     else:
         codigo = generar_codigo()
         while await col.find_one({"codigo": codigo}):
