@@ -288,6 +288,22 @@ def generar_html_email(
           font-family:Georgia,serif">
           Usa este código para acceder a La Clínica y comenzar tu tratamiento clínico
         </p>
+        <!-- Precio PRE -->
+        <div style="margin:0 0 20px;padding:12px 24px;
+          background:rgba(215,38,61,.08);border:1px solid rgba(215,38,61,.2);
+          border-radius:8px;display:inline-block">
+          <p style="font-family:\'IBM Plex Mono\',monospace;font-size:.6rem;
+            color:rgba(215,38,61,.8);letter-spacing:.16em;text-transform:uppercase;
+            margin:0 0 4px;font-weight:600">🔴 Plan de Rescate Estructural</p>
+          <p style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;
+            font-weight:700;color:#D7263D;margin:0;letter-spacing:.04em">
+            desde 399€
+          </p>
+          <p style="font-family:\'DM Sans\',sans-serif;font-size:.72rem;
+            color:rgba(249,247,242,.5);margin:4px 0 0">
+            3 síntomas · Intervención inmediata · Certificado de Alta incluido
+          </p>
+        </div>
         <a href="{CLINICA_URL}" style="display:inline-block;
           background:linear-gradient(135deg,#D4B96A,#B89D52);
           color:#0F1A35;font-family:'IBM Plex Mono',monospace;
