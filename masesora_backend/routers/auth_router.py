@@ -27,14 +27,16 @@ async def login_cliente(payload: ClientLoginRequest):
     }.get(result["role"], result["role"])
 
     return LoginResponseCliente(
-        status=result["status"],
-        token=result["token"],
-        role=role,
-        codigo=result["codigo"],
-        empresa=result.get("empresa", ""),
-        especialidades_activas=result.get("especialidades_activas", []),
-        sintomas_activos=result.get("sintomas_activos", []),
-    )
+    status=result["status"],
+    token=result["token"],
+    role=role,
+    codigo=result["codigo"],
+    empresa=result.get("empresa", ""),
+    pago_confirmado=result.get("pago_confirmado", False),   # ← AÑADIR
+    payment_active=result.get("payment_active", False),     # ← AÑADIR
+    especialidades_activas=result.get("especialidades_activas", []),
+    sintomas_activos=result.get("sintomas_activos", []),
+   )
 
 # ============================================================
 # LOGIN INTERNO
