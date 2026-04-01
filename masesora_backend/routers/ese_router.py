@@ -13,11 +13,12 @@ from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 from datetime import datetime
+from pymongo import MongoClient
 import random, string
 import os
 import json
 
-from masesora_backend.email_service import send_ese_email
+from masesora_backend.email_service import send_ese_email, send_pago_email
 
 # Motores clínicos
 from masesora_backend.database.engine.clinical_engine.services.kpi_engine import (
@@ -40,10 +41,10 @@ from masesora_backend.database.engine.clinical_engine.build_triaje import (
 
 router = APIRouter(prefix="/ese", tags=["ESE"])
 
-from masesora_backend.database.database import get_collection as _get_col
-
 def get_collection():
-    return _get_col("clients")
+    client = MongoClient(os.environ["MONGO_URI"])
+    db = client["masesora"]
+    return db["clients"]
 
 # Ruta correcta al symptoms.json (funciona en local y en Render)
 CURRENT_DIR = os.path.dirname(__file__)                     # masesora_backend/routers
@@ -132,16 +133,13 @@ def generar_codigo() -> str:
 @router.post("/submit")
 async def submit_ese(data: EseSubmitRequest):
     col = get_collection()
-    existente = await col.find_one({"email": data.email})
+
+    existente = col.find_one({"email": data.email})
     if existente:
-        codigo_existente = existente.get("codigo", "")
-        if codigo_existente.startswith("MAS-"):
-            codigo = codigo_existente
-        else:
-            codigo = generar_codigo()
+        codigo = existente.get("codigo", generar_codigo())
     else:
         codigo = generar_codigo()
-        while await col.find_one({"codigo": codigo}):
+        while col.find_one({"codigo": codigo}):
             codigo = generar_codigo()
 
     ahora = datetime.utcnow()
@@ -167,7 +165,7 @@ async def submit_ese(data: EseSubmitRequest):
         "updated_at":    ahora,
     }
 
-    await col.update_one(
+    col.update_one(
         {"email": data.email},
         {"$set": doc},
         upsert=True
@@ -202,7 +200,7 @@ async def submit_ese(data: EseSubmitRequest):
 async def actualizar_pago(codigo: str, data: PagoUpdate):
     col = get_collection()
 
-    cliente = await col.find_one({"codigo": codigo})
+    cliente = col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
@@ -217,12 +215,27 @@ async def actualizar_pago(codigo: str, data: PagoUpdate):
         update_data["fase"] = "pago_completado"
         update_data["fecha_activacion"] = ahora.isoformat()
 
-    await col.update_one(
+    col.update_one(
         {"codigo": codigo},
         {"$set": update_data}
     )
 
-    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
+    doc = col.find_one({"codigo": codigo}, {"_id": 0})
+
+    # Email post-pago si se acaba de confirmar
+    if data.pago_confirmado:
+        try:
+            await send_pago_email(
+                email        = doc.get("email", ""),
+                empresa      = doc.get("empresa", ""),
+                codigo       = codigo,
+                sintomas_ids = data.sintomas_activos or data.especialidades_activas or [],
+                plan         = "PRE",
+                importe      = data.importe or 399,
+            )
+        except Exception as e:
+            print(f"[PAGO] Error email post-pago {codigo}: {e}")
+
     return doc
 
 
@@ -233,7 +246,7 @@ async def actualizar_pago(codigo: str, data: PagoUpdate):
 @router.get("/{codigo}")
 async def get_ese_por_codigo(codigo: str):
     col = get_collection()
-    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
+    doc = col.find_one({"codigo": codigo}, {"_id": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Código no encontrado")
     return doc
@@ -252,7 +265,7 @@ class DiagnosticoRequest(BaseModel):
 async def guardar_diagnostico(codigo: str, data: DiagnosticoRequest):
     col = get_collection()
 
-    cliente = await col.find_one({"codigo": codigo})
+    cliente = col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
@@ -285,7 +298,7 @@ async def guardar_diagnostico(codigo: str, data: DiagnosticoRequest):
     ahora = datetime.utcnow().isoformat()
 
     # Guardar en Mongo (estructura PLANA)
-    await col.update_one(
+    col.update_one(
         {"codigo": codigo},
         {"$set": {
             "diagnostico_symptom_id": data.symptom_id,
@@ -315,7 +328,7 @@ async def guardar_diagnostico(codigo: str, data: DiagnosticoRequest):
 async def generar_triaje(codigo: str):
     col = get_collection()
 
-    cliente = await col.find_one({"codigo": codigo})
+    cliente = col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
@@ -325,7 +338,7 @@ async def generar_triaje(codigo: str):
     ahora = datetime.utcnow().isoformat()
 
     # Guardar en Mongo (estructura PLANA)
-    await col.update_one(
+    col.update_one(
         {"codigo": codigo},
         {"$set": {
             "triaje_diagnostico": {
@@ -362,13 +375,13 @@ async def generar_triaje(codigo: str):
 async def firmar_contrato(codigo: str):
     col = get_collection()
 
-    cliente = await col.find_one({"codigo": codigo})
+    cliente = col.find_one({"codigo": codigo})
     if not cliente:
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
     ahora = datetime.utcnow().isoformat()
 
-    await col.update_one(
+    col.update_one(
         {"codigo": codigo},
         {"$set": {
             "contract_signed": True,

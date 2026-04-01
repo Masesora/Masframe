@@ -288,22 +288,6 @@ def generar_html_email(
           font-family:Georgia,serif">
           Usa este código para acceder a La Clínica y comenzar tu tratamiento clínico
         </p>
-        <!-- Precio PRE -->
-        <div style="margin:0 0 20px;padding:12px 24px;
-          background:rgba(215,38,61,.08);border:1px solid rgba(215,38,61,.2);
-          border-radius:8px;display:inline-block">
-          <p style="font-family:\'IBM Plex Mono\',monospace;font-size:.6rem;
-            color:rgba(215,38,61,.8);letter-spacing:.16em;text-transform:uppercase;
-            margin:0 0 4px;font-weight:600">🔴 Plan de Rescate Estructural</p>
-          <p style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;
-            font-weight:700;color:#D7263D;margin:0;letter-spacing:.04em">
-            desde 399€
-          </p>
-          <p style="font-family:\'DM Sans\',sans-serif;font-size:.72rem;
-            color:rgba(249,247,242,.5);margin:4px 0 0">
-            3 síntomas · Intervención inmediata · Certificado de Alta incluido
-          </p>
-        </div>
         <a href="{CLINICA_URL}" style="display:inline-block;
           background:linear-gradient(135deg,#D4B96A,#B89D52);
           color:#0F1A35;font-family:'IBM Plex Mono',monospace;
@@ -414,6 +398,109 @@ async def send_ese_email(
                 "subject": subject,
                 "html":    html,
             },
+            timeout=15.0,
+        )
+
+    if resp.status_code not in (200, 201):
+        raise ValueError(f"Resend error {resp.status_code}: {resp.text}")
+
+    return resp.json()
+
+
+# ── Email post-pago ───────────────────────────────────────────
+async def send_pago_email(
+    email:        str,
+    empresa:      str,
+    codigo:       str,
+    sintomas_ids: list,
+    plan:         str = "PRE",
+    importe:      float = 399,
+):
+    if not RESEND_API_KEY:
+        raise ValueError("RESEND_API_KEY no configurada")
+
+    sintomas_html = "".join([
+        f'<span style="background:rgba(200,168,75,.1);color:#E8C96A;font-family:IBM Plex Mono,monospace;font-size:12px;padding:4px 12px;border-radius:999px;margin:3px;display:inline-block;font-weight:700">{s}</span>'
+        for s in sintomas_ids
+    ])
+
+    html = f"""<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"/><title>Tu tratamiento ha comenzado · MAS@FRAME®</title></head>
+<body style="margin:0;padding:0;background:#F9F7F2;font-family:'DM Sans',Helvetica,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#F9F7F2">
+<tr><td align="center" style="padding:32px 16px">
+  <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 8px 48px rgba(15,26,53,.18)">
+
+    <!-- CABECERA -->
+    <tr>
+      <td style="background:#0F1A35;padding:40px;text-align:center;border-bottom:3px solid #21ae52">
+        <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#F9F7F2;margin-bottom:6px">MAS@FRAME®</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#C8A84B;letter-spacing:.2em;text-transform:uppercase">La Clínica de Empresas</div>
+      </td>
+    </tr>
+
+    <!-- CONFIRMACIÓN -->
+    <tr>
+      <td style="background:#fff;padding:40px;text-align:center">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(33,174,82,.1);border:2px solid rgba(33,174,82,.3);display:inline-flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px">✓</div>
+        <h1 style="font-family:Georgia,serif;font-size:28px;font-weight:700;color:#0F1A35;margin:0 0 10px">Tu tratamiento ha comenzado</h1>
+        <p style="font-size:15px;color:#4A4540;line-height:1.7;margin:0 0 28px">
+          <strong>{empresa}</strong>, tu plan clínico ha quedado registrado en el sistema MAS@FRAME®.<br/>
+          Tu Consultor Clínico revisará tu expediente y comenzará el protocolo en las próximas horas.
+        </p>
+
+        <!-- Código -->
+        <div style="background:rgba(15,26,53,.04);border:1px solid rgba(184,157,82,.2);border-radius:12px;padding:16px 24px;margin-bottom:24px;display:inline-block">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(184,157,82,.7);letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px">Tu código de acceso</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:700;color:#0F1A35;letter-spacing:.1em">{codigo}</div>
+        </div>
+
+        <!-- Síntomas -->
+        <div style="margin-bottom:28px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(184,157,82,.7);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px">Síntomas contratados</div>
+          <div>{sintomas_html}</div>
+        </div>
+
+        <!-- Plan + importe -->
+        <div style="background:#0F1A35;border-radius:12px;padding:16px 24px;margin-bottom:28px;display:inline-block">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(184,157,82,.7);letter-spacing:.1em;text-transform:uppercase">{plan} · </span>
+          <span style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#E8C96A">{importe:,.0f}€</span>
+        </div>
+
+        <!-- CTA -->
+        <br/>
+        <a href="{CLINICA_URL}/triage" style="display:inline-block;background:linear-gradient(135deg,#21ae52,#69f0ae);color:#0F1A35;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:14px 36px;border-radius:999px">
+          Entrar a mi panel clínico →
+        </a>
+      </td>
+    </tr>
+
+    <!-- PIE -->
+    <tr>
+      <td style="background:#070d18;padding:24px;text-align:center">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(249,247,242,.3);margin:0">
+          <a href="https://{WEB}" style="color:rgba(200,168,75,.6);text-decoration:none">{WEB}</a> · 
+          <a href="mailto:{FROM_EMAIL}" style="color:rgba(200,168,75,.6);text-decoration:none">{FROM_EMAIL}</a> · 
+          {TELEFONO}
+        </p>
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(249,247,242,.15);margin:10px 0 0">© 2026 MASESORA · Todos los derechos reservados</p>
+      </td>
+    </tr>
+
+  </table>
+</td></tr>
+</table>
+</body>
+</html>"""
+
+    subject = f"Tu tratamiento ha comenzado · {empresa} · {codigo}"
+
+    async with __import__("httpx").AsyncClient() as client:
+        resp = await client.post(
+            "https://api.resend.com/emails",
+            headers={"Authorization": f"Bearer {RESEND_API_KEY}", "Content-Type": "application/json"},
+            json={"from": f"La Clínica de Empresas <{FROM_EMAIL}>", "to": [email], "subject": subject, "html": html},
             timeout=15.0,
         )
 
