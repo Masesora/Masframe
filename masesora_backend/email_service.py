@@ -182,7 +182,7 @@ def generar_html_email(
         </h1>
         <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;
           color:#C8A84B;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 20px">
-          MAS@FRAME® · por MASESORA
+          MAS@FRAME®
         </p>
 
         <!-- Ola MASESORA -->
