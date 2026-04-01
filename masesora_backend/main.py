@@ -18,12 +18,18 @@ from masesora_backend.routers.symptoms_router import router as symptoms_router
 # Contratos
 from masesora_backend.routers.contracts import router as contracts_router
 
+# Tratamiento C0–C6
+from masesora_backend.routers.treatment_router import router as treatment_router
+
+# ⭐ NUEVO — Pagos (Stripe)
+from masesora_backend.routers.payments_router import router as payments_router
+
 
 app = FastAPI(
     title="MASFRAME® API",
     description="Motor clínico y flujo MAS® para clientes y panel interno",
     version="2026.1",
-    lifespan=lifespan,   # ← AÑADIR ESTA LÍNEA
+    lifespan=lifespan,
 )
 
 # ============================================================
@@ -50,7 +56,9 @@ app.include_router(auth_router)
 app.include_router(ese_router)
 app.include_router(symptoms_router)
 app.include_router(contracts_router)
-app.include_router(treatment_router)   # FASE 2 — tratamiento C0-C6
+app.include_router(treatment_router)
+app.include_router(payments_router)   # ⭐ AÑADIDO AQUÍ
+
 
 # ============================================================
 # ROOT
