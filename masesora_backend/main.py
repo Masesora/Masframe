@@ -24,6 +24,9 @@ from masesora_backend.routers.treatment_router import router as treatment_router
 # ⭐ NUEVO — Pagos (Stripe)
 from masesora_backend.routers.payments_router import router as payments_router
 
+# Panel TriajePage — /clients, /acis, /consultores, /mensajes, /cliente/status
+from masesora_backend.routers.panel_router import router as panel_router
+
 
 app = FastAPI(
     title="MASFRAME® API",
@@ -61,7 +64,8 @@ app.include_router(ese_router)
 app.include_router(symptoms_router)
 app.include_router(contracts_router)
 app.include_router(treatment_router)
-app.include_router(payments_router)   # ⭐ AÑADIDO AQUÍ
+app.include_router(payments_router)   # ⭐ Stripe
+app.include_router(panel_router)       # ⭐ Panel TriajePage
 
 
 # ============================================================
