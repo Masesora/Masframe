@@ -97,3 +97,33 @@ async def get_cliente_status(codigo: str):
         "fase":            doc.get("fase", "ese_completado"),
         "redirigir_a":     "triage" if doc.get("pago_confirmado") else f"scanner-reception/{codigo}",
     }
+
+
+# ── POST /clients/{codigo} — guardar datos fiscales ──────────
+@router.post("/clients/{codigo}")
+async def save_client_datos(codigo: str, payload: dict):
+    col = _get_col("clients")
+    doc = await col.find_one({"codigo": codigo})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+    payload["updated_at"] = datetime.utcnow()
+    await col.update_one(
+        {"codigo": codigo},
+        {"$set": payload}
+    )
+    return {"status": "ok", "codigo": codigo}
+
+
+# ── PATCH /clients/{codigo} — actualizar datos ────────────────
+@router.patch("/clients/{codigo}")
+async def update_client(codigo: str, payload: dict):
+    col = _get_col("clients")
+    doc = await col.find_one({"codigo": codigo})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+    payload["updated_at"] = datetime.utcnow()
+    await col.update_one(
+        {"codigo": codigo},
+        {"$set": payload}
+    )
+    return {"status": "ok", "codigo": codigo}
