@@ -16,4 +16,7 @@ async def create_payment_intent(data: dict):
         automatic_payment_methods={"enabled": True}
     )
 
-    return {"clientSecret": intent.client_secret}
+    return {
+        "clientSecret": intent.client_secret,
+        "paymentIntentId": intent.id,
+    }
