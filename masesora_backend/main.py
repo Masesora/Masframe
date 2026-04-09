@@ -54,8 +54,11 @@ app.add_middleware(
         "https://masfront.onrender.com/",
         "https://masframelanding.onrender.com",
         "https://masframelanding.onrender.com/",
+	"https://ese-cc2u.onrender.com",
+	"https://ese-cc2u.onrender.com/",
         "http://localhost:5173",
         "http://localhost:5173/",
+
     ],
     allow_credentials=True,
     allow_methods=["*"],
