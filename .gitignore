@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Entorno virtual
+.env
+.env.*
+venv/
+.venv/
+
+# Reportes generados (no subir PDFs de clientes)
+reports/generated_reports/*.pdf
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Node (bundle.js ya existe, pero no node_modules)
+node_modules/

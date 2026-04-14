@@ -1,0 +1,24 @@
+{
+  "post_treatment_states": {
+    "critical": {
+      "description": "El tratamiento no funcionó. El síntoma sigue en estado grave.",
+      "action": "Seguimos en tratamiento",
+      "treatment_required": true
+    },
+    "recommended_re_treatment": {
+      "description": "Mejoró, pero sigue por debajo del recomendado.",
+      "action": "Segundo ciclo de tratamiento",
+      "treatment_required": true
+    },
+    "optimized": {
+      "description": "KPI positivo. Estado muy bueno.",
+      "action": "Certificar y celebrar. Opcional optimización 2.0.",
+      "treatment_required": false
+    },
+    "excellence": {
+      "description": "KPI en zona élite. Estado ideal.",
+      "action": "Certificar, celebrar y acceso a Club de Excelencia.",
+      "treatment_required": false
+    }
+  }
+}

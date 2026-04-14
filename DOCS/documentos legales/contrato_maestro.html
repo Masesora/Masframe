@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>Contrato · La Clínica de Empresas · MASF-2026-MAS-PKQ2CIXJ</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;font-size:10.5pt;color:#1a1a2e;background:#fff;}
+  .cabecera{background:#0F1A35;padding:32px 48px 24px;display:flex;justify-content:space-between;align-items:flex-end;}
+  .cab-logo .marca{font-family:'Cormorant Garamond',serif;font-size:22pt;font-weight:700;color:#E8C96A;letter-spacing:0.05em;}
+  .cab-logo .submarca{font-size:7.5pt;color:rgba(249,247,242,0.5);letter-spacing:0.22em;text-transform:uppercase;margin-top:4px;font-family:'IBM Plex Mono',monospace;}
+  .cab-meta{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:7.5pt;color:rgba(249,247,242,0.4);line-height:1.9;}
+  .cab-meta .num{font-size:9pt;color:#E8C96A;font-weight:700;margin-bottom:4px;}
+  .franja{height:3px;background:linear-gradient(90deg,#B89D52,#E8C96A,#B89D52);}
+  .titulo-bloque{padding:36px 48px 20px;border-bottom:1px solid #eee;}
+  .titulo-doc{font-family:'Cormorant Garamond',serif;font-size:20pt;font-weight:700;color:#0F1A35;margin-bottom:6px;line-height:1.2;}
+  .subtitulo-doc{font-size:8pt;color:#9ca3af;font-family:'IBM Plex Mono',monospace;letter-spacing:0.14em;text-transform:uppercase;}
+  .cuerpo{padding:28px 48px 40px;}
+  h2{font-family:'Cormorant Garamond',serif;font-size:13pt;font-weight:700;color:#0F1A35;margin:30px 0 10px;padding-bottom:6px;border-bottom:1px solid #e5e7eb;}
+  p{line-height:1.8;color:#374151;margin-bottom:10px;font-size:10pt;}
+  ul{padding-left:20px;margin-bottom:10px;}
+  li{line-height:1.8;color:#374151;margin-bottom:3px;font-size:10pt;}
+  strong{color:#0F1A35;}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:9.5pt;}
+  thead tr{background:#0F1A35;}
+  thead th{color:#F9F7F2;padding:10px 14px;text-align:left;font-weight:600;font-family:'IBM Plex Mono',monospace;font-size:7.5pt;letter-spacing:0.1em;text-transform:uppercase;}
+  tbody tr{border-bottom:1px solid #e5e7eb;}
+  tbody tr:nth-child(even){background:#f9fafb;}
+  tbody td{padding:10px 14px;color:#374151;line-height:1.6;vertical-align:top;}
+  tbody td:first-child{font-weight:600;color:#0F1A35;font-size:9pt;}
+  .ciclo-bloque{background:#f9fafb;border:1px solid #e5e7eb;border-left:3px solid #B89D52;border-radius:0 8px 8px 0;padding:14px 18px;margin:10px 0;}
+  .ciclo-bloque.pae{border-left-color:#d97706;}
+  .ciclo-num{font-size:7pt;font-family:'IBM Plex Mono',monospace;color:#B89D52;text-transform:uppercase;letter-spacing:0.18em;font-weight:700;margin-bottom:4px;}
+  .ciclo-bloque.pae .ciclo-num{color:#d97706;}
+  .ciclo-titulo{font-size:10pt;font-weight:600;color:#0F1A35;margin-bottom:5px;}
+  .ciclo-texto{font-size:9.5pt;color:#6b7280;line-height:1.75;}
+  .ucc-box{background:#f9fafb;border:1px solid #e5e7eb;border-left:3px solid #B89D52;border-radius:0 8px 8px 0;padding:14px 18px;margin:14px 0;font-size:9.5pt;color:#6b7280;line-height:1.75;}
+  .garantia-box{background:#0F1A35;border-radius:10px;padding:22px 24px;margin:16px 0;}
+  .garantia-titulo{font-family:'Cormorant Garamond',serif;font-size:13pt;font-weight:700;color:#E8C96A;margin-bottom:12px;}
+  .garantia-texto{font-size:9.5pt;color:rgba(249,247,242,0.8);line-height:1.85;}
+  .garantia-texto strong{color:#E8C96A;}
+  .garantia-claim{font-family:'Cormorant Garamond',serif;font-size:12pt;font-style:italic;color:#E8C96A;margin-top:16px;}
+  .garantia-pie{font-size:8pt;color:rgba(249,247,242,0.4);margin-top:14px;line-height:1.7;font-family:'IBM Plex Mono',monospace;border-top:1px solid rgba(249,247,242,0.1);padding-top:12px;}
+  .anexo{background:#f9fafb;border:1px solid #e5e7eb;border-left:4px solid #B89D52;border-radius:0 10px 10px 0;padding:20px 22px;margin:18px 0;}
+  .anexo-titulo{font-family:'IBM Plex Mono',monospace;font-size:7.5pt;color:#B89D52;text-transform:uppercase;letter-spacing:0.18em;margin-bottom:14px;font-weight:700;}
+  .dato-fila{display:flex;gap:14px;margin-bottom:10px;align-items:flex-start;}
+  .dato-key{font-size:8.5pt;color:#9ca3af;min-width:150px;font-weight:600;padding-top:1px;}
+  .dato-val{font-size:9.5pt;color:#0F1A35;font-weight:500;flex:1;line-height:1.6;}
+  .kpi-note{background:#f0f4ff;border:1px solid #c7d2fe;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:9pt;color:#3730a3;line-height:1.7;}
+  .partes-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0 20px;}
+  .parte-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 18px;}
+  .parte-label{font-size:7pt;font-family:'IBM Plex Mono',monospace;color:#9ca3af;text-transform:uppercase;letter-spacing:0.18em;margin-bottom:10px;}
+  .parte-dato{font-size:9.5pt;color:#374151;margin-bottom:4px;line-height:1.5;}
+  .firmas-bloque{margin-top:52px;padding-top:30px;border-top:1px solid #e5e7eb;}
+  .firmas-titulo{font-family:'Cormorant Garamond',serif;font-size:14pt;font-weight:700;color:#0F1A35;text-align:center;margin-bottom:8px;}
+  .firmas-sub{font-size:9pt;color:#9ca3af;text-align:center;margin-bottom:32px;}
+  .firmas-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+  .firma-col{display:flex;flex-direction:column;align-items:center;}
+  .firma-label{font-size:7.5pt;font-family:'IBM Plex Mono',monospace;color:#9ca3af;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:14px;}
+  .firma-img-box{width:100%;height:140px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden;padding:10px;}
+  .firma-img-box img{max-height:120px;max-width:90%;object-fit:contain;}
+  .firma-pendiente-box{width:100%;height:140px;border:1px dashed #d1d5db;border-radius:8px;background:#fafafa;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .firma-nombre{font-size:9pt;font-weight:600;color:#0F1A35;margin-bottom:2px;text-align:center;}
+  .firma-cargo{font-size:8pt;color:#9ca3af;text-align:center;}
+  .pie{margin-top:48px;padding:20px 48px;background:#0F1A35;display:flex;justify-content:space-between;align-items:center;}
+  .pie-texto{font-family:'IBM Plex Mono',monospace;font-size:7pt;color:rgba(249,247,242,0.35);line-height:1.9;}
+  .pie-num{font-family:'IBM Plex Mono',monospace;font-size:8.5pt;color:rgba(184,157,82,0.55);font-weight:700;}
+  @media print{.cabecera,.pie,.garantia-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+
+<div class="cabecera">
+  <div class="cab-logo">
+    <div class="marca">La Clínica de Empresas</div>
+    <div class="submarca">MASESORA® · Sistema MAS@FRAME®</div>
+  </div>
+  <div class="cab-meta">
+    <div class="num">MASF-2026-MAS-PKQ2CIXJ</div>
+    <div>Fecha: 9 de April de 2026</div>
+    <div>Documento confidencial</div>
+  </div>
+</div>
+<div class="franja"></div>
+
+<div class="titulo-bloque">
+  <div class="titulo-doc">Contrato de Prestación de Servicios</div>
+  <div class="subtitulo-doc">La Clínica de Empresas · MASESORA® · Sistema MAS@FRAME® · Plan de Impulso Empresarial — PIE</div>
+</div>
+
+<div class="cuerpo">
+
+<h2>1. Identificación de las partes</h2>
+<div class="partes-grid">
+  <div class="parte-card">
+    <div class="parte-label">La Clínica de Empresas</div>
+    <div class="parte-dato"><strong>Maria Teresa Cabezuelos Morcillo</strong></div>
+    <div class="parte-dato">NIF: 74860612M</div>
+    <div class="parte-dato">Carrer Gabriel Miró 27, 03530</div>
+    <div class="parte-dato">La Nucía (Alicante, España)</div>
+    <div class="parte-dato">Titular de MASESORA® y del sistema MAS@FRAME®</div>
+  </div>
+  <div class="parte-card">
+    <div class="parte-label">El Cliente</div>
+    <div class="parte-dato"><strong>ARIES SL</strong></div>
+    <div class="parte-dato">CIF/NIF: B12345678</div>
+    <div class="parte-dato">Representado/a por: Ana García López</div>
+    <div class="parte-dato">En calidad de: Administradora</div>
+    <div class="parte-dato">Email: aries@masesora.com</div>
+  </div>
+</div>
+<p>Consultora y Cliente se denominarán conjuntamente <strong>las Partes</strong>.</p>
+
+<h2>2. Objeto del contrato</h2>
+<p>El presente contrato tiene por objeto la prestación, por parte de La Clínica de Empresas — MASESORA®, de servicios especializados de intervención y optimización empresarial basados en el sistema MAS@FRAME®, estructurados según el plan contratado: <strong>Plan de Impulso Empresarial — PIE</strong>.</p>
+
+<h2>3. Alcance del servicio</h2>
+<p>El servicio tiene como objetivo la <strong>optimización de los procesos clave de la organización del Cliente</strong>, mediante la identificación, diagnóstico y tratamiento de los síntomas empresariales detectados, con el fin de mejorar los KPIs de partida y garantizar resultados medibles y sostenidos en el tiempo.</p>
+<p>El método de intervención es propio, especializado y exclusivo: el <strong>sistema MAS@FRAME®</strong>, que estructura cada intervención en Ciclos Clínicos orientados al KPI maestro de cada síntoma tratado. El alcance concreto — número de síntomas, Ciclos Clínicos, KPI maestro y hitos — queda recogido en el <strong>Anexo I</strong> del presente contrato.</p>
+
+<h2>4. Obligaciones del Cliente</h2>
+<ul>
+  <li>Facilitar información veraz, completa y actualizada para la correcta ejecución del servicio.</li>
+  <li>Designar una persona de contacto responsable y asegurar la disponibilidad del equipo interno necesario.</li>
+  <li>Introducir los datos reales de partida (KPIs iniciales) en el sistema MAS@FRAME® antes de la activación del tratamiento.</li>
+  <li>Utilizar el sistema MAS@FRAME® únicamente para la gestión de su propia organización.</li>
+  <li>Participar activamente en el protocolo de cada Ciclo Clínico y cumplir los plazos acordados.</li>
+  <li>Abonar los honorarios en la forma y plazos establecidos.</li>
+  <li>Respetar la confidencialidad de la metodología, protocolos y documentación de MAS@FRAME®.</li>
+</ul>
+
+<h2>5. Obligaciones de La Clínica de Empresas</h2>
+<ul>
+  <li>Prestar los servicios con la diligencia profesional debida y conforme al sistema MAS@FRAME®.</li>
+  <li>Asignar un Consultor Clínico Certificado (CC) responsable del caso en los plazos acordados.</li>
+  <li>Acompañar al Cliente en la definición y validación de los KPIs maestros antes de la firma definitiva del Anexo I.</li>
+  <li>Mantener informado al Cliente de la evolución del tratamiento a través del panel MAS@FRAME®.</li>
+  <li>Guardar confidencialidad sobre la información del Cliente.</li>
+  <li>Cumplir la normativa aplicable en materia de protección de datos personales.</li>
+</ul>
+
+<h2>6. Los Ciclos Clínicos de Intervención MAS@FRAME®</h2>
+<p>Un Ciclo Clínico de Intervención MAS@FRAME® es una <strong>unidad cerrada de capacidad clínica</strong> orientada al KPI maestro de cada síntoma tratado. Cada ciclo define el nivel de diagnóstico, intervención y corrección que La Clínica de Empresas asume sobre el negocio del Cliente. El ciclo no se cierra hasta que el objetivo clínico del mismo ha sido alcanzado.</p>
+
+<p style="margin-top:14px;font-size:9pt;font-family:'IBM Plex Mono',monospace;color:#B89D52;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;">PIE — 3 Ciclos Clínicos</p>
+<div class="ciclo-bloque">
+  <div class="ciclo-num">Ciclo 1 · PIE</div>
+  <div class="ciclo-titulo">Diagnóstico Profundo y Contención del Daño</div>
+  <div class="ciclo-texto">Detener la pérdida, estabilizar el sistema y obtener visión clínica real. Se detectan fugas de rentabilidad, bloqueos operativos y causas raíz. Se priorizan síntomas por impacto directo en el KPI maestro. El ciclo no se cierra hasta que el diagnóstico es preciso, compartido y accionable.</div>
+</div>
+<div class="ciclo-bloque">
+  <div class="ciclo-num">Ciclo 2 · PIE</div>
+  <div class="ciclo-titulo">Intervención Intensiva y Corrección Estructural</div>
+  <div class="ciclo-texto">Corregir las causas reales y reconfigurar el sistema para que vuelva a responder. El Consultor Clínico acompaña la toma de decisiones en tiempo real, activa los protocolos de intervención por especialidad y mide el impacto de cada acción sobre el KPI maestro. El ciclo no se cierra hasta que el negocio responde de forma objetiva al tratamiento.</div>
+</div>
+<div class="ciclo-bloque">
+  <div class="ciclo-num">Ciclo 3 · PIE</div>
+  <div class="ciclo-titulo">Optimización, Consolidación y Garantía</div>
+  <div class="ciclo-texto">Asegurar que el resultado se mantiene, escala y no recae. Se optimizan los procesos corregidos, se eliminan dependencias y se valida el KPI maestro. Aquí se activa la Garantía de Resultado. El ciclo no se cierra hasta validar el cumplimiento del KPI maestro.</div>
+</div>
+
+<p style="margin-top:20px;font-size:9pt;font-family:'IBM Plex Mono',monospace;color:#d97706;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;">PAE — 2 Ciclos Clínicos</p>
+<div class="ciclo-bloque pae">
+  <div class="ciclo-num">Ciclo 1 · PAE</div>
+  <div class="ciclo-titulo">Diagnóstico Ampliado e Intervención Focalizada</div>
+  <div class="ciclo-texto">Diagnóstico experto sobre hasta 6 síntomas, identificación de causas raíz y activación de intervenciones focalizadas para prevenir la escalada a escenario crítico.</div>
+</div>
+<div class="ciclo-bloque pae">
+  <div class="ciclo-num">Ciclo 2 · PAE</div>
+  <div class="ciclo-titulo">Corrección, Ajuste y Optimización Preventiva</div>
+  <div class="ciclo-texto">Validación de las correcciones aplicadas, ajuste de procesos y optimización preventiva para asegurar la estabilidad del sistema antes de que necesite rescate.</div>
+</div>
+
+<div class="ucc-box" style="margin-top:20px;">
+  <strong>Escalado de plan:</strong> La decisión de escalar de plan es una decisión clínica, no comercial. Cuando la complejidad, intensidad o riesgo de un caso supera la capacidad clínica del plan contratado, La Clínica de Empresas comunicará al Cliente la necesidad de escalado con justificación documentada. Cuando el margen de capacidad clínica disponible se sitúa por debajo del 15%, el protocolo exige revisar el nivel de intervención para proteger el resultado y la garantía.
+</div>
+
+<h2>7. Planes de Intervención</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Plan</th>
+      <th>Ciclos Clínicos</th>
+      <th>Síntomas</th>
+      <th>Plazo máximo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>🔴 PRE — Plan de Rescate Estructural</td>
+      <td>Sin ciclos · 100% digital</td>
+      <td>Hasta 3</td>
+      <td>90 días</td>
+    </tr>
+    <tr>
+      <td>🟠 PAE — Plan de Actuación Estratégica</td>
+      <td>2 Ciclos Clínicos</td>
+      <td>Hasta 6</td>
+      <td>120 días</td>
+    </tr>
+    <tr>
+      <td>⚫ PIE — Plan de Impulso Empresarial</td>
+      <td>3 Ciclos Clínicos</td>
+      <td>Hasta 10</td>
+      <td>180 días</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>8. Garantía de Resultado — exclusiva del PIE</h2>
+<div class="garantia-box">
+  <div class="garantia-titulo">El sistema MAS@FRAME® funciona. Si no, no lo pagas.</div>
+  <div class="garantia-texto">
+    La Garantía de Resultado aplica exclusivamente al <strong>Plan de Impulso Empresarial — PIE</strong>,
+    cuando el KPI maestro ha sido definido, validado y firmado por ambas Partes en el Anexo I,
+    y el Cliente ha colaborado activamente en la ejecución del protocolo.<br/><br/>
+    <strong>Semana 6:</strong> si el KPI maestro no se ha alcanzado y el protocolo ha sido ejecutado
+    correctamente, se activa automáticamente una extensión clínica gratuita.<br/><br/>
+    <strong>Tras 3 meses adicionales:</strong> si el KPI maestro sigue sin alcanzarse,
+    La Clínica de Empresas — MASESORA® devuelve íntegramente el importe abonado.<br/><br/>
+    La garantía no aplica en casos de inacción o incumplimiento del Cliente, ni cubre factores externos no controlables.
+  </div>
+  <div class="garantia-claim">Porque aquí no prometemos: respondemos.</div>
+  <div class="garantia-pie">
+    El PIE contempla hasta 10 síntomas · Cada síntoma: horizonte de 6 semanas ·
+    Plazo máximo: 180 días desde la firma del contrato
+  </div>
+</div>
+
+<h2>9. Duración del servicio</h2>
+<p>Los plazos máximos de intervención quedan recogidos en la cláusula 7 y se computan desde la <strong>fecha de firma del presente contrato</strong> por ambas Partes. Estos plazos constituyen <strong>fechas límite de intervención</strong>.</p>
+<p>La firma del contrato no podrá realizarse hasta que el Consultor Clínico Certificado asignado haya revisado y validado conjuntamente con el Cliente los KPIs iniciales y el plan de intervención recogido en el Anexo I.</p>
+
+<h2>10. Honorarios y forma de pago</h2>
+<p>El importe total del servicio contratado es de <strong>4.500,00 € (IVA incluido)</strong>, abonado mediante pago único previo al inicio del servicio a través de la plataforma de pago habilitada por La Clínica de Empresas — MASESORA®. La falta de pago facultará a La Clínica de Empresas para suspender o resolver el contrato conforme a la cláusula 14.</p>
+
+<h2>11. Confidencialidad y protección de datos</h2>
+<p>Ambas Partes se obligan a mantener la confidencialidad sobre toda la información a la que tengan acceso en el marco del presente contrato. La Clínica de Empresas — MASESORA® tratará los datos personales del Cliente conforme al RGPD y LOPDGDD, aplicando medidas técnicas y organizativas adecuadas. El Acuerdo de Encargado del Tratamiento (DPA) figura como Anexo III cuando sea de aplicación.</p>
+
+<h2>12. Propiedad intelectual de MAS@FRAME®</h2>
+<p>La Clínica de Empresas — MASESORA® es titular exclusiva de todos los derechos de propiedad intelectual sobre el sistema MAS@FRAME®, su metodología, protocolos, Ciclos Clínicos, estructuras C0–C6 y documentación asociada. El Cliente adquiere una licencia de uso limitada, no exclusiva, intransferible y revocable sobre los resultados generados para su organización, para uso interno exclusivamente.</p>
+
+<h2>13. Limitación de responsabilidad</h2>
+<p>MAS@FRAME® es un sistema de intervención y optimización empresarial. El Cliente es el único responsable de las decisiones empresariales que adopte. Salvo en los casos en que la ley disponga lo contrario, la responsabilidad total de La Clínica de Empresas se limitará al importe total efectivamente abonado por el Cliente en virtud de este contrato.</p>
+
+<h2>14. Causas de resolución</h2>
+<p>El contrato podrá resolverse por mutuo acuerdo, incumplimiento grave de obligaciones esenciales, impago de honorarios o imposibilidad sobrevenida de prestación. La resolución no eximirá al Cliente de abonar los servicios efectivamente prestados hasta la fecha de efectos.</p>
+
+<h2>15. Jurisdicción y ley aplicable</h2>
+<p>El presente contrato se regirá por la legislación española. Las Partes se someten a los Juzgados y Tribunales de <strong>Alicante</strong> para la resolución de cualquier conflicto derivado de este contrato.</p>
+
+<h2>16. Anexos</h2>
+
+<div class="anexo">
+  <div class="anexo-titulo">Anexo I — Plan de Intervención Clínica</div>
+  <div class="dato-fila"><span class="dato-key">Plan contratado</span><span class="dato-val"><strong>Plan de Impulso Empresarial — PIE</strong></span></div>
+  <div class="dato-fila"><span class="dato-key">Síntomas a tratar</span><span class="dato-val"><ul style="margin:0;padding-left:16px"><li>UCI-S1</li><li>NEURO-S1</li><li>PSI-S1</li><li>CLI-S1</li><li>OPE-S1</li><li>RES-S1</li><li>TER-S1</li></ul></span></div>
+  <div class="dato-fila"><span class="dato-key">Plazo máximo</span><span class="dato-val">180 días desde la fecha de firma del contrato</span></div>
+  
+  <div class="dato-fila">
+    <span class="dato-key">Garantía</span>
+    <span class="dato-val" style="background:rgba(15,26,53,0.04);border-radius:8px;padding:10px 14px;border:1px solid rgba(184,157,82,0.2);line-height:1.8;">
+      <strong>Garantía Total MAS@FRAME®</strong> — Semana 6: extensión clínica gratuita si no se alcanza el KPI maestro.
+      Tras 3 meses adicionales: devolución íntegra del importe abonado.
+    </span>
+  </div>
+  <div class="kpi-note">
+    <strong>KPIs maestros por síntoma:</strong> pendientes de definición conjunta entre el Cliente
+    y el Consultor Clínico Certificado asignado. Una vez validados y firmados por ambas Partes,
+    quedarán incorporados como parte vinculante de este Anexo I y constituirán la base de
+    medición del resultado y, en su caso, de la Garantía de Resultado.
+  </div>
+</div>
+
+<div class="anexo">
+  <div class="anexo-titulo">Anexo II — Condiciones Particulares</div>
+  <div class="dato-fila"><span class="dato-key">Razón social</span><span class="dato-val">ARIES SL</span></div>
+  <div class="dato-fila"><span class="dato-key">CIF/NIF</span><span class="dato-val">B12345678</span></div>
+  <div class="dato-fila"><span class="dato-key">Representante</span><span class="dato-val">Ana García López — Administradora</span></div>
+  <div class="dato-fila"><span class="dato-key">Email</span><span class="dato-val">aries@masesora.com</span></div>
+  <div class="dato-fila"><span class="dato-key">Importe total</span><span class="dato-val"><strong>4.500,00 €</strong> (IVA incluido)</span></div>
+  <div class="dato-fila"><span class="dato-key">Forma de pago</span><span class="dato-val">Pago único — plataforma Stripe</span></div>
+  <div class="dato-fila"><span class="dato-key">Fecha de contrato</span><span class="dato-val">9 de April de 2026</span></div>
+  <div class="dato-fila"><span class="dato-key">Número de contrato</span><span class="dato-val"><strong>MASF-2026-MAS-PKQ2CIXJ</strong></span></div>
+</div>
+
+<div class="anexo">
+  <div class="anexo-titulo">Anexo III — Acuerdo de Encargado del Tratamiento (DPA)</div>
+  <p style="font-size:9pt;color:#374151;line-height:1.8;margin:0">
+    En los casos en que el Cliente introduzca en MAS@FRAME® datos personales de empleados,
+    colaboradores u otros terceros, el Cliente actuará como <strong>responsable del tratamiento</strong>
+    y La Clínica de Empresas — MASESORA® como <strong>encargada del tratamiento</strong>, conforme
+    al artículo 28 del RGPD. La Clínica de Empresas tratará dichos datos únicamente siguiendo
+    las instrucciones documentadas del Cliente, aplicará medidas técnicas y organizativas adecuadas,
+    garantizará la confidencialidad, notificará sin dilación cualquier violación de seguridad
+    y suprimirá o devolverá los datos al término del servicio.
+  </p>
+</div>
+
+<div class="firmas-bloque">
+  <div class="firmas-titulo">Firma del contrato</div>
+  <div class="firmas-sub">En prueba de conformidad, las Partes suscriben el presente contrato en 9 de April de 2026.</div>
+  <div class="firmas-grid">
+    <div class="firma-col">
+      <div class="firma-label">La Clínica de Empresas — MASESORA®</div>
+      <div class="firma-img-box">
+        <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAQ4B4ADASIAAhEBAxEB/8QAHQABAQACAwEBAQAAAAAAAAAAAAgGBwQFCQMBAv/EAE4QAQABAwMCAwUEBgMLCgcAAAABAgMEBQYRByEIEjETIkFRYQkUMnEVI0JSgZEWYnIkJTNDc4KSoaKxshcYJjRTVleTwtGDlJWjs9LT/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ALLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//Z" alt="Firma Maria Teresa Cabezuelos"/>
+      </div>
+      <div class="firma-nombre">Maria Teresa Cabezuelos Morcillo</div>
+      <div class="firma-cargo">NIF 74860612M · Titular MASESORA® · MAS@FRAME®</div>
+    </div>
+    <div class="firma-col">
+      <div class="firma-label">El Cliente — Firma digital</div>
+      <div class="firma-pendiente-box">
+        <span style="font-size:8pt;color:#d1d5db;font-style:italic;">Pendiente de firma digital</span>
+      </div>
+      <div class="firma-nombre">Ana García López</div>
+      <div class="firma-cargo">Administradora · ARIES SL</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="pie">
+  <div class="pie-texto">
+    La Clínica de Empresas · MASESORA® · Sistema MAS@FRAME®<br/>
+    www.masesora.com · info@masesora.com · 609 987 436<br/>
+    Carrer Gabriel Miró 27, 03530 La Nucía · Alicante · España
+  </div>
+  <div class="pie-num">MASF-2026-MAS-PKQ2CIXJ</div>
+</div>
+
+</body>
+</html>
