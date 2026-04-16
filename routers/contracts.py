@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException, status
 from datetime import datetime
 from bson import ObjectId
 
-from masesora_backend.database.database import get_collection
-from masesora_backend.models.contract import Contract
+from database.database import get_collection
+from models.contract import Contract
 
 router = APIRouter(prefix="/contracts", tags=["contracts"])
 

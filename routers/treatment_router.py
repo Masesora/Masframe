@@ -9,7 +9,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional, Any
 from datetime import datetime
-from masesora_backend.database.database import get_collection
+from database.database import get_collection
 
 router = APIRouter(tags=["treatment"])
 

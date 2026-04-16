@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
-from masesora_backend.onboarding.ese_sync_service import fetch_ese_rows
-from masesora_backend.onboarding.ese_mapper import ese_row_to_mongo_doc
-from masesora_backend.database.db.client import clients_collection
+from onboarding.ese_sync_service import fetch_ese_rows
+from onboarding.ese_mapper import ese_row_to_mongo_doc
+from database.db.client import clients_collection
 
 router = APIRouter(prefix="/internal", tags=["internal"])
 

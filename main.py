@@ -1,39 +1,39 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from masesora_backend.database.database import lifespan
+from database.database import lifespan
 
 # ============================================================
 # ROUTERS ACTIVOS MASFRAME®
 # ============================================================
 
 # FASE 0 — Login
-from masesora_backend.routers.auth_router       import router as auth_router
+from routers.auth_router       import router as auth_router
 
 # FASE 1 — ESE + datos cliente
-from masesora_backend.routers.ese_router        import router as ese_router
+from routers.ese_router        import router as ese_router
 
 # Catálogo clínico (síntomas / especialidades)
-from masesora_backend.routers.symptoms_router   import router as symptoms_router
+from routers.symptoms_router   import router as symptoms_router
 
 # Contratos
-from masesora_backend.routers.contracts         import router as contracts_router
+from routers.contracts         import router as contracts_router
 
 # Tratamiento C0–C6
-from masesora_backend.routers.treatment_router  import router as treatment_router
+from routers.treatment_router  import router as treatment_router
 
 # Pagos (Stripe)
-from masesora_backend.routers.payments_router   import router as payments_router
+from routers.payments_router   import router as payments_router
 
 # Panel TriajePage — /clients, /acis, /consultores, /cliente/status
-from masesora_backend.routers.panel_router      import router as panel_router
+from routers.panel_router      import router as panel_router
 
 # Mensajería clínica — /mensajes/*
 # IMPORTANTE: registrar ANTES que panel para que /mensajes/no-leidos
 # no colisione con /{codigo}
-from masesora_backend.routers.mensajes_router   import router as mensajes_router
+from routers.mensajes_router   import router as mensajes_router
 
 # Documentos expediente — /documentos/*
-from masesora_backend.routers.documentos_router import router as documentos_router
+from routers.documentos_router import router as documentos_router
 
 
 app = FastAPI(
@@ -54,11 +54,10 @@ app.add_middleware(
         "https://masfront.onrender.com/",
         "https://masframelanding.onrender.com",
         "https://masframelanding.onrender.com/",
-	"https://ese-cc2u.onrender.com",
-	"https://ese-cc2u.onrender.com/",
+        "https://ese-cc2u.onrender.com",
+        "https://ese-cc2u.onrender.com/",
         "http://localhost:5173",
         "http://localhost:5173/",
-
     ],
     allow_credentials=True,
     allow_methods=["*"],

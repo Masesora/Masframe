@@ -12,7 +12,7 @@ from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 from datetime import datetime
 from bson import ObjectId
-from masesora_backend.database.database import get_collection
+from database.database import get_collection
 
 router = APIRouter(tags=["mensajes"])
 

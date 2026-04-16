@@ -1,12 +1,12 @@
 <<<<<<< HEAD
 import json
-from masesora_backend.config.pricing_policy import (
+from config.pricing_policy import (
     PRICING_POLICY,
     get_product_price,
     get_segment_for_facturacion
 )
 
-from masesora_backend.data.departments import SPECIALTY_TO_DEPARTMENT
+from data.departments import SPECIALTY_TO_DEPARTMENT
 
 
 # ============================================================
@@ -161,13 +161,13 @@ def build_triaje_for_code(client_data):
         "presupuesto": presupuesto
 =======
 import json
-from masesora_backend.config.pricing_policy import (
+from config.pricing_policy import (
     PRICING_POLICY,
     get_product_price,
     get_segment_for_facturacion
 )
 
-from masesora_backend.data.departments import SPECIALTY_TO_DEPARTMENT
+from data.departments import SPECIALTY_TO_DEPARTMENT
 
 
 # ============================================================

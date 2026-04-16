@@ -18,20 +18,20 @@ import random, string
 import os
 import json
 
-from masesora_backend.email_service import send_ese_email, send_pago_email
+from email_service import send_ese_email, send_pago_email
 
 # Motores clínicos
-from masesora_backend.database.engine.clinical_engine.services.kpi_engine import (
+from database.engine.clinical_engine.services.kpi_engine import (
     calcular_kpi,
     interpretar_kpi,
     evaluar_post_tratamiento,
 )
 
-from masesora_backend.database.engine.clinical_engine.services.route_engine import (
+from database.engine.clinical_engine.services.route_engine import (
     determinar_ruta,
 )
 
-from masesora_backend.database.engine.clinical_engine.build_triaje import (
+from database.engine.clinical_engine.build_triaje import (
     build_triaje_for_code,
 )
 

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from jose import jwt
 import bcrypt
 
-from masesora_backend.database.database import get_collection
+from database.database import get_collection
 
 
 # ============================================================

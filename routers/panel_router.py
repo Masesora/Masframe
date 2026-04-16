@@ -5,7 +5,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 from datetime import datetime
-from masesora_backend.database.database import get_collection as _get_col
+from database.database import get_collection as _get_col
 
 router = APIRouter(tags=["panel"])
 
