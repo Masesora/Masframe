@@ -2,19 +2,34 @@
 # FASE 2 — Tratamiento clínico C0-C6
 #
 # POST /treatment/save          → guarda protocolo C0-C6 en MongoDB
+# POST /treatment/notify-cc     → notifica al CC (email vía Resend)
 # GET  /treatment/{codigo}/{symptomId} → recupera tratamiento guardado
 # GET  /triaje/{codigo}         → documento triaje completo (alias)
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional, Any
-from datetime import datetime
+from datetime import datetime, timedelta
+import os, httpx
 from database.database import get_collection
+
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
+FROM_EMAIL     = "info@masesora.com"
+CC_EMAIL       = os.environ.get("CC_EMAIL", "info@masesora.com")
 
 router = APIRouter(tags=["treatment"])
 
 
 # ── Modelos ───────────────────────────────────────────────────
+
+class NotifyCCRequest(BaseModel):
+    clientId:    str
+    symptomId:   str
+    trigger:     str            # "c3_decision" | "protocol_complete"
+    empresa:     str = ""
+    aci_nombre:  str = ""
+    decision:    str = ""       # C2 decisión comprometida
+    sintoma_nombre: str = ""
 
 class TreatmentSaveRequest(BaseModel):
     clientId:  str
@@ -71,49 +86,20 @@ async def save_treatment(data: TreatmentSaveRequest):
     }
 
 
-# ── GET /treatment/{codigo}/{symptomId} ───────────────────────
+# ── POST /treatment/notify-cc ────────────────────────────────
 
-@router.get("/treatment/{codigo}/{symptomId}")
-async def get_treatment(codigo: str, symptomId: str):
-    col = get_collection("triaje")
+@router.post("/treatment/notify-cc")
+async def notify_cc(data: NotifyCCRequest):
+    if not RESEND_API_KEY:
+        return {"status": "skipped", "reason": "RESEND_API_KEY not set"}
 
-    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
-    if not doc:
-        # Devolver estructura vacía — el frontend lo maneja
-        return {
-            "codigo":    codigo,
-            "symptomId": symptomId,
-            "inputs":    {},
-            "shared":    {},
-            "evidences": {"text": "", "files": []},
-            "kpis":      {},
-        }
+    ahora      = datetime.utcnow()
+    fecha_rev  = (ahora + timedelta(weeks=6)).strftime("%d/%m/%Y")
+    fecha_hoy  = ahora.strftime("%d/%m/%Y %H:%M UTC")
 
-    return {
-        "codigo":    codigo,
-        "symptomId": symptomId,
-        "inputs":    doc.get("inputs", {}).get(symptomId, {}),
-        "shared":    doc.get("shared", {}).get(symptomId, {}),
-        "evidences": doc.get("evidences", {}).get(symptomId, {"text": "", "files": []}),
-        "kpis":      doc.get("kpis", {}).get(symptomId, {}),
-    }
-
-
-# ── GET /triaje/{codigo} — documento completo ─────────────────
-# Alias que usa TreatmentPage para cargar todo el contexto
-
-@router.get("/triaje/{codigo}")
-async def get_triaje(codigo: str):
-    col = get_collection("triaje")
-
-    doc = await col.find_one({"codigo": codigo}, {"_id": 0})
-    if not doc:
-        return {
-            "codigo":    codigo,
-            "inputs":    {},
-            "kpis":      {},
-            "evidences": {},
-            "shared":    {},
-        }
-
-    return doc
+    if data.trigger == "c3_decision":
+        asunto  = f"⚕ Decisión comprometida · {data.empresa or data.clientId} · {data.sintoma_nombre or data.symptomId}"
+        titulo  = "ACI ha registrado su Decisión Comprometida (C3)"
+        cuerpo  = f"""
+        <p>El ACI de <strong>{data.empresa or data.clientId}</strong> acaba de guardar la decisión comprometida en el protocolo clínico.</p>
+        <div style="background:#f5f3ff;border-left:4px solid #7c3aed;padding:14px 18px;border-radius:0 8px 8px 0;margin:16px
