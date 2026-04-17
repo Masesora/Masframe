@@ -10,7 +10,7 @@ router = APIRouter(prefix="/specialties", tags=["specialties"])
 # ============================================================
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # masesora_backend
-SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptoms.json")
+SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptom.json")
 
 with open(SYMPTOMS_PATH, "r", encoding="utf-8") as f:
     CATALOGO_CLINICO: list[dict] = json.load(f)
