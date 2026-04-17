@@ -1,0 +1,1475 @@
+[
+  {
+  "specialty_id": "UCI FINANCIERA",
+  "explanation": "Aquí tratamos casos donde la empresa ya no puede permitirse un error más. Si has llegado hasta esta unidad es porque tu negocio está enviando señales claras de agotamiento financiero: tensión de caja, decisiones urgentes y riesgo real. En esta UCI estabilizamos la liquidez como si fuera un órgano vital. No parcheamos. No improvisamos. Actuamos con precisión clínica para evitar el colapso.",
+  "lema": "Si el flujo de caja no es el adecuado, todo falla. Aquí vamos a detener esta hemorragia financiera.",
+  "orden": 1,
+  "symptom_id": "UCI-S1",
+  "department": "Finanzas",
+  "symptom_name": "Hemorragia de Liquidez",
+  "logica": "Tu negocio genera ingresos pero el dinero no llega a caja. Se queda atrapado en stock inmovilizado, cobros retenidos y anticipos que no regresan. Identificamos el punto exacto de fuga y aplicamos un protocolo de contención para recuperar liquidez real y sostenida.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tienes dinero ya facturado, vendido o pagado que aún no está disponible en caja, tu liquidez está sangrando. Esto reduce tu capacidad operativa y aumenta el riesgo de no poder cubrir gastos fijos.",
+
+  "kpi_question": "Introduce ambos datos para calcular cuántos días de operación tienes bloqueados. Este número revela cuántos días tu negocio podría sobrevivir sin vender nada más.",
+  "kpi_impact": "Reducir el dinero bloqueado por debajo de 10 días devuelve oxígeno financiero inmediato y evita entrar en fase crítica de caja.",
+  "kpi_formula": "(InputA/InputB)*30",
+  "kpi_objective": "<10 días",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    {
+      "id": "inputA",
+      "label": "Stock inmovilizado + facturas >90 días + anticipos no materializados"
+    },
+    {
+      "id": "inputB",
+      "label": "Gastos fijos mensuales"
+    }
+  ],
+
+  "input_a": "Stock inmovilizado + facturas >90 días + anticipos no materializados",
+  "input_b": "Gastos fijos mensuales",
+
+  "input_revised_1": "Total dinero rescatado post",
+  "input_revised_2": "Gastos fijos mensuales",
+  "result_revised": "DÍAS liberados",
+
+  "impact_treatment": "Liberación inmediata de días de supervivencia financiera y recuperación de capacidad operativa sin depender de nuevas ventas.",
+  "optimizer_impact": "Liquidez inmediata sin endeudarte.",
+
+  "optimizer_decision": "Localizar el Dinero Invisible",
+  "optimizer_decision_explanation": "Antes de pedir crédito, identifica dónde tienes dinero bloqueado que puedes liberar en menos de 30 días.",
+  "optimizer_action": "Protocolo de Rescate en 30 Días",
+  "optimizer_tool_explanation": "Escanea tus números y te indica cuánto puedes rescatar y cómo.",
+
+  "example": "Taller mecánico: 8.500€ atrapados. Gastos fijos: 12.000€/mes. Días atrapados: 21 días. Tras aplicar el protocolo libera 6.500€, recupera 16 días de supervivencia y evita entrar en fase crítica de caja.",
+
+  "color_theme": "amarillo",
+
+  "capa_1_priorizacion": "El dinero está atrapado en stock inmovilizado; morosidad; anticipos no materializados; ciclo de cobro largo; gastos fijos altos; sin protocolo de rescate; dependencia de ventas futuras; caja insuficiente.",
+  "justi_capa1": "La mayor parte del dinero bloqueado proviene de stock inmovilizado y morosidad.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+  "capa_2_options": "1) Extrae del inventario el valor total de los productos que llevan más de 6 meses sin venderse.\n2) Extrae del módulo de facturación el importe total de las facturas con más de 90 días sin cobrar.\n3) Extrae de contabilidad el total de anticipos pagados que aún no se han convertido en producto o servicio recibido.",
+   "justi_capa2": "Necesitas priorizar qué libera liquidez más rápido.",
+
+  "capa_3_comprension": "VSM (mapa de flujo de cobro)",
+  "justi_capa3": "Para ver el flujo completo y dónde se atasca.",
+
+  "capa_4_cambio": "Kaizen de liquidez",
+  "justi_capa4": "Para micro-mejoras continuas.",
+
+  "capa_5_ejecucion": "Checklist de cobros",
+  "justi_capa5": "Para estandarizar facturación y cobro.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir si la liquidez se libera."
+}, 
+
+{
+  "specialty_id": "UCI FINANCIERA",
+  "explanation": "Aquí llegan empresas que trabajan sin parar pero no ven el dinero. La rentabilidad está infectada: horas que no se cobran, clientes que consumen más de lo que aportan y servicios que parecen rentables pero destruyen margen. En esta unidad hacemos una cirugía profunda del margen real para que cada hora trabajada vuelva a valer dinero.",
+  "lema": "Si tu margen está infectado, tu esfuerzo no sirve.",
+  "orden": 2,
+  "symptom_id": "UCI-S2",
+  "department": "Finanzas",
+  "symptom_name": "Infección de Rentabilidad",
+  "logica": "Trabajas, vendes y produces, pero el margen no acompaña. El problema no es cuánto facturas, sino cuánto te queda después de trabajar. Aquí identificamos qué clientes, servicios o tareas están destruyendo tu rentabilidad real.",
+  "plan": "PIE",
+
+  "description_symptom": "Si trabajas muchas horas pero tu margen real no crece, tu negocio está infectado. La rentabilidad se erosiona en silencio y te obliga a trabajar más para ganar lo mismo o menos.",
+
+  "kpi_question": "Introduce tus ingresos totales del mes (Input A) y tus costes directos del mes (Input B) para calcular tu margen real por hora trabajada.",
+  "kpi_impact": "Elevar el margen real por encima de 50€/h devuelve oxígeno financiero inmediato y permite crecer sin aumentar horas ni volumen.",
+  "kpi_formula": "((InputA-InputB)/HorasDedicadas)",
+  "kpi_objective": ">50€/h",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Ingresos totales del mes" },
+    { "id": "inputB", "label": "Costes directos del mes" }
+  ],
+
+  "input_a": "Ingresos totales del mes",
+  "input_b": "Costes directos del mes",
+
+  "input_revised_1": "Top 10 clientes post-optimización",
+  "input_revised_2": "Margen real promedio post",
+  "result_revised": "Δ margen real por hora",
+
+  "impact_treatment": "Incremento inmediato del margen horario tras reasignar esfuerzo hacia clientes y servicios de alta rentabilidad.",
+  "optimizer_impact": "Rentabilidad inmediata sin aumentar volumen ni horas trabajadas.",
+
+  "optimizer_decision": "Radiografía de Rentabilidad por Cliente",
+  "optimizer_decision_explanation": "No importa quién factura más, sino quién deja más margen real.",
+  "optimizer_action": "Clasificación por Salud de Cliente (A/B/C)",
+  "optimizer_tool_explanation": "Identifica clientes tóxicos, clientes sanos y clientes drenaje.",
+
+  "example": "Peluquería premium: clienta VIP factura 800€/mes pero deja 31€/h reales. 8 clientas regulares dejan 95€/h. Tras redistribuir agenda, el margen horario sube un 212% sin aumentar horas ni precios.",
+
+  "color_theme": "amarillo",
+
+  "capa_1_priorizacion": "Parte de la cartera destruye margen real; clientes que consumen más tiempo del que pagan; servicios mal valorados; precios desalineados; horas improductivas; mezcla tóxica de clientes A/B/C.",
+  "justi_capa1": "La rentabilidad real se erosiona porque ciertos clientes consumen más recursos de los que aportan.",
+
+  "capa_2_decision": "ABC de rentabilidad",
+
+  "capa_2_options":
+  "1) Extrae del sistema de facturación el total de ingresos generados por cada cliente durante el último mes.\n2) Extrae de contabilidad o del ERP los costes directos asociados a cada cliente (materiales, horas del equipo, desplazamientos, compras específicas).\n3) Calcula las horas reales dedicadas a cada cliente revisando agenda, partes de trabajo o registros internos.\nCon estos tres datos calcula: (Ingresos - Costes directos) / Horas dedicadas. Ese es tu margen real por cliente.",
+
+  "justi_capa2": "Necesitas clasificar clientes según su contribución real al margen.",
+
+  "capa_3_comprension": "Análisis causa–efecto",
+  "justi_capa3": "Para entender qué factores erosionan el margen.",
+
+  "capa_4_cambio": "Rediseño de portafolio",
+  "justi_capa4": "Para ajustar oferta, precios o dedicación.",
+
+  "capa_5_ejecucion": "Checklist de rentabilidad",
+  "justi_capa5": "Para asegurar consistencia en cómo se calcula el margen.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la mejora del margen por cliente."
+},
+
+{
+  "specialty_id": "UCI FINANCIERA",
+  "explanation": "Aquí llegan empresas que venden bien pero cobran tarde. El negocio funciona, pero la caja no. La hipertrofia de cobro es una inflamación peligrosa del ciclo financiero: entregas rápido, facturas tarde, cobras aún más tarde. Cada día de retraso es oxígeno que pierdes. En esta unidad estabilizamos el flujo de cobro para que el dinero vuelva a entrar al ritmo correcto.",
+  "lema": "Si cobras tarde, financias a tus clientes sin querer.",
+  "orden": 3,
+  "symptom_id": "UCI-S3",
+  "department": "Finanzas",
+  "symptom_name": "Hipertrofia de Cobro",
+  "logica": "El negocio vende, entrega y trabaja, pero el dinero no circula. El problema no es la venta, es el tiempo que tarda en convertirse en caja. Aquí medimos y corregimos cada tramo del ciclo de cobro para recuperar liquidez inmediata.",
+  "plan": "PIE",
+
+  "description_symptom": "Si entregas bien pero cobras tarde, estás financiando a tus clientes. Esto reduce tu liquidez, aumenta tu riesgo y te obliga a trabajar con tensión constante.",
+
+  "kpi_question": "Introduce los días desde entrega hasta factura (Input A) y los días desde factura hasta cobro (Input B) para conocer tu ciclo real de cobro.",
+  "kpi_impact": "Reducir el ciclo de cobro por debajo de 30 días libera liquidez equivalente a entre 5 y 15 días de supervivencia financiera cada mes.",
+  "kpi_formula": "(InputA + InputB)",
+  "kpi_objective": "<30 días",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Días desde entrega hasta factura" },
+    { "id": "inputB", "label": "Días desde factura hasta cobro" }
+  ],
+
+  "input_a": "Días desde entrega hasta factura",
+  "input_b": "Días desde factura hasta cobro",
+
+  "input_revised_1": "Días desde entrega hasta factura (post)",
+  "input_revised_2": "Días desde factura hasta cobro (post)",
+  "result_revised": "Δ días ganados",
+
+  "impact_treatment": "Aceleración inmediata del ciclo order-to-cash y recuperación de liquidez sin aumentar ventas.",
+  "optimizer_impact": "Liquidez inmediata por reducción de retrasos críticos.",
+
+  "optimizer_decision": "Mapeo del Atasco de Flujo",
+  "optimizer_decision_explanation": "Identifica si el retraso está en tu empresa, en el cliente o en la burocracia.",
+  "optimizer_action": "Aceleración por Tramos del Ciclo",
+  "optimizer_tool_explanation": "Mide cada tramo del ciclo real para intervenir donde más impacto tiene.",
+
+  "example": "Tienda de alimentación: ciclo de cobro de 42 días. Tras aplicar el protocolo baja a 28 días y libera 7.000€ de liquidez mensual, equivalente a 17 días de supervivencia financiera.",
+
+  "color_theme": "amarillo",
+
+  "capa_1_priorizacion": "El ciclo order-to-cash es excesivamente largo; facturación lenta; clientes que pagan tarde; procesos manuales; retrasos internos; falta de recordatorios; entregas sin documentación completa.",
+  "justi_capa1": "El ciclo supera los 30 días y presenta un cuello de botella claro.",
+
+  "capa_2_decision": "Urgente vs Importante",
+
+  "capa_2_options":
+  "1) Revisa en tu sistema de gestión la fecha real de entrega de cada pedido y la fecha en que se emitió la factura. Calcula la diferencia en días: ese es tu Input A.\n2) Revisa la fecha de emisión de cada factura y la fecha en que el cliente realizó el pago. Calcula la diferencia en días: ese es tu Input B.\nSuma Input A + Input B para obtener tu ciclo total de cobro.",
+
+  "justi_capa2": "Necesitas distinguir retrasos críticos de retrasos tolerables.",
+
+  "capa_3_comprension": "TOC (cuello de botella de cobro)",
+  "justi_capa3": "Para identificar el punto exacto donde se frena el cobro.",
+
+  "capa_4_cambio": "Plan de aceleración de cobros",
+  "justi_capa4": "Para reducir el ciclo completo.",
+
+  "capa_5_ejecucion": "Checklist de facturación",
+  "justi_capa5": "Para asegurar que cada paso del cobro se ejecuta sin fallos.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la reducción del ciclo de cobro."
+},
+
+{
+  "specialty_id": "UNIDAD DE PROCESOS",
+  "explanation": "Cuando los procesos fallan, el tiempo se convierte en un enemigo silencioso. La empresa avanza, pero avanza lenta. Las tareas esperan más de lo que se ejecutan. La esclerosis operativa es una rigidez del sistema: el flujo se endurece, la velocidad cae y la productividad se desploma. Aquí devolvemos elasticidad, ritmo y velocidad al sistema operativo.",
+  "lema": "Si tu proceso espera más de lo que trabaja, estás perdiendo dinero sin verlo.",
+  "orden": 11,
+  "symptom_id": "UNI-S1",
+  "department": "Procesos",
+  "symptom_name": "Esclerosis Operativa",
+  "logica": "Los procesos avanzan más por inercia que por diseño. Las tareas se acumulan en colas, aprobaciones, revisiones y pasos innecesarios. El trabajo real es mínimo comparado con el tiempo total del ciclo. Aquí medimos dónde se detiene el flujo y devolvemos velocidad al sistema.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tus pedidos pasan más tiempo esperando que en trabajo real, tu proceso está rígido. La empresa pierde velocidad, capacidad y margen sin darse cuenta.",
+
+  "kpi_question": "Introduce las horas totales de espera acumuladas (Input A) y las horas totales del ciclo (Input B) para conocer el porcentaje real de tiempo muerto.",
+  "kpi_impact": "Reducir las esperas por debajo del 25% acelera la entrega sin contratar más personal y libera capacidad oculta.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": "<0.25",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Horas totales de espera acumuladas" },
+    { "id": "inputB", "label": "Horas totales del ciclo completo" }
+  ],
+
+  "input_a": "Horas totales de espera",
+  "input_b": "Horas totales del ciclo",
+
+  "input_revised_1": "Horas de espera post",
+  "input_revised_2": "Horas de ciclo post",
+  "result_revised": "Δ ratio de espera",
+
+  "impact_treatment": "Reducción inmediata del tiempo muerto y aumento real de la velocidad operativa.",
+  "optimizer_impact": "Aceleración del ciclo sin contratar más recursos.",
+
+  "optimizer_decision": "Mapeo de Esperas",
+  "optimizer_decision_explanation": "Identifica dónde se acumulan colas, aprobaciones y bloqueos.",
+  "optimizer_action": "Protocolo de Eliminación de Esperas",
+  "optimizer_tool_explanation": "Visualiza dónde se detiene el flujo y cuánto cuesta cada espera.",
+
+  "example": "Taller de carpintería: pedidos tardaban 9 días, pero solo 2 eran de trabajo real. Tras eliminar esperas, bajan a 4 días totales, liberando 5 días de capacidad por pedido.",
+
+  "color_theme": "turquesa",
+
+  "capa_1_priorizacion": "El proceso tiene demasiadas esperas; acumulación en colas; aprobaciones lentas; pasos innecesarios; tareas bloqueadas; falta de estandarización; tiempos muertos elevados.",
+  "justi_capa1": "El flujo presenta múltiples esperas y cuellos de botella que ralentizan la entrega.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Revisa cada pedido o tarea y registra cuántas horas pasa esperando entre un paso y otro (esperas en cola, aprobaciones, revisiones). Suma todas las horas: ese es tu Input A.\n2) Registra cuántas horas pasan desde que el pedido entra hasta que se entrega (incluye trabajo real + esperas). Ese total es tu Input B.\nDivide Input A entre Input B para conocer el porcentaje real de tiempo muerto.",
+
+  "justi_capa2": "Necesitas medir con precisión dónde se pierde tiempo para eliminar esperas críticas.",
+
+  "capa_3_comprension": "VSM (flujo operativo)",
+  "justi_capa3": "Para ver dónde se acumulan las esperas y cuellos de botella.",
+
+  "capa_4_cambio": "Kaizen operativo",
+  "justi_capa4": "Para reducir tiempos muertos de forma continua.",
+
+  "capa_5_ejecucion": "Kanban",
+  "justi_capa5": "Para visualizar y controlar el flujo en tiempo real.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la reducción de tiempos de espera."
+},
+{
+  "specialty_id": "UNIDAD DE PROCESOS",
+  "explanation": "Cuando la capacidad operativa colapsa, la empresa entra en modo supervivencia: urgencias constantes, tareas mal definidas, interrupciones, retrabajos y un equipo que trabaja más pero produce menos. El sistema no está roto: está saturado. Aquí devolvemos claridad, orden y capacidad real al flujo operativo.",
+  "lema": "Si todo entra mal, todo sale mal.",
+  "orden": 12,
+  "symptom_id": "UNI-S2",
+  "department": "Procesos",
+  "symptom_name": "Colapso de Capacidad",
+  "logica": "La operativa vive al límite: agendas saturadas, urgencias constantes y cero margen de maniobra. El problema no es la carga, sino la calidad de las entradas. Cuando las tareas llegan incompletas, confusas o mal definidas, el sistema se bloquea.",
+  "plan": "PIE",
+
+  "description_symptom": "Si muchas tareas entran mal definidas, tu equipo pierde tiempo aclarando, corrigiendo y rehaciendo. Esto reduce la capacidad real y aumenta la sensación de caos.",
+
+  "kpi_question": "Introduce el número de tareas incompletas (Input A) y el total de tareas (Input B) para conocer tu porcentaje real de entradas defectuosas.",
+  "kpi_impact": "Reducir entradas defectuosas por debajo del 10% elimina reprocesos, libera horas críticas y devuelve capacidad real al equipo.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": "<0.10",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Tareas con información incompleta o incorrecta" },
+    { "id": "inputB", "label": "Tareas totales recibidas" }
+  ],
+
+  "input_a": "Tareas incompletas",
+  "input_b": "Tareas totales",
+
+  "input_revised_1": "Tareas incompletas post",
+  "input_revised_2": "Tareas totales post",
+  "result_revised": "Δ porcentaje de entradas defectuosas",
+
+  "impact_treatment": "Reducción inmediata de reprocesos y correcciones, liberando capacidad real sin contratar más personal.",
+  "optimizer_impact": "Aumento inmediato de velocidad operativa y reducción del caos diario.",
+
+  "optimizer_decision": "Filtro de Entrada",
+  "optimizer_decision_explanation": "Detecta qué tareas llegan mal definidas y por qué.",
+  "optimizer_action": "Protocolo de Definición Clara",
+  "optimizer_tool_explanation": "Valida que cada tarea llegue completa y lista para ejecutar.",
+
+  "example": "Agencia de diseño: 37% de tareas entraban incompletas. Tras aplicar el protocolo bajan al 6%, liberando 18 horas semanales de reprocesos y reduciendo entregas tardías en un 42%.",
+
+  "color_theme": "turquesa",
+
+  "capa_1_priorizacion": "Tareas mal definidas; entradas incompletas; falta de información; retrabajos; interrupciones; urgencias constantes; pérdida de capacidad; saturación del equipo.",
+  "justi_capa1": "Las entradas defectuosas generan retrabajos que colapsan la capacidad operativa.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Revisa todas las tareas recibidas en la última semana y marca cuántas llegaron sin la información necesaria para ejecutarse (falta de datos, instrucciones incompletas, archivos ausentes). Ese número es tu Input A.\n2) Cuenta el total de tareas recibidas en ese mismo periodo (independientemente de su calidad). Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu porcentaje real de entradas defectuosas.",
+
+  "justi_capa2": "Necesitas medir con precisión cuántas tareas llegan mal para eliminar la causa raíz.",
+
+  "capa_3_comprension": "Análisis causa–efecto",
+  "justi_capa3": "Para entender por qué las tareas llegan incompletas.",
+
+  "capa_4_cambio": "Estandarización de entrada",
+  "justi_capa4": "Para asegurar que todas las tareas llegan completas y listas para ejecutar.",
+
+  "capa_5_ejecucion": "Checklist de entrada",
+  "justi_capa5": "Para validar que cada tarea cumple los requisitos mínimos.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la reducción de entradas defectuosas."
+},
+{
+  "specialty_id": "UNIDAD DE PROCESOS",
+  "explanation": "Cuando el ritmo operativo es irregular, la empresa vive en una montaña rusa: días de picos insoportables, días muertos, entregas que se acumulan y urgencias que queman al equipo. No es falta de capacidad, es falta de cadencia. Aquí estabilizamos el flujo para que la operación vuelva a ser predecible, constante y saludable.",
+  "lema": "Si tu ritmo sube y baja sin control, tu operación pierde estabilidad.",
+  "orden": 13,
+  "symptom_id": "UNI-S3",
+  "department": "Procesos",
+  "symptom_name": "Ritmo Operativo Irregular",
+  "logica": "La operación no mantiene una cadencia estable. Hay picos de carga, parones y retrasos que afectan calidad, capacidad y previsibilidad. Aquí medimos la puntualidad real del sistema y corregimos los puntos donde se rompe el ritmo.",
+  "plan": "PIE",
+
+  "description_symptom": "Si las entregas no se completan a tiempo, tu ritmo operativo es inestable. Esto genera retrasos, acumulación de tareas y pérdida de control sobre la capacidad real.",
+
+  "kpi_question": "Introduce entregas a tiempo (Input A) y entregas totales (Input B) para conocer tu nivel real de cadencia.",
+  "kpi_impact": "Mantener al menos el 85% de entregas dentro del plazo estándar estabiliza el ritmo, reduce urgencias y aumenta la capacidad real del sistema.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": ">0.85",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Entregas a tiempo" },
+    { "id": "inputB", "label": "Entregas totales" }
+  ],
+
+  "input_a": "Entregas a tiempo",
+  "input_b": "Entregas totales",
+
+  "input_revised_1": "Entregas a tiempo post",
+  "input_revised_2": "Entregas totales post",
+  "result_revised": "Δ ritmo",
+
+  "impact_treatment": "Aumento real de estabilidad operativa y reducción inmediata de retrasos.",
+  "optimizer_impact": "Ritmo constante sin necesidad de aumentar recursos.",
+
+  "optimizer_decision": "Diagnóstico de Ritmo",
+  "optimizer_decision_explanation": "Identifica dónde se rompe la cadencia y por qué.",
+  "optimizer_action": "Protocolo de Ritmo Sostenido",
+  "optimizer_tool_explanation": "Define pasos para estabilizar el flujo y mantener la cadencia.",
+
+  "example": "Empresa industrial: solo el 61% de entregas llegaban a tiempo. Tras aplicar el protocolo suben al 89%, reduciendo urgencias en un 47% y recuperando 3 días de capacidad semanal.",
+
+  "color_theme": "turquesa",
+
+  "capa_1_priorizacion": "Picos de carga; parones; retrasos; tareas acumuladas; urgencias constantes; falta de planificación; falta de estándar; ritmo inestable.",
+  "justi_capa1": "Tu ritmo operativo es irregular y necesitas medir la cadencia real.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Revisa todas las entregas realizadas en la última semana o mes y marca cuántas se completaron dentro del plazo estándar definido por tu empresa. Ese número es tu Input A.\n2) Cuenta el total de entregas realizadas en ese mismo periodo, independientemente de si llegaron tarde o no. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu porcentaje real de entregas a tiempo.",
+
+  "justi_capa2": "Necesitas priorizar los cuellos de botella que rompen la cadencia.",
+
+  "capa_3_comprension": "VSM operativo",
+  "justi_capa3": "Para ver el flujo completo y detectar dónde se rompe el ritmo.",
+
+  "capa_4_cambio": "Unificación de plazos",
+  "justi_capa4": "Para alinear el ritmo entre equipos y procesos.",
+
+  "capa_5_ejecucion": "Checklist de ritmo",
+  "justi_capa5": "Para asegurar que cada entrega sigue la cadencia estándar.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la estabilidad operativa en el tiempo."
+},
+{
+  "specialty_id": "CARDIO",
+  "explanation": "Cuando el corazón comercial late demasiado rápido, la empresa entra en un estado de urgencia constante: muchas oportunidades, poca conversión, mucho movimiento, poco avance real. La taquicardia comercial es un exceso de actividad sin impacto. Aquí estabilizamos el pulso comercial para que cada esfuerzo genere resultados reales.",
+  "lema": "Mucho movimiento no es crecimiento.",
+  "orden": 21,
+  "symptom_id": "CAR-S1",
+  "department": "Comercial",
+  "symptom_name": "Taquicardia Comercial",
+  "logica": "El negocio genera contactos, reuniones y propuestas, pero la conversión es baja. El sistema comercial late rápido pero sin fuerza. Aquí medimos la eficacia real del pipeline y corregimos dónde se pierde el pulso.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tienes muchas oportunidades pero pocas ventas cerradas, tu corazón comercial late demasiado rápido y sin impacto. Esto desgasta al equipo y genera sensación de esfuerzo sin resultados.",
+
+  "kpi_question": "Introduce el número de oportunidades generadas (Input A) y el número de ventas cerradas (Input B) para conocer tu tasa real de conversión.",
+  "kpi_impact": "Elevar la conversión por encima del 20% estabiliza el pulso comercial y reduce la necesidad de generar volumen excesivo.",
+  "kpi_formula": "(InputB/InputA)",
+  "kpi_objective": ">0.20",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Oportunidades generadas" },
+    { "id": "inputB", "label": "Ventas cerradas" }
+  ],
+
+  "input_a": "Oportunidades generadas",
+  "input_b": "Ventas cerradas",
+
+  "input_revised_1": "Oportunidades post",
+  "input_revised_2": "Ventas cerradas post",
+  "result_revised": "Δ conversión",
+
+  "impact_treatment": "Incremento inmediato de la conversión y reducción del esfuerzo comercial necesario para alcanzar objetivos.",
+  "optimizer_impact": "Más ventas con menos desgaste comercial.",
+
+  "optimizer_decision": "Diagnóstico de Conversión",
+  "optimizer_decision_explanation": "Identifica en qué fase del pipeline se pierde el pulso.",
+  "optimizer_action": "Protocolo de Conversión Sostenida",
+  "optimizer_tool_explanation": "Define pasos para estabilizar y aumentar la conversión.",
+
+  "example": "Consultora B2B: generaba 120 oportunidades al mes pero solo cerraba 11 ventas (9%). Tras aplicar el protocolo sube al 23%, reduciendo el volumen necesario a la mitad y aumentando ingresos un 41%.",
+
+  "color_theme": "rojo",
+
+  "capa_1_priorizacion": "Muchas oportunidades; baja conversión; pipeline saturado; propuestas sin respuesta; reuniones improductivas; desgaste comercial.",
+  "justi_capa1": "El sistema comercial late demasiado rápido y sin impacto real.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Revisa tu CRM o registro comercial y cuenta cuántas oportunidades nuevas se generaron en el periodo analizado (semana o mes). Ese número es tu Input A.\n2) Revisa cuántas de esas oportunidades terminaron en una venta cerrada en ese mismo periodo. Ese número es tu Input B.\nDivide Input B entre Input A para obtener tu tasa real de conversión.",
+
+  "justi_capa2": "Necesitas medir con precisión dónde se pierde la conversión para estabilizar el pulso comercial.",
+
+  "capa_3_comprension": "Análisis del pipeline",
+  "justi_capa3": "Para ver en qué fase se pierde el pulso comercial.",
+
+  "capa_4_cambio": "Optimización de fases críticas",
+  "justi_capa4": "Para reforzar los puntos donde se cae la conversión.",
+
+  "capa_5_ejecucion": "Checklist comercial",
+  "justi_capa5": "Para asegurar consistencia en cada fase del pipeline.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la mejora de conversión en el tiempo."
+},
+{
+  "specialty_id": "CARDIO",
+  "explanation": "La arritmia de pipeline aparece cuando el flujo comercial pierde ritmo: semanas con muchas oportunidades, semanas sin ninguna, meses con picos de ventas y meses en blanco. El corazón comercial late de forma irregular y eso impide prever ingresos, planificar recursos y crecer con estabilidad. Aquí estabilizamos el flujo para que el pipeline vuelva a latir con cadencia constante.",
+  "lema": "Sin ritmo comercial, no hay crecimiento sostenible.",
+  "orden": 22,
+  "symptom_id": "CAR-S2",
+  "department": "Comercial",
+  "symptom_name": "Arritmia de Pipeline",
+  "logica": "El pipeline no mantiene un flujo constante de oportunidades. Hay semanas de saturación y semanas de vacío. Esto genera estrés, imprevisibilidad y dificultad para planificar. Aquí medimos la estabilidad del flujo y corregimos los puntos donde se rompe la cadencia.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu pipeline tiene semanas con muchas oportunidades y semanas sin ninguna, tu ritmo comercial es irregular. Esto afecta previsibilidad, ingresos y estabilidad operativa.",
+
+  "kpi_question": "Introduce el número de semanas con generación constante de oportunidades (Input A) y el total de semanas analizadas (Input B) para medir la estabilidad real del pipeline.",
+  "kpi_impact": "Mantener al menos un 70% de semanas con generación constante estabiliza el flujo comercial y reduce la dependencia de picos.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": ">0.70",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Semanas con generación constante de oportunidades" },
+    { "id": "inputB", "label": "Semanas totales analizadas" }
+  ],
+
+  "input_a": "Semanas con generación constante",
+  "input_b": "Semanas totales",
+
+  "input_revised_1": "Semanas constantes post",
+  "input_revised_2": "Semanas totales post",
+  "result_revised": "Δ estabilidad del pipeline",
+
+  "impact_treatment": "Estabilización inmediata del flujo comercial y reducción de la variabilidad mensual de ingresos.",
+  "optimizer_impact": "Pipeline predecible sin necesidad de aumentar volumen.",
+
+  "optimizer_decision": "Diagnóstico de Cadencia Comercial",
+  "optimizer_decision_explanation": "Identifica en qué semanas se rompe el ritmo y por qué.",
+  "optimizer_action": "Protocolo de Ritmo Comercial",
+  "optimizer_tool_explanation": "Define pasos para mantener un flujo constante de oportunidades.",
+
+  "example": "Software B2B: solo 9 de 16 semanas generaban oportunidades. Tras aplicar el protocolo suben a 13 semanas constantes, reduciendo la variabilidad de ingresos en un 38% y estabilizando previsiones trimestrales.",
+
+  "color_theme": "rojo",
+
+  "capa_1_priorizacion": "Semanas sin oportunidades; picos de actividad; meses impredecibles; pipeline inestable; falta de cadencia; dependencia de campañas puntuales.",
+  "justi_capa1": "El pipeline no mantiene un ritmo constante y eso afecta previsibilidad e ingresos.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Revisa tu CRM o registro comercial y marca cuántas semanas del periodo analizado generaron al menos el mínimo estándar de oportunidades definido por tu empresa (por ejemplo, 5 oportunidades/semana). Ese número es tu Input A.\n2) Cuenta el total de semanas incluidas en el análisis (por ejemplo, 12 semanas, 16 semanas o un trimestre completo). Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu estabilidad real de pipeline.",
+
+  "justi_capa2": "Necesitas medir con precisión la cadencia semanal para estabilizar el flujo comercial.",
+
+  "capa_3_comprension": "Análisis de variabilidad",
+  "justi_capa3": "Para detectar semanas críticas donde se rompe el ritmo.",
+
+  "capa_4_cambio": "Estandarización de generación",
+  "justi_capa4": "Para asegurar un flujo constante de oportunidades.",
+
+  "capa_5_ejecucion": "Checklist de cadencia",
+  "justi_capa5": "Para mantener el ritmo semanal sin depender de motivación o picos.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la estabilidad del pipeline en el tiempo."
+},
+{
+  "specialty_id": "CARDIO",
+  "explanation": "La insuficiencia de cierre aparece cuando el corazón comercial bombea oportunidades, pero muy pocas llegan a convertirse en ventas reales. El sistema late, pero no impulsa. Hay interés, pero no decisión. Aquí intervenimos en la fase final del pipeline para que cada oportunidad tenga una probabilidad real de convertirse en ingreso.",
+  "lema": "Si no cierras, no creces.",
+  "orden": 23,
+  "symptom_id": "CAR-S3",
+  "department": "Comercial",
+  "symptom_name": "Insuficiencia de Cierre",
+  "logica": "El problema no está en generar oportunidades, sino en convertirlas. Las propuestas se envían, pero no se cierran. Las reuniones avanzan, pero no se concretan. Aquí medimos la fuerza real del cierre y corregimos los puntos donde se pierde la decisión final.",
+  "plan": "PIE",
+
+  "description_symptom": "Si envías muchas propuestas pero cierras pocas ventas, tu sistema comercial tiene insuficiencia de cierre. Esto genera desgaste, pérdida de tiempo y previsiones poco fiables.",
+
+  "kpi_question": "Introduce el número de propuestas enviadas (Input A) y el número de propuestas aceptadas (Input B) para conocer tu tasa real de cierre.",
+  "kpi_impact": "Elevar la tasa de cierre por encima del 30% aumenta ingresos sin necesidad de generar más oportunidades.",
+  "kpi_formula": "(InputB/InputA)",
+  "kpi_objective": ">0.30",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Propuestas enviadas" },
+    { "id": "inputB", "label": "Propuestas aceptadas" }
+  ],
+
+  "input_a": "Propuestas enviadas",
+  "input_b": "Propuestas aceptadas",
+
+  "input_revised_1": "Propuestas enviadas post",
+  "input_revised_2": "Propuestas aceptadas post",
+  "result_revised": "Δ tasa de cierre",
+
+  "impact_treatment": "Incremento inmediato de ingresos al mejorar la conversión final del pipeline.",
+  "optimizer_impact": "Más ventas sin aumentar volumen de oportunidades.",
+
+  "optimizer_decision": "Diagnóstico de Cierre",
+  "optimizer_decision_explanation": "Identifica por qué las propuestas no se convierten en decisiones.",
+  "optimizer_action": "Protocolo de Cierre Activo",
+  "optimizer_tool_explanation": "Define pasos para reforzar la fase final del pipeline y aumentar la aceptación.",
+
+  "example": "Empresa de servicios: enviaba 40 propuestas al mes y solo 9 se aceptaban (22%). Tras aplicar el protocolo suben a 15 cierres (37%), aumentando ingresos un 68% sin generar más oportunidades.",
+
+  "color_theme": "rojo",
+
+  "capa_1_priorizacion": "Muchas propuestas enviadas; pocas aceptadas; falta de seguimiento; propuestas genéricas; objeciones sin resolver; cierre débil.",
+  "justi_capa1": "El cierre es insuficiente y necesitas medir la conversión final del pipeline.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Revisa tu CRM o registro comercial y cuenta cuántas propuestas formales enviaste en el periodo analizado (semana o mes). Ese número es tu Input A.\n2) Revisa cuántas de esas propuestas fueron aceptadas por el cliente en ese mismo periodo. Ese número es tu Input B.\nDivide Input B entre Input A para obtener tu tasa real de cierre.",
+
+  "justi_capa2": "Necesitas medir con precisión la fuerza del cierre para intervenir donde más impacto tiene.",
+
+  "capa_3_comprension": "Análisis de objeciones",
+  "justi_capa3": "Para entender qué frena la decisión final del cliente.",
+
+  "capa_4_cambio": "Optimización del cierre",
+  "justi_capa4": "Para reforzar la fase final y aumentar la aceptación.",
+
+  "capa_5_ejecucion": "Checklist de cierre",
+  "justi_capa5": "Para asegurar consistencia en cada propuesta enviada.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la mejora de la tasa de cierre."
+},
+{
+  "specialty_id": "CIRUGIA DE MARCA",
+  "explanation": "Cuando la identidad de marca sangra, la empresa pierde fuerza en cada interacción: mensajes inconsistentes, estética desalineada, tono cambiante, promesas que no se sostienen. La marca deja de ser un órgano sólido y se convierte en un tejido débil. Aquí realizamos cirugía para reconstruir una identidad coherente, fuerte y reconocible.",
+  "lema": "Si tu marca no es clara, tu mercado no te entiende.",
+  "orden": 31,
+  "symptom_id": "MAR-S1",
+  "department": "Marca",
+  "symptom_name": "Identidad Hemorrágica",
+  "logica": "La marca pierde coherencia: cada canal comunica algo distinto, cada pieza parece de una empresa diferente. Esto debilita la percepción, reduce la confianza y afecta la conversión. Aquí medimos la consistencia real de la identidad y reconstruimos su solidez.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu marca se ve diferente en cada canal, tu identidad está sangrando. Esto confunde al cliente, debilita tu posicionamiento y reduce tu impacto comercial.",
+
+  "kpi_question": "Introduce el número de piezas coherentes con la identidad (Input A) y el total de piezas analizadas (Input B) para medir la consistencia real de tu marca.",
+  "kpi_impact": "Alcanzar un 80% de coherencia visual y verbal aumenta la confianza del cliente y mejora la percepción de valor.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": ">0.80",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Piezas coherentes con la identidad" },
+    { "id": "inputB", "label": "Piezas totales analizadas" }
+  ],
+
+  "input_a": "Piezas coherentes",
+  "input_b": "Piezas totales",
+
+  "input_revised_1": "Piezas coherentes post",
+  "input_revised_2": "Piezas totales post",
+  "result_revised": "Δ coherencia de marca",
+
+  "impact_treatment": "Reconstrucción inmediata de la identidad visual y verbal para recuperar fuerza, claridad y reconocimiento.",
+  "optimizer_impact": "Marca sólida sin rehacer todo desde cero.",
+
+  "optimizer_decision": "Diagnóstico de Coherencia",
+  "optimizer_decision_explanation": "Identifica qué piezas respetan la identidad y cuáles la debilitan.",
+  "optimizer_action": "Protocolo de Reconstrucción de Identidad",
+  "optimizer_tool_explanation": "Define pasos para unificar estética, tono y mensaje en todos los canales.",
+
+  "example": "Ecommerce de moda: solo 14 de 32 piezas respetaban la identidad (44%). Tras la cirugía suben a 29 de 32 (90%), aumentando la percepción de profesionalidad y elevando la conversión un 27%.",
+
+  "color_theme": "morado",
+
+  "capa_1_priorizacion": "Mensajes inconsistentes; estética desalineada; tono variable; piezas desconectadas; identidad débil; percepción fragmentada.",
+  "justi_capa1": "La marca pierde coherencia y necesita reconstrucción inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Reúne todas las piezas de comunicación de los últimos 30 días (posts, emails, web, anuncios, presentaciones). Cuenta cuántas respetan la identidad visual y verbal definida (colores, tipografías, tono, mensaje). Ese número es tu Input A.\n2) Cuenta el total de piezas analizadas, independientemente de su calidad o coherencia. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu coherencia real de marca.",
+
+  "justi_capa2": "Necesitas medir con precisión qué tan coherente es tu marca para reconstruirla sin improvisar.",
+
+  "capa_3_comprension": "Análisis de identidad",
+  "justi_capa3": "Para detectar qué elementos están debilitando la marca.",
+
+  "capa_4_cambio": "Unificación estética y verbal",
+  "justi_capa4": "Para reconstruir una identidad sólida y reconocible.",
+
+  "capa_5_ejecucion": "Checklist de identidad",
+  "justi_capa5": "Para asegurar que cada pieza respeta la identidad definida.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la mejora de coherencia en el tiempo."
+},
+{
+  "specialty_id": "CIRUGIA DE MARCA",
+  "explanation": "La miopía de posicionamiento aparece cuando la empresa no ve con claridad quién es, para quién es y por qué debería importar. La marca existe, pero no destaca. El mercado la percibe como una opción más, no como una elección obvia. Aquí corregimos la visión estratégica para que la marca vuelva a ocupar un lugar nítido y defendible.",
+  "lema": "Si no ocupas un lugar en la mente del cliente, desapareces.",
+  "orden": 32,
+  "symptom_id": "MAR-S2",
+  "department": "Marca",
+  "symptom_name": "Miopía de Posicionamiento",
+  "logica": "La marca no está claramente posicionada: no comunica su diferencia, no transmite su valor y no ocupa un espacio mental propio. Esto reduce la preferencia, debilita la percepción y aumenta la competencia directa.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu cliente no puede explicar en una frase qué te hace diferente, tu posicionamiento es débil. Esto te obliga a competir por precio y te vuelve sustituible.",
+
+  "kpi_question": "Introduce el número de mensajes alineados con tu propuesta de valor (Input A) y el total de mensajes analizados (Input B) para medir la claridad real de tu posicionamiento.",
+  "kpi_impact": "Alcanzar un 70% de mensajes alineados aumenta la diferenciación percibida y reduce la competencia directa.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": ">0.70",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Mensajes alineados con la propuesta de valor" },
+    { "id": "inputB", "label": "Mensajes totales analizados" }
+  ],
+
+  "input_a": "Mensajes alineados",
+  "input_b": "Mensajes totales",
+
+  "input_revised_1": "Mensajes alineados post",
+  "input_revised_2": "Mensajes totales post",
+  "result_revised": "Δ claridad de posicionamiento",
+
+  "impact_treatment": "Claridad inmediata en la propuesta de valor, aumentando diferenciación y preferencia.",
+  "optimizer_impact": "Posicionamiento sólido sin rehacer toda la marca.",
+
+  "optimizer_decision": "Diagnóstico de Mensaje",
+  "optimizer_decision_explanation": "Identifica qué mensajes refuerzan tu diferencia y cuáles la diluyen.",
+  "optimizer_action": "Protocolo de Alineación de Mensaje",
+  "optimizer_tool_explanation": "Define pasos para comunicar tu valor de forma clara y consistente.",
+
+  "example": "Academia online: solo 9 de 25 mensajes comunicaban su diferencia real (36%). Tras la cirugía suben a 21 de 25 (84%), aumentando la preferencia de marca y reduciendo la comparación por precio.",
+
+  "color_theme": "morado",
+
+  "capa_1_priorizacion": "Mensajes genéricos; propuesta de valor débil; falta de diferenciación; comunicación confusa; posicionamiento difuso.",
+  "justi_capa1": "El posicionamiento no es claro y necesita reconstrucción inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Reúne todos los mensajes publicados en los últimos 30 días (posts, emails, web, anuncios, presentaciones). Marca cuántos comunican claramente tu propuesta de valor diferenciadora. Ese número es tu Input A.\n2) Cuenta el total de mensajes analizados, independientemente de su calidad o claridad. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu claridad real de posicionamiento.",
+
+  "justi_capa2": "Necesitas medir con precisión qué tan claro es tu posicionamiento para reconstruirlo sin improvisar.",
+
+  "capa_3_comprension": "Análisis de propuesta de valor",
+  "justi_capa3": "Para detectar qué mensajes diluyen tu diferencia.",
+
+  "capa_4_cambio": "Unificación de mensaje",
+  "justi_capa4": "Para comunicar tu valor de forma clara y consistente.",
+
+  "capa_5_ejecucion": "Checklist de mensaje",
+  "justi_capa5": "Para asegurar que cada mensaje refuerza tu posicionamiento.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la mejora de claridad en el tiempo."
+},
+{
+  "specialty_id": "CIRUGIA DE MARCA",
+  "explanation": "La atrofia de diferenciación aparece cuando la marca pierde músculo competitivo. Suena igual que las demás, se ve igual que las demás y promete lo mismo que las demás. El mercado no encuentra razones para elegirla. Aquí reconstruimos la musculatura competitiva para que la marca vuelva a ser una elección obvia.",
+  "lema": "Si no eres diferente, eres invisible.",
+  "orden": 33,
+  "symptom_id": "MAR-S3",
+  "department": "Marca",
+  "symptom_name": "Atrofia de Diferenciación",
+  "logica": "La marca no destaca en su categoría. Su propuesta es genérica, su estética es común y su mensaje es intercambiable. Esto reduce la preferencia, aumenta la comparación por precio y debilita la percepción de valor.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu cliente te compara con otros sin esfuerzo, tu marca sufre atrofia de diferenciación. Esto te vuelve sustituible y reduce tu capacidad de cobrar más.",
+
+  "kpi_question": "Introduce el número de atributos únicos identificados (Input A) y el total de atributos analizados en tu categoría (Input B) para medir tu nivel real de diferenciación.",
+  "kpi_impact": "Alcanzar al menos un 30% de atributos únicos te posiciona como una opción claramente distinta en tu mercado.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": ">0.30",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Atributos únicos de tu marca" },
+    { "id": "inputB", "label": "Atributos totales analizados en la categoría" }
+  ],
+
+  "input_a": "Atributos únicos",
+  "input_b": "Atributos totales",
+
+  "input_revised_1": "Atributos únicos post",
+  "input_revised_2": "Atributos totales post",
+  "result_revised": "Δ diferenciación",
+
+  "impact_treatment": "Incremento inmediato de diferenciación percibida y reducción de la comparación directa con competidores.",
+  "optimizer_impact": "Marca más fuerte sin necesidad de rebranding completo.",
+
+  "optimizer_decision": "Diagnóstico de Diferencia",
+  "optimizer_decision_explanation": "Identifica qué elementos te hacen único y cuáles te vuelven genérico.",
+  "optimizer_action": "Protocolo de Musculatura Competitiva",
+  "optimizer_tool_explanation": "Define pasos para reforzar atributos únicos y eliminar similitudes innecesarias.",
+
+  "example": "Clínica estética: solo 3 de 14 atributos eran únicos (21%). Tras la cirugía suben a 6 de 14 (43%), aumentando la preferencia y reduciendo la comparación por precio en un 31%.",
+
+  "color_theme": "morado",
+
+  "capa_1_priorizacion": "Propuesta genérica; estética común; mensajes intercambiables; atributos débiles; marca sustituible.",
+  "justi_capa1": "La marca no destaca y necesita reconstrucción competitiva inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Lista todos los atributos que comunicas actualmente (beneficios, características, promesas, valores). Marca cuáles son realmente únicos en tu categoría. Ese número es tu Input A.\n2) Lista todos los atributos que comunican tus competidores directos (mínimo 5 competidores). Suma todos los atributos repetidos y no repetidos: ese total es tu Input B.\nDivide Input A entre Input B para obtener tu nivel real de diferenciación.",
+
+  "justi_capa2": "Necesitas medir con precisión qué tan único eres para reconstruir tu musculatura competitiva.",
+
+  "capa_3_comprension": "Análisis competitivo",
+  "justi_capa3": "Para detectar similitudes peligrosas con competidores.",
+
+  "capa_4_cambio": "Refuerzo de atributos únicos",
+  "justi_capa4": "Para aumentar diferenciación percibida.",
+
+  "capa_5_ejecucion": "Checklist de diferenciación",
+  "justi_capa5": "Para asegurar que cada mensaje refuerza tu diferencia.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la evolución de tu musculatura competitiva."
+},
+{
+  "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
+  "explanation": "La ansiedad operativa crónica aparece cuando la empresa vive en un estado permanente de alerta: urgencias constantes, interrupciones, cambios de prioridad, falta de claridad y un equipo que trabaja con tensión continua. No es un problema de capacidad, es un problema de sistema nervioso. Aquí estabilizamos la mente operativa de la empresa para devolver calma, foco y control.",
+  "lema": "Si todo es urgente, nada es importante.",
+  "orden": 41,
+  "symptom_id": "PSI-S1",
+  "department": "Organización",
+  "symptom_name": "Ansiedad Operativa Crónica",
+  "logica": "El equipo vive en modo supervivencia: interrupciones constantes, prioridades cambiantes, tareas que se reabren, decisiones impulsivas. Esto genera agotamiento, errores y pérdida de calidad. Aquí medimos la estabilidad emocional del sistema operativo y corregimos los detonantes.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu equipo trabaja con tensión constante, cambia de tarea cada pocos minutos y siente que nunca llega a todo, tu empresa sufre ansiedad operativa crónica.",
+
+  "kpi_question": "Introduce el número de interrupciones diarias por persona (Input A) y el número de horas productivas reales por persona (Input B) para medir el nivel de ansiedad operativa.",
+  "kpi_impact": "Reducir interrupciones por debajo de 5 al día aumenta la productividad real entre un 20% y un 40% sin contratar más personal.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": "<1 interrupción por hora productiva",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Interrupciones diarias por persona" },
+    { "id": "inputB", "label": "Horas productivas reales por persona" }
+  ],
+
+  "input_a": "Interrupciones diarias",
+  "input_b": "Horas productivas reales",
+
+  "input_revised_1": "Interrupciones post",
+  "input_revised_2": "Horas productivas post",
+  "result_revised": "Δ nivel de ansiedad operativa",
+
+  "impact_treatment": "Reducción inmediata de tensión operativa y aumento de foco, calidad y estabilidad emocional del equipo.",
+  "optimizer_impact": "Más productividad sin más horas ni más personas.",
+
+  "optimizer_decision": "Diagnóstico de Interrupciones",
+  "optimizer_decision_explanation": "Identifica qué detona la ansiedad: personas, procesos o decisiones.",
+  "optimizer_action": "Protocolo de Foco Sostenido",
+  "optimizer_tool_explanation": "Define pasos para reducir interrupciones y estabilizar el sistema nervioso operativo.",
+
+  "example": "Agencia creativa: 27 interrupciones diarias por persona. Tras aplicar el protocolo bajan a 6, aumentando la productividad un 38% y reduciendo errores un 41%.",
+
+  "color_theme": "azul oscuro",
+
+  "capa_1_priorizacion": "Interrupciones constantes; urgencias; prioridades cambiantes; multitarea; falta de foco; agotamiento emocional; errores frecuentes.",
+  "justi_capa1": "La ansiedad operativa está desbordada y necesita intervención inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Durante 3 días consecutivos, cada persona registra cuántas interrupciones recibe (mensajes, llamadas, preguntas, urgencias). Calcula el promedio diario: ese es tu Input A.\n2) Registra cuántas horas reales de trabajo profundo tiene cada persona al día (sin interrupciones, sin multitarea). Calcula el promedio: ese es tu Input B.\nDivide Input A entre Input B para obtener tu nivel real de ansiedad operativa.",
+
+  "justi_capa2": "Necesitas medir con precisión el nivel de interrupciones para estabilizar el sistema nervioso de la empresa.",
+
+  "capa_3_comprension": "Análisis de detonantes",
+  "justi_capa3": "Para identificar qué provoca la ansiedad operativa.",
+
+  "capa_4_cambio": "Bloques de foco",
+  "justi_capa4": "Para reducir interrupciones y aumentar concentración.",
+
+  "capa_5_ejecucion": "Checklist de foco",
+  "justi_capa5": "Para asegurar que cada persona protege su tiempo productivo.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la reducción de ansiedad operativa en el tiempo."
+},
+{
+  "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
+  "explanation": "La disociación de liderazgo aparece cuando el equipo no sabe quién decide, quién prioriza o quién marca el rumbo. La empresa funciona, pero sin un eje claro. Las decisiones se diluyen, los mensajes se contradicen y el equipo opera en un estado de confusión silenciosa. Aquí reconstruimos la coherencia directiva para que el liderazgo vuelva a ser un punto de referencia estable.",
+  "lema": "Si el liderazgo no está alineado, la empresa se fragmenta.",
+  "orden": 42,
+  "symptom_id": "PSI-S2",
+  "department": "Organización",
+  "symptom_name": "Disociación de Liderazgo",
+  "logica": "El equipo recibe mensajes contradictorios, prioridades cambiantes y decisiones que se revierten. No hay un liderazgo unificado. Esto genera inseguridad, ralentiza la ejecución y erosiona la confianza interna.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu equipo recibe instrucciones diferentes según con quién hable, tu liderazgo está disociado. Esto genera confusión, fricción y pérdida de velocidad operativa.",
+
+  "kpi_question": "Introduce el número de decisiones contradictorias detectadas en el mes (Input A) y el número total de decisiones tomadas (Input B) para medir el nivel real de disociación.",
+  "kpi_impact": "Reducir contradicciones por debajo del 10% aumenta la confianza interna y acelera la ejecución.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": "<0.10",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Decisiones contradictorias detectadas" },
+    { "id": "inputB", "label": "Decisiones totales tomadas" }
+  ],
+
+  "input_a": "Decisiones contradictorias",
+  "input_b": "Decisiones totales",
+
+  "input_revised_1": "Contradicciones post",
+  "input_revised_2": "Decisiones totales post",
+  "result_revised": "Δ coherencia directiva",
+
+  "impact_treatment": "Alineación inmediata del liderazgo, reducción de fricción interna y aumento de velocidad en la ejecución.",
+  "optimizer_impact": "Decisiones más claras sin reorganizar toda la estructura.",
+
+  "optimizer_decision": "Diagnóstico de Coherencia Directiva",
+  "optimizer_decision_explanation": "Identifica dónde se contradicen las decisiones y por qué.",
+  "optimizer_action": "Protocolo de Alineación de Liderazgo",
+  "optimizer_tool_explanation": "Define pasos para unificar criterios, mensajes y prioridades.",
+
+  "example": "Empresa tecnológica: 11 decisiones contradictorias en un mes. Tras la intervención bajan a 2, reduciendo fricción interna un 54% y acelerando entregas clave en un 28%.",
+
+  "color_theme": "azul oscuro",
+
+  "capa_1_priorizacion": "Mensajes contradictorios; prioridades cambiantes; decisiones que se revierten; falta de alineación; inseguridad del equipo; fricción interna.",
+  "justi_capa1": "El liderazgo está desalineado y necesita intervención inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Revisa todas las decisiones tomadas en los últimos 30 días (reuniones, chats, emails, instrucciones). Marca cuántas se contradicen entre sí o fueron revertidas sin explicación. Ese número es tu Input A.\n2) Cuenta el total de decisiones tomadas en ese mismo periodo, independientemente de su calidad o coherencia. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu nivel real de disociación de liderazgo.",
+
+  "justi_capa2": "Necesitas medir con precisión dónde se contradice el liderazgo para reconstruir la coherencia directiva.",
+
+  "capa_3_comprension": "Análisis de alineación",
+  "justi_capa3": "Para detectar qué líderes generan contradicciones.",
+
+  "capa_4_cambio": "Unificación de criterios",
+  "justi_capa4": "Para asegurar que todos los líderes comunican lo mismo.",
+
+  "capa_5_ejecucion": "Checklist de liderazgo",
+  "justi_capa5": "Para validar que cada decisión se comunica de forma coherente.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la reducción de contradicciones en el tiempo."
+},
+{
+  "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
+  "explanation": "El delirio de prioridad aparece cuando la empresa cree que todo es importante, todo es urgente y todo debe hacerse ya. El sistema pierde criterio, el equipo pierde foco y la dirección pierde control. Aquí intervenimos para restaurar la capacidad de priorizar de forma racional, estratégica y sostenible.",
+  "lema": "Si todo es prioridad, nada avanza.",
+  "orden": 43,
+  "symptom_id": "PSI-S3",
+  "department": "Organización",
+  "symptom_name": "Delirio de Prioridad",
+  "logica": "La empresa vive en un estado de hiperactividad improductiva: demasiados frentes abiertos, demasiadas iniciativas simultáneas, demasiadas tareas sin impacto real. El sistema confunde movimiento con progreso. Aquí medimos la calidad de las prioridades y reconstruimos el criterio estratégico.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu equipo trabaja en demasiadas cosas a la vez y ninguna avanza con fuerza, tu empresa sufre delirio de prioridad. Esto destruye foco, velocidad y resultados.",
+
+  "kpi_question": "Introduce el número de tareas estratégicas completadas (Input A) y el número total de tareas iniciadas (Input B) para medir la calidad real de tus prioridades.",
+  "kpi_impact": "Alcanzar un 40% de tareas estratégicas completadas aumenta la velocidad real de avance y reduce la dispersión operativa.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": ">0.40",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Tareas estratégicas completadas" },
+    { "id": "inputB", "label": "Tareas totales iniciadas" }
+  ],
+
+  "input_a": "Tareas estratégicas completadas",
+  "input_b": "Tareas totales iniciadas",
+
+  "input_revised_1": "Tareas estratégicas post",
+  "input_revised_2": "Tareas totales post",
+  "result_revised": "Δ calidad de prioridad",
+
+  "impact_treatment": "Reducción inmediata de dispersión, aumento de foco y avance real en objetivos estratégicos.",
+  "optimizer_impact": "Más progreso con menos desgaste.",
+
+  "optimizer_decision": "Diagnóstico de Prioridad Real",
+  "optimizer_decision_explanation": "Identifica qué tareas generan impacto y cuáles solo consumen energía.",
+  "optimizer_action": "Protocolo de Prioridad Clínica",
+  "optimizer_tool_explanation": "Define pasos para seleccionar, sostener y completar prioridades reales.",
+
+  "example": "Startup SaaS: 41 tareas iniciadas, solo 9 estratégicas completadas (22%). Tras la intervención suben a 18 de 39 (46%), duplicando el avance real y reduciendo la dispersión un 37%.",
+
+  "color_theme": "azul oscuro",
+
+  "capa_1_priorizacion": "Demasiadas tareas; demasiados frentes abiertos; dispersión; urgencias falsas; falta de foco; avance lento; desgaste emocional.",
+  "justi_capa1": "El sistema ha perdido criterio de prioridad y necesita intervención inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Revisa todas las tareas iniciadas en los últimos 30 días y marca cuáles están directamente vinculadas a objetivos estratégicos (crecimiento, eficiencia, ingresos, retención). Ese número es tu Input A.\n2) Cuenta el total de tareas iniciadas en ese mismo periodo, sin importar su impacto. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu calidad real de prioridad.",
+
+  "justi_capa2": "Necesitas medir con precisión qué porcentaje de tu energía se invierte en lo que realmente importa.",
+
+  "capa_3_comprension": "Análisis de impacto",
+  "justi_capa3": "Para entender qué tareas generan avance real.",
+
+  "capa_4_cambio": "Regla de Prioridad Clínica",
+  "justi_capa4": "Para limitar frentes abiertos y aumentar foco.",
+
+  "capa_5_ejecucion": "Checklist de prioridad",
+  "justi_capa5": "Para validar que cada tarea merece existir.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la mejora en foco y avance real."
+},
+{
+  "specialty_id": "RESCATE DE PERSONAS",
+  "explanation": "La fatiga emocional acumulada aparece cuando las personas llevan demasiado tiempo sosteniendo más de lo que pueden. No es cansancio físico: es desgaste emocional. La energía baja, la motivación cae, la paciencia se agota y la calidad del trabajo se resiente. Aquí intervenimos para restaurar la salud emocional del equipo y devolver estabilidad, energía y claridad.",
+  "lema": "Las personas no se rompen de golpe, se rompen por acumulación.",
+  "orden": 51,
+  "symptom_id": "PER-S1",
+  "department": "Personas",
+  "symptom_name": "Fatiga Emocional Acumulada",
+  "logica": "El equipo está agotado emocionalmente: demasiadas urgencias, demasiada presión, demasiada incertidumbre. Esto reduce la creatividad, la paciencia, la calidad y la capacidad de sostener el ritmo. Aquí medimos el nivel real de desgaste y aplicamos un protocolo de recuperación.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu equipo está irritable, desconectado, lento o desmotivado, no es falta de actitud: es fatiga emocional acumulada.",
+
+  "kpi_question": "Introduce el número de señales de desgaste detectadas (Input A) y el número total de personas del equipo (Input B) para medir el nivel real de fatiga emocional.",
+  "kpi_impact": "Reducir señales de desgaste por debajo del 20% mejora la energía, la motivación y la calidad del trabajo.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": "<0.20",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Señales de desgaste detectadas" },
+    { "id": "inputB", "label": "Personas del equipo" }
+  ],
+
+  "input_a": "Señales de desgaste",
+  "input_b": "Personas del equipo",
+
+  "input_revised_1": "Señales post",
+  "input_revised_2": "Personas post",
+  "result_revised": "Δ nivel de fatiga emocional",
+
+  "impact_treatment": "Recuperación inmediata de energía emocional, reducción de irritabilidad y aumento de motivación.",
+  "optimizer_impact": "Más energía sin cambiar la estructura del equipo.",
+
+  "optimizer_decision": "Diagnóstico de Desgaste",
+  "optimizer_decision_explanation": "Identifica qué personas están más afectadas y por qué.",
+  "optimizer_action": "Protocolo de Recuperación Emocional",
+  "optimizer_tool_explanation": "Define pasos para reducir presión, restaurar energía y estabilizar el clima emocional.",
+
+  "example": "Equipo de atención al cliente: 7 señales de desgaste en un equipo de 18 personas (39%). Tras la intervención bajan a 3 (17%), reduciendo errores un 28% y aumentando satisfacción interna un 34%.",
+
+  "color_theme": "naranja",
+
+  "capa_1_priorizacion": "Irritabilidad; desmotivación; lentitud; desconexión; baja energía; microconflictos; agotamiento emocional.",
+  "justi_capa1": "El desgaste emocional es alto y necesita intervención inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Revisa durante 7 días señales de desgaste en el equipo: irritabilidad, retrasos, desconexión, errores, falta de iniciativa. Cuenta cuántas señales aparecen. Ese número es tu Input A.\n2) Cuenta el número total de personas del equipo, independientemente de su rol o antigüedad. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu nivel real de fatiga emocional acumulada.",
+
+  "justi_capa2": "Necesitas medir con precisión el desgaste emocional para intervenir donde más impacto tiene.",
+
+  "capa_3_comprension": "Análisis de detonantes emocionales",
+  "justi_capa3": "Para entender qué está generando el desgaste.",
+
+  "capa_4_cambio": "Reducción de presión",
+  "justi_capa4": "Para aliviar carga emocional y restaurar energía.",
+
+  "capa_5_ejecucion": "Checklist emocional",
+  "justi_capa5": "Para asegurar que cada persona tiene condiciones mínimas de estabilidad.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la recuperación emocional en el tiempo."
+},
+{
+  "specialty_id": "RESCATE DE PERSONAS",
+  "explanation": "La desconexión silenciosa aparece cuando las personas dejan de aportar, dejan de proponer y dejan de involucrarse, pero siguen presentes físicamente. No renuncian, pero tampoco participan. No se quejan, pero tampoco avanzan. Es una retirada emocional progresiva que erosiona la cultura y la productividad. Aquí intervenimos para reconectar, reactivar y restaurar el vínculo.",
+  "lema": "La desconexión no hace ruido, pero destruye en silencio.",
+  "orden": 52,
+  "symptom_id": "PER-S2",
+  "department": "Personas",
+  "symptom_name": "Desconexión Silenciosa",
+  "logica": "El equipo está presente pero no involucrado. Las personas cumplen, pero no se comprometen. La energía baja, la iniciativa desaparece y la cultura se debilita. Aquí medimos el nivel real de desconexión y aplicamos un protocolo de reactivación emocional.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu equipo hace lo mínimo, evita involucrarse y deja de proponer, tu empresa sufre desconexión silenciosa.",
+
+  "kpi_question": "Introduce el número de comportamientos pasivo‑reactivos detectados (Input A) y el número total de personas del equipo (Input B) para medir el nivel real de desconexión.",
+  "kpi_impact": "Reducir comportamientos pasivo‑reactivos por debajo del 15% aumenta la iniciativa, la energía y la participación.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": "<0.15",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Comportamientos pasivo‑reactivos detectados" },
+    { "id": "inputB", "label": "Personas del equipo" }
+  ],
+
+  "input_a": "Comportamientos pasivo‑reactivos",
+  "input_b": "Personas del equipo",
+
+  "input_revised_1": "Comportamientos post",
+  "input_revised_2": "Personas post",
+  "result_revised": "Δ nivel de desconexión",
+
+  "impact_treatment": "Recuperación inmediata de participación, energía y compromiso emocional.",
+  "optimizer_impact": "Más iniciativa sin aumentar presión ni carga.",
+
+  "optimizer_decision": "Diagnóstico de Conexión",
+  "optimizer_decision_explanation": "Identifica quién está desconectado y por qué.",
+  "optimizer_action": "Protocolo de Reactivación",
+  "optimizer_tool_explanation": "Define pasos para restaurar vínculo, motivación y participación.",
+
+  "example": "Empresa logística: 6 comportamientos pasivo‑reactivos en un equipo de 20 personas (30%). Tras la intervención bajan a 2 (10%), aumentando la iniciativa un 44% y reduciendo errores un 19%.",
+
+  "color_theme": "naranja",
+
+  "capa_1_priorizacion": "Baja iniciativa; participación mínima; silencio en reuniones; falta de propuestas; energía baja; cumplimiento sin compromiso.",
+  "justi_capa1": "La desconexión emocional es alta y necesita intervención inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Durante 7 días, registra comportamientos pasivo‑reactivos: no proponer, evitar responsabilidades, silencio en reuniones, mínima participación. Cuenta cuántos comportamientos aparecen. Ese número es tu Input A.\n2) Cuenta el número total de personas del equipo, independientemente de su rol. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu nivel real de desconexión silenciosa.",
+
+  "justi_capa2": "Necesitas medir con precisión la desconexión para intervenir donde más impacto tiene.",
+
+  "capa_3_comprension": "Análisis de vínculo",
+  "justi_capa3": "Para entender qué ha roto la conexión emocional.",
+
+  "capa_4_cambio": "Reactivación emocional",
+  "justi_capa4": "Para devolver energía, participación y compromiso.",
+
+  "capa_5_ejecucion": "Checklist de conexión",
+  "justi_capa5": "Para asegurar que cada persona vuelve a sentirse parte del sistema.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la recuperación del vínculo en el tiempo."
+},
+{
+  "specialty_id": "RESCATE DE PERSONAS",
+  "explanation": "La fuga de talento latente aparece cuando las personas clave ya se han ido emocionalmente, aunque sigan físicamente en la empresa. Su energía baja, su compromiso cae y su mirada está puesta fuera. No renuncian aún, pero ya no están. Aquí intervenimos para detectar señales tempranas y evitar pérdidas críticas.",
+  "lema": "Las personas no se van cuando renuncian, se van cuando dejan de creer.",
+  "orden": 53,
+  "symptom_id": "PER-S3",
+  "department": "Personas",
+  "symptom_name": "Fuga de Talento Latente",
+  "logica": "El talento clave empieza a desconectarse: baja participación, menos iniciativa, menos responsabilidad emocional, más distancia. Esto es una fuga silenciosa que, si no se interviene, termina en renuncias inesperadas y pérdida de conocimiento crítico.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tus personas clave están más distantes, menos involucradas o emocionalmente apagadas, tu empresa sufre fuga de talento latente.",
+
+  "kpi_question": "Introduce el número de señales de fuga detectadas (Input A) y el número total de personas clave analizadas (Input B) para medir el riesgo real de pérdida.",
+  "kpi_impact": "Reducir señales de fuga por debajo del 10% protege conocimiento crítico y estabilidad operativa.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": "<0.10",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Señales de fuga detectadas" },
+    { "id": "inputB", "label": "Personas clave analizadas" }
+  ],
+
+  "input_a": "Señales de fuga",
+  "input_b": "Personas clave",
+
+  "input_revised_1": "Señales post",
+  "input_revised_2": "Personas clave post",
+  "result_revised": "Δ riesgo de fuga",
+
+  "impact_treatment": "Reducción inmediata del riesgo de renuncias críticas y recuperación del compromiso emocional.",
+  "optimizer_impact": "Retención de talento sin aumentar salarios ni beneficios.",
+
+  "optimizer_decision": "Diagnóstico de Riesgo",
+  "optimizer_decision_explanation": "Identifica quién está a punto de irse y por qué.",
+  "optimizer_action": "Protocolo de Retención Activa",
+  "optimizer_tool_explanation": "Define pasos para reconectar, reconocer y retener talento clave.",
+
+  "example": "Empresa de software: 4 señales de fuga en un grupo de 12 personas clave (33%). Tras la intervención bajan a 1 (8%), estabilizando el equipo y evitando dos renuncias críticas.",
+  
+  "color_theme": "naranja",
+
+  "capa_1_priorizacion": "Distancia emocional; baja participación; menos iniciativa; reducción de responsabilidad; señales de salida; pérdida de energía.",
+  "justi_capa1": "El talento clave está desconectándose y necesita intervención inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Identifica a tus personas clave (roles críticos, conocimiento único, impacto alto). Durante 14 días registra señales de fuga: distancia emocional, menos participación, retrasos, falta de iniciativa, comentarios de desgaste. Cuenta cuántas señales aparecen. Ese número es tu Input A.\n2) Cuenta el número total de personas clave analizadas. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu riesgo real de fuga de talento latente.",
+
+  "justi_capa2": "Necesitas medir con precisión el riesgo de fuga para intervenir antes de perder talento crítico.",
+
+  "capa_3_comprension": "Análisis de motivadores",
+  "justi_capa3": "Para entender qué está empujando al talento a desconectarse.",
+
+  "capa_4_cambio": "Reactivación del vínculo",
+  "justi_capa4": "Para restaurar compromiso y sentido de pertenencia.",
+
+  "capa_5_ejecucion": "Checklist de retención",
+  "justi_capa5": "Para asegurar que cada persona clave recibe soporte emocional y estratégico.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la reducción del riesgo de fuga en el tiempo."
+},
+{
+  "specialty_id": "TERAPIA DE EXPERIENCIA",
+  "explanation": "La fricción sensorial aparece cuando la experiencia del cliente se siente torpe, pesada o incómoda. No duele, pero molesta. No bloquea, pero irrita. Son microfricciones que erosionan la percepción de calidad y reducen la probabilidad de compra o retorno. Aquí intervenimos para suavizar, pulir y armonizar la experiencia.",
+  "lema": "La fricción no mata, pero desgasta.",
+  "orden": 61,
+  "symptom_id": "EXP-S1",
+  "department": "Experiencia",
+  "symptom_name": "Fricción Sensorial",
+  "logica": "El cliente encuentra pequeños obstáculos: tiempos lentos, textos confusos, botones escondidos, pasos innecesarios, estética inconsistente. Nada es grave, pero todo suma. Aquí medimos la fricción real y eliminamos los puntos que dañan la experiencia.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu cliente se irrita, se pierde o se cansa durante la experiencia, tu sistema sufre fricción sensorial.",
+
+  "kpi_question": "Introduce el número de puntos de fricción detectados (Input A) y el número total de pasos de la experiencia (Input B) para medir la suavidad real del recorrido.",
+  "kpi_impact": "Reducir fricción por debajo del 10% aumenta conversión, satisfacción y repetición.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": "<0.10",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Puntos de fricción detectados" },
+    { "id": "inputB", "label": "Pasos totales de la experiencia" }
+  ],
+
+  "input_a": "Puntos de fricción",
+  "input_b": "Pasos totales",
+
+  "input_revised_1": "Fricciones post",
+  "input_revised_2": "Pasos post",
+  "result_revised": "Δ suavidad de experiencia",
+
+  "impact_treatment": "Reducción inmediata de irritación del cliente y aumento de fluidez en la experiencia.",
+  "optimizer_impact": "Más conversión sin cambiar el producto.",
+
+  "optimizer_decision": "Diagnóstico de Fricción",
+  "optimizer_decision_explanation": "Identifica dónde se incomoda el cliente y por qué.",
+  "optimizer_action": "Protocolo de Suavidad Sensorial",
+  "optimizer_tool_explanation": "Define pasos para eliminar obstáculos y armonizar la experiencia.",
+
+  "example": "Ecommerce: 12 fricciones en un recorrido de 40 pasos (30%). Tras la intervención bajan a 3 (7%), aumentando conversión un 22% y reduciendo abandono un 31%.",
+
+  "color_theme": "verde agua",
+
+  "capa_1_priorizacion": "Pasos confusos; tiempos lentos; textos ambiguos; estética inconsistente; botones escondidos; microirritaciones.",
+  "justi_capa1": "La experiencia tiene fricciones que dañan la percepción y la conversión.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Mapea todo el recorrido del cliente (web, app, tienda, servicio). Identifica cada paso y marca dónde el cliente se frena, duda, se irrita o se pierde. Ese número es tu Input A.\n2) Cuenta el total de pasos del recorrido, desde el primer contacto hasta la acción final. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu nivel real de fricción sensorial.",
+
+  "justi_capa2": "Necesitas medir con precisión dónde se incomoda el cliente para suavizar la experiencia.",
+
+  "capa_3_comprension": "Análisis de recorrido",
+  "justi_capa3": "Para detectar los puntos exactos donde se rompe la fluidez.",
+
+  "capa_4_cambio": "Suavización de pasos",
+  "justi_capa4": "Para eliminar obstáculos y reducir irritación.",
+
+  "capa_5_ejecucion": "Checklist sensorial",
+  "justi_capa5": "Para asegurar que cada paso es claro, fluido y agradable.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la mejora de suavidad en el tiempo."
+},
+{
+  "specialty_id": "TERAPIA DE EXPERIENCIA",
+  "explanation": "La amnesia de valor aparece cuando el cliente olvida rápidamente por qué tu marca importa. No recuerda lo que recibió, no recuerda cómo se sintió, no recuerda qué te hace diferente. La experiencia no deja huella. Aquí intervenimos para reconstruir la memoria emocional del cliente y aumentar la retención natural.",
+  "lema": "Si el cliente te olvida, nunca vuelve.",
+  "orden": 62,
+  "symptom_id": "EXP-S2",
+  "department": "Experiencia",
+  "symptom_name": "Amnesia de Valor",
+  "logica": "El cliente vive la experiencia, pero no la recuerda. No hay momentos memorables, no hay detalles que destaquen, no hay emociones que se queden. Esto reduce la repetición, la recomendación y la fidelidad. Aquí medimos la huella emocional real y reconstruimos el valor percibido.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu cliente compra, recibe o usa tu servicio pero no recuerda nada especial, tu experiencia sufre amnesia de valor.",
+
+  "kpi_question": "Introduce el número de momentos memorables identificados (Input A) y el número total de interacciones del recorrido (Input B) para medir la huella emocional real.",
+  "kpi_impact": "Alcanzar al menos un 15% de momentos memorables aumenta la repetición y la recomendación orgánica.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": ">0.15",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Momentos memorables identificados" },
+    { "id": "inputB", "label": "Interacciones totales del recorrido" }
+  ],
+
+  "input_a": "Momentos memorables",
+  "input_b": "Interacciones totales",
+
+  "input_revised_1": "Momentos memorables post",
+  "input_revised_2": "Interacciones totales post",
+  "result_revised": "Δ huella emocional",
+
+  "impact_treatment": "Incremento inmediato de valor percibido, retención y recomendación.",
+  "optimizer_impact": "Más fidelidad sin aumentar inversión en marketing.",
+
+  "optimizer_decision": "Diagnóstico de Huella",
+  "optimizer_decision_explanation": "Identifica qué momentos generan emoción y cuáles pasan desapercibidos.",
+  "optimizer_action": "Protocolo de Momentos Memorables",
+  "optimizer_tool_explanation": "Define pasos para crear microexperiencias que el cliente recuerde y valore.",
+
+  "example": "Clínica dental: 2 momentos memorables en 18 interacciones (11%). Tras la intervención suben a 4 (22%), aumentando la repetición un 19% y la recomendación un 27%.",
+
+  "color_theme": "verde agua",
+
+  "capa_1_priorizacion": "Experiencia plana; falta de emoción; ausencia de detalles; recorrido olvidable; baja retención; poca recomendación.",
+  "justi_capa1": "La experiencia no deja huella y necesita intervención inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Mapea todas las interacciones del recorrido del cliente (desde el primer contacto hasta el cierre). Identifica cuáles generan emoción positiva, sorpresa o cuidado. Ese número es tu Input A.\n2) Cuenta el total de interacciones del recorrido, sin importar su calidad. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu nivel real de huella emocional.",
+
+  "justi_capa2": "Necesitas medir con precisión qué tan memorable es tu experiencia para reconstruir el valor percibido.",
+
+  "capa_3_comprension": "Análisis emocional",
+  "justi_capa3": "Para detectar qué interacciones no generan valor emocional.",
+
+  "capa_4_cambio": "Creación de momentos memorables",
+  "justi_capa4": "Para aumentar la huella emocional del recorrido.",
+
+  "capa_5_ejecucion": "Checklist de memorabilidad",
+  "justi_capa5": "Para asegurar que cada interacción tiene intención emocional.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la evolución de la huella emocional."
+},
+{
+  "specialty_id": "TERAPIA DE EXPERIENCIA",
+  "explanation": "La experiencia neutra aparece cuando el cliente vive un recorrido correcto, funcional, sin errores… pero sin emoción. Todo funciona, pero nada destaca. Todo está bien, pero nada es memorable. La experiencia no genera transformación, no genera vínculo y no genera preferencia. Aquí intervenimos para elevar la experiencia de correcta a extraordinaria.",
+  "lema": "Lo contrario de una mala experiencia no es una buena, es una experiencia neutra.",
+  "orden": 63,
+  "symptom_id": "EXP-S3",
+  "department": "Experiencia",
+  "symptom_name": "Experiencia Neutra",
+  "logica": "La empresa entrega lo prometido, pero no sorprende. El cliente recibe lo que esperaba, pero no más. Esto reduce la fidelidad, la recomendación y la diferenciación. Aquí medimos el nivel de neutralidad y diseñamos experiencias que eleven la percepción de valor.",
+  "plan": "PIE",
+
+  "description_symptom": "Si tu cliente dice 'todo bien' pero no vuelve, tu experiencia es neutra.",
+
+  "kpi_question": "Introduce el número de interacciones con impacto emocional positivo (Input A) y el número total de interacciones del recorrido (Input B) para medir el nivel real de neutralidad.",
+  "kpi_impact": "Alcanzar al menos un 20% de interacciones con impacto emocional positivo aumenta la fidelidad y la recomendación.",
+  "kpi_formula": "(InputA/InputB)",
+  "kpi_objective": ">0.20",
+
+  "threshold_critical": 70,
+  "threshold_recommended": 85,
+  "threshold_optimizer": 95,
+  "threshold_elite": 100,
+
+  "inputs": [
+    { "id": "inputA", "label": "Interacciones con impacto emocional positivo" },
+    { "id": "inputB", "label": "Interacciones totales del recorrido" }
+  ],
+
+  "input_a": "Interacciones positivas",
+  "input_b": "Interacciones totales",
+
+  "input_revised_1": "Interacciones positivas post",
+  "input_revised_2": "Interacciones totales post",
+  "result_revised": "Δ impacto emocional",
+
+  "impact_treatment": "Incremento inmediato de valor percibido, diferenciación y fidelidad.",
+  "optimizer_impact": "Más recomendación sin aumentar inversión en marketing.",
+
+  "optimizer_decision": "Diagnóstico de Neutralidad",
+  "optimizer_decision_explanation": "Identifica qué partes del recorrido son correctas pero no memorables.",
+  "optimizer_action": "Protocolo de Elevación de Experiencia",
+  "optimizer_tool_explanation": "Define pasos para transformar interacciones funcionales en interacciones memorables.",
+
+  "example": "Centro de formación: 3 interacciones positivas en un recorrido de 20 pasos (15%). Tras la intervención suben a 6 (30%), aumentando la repetición un 22% y la recomendación un 31%.",
+
+  "color_theme": "verde agua",
+
+  "capa_1_priorizacion": "Experiencia correcta pero plana; falta de emoción; ausencia de sorpresa; recorrido funcional pero no memorable.",
+  "justi_capa1": "La experiencia no genera impacto emocional y necesita intervención inmediata.",
+
+  "capa_2_decision": "Impacto vs Esfuerzo",
+
+  "capa_2_options":
+  "1) Mapea todas las interacciones del recorrido del cliente. Identifica cuáles generan emoción positiva (sorpresa, cuidado, claridad, alivio). Ese número es tu Input A.\n2) Cuenta el total de interacciones del recorrido, sin importar su calidad. Ese número es tu Input B.\nDivide Input A entre Input B para obtener tu nivel real de impacto emocional.",
+
+  "justi_capa2": "Necesitas medir con precisión qué tan transformadora es tu experiencia para elevarla.",
+
+  "capa_3_comprension": "Análisis de impacto emocional",
+  "justi_capa3": "Para detectar qué interacciones son planas o neutras.",
+
+  "capa_4_cambio": "Elevación de interacciones",
+  "justi_capa4": "Para transformar momentos funcionales en momentos memorables.",
+
+  "capa_5_ejecucion": "Checklist de impacto",
+  "justi_capa5": "Para asegurar que cada interacción aporta valor emocional.",
+
+  "capa_6_seguimiento": "OKR tracking",
+  "justi_capa6": "Para medir la evolución del impacto emocional."
+}
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
