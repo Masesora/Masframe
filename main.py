@@ -35,6 +35,9 @@ from routers.mensajes_router   import router as mensajes_router
 # Documentos expediente — /documentos/*
 from routers.documentos_router import router as documentos_router
 
+# Diagnóstico Tu Solución — /api/leads
+from routers.leads_router      import router as leads_router
+
 
 app = FastAPI(
     title="MASFRAME® API",
@@ -58,6 +61,8 @@ app.add_middleware(
         "https://ese-cc2u.onrender.com/",
         "http://localhost:5173",
         "http://localhost:5173/",
+        "https://masesora.com",
+        "https://www.masesora.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -81,6 +86,7 @@ app.include_router(payments_router)
 app.include_router(mensajes_router)    # ⭐ Mensajería — ANTES de panel
 app.include_router(panel_router)       # ⭐ Panel TriajePage
 app.include_router(documentos_router)  # ⭐ Documentos expediente
+app.include_router(leads_router)       # ⭐ Diagnóstico Tu Solución
 
 
 # ============================================================
@@ -101,6 +107,7 @@ def root():
             "mensajes":   ["/mensajes", "/mensajes/{codigo}", "/mensajes/no-leidos"],
             "documentos": ["/documentos/{codigo}"],
             "panel":      ["/clients", "/acis", "/consultores", "/cliente/status/{codigo}"],
+            "leads":      ["/api/leads"],
         }
     }
 
