@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>MAS@FRAME® · En construcción · MASESORA</title>
+  <meta name="description" content="MAS@FRAME® está actualmente en construcción. Mientras, te invitamos a conocer Tu Solución, el diagnóstico clínico de 10 minutos de MASESORA."/>
+  <meta name="robots" content="noindex,nofollow"/>
+
+  <link rel="icon" type="image/svg+xml" href="https://www.masesora.com/assets/favicon.svg"/>
+  <link rel="alternate icon" href="https://www.masesora.com/assets/favicon.svg"/>
+  <link rel="apple-touch-icon" href="https://www.masesora.com/assets/favicon.svg"/>
+  <meta name="theme-color" content="#0F1A35"/>
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-62L9S89H53"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-62L9S89H53');
+
+    // Tracking de clicks delegados (telón EN CONSTRUCCIÓN)
+    document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('click', function(e) {
+        var a = e.target.closest('a');
+        if (!a || !a.href) return;
+        var href = a.href;
+        if (href.indexOf('tusolucion.onrender.com') !== -1) {
+          gtag('event','clic_construir_solucion',{from:'/masframelanding'});
+        } else if (href.indexOf('masesora.com') !== -1) {
+          gtag('event','clic_volver_masesora',{from:'/masframelanding'});
+        }
+      });
+    });
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --navy:#0F1A35;
+      --navy-deep:#070d18;
+      --navy-soft:#1E3060;
+      --gold:#B89D52;
+      --gold-light:#E8C96A;
+      --white:#FFFFFF;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;
+      background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 50%,var(--navy-soft) 100%);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      line-height:1.55;
+      overflow-x:hidden;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 24px;
+      position:relative;
+    }
+
+    /* Patrón sutil de fondo */
+    body::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(184,157,82,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(184,157,82,.04) 1px,transparent 1px);
+      background-size:48px 48px;
+      pointer-events:none;
+    }
+
+    .uc-wrap{
+      position:relative;
+      z-index:1;
+      max-width:680px;
+      text-align:center;
+      animation:fadeUp .8s ease both;
+    }
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(20px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .uc-hex{
+      width:88px;
+      height:88px;
+      margin:0 auto 28px;
+      display:block;
+    }
+
+    .uc-eyebrow{
+      font-size:.78rem;
+      letter-spacing:.3em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:18px;
+      font-weight:600;
+    }
+
+    .uc-h1{
+      font-family:'Playfair Display',Georgia,serif;
+      font-size:clamp(2.2rem,6vw,3.6rem);
+      font-weight:500;
+      line-height:1.15;
+      margin-bottom:24px;
+      letter-spacing:-.01em;
+      color:var(--white);
+    }
+    .uc-h1 em{
+      font-style:italic;
+      color:var(--gold-light);
+    }
+
+    .uc-lead{
+      font-size:1.05rem;
+      line-height:1.7;
+      color:rgba(255,255,255,.78);
+      max-width:540px;
+      margin:0 auto 18px;
+    }
+    .uc-lead strong{color:var(--gold-light);font-weight:600}
+
+    .uc-divider{
+      width:48px;
+      height:2px;
+      background:var(--gold);
+      margin:32px auto;
+      opacity:.6;
+    }
+
+    .uc-cta-row{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:36px;
+    }
+    .uc-cta-primary{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:16px 30px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#C8A84B,var(--gold-light));
+      color:var(--navy);
+      font-size:.88rem;
+      font-weight:700;
+      letter-spacing:.04em;
+      text-decoration:none;
+      transition:transform .25s,box-shadow .25s,filter .25s;
+      box-shadow:0 10px 30px -8px rgba(184,157,82,.5);
+      white-space:nowrap;
+    }
+    .uc-cta-primary:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.08);
+      box-shadow:0 14px 40px -6px rgba(184,157,82,.7);
+    }
+    .uc-cta-ghost{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:16px 28px;
+      border-radius:999px;
+      background:transparent;
+      border:1px solid rgba(184,157,82,.45);
+      color:rgba(255,255,255,.85);
+      font-size:.84rem;
+      font-weight:500;
+      letter-spacing:.04em;
+      text-decoration:none;
+      transition:border-color .25s,color .25s;
+      white-space:nowrap;
+    }
+    .uc-cta-ghost:hover{
+      border-color:var(--gold-light);
+      color:var(--white);
+    }
+
+    .uc-foot{
+      margin-top:42px;
+      font-size:.78rem;
+      color:rgba(255,255,255,.45);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    @media (max-width:520px){
+      .uc-cta-row{flex-direction:column;align-items:stretch}
+      .uc-cta-primary,.uc-cta-ghost{justify-content:center}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .uc-wrap{animation:none}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="uc-wrap">
+
+    <svg class="uc-hex" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="ucg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#C8A84B"/>
+          <stop offset="50%" stop-color="#E8C96A"/>
+          <stop offset="100%" stop-color="#B89D52"/>
+        </linearGradient>
+      </defs>
+      <rect width="120" height="120" fill="#0F1A35" rx="24"/>
+      <polygon points="60,12 95,31 95,69 60,88 25,69 25,31" fill="none" stroke="url(#ucg)" stroke-width="2.5" opacity="0.9"/>
+      <polygon points="60,22 85,36 85,64 60,78 35,64 35,36" fill="none" stroke="url(#ucg)" stroke-width="1" opacity="0.3"/>
+      <text x="60" y="70" font-family="Montserrat,sans-serif" font-size="36" font-weight="800" fill="#F9F7F2" text-anchor="middle">M</text>
+    </svg>
+
+    <div class="uc-eyebrow">MAS@FRAME® · MASESORA</div>
+
+    <h1 class="uc-h1">Estamos <em>construyendo.</em></h1>
+
+    <p class="uc-lead">
+      MAS@FRAME® es nuestro sistema enterprise de intervención empresarial estructurado, pensado para asesorías y empresas que quieren digitalizar su propia metodología.
+    </p>
+    <p class="uc-lead">
+      Está actualmente en construcción y se publicará próximamente.
+    </p>
+
+    <div class="uc-divider"></div>
+
+    <p class="uc-lead">
+      Mientras tanto, te invitamos a conocer <strong>Tu Solución</strong>, el diagnóstico clínico de 10 minutos para autónomos y micropymes.
+    </p>
+
+    <div class="uc-cta-row">
+      <a href="https://tusolucion.onrender.com" class="uc-cta-primary">Empezar mi diagnóstico →</a>
+      <a href="https://www.masesora.com" class="uc-cta-ghost">Volver a masesora.com</a>
+    </div>
+
+    <p class="uc-foot">Próximamente disponible · Equipo MASESORA</p>
+
+  </div>
+
+</body>
+</html>
