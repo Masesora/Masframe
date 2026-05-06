@@ -19,17 +19,28 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-62L9S89H53');
+  </script>
 
-    // Tracking de clicks delegados (telón EN CONSTRUCCIÓN)
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','4359415267704371');
+    fbq('track','PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4359415267704371&ev=PageView&noscript=1"/></noscript>
+
+  <!-- Tracking unificado · clicks a GA4 + Meta Pixel (telón) -->
+  <script>
     document.addEventListener('DOMContentLoaded', function() {
       document.addEventListener('click', function(e) {
         var a = e.target.closest('a');
         if (!a || !a.href) return;
         var href = a.href;
         if (href.indexOf('tusolucion.onrender.com') !== -1) {
-          gtag('event','clic_construir_solucion',{from:'/masframelanding'});
+          if (typeof gtag==='function') gtag('event','clic_construir_solucion',{from:'/masframelanding'});
+          if (typeof fbq==='function') fbq('trackCustom','InitiateQuestionnaire',{from:'/masframelanding'});
         } else if (href.indexOf('masesora.com') !== -1) {
-          gtag('event','clic_volver_masesora',{from:'/masframelanding'});
+          if (typeof gtag==='function') gtag('event','clic_volver_masesora',{from:'/masframelanding'});
         }
       });
     });
