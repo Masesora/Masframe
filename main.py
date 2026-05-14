@@ -104,6 +104,8 @@ def root():
             "ese":        ["/ese/submit", "/ese/{codigo}"],
             "treatment":  ["/treatment/save", "/treatment/{codigo}/{symptomId}", "/triaje/{codigo}"],
             "payments":   ["/payments/create-payment-intent"],
+            "contracts":  ["/contracts/generar/{codigo}", "/contracts/html/{codigo}",
+                           "/contracts/firmar/{codigo}", "/contracts/factura/{codigo}"],
             "mensajes":   ["/mensajes", "/mensajes/{codigo}", "/mensajes/no-leidos"],
             "documentos": ["/documentos/{codigo}"],
             "panel":      ["/clients", "/acis", "/consultores", "/cliente/status/{codigo}"],
@@ -114,10 +116,4 @@ def root():
 
 # ============================================================
 # EJECUCIÓN LOCAL
-# ============================================================
-
-if __name__ == "__main__":
-    import os
-    import uvicorn
-    port = int(os.environ.get("PORT", 10000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+# =========================================
