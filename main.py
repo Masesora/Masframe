@@ -38,6 +38,9 @@ from routers.documentos_router import router as documentos_router
 # Diagnóstico Tu Solución — /api/leads
 from routers.leads_router      import router as leads_router
 
+# Alta Clínica — /discharge/* + /certificados
+from routers.discharge_router  import router as discharge_router
+
 
 app = FastAPI(
     title="MASFRAME® API",
@@ -87,6 +90,7 @@ app.include_router(mensajes_router)    # ⭐ Mensajería — ANTES de panel
 app.include_router(panel_router)       # ⭐ Panel TriajePage
 app.include_router(documentos_router)  # ⭐ Documentos expediente
 app.include_router(leads_router)       # ⭐ Diagnóstico Tu Solución
+app.include_router(discharge_router)   # ⭐ Alta Clínica + Certificados
 
 
 # ============================================================
@@ -116,4 +120,10 @@ def root():
 
 # ============================================================
 # EJECUCIÓN LOCAL
-# =========================================
+# ============================================================
+
+if __name__ == "__main__":
+    import os
+    import uvicorn
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
