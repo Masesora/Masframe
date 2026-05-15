@@ -34,6 +34,9 @@ async def get_discharge_data(codigo: str, symptomId: str):
             "evidences": (triaje.get("evidences", {}) or {}).get(symptomId),
         }
 
+    # KPIs maestros del Anexo I para este síntoma (si CC los configuró)
+    anexo_i_symptom = (client.get("anexo_i") or {}).get(symptomId, {})
+
     return {
         "codigo":             codigo,
         "empresa":            client.get("empresa") or client.get("razon_social") or codigo,
@@ -42,6 +45,7 @@ async def get_discharge_data(codigo: str, symptomId: str):
         "sintomas_activos":   client.get("sintomas_activos", []),
         "sintomas_completados": client.get("sintomas_completados", []),
         "session":            session,
+        "anexo_i":            anexo_i_symptom,   # { kpi_question, kpi_objetivo, kpi_unidad, kpi_inicial }
     }
 
 
