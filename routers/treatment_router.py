@@ -183,7 +183,108 @@ async def get_treatment(codigo: str, symptomId: str):
         "shared":    (doc.get("shared") or {}).get(symptomId),
         "evidences": (doc.get("evidences") or {}).get(symptomId),
         "kpi":       (doc.get("kpis") or {}).get(symptomId),
+        "c0_locked": (doc.get("flags") or {}).get(symptomId, {}).get("c0_locked", False),
     }
+
+
+# ============================================================
+# POST /treatment/lock-c0/{codigo}/{symptomId}
+# ACI confirma C0 → bloquea para ACI + notifica CC interno
+# ============================================================
+
+@router.post("/treatment/lock-c0/{codigo}/{symptomId}")
+async def lock_c0(codigo: str, symptomId: str, payload: dict = {}):
+    """
+    Bloquea C0 para el ACI (solo CC/admin pueden desbloquear).
+    Registra kpi_value, kpi_question y kpi_objetivo en clients.anexo_i.
+    Envía mensaje interno al CC asignado.
+    """
+    triaje_col  = get_collection("triaje")
+    clients_col = get_collection("clients")
+    mensajes_col = get_collection("mensajes")
+    ahora = datetime.utcnow()
+
+    # 1. Marcar c0_locked en triaje.flags
+    await triaje_col.update_one(
+        {"codigo": codigo},
+        {"$set": {
+            f"flags.{symptomId}.c0_locked":     True,
+            f"flags.{symptomId}.c0_locked_at":  ahora,
+            "updated_at": ahora,
+        }},
+        upsert=True,
+    )
+
+    # 2. Guardar datos C0 en clients.anexo_i (kpi_inicial + kpi_question)
+    kpi_value    = payload.get("kpi_value", "")
+    kpi_question = payload.get("kpi_question", "")
+    kpi_objetivo = payload.get("kpi_objetivo", "")
+    kpi_unidad   = payload.get("kpi_unidad", "")
+    empresa      = payload.get("empresa", codigo)
+    aci_nombre   = payload.get("aci_nombre", "")
+
+    if kpi_value or kpi_question:
+        await clients_col.update_one(
+            {"codigo": codigo},
+            {"$set": {
+                f"anexo_i.{symptomId}.kpi_inicial":  kpi_value,
+                f"anexo_i.{symptomId}.kpi_question": kpi_question,
+                f"anexo_i.{symptomId}.kpi_objetivo": kpi_objetivo,
+                f"anexo_i.{symptomId}.kpi_unidad":   kpi_unidad,
+                "updated_at": ahora,
+            }},
+        )
+
+    # 3. Obtener CC asignado
+    client = await clients_col.find_one({"codigo": codigo})
+    cc_email = (client or {}).get("cc_asignado", "")
+
+    # 4. Enviar mensaje interno al CC
+    if cc_email:
+        await mensajes_col.insert_one({
+            "de":              "sistema",
+            "para":            cc_email,
+            "texto":           (
+                f"📋 {empresa} ({codigo}) ha confirmado los datos iniciales de {symptomId}.\n"
+                f"KPI inicial declarado: {kpi_value}\n"
+                f"Pregunta KPI: {kpi_question}\n"
+                f"Objetivo: {kpi_objetivo}\n"
+                f"C0 queda bloqueado. Revisa y valida el Anexo I en el expediente."
+            ),
+            "tipo":            "c0_confirmado",
+            "cliente_codigo":  codigo,
+            "symptom_id":      symptomId,
+            "leido":           False,
+            "fecha":           ahora,
+        })
+
+    return {
+        "ok":         True,
+        "c0_locked":  True,
+        "locked_at":  ahora.isoformat(),
+        "cc_notified": bool(cc_email),
+    }
+
+
+# ============================================================
+# DELETE /treatment/lock-c0/{codigo}/{symptomId}
+# CC/admin desbloquea C0 para corrección
+# ============================================================
+
+@router.delete("/treatment/lock-c0/{codigo}/{symptomId}")
+async def unlock_c0(codigo: str, symptomId: str):
+    """Solo CC o admin pueden desbloquear C0."""
+    triaje_col = get_collection("triaje")
+    ahora = datetime.utcnow()
+    await triaje_col.update_one(
+        {"codigo": codigo},
+        {"$set": {
+            f"flags.{symptomId}.c0_locked":       False,
+            f"flags.{symptomId}.c0_unlocked_at":  ahora,
+            "updated_at": ahora,
+        }},
+    )
+    return {"ok": True, "c0_locked": False}
 
 
 @router.get("/triaje/{codigo}")

@@ -65,7 +65,13 @@ CLAUSULAS = [
     (
         "3. ALCANCE DE LA INTERVENCIÓN",
         """<p>El alcance queda definido exclusivamente por los síntomas contratados y el plan
-        elegido, tal y como se detallan en el <strong>Anexo I</strong> de este contrato.</p>
+        elegido, tal y como figuran en el encabezado del presente contrato.</p>
+        <p><strong>Anexo I — KPIs Maestros:</strong> Este contrato incluye un Anexo I vinculante
+        que documenta, para cada síntoma, el KPI de partida (valor C0), el criterio objetivo
+        de alta y la fórmula de medición. El Anexo I <strong>se cumplimenta al inicio del protocolo
+        de tratamiento</strong>, una vez completada la Capa C0 por el ACI y validada por el CC.
+        Desde ese momento queda firmado digitalmente por ambas partes y es inamovible
+        durante la vigencia del contrato.</p>
         <p>Cualquier ampliación del alcance —nuevos síntomas, planes adicionales o
         extensiones— requerirá un addendum firmado por ambas partes y el pago del importe
         correspondiente según la política de precios vigente en ese momento.</p>
@@ -138,10 +144,11 @@ CLAUSULAS = [
             Comparación con valor C0. Emisión del veredicto y, si procede, del
             Certificado de Alta.</li>
         </ul>
-        <p><strong>El KPI Maestro</strong> es la métrica principal del síntoma tratado. Se define
-        en C0, se valida en C1, se compromete en C2 y se certifica en C6. Su fórmula,
-        fuente de datos, frecuencia de medición y criterio de éxito quedan documentados
-        en el <strong>Anexo I</strong> del presente contrato y son vinculantes para ambas partes.</p>
+        <p><strong>El KPI Maestro</strong> es la métrica principal del síntoma tratado. Se declara
+        en C0 por el ACI, se valida en C1, se compromete en C2 y se certifica en C6.
+        Su valor de partida, fórmula, fuente de datos, frecuencia de medición y criterio
+        de alta quedan registrados en el <strong>Anexo I</strong>, que se genera y firma digitalmente
+        al completar C0, siendo vinculante e inamovible para ambas partes a partir de ese momento.</p>
         <p>El alta solo se emite cuando el KPI Maestro alcanza el criterio objetivo con
         veredicto <strong>EXCELENTE</strong> u <strong>ÓPTIMO</strong>. No se certifica por completar
         formularios, sino por <strong>resultados reales documentados y verificados por el sistema.</strong></p>"""
