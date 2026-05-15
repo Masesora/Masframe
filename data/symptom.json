@@ -13,7 +13,7 @@
     "kpi_question": "¿Quieres saber cuántos días puede sobrevivir tu empresa sin facturar nada? Este número revela si tienes oxígeno financiero real o si vives al límite de la caja.",
     "kpi_impact": "Tras el tratamiento, tu empresa gana días reales de vida financiera — sin depender de nuevas ventas para mantenerse a flote.",
     "kpi_formula": "(InputA*30/InputB)",
-    "kpi_objective": ">30 días",
+    "kpi_objective": ">15 días",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
