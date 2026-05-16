@@ -1,20 +1,24 @@
 # panel_router.py
-# Endpoints sin prefijo para TriajePage
-# /clients, /ese/list, /acis, /consultores, /mensajes/no-leidos
-
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 from typing import Optional
 from datetime import datetime
 from database.database import get_collection as _get_col
+from routers.auth_deps import (
+    get_current_user,
+    require_cc_or_admin,
+    require_admin,
+    require_internal,
+    check_owns_or_internal,
+)
 
 router = APIRouter(tags=["panel"])
 
 
-# ── GET /clients ──────────────────────────────────────────────
 @router.get("/clients")
 async def get_clients(
     q: Optional[str] = Query(None),
     limit: int = Query(100, le=500),
+    _user: dict = Depends(require_cc_or_admin),
 ):
     col = _get_col("clients")
     filtro = {}
@@ -29,42 +33,39 @@ async def get_clients(
     return clientes
 
 
-# ── GET /ese/list ─────────────────────────────────────────────
 @router.get("/ese/list")
-async def get_ese_list(limit: int = Query(100, le=500)):
+async def get_ese_list(
+    limit: int = Query(100, le=500),
+    _user: dict = Depends(require_cc_or_admin),
+):
     col = _get_col("clients")
     cursor = col.find({}, {"_id": 0}).sort("created_at", -1).limit(limit)
     clientes = await cursor.to_list(length=limit)
     return clientes
 
 
-# ── GET /acis ─────────────────────────────────────────────────
 @router.get("/acis")
-async def get_acis():
+async def get_acis(_user: dict = Depends(require_cc_or_admin)):
     col = _get_col("internal_users")
     cursor = col.find(
         {"role": "aci"},
-        {"_id": 0, "password": 0, "hashed_password": 0}
+        {"_id": 0, "password": 0, "password_hash": 0, "hashed_password": 0}
     )
-    acis = await cursor.to_list(length=100)
-    return acis
+    return await cursor.to_list(length=100)
 
 
-# ── GET /consultores ──────────────────────────────────────────
 @router.get("/consultores")
-async def get_consultores():
+async def get_consultores(_user: dict = Depends(require_cc_or_admin)):
     col = _get_col("internal_users")
     cursor = col.find(
         {"role": "cc"},
-        {"_id": 0, "password": 0, "hashed_password": 0}
+        {"_id": 0, "password": 0, "password_hash": 0, "hashed_password": 0}
     )
-    ccs = await cursor.to_list(length=100)
-    return ccs
+    return await cursor.to_list(length=100)
 
 
-# ── POST /consultores — crear CC ──────────────────────────────
 @router.post("/consultores")
-async def create_consultor(payload: dict):
+async def create_consultor(payload: dict, _user: dict = Depends(require_admin)):
     col = _get_col("internal_users")
     payload["role"] = "cc"
     payload["created_at"] = datetime.utcnow()
@@ -74,23 +75,26 @@ async def create_consultor(payload: dict):
     await col.insert_one(payload)
     payload.pop("_id", None)
     payload.pop("password", None)
+    payload.pop("password_hash", None)
     payload.pop("hashed_password", None)
     return {"status": "ok", "data": payload}
 
 
-# ── GET /mensajes/no-leidos ───────────────────────────────────
 @router.get("/mensajes/no-leidos")
-async def get_mensajes_no_leidos(email: Optional[str] = Query(None)):
+async def get_mensajes_no_leidos(
+    email: Optional[str] = Query(None),
+    _user: dict = Depends(require_internal),
+):
     return []
 
 
-# ── GET /cliente/status/{codigo} — para LoginPage ────────────
+# Publico - usado en LoginPage para verificar pago antes de redirigir
 @router.get("/cliente/status/{codigo}")
 async def get_cliente_status(codigo: str):
     col = _get_col("clients")
     doc = await col.find_one({"codigo": codigo}, {"_id": 0})
     if not doc:
-        raise HTTPException(status_code=404, detail="Código no encontrado")
+        raise HTTPException(status_code=404, detail="Codigo no encontrado")
     return {
         "codigo":          doc.get("codigo"),
         "pago_confirmado": doc.get("pago_confirmado", False),
@@ -99,31 +103,34 @@ async def get_cliente_status(codigo: str):
     }
 
 
-# ── POST /clients/{codigo} — guardar datos fiscales ──────────
+# El propio cliente rellena su ficha fiscal; internos tambien pueden
 @router.post("/clients/{codigo}")
-async def save_client_datos(codigo: str, payload: dict):
+async def save_client_datos(
+    codigo: str,
+    payload: dict,
+    user: dict = Depends(get_current_user),
+):
+    check_owns_or_internal(user, codigo)
     col = _get_col("clients")
     doc = await col.find_one({"codigo": codigo})
     if not doc:
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
     payload["updated_at"] = datetime.utcnow()
-    await col.update_one(
-        {"codigo": codigo},
-        {"$set": payload}
-    )
+    await col.update_one({"codigo": codigo}, {"$set": payload})
     return {"status": "ok", "codigo": codigo}
 
 
-# ── PATCH /clients/{codigo} — actualizar datos ────────────────
+# Solo CC y admin pueden hacer PATCH sobre datos de cliente
 @router.patch("/clients/{codigo}")
-async def update_client(codigo: str, payload: dict):
+async def update_client(
+    codigo: str,
+    payload: dict,
+    _user: dict = Depends(require_cc_or_admin),
+):
     col = _get_col("clients")
     doc = await col.find_one({"codigo": codigo})
     if not doc:
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
     payload["updated_at"] = datetime.utcnow()
-    await col.update_one(
-        {"codigo": codigo},
-        {"$set": payload}
-    )
+    await col.update_one({"codigo": codigo}, {"$set": payload})
     return {"status": "ok", "codigo": codigo}

@@ -1,10 +1,16 @@
 # treatment_router.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional, Any
 from datetime import datetime, timedelta
 import os, httpx
 from database.database import get_collection
+from routers.auth_deps import (
+    get_current_user,
+    require_internal,
+    require_cc_or_admin,
+    check_owns_or_internal,
+)
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 FROM_EMAIL     = "info@masesora.com"
@@ -32,8 +38,14 @@ class TreatmentSaveRequest(BaseModel):
     state:     Optional[str] = None
 
 
+# POST /treatment/save — cliente solo su expediente, internos cualquiera
 @router.post("/treatment/save")
-async def save_treatment(data: TreatmentSaveRequest):
+async def save_treatment(
+    data: TreatmentSaveRequest,
+    user: dict = Depends(get_current_user),
+):
+    check_owns_or_internal(user, data.clientId)
+
     col   = get_collection("triaje")
     ahora = datetime.utcnow()
     await col.update_one(
@@ -97,8 +109,12 @@ def _build_html(titulo: str, meta: str, cuerpo: str) -> str:
     )
 
 
+# POST /treatment/notify-cc — solo usuarios internos
 @router.post("/treatment/notify-cc")
-async def notify_cc(data: NotifyCCRequest):
+async def notify_cc(
+    data: NotifyCCRequest,
+    _user: dict = Depends(require_internal),
+):
     if not RESEND_API_KEY:
         return {"status": "skipped", "reason": "RESEND_API_KEY not set"}
 
@@ -170,8 +186,15 @@ async def notify_cc(data: NotifyCCRequest):
         return {"status": "error", "detail": str(exc)}
 
 
+# GET /treatment/{codigo}/{symptomId} — auth + ownership
 @router.get("/treatment/{codigo}/{symptomId}")
-async def get_treatment(codigo: str, symptomId: str):
+async def get_treatment(
+    codigo: str,
+    symptomId: str,
+    user: dict = Depends(get_current_user),
+):
+    check_owns_or_internal(user, codigo)
+
     col = get_collection("triaje")
     doc = await col.find_one({"codigo": codigo}, {"_id": 0})
     if not doc:
@@ -187,41 +210,34 @@ async def get_treatment(codigo: str, symptomId: str):
     }
 
 
-# ============================================================
-# POST /treatment/lock-c0/{codigo}/{symptomId}
-# ACI confirma C0 → bloquea para ACI + notifica CC interno
-# ============================================================
-
+# POST /treatment/lock-c0 — ACI confirma C0, requiere usuario interno
 @router.post("/treatment/lock-c0/{codigo}/{symptomId}")
-async def lock_c0(codigo: str, symptomId: str, payload: dict = {}):
-    """
-    Bloquea C0 para el ACI (solo CC/admin pueden desbloquear).
-    Registra kpi_value, kpi_question y kpi_objetivo en clients.anexo_i.
-    Envía mensaje interno al CC asignado.
-    """
-    triaje_col  = get_collection("triaje")
-    clients_col = get_collection("clients")
+async def lock_c0(
+    codigo: str,
+    symptomId: str,
+    payload: dict = {},
+    _user: dict = Depends(require_internal),
+):
+    triaje_col   = get_collection("triaje")
+    clients_col  = get_collection("clients")
     mensajes_col = get_collection("mensajes")
     ahora = datetime.utcnow()
 
-    # 1. Marcar c0_locked en triaje.flags
     await triaje_col.update_one(
         {"codigo": codigo},
         {"$set": {
-            f"flags.{symptomId}.c0_locked":     True,
-            f"flags.{symptomId}.c0_locked_at":  ahora,
+            f"flags.{symptomId}.c0_locked":    True,
+            f"flags.{symptomId}.c0_locked_at": ahora,
             "updated_at": ahora,
         }},
         upsert=True,
     )
 
-    # 2. Guardar datos C0 en clients.anexo_i (kpi_inicial + kpi_question)
     kpi_value    = payload.get("kpi_value", "")
     kpi_question = payload.get("kpi_question", "")
     kpi_objetivo = payload.get("kpi_objetivo", "")
     kpi_unidad   = payload.get("kpi_unidad", "")
     empresa      = payload.get("empresa", codigo)
-    aci_nombre   = payload.get("aci_nombre", "")
 
     if kpi_value or kpi_question:
         await clients_col.update_one(
@@ -235,60 +251,64 @@ async def lock_c0(codigo: str, symptomId: str, payload: dict = {}):
             }},
         )
 
-    # 3. Obtener CC asignado
-    client = await clients_col.find_one({"codigo": codigo})
+    client   = await clients_col.find_one({"codigo": codigo})
     cc_email = (client or {}).get("cc_asignado", "")
 
-    # 4. Enviar mensaje interno al CC
     if cc_email:
         await mensajes_col.insert_one({
-            "de":              "sistema",
-            "para":            cc_email,
-            "texto":           (
-                f"📋 {empresa} ({codigo}) ha confirmado los datos iniciales de {symptomId}.\n"
+            "de":             "sistema",
+            "para":           cc_email,
+            "texto":          (
+                f"Recordatorio: {empresa} ({codigo}) ha confirmado los datos iniciales de {symptomId}.\n"
                 f"KPI inicial declarado: {kpi_value}\n"
                 f"Pregunta KPI: {kpi_question}\n"
                 f"Objetivo: {kpi_objetivo}\n"
                 f"C0 queda bloqueado. Revisa y valida el Anexo I en el expediente."
             ),
-            "tipo":            "c0_confirmado",
-            "cliente_codigo":  codigo,
-            "symptom_id":      symptomId,
-            "leido":           False,
-            "fecha":           ahora,
+            "tipo":           "c0_confirmado",
+            "cliente_codigo": codigo,
+            "symptom_id":     symptomId,
+            "leido":          False,
+            "fecha":          ahora,
         })
 
     return {
-        "ok":         True,
-        "c0_locked":  True,
-        "locked_at":  ahora.isoformat(),
+        "ok":          True,
+        "c0_locked":   True,
+        "locked_at":   ahora.isoformat(),
         "cc_notified": bool(cc_email),
     }
 
 
-# ============================================================
-# DELETE /treatment/lock-c0/{codigo}/{symptomId}
-# CC/admin desbloquea C0 para corrección
-# ============================================================
-
+# DELETE /treatment/lock-c0 — solo CC y admin (verificacion real de rol)
 @router.delete("/treatment/lock-c0/{codigo}/{symptomId}")
-async def unlock_c0(codigo: str, symptomId: str):
-    """Solo CC o admin pueden desbloquear C0."""
+async def unlock_c0(
+    codigo: str,
+    symptomId: str,
+    user: dict = Depends(require_cc_or_admin),
+):
     triaje_col = get_collection("triaje")
     ahora = datetime.utcnow()
     await triaje_col.update_one(
         {"codigo": codigo},
         {"$set": {
-            f"flags.{symptomId}.c0_locked":       False,
-            f"flags.{symptomId}.c0_unlocked_at":  ahora,
+            f"flags.{symptomId}.c0_locked":      False,
+            f"flags.{symptomId}.c0_unlocked_at": ahora,
+            f"flags.{symptomId}.c0_unlocked_por": user.get("email", ""),
             "updated_at": ahora,
         }},
     )
     return {"ok": True, "c0_locked": False}
 
 
+# GET /triaje/{codigo} — datos completos, auth + ownership
 @router.get("/triaje/{codigo}")
-async def get_triaje(codigo: str):
+async def get_triaje(
+    codigo: str,
+    user: dict = Depends(get_current_user),
+):
+    check_owns_or_internal(user, codigo)
+
     col = get_collection("triaje")
     doc = await col.find_one({"codigo": codigo}, {"_id": 0})
     if not doc:
@@ -296,17 +316,30 @@ async def get_triaje(codigo: str):
     return doc
 
 
+# POST /certificados — guardar certificado de alta
 @router.post("/certificados")
-async def save_certificado(data: dict):
+async def save_certificado(
+    data: dict,
+    user: dict = Depends(get_current_user),
+):
+    codigo = data.get("cliente_codigo", "")
+    if codigo:
+        check_owns_or_internal(user, codigo)
+
     col   = get_collection("certificados")
     ahora = datetime.utcnow()
-    data["created_at"] = ahora
+    data["created_at"]   = ahora
+    data["guardado_por"] = user.get("sub", "")
     await col.insert_one(data)
     return {"status": "ok", "created_at": ahora.isoformat()}
 
 
+# GET /certificados/{codigo} — solo CC y admin
 @router.get("/certificados/{codigo}")
-async def get_certificados(codigo: str):
+async def get_certificados(
+    codigo: str,
+    _user: dict = Depends(require_cc_or_admin),
+):
     col  = get_collection("certificados")
     docs = await col.find(
         {"cliente_codigo": codigo}, {"_id": 0}
