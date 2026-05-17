@@ -172,7 +172,7 @@ async def get_metrics(_user: dict = Depends(require_admin)):
 
     # Progreso de triaje — qué capas confirmadas tiene cada cliente
     triaje_docs = await triaje_col.find(
-        {}, {"codigo": 1, "flags": 1, "_id": 0}
+        {}, {"codigo": 1, "flags": 1, "updated_at": 1, "_id": 0}
     ).to_list(500)
     triaje_flags = {}
     for t in triaje_docs:
@@ -192,8 +192,25 @@ async def get_metrics(_user: dict = Depends(require_admin)):
 
     ahora = datetime.utcnow()
 
+    # Última actividad por cliente (para detectar stalled)
+    ultima_actividad = {}
+    for t in triaje_docs:
+        ua = t.get("updated_at")
+        if ua:
+            ultima_actividad[t["codigo"]] = ua.isoformat() if hasattr(ua, "isoformat") else str(ua)
+
+    # Clientes parados > 7 días
+    from datetime import timedelta
+    hace_7_dias = ahora - timedelta(days=7)
+    stalled = sum(
+        1 for t in triaje_docs
+        if t.get("updated_at") and t["updated_at"] < hace_7_dias
+    )
+
     return {
         "generado_en":     ahora.isoformat(),
+        "stalled_clientes": stalled,
+        "ultima_actividad": ultima_actividad,
         "clientes": {
             "total":        total_clientes,
             "pagados":      total_pagados,
