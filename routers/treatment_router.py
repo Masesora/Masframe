@@ -345,3 +345,95 @@ async def get_certificados(
         {"cliente_codigo": codigo}, {"_id": 0}
     ).to_list(length=50)
     return docs
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CONFIRMACIÓN DE CAPAS — validación de secuencia C0 → C6
+# ─────────────────────────────────────────────────────────────────────────────
+
+SECUENCIA_CAPAS = ["c0", "c1", "c2", "c3", "c4", "c5", "c6"]
+
+
+# POST /treatment/confirm/{codigo}/{symptomId}/{capa}
+# Confirma una capa como completada, valida que la anterior esté confirmada.
+@router.post("/treatment/confirm/{codigo}/{symptomId}/{capa}")
+async def confirm_capa(
+    codigo: str,
+    symptomId: str,
+    capa: str,
+    user: dict = Depends(get_current_user),
+):
+    check_owns_or_internal(user, codigo)
+
+    if capa not in SECUENCIA_CAPAS:
+        raise HTTPException(status_code=400, detail=f"Capa '{capa}' no válida. Válidas: {SECUENCIA_CAPAS}")
+
+    triaje_col = get_collection("triaje")
+    ahora      = datetime.utcnow()
+
+    # Validar secuencia: la capa anterior debe estar confirmada
+    idx = SECUENCIA_CAPAS.index(capa)
+    if idx > 0:
+        capa_anterior = SECUENCIA_CAPAS[idx - 1]
+        doc = await triaje_col.find_one({"codigo": codigo}, {"flags": 1})
+        flags    = (doc or {}).get("flags", {}).get(symptomId, {})
+        confirmed = flags.get("confirmed_capas", [])
+
+        # c0 también puede marcarse como confirmada via c0_locked
+        c0_ok = "c0" in confirmed or flags.get("c0_locked", False)
+
+        if capa_anterior == "c0" and not c0_ok:
+            raise HTTPException(
+                status_code=422,
+                detail="C0 debe estar confirmado antes de confirmar C1"
+            )
+        elif capa_anterior != "c0" and capa_anterior not in confirmed:
+            raise HTTPException(
+                status_code=422,
+                detail=f"{capa_anterior.upper()} debe estar confirmado antes de confirmar {capa.upper()}"
+            )
+
+    await triaje_col.update_one(
+        {"codigo": codigo},
+        {
+            "$addToSet": {f"flags.{symptomId}.confirmed_capas": capa},
+            "$set": {
+                f"flags.{symptomId}.{capa}_confirmed_at": ahora,
+                "updated_at": ahora,
+            },
+        },
+        upsert=True,
+    )
+
+    return {"ok": True, "capa": capa, "confirmed_at": ahora.isoformat()}
+
+
+# DELETE /treatment/confirm/{codigo}/{symptomId}/{capa}
+# Desconfirma una capa y todas las posteriores en cascade.
+@router.delete("/treatment/confirm/{codigo}/{symptomId}/{capa}")
+async def unconfirm_capa(
+    codigo: str,
+    symptomId: str,
+    capa: str,
+    user: dict = Depends(get_current_user),
+):
+    check_owns_or_internal(user, codigo)
+
+    if capa not in SECUENCIA_CAPAS:
+        raise HTTPException(status_code=400, detail=f"Capa '{capa}' no válida.")
+
+    idx = SECUENCIA_CAPAS.index(capa)
+    capas_a_eliminar = SECUENCIA_CAPAS[idx:]   # capa actual + todas las posteriores
+
+    triaje_col = get_collection("triaje")
+    ahora      = datetime.utcnow()
+
+    await triaje_col.update_one(
+        {"codigo": codigo},
+        {
+            "$pullAll": {f"flags.{symptomId}.confirmed_capas": capas_a_eliminar},
+            "$set":     {"updated_at": ahora},
+        },
+    )
+
+    return {"ok": True, "desconfirmadas": capas_a_eliminar}
