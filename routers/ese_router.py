@@ -49,7 +49,7 @@ def get_collection():
 # Ruta correcta al symptoms.json (funciona en local y en Render)
 CURRENT_DIR = os.path.dirname(__file__)                     # masesora_backend/routers
 BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "..")) # masesora_backend
-SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptom.json")
+SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptoms.json")
 
 with open(SYMPTOMS_PATH, "r", encoding="utf-8") as f:
     SYMPTOMS = json.load(f)
@@ -79,15 +79,16 @@ class Insights(BaseModel):
     palancas:  List[str]
 
 class EseSubmitRequest(BaseModel):
-    email:          EmailStr
-    empresa:        str
-    facturacion:    float
-    scores_areas:   AreaScores
-    score_global:   float
-    estado_global:  str
-    especialidades: List[Especialidad]
-    insights:       Insights
-    timestamp:      Optional[str] = None
+    email:               EmailStr
+    empresa:             str
+    facturacion:         float
+    scores_areas:        AreaScores
+    score_global:        float
+    estado_global:       str
+    especialidades:      List[Especialidad]
+    insights:            Insights
+    sintomas_detectados: Optional[List[str]] = []
+    timestamp:           Optional[str] = None
 
 
 # ─────────────────────────────────────────────────────────────
@@ -154,7 +155,8 @@ async def submit_ese(data: EseSubmitRequest):
         "score_global":  data.score_global,
         "estado_global": data.estado_global,
         "especialidades": [e.dict() for e in data.especialidades],
-        "insights":      data.insights.dict(),
+        "insights":            data.insights.dict(),
+        "sintomas_detectados": data.sintomas_detectados,
 
         "pago_confirmado": False,
         "payment_active":  False,
