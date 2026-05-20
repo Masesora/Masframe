@@ -103,6 +103,20 @@ async def get_cliente_status(codigo: str):
     }
 
 
+# El propio cliente puede leer su ficha (sin datos sensibles de negocio)
+@router.get("/clients/{codigo}/me")
+async def get_client_me(
+    codigo: str,
+    user: dict = Depends(get_current_user),
+):
+    check_owns_or_internal(user, codigo)
+    col = _get_col("clients")
+    doc = await col.find_one({"codigo": codigo}, {"_id": 0, "password": 0, "password_hash": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+    return doc
+
+
 # El propio cliente rellena su ficha fiscal; internos tambien pueden
 @router.post("/clients/{codigo}")
 async def save_client_datos(
