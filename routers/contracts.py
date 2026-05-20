@@ -46,6 +46,59 @@ def _build_datos(doc: dict) -> dict:
     }
 
 
+# ─────────────────────────────────────────────────────────────
+# FUNCIÓN INTERNA — llamada desde ese_router tras pago confirmado
+# ─────────────────────────────────────────────────────────────
+async def generar_documentos_interno(
+    codigo: str,
+    stripe_ref: str = "",
+    metodo_pago: str = "Tarjeta de crédito",
+):
+    """Genera contrato + factura sin requerir autenticación HTTP.
+    Usar solo desde el backend (ese_router PATCH pago_confirmado)."""
+    try:
+        doc   = await _get_client(codigo)
+        datos = _build_datos(doc)
+        datos["stripe_ref"]  = stripe_ref  or doc.get("stripe_ref", "")
+        datos["metodo_pago"] = metodo_pago or doc.get("metodo_pago", "Tarjeta de crédito")
+
+        contracts_col = get_collection("contracts")
+        year      = datetime.utcnow().year
+        n_facturas = await contracts_col.count_documents({"anyo_factura": year})
+        datos["numero"] = n_facturas + 1
+
+        contrato_html = generar_contrato_html(datos)
+        factura_html  = generar_factura_html(datos)
+        ahora = datetime.utcnow()
+
+        await contracts_col.update_one(
+            {"codigo": codigo},
+            {"$set": {
+                "codigo":         codigo,
+                "contrato_html":  contrato_html,
+                "factura_html":   factura_html,
+                "generado_en":    ahora,
+                "anyo_factura":   year,
+                "numero_factura": datos["numero"],
+                "stripe_ref":     datos["stripe_ref"],
+                "metodo_pago":    datos["metodo_pago"],
+                "signed":         False,
+                "generado_por":   "sistema",
+            }},
+            upsert=True,
+        )
+
+        clients_col = get_collection("clients")
+        await clients_col.update_one(
+            {"codigo": codigo},
+            {"$set": {"documentos_generados": True, "updated_at": ahora}},
+        )
+        return True
+    except Exception as e:
+        print(f"[CONTRATO] Error generando docs para {codigo}: {e}")
+        return False
+
+
 # 1. GENERAR CONTRATO + FACTURA — solo CC y admin
 @router.post("/generar/{codigo}")
 async def generar_documentos(

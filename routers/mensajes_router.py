@@ -178,3 +178,25 @@ async def archivar_mensaje(id: str):
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Mensaje no encontrado")
     return {"status": "ok", "id": id}
+
+
+# ── DELETE /mensajes/conversacion — archiva TODOS entre dos emails de una vez
+from fastapi import Query as FQuery
+
+@router.delete("/mensajes/conversacion")
+async def archivar_conversacion(
+    email1: str = FQuery(...),
+    email2: str = FQuery(...),
+):
+    col = get_collection("mensajes")
+    result = await col.update_many(
+        {
+            "archivado": {"$ne": True},
+            "$or": [
+                {"de": email1, "para": email2},
+                {"de": email2, "para": email1},
+            ],
+        },
+        {"$set": {"archivado": True, "archivado_at": datetime.utcnow().isoformat()}},
+    )
+    return {"status": "ok", "archivados": result.modified_count}

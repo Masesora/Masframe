@@ -10,9 +10,9 @@
     "logica": "El dinero existe, pero está bloqueado dentro de tu propio negocio.",
     "plan": "PIE",
     "description_symptom": "Si tienes dinero atrapado en stock sin mover, facturas sin cobrar o anticipos no materializados, tu caja sufre aunque el negocio funcione. El problema no es que no entres — es que no sale lo que ya ganaste.",
-    "kpi_question": "Introduce el valor del dinero inmovilizado — stock parado, facturas sin cobrar y anticipos no materializados — y tus gastos fijos mensuales. El resultado te dice cuántos meses de operación tienes bloqueados dentro de tu propio negocio.",
+    "kpi_question": "Introduce el valor del dinero inmovilizado — stock parado, facturas sin cobrar y anticipos no materializados — y tus gastos fijos mensuales. El resultado te dice cuántos días de operación tienes bloqueados dentro de tu propio negocio.",
     "kpi_impact": "Mantener el dinero bloqueado por debajo de 15 días libera liquidez suficiente para operar sin depender de las próximas ventas.",
-    "kpi_formula": "(InputA/InputB)",
+    "kpi_formula": "(InputA/InputB)*30",
     "kpi_objective": "<15 días",
     "threshold_critical": 70,
     "threshold_recommended": 85,
@@ -66,10 +66,10 @@
     "logica": "Facturas, cobras, pagas — y a final de mes el beneficio no aparece por ningún lado.",
     "plan": "PIE",
     "description_symptom": "Si tus ingresos son estables pero el beneficio mensual siempre desaparece, hay algo en tu operación que lo consume antes de que llegue a tu bolsillo. Puede ser un cliente, una línea, un proveedor — pero no lo ves porque no lo has medido por separado.",
-    "kpi_question": "Introduce tus ingresos totales del mes y tus costes directos del mes para calcular tu margen bruto real. Si ese margen no crece aunque vendas más, hay una fuga activa que todavía no has identificado.",
-    "kpi_impact": "Identificar y eliminar las líneas o clientes que destruyen margen permite recuperar rentabilidad sin aumentar ventas.",
-    "kpi_formula": "((InputA-InputB)/HorasDedicadas)",
-    "kpi_objective": ">50€/h",
+    "kpi_question": "Introduce tus ingresos totales del mes y el dinero que realmente quedó en tu cuenta al final del mes (saldo final menos saldo inicial). Si ese ratio es bajo, hay una fuga activa que todavía no has localizado.",
+    "kpi_impact": "Cuando el dinero retenido supera el 15% de los ingresos, la fuga está controlada y el negocio empieza a acumular en lugar de solo circular.",
+    "kpi_formula": "(InputB/InputA)*100",
+    "kpi_objective": ">15%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -81,14 +81,14 @@
       },
       {
         "id": "inputB",
-        "label": "Costes directos del mes"
+        "label": "Dinero real que quedó en cuenta (saldo final − saldo inicial del mes)"
       }
     ],
     "input_a": "Ingresos totales del mes",
-    "input_b": "Costes directos del mes",
-    "input_revised_1": "Top 10 clientes post-optimización",
-    "input_revised_2": "Margen real promedio post",
-    "result_revised": "Δ margen real por hora",
+    "input_b": "Dinero real que quedó en cuenta (saldo final − saldo inicial del mes)",
+    "input_revised_1": "Ingresos totales del mes (post)",
+    "input_revised_2": "Dinero retenido en cuenta (post)",
+    "result_revised": "Δ tasa de retención de caja",
     "impact_treatment": "Identificamos exactamente qué clientes o líneas destruyen tu rentabilidad y por cuánto. El margen real deja de ser una cifra que no cuadra y pasa a ser una palanca que controlas.",
     "optimizer_impact": "Incremento inmediato de rentabilidad sin necesidad de aumentar volumen de ventas.",
     "optimizer_decision": "Radiografía de Rentabilidad por Cliente",
@@ -122,10 +122,10 @@
     "logica": "Cobras lo que el mercado aguanta o lo que cobra la competencia — pero nadie ha calculado si ese precio te deja beneficio real.",
     "plan": "PIE",
     "description_symptom": "Si nunca has calculado cuánto te queda después de pagar todos tus gastos reales — incluyendo impuestos y lo que deberías cobrarte como sueldo — estás fijando precios a ciegas. Muchos autónomos facturan bien y sobreviven mal porque su precio no cubre su coste real de vida empresarial.",
-    "kpi_question": "Introduce tus ingresos totales del mes y todos tus gastos reales — incluyendo tu estimación de impuestos y lo que deberías pagarte como sueldo. El resultado es tu margen neto real. Si es menor del 20%, estás trabajando para cubrir costes.",
-    "kpi_impact": "Un margen neto real superior al 20% indica que el negocio genera valor por encima de sus costes reales.",
-    "kpi_formula": "((InputA-InputB)/InputA)",
-    "kpi_objective": ">0.20",
+    "kpi_question": "Introduce el precio de venta de tu servicio o producto principal y su coste real de entregarlo — materiales, subcontratas y gastos directos. Si el margen por venta es inferior al 30%, cada venta que haces te acerca más al límite que al beneficio.",
+    "kpi_impact": "Un margen por venta superior al 30% garantiza que cada unidad vendida genera valor real, no solo movimiento de caja.",
+    "kpi_formula": "((InputA-InputB)/InputA)*100",
+    "kpi_objective": ">30%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -133,15 +133,15 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Ingresos totales del mes"
+        "label": "Precio de venta de tu servicio o producto principal"
       },
       {
         "id": "inputB",
-        "label": "Gastos totales reales del mes — incluyendo impuestos estimados y sueldo del dueño"
+        "label": "Coste real de entregarlo (materiales, subcontratas y gastos directos)"
       }
     ],
-    "input_a": "Ingresos totales del mes",
-    "input_b": "Gastos totales reales del mes",
+    "input_a": "Precio de venta de tu servicio o producto principal",
+    "input_b": "Coste real de entregarlo (materiales, subcontratas y gastos directos)",
     "input_revised_1": "Días desde entrega hasta factura (post)",
     "input_revised_2": "Días desde factura hasta cobro (post)",
     "result_revised": "Δ días ganados",
@@ -178,10 +178,10 @@
     "logica": "Tu operación avanza por inercia, sin diseño — y cada día que pasa ese desorden te cuesta más de lo que crees.",
     "plan": "PIE",
     "description_symptom": "Si tu operación funciona porque siempre ha funcionado así — sin que nadie haya diseñado cómo debería funcionar — cada paso acumula un coste oculto. Las esperas, los cuellos de botella y los pasos sin valor llevan años comiéndote tiempo sin que nadie los haya atacado.",
-    "kpi_question": "Introduce las horas totales de espera acumuladas en el proceso y las horas totales del ciclo completo. Si más del 25% del tiempo es espera y no trabajo real, tu operación está rígida: avanza por inercia, no por diseño.",
-    "kpi_impact": "Reducir las esperas por debajo del 25% del ciclo total acelera la entrega y libera capacidad sin contratar más recursos.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": "<0.25",
+    "kpi_question": "Introduce cuántas veces esta semana una interrupción no planificada paró el flujo de trabajo — ingrediente que faltó, herramienta no disponible, paso que nadie supo cómo hacer — y el total de procesos o entregas completadas. Si más del 20% de tus entregas sufrió una rotura de flujo, tu operación avanza por inercia, no por diseño.",
+    "kpi_impact": "Mantener las roturas de flujo por debajo del 20% significa que los procesos están diseñados y el equipo puede ejecutar sin depender de la improvisación.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": "<20%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -189,18 +189,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Horas totales de espera acumuladas"
+        "label": "Interrupciones no planificadas que pararon el flujo de trabajo esta semana"
       },
       {
         "id": "inputB",
-        "label": "Horas totales del ciclo completo"
+        "label": "Total procesos o entregas completadas esa semana"
       }
     ],
-    "input_a": "Horas totales de espera",
-    "input_b": "Horas totales del ciclo",
-    "input_revised_1": "Horas de espera post",
-    "input_revised_2": "Horas de ciclo post",
-    "result_revised": "Δ ratio de espera",
+    "input_a": "Interrupciones no planificadas que pararon el flujo esta semana",
+    "input_b": "Total procesos o entregas completadas esa semana",
+    "input_revised_1": "Interrupciones no planificadas (post)",
+    "input_revised_2": "Total entregas completadas (post)",
+    "result_revised": "Δ % roturas de flujo",
     "impact_treatment": "Rediseñamos tu flujo operativo eliminando el tiempo invisible que consumen los procesos sin protocolo. La misma energía produce resultados medibles, sin rozamiento.",
     "optimizer_impact": "Aceleración inmediata del ciclo operativo sin aumentar recursos ni contratar.",
     "optimizer_decision": "Mapeo de Esperas y Flujo Real",
@@ -234,10 +234,10 @@
     "logica": "Trabajas al límite y siempre hay algo sin hacer — porque el problema no es tu esfuerzo, es cómo está organizado el trabajo.",
     "plan": "PIE",
     "description_symptom": "Si tu equipo trabaja al máximo pero siempre hay cola, es porque el problema no es capacidad — es organización. Las tareas que llegan mal definidas, los reprocesos constantes y la falta de estándar consumen más horas que cualquier aumento de plantilla podría cubrir.",
-    "kpi_question": "Introduce las tareas que llegan con información incompleta o incorrecta y el total de tareas recibidas. Si más del 10% entra defectuosa, tu operación empieza cada ciclo con un coste oculto de aclaración y reproceso.",
-    "kpi_impact": "Reducir las entradas defectuosas por debajo del 10% elimina reprocesos y libera horas de ejecución real sin ampliar el equipo.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": "<0.10",
+    "kpi_question": "Introduce cuántos clientes o proyectos tienes activos ahora mismo y cuántos puedes gestionar con calidad sin colapsar. Si estás por encima del 85% de ocupación, el sistema ya opera bajo presión constante.",
+    "kpi_impact": "Mantener la ocupación real por debajo del 85% garantiza margen de maniobra para absorber imprevistos sin que el equipo ni la calidad colapsen.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": "<85%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -245,18 +245,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Tareas con información incompleta o incorrecta"
+        "label": "Clientes o proyectos activos en este momento"
       },
       {
         "id": "inputB",
-        "label": "Tareas totales recibidas"
+        "label": "Número máximo que puedes gestionar con calidad sin colapsar"
       }
     ],
-    "input_a": "Tareas incompletas",
-    "input_b": "Tareas totales",
-    "input_revised_1": "Tareas incompletas post",
-    "input_revised_2": "Tareas totales post",
-    "result_revised": "Δ porcentaje de entradas defectuosas",
+    "input_a": "Clientes o proyectos activos en este momento",
+    "input_b": "Número máximo que puedes gestionar con calidad sin colapsar",
+    "input_revised_1": "Clientes o proyectos activos (post)",
+    "input_revised_2": "Capacidad máxima con calidad (post)",
+    "result_revised": "Δ % de ocupación real",
     "impact_treatment": "Reorganizamos la carga para que el equipo rinda al límite real de su capacidad, no al de sus urgencias. Crecer deja de significar reventar.",
     "optimizer_impact": "Aumento inmediato de velocidad operativa al eliminar reprocesos por entradas defectuosas.",
     "optimizer_decision": "Filtro de Entrada de Tareas",
@@ -290,10 +290,10 @@
     "logica": "Los mismos errores, las mismas quejas, el mismo retrabajo — porque nadie ha cerrado todavía las brechas que los generan.",
     "plan": "PIE",
     "description_symptom": "Si las mismas correcciones aparecen semana tras semana, no es mala suerte ni falta de cuidado — es que hay brechas estructurales que nadie ha cerrado. Cada retrabajo es tiempo y margen que regalas sin necesidad.",
-    "kpi_question": "Introduce el número de entregas que han requerido correcciones y el total de entregas del periodo. Si más del 5% necesita retrabajo, estás absorbiendo un coste crónico que no aparece en ninguna factura pero sí en tu margen.",
+    "kpi_question": "Introduce cuántas entregas requirieron corrección o generaron una queja este mes y el total de entregas realizadas. Si más del 5% falla, estás absorbiendo un coste crónico de retrabajo que no aparece en ninguna factura pero sí en tu margen.",
     "kpi_impact": "Mantener el retrabajo por debajo del 5% libera horas críticas, aumenta la capacidad real y mejora la percepción de calidad del cliente.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": "<0.05",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": "<5%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -301,18 +301,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Entregas con correcciones o retrabajo"
+        "label": "Entregas que requirieron corrección o generaron queja este mes"
       },
       {
         "id": "inputB",
-        "label": "Entregas totales"
+        "label": "Total entregas realizadas este mes"
       }
     ],
-    "input_a": "Entregas con correcciones",
-    "input_b": "Entregas totales",
-    "input_revised_1": "Correcciones post",
-    "input_revised_2": "Entregas totales post",
-    "result_revised": "Δ porcentaje de retrabajo",
+    "input_a": "Entregas que requirieron corrección o generaron queja este mes",
+    "input_b": "Total entregas realizadas este mes",
+    "input_revised_1": "Entregas con corrección o queja (post)",
+    "input_revised_2": "Total entregas realizadas (post)",
+    "result_revised": "Δ % de retrabajo",
     "impact_treatment": "Cerramos las brechas operativas que generan retrabajo, quejas y coste invisible. Cada proceso pasa a funcionar a la primera — sin retroceder.",
     "optimizer_impact": "Aumento inmediato de capacidad operativa al eliminar el coste del retrabajo crónico.",
     "optimizer_decision": "Diagnóstico de Causa Raíz de Calidad",
@@ -346,10 +346,10 @@
     "logica": "Tu negocio no genera clientes por sí solo — dependes del boca a boca y de que llegue el momento oportuno.",
     "plan": "PIE",
     "description_symptom": "Si la mayoría de tus clientes llegan por recomendación o por casualidad, tu crecimiento no está en tus manos. No tienes un motor de demanda — tienes esperanza. Y la esperanza no es una estrategia comercial.",
-    "kpi_question": "Introduce las oportunidades comerciales que has generado este mes y las que necesitas para cumplir tu objetivo. Si generas menos del 80% de las necesarias, tu motor comercial no tiene suficiente fuerza para sostener el crecimiento.",
-    "kpi_impact": "Un motor comercial que genera sistemáticamente el 80% o más de las oportunidades necesarias convierte el crecimiento en algo predecible, no en algo que depende del boca a boca.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.80",
+    "kpi_question": "Divide tus ventas totales del mes entre el número de clientes nuevos que consiguiste. El resultado es lo que vale de media cada cliente nuevo que entra. Si ese número sube tras el tratamiento, estás atrayendo a los clientes que realmente te convienen.",
+    "kpi_impact": "Cuando el ticket medio por cliente nuevo sube más de un 20% en 6 semanas, el sistema empieza a atraer demanda rentable — no solo volumen.",
+    "kpi_formula": "InputA/InputB",
+    "kpi_objective": "+20% en 6 semanas",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -357,19 +357,19 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Oportunidades generadas este mes"
+        "label": "Ventas totales del mes (€)"
       },
       {
         "id": "inputB",
-        "label": "Oportunidades necesarias para objetivo mensual"
+        "label": "Clientes nuevos ese mes"
       }
     ],
-    "input_a": "Oportunidades generadas",
-    "input_b": "Oportunidades necesarias",
-    "input_revised_1": "Oportunidades generadas post",
-    "input_revised_2": "Oportunidades necesarias post",
-    "result_revised": "Δ ratio de demanda",
-    "impact_treatment": "Activamos un sistema de captación que genera oportunidades de forma constante y predecible. Tu negocio deja de sobrevivir del boca a boca y empieza a crecer por diseño.",
+    "input_a": "Ventas totales del mes (€)",
+    "input_b": "Clientes nuevos ese mes",
+    "input_revised_1": "Ventas totales (post)",
+    "input_revised_2": "Clientes nuevos (post)",
+    "result_revised": "Δ ticket medio por cliente nuevo",
+    "impact_treatment": "Identificamos qué clientes y productos te dejan más margen y construimos un sistema para atraer más de esos. Dejas de vender lo que llega y empiezas a crecer por diseño.",
     "optimizer_impact": "Activación inmediata del motor de demanda con el canal de mayor retorno.",
     "optimizer_decision": "Diagnóstico de Motor Comercial",
     "optimizer_decision_explanation": "Para saber qué canal activar, primero necesitas medir cuál de los que ya usas genera oportunidades reales — y cuáles son solo actividad sin resultado.",
@@ -402,10 +402,10 @@
     "logica": "Un mes bien, el siguiente mal — sin entender por qué cambia ni cómo controlarlo.",
     "plan": "PIE",
     "description_symptom": "Si hay meses que van bien y meses que van mal sin que entiendas por qué cambia, tu sistema comercial no tiene ritmo — tiene suerte variable. La arritmia comercial no es un problema de ventas, es un problema de sistema: no hay cadencia, no hay seguimiento, no hay previsión.",
-    "kpi_question": "Introduce las ventas de tu peor mes y tu mejor mes en los últimos 6 meses. Si el ratio es inferior a 0.60 — es decir, tu peor mes genera menos del 60% de tu mejor mes — tienes arritmia comercial severa.",
-    "kpi_impact": "Un ratio superior a 0.60 entre el mejor y peor mes indica ritmo comercial estable y predecible.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.60",
+    "kpi_question": "Introduce las ventas de tu mejor y peor mes en los últimos 6 meses. Si tu peor mes genera menos del 60% de tu mejor mes, tienes arritmia comercial — el vaivén manda más que tú.",
+    "kpi_impact": "Cuando el ratio supera el 60%, tu facturación tiene ritmo. Dejas de depender de las rachas y puedes planificar con datos reales.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">60%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -420,12 +420,12 @@
         "label": "Ventas del mes más alto de los últimos 6 meses (€)"
       }
     ],
-    "input_a": "Ventas mes más bajo",
-    "input_b": "Ventas mes más alto",
-    "input_revised_1": "Pipeline post",
-    "input_revised_2": "Objetivo post",
-    "result_revised": "Δ fuerza pipeline",
-    "impact_treatment": "Estabilizamos el ciclo de ventas para que puedas predecir tu facturación mensual con margen de error controlado. El vaivén deja de dictarte el presupuesto.",
+    "input_a": "Ventas del mes más bajo (últimos 6 meses)",
+    "input_b": "Ventas del mes más alto (últimos 6 meses)",
+    "input_revised_1": "Ventas mes más bajo (post)",
+    "input_revised_2": "Ventas mes más alto (post)",
+    "result_revised": "Δ estabilidad comercial",
+    "impact_treatment": "Analizamos por qué hay meses buenos y meses malos, y ponemos en marcha un ritmo comercial que hace que tu facturación deje de ser una sorpresa.",
     "optimizer_impact": "Estabilidad inmediata del sistema de ventas al establecer cadencia y seguimiento regulares.",
     "optimizer_decision": "Diagnóstico de Cadencia Comercial",
     "optimizer_decision_explanation": "La arritmia no se cura con más esfuerzo en los meses malos — se cura con sistema. Hay que identificar qué falta en los meses flojos que sí ocurre en los meses buenos.",
@@ -458,10 +458,10 @@
     "logica": "Tu negocio existe, pero el cliente no entiende qué haces ni por qué contratarte a ti — y lo que no se entiende, no se vende.",
     "plan": "PIE",
     "description_symptom": "Si tienes que explicar mucho lo que haces para que alguien te contrate, o si el precio siempre se negocia, tu mensaje no está llegando. No es un problema de precio — es que el valor no se percibe antes de la conversación.",
-    "kpi_question": "Introduce cuántas propuestas se aceptaron sin que el cliente negociara el precio y cuántas enviaste en total. Si menos del 40% se acepta a la primera, tu mensaje no está haciendo el trabajo antes de la reunión.",
-    "kpi_impact": "Cuando más del 40% de propuestas se aceptan sin negociar precio, el mensaje está haciendo su trabajo.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.40",
+    "kpi_question": "Introduce cuánto invertiste en marketing este mes y cuántos clientes nuevos conseguiste. El resultado es lo que te cuesta cada cliente nuevo. Si ese número baja con el tratamiento, tu mensaje está funcionando.",
+    "kpi_impact": "Cuando el coste por cliente nuevo se reduce más de un 20% en 6 semanas, el mensaje está haciendo su trabajo antes de que empiece la conversación.",
+    "kpi_formula": "InputA/InputB",
+    "kpi_objective": "-20% en 6 semanas",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -469,19 +469,19 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Presupuestos o propuestas aceptadas sin negociación de precio"
+        "label": "Dinero invertido en marketing este mes (€)"
       },
       {
         "id": "inputB",
-        "label": "Total presupuestos o propuestas enviadas"
+        "label": "Clientes nuevos conseguidos este mes"
       }
     ],
-    "input_a": "Propuestas aceptadas sin negociar",
-    "input_b": "Total propuestas enviadas",
-    "input_revised_1": "Ventas repetibles post",
-    "input_revised_2": "Ventas totales post",
-    "result_revised": "Δ repetibilidad",
-    "impact_treatment": "Redactamos y comunicamos tu propuesta de valor con la precisión que convierte la duda en decisión. Tu cliente entiende por qué eres la única opción antes de que empiece la negociación.",
+    "input_a": "Dinero invertido en marketing este mes (€)",
+    "input_b": "Clientes nuevos conseguidos este mes",
+    "input_revised_1": "Inversión en marketing (post)",
+    "input_revised_2": "Clientes nuevos (post)",
+    "result_revised": "Δ coste de adquisición por cliente",
+    "impact_treatment": "Trabajamos cómo explicas lo que haces para que el cliente lo entienda antes de preguntar el precio — y diga que sí más fácilmente. Cada euro invertido en marketing trae más clientes.",
     "optimizer_impact": "Reducción inmediata de la negociación de precio al hacer visible el valor antes de la propuesta.",
     "optimizer_decision": "Diagnóstico de Claridad del Mensaje",
     "optimizer_decision_explanation": "Si el cliente siempre negocia el precio, no es que el precio sea alto — es que el valor no está claro. Hay que medir cuántas propuestas se aceptan a la primera para saber si el mensaje hace su trabajo.",
@@ -626,10 +626,10 @@
     "logica": "Tu negocio funciona hoy — pero no tienes un plan claro de hacia dónde va, cuánto quieres que valga, ni cómo salir cuando llegue el momento.",
     "plan": "PIE",
     "description_symptom": "Si tu empresa funciona pero no tienes un plan escrito de dónde quieres estar en 3 años, cuánto quieres que valga el negocio o qué pasa si decides salir — estás gestionando el presente sin diseñar el futuro. Y los negocios sin dirección consciente acaban donde el mercado los lleva, no donde el dueño quería.",
-    "kpi_question": "Introduce cuántas personas de tu equipo pueden explicar con precisión la dirección del negocio a 3 años y el total de personas. Si menos del 80% lo sabe, la estrategia existe solo en tu cabeza — y eso no es estrategia, es dependencia.",
-    "kpi_impact": "Cuando el 80% o más del equipo puede articular la dirección a 3 años, las decisiones del día a día se alinean sin necesidad de supervisión constante.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.80",
+    "kpi_question": "Introduce tu facturación media mensual actual y la facturación mensual que quieres tener dentro de 12 meses. El resultado te dice a qué distancia estás del negocio que tienes en mente — y si esa distancia tiene nombre y fecha, ya empieza a ser un plan.",
+    "kpi_impact": "Cuando la facturación actual supera el 80% del objetivo a 12 meses, el plan está funcionando y el negocio avanza con dirección real.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">80%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -637,19 +637,19 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Personas alineadas con objetivos"
+        "label": "Facturación media mensual actual (€)"
       },
       {
         "id": "inputB",
-        "label": "Personas totales del equipo"
+        "label": "Facturación mensual que quieres tener en 12 meses (€)"
       }
     ],
-    "input_a": "Personas alineadas",
-    "input_b": "Personas totales",
-    "input_revised_1": "Personas alineadas post",
-    "input_revised_2": "Personas totales post",
-    "result_revised": "Δ alineación",
-    "impact_treatment": "Documentamos y comunicamos la dirección estratégica de forma que cada decisión se tome alineada con el destino. El equipo deja de improvisar y empieza a ejecutar con propósito.",
+    "input_a": "Facturación media mensual actual (€)",
+    "input_b": "Facturación mensual objetivo en 12 meses (€)",
+    "input_revised_1": "Facturación media mensual (post)",
+    "input_revised_2": "Objetivo mensual (post)",
+    "result_revised": "Δ avance hacia objetivo",
+    "impact_treatment": "Construimos el plan que convierte tu visión en un destino concreto con fechas y métricas. El equipo deja de improvisar y empieza a ejecutar con propósito.",
     "optimizer_impact": "Incremento inmediato de cohesión y velocidad de decisión al compartir una dirección común.",
     "optimizer_decision": "Diagnóstico de Claridad Estratégica",
     "optimizer_decision_explanation": "El primer paso para que el equipo avance en la misma dirección es saber cuántos realmente conocen esa dirección. Si no se ha medido, no se puede mejorar.",
@@ -682,10 +682,10 @@
     "logica": "Tienes demasiados frentes abiertos y ninguno termina — porque cuando todo es prioridad, nada lo es.",
     "plan": "PIE",
     "description_symptom": "Si tienes una lista interminable de proyectos a medias y cada semana aparece algo nuevo que 'no puede esperar', no tienes un problema de agenda — tienes un problema de criterio. Sin un sistema para decidir qué sigue y qué para, el esfuerzo se dispersa y nada avanza de verdad.",
-    "kpi_question": "Introduce las horas semanales que dedicas a tareas estratégicas — no operativas ni urgentes — y el total de horas trabajadas. Si menos del 20% va a estrategia, tu agenda está secuestrada por la operación.",
-    "kpi_impact": "Dedicar el 20% o más del tiempo semanal a estrategia permite cerrar frentes abiertos y generar avance real en los objetivos del negocio.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.20",
+    "kpi_question": "Introduce las mejoras o iniciativas del negocio que te habías propuesto este mes y las que realmente completaste. Si cierras menos del 70%, tienes más frentes abiertos de los que puedes cerrar — y eso consume energía sin producir avance.",
+    "kpi_impact": "Cuando completas el 70% o más de lo que te propones cada mes, los frentes se cierran en orden y el negocio avanza sin desgaste.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">70%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -693,18 +693,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Horas estratégicas semanales"
+        "label": "Mejoras o iniciativas del negocio que completaste este mes"
       },
       {
         "id": "inputB",
-        "label": "Horas totales semanales"
+        "label": "Mejoras o iniciativas que te habías propuesto este mes"
       }
     ],
-    "input_a": "Horas estratégicas",
-    "input_b": "Horas totales",
-    "input_revised_1": "Horas estratégicas post",
-    "input_revised_2": "Horas totales post",
-    "result_revised": "Δ tiempo estratégico",
+    "input_a": "Mejoras completadas este mes",
+    "input_b": "Mejoras propuestas este mes",
+    "input_revised_1": "Mejoras completadas (post)",
+    "input_revised_2": "Mejoras propuestas (post)",
+    "result_revised": "Δ tasa de cierre de iniciativas",
     "impact_treatment": "Priorizamos y cerramos los frentes abiertos en orden de impacto real. El tiempo del líder vuelve a estar donde puede cambiar algo — no donde urge apagar fuegos.",
     "optimizer_impact": "Reducción inmediata de urgencias al establecer criterios de prioridad claros.",
     "optimizer_decision": "Diagnóstico de Uso del Tiempo Directivo",
@@ -734,14 +734,14 @@
     "orden": 35,
     "symptom_id": "NEURO-S3",
     "department": "Estrategia",
-    "symptom_name": "Inercia de Modelo",
-    "logica": "Tu empresa lleva años haciendo lo mismo — y nadie ha parado a comprobar si ese modelo aguanta lo que viene.",
+    "symptom_name": "Ilusión de Crecimiento",
+    "logica": "Facturas más cada año pero no ganas más — porque el modelo no está diseñado para ser rentable, solo para ser grande.",
     "plan": "PIE",
-    "description_symptom": "Si llevas años haciendo lo mismo de la misma manera y nadie ha revisado si ese modelo sigue siendo el más adecuado — no estás estable, estás inmóvil. Los mercados cambian, los clientes cambian, la competencia cambia. Un modelo que no se revisa no se adapta: se queda atrás.",
-    "kpi_question": "Introduce qué porcentaje de tus ingresos proviene de líneas de negocio o servicios que llevas más de 3 años ofreciendo exactamente igual, sin revisión ni evolución. Si supera el 50%, tu modelo tiene rigidez estructural.",
-    "kpi_impact": "Cuando menos del 50% de los ingresos dependen de líneas sin revisar, el modelo tiene capacidad real de adaptación.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": "<0.50",
+    "description_symptom": "Si tu facturación sube pero tu bolsillo no lo nota, el modelo tiene una fuga estructural. Crecer en volumen sin crecer en margen es trabajar más para ganar lo mismo — o menos. El problema no está en lo que vendes sino en cómo está diseñado lo que haces.",
+    "kpi_question": "Introduce el beneficio neto del último año — lo que quedó después de pagar todo — y tu facturación total del año. Si el margen es inferior al 15%, tu modelo trabaja más de lo que rentabiliza.",
+    "kpi_impact": "Cuando el margen neto anual supera el 15%, el modelo está diseñado para crear riqueza real — no solo volumen.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">15%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -749,19 +749,19 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Ingresos provenientes de líneas de negocio o servicios sin revisión en los últimos 3 años (€)"
+        "label": "Beneficio neto del último año — lo que quedó después de pagar todo (€)"
       },
       {
         "id": "inputB",
-        "label": "Ingresos totales del último año (€)"
+        "label": "Facturación total del último año (€)"
       }
     ],
-    "input_a": "Ingresos líneas sin revisar (3+ años)",
-    "input_b": "Ingresos totales",
-    "input_revised_1": "Decisiones con criterio post",
-    "input_revised_2": "Decisiones totales post",
-    "result_revised": "Δ decisiones estratégicas",
-    "impact_treatment": "Revisamos y actualizamos tu modelo de negocio antes de que el mercado te obligue. La adaptación pasa a ser una ventaja competitiva, no una reacción de emergencia.",
+    "input_a": "Beneficio neto del último año (€)",
+    "input_b": "Facturación total del último año (€)",
+    "input_revised_1": "Beneficio neto anual (post)",
+    "input_revised_2": "Facturación anual (post)",
+    "result_revised": "Δ margen neto anual",
+    "impact_treatment": "Rediseñamos el modelo para que cada euro de facturación deje más margen real. Crecer pasa a significar ganar más, no solo facturar más.",
     "optimizer_impact": "Reducción inmediata del riesgo de obsolescencia al identificar las líneas que necesitan revisión urgente.",
     "optimizer_decision": "Diagnóstico de Portafolio de Negocio",
     "optimizer_decision_explanation": "Para saber si el modelo aguanta lo que viene, primero hay que medir qué parte de los ingresos proviene de líneas que nadie ha cuestionado en años.",
@@ -796,8 +796,8 @@
     "description_symptom": "Si gestionas tu empresa sin saber exactamente cuánto te queda después de pagar todo — incluyendo impuestos y tu propio sueldo real — estás dirigiendo a ciegas. La intuición puede llevarte lejos, pero no puede sustituir a los números cuando el negocio crece o cuando llega la primera crisis.",
     "kpi_question": "Introduce tus ingresos brutos y todos tus gastos reales del mes — incluyendo lo que deberías pagarte como sueldo y la estimación proporcional de impuestos. El resultado es tu margen neto real: lo que el negocio genera para ti después de todo. Muchos autónomos nunca lo han calculado.",
     "kpi_impact": "Un margen neto real superior al 15% confirma que el negocio es viable. Por debajo, estás trabajando para cubrir costes.",
-    "kpi_formula": "((InputA-InputB)/InputA)",
-    "kpi_objective": ">0.15",
+    "kpi_formula": "((InputA-InputB)/InputA)*100",
+    "kpi_objective": ">15%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -852,8 +852,8 @@
     "description_symptom": "Si pagas lo que toca cuando toca pero sin saber con antelación cuánto va a ser ni si tienes suficiente apartado, vives en riesgo constante. Las multas, los recargos y el estrés de los vencimientos son síntomas de un problema de sistema, no de mala suerte.",
     "kpi_question": "Introduce el total de obligaciones fiscales y laborales que estimas para este año y cuánto tienes ya reservado para cubrirlas. Un ratio inferior al 80% significa que vas a llegar al vencimiento sin cobertura suficiente.",
     "kpi_impact": "Un ratio de cobertura superior al 80% elimina el riesgo de sorpresas fiscales y garantiza cumplimiento en plazo.",
-    "kpi_formula": "(InputB/InputA)",
-    "kpi_objective": ">0.80",
+    "kpi_formula": "(InputB/InputA)*100",
+    "kpi_objective": ">80%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -906,10 +906,10 @@
     "logica": "Todo acaba en el mismo despacho porque nadie sabe exactamente qué le corresponde a quién.",
     "plan": "PIE",
     "description_symptom": "Si la mayoría de las decisiones y tareas acaban en tu mesa aunque no tendrían por qué, no es que seas imprescindible — es que no están claros los límites de cada rol. Y mientras no estén claros, todo seguirá llegando al mismo sitio.",
-    "kpi_question": "Introduce el número de tareas que han sido escaladas al dueño o directivo y el total de tareas del mes. Si más del 20% acaba en tu mesa, los roles no tienen autonomía suficiente para resolver sin ti.",
-    "kpi_impact": "Mantener el escalamiento por debajo del 20% significa que el equipo puede resolver la mayoría de situaciones sin depender del líder.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": "<0.20",
+    "kpi_question": "Introduce cuántas personas de tu equipo tienen sus competencias y fortalezas evaluadas formalmente, y el total de personas. Si menos del 80% ha sido evaluado, estás gestionando un equipo que no conoces — y no puedes poner a cada persona donde más aporta.",
+    "kpi_impact": "Cuando el 80% o más del equipo tiene su perfil de competencias evaluado y comparado con su rol, puedes tomar decisiones de estructura con datos reales en lugar de suposiciones.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">80%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -917,18 +917,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Tareas escaladas al dueño"
+        "label": "Personas del equipo cuyas competencias y fortalezas has evaluado formalmente"
       },
       {
         "id": "inputB",
-        "label": "Tareas totales del mes"
+        "label": "Total personas del equipo"
       }
     ],
-    "input_a": "Tareas escaladas",
-    "input_b": "Tareas totales",
-    "input_revised_1": "Tareas escaladas post",
-    "input_revised_2": "Tareas totales post",
-    "result_revised": "Δ dependencia",
+    "input_a": "Personas evaluadas formalmente",
+    "input_b": "Total personas del equipo",
+    "input_revised_1": "Personas evaluadas (post)",
+    "input_revised_2": "Total personas del equipo (post)",
+    "result_revised": "Δ cobertura de evaluación de equipo",
     "impact_treatment": "Definimos y asignamos responsabilidades con precisión quirúrgica. El equipo resuelve sin necesitarte a ti — y tú recuperas el tiempo que el negocio te había secuestrado.",
     "optimizer_impact": "Aumento inmediato de estabilidad operativa al clarificar quién decide qué.",
     "optimizer_decision": "Diagnóstico de Autonomía de Roles",
@@ -962,10 +962,10 @@
     "logica": "Tu empresa vale más de lo que parece — el problema es que tu marca todavía no lo transmite.",
     "plan": "PIE",
     "description_symptom": "Si lo que proyecta tu marca no refleja lo que realmente eres capaz de hacer, estás perdiendo clientes antes de la primera conversación. La identidad débil no es un problema estético — es un problema de valor perdido.",
-    "kpi_question": "Introduce cuántos elementos de tu identidad de marca — nombre, visual, mensaje, tono, materiales — están alineados con tu posicionamiento real y el total de elementos revisados. Si menos del 70% está alineado, tu marca trabaja en tu contra.",
-    "kpi_impact": "Una identidad con más del 70% de sus elementos alineados transmite el valor real del negocio desde el primer contacto.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.70",
+    "kpi_question": "Introduce cuántos de tus materiales de imagen están actualizados y tienen un aspecto profesional — carta de precios, catálogo, tarjetas, web, redes — y el total que tienes en uso. Si menos del 80% está al nivel, tu imagen está trabajando en tu contra antes de que el cliente te conozca.",
+    "kpi_impact": "Cuando el 80% o más de tus materiales de imagen son coherentes y profesionales, la primera impresión genera confianza en lugar de dudas.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">80%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -973,18 +973,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Elementos alineados"
+        "label": "Materiales de imagen actualizados y con aspecto profesional (carta, catálogo, tarjetas, web, redes)"
       },
       {
         "id": "inputB",
-        "label": "Elementos totales"
+        "label": "Total materiales de imagen que tienes en uso"
       }
     ],
-    "input_a": "Elementos alineados",
-    "input_b": "Elementos totales",
-    "input_revised_1": "Elementos alineados post",
-    "input_revised_2": "Elementos totales post",
-    "result_revised": "Δ identidad alineada",
+    "input_a": "Materiales de imagen actualizados y profesionales",
+    "input_b": "Total materiales de imagen en uso",
+    "input_revised_1": "Materiales actualizados (post)",
+    "input_revised_2": "Total materiales (post)",
+    "result_revised": "Δ imagen profesional",
     "impact_treatment": "Reconstruimos la imagen de tu negocio para que transmita el nivel que merece. La primera impresión empieza a abrir puertas en lugar de generar dudas.",
     "optimizer_impact": "Incremento inmediato de confianza y valor percibido en el primer contacto con el cliente.",
     "optimizer_decision": "Diagnóstico de Identidad Competitiva",
@@ -1018,10 +1018,10 @@
     "logica": "Tu cliente no sabe por qué elegirte a ti — y si no lo sabe él, tampoco lo sabe tu equipo comercial.",
     "plan": "PIE",
     "description_symptom": "Si cuando alguien te pregunta por qué deberían elegirte tardas en responder o das una respuesta diferente cada vez, no tienes una propuesta única — tienes una colección de argumentos. Y lo que no se puede explicar en una frase no se puede vender.",
-    "kpi_question": "Introduce cuántos atributos de tu oferta son realmente diferenciales — no comparables ni genéricos — y el total de atributos analizados. Si menos del 60% es diferencial, tu propuesta se parece demasiado a la de todos los demás.",
-    "kpi_impact": "Cuando más del 60% de los atributos son genuinamente diferenciales, tu equipo comercial puede vender con criterio en lugar de con esperanza.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.60",
+    "kpi_question": "Introduce los ingresos del servicio o producto que más margen real te deja y tus ingresos totales del mes. Si tu producto estrella representa menos del 30% de tu facturación, estás dispersando esfuerzo en lo que menos te renta.",
+    "kpi_impact": "Cuando tu producto estrella genera más del 30% de los ingresos, el negocio está enfocado en lo que más valor crea — y el margen total mejora sin trabajar más.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">30%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1029,18 +1029,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Atributos diferenciales"
+        "label": "Ingresos del servicio o producto que más margen real te deja este mes (€)"
       },
       {
         "id": "inputB",
-        "label": "Atributos totales"
+        "label": "Ingresos totales del mes (€)"
       }
     ],
-    "input_a": "Atributos diferenciales",
-    "input_b": "Atributos totales",
-    "input_revised_1": "Atributos diferenciales post",
-    "input_revised_2": "Atributos totales post",
-    "result_revised": "Δ diferenciacion",
+    "input_a": "Ingresos del producto estrella",
+    "input_b": "Ingresos totales del mes",
+    "input_revised_1": "Ingresos producto estrella (post)",
+    "input_revised_2": "Ingresos totales (post)",
+    "result_revised": "Δ concentración en producto estrella",
     "impact_treatment": "Definimos tu diferenciación con la especificidad suficiente para que no tengas que competir por precio. Tu equipo deja de vender con esperanza y empieza a vender con argumento.",
     "optimizer_impact": "Incremento inmediato de valor percibido al tener un argumento diferencial claro y defendible.",
     "optimizer_decision": "Diagnóstico de Diferenciación Real",
@@ -1074,10 +1074,10 @@
     "logica": "No hay un plan de comunicación — tu marca habla cuando puede, como puede, y nadie ha medido si funciona.",
     "plan": "PIE",
     "description_symptom": "Si tu marca comunica cuando te acuerdas, en el formato que tienes disponible y sin medir si funciona, no tienes estrategia de comunicación — tienes ruido intermitente. Y el ruido no construye posicionamiento.",
-    "kpi_question": "Introduce cuántos mensajes emitidos en el último mes están alineados con tu identidad de marca y el total de mensajes revisados. Si menos del 75% es coherente, tu marca habla con varias voces y ninguna construye.",
-    "kpi_impact": "Mantener más del 75% de mensajes alineados con la identidad construye reconocimiento acumulado y posicionamiento real.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.75",
+    "kpi_question": "Introduce las reseñas o recomendaciones digitales que recibiste este mes — Google, Instagram, cualquier plataforma — y el total de clientes que atendiste. Si menos del 10% de tus clientes te recomienda digitalmente, tu marca no está generando prescripción activa.",
+    "kpi_impact": "Cuando más del 10% de tus clientes deja una recomendación digital, tu marca empieza a crecer sola — cada reseña atrae nuevos clientes sin que tengas que hacer nada más.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">10%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1085,18 +1085,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Mensajes alineados"
+        "label": "Reseñas o recomendaciones digitales recibidas este mes (Google, Instagram, etc.)"
       },
       {
         "id": "inputB",
-        "label": "Mensajes totales"
+        "label": "Total clientes atendidos este mes"
       }
     ],
-    "input_a": "Mensajes alineados",
-    "input_b": "Mensajes totales",
-    "input_revised_1": "Mensajes alineados post",
-    "input_revised_2": "Mensajes totales post",
-    "result_revised": "Δ coherencia comunicativa",
+    "input_a": "Reseñas o recomendaciones digitales este mes",
+    "input_b": "Total clientes atendidos este mes",
+    "input_revised_1": "Reseñas digitales (post)",
+    "input_revised_2": "Total clientes (post)",
+    "result_revised": "Δ tasa de recomendación digital",
     "impact_treatment": "Diseñamos el plan de comunicación con cadencia, canales y métricas para que tu marca hable cuando tiene que hablar — y lo que dice convierta.",
     "optimizer_impact": "Incremento inmediato de reconocimiento al establecer un tono y mensaje consistente en todos los canales.",
     "optimizer_decision": "Diagnóstico de Coherencia Comunicativa",
@@ -1132,8 +1132,8 @@
     "description_symptom": "Si más de un tercio de los días laborables se viven con alta tensión — urgencias, conflictos, saturación — el coste no aparece en ninguna hoja de cálculo pero está ahí: errores, absentismo, rotación y decisiones impulsivas. La emergencia permanente no es un pico de trabajo, es un sistema roto.",
     "kpi_question": "Introduce los días del mes que el equipo ha vivido con tensión alta percibida y el total de días del periodo. Si más del 30% de los días son de alta tensión, el sistema organizacional está en modo emergencia crónica.",
     "kpi_impact": "Reducir los días de alta tensión por debajo del 30% del total recupera productividad, reduce errores y baja el riesgo de rotación.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": "<0.30",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": "<30%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1141,18 +1141,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Dias con tension alta"
+        "label": "Días del mes con tensión alta percibida en el equipo"
       },
       {
         "id": "inputB",
-        "label": "Dias totales"
+        "label": "Total días laborables del mes"
       }
     ],
-    "input_a": "Dias con tension",
-    "input_b": "Dias totales",
-    "input_revised_1": "Dias con tension post",
-    "input_revised_2": "Dias totales post",
-    "result_revised": "Δ tension",
+    "input_a": "Días con tensión alta",
+    "input_b": "Total días laborables",
+    "input_revised_1": "Días con tensión alta (post)",
+    "input_revised_2": "Total días laborables (post)",
+    "result_revised": "Δ días de tensión",
     "impact_treatment": "Reducimos la carga emocional del equipo identificando y eliminando los focos de estrés operativo. El equipo vuelve a rendir con energía real, no con el último combustible que le queda.",
     "optimizer_impact": "Incremento inmediato de estabilidad emocional al identificar y eliminar los detonantes de tensión más frecuentes.",
     "optimizer_decision": "Diagnóstico de Detonantes de Tensión",
@@ -1186,10 +1186,10 @@
     "logica": "Tienes personas válidas en los puestos equivocados — y eso genera fricción, desgaste y dependencia del que siempre resuelve todo.",
     "plan": "PIE",
     "description_symptom": "Cuando las personas no están en los roles que les corresponden por competencia y carácter, el sistema organizacional falla aunque todos trabajen duro. Hay quien resuelve todo, hay quien no resuelve nada, y hay quien podría dar más pero nadie se lo pide porque está ocupado en lo que no es suyo.",
-    "kpi_question": "Introduce el número de decisiones que se han escalado al líder este mes y el total de decisiones tomadas en la organización. Si más del 20% escala, los roles no tienen la autoridad ni la competencia para resolver en su nivel.",
-    "kpi_impact": "Mantener el escalamiento de decisiones por debajo del 20% indica que los perfiles están donde pueden rendir y los roles funcionan con autonomía real.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": "<0.20",
+    "kpi_question": "Introduce cuántas personas de tu equipo trabajan habitualmente más horas de las pactadas y el total de personas. Si más del 20% está cronicamente saturado, los roles no están bien asignados — hay personas haciendo lo que no les corresponde.",
+    "kpi_impact": "Cuando menos del 20% del equipo trabaja en exceso de forma habitual, las competencias y los roles están alineados y cada persona rinde desde su punto fuerte.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": "<20%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1197,18 +1197,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Decisiones escaladas"
+        "label": "Personas del equipo habitualmente saturadas (trabajan más horas de lo pactado)"
       },
       {
         "id": "inputB",
-        "label": "Decisiones totales"
+        "label": "Total personas del equipo"
       }
     ],
-    "input_a": "Decisiones escaladas",
-    "input_b": "Decisiones totales",
-    "input_revised_1": "Decisiones escaladas post",
-    "input_revised_2": "Decisiones totales post",
-    "result_revised": "Δ escalamiento",
+    "input_a": "Personas habitualmente saturadas",
+    "input_b": "Total personas del equipo",
+    "input_revised_1": "Personas saturadas (post)",
+    "input_revised_2": "Total personas (post)",
+    "result_revised": "Δ saturación de equipo",
     "impact_treatment": "Alineamos personas, roles y responsabilidades para que cada uno trabaje donde puede dar su máximo. La fricción desaparece y el equipo empieza a fluir sin que tú tengas que empujarlo.",
     "optimizer_impact": "Incremento inmediato de autonomía organizacional al reasignar personas a los roles que mejor les corresponden.",
     "optimizer_decision": "Diagnóstico de Alineación Persona-Rol",
@@ -1242,10 +1242,10 @@
     "logica": "Tu equipo cumple, pero sin energía — y la motivación que se apaga en silencio es la más cara de recuperar.",
     "plan": "PIE",
     "description_symptom": "Si el equipo cumple pero no propone, no mejora ni se implica más allá de lo mínimo, la desconexión ya está instalada. El silencio organizacional es el síntoma más costoso y el más difícil de ver — hasta que alguien clave se va.",
-    "kpi_question": "Introduce el número de iniciativas de mejora propuestas por el equipo este mes y el total de oportunidades de mejora identificadas. Si menos del 30% viene del equipo, la participación es solo nominal.",
-    "kpi_impact": "Cuando más del 30% de las iniciativas de mejora emergen del propio equipo, la desconexión ha cedido y la organización empieza a mejorar sola.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.30",
+    "kpi_question": "Introduce cuántas personas de tu equipo propusieron al menos una mejora o idea este mes y el total de personas. Si menos del 50% participa, el equipo cumple pero no se implica — y esa energía apagada tiene un coste invisible.",
+    "kpi_impact": "Cuando más del 50% del equipo propone mejoras de forma espontánea, la motivación es real y la organización mejora desde dentro sin que tengas que empujarla.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">50%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1253,18 +1253,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Iniciativas propuestas"
+        "label": "Personas del equipo que propusieron al menos una mejora o idea este mes"
       },
       {
         "id": "inputB",
-        "label": "Iniciativas totales posibles"
+        "label": "Total personas del equipo"
       }
     ],
-    "input_a": "Iniciativas propuestas",
-    "input_b": "Iniciativas totales",
-    "input_revised_1": "Iniciativas propuestas post",
-    "input_revised_2": "Iniciativas totales post",
-    "result_revised": "Δ implicacion",
+    "input_a": "Personas que propusieron mejoras este mes",
+    "input_b": "Total personas del equipo",
+    "input_revised_1": "Personas con iniciativa (post)",
+    "input_revised_2": "Total personas (post)",
+    "result_revised": "Δ participación activa del equipo",
     "impact_treatment": "Diagnosticamos qué apaga la energía de tu equipo y aplicamos el protocolo de reactivación. La motivación vuelve a ser una fuerza real, no un deseo que se escapa entre reuniones.",
     "optimizer_impact": "Incremento inmediato de participación y energía colectiva al abrir canales de voz reales.",
     "optimizer_decision": "Diagnóstico de Nivel de Conexión",
@@ -1298,10 +1298,10 @@
     "logica": "Tus mejores personas están en modo desconexión — y cuando se vayan, el coste será mucho mayor que el de haberlo evitado.",
     "plan": "PIE",
     "description_symptom": "Si no sabes quiénes son tus A players, qué los retiene y qué los está desgastando, estás gestionando el talento a ciegas. Cuando se van, el coste no es solo el tiempo de encontrar un reemplazo — es el conocimiento, las relaciones y la cultura que se van con ellos.",
-    "kpi_question": "Introduce cuántos de tus empleados clasificarías como A players — personas que podrían trabajar en cualquier empresa de tu sector y eligen quedarse — y el total del equipo. Si son menos del 20%, el talento crítico está infrarrepresentado.",
-    "kpi_impact": "Mantener un 20% o más de A players en el equipo garantiza un núcleo de alto rendimiento que eleva el nivel del conjunto.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.20",
+    "kpi_question": "Introduce cuántas personas han dejado tu empresa en los últimos 12 meses y el total de personas que tenías hace 12 meses. Si más del 15% se ha ido, estás perdiendo talento más rápido de lo que puedes reponerlo.",
+    "kpi_impact": "Una rotación por debajo del 15% anual indica que el talento está retenido y el negocio no pierde conocimiento ni relaciones de forma crónica.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": "<15%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1309,18 +1309,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Empleados A player"
+        "label": "Personas que han dejado la empresa en los últimos 12 meses"
       },
       {
         "id": "inputB",
-        "label": "Empleados totales"
+        "label": "Total personas que tenías hace 12 meses"
       }
     ],
-    "input_a": "Empleados A player",
-    "input_b": "Empleados totales",
-    "input_revised_1": "Empleados A player post",
-    "input_revised_2": "Empleados totales post",
-    "result_revised": "Δ A players",
+    "input_a": "Personas que se fueron en 12 meses",
+    "input_b": "Total personas hace 12 meses",
+    "input_revised_1": "Bajas en 12 meses (post)",
+    "input_revised_2": "Total personas (post)",
+    "result_revised": "Δ tasa de rotación",
     "impact_treatment": "Identificamos y retenemos a las personas que hacen que tu empresa funcione de verdad. Que se vayan deja de ser una sorpresa — pasa a ser una señal que detectamos y revertimos antes.",
     "optimizer_impact": "Incremento inmediato de estabilidad del talento crítico al identificar quién está en riesgo y por qué.",
     "optimizer_decision": "Diagnóstico de Talento Crítico",
@@ -1354,10 +1354,10 @@
     "logica": "Tu equipo sabe más, puede más y tiene más que ofrecer de lo que el negocio le está pidiendo — y ese talento lo estás pagando sin aprovecharlo.",
     "plan": "PIE",
     "description_symptom": "Si tu equipo pasa la mayor parte del tiempo en tareas administrativas, operativas o de bajo impacto, no es que no tengan capacidad — es que el sistema no les deja usarla. El potencial bloqueado es el activo más infrautilizado de cualquier empresa.",
-    "kpi_question": "Introduce cuántas horas semanales dedica tu equipo a tareas estratégicas o de alto valor — no operativas ni administrativas — y el total de horas trabajadas. Si menos del 30% del tiempo va a trabajo de alto impacto, el potencial del equipo está bloqueado por la operación.",
-    "kpi_impact": "Cuando más del 30% del tiempo del equipo va a tareas de alto valor, el potencial empieza a traducirse en resultados reales.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.30",
+    "kpi_question": "Introduce cuántas personas de tu equipo recibieron algún tipo de formación o desarrollo profesional este trimestre y el total de personas. Si menos del 50% se está desarrollando, el potencial está pagado pero bloqueado.",
+    "kpi_impact": "Cuando más del 50% del equipo se forma o desarrolla cada trimestre, el talento crece con el negocio — y eso es más barato y más rápido que contratar de nuevo.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">50%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1365,18 +1365,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Horas semanales del equipo dedicadas a tareas estratégicas o de alto valor"
+        "label": "Personas del equipo que recibieron formación o desarrollo profesional este trimestre"
       },
       {
         "id": "inputB",
-        "label": "Total horas semanales trabajadas por el equipo"
+        "label": "Total personas del equipo"
       }
     ],
-    "input_a": "Horas equipo en tareas de alto valor",
-    "input_b": "Total horas semanales del equipo",
-    "input_revised_1": "Dias de onboarding post",
-    "input_revised_2": "—",
-    "result_revised": "Δ dias onboarding",
+    "input_a": "Personas con formación este trimestre",
+    "input_b": "Total personas del equipo",
+    "input_revised_1": "Personas formadas (post)",
+    "input_revised_2": "Total personas (post)",
+    "result_revised": "Δ desarrollo de equipo",
     "impact_treatment": "Activamos el talento que tu equipo tiene pero que el negocio no está aprovechando. Crecer con las personas que ya tienes es siempre más rápido y más barato que contratar de nuevo.",
     "optimizer_impact": "Liberación inmediata de capacidad de alto valor al identificar y redistribuir las tareas que bloquean el potencial.",
     "optimizer_decision": "Diagnóstico de Distribución de Tiempo del Equipo",
@@ -1412,8 +1412,8 @@
     "description_symptom": "Si en tu equipo hay fricciones que todo el mundo nota pero nadie menciona, el problema no es la fricción — es el silencio. Las tensiones no resueltas no desaparecen: se acumulan, se agrandan y eventualmente explotan cuando menos lo esperas o cuando más te cuesta.",
     "kpi_question": "Introduce cuántas tensiones o conflictos internos identificas en tu equipo este mes y cuántos de ellos llegaron a una resolución o acuerdo claro. Si menos del 60% se resuelven de forma explícita, el resto se convierte en tensión silenciosa acumulada.",
     "kpi_impact": "Cuando más del 60% de las tensiones se resuelven de forma explícita, el ambiente mejora y la contaminación silenciosa desaparece.",
-    "kpi_formula": "(InputB/InputA)",
-    "kpi_objective": ">0.60",
+    "kpi_formula": "(InputB/InputA)*100",
+    "kpi_objective": ">60%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1466,10 +1466,10 @@
     "logica": "La experiencia que vive tu cliente depende del día o de quién le atiende — y esa variabilidad destruye la reputación que tardaste años en construir.",
     "plan": "PIE",
     "description_symptom": "Si la experiencia que recibe tu cliente cambia según el turno, la persona o el día de la semana, no tienes un estándar de servicio — tienes improvisación. Y cada experiencia por debajo del nivel borra el esfuerzo de diez que salieron bien.",
-    "kpi_question": "Introduce cuántos pasos o momentos de tu proceso de atención al cliente se ejecutan de forma consistente — igual independientemente de quién atiende — y el total de pasos del proceso. Si menos del 80% es consistente, la experiencia depende del azar.",
-    "kpi_impact": "Una consistencia superior al 80% garantiza que el cliente recibe lo que espera independientemente del día o de quién le atiende.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.80",
+    "kpi_question": "Introduce cuántas atenciones o servicios generaron una queja o incidencia este mes y el total de atenciones realizadas. Si más del 5% genera problemas, la experiencia que vive el cliente depende del día o de quién atiende — no de un estándar.",
+    "kpi_impact": "Mantener las incidencias por debajo del 5% garantiza que el cliente recibe lo que espera independientemente del día o de quién le atiende.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": "<5%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1477,18 +1477,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Pasos consistentes"
+        "label": "Atenciones o servicios que generaron queja o incidencia este mes"
       },
       {
         "id": "inputB",
-        "label": "Pasos totales"
+        "label": "Total atenciones o servicios realizados este mes"
       }
     ],
-    "input_a": "Pasos consistentes",
-    "input_b": "Pasos totales",
-    "input_revised_1": "Pasos consistentes post",
-    "input_revised_2": "Pasos totales post",
-    "result_revised": "Δ consistencia",
+    "input_a": "Atenciones con queja o incidencia",
+    "input_b": "Total atenciones del mes",
+    "input_revised_1": "Atenciones con queja (post)",
+    "input_revised_2": "Total atenciones (post)",
+    "result_revised": "Δ tasa de incidencias",
     "impact_treatment": "Estandarizamos la experiencia del cliente para que sea excelente independientemente de quién atiende o qué día es. Tu reputación deja de depender del azar y pasa a ser un activo que se construye.",
     "optimizer_impact": "Reducción inmediata de fricción y variabilidad en los momentos clave del proceso de atención.",
     "optimizer_decision": "Diagnóstico de Consistencia de Experiencia",
@@ -1524,8 +1524,8 @@
     "description_symptom": "El cliente que se va sin quejarse es el más peligroso: no te da la oportunidad de mejorar, y sí le cuenta a otros por qué se fue. La necrosis de cliente no duele en el momento — duele meses después, cuando notas que la reputación se ha erosionado sin que hayas hecho nada visible para que ocurra.",
     "kpi_question": "Introduce cuántos clientes molestos o insatisfechos has detectado y cuántos de ellos has recuperado antes de que terminaran la relación. Si recuperas menos del 60%, cada cliente insatisfecho es un detractor en potencia que ya no puedes controlar.",
     "kpi_impact": "Recuperar más del 60% de los clientes molestos antes de que se vayan convierte una experiencia negativa en fidelización y elimina la propagación silenciosa de reputación negativa.",
-    "kpi_formula": "(InputB/InputA)",
-    "kpi_objective": ">0.60",
+    "kpi_formula": "(InputB/InputA)*100",
+    "kpi_objective": ">60%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1533,11 +1533,11 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Clientes molestos detectados"
+        "label": "Clientes molestos o insatisfechos detectados este mes"
       },
       {
         "id": "inputB",
-        "label": "Clientes recuperados"
+        "label": "De esos, clientes que recuperaste antes de que se fueran"
       }
     ],
     "input_a": "Clientes molestos detectados",
@@ -1578,10 +1578,10 @@
     "logica": "Tu cliente paga pero no siente que vale lo que cuesta — y ese gap impide que te recomienden.",
     "plan": "PIE",
     "description_symptom": "Si tus clientes pagan sin protestar pero tampoco te recomiendan activamente, el valor que entregas no está siendo percibido. No es lo mismo hacer bien el trabajo que hacer que el cliente sienta que ha sido una buena decisión. El gap entre valor real y valor percibido es donde se pierden las renovaciones y las referencias.",
-    "kpi_question": "Introduce cuántas interacciones con el cliente han transmitido valor percibido de forma explícita — el cliente lo reconoce, lo comenta o lo recomienda — y el total de interacciones del periodo. Si es menos del 70%, el valor existe pero no llega.",
-    "kpi_impact": "Cuando más del 70% de las interacciones transmiten valor percibido, el cliente recomienda de forma espontánea y el precio deja de ser el factor de decisión.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.70",
+    "kpi_question": "Introduce cuántos clientes nuevos llegaron este mes por recomendación de un cliente existente y el total de clientes nuevos. Si menos del 40% llega por recomendación, tus clientes no están prescribiendo tu negocio — y el valor que entregas no se está percibiendo lo suficiente.",
+    "kpi_impact": "Cuando más del 40% de los nuevos clientes llegan por recomendación, el valor percibido es tan alto que tus propios clientes se convierten en tu mejor canal de captación.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">40%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1589,18 +1589,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Interacciones con valor percibido"
+        "label": "Clientes nuevos que llegaron por recomendación de un cliente existente"
       },
       {
         "id": "inputB",
-        "label": "Interacciones totales"
+        "label": "Total clientes nuevos este mes"
       }
     ],
-    "input_a": "Interacciones con valor",
-    "input_b": "Interacciones totales",
-    "input_revised_1": "Interacciones con valor post",
-    "input_revised_2": "Interacciones totales post",
-    "result_revised": "Δ valor percibido",
+    "input_a": "Clientes nuevos por recomendación",
+    "input_b": "Total clientes nuevos del mes",
+    "input_revised_1": "Clientes por recomendación (post)",
+    "input_revised_2": "Total clientes nuevos (post)",
+    "result_revised": "Δ tasa de recomendación",
     "impact_treatment": "Diseñamos la experiencia para que tu cliente perciba exactamente el valor que le entregas. Cuando siente que vale lo que paga, te recomienda, vuelve y acepta el precio sin regatear.",
     "optimizer_impact": "Reducción inmediata de comparación por precio al hacer visible el valor en cada interacción.",
     "optimizer_decision": "Diagnóstico de Gap de Valor Percibido",
@@ -1636,8 +1636,8 @@
     "description_symptom": "Si cada persona que entra tarda demasiado en aportar sin que eso se deba a la complejidad del puesto, tienes un problema de sistema de integración. El tiempo de adaptación no es inevitable — es diseñable. Y cada mes que se puede recortar es un mes de coste real que dejas de asumir.",
     "kpi_question": "Introduce el número de errores cometidos por nuevas incorporaciones y el total de errores del periodo. Si más del 10% de los errores los generan los nuevos, tu sistema de integración no está transfiriendo el conocimiento necesario.",
     "kpi_impact": "Mantener los errores de nuevas incorporaciones por debajo del 10% del total indica que el sistema de integración funciona y que la curva de aprendizaje está controlada.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": "<0.10",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": "<10%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1645,18 +1645,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Errores nuevas incorporaciones"
+        "label": "Errores o incidencias generadas por personas incorporadas hace menos de 3 meses"
       },
       {
         "id": "inputB",
-        "label": "Errores totales"
+        "label": "Total errores o incidencias del mes"
       }
     ],
-    "input_a": "Errores nuevas incorporaciones",
-    "input_b": "Errores totales",
-    "input_revised_1": "Errores nuevas incorporaciones post",
-    "input_revised_2": "Errores totales post",
-    "result_revised": "Δ errores integracion",
+    "input_a": "Errores de nuevas incorporaciones",
+    "input_b": "Total errores del mes",
+    "input_revised_1": "Errores de nuevas incorporaciones (post)",
+    "input_revised_2": "Total errores (post)",
+    "result_revised": "Δ errores de integración",
     "impact_treatment": "Reducimos el tiempo de integración de nuevas incorporaciones de meses a semanas con protocolos concretos. El coste invisible de cada nueva persona deja de sangrar el negocio mientras aprende.",
     "optimizer_impact": "Aumento inmediato de madurez operativa al reducir los errores iniciales de las nuevas incorporaciones.",
     "optimizer_decision": "Diagnóstico de Sistema de Integración",
@@ -1692,8 +1692,8 @@
     "description_symptom": "Si hay decisiones, procesos o relaciones que solo funcionan cuando estás tú, no has construido una empresa — has construido un puesto de trabajo que depende de tu presencia. Eso no es liderazgo: es una trampa que te impide crecer, delegar o tomarte vacaciones sin que todo se detenga.",
     "kpi_question": "Introduce cuántas de las tareas críticas de la operación dependen exclusivamente del líder y el total de tareas críticas. Si más del 15% es dependiente de ti, la empresa no puede funcionar sin tu presencia — y eso tiene un coste real.",
     "kpi_impact": "Mantener la dependencia del líder por debajo del 15% en tareas críticas significa que la empresa puede operar, decidir y crecer sin requerir tu presencia constante.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": "<0.15",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">30%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1701,18 +1701,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Tareas criticas del lider"
+        "label": "Días del mes que el negocio funcionó con normalidad sin que tuvieras que intervenir"
       },
       {
         "id": "inputB",
-        "label": "Tareas criticas totales"
+        "label": "Total días laborables del mes"
       }
     ],
-    "input_a": "Tareas criticas del lider",
-    "input_b": "Tareas criticas totales",
-    "input_revised_1": "Tareas criticas lider post",
-    "input_revised_2": "Tareas criticas totales post",
-    "result_revised": "Δ dependencia",
+    "input_a": "Días sin intervención del líder",
+    "input_b": "Total días laborables",
+    "input_revised_1": "Días sin intervención (post)",
+    "input_revised_2": "Total días laborables (post)",
+    "result_revised": "Δ autonomía operativa",
     "impact_treatment": "Desmontamos la trampa que convierte al dueño en el cuello de botella de su propio negocio. La empresa empieza a funcionar sin ti — y eso es lo que permite que pueda escalar de verdad.",
     "optimizer_impact": "Reducción inmediata de la carga del líder al transferir tareas críticas a personas con autoridad y criterio.",
     "optimizer_decision": "Diagnóstico de Dependencia del Líder",
@@ -1748,8 +1748,8 @@
     "description_symptom": "Si tu operación alterna entre semanas de colapso y semanas muertas, no tienes ritmo — tienes reacción. Y un negocio que reacciona en lugar de fluir no puede crecer de forma sostenida: siempre está apagando el fuego del pico anterior o llenando el hueco del parón siguiente.",
     "kpi_question": "Introduce el número de entregas completadas dentro del plazo estándar y el total de entregas del periodo. Si menos del 85% llega a tiempo, tu operación no tiene ritmo estable y los golpes de carga son una constante.",
     "kpi_impact": "Mantener más del 85% de entregas a tiempo indica que la operación tiene cadencia real y puede crecer sin que los picos la desestabilicen.",
-    "kpi_formula": "(InputA/InputB)",
-    "kpi_objective": ">0.85",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">85%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1757,18 +1757,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Entregas a tiempo"
+        "label": "Entregas o servicios completados en el plazo acordado este mes"
       },
       {
         "id": "inputB",
-        "label": "Entregas totales"
+        "label": "Total entregas o servicios realizados este mes"
       }
     ],
-    "input_a": "Entregas a tiempo",
-    "input_b": "Entregas totales",
-    "input_revised_1": "Entregas a tiempo post",
-    "input_revised_2": "Entregas totales post",
-    "result_revised": "Δ ritmo",
+    "input_a": "Entregas completadas en plazo",
+    "input_b": "Total entregas del mes",
+    "input_revised_1": "Entregas en plazo (post)",
+    "input_revised_2": "Total entregas (post)",
+    "result_revised": "Δ cadencia operativa",
     "impact_treatment": "Instalamos la cadencia operativa que convierte los picos y baches en un ritmo de trabajo sostenido. La empresa deja de funcionar a golpes y empieza a crecer de forma ordenada y predecible.",
     "optimizer_impact": "Reducción inmediata de retrasos al identificar los cuellos de botella que rompen la cadencia operativa.",
     "optimizer_decision": "Diagnóstico de Cadencia Operativa",
