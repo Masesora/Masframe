@@ -150,15 +150,16 @@ async def update_client(
     return {"status": "ok", "codigo": codigo}
 
 
-# ACI puede actualizar sus propios datos fiscales (campos seguros únicamente)
+# El propio cliente o un interno puede actualizar los datos fiscales (campos seguros)
 CAMPOS_SELF = {"razon_social", "cif", "representante", "email", "telefono", "direccion", "ciudad"}
 
 @router.patch("/clients/{codigo}/self")
 async def update_client_self(
     codigo: str,
     payload: dict,
-    _user: dict = Depends(require_internal),
+    user: dict = Depends(get_current_user),
 ):
+    check_owns_or_internal(user, codigo)
     col = _get_col("clients")
     doc = await col.find_one({"codigo": codigo})
     if not doc:
