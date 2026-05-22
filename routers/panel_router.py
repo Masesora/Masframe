@@ -289,26 +289,3 @@ async def reasignar_cc(
         raise HTTPException(status_code=404, detail=f"Cliente '{codigo}' no encontrado")
 
     return {"ok": True, "codigo": codigo, "cc_asignado": nuevo_cc}
-──────────────────────────────────────────────────────────
-
-@router.patch("/clients/{codigo}/reasignar-cc")
-async def reasignar_cc(
-    codigo: str,
-    payload: dict,
-    _user: dict = Depends(require_admin),
-):
-    nuevo_cc = payload.get("cc_email", "").strip()
-    if not nuevo_cc:
-        raise HTTPException(status_code=400, detail="cc_email es requerido")
-
-    col   = _get_col("clients")
-    ahora = datetime.utcnow()
-
-    result = await col.update_one(
-        {"codigo": codigo},
-        {"$set": {"cc_asignado": nuevo_cc, "updated_at": ahora}},
-    )
-    if result.matched_count == 0:
-        raise HTTPException(status_code=404, detail=f"Cliente '{codigo}' no encontrado")
-
-    return {"ok": True, "codigo": codigo, "cc_asignado": nuevo_cc}
