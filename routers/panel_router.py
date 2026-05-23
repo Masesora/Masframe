@@ -207,13 +207,79 @@ async def get_metrics(_user: dict = Depends(require_admin)):
     plan_result = await clients_col.aggregate(pipeline_plan).to_list(10)
     por_plan = {r["_id"] or "Sin plan": r["count"] for r in plan_result}
 
-    # Progreso de triaje — qué capas confirmadas tiene cada cliente
+    # Progreso de triaje — derivado de shared+inputs (TreatmentPage nunca llama
+    # a /treatment/confirm, por lo que confirmed_capas en flags siempre está vacío;
+    # calculamos el progreso real leyendo los datos guardados por /treatment/save)
     triaje_docs = await triaje_col.find(
-        {}, {"codigo": 1, "flags": 1, "updated_at": 1, "_id": 0}
+        {}, {"codigo": 1, "flags": 1, "shared": 1, "inputs": 1, "updated_at": 1, "_id": 0}
     ).to_list(500)
-    triaje_flags = {}
+
+    def _capas_done_from_data(
+        symptom_id: str,
+        raw_flags: dict,
+        shared: dict,
+        inputs: dict,
+    ) -> list[str]:
+        """Espejo de getCapasDone() en TriajePage.tsx."""
+        done: list[str] = []
+        sym_flags  = raw_flags.get(symptom_id, {})
+        sym_shared = shared.get(symptom_id, {})
+        sym_inputs = inputs.get(symptom_id, {})
+
+        # C0: kpi_value relleno O c0_locked
+        kpi_val = str(sym_inputs.get("kpi_value", "")).strip()
+        if sym_flags.get("c0_locked") or (kpi_val and kpi_val != "0"):
+            done.append("c0")
+
+        # C1: ≥2 items seleccionado=True
+        c1_items = sym_shared.get("c1", {}).get("items", [])
+        if sum(1 for i in c1_items if i.get("seleccionado")) >= 2:
+            done.append("c1")
+
+        # C2: decision_comprometida no vacía
+        dec = str(sym_shared.get("c2", {}).get("decision_comprometida", "")).strip()
+        if dec:
+            done.append("c2")
+
+        # C3: ≥2 items seleccionado=True
+        c3_items = sym_shared.get("c3", {}).get("items", [])
+        if sum(1 for i in c3_items if i.get("seleccionado")) >= 2:
+            done.append("c3")
+
+        # C4: algún item done=True
+        c4_items = sym_shared.get("c4", {}).get("items", [])
+        if any(i.get("done") for i in c4_items):
+            done.append("c4")
+
+        # C5: todos los items done=True (misma lista que C4)
+        if c4_items and all(i.get("done") for i in c4_items):
+            done.append("c5")
+
+        # C6: kpi_actual relleno y distinto de "0"
+        kpi_actual = str(sym_shared.get("c6", {}).get("kpi_actual", "")).strip()
+        if kpi_actual and kpi_actual != "0":
+            done.append("c6")
+
+        return done
+
+    # Construir triaje_flags con confirmed_capas calculadas
+    triaje_flags: dict[str, dict] = {}
     for t in triaje_docs:
-        triaje_flags[t["codigo"]] = t.get("flags", {})
+        codigo    = t["codigo"]
+        raw_flags = t.get("flags", {})
+        shared    = t.get("shared", {})
+        inputs    = t.get("inputs", {})
+
+        all_symptom_ids = set(raw_flags.keys()) | set(shared.keys()) | set(inputs.keys())
+        computed: dict[str, dict] = {}
+        for symptom_id in all_symptom_ids:
+            sym_flags = raw_flags.get(symptom_id, {})
+            confirmed = _capas_done_from_data(symptom_id, raw_flags, shared, inputs)
+            computed[symptom_id] = {
+                **sym_flags,
+                "confirmed_capas": confirmed,
+            }
+        triaje_flags[codigo] = computed
 
     # Calcular "nivel máximo" de capa por síntoma para cada cliente
     SECUENCIA = ["c0", "c1", "c2", "c3", "c4", "c5", "c6"]
@@ -221,8 +287,6 @@ async def get_metrics(_user: dict = Depends(require_admin)):
     for codigo, flags in triaje_flags.items():
         for symptom_id, symptom_flags in flags.items():
             confirmed = symptom_flags.get("confirmed_capas", [])
-            if symptom_flags.get("c0_locked") and "c0" not in confirmed:
-                confirmed = ["c0"] + confirmed
             for c in SECUENCIA:
                 if c in confirmed:
                     progreso_global[c] += 1
