@@ -21,14 +21,14 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Stock inmovilizado + facturas >90 días + anticipos no materializados"
+        "label": "Caja disponible actual"
       },
       {
         "id": "inputB",
         "label": "Gastos fijos mensuales"
       }
     ],
-    "input_a": "Stock inmovilizado + facturas >90 días + anticipos no materializados",
+    "input_a": "Caja disponible actual",
     "input_b": "Gastos fijos mensuales",
     "input_revised_1": "Total dinero rescatado post",
     "input_revised_2": "Gastos fijos mensuales",
@@ -1765,30 +1765,30 @@
       }
     ],
     "input_a": "Entregas completadas en plazo",
-    "input_b": "Total entregas del mes",
-    "input_revised_1": "Entregas en plazo (post)",
-    "input_revised_2": "Total entregas (post)",
-    "result_revised": "Δ cadencia operativa",
-    "impact_treatment": "Instalamos la cadencia operativa que convierte los picos y baches en un ritmo de trabajo sostenido. La empresa deja de funcionar a golpes y empieza a crecer de forma ordenada y predecible.",
-    "optimizer_impact": "Reducción inmediata de retrasos al identificar los cuellos de botella que rompen la cadencia operativa.",
-    "optimizer_decision": "Diagnóstico de Cadencia Operativa",
-    "optimizer_decision_explanation": "El ritmo irregular no se estabiliza trabajando más — se estabiliza eliminando los puntos de ruptura. Hay que medir dónde se rompe la cadencia para saber qué rediseñar.",
-    "optimizer_action": "Protocolo de Ritmo Sostenido",
-    "optimizer_tool_explanation": "Mapea el flujo operativo completo, identifica los puntos de acumulación y ruptura de cadencia, y establece los estándares de ritmo que permiten crecer de forma sostenida sin colapsar.",
-    "example": "Empresa industrial 61 por ciento entregas a tiempo Tras protocolo sube a 89 por ciento",
+    "input_b": "Total entregas o servicios realizados en el periodo",
+    "input_revised_1": "Entregas completadas en plazo (post-protocolo)",
+    "input_revised_2": "Total entregas realizadas (post-protocolo)",
+    "result_revised": "Δ tasa de cumplimiento de entregas",
+    "impact_treatment": "Normalizamos la carga de trabajo mediante sistemas de planificación y distribución de capacidad, convirtiendo los picos de urgencia en entregas predecibles para que el negocio pueda escalar sin colapsar.",
+    "optimizer_impact": "Incremento de la tasa de cumplimiento en plazo sin contratar más recursos.",
+    "optimizer_decision": "Estabilizar el Ritmo Operativo",
+    "optimizer_decision_explanation": "Antes de contratar más personal, identifica qué genera los picos y diseña un sistema de carga equilibrada que evite los colapsos recurrentes.",
+    "optimizer_action": "Protocolo de Cadencia Operativa en 30 Días",
+    "optimizer_tool_explanation": "Mapea los cuellos de botella de capacidad, identifica los detonantes de los picos y establece un sistema de nivelación de carga que garantice ritmo constante.",
+    "example": "Empresa logística: 62% cumplimiento en plazo. Tras protocolo de nivelación: 88% entregas a tiempo, sin incremento de plantilla.",
     "color_theme": "dorado",
-    "capa_1_priorizacion": "Picos de carga parones retrasos tareas acumuladas urgencias constantes falta de planificacion falta de estandar ritmo inestable",
-    "justi_capa1": "Tu ritmo operativo es irregular necesitas medir cadencia",
-    "capa_2_decision": "Impacto vs Esfuerzo",
-    "capa_2_options": "Mi operación va a golpes: picos, parones y urgencias; Alternamos semanas de colapso con semanas muertas; Reacciono en lugar de planificar; Se acumulan tareas y luego hay que correr; Las urgencias constantes me impiden organizarme; No tengo un ritmo de trabajo estable; Esa irregularidad me impide crecer de forma sostenida",
-    "justi_capa2": "Porque necesitas priorizar cuellos de botella",
-    "capa_3_comprension": "VSM operativo",
-    "justi_capa3": "Porque necesitas ver flujo completo",
-    "capa_4_cambio": "Unificacion de plazos",
-    "justi_capa4": "Porque necesitas alinear ritmo",
-    "capa_5_ejecucion": "Checklist de ritmo",
-    "justi_capa5": "Porque necesitas asegurar cadencia",
+    "capa_1_priorizacion": "Picos de carga impredecibles; semanas sin actividad y semanas de colapso; retrasos sistemáticos en entregas; urgencias constantes; planificación reactiva; sin estándares de producción; capacidad mal dimensionada; dependencia del esfuerzo individual.",
+    "justi_capa1": "La irregularidad proviene de carga no nivelada y falta de estándares de ritmo.",
+    "capa_2_decision": "Análisis de capacidad y carga",
+    "capa_2_options": "Tengo semanas de colapso y semanas muertas sin término medio; Las urgencias de última hora rompen cualquier planificación; No tengo un ritmo de trabajo establecido, cada semana es diferente; Los retrasos en entregas son habituales y los clientes lo notan; Dedico más tiempo a apagar fuegos que a producir; Mi equipo trabaja a tope en picos y está inactivo en valles; No puedo prever cuándo llegará el próximo colapso de trabajo",
+    "justi_capa2": "Necesitas identificar qué tipo de irregularidad tiene tu operación.",
+    "capa_3_comprension": "VSM de flujo operativo",
+    "justi_capa3": "Para mapear dónde se acumula carga y dónde se pierde ritmo.",
+    "capa_4_cambio": "Nivelación de carga (Heijunka)",
+    "justi_capa4": "Para distribuir la carga de trabajo de forma sostenida y predecible.",
+    "capa_5_ejecucion": "Checklist de cadencia diaria",
+    "justi_capa5": "Para estandarizar el ritmo operativo y medir cumplimiento.",
     "capa_6_seguimiento": "OKR tracking",
-    "justi_capa6": "Porque necesitas medir estabilidad operativa"
+    "justi_capa6": "Para medir el porcentaje de entregas a tiempo semana a semana."
   }
 ]

@@ -94,3 +94,31 @@ async def guardar_certificado(
 ):
     """Alias - compatibilidad con DischargePage anterior."""
     return await _save_cert(payload, user)
+
+
+@router.get("/certificados")
+async def listar_certificados(
+    cliente_codigo: str | None = None,
+    user: dict = Depends(get_current_user),
+):
+    """
+    Devuelve los certificados de alta guardados.
+    - ACI/cliente: solo los suyos (cliente_codigo obligatorio, debe coincidir con user.codigo)
+    - CC/admin: puede consultar cualquier cliente_codigo
+    """
+    col = get_collection("certificados")
+
+    role = user.get("role", "client")
+    if role in ("admin", "cc"):
+        # Equipo interno: filtra por cliente_codigo si se pasa, o devuelve todos
+        query = {"cliente_codigo": cliente_codigo} if cliente_codigo else {}
+    else:
+        # Cliente/ACI: solo puede ver los suyos
+        codigo_propio = user.get("codigo") or user.get("sub")
+        if cliente_codigo and cliente_codigo != codigo_propio:
+            raise HTTPException(status_code=403, detail="No autorizado")
+        query = {"cliente_codigo": cliente_codigo or codigo_propio}
+
+    cursor = col.find(query, {"_id": 0, "session_snapshot": 0}).sort("guardado_en", -1)
+    docs   = await cursor.to_list(length=100)
+    return docs
