@@ -1,4 +1,4 @@
-from masesora_backend.database.database import get_collection
+from database.database import get_collection
 
 async def validate_cliente_login(email: str, codigo: str) -> dict | None:
     """

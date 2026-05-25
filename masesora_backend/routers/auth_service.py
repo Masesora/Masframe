@@ -2,15 +2,16 @@ from fastapi import HTTPException, status
 from datetime import datetime, timedelta
 from jose import jwt
 import bcrypt
+import os
 
-from masesora_backend.database.database import get_collection
+from database.database import get_collection
 
 
 # ============================================================
 # CONFIG JWT
 # ============================================================
 
-SECRET_KEY = "MASFRAME_SUPER_SECRET_KEY"  # cambiar en producción por variable de entorno
+SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "MASFRAME_SUPER_SECRET_KEY")
 ALGORITHM  = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 8  # 8 horas
 

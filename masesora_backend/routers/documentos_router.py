@@ -10,7 +10,7 @@ from fastapi.responses import StreamingResponse
 from typing import Optional
 from datetime import datetime
 import io
-from masesora_backend.database.database import get_collection, get_database
+from database.database import get_collection, get_database
 
 router = APIRouter(tags=["documentos"])
 

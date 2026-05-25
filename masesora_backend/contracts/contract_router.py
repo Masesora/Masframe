@@ -2,15 +2,15 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List
 
-from masesora_backend.config.pricing_policy import (
+from config.pricing_policy import (
     get_segment_for_facturacion,
     get_product_price,
     PRICING_POLICY
 )
 
-from masesora_backend.onboarding.scanner_schema import ScannerOutput
-from masesora_backend.database.db.contracts import contracts_collection
-from masesora_backend.database.db.client import clients_collection
+from onboarding.scanner_schema import ScannerOutput
+from database.db.contracts import contracts_collection
+from database.db.client import clients_collection
 
 
 router = APIRouter(prefix="/contracts", tags=["Contracts"])

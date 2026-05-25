@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 from fastapi import HTTPException
 
 from engine.clinical_engine.loader import load_symptom_catalog
-from masesora_backend.schemas.evaluation_schema import SymptomInput
+from schemas.evaluation_schema import SymptomInput
 
 
 # ---------------------------------------------------------

@@ -1,11 +1,11 @@
 import json
-from masesora_backend.config.pricing_policy import (
+from config.pricing_policy import (
     PRICING_POLICY,
     get_product_price,
     get_segment_for_facturacion,
 )
 
-from masesora_backend.data.departments import SPECIALTY_TO_DEPARTMENT
+from data.departments import SPECIALTY_TO_DEPARTMENT
 
 
 # ============================================================

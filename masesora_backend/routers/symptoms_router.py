@@ -6,29 +6,30 @@ router = APIRouter(prefix="/specialties", tags=["specialties"])
 
 # ============================================================
 # CARGA ÚNICA DEL CATÁLOGO CLÍNICO (symptoms.json)
+# Array plano de síntomas — cada uno con symptom_id + specialty_id
 # ============================================================
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # masesora_backend
 SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptoms.json")
 
 with open(SYMPTOMS_PATH, "r", encoding="utf-8") as f:
-    CATALOGO_CLINICO = json.load(f)
+    CATALOGO_CLINICO: list[dict] = json.load(f)
 
 # ============================================================
 # MAPEO ESPECIALIDAD → DEPARTAMENTO
 # ============================================================
 
 SPECIALTY_TO_DEPARTMENT = {
-    "UCI FINANCIERA": "FINANZAS",
-    "UNIDAD DE PROCESOS": "PROCESOS",
-    "CARDIOLOGIA COMERCIAL": "COMERCIAL",
-    "NEUROLOGIA ESTRATÉGICA": "ESTRATÉGIA",
-    "GESTION CLINICA": "GESTION",
-    "CIRUJIA DE MARCA": "MARCA",
-    "PSIQUIATRÍA ORGANIZACIONAL": "ORGANIZACIONAL",
-    "RESCATE DEPERSONAS": "PERSONAS",
-    "TERAPIA DE EXPERIENCIA": "EXPERIENCIA",
-    "EXCELENCIA OPERATIVA": "EXCELENCIA"
+    "UCI FINANCIERA":              "FINANZAS",
+    "UNIDAD DE PROCESOS":          "PROCESOS",
+    "CARDIOLOGIA COMERCIAL":       "COMERCIAL",
+    "NEUROLOGIA ESTRATEGICA":      "ESTRATEGIA",
+    "GESTION CLINICA":             "GESTION",
+    "CIRUGIA DE MARCA":            "MARCA",
+    "PSIQUIATRIA ORGANIZACIONAL":  "ORGANIZACIONAL",
+    "RESCATE DE PERSONAS":         "PERSONAS",
+    "TERAPIA DE EXPERIENCIA":      "EXPERIENCIA",
+    "EXCELENCIA OPERATIVA":        "EXCELENCIA",
 }
 
 DEPARTMENTS = list(SPECIALTY_TO_DEPARTMENT.values())
@@ -37,11 +38,35 @@ DEPARTMENTS = list(SPECIALTY_TO_DEPARTMENT.values())
 # HELPERS
 # ============================================================
 
-def get_specialty_by_id(specialty_id: str):
+def get_symptom_by_id(symptom_id: str) -> dict | None:
+    """Busca un síntoma por su symptom_id (ej: UCI-S1)."""
     for s in CATALOGO_CLINICO:
-        if s.get("id") == specialty_id:
+        if s.get("symptom_id") == symptom_id:
             return s
     return None
+
+
+def get_symptoms_by_specialty(specialty_id: str) -> list[dict]:
+    """Devuelve todos los síntomas de una especialidad."""
+    return [s for s in CATALOGO_CLINICO if s.get("specialty_id") == specialty_id]
+
+
+def get_specialties_index() -> list[dict]:
+    """Devuelve una lista deduplicada de especialidades con metadatos."""
+    seen = set()
+    result = []
+    for s in CATALOGO_CLINICO:
+        sp_id = s.get("specialty_id")
+        if sp_id and sp_id not in seen:
+            seen.add(sp_id)
+            result.append({
+                "specialty_id":  sp_id,
+                "department":    SPECIALTY_TO_DEPARTMENT.get(sp_id, sp_id),
+                "explanation":   s.get("explanation", ""),
+                "color_theme":   s.get("color_theme", ""),
+                "total_symptoms": len(get_symptoms_by_specialty(sp_id)),
+            })
+    return result
 
 # ============================================================
 # ENDPOINTS
@@ -50,64 +75,98 @@ def get_specialty_by_id(specialty_id: str):
 @router.get("/version")
 def get_catalog_version():
     return {
-        "version": "1.0",
-        "total_specialties": len(CATALOGO_CLINICO)
+        "version":           "2026.1",
+        "total_symptoms":    len(CATALOGO_CLINICO),
+        "total_specialties": len(get_specialties_index()),
     }
+
 
 @router.get("/")
 def list_specialties():
+    """Lista todas las especialidades con su metadato (sin síntomas individuales)."""
+    return get_specialties_index()
+
+
+@router.get("/all")
+def list_all_symptoms():
+    """Catálogo completo — todos los síntomas en array plano."""
     return CATALOGO_CLINICO
 
-@router.get("/{specialty_id}")
-def get_specialty(specialty_id: str):
-    spec = get_specialty_by_id(specialty_id)
-    if not spec:
-        raise HTTPException(status_code=404, detail="Especialidad no encontrada")
-    return spec
 
 @router.get("/departments/list")
 def list_departments():
     return {
         "departments": DEPARTMENTS,
-        "mapping": SPECIALTY_TO_DEPARTMENT
+        "mapping":     SPECIALTY_TO_DEPARTMENT,
     }
+
+
+@router.get("/{specialty_id}/symptoms")
+def get_symptoms_for_specialty(specialty_id: str):
+    """Síntomas de una especialidad concreta (ej: UCI FINANCIERA)."""
+    symptoms = get_symptoms_by_specialty(specialty_id)
+    if not symptoms:
+        raise HTTPException(status_code=404, detail=f"Especialidad '{specialty_id}' no encontrada")
+    return symptoms
+
+
+@router.get("/symptom/{symptom_id}")
+def get_symptom(symptom_id: str):
+    """Síntoma individual por su ID (ej: UCI-S1)."""
+    symptom = get_symptom_by_id(symptom_id)
+    if not symptom:
+        raise HTTPException(status_code=404, detail=f"Síntoma '{symptom_id}' no encontrado")
+    return symptom
+
 
 @router.get("/scanner/{codigo}")
 def scanner_result(codigo: str):
-    spec = get_specialty_by_id(codigo)
-    if not spec:
-        raise HTTPException(status_code=404, detail="Código de scanner no válido")
+    """
+    Resultado del scanner ESE — devuelve la especialidad detectada
+    con el síntoma más crítico como punto de entrada al protocolo clínico.
+    Busca por symptom_id (ej: UCI-S1) o por prefijo de especialidad (ej: UCI).
+    """
+    # Intentar por symptom_id exacto primero
+    symptom = get_symptom_by_id(codigo)
 
-    narrativa = {
-        "bienvenida": "Bienvenido a la Recepción Clínica MAS@FRAME®.",
-        "diagnostico_inicial": f"Hemos detectado que tu caso encaja en la unidad: {spec.get('specialty', '')}.",
-        "clinica_te_acompana": "A partir de aquí, te acompañamos con un protocolo clínico completo y medible.",
-    }
+    # Si no, buscar el primer síntoma cuyo specialty_id empiece por el código
+    if not symptom:
+        for s in CATALOGO_CLINICO:
+            sp = s.get("specialty_id", "")
+            if sp.startswith(codigo.upper()) or sp == codigo.upper():
+                symptom = s
+                break
 
-    diagnostico = {
-        "color": spec.get("color_theme", "#999"),
-        "nombre": spec.get("name", spec.get("specialty", "")),
-        "descripcion": spec.get("description_symptom", spec.get("explanation", "")),
-    }
+    if not symptom:
+        raise HTTPException(status_code=404, detail=f"Código de scanner '{codigo}' no válido")
 
-    especialidades = [{
-        "id": spec.get("id"),
-        "nombre": spec.get("name"),
-        "short_description": spec.get("description_symptom"),
-        "narrative": spec.get("explanation"),
-        "department": spec.get("department"),
-        "plan": spec.get("plan"),
-    }]
+    sp_id = symptom.get("specialty_id", "")
 
     return {
         "codigo": codigo,
-        "diagnostico": diagnostico,
-        "especialidades": especialidades,
-        "sintomas": [],
+        "diagnostico": {
+            "color":       symptom.get("color_theme", "#999"),
+            "nombre":      sp_id,
+            "descripcion": symptom.get("description_symptom", symptom.get("explanation", "")),
+        },
+        "especialidades": [{
+            "id":                sp_id,
+            "symptom_id":        symptom.get("symptom_id"),
+            "nombre":            symptom.get("symptom_name", ""),
+            "short_description": symptom.get("description_symptom", ""),
+            "narrative":         symptom.get("explanation", ""),
+            "department":        SPECIALTY_TO_DEPARTMENT.get(sp_id, sp_id),
+            "plan":              symptom.get("plan", ""),
+        }],
+        "sintomas":        get_symptoms_by_specialty(sp_id),
         "presupuesto_base": {"total": 0},
-        "narrativa": narrativa,
+        "narrativa": {
+            "bienvenida":           "Bienvenido a la Recepción Clínica MAS@FRAME®.",
+            "diagnostico_inicial":  f"Hemos detectado que tu caso encaja en la unidad: {sp_id}.",
+            "clinica_te_acompana":  "A partir de aquí, te acompañamos con un protocolo clínico completo y medible.",
+        },
         "preseleccion": {
-            "criticas": [spec.get("id")],
-            "recomendadas": []
-        }
+            "criticas":     [symptom.get("symptom_id")],
+            "recomendadas": [],
+        },
     }

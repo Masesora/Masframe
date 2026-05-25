@@ -1,13 +1,13 @@
 from fastapi import APIRouter, HTTPException
 from typing import List, Dict, Any
 
-from masesora_backend.database.database import db
-from masesora_backend.models.client_symptom_state import ClientSymptomState
-from masesora_backend.models.symptom_master import SymptomMaster
-from masesora_backend.engine.clinical_engine import compute_kpi
+from database.database import db
+from models.client_symptom_state import ClientSymptomState
+from models.symptom_master import SymptomMaster
+from engine.clinical_engine import compute_kpi
 
 # --- NUEVO IMPORTS PARA EL BATCH ---
-from masesora_backend.schemas.evaluation_schema import (
+from schemas.evaluation_schema import (
     BatchEvaluationRequest,
     BatchEvaluationResponse,
     SymptomEvaluationResult,
