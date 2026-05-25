@@ -1,39 +1,45 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from masesora_backend.database.database import lifespan
+from database.database import lifespan
 
 # ============================================================
 # ROUTERS ACTIVOS MASFRAME®
 # ============================================================
 
 # FASE 0 — Login
-from masesora_backend.routers.auth_router       import router as auth_router
+from routers.auth_router       import router as auth_router
 
 # FASE 1 — ESE + datos cliente
-from masesora_backend.routers.ese_router        import router as ese_router
+from routers.ese_router        import router as ese_router
 
 # Catálogo clínico (síntomas / especialidades)
-from masesora_backend.routers.symptoms_router   import router as symptoms_router
+from routers.symptoms_router   import router as symptoms_router
 
 # Contratos
-from masesora_backend.routers.contracts         import router as contracts_router
+from routers.contracts         import router as contracts_router
 
 # Tratamiento C0–C6
-from masesora_backend.routers.treatment_router  import router as treatment_router
+from routers.treatment_router  import router as treatment_router
 
 # Pagos (Stripe)
-from masesora_backend.routers.payments_router   import router as payments_router
+from routers.payments_router   import router as payments_router
 
 # Panel TriajePage — /clients, /acis, /consultores, /cliente/status
-from masesora_backend.routers.panel_router      import router as panel_router
+from routers.panel_router      import router as panel_router
 
 # Mensajería clínica — /mensajes/*
 # IMPORTANTE: registrar ANTES que panel para que /mensajes/no-leidos
 # no colisione con /{codigo}
-from masesora_backend.routers.mensajes_router   import router as mensajes_router
+from routers.mensajes_router   import router as mensajes_router
 
 # Documentos expediente — /documentos/*
-from masesora_backend.routers.documentos_router import router as documentos_router
+from routers.documentos_router import router as documentos_router
+
+# Diagnóstico Tu Solución — /api/leads
+from routers.leads_router      import router as leads_router
+
+# Alta Clínica — /discharge/* + /certificados
+from routers.discharge_router  import router as discharge_router
 
 
 app = FastAPI(
@@ -54,11 +60,17 @@ app.add_middleware(
         "https://masfront.onrender.com/",
         "https://masframelanding.onrender.com",
         "https://masframelanding.onrender.com/",
-	"https://ese-cc2u.onrender.com",
-	"https://ese-cc2u.onrender.com/",
+        "https://ese-cc2u.onrender.com",
+        "https://ese-cc2u.onrender.com/",
         "http://localhost:5173",
         "http://localhost:5173/",
-
+        "http://localhost:3000",
+        "http://localhost:8080",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5500",
+        "http://127.0.0.1:8080",
+        "https://masesora.com",
+        "https://www.masesora.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -82,6 +94,8 @@ app.include_router(payments_router)
 app.include_router(mensajes_router)    # ⭐ Mensajería — ANTES de panel
 app.include_router(panel_router)       # ⭐ Panel TriajePage
 app.include_router(documentos_router)  # ⭐ Documentos expediente
+app.include_router(leads_router)       # ⭐ Diagnóstico Tu Solución
+app.include_router(discharge_router)   # ⭐ Alta Clínica + Certificados
 
 
 # ============================================================
@@ -99,9 +113,12 @@ def root():
             "ese":        ["/ese/submit", "/ese/{codigo}"],
             "treatment":  ["/treatment/save", "/treatment/{codigo}/{symptomId}", "/triaje/{codigo}"],
             "payments":   ["/payments/create-payment-intent"],
+            "contracts":  ["/contracts/generar/{codigo}", "/contracts/html/{codigo}",
+                           "/contracts/firmar/{codigo}", "/contracts/factura/{codigo}"],
             "mensajes":   ["/mensajes", "/mensajes/{codigo}", "/mensajes/no-leidos"],
             "documentos": ["/documentos/{codigo}"],
             "panel":      ["/clients", "/acis", "/consultores", "/cliente/status/{codigo}"],
+            "leads":      ["/api/leads"],
         }
     }
 
