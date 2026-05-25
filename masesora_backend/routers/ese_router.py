@@ -8,7 +8,7 @@
 # FASE 5 — Triaje clínico (motor avanzado)
 # FASE 6 — Firma de contrato
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
@@ -18,20 +18,23 @@ import random, string
 import os
 import json
 
-from masesora_backend.email_service import send_ese_email, send_pago_email
+from routers.auth_deps import require_cc_or_admin
+
+from email_service import send_ese_email, send_pago_email
+from routers.contracts import generar_documentos_interno
 
 # Motores clínicos
-from masesora_backend.database.engine.clinical_engine.services.kpi_engine import (
+from database.engine.clinical_engine.services.kpi_engine import (
     calcular_kpi,
     interpretar_kpi,
     evaluar_post_tratamiento,
 )
 
-from masesora_backend.database.engine.clinical_engine.services.route_engine import (
+from database.engine.clinical_engine.services.route_engine import (
     determinar_ruta,
 )
 
-from masesora_backend.database.engine.clinical_engine.build_triaje import (
+from database.engine.clinical_engine.build_triaje import (
     build_triaje_for_code,
 )
 
@@ -45,6 +48,11 @@ def get_collection():
     client = MongoClient(os.environ["MONGO_URI"])
     db = client["masesora"]
     return db["clients"]
+
+def get_dropoff_collection():
+    client = MongoClient(os.environ["MONGO_URI"])
+    db = client["masesora"]
+    return db["ese_dropoff"]
 
 # Ruta correcta al symptoms.json (funciona en local y en Render)
 CURRENT_DIR = os.path.dirname(__file__)                     # masesora_backend/routers
@@ -79,15 +87,17 @@ class Insights(BaseModel):
     palancas:  List[str]
 
 class EseSubmitRequest(BaseModel):
-    email:          EmailStr
-    empresa:        str
-    facturacion:    float
-    scores_areas:   AreaScores
-    score_global:   float
-    estado_global:  str
-    especialidades: List[Especialidad]
-    insights:       Insights
-    timestamp:      Optional[str] = None
+    email:               EmailStr
+    empresa:             str
+    facturacion:         float
+    scores_areas:        AreaScores
+    score_global:        float
+    estado_global:       str
+    especialidades:      List[Especialidad]
+    insights:            Insights
+    sintomas_detectados: Optional[List[str]] = []
+    timestamp:           Optional[str] = None
+    session_id:          Optional[str] = None
 
 
 # ─────────────────────────────────────────────────────────────
@@ -127,6 +137,147 @@ def generar_codigo() -> str:
 
 
 # ─────────────────────────────────────────────────────────────
+# ⭐ DROP-OFF TRACKING — POST /ese/dropoff
+# ─────────────────────────────────────────────────────────────
+
+FASES_VALIDAS = {
+    "page_loaded",
+    "fase1_completa",
+    "facturacion_completa",
+    "fase2_completa",
+    "informe_visible",
+    "email_submit",
+}
+
+class DropoffRequest(BaseModel):
+    session_id:    str
+    fase:          str
+    empresa:       Optional[str]  = None
+    facturacion:   Optional[float] = None
+    n_sintomas:    Optional[int]  = None
+    estado_global: Optional[str]  = None
+    user_agent:    Optional[str]  = None
+
+@router.post("/dropoff")
+async def registrar_dropoff(data: DropoffRequest):
+    if data.fase not in FASES_VALIDAS:
+        raise HTTPException(status_code=400, detail=f"Fase no válida: {data.fase}")
+
+    col = get_dropoff_collection()
+    ahora = datetime.utcnow()
+
+    update_fields = {
+        "session_id":  data.session_id,
+        "fase":        data.fase,
+        "updated_at":  ahora,
+        "converted":   False,
+    }
+    if data.empresa:       update_fields["empresa"]       = data.empresa
+    if data.facturacion:   update_fields["facturacion"]   = data.facturacion
+    if data.n_sintomas is not None: update_fields["n_sintomas"] = data.n_sintomas
+    if data.estado_global: update_fields["estado_global"] = data.estado_global
+    if data.user_agent:    update_fields["user_agent"]    = data.user_agent
+
+    col.update_one(
+        {"session_id": data.session_id},
+        {
+            "$set": update_fields,
+            "$setOnInsert": {"created_at": ahora},
+        },
+        upsert=True,
+    )
+
+    return {"status": "ok", "session_id": data.session_id, "fase": data.fase}
+
+
+# ─────────────────────────────────────────────────────────────
+# ⭐ DROP-OFF STATS — GET /ese/dropoff/stats
+# ─────────────────────────────────────────────────────────────
+
+FASE_ORDER = [
+    "page_loaded",
+    "fase1_completa",
+    "facturacion_completa",
+    "fase2_completa",
+    "informe_visible",
+    "email_submit",
+]
+
+FASE_LABELS = {
+    "page_loaded":          "Página cargada",
+    "fase1_completa":       "Formulario completado",
+    "facturacion_completa": "Facturación confirmada",
+    "fase2_completa":       "Síntomas seleccionados",
+    "informe_visible":      "Informe visto",
+    "email_submit":         "Email registrado",
+}
+
+@router.get("/dropoff/stats")
+async def get_dropoff_stats(
+    periodo: str = "30d",
+    _user: dict = Depends(require_cc_or_admin),
+):
+    from datetime import timedelta
+    col = get_dropoff_collection()
+
+    if periodo == "7d":
+        since = datetime.utcnow() - timedelta(days=7)
+    elif periodo == "30d":
+        since = datetime.utcnow() - timedelta(days=30)
+    else:
+        since = None
+
+    base: dict = {}
+    if since:
+        base["created_at"] = {"$gte": since}
+
+    total = col.count_documents(base)
+
+    # Funnel: cuántas sesiones alcanzaron AL MENOS cada fase
+    funnel = []
+    for i, fase in enumerate(FASE_ORDER):
+        fases_desde_aqui = FASE_ORDER[i:]
+        count = col.count_documents({**base, "fase": {"$in": fases_desde_aqui}})
+        funnel.append({"fase": fase, "label": FASE_LABELS[fase], "count": count})
+
+    converted = next((f["count"] for f in funnel if f["fase"] == "email_submit"), 0)
+    tasa = round(converted / total * 100, 1) if total > 0 else 0.0
+
+    # Estado global de los convertidos
+    estado_pipeline = [
+        {"$match": {**base, "fase": "email_submit", "estado_global": {"$exists": True, "$ne": None}}},
+        {"$group": {"_id": "$estado_global", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+    ]
+    estados = {d["_id"]: d["count"] for d in col.aggregate(estado_pipeline)}
+
+    # Media facturación (convertidos)
+    avg_fact = list(col.aggregate([
+        {"$match": {**base, "fase": "email_submit", "facturacion": {"$gt": 0}}},
+        {"$group": {"_id": None, "avg": {"$avg": "$facturacion"}}},
+    ]))
+    avg_facturacion = round(avg_fact[0]["avg"], 0) if avg_fact else 0
+
+    # Media síntomas (convertidos)
+    avg_sint = list(col.aggregate([
+        {"$match": {**base, "fase": "email_submit", "n_sintomas": {"$gt": 0}}},
+        {"$group": {"_id": None, "avg": {"$avg": "$n_sintomas"}}},
+    ]))
+    avg_sintomas = round(avg_sint[0]["avg"], 1) if avg_sint else 0
+
+    return {
+        "periodo":          periodo,
+        "total_sesiones":   total,
+        "total_convertidos": converted,
+        "tasa_conversion":  tasa,
+        "funnel":           funnel,
+        "estado_global":    estados,
+        "avg_facturacion":  avg_facturacion,
+        "avg_sintomas":     avg_sintomas,
+    }
+
+
+# ─────────────────────────────────────────────────────────────
 # ⭐ FASE 1 — POST /ese/submit
 # ─────────────────────────────────────────────────────────────
 
@@ -154,7 +305,8 @@ async def submit_ese(data: EseSubmitRequest):
         "score_global":  data.score_global,
         "estado_global": data.estado_global,
         "especialidades": [e.dict() for e in data.especialidades],
-        "insights":      data.insights.dict(),
+        "insights":            data.insights.dict(),
+        "sintomas_detectados": data.sintomas_detectados,
 
         "pago_confirmado": False,
         "payment_active":  False,
@@ -170,6 +322,13 @@ async def submit_ese(data: EseSubmitRequest):
         {"$set": doc},
         upsert=True
     )
+
+    # Marcar drop-off como convertido si existe session_id en el payload
+    if hasattr(data, "session_id") and data.session_id:
+        get_dropoff_collection().update_one(
+            {"session_id": data.session_id},
+            {"$set": {"converted": True, "email": data.email, "updated_at": ahora}},
+        )
 
     try:
         await send_ese_email(
@@ -193,6 +352,18 @@ async def submit_ese(data: EseSubmitRequest):
 
 
 # ─────────────────────────────────────────────────────────────
+# ⭐ GET /ese/{codigo} — datos del ESE para ScannerReceptionPage
+# ─────────────────────────────────────────────────────────────
+
+@router.get("/{codigo}")
+async def get_ese(codigo: str):
+    col = get_collection()
+    doc = col.find_one({"codigo": codigo}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Código no encontrado")
+    return doc
+
+
 # ⭐ FASE 2 — PATCH /ese/{codigo}
 # ─────────────────────────────────────────────────────────────
 
@@ -222,8 +393,14 @@ async def actualizar_pago(codigo: str, data: PagoUpdate):
 
     doc = col.find_one({"codigo": codigo}, {"_id": 0})
 
-    # Email post-pago si se acaba de confirmar
+    # Email + contrato post-pago si se acaba de confirmar
     if data.pago_confirmado:
+        # Generar contrato y factura internamente (sin necesitar rol CC/admin)
+        await generar_documentos_interno(
+            codigo      = codigo,
+            stripe_ref  = data.stripe_payment_intent or "",
+            metodo_pago = data.metodo_pago or "Tarjeta de crédito",
+        )
         try:
             await send_pago_email(
                 email        = doc.get("email", ""),
@@ -270,7 +447,7 @@ async def guardar_diagnostico(codigo: str, data: DiagnosticoRequest):
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
     # Buscar síntoma
-    symptom = next((s for s in SYMPTOMS if s["id"] == data.symptom_id), None)
+    symptom = next((s for s in SYMPTOMS if s.get("symptom_id") == data.symptom_id), None)
     if not symptom:
         raise HTTPException(status_code=404, detail="Síntoma no encontrado")
 
