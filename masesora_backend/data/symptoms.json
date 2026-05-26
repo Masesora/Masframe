@@ -10,10 +10,10 @@
     "plan": "PIE",
     "description_symptom": "Si tienes dinero atrapado en stock sin mover, facturas sin cobrar o anticipos no materializados, tu caja sufre aunque el negocio funcione. El problema no es tu facturación, si no que tienes una mochila con un valor que ya ganaste.",
     "example": "Taller mecánico: 8500€ atrapados. Gastos fijos: 12000€/mes. Meses atrapados: 0.71. Tras aplicar el protocolo libera 6500€.",
-    "kpi_question": "Tu negocio tiene dinero atrapado que no puedes ver ni usar. Introduce todo lo que tienes inmovilizado — stock que no se mueve, facturas que no te han pagado, trabajos terminados que aún no has cobrado — y tus gastos fijos mensuales. El resultado te dice cuántos días de operación tienes bloqueados dentro de tu propio negocio. A partir de aquí trabajamos en dos frentes: liberar el dinero que ya está en tu empresa actuando sobre la morosidad, el ciclo de cobro y el stock; y reducir lo que sale innecesariamente cada mes para que cada euro que entra rinda más.",
+    "kpi_question": "Tu negocio tiene dinero atrapado que no puedes ver ni usar. Introduce todo lo que tienes inmovilizado — stock que no se mueve, facturas que no te han pagado, trabajos terminados que aún no has cobrado — y tus gastos fijos mensuales. El resultado te dice CÚANTOS DÍAS DE OPERACIÓN DEBES LIBERAR. A partir de aquí trabajamos en dos frentes: liberar el dinero que ya está en tu empresa actuando sobre la morosidad, el ciclo de cobro y el stock; y reducir lo que sale innecesariamente cada mes para que cada euro que entra rinda más.",
     "kpi_impact": "Mantener el dinero bloqueado por debajo de 15 días libera liquidez suficiente para operar sin depender de las próximas ventas.",
-    "kpi_formula": "InputA/InputB",
-    "kpi_objective": "<15 días",
+    "kpi_formula": "InputA / (InputB / 30)",
+    "kpi_objective": ">15 días",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -28,7 +28,7 @@
         "label": "Gastos fijos mensuales"
       }
     ],
-    "input_a": "Dinero inmovilizado: stock parado + facturas sin cobrar + trabajos terminados sin facturar",
+    "input_a": "Dinero inmovilizado",
     "input_b": "Gastos fijos mensuales",
     "input_revised_1": "Dinero inmovilizado: stock parado + facturas sin cobrar + trabajos terminados sin facturar",
     "input_revised_2": "Gastos fijos mensuales optimizados tras eliminar todo lo que no genera valor directo",
