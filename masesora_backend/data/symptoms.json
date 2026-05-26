@@ -13,7 +13,7 @@
     "kpi_question": "Tu negocio tiene dinero atrapado que no puedes ver ni usar. Introduce todo lo que tienes inmovilizado — stock que no se mueve, facturas que no te han pagado, trabajos terminados que aún no has cobrado — y tus gastos fijos mensuales. El resultado te dice cuántos días de operación tienes bloqueados dentro de tu propio negocio. A partir de aquí trabajamos en dos frentes: liberar el dinero que ya está en tu empresa actuando sobre la morosidad, el ciclo de cobro y el stock; y reducir lo que sale innecesariamente cada mes para que cada euro que entra rinda más.",
     "kpi_impact": "Mantener el dinero bloqueado por debajo de 15 días libera liquidez suficiente para operar sin depender de las próximas ventas.",
     "kpi_formula": "InputA/InputB",
-    "kpi_objective": ">15 días",
+    "kpi_objective": "<15 días",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
