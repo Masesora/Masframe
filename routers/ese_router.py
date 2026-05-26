@@ -447,7 +447,7 @@ async def guardar_diagnostico(codigo: str, data: DiagnosticoRequest):
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
     # Buscar síntoma
-    symptom = next((s for s in SYMPTOMS if s["id"] == data.symptom_id), None)
+    symptom = next((s for s in SYMPTOMS if s.get("symptom_id") == data.symptom_id), None)
     if not symptom:
         raise HTTPException(status_code=404, detail="Síntoma no encontrado")
 
