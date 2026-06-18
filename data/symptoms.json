@@ -103,7 +103,7 @@
     "justi_capa5": "Porque necesitas asegurar que los cambios se ejecutan y el margen real mejora.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la mejora del margen por cliente o servicio tras aplicar el rediseño.",
-    "capa_1_options": "[INPUT] ¿Cuál es el cliente o servicio que más ingresos te genera este mes?; [INPUT] ¿Cuál es el cliente o servicio al que más horas dedicas al mes?"
+    "capa_1_options": "[INPUT] ¿Cuál es el cliente o servicio que más ingresos te genera?; [INPUT] ¿Cuál es el cliente o servicio al que más horas dedicas?"
   },
   {
     "specialty_id": "UCI FINANCIERA",
