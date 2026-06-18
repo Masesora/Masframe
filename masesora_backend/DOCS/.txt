@@ -1,0 +1,19 @@
+cd C:\Users\Masesora\OneDrive\MASESORA\CLINICA
+uvicorn masesora_backend.main:app --reload
+
+
+googlemasesora@project-2190d02d-318b-44aa-990.iam.gserviceaccount.com
+
+Crear cuenta de servicio
+Nombre de la cuenta de servicio
+Masesora
+Mostrar nombre de esta cuenta de servicio
+ID de cuenta de servicio
+googlemasesora
+Dirección de correo electrónico: googlemasesora@project-2190d02d-318b-44aa-990.iam.gserviceaccount.com
+Descripción de la cuenta de servicio
+Mas@frame
+Describe lo que hará esta cuenta de servicio
+
+
+C:\Users\Masesora\OneDrive\MASESORA\CLINICA\masesora_backend\config\google_service_account.json
