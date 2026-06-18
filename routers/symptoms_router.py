@@ -5,15 +5,20 @@ from fastapi import APIRouter, HTTPException
 router = APIRouter(prefix="/specialties", tags=["specialties"])
 
 # ============================================================
-# CARGA ÚNICA DEL CATÁLOGO CLÍNICO (symptoms.json)
+# CARGA DEL CATÁLOGO CLÍNICO (symptoms.json)
 # Array plano de síntomas — cada uno con symptom_id + specialty_id
 # ============================================================
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # masesora_backend
 SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptoms.json")
 
-with open(SYMPTOMS_PATH, "r", encoding="utf-8") as f:
-    CATALOGO_CLINICO: list[dict] = json.load(f)
+
+def _load_catalog() -> list[dict]:
+    with open(SYMPTOMS_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+CATALOGO_CLINICO: list[dict] = _load_catalog()
 
 # ============================================================
 # MAPEO ESPECIALIDAD → DEPARTAMENTO
@@ -75,9 +80,19 @@ def get_specialties_index() -> list[dict]:
 @router.get("/version")
 def get_catalog_version():
     return {
-        "version":           "2026.1",
+        "version":           "2026.2",
         "total_symptoms":    len(CATALOGO_CLINICO),
         "total_specialties": len(get_specialties_index()),
+    }
+
+
+@router.post("/reload")
+def reload_catalog():
+    global CATALOGO_CLINICO
+    CATALOGO_CLINICO = _load_catalog()
+    return {
+        "ok": True,
+        "total_symptoms": len(CATALOGO_CLINICO),
     }
 
 
