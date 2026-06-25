@@ -147,7 +147,7 @@
     "capa_1_priorizacion": "El ciclo order-to-cash es excesivamente largo; existe un cuello de botella entre entrega y cobro; la facturación se retrasa; el cliente tarda demasiado en pagar; el flujo depende de procesos lentos; no existe protocolo de aceleración; la empresa no mide tramos; la caja se asfixia por retrasos acumulados.",
     "justi_capa1": "El ciclo de cobro supera los 30 días y presenta un cuello de botella claro entre entrega facturación y pago.",
     "capa_2_decision": "Semáforo de Viabilidad",
-    "capa_2_options": "Identificar qué líneas están absorbiendo el margen sin que lo veas; Calcular cuánto margen pierdes por los descuentos que aplicas; Medir cuánto margen te queda después de la subida de costes en cada servicio; Diagnosticar si las líneas de bajo margen tienen costes ocultos que las hacen negativas; Calcular el margen real de cada servicio incluyendo lo que no facturas; Analizar por qué el crecimiento en ventas no se traduce en más caja",
+    "capa_2_options": "Calcular el precio mínimo por debajo del cual cada venta te cuesta dinero; Medir cuánto margen real te queda después de aplicar tus descuentos habituales; Cuantificar el impacto de la subida de costes y el precio al que deberías estar; Calcular tu hora real facturada incluyendo el tiempo que trabajas sin cobrar; Comparar el margen real de cada línea e identificar cuáles te sostienen y cuáles te drenan; Calcular la rentabilidad real de cada cliente incluyendo el tiempo y recursos que consume",
     "justi_capa2": "Para cada problema que has marcado, calcula el margen real de tus servicios — incluyendo los costes que normalmente no aparecen en la factura.",
     "capa_3_comprension": "Análisis de estructura de costes",
     "justi_capa3": "Porque necesitas identificar qué coste concreto destruye tu margen en cada línea o servicio.",
@@ -157,7 +157,7 @@
     "justi_capa5": "Porque necesitas confirmar que los cambios de precio y coste se ejecutaron.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción del ciclo de cobro.",
-    "capa_1_options": "Mis márgenes se reducen aunque facture lo mismo o más; He bajado precios para no perder clientes y ahora gano menos; Los costes han subido pero no he podido repercutirlos al cliente; Hay líneas que casi no dejan margen pero las sigo manteniendo; No sé cuál es mi margen real después de todos los costes; Vendo más pero mi cuenta bancaria no refleja ese crecimiento",
+    "capa_1_options": "Dudo si mi carta de precios es la correcta; Hago descuentos para fidelizar y facturar más, pero no sé si me estoy pasando; Los costes han subido pero no he podido repercutirlos al cliente; Hay trabajo que hago y no cobro: soporte, cambios o revisiones fuera de precio; Tengo servicios o líneas pero no sé cuál me deja margen de verdad; Quiero analizar clientes en concreto",
     "c2_herramienta": "margen"
   },
   {
