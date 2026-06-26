@@ -117,8 +117,8 @@
     "logica": "Cobras lo que el mercado aguanta o lo que cobra la competencia — pero nadie ha calculado si ese precio te deja beneficio real.",
     "plan": "PIE",
     "description_symptom": "Si nunca has calculado cuánto te queda después de pagar todos tus gastos reales — incluyendo impuestos y lo que deberías cobrarte como sueldo — estás fijando precios a ciegas. Muchos autónomos facturan bien y sobreviven mal porque su precio no cubre su coste real de vida empresarial.",
-    "kpi_question": "Introduce el precio de venta de tu servicio o producto principal y su coste real de entregarlo — materiales, subcontratas y gastos directos. Si el margen por venta es inferior al 30%, cada venta que haces te acerca más al límite que al beneficio.",
-    "kpi_impact": "Un margen por venta superior al 30% garantiza que cada unidad vendida genera valor real, no solo movimiento de caja.",
+    "kpi_question": "Introduce tu facturación mensual total y el total de costes directos mensuales — materiales, subcontratas y gastos directos. Si tu margen mensual es inferior al 30%, estás trabajando para pagar gastos, no para generar beneficio real.",
+    "kpi_impact": "Un margen mensual superior al 30% sobre tu facturación garantiza que tu negocio genera valor real, no solo movimiento de caja.",
     "kpi_formula": "((InputA-InputB)/InputA)*100",
     "kpi_objective": ">30%",
     "threshold_critical": 70,
@@ -128,15 +128,15 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Precio de venta de tu servicio o producto principal"
+        "label": "Facturación mensual total"
       },
       {
         "id": "inputB",
-        "label": "Coste real de entregarlo (materiales, subcontratas y gastos directos)"
+        "label": "Costes directos mensuales totales (materiales, subcontratas, gastos directos)"
       }
     ],
-    "input_a": "Precio de venta de tu servicio o producto principal",
-    "input_b": "Coste real de entregarlo (materiales, subcontratas y gastos directos)",
+    "input_a": "Facturación mensual total",
+    "input_b": "Costes directos mensuales totales (materiales, subcontratas, gastos directos)",
     "input_revised_1": "Días desde entrega hasta factura (post)",
     "input_revised_2": "Días desde factura hasta cobro (post)",
     "result_revised": "Δ días ganados",
