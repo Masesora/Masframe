@@ -255,16 +255,16 @@
     "justi_capa1": "El sistema de entrada de tareas es inconsistente y genera colapso operativo por lo que es necesario entender causas internas y externas para rediseñar el intake",
     "capa_2_decision": "Análisis de Carga",
     "capa_2_options": "Entrada de tareas (intake); Coordinación entre áreas; Gestión de colas y prioridades; Formación y onboarding de nuevas personas; Revisión y control de calidad; Comunicación con cliente o demandante",
-    "justi_capa2": "Porque necesitas entender causas internas y externas del colapso",
+    "justi_capa2": "El Análisis de Carga clasifica el origen del problema en categorías medibles. Lo que tiene mayor frecuencia e impacto es lo que el tratamiento atacará primero.",
     "capa_3_comprension": "Ishikawa",
-    "justi_capa3": "Porque necesitas mapear todas las causas de errores de entrada",
+    "justi_capa3": "El Ishikawa traza el camino desde el síntoma visible hasta la causa raíz de lo que el cliente priorizó en C2. Sin ese recorrido, C4 atacaría el síntoma en lugar de la causa.",
     "capa_4_cambio": "Rediseño de intake",
-    "justi_capa4": "Porque necesitas transformar cómo entra la información",
+    "justi_capa4": "Con los datos que entregó el Ishikawa, el Rediseño de intake no es una opinión — es una decisión basada en números reales. Cada cambio tiene una consecuencia cuantificada.",
     "capa_5_ejecucion": "Checklist de entrada de tareas",
     "justi_capa5": "Porque necesitas estandarizar qué información mínima debe llegar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción de errores de entrada",
-    "capa_1_options": "Trabajamos al máximo pero siempre hay tareas en cola sin terminar; Pierdo tiempo aclarando trabajos que llegan mal explicados; Las tareas entran con datos incompletos y hay que rehacerlas; Cada uno hace las cosas a su manera sin un estándar; Cuando llega trabajo nuevo siempre falta información clave para empezar; Por más horas que metemos nunca llegamos a todo; Contratar más gente no resuelve el atasco real"
+    "capa_1_options": "Trabajamos al máximo pero siempre hay tareas en cola sin terminar; Pierdo tiempo aclarando trabajos que llegan mal explicados; Cada uno hace las cosas a su manera sin un estándar; Cuando llega trabajo nuevo siempre falta información clave para empezar; Por más horas que metemos nunca llegamos a todo; Contratar más gente no resuelve el atasco real"
   },
   {
     "specialty_id": "UNIDAD DE PROCESOS",
@@ -317,7 +317,7 @@
     "justi_capa5": "Porque necesitas asegurar que cada entrega cumple estándar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción del retrabajo",
-    "capa_1_options": "Aparecen los mismos errores y las mismas quejas una y otra vez; Dedico demasiado tiempo a corregir y rehacer trabajo; No tengo un control de calidad que funcione de verdad; El equipo apaga fuegos en lugar de evitar que ocurran; Nunca llegamos a la causa real del problema; Si entrega una persona sale bien y si entrega otra no; El retrabajo se está comiendo mi margen sin que lo vea"
+    "capa_1_options": "Aparecen los mismos errores y las mismas quejas una y otra vez; Dedico demasiado tiempo a corregir y rehacer trabajo; No tengo un control de calidad que funcione de verdad; El equipo apaga fuegos en lugar de evitar que ocurran; Si entrega una persona sale bien y si entrega otra no; El retrabajo se está comiendo mi margen sin que lo vea"
   },
   {
     "specialty_id": "CARDIOLOGIA COMERCIAL",
@@ -377,7 +377,7 @@
     "justi_capa5": "Porque necesitas constancia semanal",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir oportunidades generadas",
-    "capa_1_options": "La mayoría de mis clientes llegan por recomendación o de casualidad; Si dejo de tener suerte un mes las ventas se desploman; No sé qué canal me trae clientes y cuál es perder el tiempo; Sigo invirtiendo en sitios sin saber si funcionan; Mi crecimiento es impredecible un mes va bien y al siguiente no; No tengo una forma constante de captar clientes nuevos; Dependo de que me conozcan no de que me encuentren"
+    "capa_1_options": "La mayoría de mis clientes llegan por recomendación o de casualidad; No sé qué canal me trae clientes y cuál es perder el tiempo; Sigo invirtiendo en sitios sin saber si funcionan; Mi crecimiento es impredecible un mes va bien y al siguiente no; No tengo una forma constante de captar clientes nuevos; Dependo de que me conozcan no de que me encuentren"
   },
   {
     "specialty_id": "CARDIOLOGIA COMERCIAL",
@@ -437,7 +437,7 @@
     "justi_capa5": "Porque necesitas constancia semanal",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir fuerza del pipeline",
-    "capa_1_options": "Un mes facturo bien y al siguiente cae sin saber por qué; No tengo previsión de lo que voy a vender el mes que viene; Tengo oportunidades paradas que no avanzan ni se cierran; Hago seguimiento a los clientes cuando me acuerdo; Pierdo ventas por no insistir en el momento adecuado; Mis ventas dependen de la suerte no de un sistema; No sé en qué punto está cada cliente potencial"
+    "capa_1_options": "Un mes facturo bien y al siguiente cae sin saber por qué; No tengo previsión de lo que voy a vender el mes que viene; Tengo oportunidades paradas que no avanzan ni se cierran; Hago seguimiento a los clientes cuando me acuerdo; Mis ventas dependen de la suerte no de un sistema; No sé en qué punto está cada cliente potencial"
   },
   {
     "specialty_id": "CARDIOLOGIA COMERCIAL",
@@ -497,7 +497,7 @@
     "justi_capa5": "Porque necesitas estandarizar validación",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir leads calificados",
-    "capa_1_options": "Recibo muchos contactos pero pocos son oportunidades reales; Pierdo tiempo atendiendo peticiones que no van a ningún lado; No tengo un filtro para saber a quién dedicarme; Me disperso entre clientes de bajo valor; Trabajo mucho comercialmente pero avanzo poco; Persigo oportunidades que nunca se cierran; No distingo el cliente bueno del que solo me hace perder tiempo"
+    "capa_1_options": "Recibo muchos contactos pero pocos son oportunidades reales; Pierdo tiempo atendiendo peticiones que no van a ningún lado; No tengo un filtro para saber a quién dedicarme; Me disperso entre clientes de bajo valor; Persigo oportunidades que nunca se cierran; No distingo el cliente bueno del que solo me hace perder tiempo"
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
@@ -550,7 +550,7 @@
     "justi_capa5": "Porque necesitas sostener foco",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir alineación real",
-    "capa_1_options": "Mi empresa funciona hoy pero no sé hacia dónde va en 3 años; No tengo un plan escrito de a dónde quiero llegar; El equipo no está alineado con una dirección clara; Mis prioridades cambian según la semana; No he pensado cuánto quiero que valga mi negocio; Voy llevando el día a día sin diseñar el futuro; No sé qué pasaría si quisiera salir o vender"
+    "capa_1_options": "Mi empresa funciona hoy pero no sé hacia dónde va en 3 años; No tengo un plan escrito de a dónde quiero llegar; El equipo no está alineado con una dirección clara; No he pensado cuánto quiero que valga mi negocio; Voy llevando el día a día sin diseñar el futuro; No sé qué pasaría si quisiera salir o vender"
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
@@ -603,7 +603,7 @@
     "justi_capa5": "Porque necesitas mantener dirección",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir tiempo estratégico real",
-    "capa_1_options": "Tengo demasiados proyectos a medias y ninguno termina; Cada semana aparece algo urgente que lo descoloca todo; Trabajo todo el día pero no avanzo en lo importante; Apago fuegos y nunca llego a lo estratégico; No tengo tiempo protegido para pensar el negocio; Todo me parece prioritario así que nada lo es; Me cuesta decidir qué hacer primero y qué puede esperar"
+    "capa_1_options": "Tengo demasiados proyectos a medias y ninguno termina; Cada semana aparece algo urgente que lo descoloca todo; Trabajo todo el día pero no avanzo en lo importante; No tengo tiempo protegido para pensar el negocio; Todo me parece prioritario así que nada lo es; Me cuesta decidir qué hacer primero y qué puede esperar"
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
@@ -656,7 +656,7 @@
     "justi_capa5": "Porque necesitas ejecutar sin dudar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir decisiones con criterio",
-    "capa_1_options": "Facturo más cada año pero no noto que gane más; Trabajo más para ganar lo mismo o menos; Tengo productos o servicios que no sé si son rentables; Mi portafolio es tan amplio que dispersa recursos; No analizo el margen real de cada cosa que vendo; Sigo ofreciendo cosas por inercia no por rentabilidad; Crezco en volumen pero no en beneficio"
+    "capa_1_options": "Facturo más cada año pero no noto que gane más; Trabajo más para ganar lo mismo o menos; Tengo productos o servicios que no sé si son rentables; Mi portafolio es tan amplio que dispersa recursos; No analizo el margen real de cada cosa que vendo; Sigo ofreciendo cosas por inercia no por rentabilidad"
   },
   {
     "specialty_id": "GESTION CLINICA",
@@ -709,7 +709,7 @@
     "justi_capa5": "Porque necesitas estandarizar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir velocidad de cierre",
-    "capa_1_options": "Tomo decisiones con números que ya no son de fiar; No sé exactamente cuánto me queda tras pagarlo todo; Mi cierre de cuentas es lento y llega tarde; Dirijo más por intuición que por datos reales; Repito errores porque no veo los números a tiempo; Dependo de tareas manuales para saber cómo voy; No tengo visibilidad clara de mi situación real"
+    "capa_1_options": "Tomo decisiones con números que ya no son de fiar; No sé exactamente cuánto me queda tras pagarlo todo; Mi cierre de cuentas es lento y llega tarde; Repito errores porque no veo los números a tiempo; Dependo de tareas manuales para saber cómo voy; No tengo visibilidad clara de mi situación real"
   },
   {
     "specialty_id": "GESTION CLINICA",
@@ -815,7 +815,7 @@
     "justi_capa5": "Porque necesitas sostener estructura",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir dependencia real",
-    "capa_1_options": "Casi todas las decisiones acaban en mi mesa aunque no deberían; No están claros los límites de cada puesto; Hay tareas que nadie tiene claro de quién son; Se duplican esfuerzos y otras cosas quedan sin hacer; Estoy saturado porque todo depende de mí; Hay roces entre el equipo por no saber quién hace qué; Sin mí las cosas se atascan"
+    "capa_1_options": "Casi todas las decisiones acaban en mi mesa aunque no deberían; No están claros los límites de cada puesto; Hay tareas que nadie tiene claro de quién son; Se duplican esfuerzos y otras cosas quedan sin hacer; Hay roces entre el equipo por no saber quién hace qué; Sin mí las cosas se atascan"
   },
   {
     "specialty_id": "CIRUGIA DE MARCA",
@@ -875,7 +875,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir identidad real",
-    "capa_1_options": "Mi marca no transmite lo bueno que es mi trabajo; Pierdo clientes antes de la primera conversación; Mi imagen parece más floja de lo que realmente soy; Mi estilo es genérico y no destaca; La primera impresión que doy no me hace justicia; No tengo una identidad visual coherente; Mi negocio vale más de lo que aparenta"
+    "capa_1_options": "Mi marca no transmite lo bueno que es mi trabajo; Pierdo clientes antes de la primera conversación; Mi estilo es genérico y no destaca; La primera impresión que doy no me hace justicia; No tengo una identidad visual coherente; Mi negocio vale más de lo que aparenta"
   },
   {
     "specialty_id": "CIRUGIA DE MARCA",
@@ -935,7 +935,7 @@
     "justi_capa5": "Porque necesitas asegurar claridad",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir diferenciacion real",
-    "capa_1_options": "Cuando me preguntan por qué elegirme no sé qué responder; Doy una respuesta distinta cada vez sobre lo que me diferencia; Mi propuesta suena igual que la de la competencia; El cliente no tiene claro por qué contratarme a mí; Soy fácilmente sustituible por otro parecido; Mi equipo comercial tampoco sabe explicar mi valor; No tengo un mensaje único y claro"
+    "capa_1_options": "Cuando me preguntan por qué elegirme no sé qué responder; Doy una respuesta distinta cada vez sobre lo que me diferencia; Mi propuesta suena igual que la de la competencia; El cliente no tiene claro por qué contratarme a mí; Mi equipo comercial tampoco sabe explicar mi valor; No tengo un mensaje único y claro"
   },
   {
     "specialty_id": "CIRUGIA DE MARCA",
@@ -995,7 +995,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir coherencia comunicativa",
-    "capa_1_options": "Comunico cuando me acuerdo sin un plan detrás; Mi marca habla con un tono distinto cada vez; No mido si lo que comunico funciona; Cada persona del equipo transmite un mensaje diferente; Mis mensajes a veces se contradicen entre sí; Me cuesta que me reconozcan por comunicar de forma irregular; No tengo una guía de cómo y cuándo comunicar"
+    "capa_1_options": "Comunico cuando me acuerdo sin un plan detrás; Mi marca habla con un tono distinto cada vez; No mido si lo que comunico funciona; Cada persona del equipo transmite un mensaje diferente; Me cuesta que me reconozcan por comunicar de forma irregular; No tengo una guía de cómo y cuándo comunicar"
   },
   {
     "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
@@ -1055,7 +1055,7 @@
     "justi_capa5": "Porque necesitas asegurar estabilidad",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de tension",
-    "capa_1_options": "Mi equipo vive en modo emergencia casi todos los días; Hay demasiada tensión y urgencias constantes; Tomamos decisiones impulsivas por la presión; Noto más errores y absentismo de lo normal; El clima está crispado y se nota en el trabajo; Tratamos como urgente lo que no lo es; La saturación nos está pasando factura sin verlo en las cuentas"
+    "capa_1_options": "Mi equipo vive en modo emergencia casi todos los días; Tomamos decisiones impulsivas por la presión; Noto más errores y absentismo de lo normal; El clima está crispado y se nota en el trabajo; Tratamos como urgente lo que no lo es; La saturación nos está pasando factura sin verlo en las cuentas"
   },
   {
     "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
@@ -1115,7 +1115,7 @@
     "justi_capa5": "Porque necesitas asegurar autonomia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de escalamiento",
-    "capa_1_options": "Tengo gente válida pero en el puesto equivocado; Siempre resuelve todo la misma persona; Las decisiones se atascan porque dependen de mí; Hay duplicidad de funciones y fricción interna; Hay quien podría aportar más pero está ocupado en lo que no es suyo; El equipo trabaja duro pero el sistema falla igual; Falta autonomía para decidir sin pasar por mí"
+    "capa_1_options": "Tengo gente válida pero en el puesto equivocado; Siempre resuelve todo la misma persona; Hay duplicidad de funciones y fricción interna; Hay quien podría aportar más pero está ocupado en lo que no es suyo; El equipo trabaja duro pero el sistema falla igual; Falta autonomía para decidir sin pasar por mí"
   },
   {
     "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
@@ -1175,7 +1175,7 @@
     "justi_capa5": "Porque necesitas asegurar participacion",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir implicacion real",
-    "capa_1_options": "El equipo cumple pero no propone ni se implica más; Noto apatía y poca energía en el día a día; Nadie aporta ideas para mejorar; El sentido de pertenencia se ha ido enfriando; Hacen lo mínimo y poco más; El silencio del equipo me preocupa pero no sé por qué; Temo que alguien clave se vaya sin avisar"
+    "capa_1_options": "El equipo cumple pero no propone ni se implica más; Noto apatía y poca energía en el día a día; El sentido de pertenencia se ha ido enfriando; Hacen lo mínimo y poco más; El silencio del equipo me preocupa pero no sé por qué; Temo que alguien clave se vaya sin avisar"
   },
   {
     "specialty_id": "RESCATE DE PERSONAS",
@@ -1228,7 +1228,7 @@
     "justi_capa5": "Porque necesitas asegurar acciones consistentes",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir estabilidad del talento",
-    "capa_1_options": "Tengo miedo de que se vaya alguien clave y no sé cómo evitarlo; Mis mejores personas están sobrecargadas y quemadas; No sé qué retiene de verdad a la gente que más importa; Noto desconexión en el equipo pero no sé por qué; Si se va una persona concreta se lleva conocimiento único; El trabajo está mal repartido y cargan siempre los mismos; Me entero tarde de que alguien está descontento"
+    "capa_1_options": "Tengo miedo de que se vaya alguien clave y no sé cómo evitarlo; Mis mejores personas están sobrecargadas y quemadas; No sé qué retiene de verdad a la gente que más importa; Si se va una persona concreta se lleva conocimiento único; El trabajo está mal repartido y cargan siempre los mismos; Me entero tarde de que alguien está descontento"
   },
   {
     "specialty_id": "RESCATE DE PERSONAS",
@@ -1281,7 +1281,7 @@
     "justi_capa5": "Porque necesitas confirmar que las reasignaciones se ejecutaron y el tiempo liberado se usa bien.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion del tiempo de productividad",
-    "capa_1_options": "Pago talento que no estoy aprovechando; Mi equipo pasa el día en tareas de bajo impacto; La gente sabe y puede más de lo que les pido; El sistema no les deja usar su potencial; Tengo gente buena haciendo cosas que no aportan; Desaprovecho capacidades que ya tengo en casa; Los nuevos tardan demasiado en rendir de verdad"
+    "capa_1_options": "Pago talento que no estoy aprovechando; Mi equipo pasa el día en tareas de bajo impacto; La gente sabe y puede más de lo que les pido; Tengo gente buena haciendo cosas que no aportan; Desaprovecho capacidades que ya tengo en casa; Los nuevos tardan demasiado en rendir de verdad"
   },
   {
     "specialty_id": "RESCATE DE PERSONAS",
@@ -1334,7 +1334,7 @@
     "justi_capa5": "Porque necesitas confirmar que las tensiones bajan y el equipo recupera rendimiento.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de dependencia",
-    "capa_1_options": "Hay tensiones que todos notan pero nadie menciona; El mal ambiente contamina el día a día; Hay roces silenciosos que no se resuelven; Demasiadas cosas dependen de una sola persona; Si esa persona falta nos paramos; No tenemos backup ni el conocimiento documentado; Las tensiones se acumulan hasta que explotan"
+    "capa_1_options": "Hay tensiones que todos notan pero nadie menciona; El mal ambiente contamina el día a día; Demasiadas cosas dependen de una sola persona; Si esa persona falta nos paramos; No tenemos backup ni el conocimiento documentado; Las tensiones se acumulan hasta que explotan"
   },
   {
     "specialty_id": "TERAPIA DE EXPERIENCIA",
@@ -1394,7 +1394,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir coherencia real",
-    "capa_1_options": "La experiencia del cliente cambia según el día o quién atiende; No tenemos un estándar de servicio improvisamos; Un mal día borra el esfuerzo de diez que salieron bien; El cliente no sabe qué esperar cada vez que viene; La calidad del trato depende de la persona del turno; Cuidamos unos momentos y descuidamos otros; Mi reputación se resiente por esa irregularidad"
+    "capa_1_options": "La experiencia del cliente cambia según el día o quién atiende; No tenemos un estándar de servicio improvisamos; Un mal día borra el esfuerzo de diez que salieron bien; El cliente no sabe qué esperar cada vez que viene; Cuidamos unos momentos y descuidamos otros; Mi reputación se resiente por esa irregularidad"
   },
   {
     "specialty_id": "TERAPIA DE EXPERIENCIA",
@@ -1454,7 +1454,7 @@
     "justi_capa5": "Porque necesitas asegurar pasos criticos",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir recuperacion real",
-    "capa_1_options": "Tengo clientes que se van sin decir nada; No detectamos cuándo un cliente está molesto; Me entero de que alguien se fue cuando ya es tarde; No tenemos un protocolo para recuperar a un cliente dolido; El cliente insatisfecho habla mal de mí por ahí; La experiencia se rompe sin que yo lo vea; Pierdo reputación en silencio mes a mes"
+    "capa_1_options": "Tengo clientes que se van sin decir nada; No detectamos cuándo un cliente está molesto; No tenemos un protocolo para recuperar a un cliente dolido; El cliente insatisfecho habla mal de mí por ahí; La experiencia se rompe sin que yo lo vea; Pierdo reputación en silencio mes a mes"
   },
   {
     "specialty_id": "TERAPIA DE EXPERIENCIA",
@@ -1514,7 +1514,7 @@
     "justi_capa5": "Porque necesitas asegurar ejecucion",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir aumento de valor percibido",
-    "capa_1_options": "Mis clientes pagan pero no me recomiendan; El cliente no percibe el valor que de verdad entrego; Pierdo renovaciones aunque hago bien el trabajo; Mi servicio funciona pero no emociona ni destaca; Justifico el precio con esfuerzo y aun así dudan; No consigo que el cliente sienta que acertó conmigo; Nos comparan por precio porque no ven qué nos diferencia"
+    "capa_1_options": "Mis clientes pagan pero no me recomiendan; El cliente no percibe el valor que de verdad entrego; Pierdo renovaciones aunque hago bien el trabajo; Mi servicio funciona pero no emociona ni destaca; Justifico el precio con esfuerzo y aun así dudan; No consigo que el cliente sienta que acertó conmigo"
   },
   {
     "specialty_id": "EXCELENCIA OPERATIVA",
@@ -1567,7 +1567,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de errores iniciales",
-    "capa_1_options": "Cada persona nueva tarda meses en rendir de verdad; Los que entran cometen los mismos errores al principio; No tengo un sistema claro para integrar a alguien nuevo; El tiempo de adaptación lo pago yo en dinero y calidad; Falta acompañamiento cuando entra gente nueva; Mis procesos de entrada son confusos; La curva de aprendizaje es demasiado larga"
+    "capa_1_options": "Cada persona nueva tarda meses en rendir de verdad; Los que entran cometen los mismos errores al principio; No tengo un sistema claro para integrar a alguien nuevo; El tiempo de adaptación lo pago yo en dinero y calidad; Mis procesos de entrada son confusos; La curva de aprendizaje es demasiado larga"
   },
   {
     "specialty_id": "EXCELENCIA OPERATIVA",
@@ -1620,7 +1620,7 @@
     "justi_capa5": "Porque necesitas asegurar ejecucion",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de dependencia",
-    "capa_1_options": "Si yo no estoy la empresa se para; Demasiadas decisiones dependen solo de mí; No tengo claro qué puedo delegar; Las cosas se atascan cuando no estoy disponible; No puedo tomarme vacaciones sin que todo se detenga; El equipo depende de mí para casi todo; He construido un puesto de trabajo no una empresa"
+    "capa_1_options": "Si yo no estoy la empresa se para; Demasiadas decisiones dependen solo de mí; No tengo claro qué puedo delegar; No puedo tomarme vacaciones sin que todo se detenga; El equipo depende de mí para casi todo; He construido un puesto de trabajo no una empresa"
   },
   {
     "specialty_id": "EXCELENCIA OPERATIVA",
@@ -1673,6 +1673,6 @@
     "justi_capa5": "Para estandarizar el ritmo operativo y medir cumplimiento.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Para medir el porcentaje de entregas a tiempo semana a semana.",
-    "capa_1_options": "Tengo semanas de colapso y semanas muertas sin término medio; Las urgencias de última hora rompen cualquier planificación; No tengo un ritmo de trabajo establecido cada semana es diferente; Los retrasos en entregas son habituales y los clientes lo notan; Dedico más tiempo a apagar fuegos que a producir; Mi equipo trabaja a tope en picos y está inactivo en valles; No puedo prever cuándo llegará el próximo colapso de trabajo"
+    "capa_1_options": "Tengo semanas de colapso y semanas muertas sin término medio; Las urgencias de última hora rompen cualquier planificación; Los retrasos en entregas son habituales y los clientes lo notan; Dedico más tiempo a apagar fuegos que a producir; Mi equipo trabaja a tope en picos y está inactivo en valles; No puedo prever cuándo llegará el próximo colapso de trabajo"
   }
 ]
