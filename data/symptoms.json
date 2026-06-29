@@ -10,10 +10,10 @@
     "logica": "El dinero existe, pero está bloqueado dentro de tu propio negocio.",
     "plan": "PIE",
     "description_symptom": "Si tienes dinero atrapado en stock sin mover, facturas sin cobrar o anticipos no materializados, tu caja sufre aunque el negocio funcione. El problema no es que no entres — es que no sale lo que ya ganaste.",
-    "kpi_question": "Introduce el valor del dinero inmovilizado — stock parado, facturas sin cobrar y anticipos no materializados — y tus gastos fijos mensuales. El resultado te dice cuántos días de operación tienes bloqueados dentro de tu propio negocio.",
-    "kpi_impact": "Mantener el dinero bloqueado por debajo de 15 días libera liquidez suficiente para operar sin depender de las próximas ventas.",
-    "kpi_formula": "InputA/InputB",
-    "kpi_objective": "<15 días",
+    "kpi_question": "Introduce el saldo disponible en cuenta ahora mismo y la media de tus gastos fijos de los últimos 3 meses. El resultado te dice cuántos días puede sobrevivir tu negocio sin ingresar ni un euro.",
+    "kpi_impact": "Por debajo de 30 días tu negocio vende por urgencia, no por estrategia. Por encima de 60 días recuperas el control total de tu caja.",
+    "kpi_formula": "(InputA/InputB)*30",
+    "kpi_objective": ">30",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -21,15 +21,15 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Caja disponible actual"
+        "label": "Caja disponible actual (€ en cuenta)"
       },
       {
         "id": "inputB",
-        "label": "Gastos fijos mensuales"
+        "label": "Media gastos fijos mensuales últimos 3 meses (€)"
       }
     ],
-    "input_a": "Caja disponible actual",
-    "input_b": "Gastos fijos mensuales",
+    "input_a": "Caja disponible actual (€ en cuenta)",
+    "input_b": "Media gastos fijos mensuales últimos 3 meses (€)",
     "input_revised_1": "Total dinero rescatado post",
     "input_revised_2": "Gastos fijos mensuales",
     "result_revised": "Meses liberados",
@@ -171,10 +171,10 @@
     "logica": "Tu operación avanza por inercia, sin diseño — y cada día que pasa ese desorden te cuesta más de lo que crees.",
     "plan": "PIE",
     "description_symptom": "Si tu operación funciona porque siempre ha funcionado así — sin que nadie haya diseñado cómo debería funcionar — cada paso acumula un coste oculto. Las esperas, los cuellos de botella y los pasos sin valor llevan años comiéndote tiempo sin que nadie los haya atacado.",
-    "kpi_question": "Introduce cuántas veces esta semana una interrupción no planificada paró el flujo de trabajo — ingrediente que faltó, herramienta no disponible, paso que nadie supo cómo hacer — y el total de procesos o entregas completadas. Si más del 20% de tus entregas sufrió una rotura de flujo, tu operación avanza por inercia, no por diseño.",
-    "kpi_impact": "Mantener las roturas de flujo por debajo del 20% significa que los procesos están diseñados y el equipo puede ejecutar sin depender de la improvisación.",
+    "kpi_question": "De todo lo que entregaste esta semana — citas, pedidos, trabajos — ¿cuántos salieron sin ningún problema: sin retraso, sin reproceso, sin imprevisto?",
+    "kpi_impact": "Si menos del 85% de tu trabajo sale limpio a la primera, hay fricciones operativas activas que te cuestan tiempo y reputación sin que las hayas medido todavía.",
     "kpi_formula": "(InputA/InputB)*100",
-    "kpi_objective": "<20%",
+    "kpi_objective": ">85%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -182,17 +182,17 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Interrupciones no planificadas que pararon el flujo de trabajo esta semana"
+        "label": "Servicios o pedidos entregados sin ningún problema esta semana"
       },
       {
         "id": "inputB",
-        "label": "Total procesos o entregas completadas esa semana"
+        "label": "Total de servicios o pedidos de la semana"
       }
     ],
-    "input_a": "Interrupciones no planificadas que pararon el flujo esta semana",
-    "input_b": "Total procesos o entregas completadas esa semana",
-    "input_revised_1": "Interrupciones no planificadas (post)",
-    "input_revised_2": "Total entregas completadas (post)",
+    "input_a": "Servicios o pedidos entregados sin ningún problema esta semana",
+    "input_b": "Total de servicios o pedidos de la semana",
+    "input_revised_1": "Servicios sin problema (post)",
+    "input_revised_2": "Total servicios (post)",
     "result_revised": "Δ % roturas de flujo",
     "impact_treatment": "Rediseñamos tu flujo operativo eliminando el tiempo invisible que consumen los procesos sin protocolo. La misma energía produce resultados medibles, sin rozamiento.",
     "optimizer_impact": "Aceleración inmediata del ciclo operativo sin aumentar recursos ni contratar.",
@@ -224,10 +224,10 @@
     "logica": "Trabajas al límite y siempre hay algo sin hacer — porque el problema no es tu esfuerzo, es cómo está organizado el trabajo.",
     "plan": "PIE",
     "description_symptom": "Si tu equipo trabaja al máximo pero siempre hay cola, es porque el problema no es capacidad — es organización. Las tareas que llegan mal definidas, los reprocesos constantes y la falta de estándar consumen más horas que cualquier aumento de plantilla podría cubrir.",
-    "kpi_question": "Introduce cuántos clientes o proyectos tienes activos ahora mismo y cuántos puedes gestionar con calidad sin colapsar. Si estás por encima del 85% de ocupación, el sistema ya opera bajo presión constante.",
-    "kpi_impact": "Mantener la ocupación real por debajo del 85% garantiza margen de maniobra para absorber imprevistos sin que el equipo ni la calidad colapsen.",
+    "kpi_question": "De todo lo que entregaste esta semana — citas, pedidos, proyectos, trabajos — ¿cuántos llegaron al cliente en el plazo que prometiste cuando lo vendiste?",
+    "kpi_impact": "Si menos del 90% de tus entregas cumplen el plazo prometido, el sistema está operando por encima de su capacidad real — y eso lo paga el cliente en forma de esperas que no esperaba.",
     "kpi_formula": "(InputA/InputB)*100",
-    "kpi_objective": "<85%",
+    "kpi_objective": ">90%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -235,18 +235,18 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Clientes o proyectos activos en este momento"
+        "label": "Entregas realizadas en el plazo prometido al cliente esta semana"
       },
       {
         "id": "inputB",
-        "label": "Número máximo que puedes gestionar con calidad sin colapsar"
+        "label": "Total de entregas de la semana"
       }
     ],
-    "input_a": "Clientes o proyectos activos en este momento",
-    "input_b": "Número máximo que puedes gestionar con calidad sin colapsar",
-    "input_revised_1": "Clientes o proyectos activos (post)",
-    "input_revised_2": "Capacidad máxima con calidad (post)",
-    "result_revised": "Δ % de ocupación real",
+    "input_a": "Entregas realizadas en el plazo prometido al cliente esta semana",
+    "input_b": "Total de entregas de la semana",
+    "input_revised_1": "Entregas en plazo (post)",
+    "input_revised_2": "Total entregas (post)",
+    "result_revised": "Δ % cumplimiento de plazo",
     "impact_treatment": "Reorganizamos la carga para que el equipo rinda al límite real de su capacidad, no al de sus urgencias. Crecer deja de significar reventar.",
     "optimizer_impact": "Aumento inmediato de velocidad operativa al eliminar reprocesos por entradas defectuosas.",
     "optimizer_decision": "Filtro de Entrada de Tareas",
@@ -264,7 +264,7 @@
     "justi_capa5": "Porque necesitas estandarizar qué información mínima debe llegar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción de errores de entrada",
-    "capa_1_options": "Trabajamos al máximo pero siempre hay tareas en cola sin terminar; Pierdo tiempo aclarando trabajos que llegan mal explicados; Las tareas entran con datos incompletos y hay que rehacerlas; Cada uno hace las cosas a su manera sin un estándar; La calidad depende de quién haga el trabajo ese día; Por más horas que metemos nunca llegamos a todo; Contratar más gente no resuelve el atasco real"
+    "capa_1_options": "Trabajamos al máximo pero siempre hay tareas en cola sin terminar; Pierdo tiempo aclarando trabajos que llegan mal explicados; Las tareas entran con datos incompletos y hay que rehacerlas; Cada uno hace las cosas a su manera sin un estándar; Cuando llega trabajo nuevo siempre falta información clave para empezar; Por más horas que metemos nunca llegamos a todo; Contratar más gente no resuelve el atasco real"
   },
   {
     "specialty_id": "UNIDAD DE PROCESOS",
@@ -306,8 +306,8 @@
     "example": "Estudio de arquitectura 27 por ciento de entregas requerían correcciones Tras protocolo baja a 6 por ciento y libera 42 horas al mes",
     "capa_1_priorizacion": "Se repiten defectos en las entregas hay demasiado retrabajo no existe un control de calidad consistente el equipo corrige errores en lugar de prevenirlos no se llega a la causa raíz la calidad depende de la persona no hay estándares claros el retrabajo consume demasiados recursos",
     "justi_capa1": "Los fallos repetidos generan retrabajo y riesgo operativo por lo que es necesario identificar qué errores son críticos y eliminarlos desde la causa raíz",
-    "capa_2_decision": "Análisis de riesgos",
-    "capa_2_options": "Perder un cliente clave por un error de calidad repetido; Que el retrabajo supere el 15% de las horas facturables; Que la reputación sufra por quejas públicas no gestionadas; Que el equipo se desmotive por la presión de corregir errores constantemente; Que la falta de estándares bloquee la incorporación de nuevas personas; Que un error derive en una reclamación económica",
+    "capa_2_decision": "Pareto de Fallos",
+    "capa_2_options": "Frecuencia: qué tipo de error aparece más veces; Coste: qué defecto consume más horas de retrabajo; Origen: en qué fase del proceso ocurre el fallo; Impacto externo: qué errores generan quejas del cliente; Consistencia: si el fallo varía según quién entrega; Estándar: si hay protocolo definido para ese paso o no",
     "justi_capa2": "Porque necesitas identificar qué fallos generan más retrabajo",
     "capa_3_comprension": "5 Porqués",
     "justi_capa3": "Porque necesitas llegar a la causa raíz de los defectos",
@@ -330,29 +330,29 @@
     "logica": "Tu negocio no genera clientes por sí solo — dependes del boca a boca y de que llegue el momento oportuno.",
     "plan": "PIE",
     "description_symptom": "Si la mayoría de tus clientes llegan por recomendación o por casualidad, tu crecimiento no está en tus manos. No tienes un motor de demanda — tienes esperanza. Y la esperanza no es una estrategia comercial.",
-    "kpi_question": "Divide tus ventas totales del mes entre el número de clientes nuevos que consiguiste. El resultado es lo que vale de media cada cliente nuevo que entra. Si ese número sube tras el tratamiento, estás atrayendo a los clientes que realmente te convienen.",
-    "kpi_impact": "Cuando el ticket medio por cliente nuevo sube más de un 20% en 6 semanas, el sistema empieza a atraer demanda rentable — no solo volumen.",
-    "kpi_formula": "InputA/InputB",
-    "kpi_objective": "+20% en 6 semanas",
-    "threshold_critical": 70,
-    "threshold_recommended": 85,
-    "threshold_optimizer": 95,
-    "threshold_elite": 100,
+    "kpi_question": "¿Cuántos clientes nuevos atendiste este mes y cuántos clientes en total? Si menos del 20% son nuevos, tu negocio no tiene motor comercial — depende de los que ya tiene.",
+    "kpi_impact": "Si menos del 20% de tus clientes son nuevos cada mes, el negocio no genera demanda propia — crece solo si el boca a boca llega solo. Eso no es un sistema, es suerte.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">20%",
+    "threshold_critical": 10,
+    "threshold_recommended": 15,
+    "threshold_optimizer": 20,
+    "threshold_elite": 30,
     "inputs": [
       {
         "id": "inputA",
-        "label": "Ventas totales del mes (€)"
+        "label": "Clientes nuevos este mes"
       },
       {
         "id": "inputB",
-        "label": "Clientes nuevos ese mes"
+        "label": "Total de clientes atendidos este mes"
       }
     ],
-    "input_a": "Ventas totales del mes (€)",
-    "input_b": "Clientes nuevos ese mes",
-    "input_revised_1": "Ventas totales (post)",
-    "input_revised_2": "Clientes nuevos (post)",
-    "result_revised": "Δ ticket medio por cliente nuevo",
+    "input_a": "Clientes nuevos este mes",
+    "input_b": "Total de clientes atendidos este mes",
+    "input_revised_1": "Clientes nuevos (post)",
+    "input_revised_2": "Total clientes atendidos (post)",
+    "result_revised": "Δ % clientes nuevos sobre total",
     "impact_treatment": "Identificamos qué clientes y productos te dejan más margen y construimos un sistema para atraer más de esos. Dejas de vender lo que llega y empiezas a crecer por diseño.",
     "optimizer_impact": "Activación inmediata del motor de demanda con el canal de mayor retorno.",
     "optimizer_decision": "Diagnóstico de Motor Comercial",
