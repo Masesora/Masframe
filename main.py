@@ -41,6 +41,9 @@ from routers.leads_router      import router as leads_router
 # Alta Clínica — /discharge/* + /certificados
 from routers.discharge_router  import router as discharge_router
 
+# Acceso Beta — /beta-codes/generate + /beta-codes/redeem + /beta-codes
+from routers.beta_codes_router import router as beta_codes_router
+
 
 app = FastAPI(
     title="MASFRAME® API",
@@ -96,6 +99,7 @@ app.include_router(panel_router)       # ⭐ Panel TriajePage
 app.include_router(documentos_router)  # ⭐ Documentos expediente
 app.include_router(leads_router)       # ⭐ Diagnóstico Tu Solución
 app.include_router(discharge_router)   # ⭐ Alta Clínica + Certificados
+app.include_router(beta_codes_router)  # ⭐ Acceso Beta FASE 9
 
 
 # ============================================================
