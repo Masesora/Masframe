@@ -35,6 +35,8 @@ def _gen_code() -> str:
 # ─── Modelos ──────────────────────────────────────────────────
 
 class GenerateIn(BaseModel):
+    code:  Optional[str] = None   # si se provee, se usa tal cual; si no, se auto-genera
+    email: Optional[str] = None   # email del cliente al que se vincula
     notes: Optional[str] = None
 
 
@@ -53,15 +55,20 @@ async def generate_beta_code(
     """Genera un código beta de uso único. Solo admin."""
     col = get_collection("beta_codes")
 
-    code = _gen_code()
-    # Regenerar si colisión (extremadamente improbable)
-    while await col.find_one({"code": code}):
+    if body.code and body.code.strip():
+        code = body.code.strip().upper()
+        if await col.find_one({"code": code}):
+            raise HTTPException(status_code=409, detail="Este código ya existe")
+    else:
         code = _gen_code()
+        while await col.find_one({"code": code}):
+            code = _gen_code()
 
     doc = {
         "code":       code,
         "created_at": datetime.utcnow().isoformat(),
         "created_by": admin.get("email") or admin.get("sub") or "admin",
+        "email":      body.email or "",
         "notes":      body.notes or "",
         "used":       False,
         "used_by":    None,
