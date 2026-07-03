@@ -1,6 +1,6 @@
 """
 contrato_template.py — MAS@FRAME® v2 (10/10 clínico-premium)
-Genera el HTML del Contrato Maestro Universal a partir de los datos del cliente.
+Genera el HTML del Acuerdo de Prestación de Servicios Masframe a partir de los datos del cliente.
 Uso: html = generar_contrato_html(datos)
 """
 
@@ -409,7 +409,7 @@ CLAUSULAS = [
 # ─── Generador HTML ───────────────────────────────────────────────────────────
 def generar_contrato_html(datos: dict) -> str:
     """
-    Genera el HTML completo del Contrato Maestro Universal MAS@FRAME®.
+    Genera el HTML completo del Acuerdo de Prestación de Servicios Masframe MAS@FRAME®.
 
     datos = {
         "codigo":        str,   # Código del expediente
@@ -727,7 +727,7 @@ def generar_contrato_html(datos: dict) -> str:
   <div class="portada-logo">MAS@FRAME®</div>
   <div class="portada-subtitulo">Sistema Clínico de Intervención Empresarial</div>
   <div class="portada-badge">Contrato de Prestación de Servicios Clínicos · Instrumento Jurídico</div>
-  <div class="portada-titulo">Contrato Maestro<br/>Universal</div>
+  <div class="portada-titulo">Acuerdo de Prestación<br/>de Servicios Masframe</div>
   <div class="portada-num">{num_contrato}</div>
   <div class="portada-divider"></div>
   <div class="portada-data">
