@@ -44,6 +44,9 @@ from routers.discharge_router  import router as discharge_router
 # Acceso Beta — /beta-codes/generate + /beta-codes/redeem + /beta-codes
 from routers.beta_codes_router import router as beta_codes_router
 
+# Ciclos Clínicos UCC — /ciclos/{codigo} + /protocolos
+from routers.ciclos_router     import router as ciclos_router
+
 
 app = FastAPI(
     title="MASFRAME® API",
@@ -100,6 +103,7 @@ app.include_router(documentos_router)  # ⭐ Documentos expediente
 app.include_router(leads_router)       # ⭐ Diagnóstico Tu Solución
 app.include_router(discharge_router)   # ⭐ Alta Clínica + Certificados
 app.include_router(beta_codes_router)  # ⭐ Acceso Beta FASE 9
+app.include_router(ciclos_router)      # ⭐ Ciclos Clínicos UCC
 
 
 # ============================================================
