@@ -153,6 +153,8 @@ async def update_client(
 # El propio cliente o un interno puede actualizar los datos fiscales (campos seguros)
 CAMPOS_SELF = {"razon_social", "cif", "representante", "email", "telefono", "direccion", "ciudad"}
 
+import re as _re
+
 @router.patch("/clients/{codigo}/self")
 async def update_client_self(
     codigo: str,
@@ -164,7 +166,22 @@ async def update_client_self(
     doc = await col.find_one({"codigo": codigo})
     if not doc:
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
-    # Filtrar solo campos permitidos
+
+    # Cambio de código personalizado
+    nuevo_codigo = payload.pop("codigo", None)
+    if nuevo_codigo:
+        nuevo_codigo = nuevo_codigo.strip().upper()
+        if not _re.match(r"^MAS-[A-Z0-9]{4,10}$", nuevo_codigo):
+            raise HTTPException(status_code=422, detail="Formato de código inválido. Usa MAS- seguido de 4-10 letras o números.")
+        if nuevo_codigo != codigo:
+            existe = await col.find_one({"codigo": nuevo_codigo})
+            if existe:
+                raise HTTPException(status_code=409, detail="Ese código ya está en uso.")
+            await col.update_one({"codigo": codigo}, {"$set": {"codigo": nuevo_codigo, "updated_at": datetime.utcnow()}})
+            ese_col = _get_col("ese")
+            await ese_col.update_one({"codigo": codigo}, {"$set": {"codigo": nuevo_codigo}})
+            return {"status": "ok", "codigo": nuevo_codigo}
+
     safe = {k: v for k, v in payload.items() if k in CAMPOS_SELF}
     if not safe:
         raise HTTPException(status_code=400, detail="Sin campos válidos para actualizar")
