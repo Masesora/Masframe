@@ -97,9 +97,27 @@ async def redeem_beta_code(body: RedeemIn):
     if code_doc.get("used"):
         raise HTTPException(status_code=409, detail="Este código ya ha sido utilizado")
 
+    # Verificar que el expediente existe ANTES de quemar el código
+    ese_doc = await ese_col.find_one({"codigo": body.ese_codigo})
+    if not ese_doc:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No se encontró el expediente '{body.ese_codigo}'",
+        )
+
     now = datetime.utcnow().isoformat()
 
-    # Marcar código como usado
+    # Activar pago en ese y clients
+    await ese_col.update_one(
+        {"codigo": body.ese_codigo},
+        {"$set": {"pago_confirmado": True}},
+    )
+    await cli_col.update_one(
+        {"codigo": body.ese_codigo},
+        {"$set": {"pago_confirmado": True}},
+    )
+
+    # Marcar código como usado solo si todo fue bien
     await col.update_one(
         {"code": body.code.strip().upper()},
         {"$set": {
@@ -109,29 +127,24 @@ async def redeem_beta_code(body: RedeemIn):
         }},
     )
 
-    # Activar pago en colección ese
-    ese_result = await ese_col.update_one(
-        {"codigo": body.ese_codigo},
-        {"$set": {"pago_confirmado": True}},
-    )
-
-    # Activar también en clients (por si ya existe el registro)
-    await cli_col.update_one(
-        {"codigo": body.ese_codigo},
-        {"$set": {"pago_confirmado": True}},
-    )
-
-    if ese_result.matched_count == 0:
-        raise HTTPException(
-            status_code=404,
-            detail=f"No se encontró el expediente '{body.ese_codigo}'",
-        )
-
     return {
         "ok":        True,
         "ese_codigo": body.ese_codigo,
         "activated_at": now,
     }
+
+
+@router.post("/{code}/reset")
+async def reset_beta_code(code: str, admin: dict = Depends(require_admin)):
+    """Resetea un código beta a estado no usado. Solo admin."""
+    col = get_collection("beta_codes")
+    result = await col.update_one(
+        {"code": code.strip().upper()},
+        {"$set": {"used": False, "used_by": None, "used_at": None}},
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Código no encontrado")
+    return {"ok": True, "code": code.strip().upper(), "reset": True}
 
 
 @router.get("/")
