@@ -53,14 +53,9 @@ async def get_mensajes(
     col = get_collection("mensajes")
     filtro: dict = {"archivado": {"$ne": True}}
 
-    if email and rol:
-        filtro["$or"] = [
-            {"de": email},
-            {"para": email},
-            {"de_rol": rol},
-            {"para_rol": rol},
-        ]
-    elif email:
+    if email:
+        # El email identifica unívocamente al usuario — nunca mezclar con rol
+        # para evitar filtrar mensajes de otros clientes/usuarios del mismo rol
         filtro["$or"] = [{"de": email}, {"para": email}]
     elif rol:
         filtro["$or"] = [{"de_rol": rol}, {"para_rol": rol}]
@@ -68,7 +63,7 @@ async def get_mensajes(
     total = await col.count_documents(filtro)
     cursor = col.find(filtro, {"_id": 1, "de": 1, "de_rol": 1, "para": 1,
                                "texto": 1, "fecha": 1, "leido": 1, "tipo": 1,
-                               "cliente_codigo": 1}) \
+                               "cliente_codigo": 1, "sintomas_recomendados": 1}) \
                 .sort("fecha", 1).skip(skip).limit(limit)
     msgs = await cursor.to_list(length=limit)
     return {
@@ -113,7 +108,8 @@ async def get_mensajes_cliente(
     cursor = col.find(
         filtro,
         {"_id": 1, "de": 1, "de_rol": 1, "para": 1,
-         "texto": 1, "fecha": 1, "leido": 1, "tipo": 1}
+         "texto": 1, "fecha": 1, "leido": 1, "tipo": 1,
+         "sintomas_recomendados": 1}
     ).sort("fecha", 1).skip(skip).limit(limit)
     msgs = await cursor.to_list(length=limit)
     return {
