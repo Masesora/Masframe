@@ -54,11 +54,19 @@ async def get_acis(_user: dict = Depends(require_cc_or_admin)):
     return await cursor.to_list(length=100)
 
 
+@router.get("/internal-users-debug")
+async def debug_internal_users(_user: dict = Depends(require_admin)):
+    """Diagnóstico temporal — muestra todos los usuarios internos con su role real."""
+    col = _get_col("internal_users")
+    cursor = col.find({}, {"_id": 0, "password": 0, "password_hash": 0, "hashed_password": 0})
+    return await cursor.to_list(length=200)
+
+
 @router.get("/consultores")
 async def get_consultores(_user: dict = Depends(require_cc_or_admin)):
     col = _get_col("internal_users")
     cursor = col.find(
-        {"role": "cc"},
+        {"role": {"$in": ["cc", "CC", "consultor", "Consultor"]}},
         {"_id": 0, "password": 0, "password_hash": 0, "hashed_password": 0}
     )
     return await cursor.to_list(length=100)
