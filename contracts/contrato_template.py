@@ -902,23 +902,23 @@ def generar_contrato_html(datos: dict) -> str:
     <div class="firmas-grid">
       <div class="firma-col">
         <div class="firma-label">La Clínica · MASESORA CONSULTING SL</div>
-        <div style="height:100px;display:flex;align-items:center;justify-content:center;
-                    border:1px solid #C4A55A;border-radius:8px;margin-bottom:12px;
-                    background:#FDFBF7;position:relative;overflow:hidden;">
-          <svg viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg" style="width:220px;height:70px;">
-            <path d="M20,55 C30,20 45,15 55,40 C60,52 65,55 72,35 C78,18 85,14 92,38 C96,50 100,54 108,30"
-                  fill="none" stroke="#0F1A35" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M108,30 C115,10 122,8 128,32 C132,46 136,52 144,28 C150,10 158,8 163,35 C166,48 170,54 178,38"
-                  fill="none" stroke="#0F1A35" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M178,38 C185,22 192,20 196,42 C198,52 202,58 210,45 C215,36 218,30 224,42"
-                  fill="none" stroke="#0F1A35" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M30,65 L230,65" fill="none" stroke="#C4A55A" stroke-width="0.8" opacity="0.5"/>
-          </svg>
-          <div style="position:absolute;top:6px;right:8px;background:#21ae52;color:#fff;
-                      font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:20px;
-                      letter-spacing:0.05em;">✓ FIRMADO</div>
+        <div style="border-top:2px solid #0F1A35;padding-top:14px;margin-bottom:12px;">
+          <div style="font-size:1.05rem;font-weight:700;color:#0F1A35;font-family:'Cormorant Garamond',Georgia,serif;">
+            Maite Cabezuelos Morcillo
+          </div>
+          <div style="font-size:0.65rem;color:#888;font-family:'IBM Plex Mono',monospace;margin-top:4px;">
+            NIF 74860612M · Directora Clínica · MASESORA CONSULTING SL
+          </div>
+          <div style="font-size:0.65rem;color:#888;font-family:'IBM Plex Mono',monospace;margin-top:2px;">
+            Firmado digitalmente el {hoy}
+          </div>
+          <div style="display:inline-block;margin-top:8px;background:#0F1A35;color:#C4A55A;
+                      font-size:0.58rem;font-weight:700;padding:3px 10px;border-radius:3px;
+                      font-family:'IBM Plex Mono',monospace;letter-spacing:1px;">
+            DOCUMENTO FIRMADO DIGITALMENTE
+          </div>
         </div>
-        <div class="firma-nombre">María Teresa Cabezuelos Morcillo</div>
+        <div class="firma-nombre" style="display:none;">Maite Cabezuelos Morcillo</div>
         <div class="firma-fecha">NIF 74860612M · Directora Clínica · {hoy}</div>
       </div>
       <div class="firma-col">
