@@ -127,6 +127,25 @@ async def redeem_beta_code(body: RedeemIn):
         }},
     )
 
+    # Mensaje sistema → cliente: firma de contrato pendiente
+    try:
+        client_email = ese_doc.get("email", "")
+        if client_email:
+            msg_col = get_collection("mensajes")
+            await msg_col.insert_one({
+                "de":             "sistema",
+                "para":           client_email,
+                "de_rol":         "sistema",
+                "para_rol":       "aci",
+                "texto":          "📄 Tu contrato de servicio MASFRAME está listo. Accede a tu expediente clínico → pestaña Archivo clínico para revisarlo y firmarlo digitalmente. Es el último paso antes de arrancar.",
+                "tipo":           "contrato_pendiente",
+                "cliente_codigo": body.ese_codigo,
+                "leido":          False,
+                "fecha":          now,
+            })
+    except Exception as e:
+        print(f"[BETA] Error mensaje contrato pendiente {body.ese_codigo}: {e}")
+
     return {
         "ok":        True,
         "ese_codigo": body.ese_codigo,

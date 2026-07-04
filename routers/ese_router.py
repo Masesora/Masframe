@@ -413,6 +413,25 @@ async def actualizar_pago(codigo: str, data: PagoUpdate):
         except Exception as e:
             print(f"[PAGO] Error email post-pago {codigo}: {e}")
 
+        # Mensaje sistema → cliente: firma de contrato pendiente
+        try:
+            client_email = doc.get("email", "")
+            if client_email:
+                msg_col = MongoClient(os.environ["MONGO_URI"])["masesora"]["mensajes"]
+                msg_col.insert_one({
+                    "de":             "sistema",
+                    "para":           client_email,
+                    "de_rol":         "sistema",
+                    "para_rol":       "aci",
+                    "texto":          "📄 Tu contrato de servicio MASFRAME está listo. Accede a tu expediente clínico → pestaña Archivo clínico para revisarlo y firmarlo digitalmente. Es el último paso antes de arrancar.",
+                    "tipo":           "contrato_pendiente",
+                    "cliente_codigo": codigo,
+                    "leido":          False,
+                    "fecha":          ahora.isoformat(),
+                })
+        except Exception as e:
+            print(f"[PAGO] Error mensaje contrato pendiente {codigo}: {e}")
+
     return doc
 
 
