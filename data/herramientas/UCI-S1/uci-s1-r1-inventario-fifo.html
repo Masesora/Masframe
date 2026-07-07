@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R1 — Inventario sin rotación FIFO</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 13px; }
+  .header { background: #1B2B4B; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #C4A55A; font-family: Georgia, serif; }
+  .header-text h1 { font-size: 15px; font-weight: 700; color: #C4A55A; margin-bottom: 2px; }
+  .header-text h2 { font-size: 12px; color: #c8d4e8; font-weight: 400; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+  .section { background: #fff; border: 1px solid #dde3ef; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #C4A55A; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #1B2B4B; color: #C4A55A; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 6px; text-align: left; }
+  td { border-bottom: 1px solid #eef0f5; padding: 5px 4px; vertical-align: middle; }
+  tr:hover td { background: #f5f4ff; }
+  input[type="text"], input[type="number"], input[type="date"] { border: 1px solid #ddd; border-radius: 3px; padding: 4px 6px; width: 100%; font-size: 12px; font-family: inherit; color: #1B2B4B; background: #fdfdff; }
+  input:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0f4fc; font-weight: 600; text-align: right; color: #1B2B4B; padding: 5px 6px; }
+  .total-row td { background: #1B2B4B; color: #C4A55A; font-weight: 700; font-size: 12px; }
+  .total-row .calc { background: #1B2B4B; color: #fff; }
+  .add-row-btn { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+  .add-row-btn:hover { background: #b8923e; }
+  .decision-box { border: 2px solid #C4A55A; border-radius: 6px; padding: 16px; background: #fffdf5; }
+  .decision-box label { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px; color: #1B2B4B; }
+  .decision-box input, .decision-box textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 8px; font-family: inherit; font-size: 13px; color: #1B2B4B; }
+  .decision-box textarea { height: 70px; resize: vertical; }
+  .result-summary { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+  .result-card { background: #1B2B4B; color: #fff; border-radius: 6px; padding: 12px 18px; flex: 1; min-width: 160px; text-align: center; }
+  .result-card .label { font-size: 10px; color: #C4A55A; text-transform: uppercase; font-weight: 700; }
+  .result-card .value { font-size: 22px; font-weight: 800; color: #fff; margin-top: 4px; }
+  .print-btn { background: #1B2B4B; color: #C4A55A; border: none; border-radius: 4px; padding: 8px 20px; font-size: 12px; font-weight: 700; cursor: pointer; float: right; }
+  .print-btn:hover { background: #243655; }
+  @media print { .add-row-btn, .print-btn { display: none; } body { background: #fff; } }
+  .dias-badge { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+  .dias-ok { background: #d4edda; color: #155724; }
+  .dias-warn { background: #fff3cd; color: #856404; }
+  .dias-alert { background: #f8d7da; color: #721c24; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-text">
+    <h1>UCI-S1 — Obstrucción de Caja</h1>
+    <h2>R1 · Liquidar capital inmovilizado en inventario sin rotación</h2>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">Inventario sin rotación — Plan de liquidación FIFO</div>
+    <table id="inv-table">
+      <thead>
+        <tr>
+          <th style="width:18%">Referencia / Producto</th>
+          <th style="width:7%">Uds.</th>
+          <th style="width:10%">Coste unit. (€)</th>
+          <th style="width:10%">Valor total (€)</th>
+          <th style="width:10%">Días sin mov.</th>
+          <th style="width:12%">Precio liquid. (€)</th>
+          <th style="width:10%">Recuperac. estimada (€)</th>
+          <th style="width:13%">Fecha límite acción</th>
+          <th style="width:6%"></th>
+        </tr>
+      </thead>
+      <tbody id="inv-body">
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="3"><strong>TOTALES</strong></td>
+          <td class="calc" id="total-valor">0,00 €</td>
+          <td></td>
+          <td></td>
+          <td class="calc" id="total-recup">0,00 €</td>
+          <td colspan="2"></td>
+        </tr>
+      </tfoot>
+    </table>
+    <button class="add-row-btn" onclick="addRow()">+ Añadir fila</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resumen de liquidez recuperable</div>
+    <div class="result-summary">
+      <div class="result-card">
+        <div class="label">Valor en libros total</div>
+        <div class="value" id="sum-valor">0 €</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Recuperación estimada</div>
+        <div class="value" id="sum-recup">0 €</div>
+      </div>
+      <div class="result-card">
+        <div class="label">% de recuperación</div>
+        <div class="value" id="sum-pct">—</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Pérdida asumida</div>
+        <div class="value" id="sum-perdida">0 €</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:right; margin-top:8px;">
+    <button class="print-btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+
+</div>
+
+<script>
+let rowCount = 0;
+
+function fmt(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+
+function addRow(){
+  rowCount++;
+  const tbody = document.getElementById('inv-body');
+  const tr = document.createElement('tr');
+  tr.id = 'row-'+rowCount;
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Ref / Producto" onchange="recalc()"></td>
+    <td><input type="number" min="0" step="1" value="0" class="uds" onchange="recalcRow(${rowCount})" oninput="recalcRow(${rowCount})"></td>
+    <td><input type="number" min="0" step="0.01" value="0" class="coste" onchange="recalcRow(${rowCount})" oninput="recalcRow(${rowCount})"></td>
+    <td class="calc val-total">0,00 €</td>
+    <td><input type="number" min="0" step="1" value="0" class="dias" onchange="paintDias(${rowCount})" oninput="paintDias(${rowCount})"><span class="dias-badge" id="db-${rowCount}"></span></td>
+    <td><input type="number" min="0" step="0.01" value="0" class="prliq" onchange="recalcRow(${rowCount})" oninput="recalcRow(${rowCount})"></td>
+    <td class="calc recup">0,00 €</td>
+    <td><input type="date"></td>
+    <td><button onclick="removeRow(${rowCount})" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:15px;">✕</button></td>`;
+  tbody.appendChild(tr);
+  recalc();
+}
+
+function paintDias(id){
+  const tr = document.getElementById('row-'+id);
+  const dias = parseFloat(tr.querySelector('.dias').value)||0;
+  const badge = document.getElementById('db-'+id);
+  badge.className = 'dias-badge';
+  if(dias===0){ badge.textContent=''; return; }
+  if(dias<=90){ badge.classList.add('dias-ok'); badge.textContent=dias+'d'; }
+  else if(dias<=180){ badge.classList.add('dias-warn'); badge.textContent=dias+'d'; }
+  else { badge.classList.add('dias-alert'); badge.textContent=dias+'d ⚠'; }
+  recalcRow(id);
+}
+
+function recalcRow(id){
+  const tr = document.getElementById('row-'+id);
+  const uds = parseFloat(tr.querySelector('.uds').value)||0;
+  const coste = parseFloat(tr.querySelector('.coste').value)||0;
+  const prliq = parseFloat(tr.querySelector('.prliq').value)||0;
+  const valTotal = uds * coste;
+  const recup = uds * prliq;
+  tr.querySelector('.val-total').textContent = fmt(valTotal);
+  tr.querySelector('.recup').textContent = fmt(recup);
+  recalcTotals();
+}
+
+function recalcTotals(){
+  let totalValor=0, totalRecup=0;
+  document.querySelectorAll('#inv-body tr').forEach(tr=>{
+    const uds = parseFloat(tr.querySelector('.uds')?.value)||0;
+    const coste = parseFloat(tr.querySelector('.coste')?.value)||0;
+    const prliq = parseFloat(tr.querySelector('.prliq')?.value)||0;
+    totalValor += uds*coste;
+    totalRecup += uds*prliq;
+  });
+  document.getElementById('total-valor').textContent = fmt(totalValor);
+  document.getElementById('total-recup').textContent = fmt(totalRecup);
+  document.getElementById('sum-valor').textContent = fmt(totalValor);
+  document.getElementById('sum-recup').textContent = fmt(totalRecup);
+  const pct = totalValor>0 ? (totalRecup/totalValor*100).toFixed(1)+'%' : '—';
+  document.getElementById('sum-pct').textContent = pct;
+  document.getElementById('sum-perdida').textContent = fmt(Math.max(0,totalValor-totalRecup));
+}
+
+function removeRow(id){
+  document.getElementById('row-'+id)?.remove();
+  recalcTotals();
+}
+
+function recalc(){ recalcTotals(); }
+
+// Seed 3 empty rows
+addRow(); addRow(); addRow();
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R2 — Rentabilidad Real por Cliente | UCI-S2 Fuga Invisible | MASFRAME</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f8f7ff;font-family:system-ui,-apple-system,sans-serif;color:#1B2B4B;font-size:13px}
+.header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-family:Georgia,serif;font-size:22px;color:#C4A55A;font-weight:bold;letter-spacing:2px}
+.header-center{text-align:center}
+.sintoma{font-size:11px;color:#aab;letter-spacing:1px;text-transform:uppercase}
+.titulo{font-size:15px;font-weight:600;color:#fff;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:10px;font-weight:700;padding:4px 10px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.section{background:#fff;border-radius:6px;border:1px solid #e0dff0;padding:18px;margin-bottom:16px}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:12px;border-bottom:1px solid #f0efe8;padding-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#1B2B4B;color:#C4A55A;padding:7px 8px;text-align:left;font-weight:600;font-size:11px;letter-spacing:0.5px}
+td{padding:6px 8px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+tr:hover td{background:#f8f7ff}
+input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 6px;font-size:12px;color:#1B2B4B;background:#fafafa}
+input:focus{outline:none;border-color:#C4A55A;background:#fff}
+.calc{background:#f0efe8;color:#1B2B4B;font-weight:600;text-align:right;padding:6px 8px}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;border-radius:4px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer}
+.btn:hover{background:#b8944a}
+.btn-del{background:#e74c3c;color:#fff;border:none;border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
+.metric-card{background:#f8f7ff;border:1px solid #e0dff0;border-radius:5px;padding:14px;text-align:center}
+.metric-label{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:4px}
+.metric-value{font-size:20px;font-weight:700;color:#1B2B4B}
+.metric-sub{font-size:10px;color:#aaa;margin-top:2px}
+.totals-row td{background:#1B2B4B;color:#C4A55A;font-weight:700}
+.decision{border:2px solid #C4A55A;border-radius:5px;padding:14px;background:#fffdf4}
+.decision label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#C4A55A;margin-bottom:5px}
+textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:8px;font-size:12px;color:#1B2B4B;resize:vertical;background:#fafafa;min-height:60px}
+textarea:focus{outline:none;border-color:#C4A55A}
+.alerta{background:#fdedec;border:1px solid #e74c3c;color:#c0392b;padding:4px 10px;border-radius:3px;font-size:11px;font-weight:700}
+.print-btn{background:#1B2B4B;color:#C4A55A;border:none;border-radius:4px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer}
+.toolbar{display:flex;gap:8px;margin-bottom:12px}
+@media print{.toolbar,.btn,.btn-del,.print-btn{display:none!important}body{background:#fff}.section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <div class="sintoma">UCI-S2 — Fuga Invisible</div>
+    <div class="titulo">R2 — Rentabilidad Real por Cliente</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">Resumen de Cartera</div>
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Facturación Total</div>
+        <div class="metric-value" id="m-fact">0 €</div>
+        <div class="metric-sub">suma clientes activos</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Margen Medio</div>
+        <div class="metric-value" id="m-mg-med">0%</div>
+        <div class="metric-sub">ponderado por facturación</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Clientes A</div>
+        <div class="metric-value" id="m-a" style="color:#2ecc71">0</div>
+        <div class="metric-sub">margen ≥ 40%</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Clientes B</div>
+        <div class="metric-value" id="m-b" style="color:#f39c12">0</div>
+        <div class="metric-sub">margen 20–40%</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Clientes C / Alerta</div>
+        <div class="metric-value" id="m-c" style="color:#e74c3c">0</div>
+        <div class="metric-sub">margen &lt; 20% o negativo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tabla de Rentabilidad por Cliente</div>
+    <div class="toolbar">
+      <button class="btn" onclick="addRow()">+ Añadir cliente</button>
+    </div>
+    <div style="overflow-x:auto">
+    <table id="tabla">
+      <thead>
+        <tr>
+          <th style="width:150px">Cliente</th>
+          <th>Facturación/mes (€)</th>
+          <th>Horas/mes</th>
+          <th>Tarifa hora implícita (€)</th>
+          <th>Coste hora propio (€)</th>
+          <th>Margen/hora (€)</th>
+          <th>Margen %</th>
+          <th>Clase</th>
+          <th>Alerta</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+      <tfoot>
+        <tr class="totals-row">
+          <td>TOTALES</td>
+          <td id="tot-fact" class="calc" style="background:#C4A55A;color:#1B2B4B">0 €</td>
+          <td id="tot-horas" class="calc" style="background:#C4A55A;color:#1B2B4B">0</td>
+          <td colspan="7"></td>
+        </tr>
+      </tfoot>
+    </table>
+    </div>
+  </div>
+
+  <div style="text-align:right;margin-bottom:16px">
+    <button class="print-btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+
+</div>
+<script>
+var rowCount=0;
+function addRow(cl,fact,horas,coste){
+  rowCount++;
+  var id=rowCount;
+  var tbody=document.getElementById('tbody');
+  var tr=document.createElement('tr');
+  tr.id='row-'+id;
+  tr.innerHTML=`
+    <td><input type="text" id="cl${id}" value="${cl||''}" placeholder="Nombre cliente"></td>
+    <td><input type="number" id="fact${id}" value="${fact||''}" step="0.01" min="0" onchange="recalc()" placeholder="0"></td>
+    <td><input type="number" id="h${id}" value="${horas||''}" step="0.5" min="0" onchange="recalc()" placeholder="0"></td>
+    <td class="calc" id="thi${id}">—</td>
+    <td><input type="number" id="cp${id}" value="${coste||''}" step="0.01" min="0" onchange="recalc()" placeholder="0"></td>
+    <td class="calc" id="mh${id}">—</td>
+    <td class="calc" id="mpct${id}">—</td>
+    <td id="clase${id}" style="text-align:center"></td>
+    <td id="alert${id}"></td>
+    <td><button class="btn-del" onclick="delRow(${id})">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+function delRow(id){var r=document.getElementById('row-'+id);if(r)r.remove();recalc();}
+function fmt(n){return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function recalc(){
+  var rows=document.querySelectorAll('#tbody tr');
+  var totFact=0,totH=0,cntA=0,cntB=0,cntC=0,sumMgW=0;
+  rows.forEach(function(tr){
+    var id=tr.id.replace('row-','');
+    var fact=parseFloat(document.getElementById('fact'+id)?.value)||0;
+    var h=parseFloat(document.getElementById('h'+id)?.value)||0;
+    var cp=parseFloat(document.getElementById('cp'+id)?.value)||0;
+    var thi=h>0?fact/h:0;
+    var mh=thi-cp;
+    var mpct=thi>0?mh/thi*100:0;
+    document.getElementById('thi'+id).textContent=h>0?fmt(thi):'—';
+    document.getElementById('mh'+id).textContent=h>0?fmt(mh):'—';
+    document.getElementById('mpct'+id).textContent=h>0?mpct.toFixed(1)+'%':'—';
+    var clase='',badge='';
+    if(h>0){
+      if(mpct>=40){clase='A';badge='<span style="background:#d5f5e3;color:#1e8449;padding:2px 8px;border-radius:10px;font-weight:700;font-size:11px">A</span>';cntA++;}
+      else if(mpct>=20){clase='B';badge='<span style="background:#fef9e7;color:#b7950b;padding:2px 8px;border-radius:10px;font-weight:700;font-size:11px">B</span>';cntB++;}
+      else{clase='C';badge='<span style="background:#fdedec;color:#c0392b;padding:2px 8px;border-radius:10px;font-weight:700;font-size:11px">C</span>';cntC++;}
+    }
+    document.getElementById('clase'+id).innerHTML=badge;
+    var alerta='';
+    if(h>0&&mh<0) alerta='<span class="alerta">⚠ PÉRDIDA</span>';
+    else if(h>0&&mpct<20) alerta='<span style="background:#fef9e7;color:#b7950b;padding:3px 8px;border-radius:3px;font-size:11px;font-weight:700">⚠ RIESGO</span>';
+    document.getElementById('alert'+id).innerHTML=alerta;
+    totFact+=fact;totH+=h;
+    if(h>0) sumMgW+=mpct*(fact/1);
+  });
+  document.getElementById('tot-fact').textContent=fmt(totFact);
+  document.getElementById('tot-horas').textContent=totH.toFixed(1)+' h';
+  document.getElementById('m-fact').textContent=fmt(totFact);
+  document.getElementById('m-a').textContent=cntA;
+  document.getElementById('m-b').textContent=cntB;
+  document.getElementById('m-c').textContent=cntC;
+  // margen medio ponderado por facturación
+  var totalFactRows=0;
+  var sumW=0;
+  rows.forEach(function(tr){
+    var id=tr.id.replace('row-','');
+    var fact=parseFloat(document.getElementById('fact'+id)?.value)||0;
+    var h=parseFloat(document.getElementById('h'+id)?.value)||0;
+    var cp=parseFloat(document.getElementById('cp'+id)?.value)||0;
+    var thi=h>0?fact/h:0;
+    var mh=thi-cp;
+    var mpct=thi>0?mh/thi*100:0;
+    if(h>0){totalFactRows+=fact;sumW+=mpct*fact;}
+  });
+  document.getElementById('m-mg-med').textContent=totalFactRows>0?(sumW/totalFactRows).toFixed(1)+'%':'0%';
+}
+addRow('Cliente A',2400,12,45);
+addRow('Cliente B',800,20,45);
+addRow('Cliente C',1500,8,45);
+</script>
+</body>
+</html>

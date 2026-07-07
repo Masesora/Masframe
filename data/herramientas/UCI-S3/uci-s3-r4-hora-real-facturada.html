@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R4 — Hora Real Facturada | UCI-S3 MASFRAME</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:13px}
+  .header{background:#1B2B4B;color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{font-size:22px;font-weight:900;color:#C4A55A;letter-spacing:2px}
+  .header-titles{flex:1}
+  .header-sub{font-size:11px;color:#C4A55A;letter-spacing:1px;text-transform:uppercase}
+  .header-tool{font-size:15px;font-weight:700;margin-top:2px}
+  .badge{background:#C4A55A;color:#1B2B4B;font-size:9px;font-weight:800;padding:3px 8px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+  .main{padding:16px 20px;max-width:900px;margin:0 auto}
+  h2{font-size:13px;font-weight:700;color:#1B2B4B;margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px;border-left:3px solid #C4A55A;padding-left:8px}
+  .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+  @media(max-width:600px){.calc-grid{grid-template-columns:1fr}}
+  .input-group{background:#fff;border-radius:6px;padding:12px 14px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+  .input-group label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:4px;font-weight:700}
+  .input-group input{width:100%;border:1px solid #ddd;border-radius:3px;padding:6px 8px;font-size:16px;color:#1B2B4B;text-align:right}
+  .input-group input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .input-group .unit{font-size:10px;color:#999;margin-top:2px;text-align:right}
+  .result-group{background:#1B2B4B;border-radius:6px;padding:12px 14px}
+  .result-group label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#C4A55A;margin-bottom:4px;font-weight:700}
+  .result-group .val{font-size:22px;font-weight:900;color:#fff}
+  .result-group .sub{font-size:10px;color:#aaa;margin-top:2px}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
+  .metric-card{background:#1B2B4B;color:#fff;border-radius:6px;padding:12px 14px}
+  .metric-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:4px}
+  .metric-value{font-size:20px;font-weight:900;color:#fff}
+  .metric-sub{font-size:10px;color:#aaa;margin-top:2px}
+  .alert-box{background:#ffeaea;border:1.5px solid #e74c3c;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:12px;color:#c0392b}
+  table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);border-radius:4px;overflow:hidden;margin:8px 0}
+  th{background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 6px;text-align:left}
+  td{padding:7px 8px;border-bottom:1px solid #eee;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  .td-right{text-align:right;font-weight:700}
+  .td-pct{text-align:right;color:#666;font-size:11px}
+  .sim-box{background:#fff;border:1px solid #C4A55A;border-radius:6px;padding:14px;margin:14px 0}
+  .sim-box h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:10px;font-weight:800}
+  .sim-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+  .sim-label{font-size:12px;color:#1B2B4B;min-width:220px}
+  .sim-input{border:1px solid #ddd;border-radius:3px;padding:4px 8px;font-size:13px;width:80px;text-align:right;color:#1B2B4B}
+  .sim-result{font-size:14px;font-weight:700;color:#1B2B4B;background:#f8f7ff;border-radius:3px;padding:4px 10px;border:1px solid #eee}
+  .decision-block{background:#fff;border:1.5px solid #C4A55A;border-radius:6px;padding:14px;margin:14px 0}
+  .decision-block h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:8px;font-weight:800}
+  textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:6px;font-size:12px;color:#1B2B4B;resize:vertical;min-height:52px;font-family:inherit}
+  textarea:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .btn-print{background:#1B2B4B;color:#C4A55A;border:none;border-radius:3px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:10px}
+  .gauge-bar{height:12px;background:#eee;border-radius:6px;overflow:hidden;margin-top:4px}
+  .gauge-fill{height:100%;border-radius:6px;transition:width .3s}
+  @media print{.btn-print{display:none!important}body{background:#fff}.result-group,.metric-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-titles">
+    <div class="header-sub">UCI-S3 — Anemia de Margen</div>
+    <div class="header-tool">R4 — Calculadora de la Hora Real Facturada</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+<h2>Datos de Facturación y Tiempo</h2>
+<div class="calc-grid">
+  <div class="input-group">
+    <label>Facturación mensual (€)</label>
+    <input type="number" id="facturacion" min="0" step="100" placeholder="0" oninput="calcAll()">
+    <div class="unit">Total ingresado al mes</div>
+  </div>
+  <div class="input-group">
+    <label>Tarifa declarada (€/hora)</label>
+    <input type="number" id="tarifa" min="0" step="1" placeholder="0" oninput="calcAll()">
+    <div class="unit">Lo que dices que cobras por hora</div>
+  </div>
+  <div class="input-group">
+    <label>Horas directamente facturadas / mes</label>
+    <input type="number" id="h-facturadas" min="0" step="0.5" placeholder="0" oninput="calcAll()">
+    <div class="unit">Horas que el cliente paga explícitamente</div>
+  </div>
+  <div class="input-group">
+    <label>Horas de soporte no cobrado / mes</label>
+    <input type="number" id="h-soporte" min="0" step="0.5" placeholder="0" oninput="calcAll()">
+    <div class="unit">Emails, WhatsApps, consultas rápidas...</div>
+  </div>
+  <div class="input-group">
+    <label>Horas de revisiones gratuitas / mes</label>
+    <input type="number" id="h-revisiones" min="0" step="0.5" placeholder="0" oninput="calcAll()">
+    <div class="unit">Correcciones y repasos no presupuestados</div>
+  </div>
+  <div class="input-group">
+    <label>Horas de reuniones no cobradas / mes</label>
+    <input type="number" id="h-reuniones" min="0" step="0.5" placeholder="0" oninput="calcAll()">
+    <div class="unit">Reuniones de seguimiento, briefings, etc.</div>
+  </div>
+  <div class="input-group">
+    <label>Horas de desplazamiento no cobrado / mes</label>
+    <input type="number" id="h-desplaz" min="0" step="0.5" placeholder="0" oninput="calcAll()">
+    <div class="unit">Ida y vuelta a clientes no repercutida</div>
+  </div>
+  <div class="input-group">
+    <label>Otras horas no cobradas / mes</label>
+    <input type="number" id="h-otras" min="0" step="0.5" placeholder="0" oninput="calcAll()">
+    <div class="unit">Formación, presupuestos no adjudicados, etc.</div>
+  </div>
+</div>
+
+<h2>Resultado: Tarifa Efectiva Real</h2>
+<div class="calc-grid">
+  <div class="result-group"><label>Total horas realmente consumidas / mes</label><div class="val" id="r-total-h">—</div><div class="sub">Facturadas + todas las no cobradas</div></div>
+  <div class="result-group"><label>Tarifa efectiva real (€/hora)</label><div class="val" id="r-tarifa-real" style="color:#e74c3c">—</div><div class="sub">Lo que realmente ganas por cada hora trabajada</div></div>
+  <div class="result-group"><label>Gap de tarifa (€/hora)</label><div class="val" id="r-gap">—</div><div class="sub">Diferencia entre tarifa declarada y real</div></div>
+  <div class="result-group"><label>Eficiencia de facturación</label><div class="val" id="r-efic">—</div><div class="sub">% de horas trabajadas que cobras</div></div>
+</div>
+
+<h2>Desglose: Tiempo No Cobrado</h2>
+<table>
+  <thead><tr><th>Tipo de tiempo no cobrado</th><th style="text-align:right">Horas/mes</th><th style="text-align:right">% s/Total</th><th style="text-align:right">Valor a tarifa declarada (€)</th></tr></thead>
+  <tbody id="desglose-body"></tbody>
+  <tfoot>
+    <tr style="background:#f8f7ff;font-weight:700">
+      <td>TOTAL tiempo no cobrado</td>
+      <td class="td-right" id="t-h-noc">—</td>
+      <td class="td-pct" id="t-pct-noc">—</td>
+      <td class="td-right" id="t-val-noc" style="color:#e74c3c">—</td>
+    </tr>
+  </tfoot>
+</table>
+
+<div id="alert-zone"></div>
+
+<div class="sim-box">
+  <h3>Simulador — ¿Qué pasaría si facturara parte del tiempo extra?</h3>
+  <div class="sim-row">
+    <span class="sim-label">Valor total del tiempo no cobrado:</span>
+    <span class="sim-result" id="sim-valor">0€/mes</span>
+  </div>
+  <div class="sim-row">
+    <span class="sim-label">Si facturara el <input type="number" class="sim-input" id="sim-pct" value="80" min="1" max="100" oninput="simular()">% de ese tiempo extra:</span>
+    <span class="sim-result" id="sim-result">0€/mes adicionales</span>
+  </div>
+  <div class="sim-row">
+    <span class="sim-label">Equivale a un incremento de facturación del:</span>
+    <span class="sim-result" id="sim-pct-incr">—</span>
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="metric-card"><div class="metric-label">Horas facturadas / mes</div><div class="metric-value" id="m-hf">—</div></div>
+  <div class="metric-card"><div class="metric-label">Horas no cobradas / mes</div><div class="metric-value" id="m-hnc" style="color:#e74c3c">—</div></div>
+  <div class="metric-card"><div class="metric-label">Valor no cobrado / año</div><div class="metric-value" id="m-val-año" style="color:#e74c3c">—</div></div>
+  <div class="metric-card"><div class="metric-label">Tarifa real vs declarada</div><div class="metric-value" id="m-ratio">—</div></div>
+</div>
+
+<button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div>
+
+<script>
+const campos=[
+  {id:'h-soporte',label:'Soporte no cobrado'},
+  {id:'h-revisiones',label:'Revisiones gratuitas'},
+  {id:'h-reuniones',label:'Reuniones no cobradas'},
+  {id:'h-desplaz',label:'Desplazamiento no cobrado'},
+  {id:'h-otras',label:'Otras horas no cobradas'},
+];
+let totalValorNoCobrado=0;
+
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function fmt(n){return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function el(id){return document.getElementById(id);}
+
+function calcAll(){
+  const fac=v('facturacion'), tarifa=v('tarifa'), hf=v('h-facturadas');
+  const hNoCobradas=campos.reduce((s,c)=>s+v(c.id),0);
+  const totalH=hf+hNoCobradas;
+  const tarifaReal=totalH>0?fac/totalH:0;
+  const gap=tarifaReal-tarifa;
+  const efic=totalH>0?hf/totalH*100:0;
+  totalValorNoCobrado=tarifa>0?hNoCobradas*tarifa:0;
+
+  el('r-total-h').textContent=totalH.toFixed(1)+' h';
+  el('r-tarifa-real').textContent=tarifaReal>0?fmt(tarifaReal)+'€/h':'—';
+  el('r-tarifa-real').style.color=tarifaReal>=tarifa*0.9?'#2ecc71':tarifaReal>=tarifa*0.6?'#f39c12':'#e74c3c';
+  el('r-gap').textContent=tarifaReal&&tarifa?(gap>=0?'+':'')+fmt(gap)+'€/h':'—';
+  el('r-gap').style.color=gap>=0?'#2ecc71':'#e74c3c';
+  el('r-efic').textContent=totalH>0?efic.toFixed(1)+'%':'—';
+
+  // Desglose
+  const tb=el('desglose-body');
+  tb.innerHTML='';
+  let sumH=0,sumVal=0;
+  campos.forEach(c=>{
+    const h=v(c.id); if(h===0) return;
+    const val=tarifa*h; sumH+=h; sumVal+=val;
+    const pct=totalH>0?h/totalH*100:0;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${c.label}</td><td class="td-right">${h.toFixed(1)} h</td><td class="td-pct">${pct.toFixed(1)}%</td><td class="td-right" style="color:#e74c3c">${tarifa>0?fmt(val)+'€':'—'}</td>`;
+    tb.appendChild(tr);
+  });
+  el('t-h-noc').textContent=sumH.toFixed(1)+' h';
+  el('t-pct-noc').textContent=totalH>0?(sumH/totalH*100).toFixed(1)+'%':'—';
+  el('t-val-noc').textContent=tarifa>0?fmt(sumVal)+'€':'—';
+
+  el('m-hf').textContent=hf.toFixed(1)+' h';
+  el('m-hnc').textContent=sumH.toFixed(1)+' h';
+  el('m-val-año').textContent=tarifa>0?fmt(sumVal*12)+'€':'—';
+  el('m-ratio').textContent=tarifa>0&&tarifaReal>0?Math.round(tarifaReal/tarifa*100)+'%':'—';
+
+  const az=el('alert-zone');
+  if(gap<-tarifa*0.2&&tarifa>0) az.innerHTML=`<div class="alert-box">⚠ Tu tarifa efectiva real es <strong>${fmt(tarifaReal)}€/h</strong>, un <strong>${Math.abs(Math.round(gap/tarifa*100))}% por debajo</strong> de tu tarifa declarada. Estás regalando valor sistemáticamente.</div>`;
+  else az.innerHTML='';
+  simular();
+}
+function simular(){
+  const pct=v('sim-pct'), fac=v('facturacion');
+  const extra=totalValorNoCobrado*pct/100;
+  el('sim-valor').textContent=fmt(totalValorNoCobrado)+'€/mes';
+  el('sim-result').textContent=fmt(extra)+'€/mes adicionales';
+  el('sim-pct-incr').textContent=fac>0?((extra/fac)*100).toFixed(1)+'% más de facturación':'—';
+}
+</script>
+</body>
+</html>

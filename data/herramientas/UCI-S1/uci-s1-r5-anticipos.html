@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R5 — Tracker de anticipos</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 13px; }
+  .header { background: #1B2B4B; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #C4A55A; font-family: Georgia, serif; }
+  .header-text h1 { font-size: 15px; font-weight: 700; color: #C4A55A; margin-bottom: 2px; }
+  .header-text h2 { font-size: 12px; color: #c8d4e8; font-weight: 400; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
+  .container { max-width: 1150px; margin: 0 auto; padding: 20px; }
+  .section { background: #fff; border: 1px solid #dde3ef; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #C4A55A; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #1B2B4B; color: #C4A55A; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 6px; text-align: left; }
+  td { border-bottom: 1px solid #eef0f5; padding: 5px 4px; vertical-align: middle; }
+  tr:hover td { background: #f5f4ff; }
+  input[type="text"], input[type="number"], input[type="date"] { border: 1px solid #ddd; border-radius: 3px; padding: 4px 6px; width: 100%; font-size: 12px; font-family: inherit; color: #1B2B4B; background: #fdfdff; }
+  input:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0f4fc; font-weight: 600; text-align: right; padding: 5px 6px; }
+  .total-row td { background: #1B2B4B; color: #C4A55A; font-weight: 700; }
+  .total-row .calc { background: #1B2B4B; color: #fff; }
+  .add-row-btn { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+  .print-btn { background: #1B2B4B; color: #C4A55A; border: none; border-radius: 4px; padding: 8px 20px; font-size: 12px; font-weight: 700; cursor: pointer; float: right; }
+  .result-summary { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+  .result-card { background: #1B2B4B; color: #fff; border-radius: 6px; padding: 12px 18px; flex: 1; min-width: 150px; text-align: center; }
+  .result-card .label { font-size: 10px; color: #C4A55A; text-transform: uppercase; font-weight: 700; }
+  .result-card .value { font-size: 20px; font-weight: 800; margin-top: 4px; }
+  .decision-box { border: 2px solid #C4A55A; border-radius: 6px; padding: 16px; background: #fffdf5; }
+  .decision-box label { font-weight: 700; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 5px; }
+  textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 8px; font-family: inherit; font-size: 13px; resize: vertical; }
+  .progress-bar { height: 7px; background: #eee; border-radius: 4px; overflow: hidden; margin-top: 3px; }
+  .progress-fill { height: 100%; background: #C4A55A; border-radius: 4px; }
+  .pct-label { font-size: 10px; color: #666; text-align: right; }
+  @media print { .add-row-btn, .print-btn { display: none; } body { background: #fff; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-text">
+    <h1>UCI-S1 — Obstrucción de Caja</h1>
+    <h2>R5 · Convertir los anticipos retenidos en ingresos ejecutados</h2>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">Tracker de anticipos — Estado de ejecución</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:13%">Cliente</th>
+          <th style="width:14%">Concepto</th>
+          <th style="width:9%">Importe anticipado (€)</th>
+          <th style="width:9%">Fecha recibido</th>
+          <th style="width:10%">% ejecución actual</th>
+          <th style="width:9%">Importe ejecutado (€)</th>
+          <th style="width:9%">Pendiente ejecutar (€)</th>
+          <th style="width:10%">Fecha compromiso entrega</th>
+          <th style="width:12%">Acción de desbloqueo</th>
+          <th style="width:5%"></th>
+        </tr>
+      </thead>
+      <tbody id="ant-body"></tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="2"><strong>TOTALES</strong></td>
+          <td class="calc" id="tot-anticipado">0,00 €</td>
+          <td colspan="2"></td>
+          <td class="calc" id="tot-ejecutado">0,00 €</td>
+          <td class="calc" id="tot-pendiente">0,00 €</td>
+          <td colspan="3"></td>
+        </tr>
+      </tfoot>
+    </table>
+    <button class="add-row-btn" onclick="addRow()">+ Añadir anticipo</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resumen de anticipos retenidos</div>
+    <div class="result-summary">
+      <div class="result-card">
+        <div class="label">Total anticipos recibidos</div>
+        <div class="value" id="s-anticipado">0 €</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Ya ejecutado</div>
+        <div class="value" id="s-ejecutado">0 €</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Pendiente de ejecutar</div>
+        <div class="value" id="s-pendiente" style="color:#C4A55A;">0 €</div>
+      </div>
+      <div class="result-card">
+        <div class="label">% ejecución global</div>
+        <div class="value" id="s-pct">—</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Nº de anticipos activos</div>
+        <div class="value" id="s-count">0</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:right; margin-top:8px;">
+    <button class="print-btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+
+</div>
+
+<script>
+let rc = 0;
+function fmt(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+
+function addRow(){
+  rc++;
+  const tbody = document.getElementById('ant-body');
+  const tr = document.createElement('tr');
+  tr.id = 'at-'+rc;
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Cliente"></td>
+    <td><input type="text" placeholder="Concepto del anticipo"></td>
+    <td><input type="number" min="0" step="0.01" value="0" class="anticipado" oninput="recalcRow(${rc})"></td>
+    <td><input type="date" class="frecibi"></td>
+    <td>
+      <input type="number" min="0" max="100" step="1" value="0" class="pct" oninput="recalcRow(${rc})" style="width:55px">
+      <div class="progress-bar"><div class="progress-fill" id="pb-${rc}" style="width:0%"></div></div>
+      <div class="pct-label" id="pl-${rc}">0%</div>
+    </td>
+    <td class="calc ejecutado-cell">0,00 €</td>
+    <td class="calc pendiente-cell">0,00 €</td>
+    <td><input type="date"></td>
+    <td><input type="text" placeholder="Acción concreta"></td>
+    <td><button onclick="removeRow(${rc})" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:15px;">✕</button></td>`;
+  tbody.appendChild(tr);
+  recalcTotals();
+}
+
+function recalcRow(id){
+  const tr = document.getElementById('at-'+id);
+  const ant = parseFloat(tr.querySelector('.anticipado').value)||0;
+  const pct = Math.min(100, parseFloat(tr.querySelector('.pct').value)||0);
+  const ejec = ant * pct / 100;
+  const pend = ant - ejec;
+  tr.querySelector('.ejecutado-cell').textContent = fmt(ejec);
+  tr.querySelector('.pendiente-cell').textContent = fmt(pend);
+  document.getElementById('pb-'+id).style.width = pct+'%';
+  document.getElementById('pl-'+id).textContent = pct+'%';
+  recalcTotals();
+}
+
+function recalcTotals(){
+  let ta=0, te=0, tp=0, count=0;
+  document.querySelectorAll('#ant-body tr').forEach(tr=>{
+    const ant = parseFloat(tr.querySelector('.anticipado')?.value)||0;
+    const pct = Math.min(100, parseFloat(tr.querySelector('.pct')?.value)||0);
+    const ejec = ant * pct / 100;
+    const pend = ant - ejec;
+    ta+=ant; te+=ejec; tp+=pend; count++;
+  });
+  document.getElementById('tot-anticipado').textContent = fmt(ta);
+  document.getElementById('tot-ejecutado').textContent = fmt(te);
+  document.getElementById('tot-pendiente').textContent = fmt(tp);
+  document.getElementById('s-anticipado').textContent = fmt(ta);
+  document.getElementById('s-ejecutado').textContent = fmt(te);
+  document.getElementById('s-pendiente').textContent = fmt(tp);
+  document.getElementById('s-pct').textContent = ta>0 ? (te/ta*100).toFixed(1)+'%' : '—';
+  document.getElementById('s-count').textContent = count;
+}
+
+function removeRow(id){ document.getElementById('at-'+id)?.remove(); recalcTotals(); }
+
+addRow(); addRow(); addRow();
+</script>
+</body>
+</html>

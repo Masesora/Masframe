@@ -1447,5 +1447,57 @@ def fix_double_encoded(s):
 
 ---
 
+## XIII. SESIÓN 8 JUL 2026 — SYMPTOMS REWRITE + HERRAMIENTAS OPERATIVAS
+
+### Fixes y commits de esta sesión
+
+| Commit | Descripción |
+|--------|-------------|
+| `1829894` | feat(symptoms): rewrite capa_1_options + capa_2_options + justi_capa1 en los 30 síntomas — 6 orígenes clínicos distintos, formatos string/array respetados |
+| `8f16c37` | fix(triaje): /ese/list → /panel/ese/list — corrige 404 en logs de producción |
+| `8064984` | fix(c2-cards): orden estable al puntuar — las tarjetas no saltan de posición al cambiar impacto/esfuerzo |
+| `26065d2` | feat(c3): campo 🛠 Herramienta en tarjetas de planificación C3 — grid pasa de 4 a 5 columnas |
+
+### Decisión de arquitectura — Herramientas Operativas MASFRAME
+
+**Contexto:** En C3 el CC asigna responsable y acción concreta, pero el cliente no tiene el instrumento para ejecutarla. Ej: "Liberar stock" → necesita una plantilla de inventario FIFO real.
+
+**Decisión tomada:**
+
+- **Ahora (MVP):** Herramientas como archivos descargables estáticos (PDF/Excel). Rápido de montar. Si el cliente quiere personalización, es un servicio adicional de Masesora.
+- **Fase futura (ver §I):** Herramientas embebidas dentro de la plataforma — el instrumento se abre y rellena directamente en la app. Mayor IP, nadie lo puede copiar, pero requiere meses de desarrollo.
+
+**Estructura de cada herramienta operativa:**
+- 1 herramienta por acción de C3
+- Tipo: plantilla operativa específica (inventario FIFO, aging de facturas, calendar de tesorería, script de cobro, etc.)
+- No son guías de preguntas ni diagnóstico — son instrumentos de ejecución
+- Viven en `data/resources.json` como catálogo + archivos estáticos descargables
+
+### §I — FASE FUTURA: Herramientas Embebidas en Plataforma
+
+**Visión:** Cada acción de C3 tiene una herramienta operativa que se abre y rellena directamente dentro de MASFRAME. El cliente no descarga nada — trabaja dentro del sistema.
+
+**Por qué es la bomba:**
+- La IP no está en el diagnóstico sino en el armamento de ejecución
+- Nadie puede copiar herramientas embebidas en un protocolo clínico propietario
+- El cliente trabaja dentro de la plataforma → visibilidad total de uso → datos de mejora continua
+- Convierte MASFRAME de framework diagnóstico en sistema operativo de ejecución completo
+
+**Ejemplos de herramientas embebidas:**
+- UCI-S1: Tracker de tesorería interactivo a 90 días dentro de la app
+- CARDIO-S1: Canvas de canales de captación con scoring en tiempo real
+- CLI-S2: Calculadora fiscal comparativa autónomo vs SL
+- PSI-S2: Matriz de roles con drag & drop de responsabilidades
+
+**Prerequisitos antes de abordar esta fase:**
+1. Catálogo `resources.json` completo y validado con clientes reales
+2. Al menos 5 clientes que hayan usado los descargables estáticos → feedback de cuáles usan de verdad
+3. FASE BETA completada (clientes reales en producción)
+4. Decidir tecnología de embebido (React interactivo, iframe, o Notion embed)
+
+**Estimación:** 3-4 meses de desarrollo para las primeras 10 herramientas embebidas (UCI + CARDIO).
+
+---
+
 *Fin del documento · MASFRAME Plan v12.5 · Julio 2026*
 *Para retomar una sesión: "Aquí está el plan MASFRAME v12, continuamos con [FASE X]"*

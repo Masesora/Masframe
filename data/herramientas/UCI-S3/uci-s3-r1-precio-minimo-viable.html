@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R1 — Precio Mínimo Viable | UCI-S3 MASFRAME</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:13px}
+  .header{background:#1B2B4B;color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{font-size:22px;font-weight:900;color:#C4A55A;letter-spacing:2px}
+  .header-titles{flex:1}
+  .header-sub{font-size:11px;color:#C4A55A;letter-spacing:1px;text-transform:uppercase}
+  .header-tool{font-size:15px;font-weight:700;margin-top:2px}
+  .badge{background:#C4A55A;color:#1B2B4B;font-size:9px;font-weight:800;padding:3px 8px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+  .main{padding:16px 20px;max-width:1300px;margin:0 auto}
+  h2{font-size:13px;font-weight:700;color:#1B2B4B;margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px;border-left:3px solid #C4A55A;padding-left:8px}
+  table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);border-radius:4px;overflow:hidden}
+  th{background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 6px;text-align:center}
+  td{padding:5px 4px;border-bottom:1px solid #eee;text-align:center;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:#f8f7ff}
+  input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 5px;font-size:12px;color:#1B2B4B;background:#fff;text-align:right}
+  input[type=text]{text-align:left}
+  input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .calc-cell{background:#f8f7ff;font-weight:700;font-size:12px;color:#1B2B4B}
+  .semaforo{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle}
+  .s-verde{background:#2ecc71}
+  .s-amarillo{background:#f39c12}
+  .s-rojo{background:#e74c3c}
+  .btn-add{background:#C4A55A;color:#1B2B4B;border:none;border-radius:3px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin:8px 0;letter-spacing:.5px}
+  .btn-add:hover{background:#b8943e}
+  .btn-del{background:#e74c3c;color:#fff;border:none;border-radius:2px;padding:2px 7px;font-size:11px;cursor:pointer}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
+  .metric-card{background:#1B2B4B;color:#fff;border-radius:6px;padding:12px 14px}
+  .metric-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:4px}
+  .metric-value{font-size:22px;font-weight:900;color:#fff}
+  .metric-sub{font-size:10px;color:#aaa;margin-top:2px}
+  .alert-box{background:#ffeaea;border:1.5px solid #e74c3c;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:12px;color:#c0392b}
+  .ok-box{background:#eafaf1;border:1.5px solid #2ecc71;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:12px;color:#1e8449}
+  .decision-block{background:#fff;border:1.5px solid #C4A55A;border-radius:6px;padding:14px;margin:14px 0}
+  .decision-block h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:8px;font-weight:800}
+  textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:6px;font-size:12px;color:#1B2B4B;resize:vertical;min-height:56px;font-family:inherit}
+  textarea:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .btn-print{background:#1B2B4B;color:#C4A55A;border:none;border-radius:3px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:10px}
+  .btn-print:hover{background:#0f1d33}
+  @media print{.btn-print,.btn-add,.btn-del{display:none!important}body{background:#fff}th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.metric-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-titles">
+    <div class="header-sub">UCI-S3 — Anemia de Margen</div>
+    <div class="header-tool">R1 — Calculadora de Precio Mínimo Viable por Servicio</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+
+<h2>Tabla de Precios Mínimos Viables</h2>
+<table id="tabla">
+  <thead>
+    <tr>
+      <th style="width:150px;text-align:left">Servicio / Producto</th>
+      <th>Coste Directo (€)</th>
+      <th>Costes Indirectos Asig. (€)</th>
+      <th>Coste Total (€)</th>
+      <th>Margen Obj. %</th>
+      <th>Precio Mín. Viable (€)</th>
+      <th>Precio Actual (€)</th>
+      <th>Gap (€)</th>
+      <th>Estado</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+  </tbody>
+</table>
+<button class="btn-add" onclick="addRow()">+ Añadir servicio</button>
+
+<div class="metrics" id="metrics">
+  <div class="metric-card"><div class="metric-label">Servicios analizados</div><div class="metric-value" id="m-total">0</div></div>
+  <div class="metric-card"><div class="metric-label">Por debajo del mínimo</div><div class="metric-value" id="m-bajo" style="color:#e74c3c">0</div></div>
+  <div class="metric-card"><div class="metric-label">Gap total acumulado (€)</div><div class="metric-value" id="m-gap">0</div></div>
+  <div class="metric-card"><div class="metric-label">% servicios en riesgo</div><div class="metric-value" id="m-pct">0%</div></div>
+</div>
+
+<div id="alert-zone"></div>
+
+<h2>Detalle: Servicios Bajo el Precio Mínimo</h2>
+<div id="lista-bajo" style="background:#fff;border-radius:4px;padding:10px;font-size:12px;color:#666;border:1px solid #eee">Ningún servicio por debajo del mínimo aún.</div>
+
+<button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div>
+
+<script>
+let rows=[];
+function addRow(){
+  rows.push({id:Date.now()});
+  renderRows();
+  calcAll();
+}
+function delRow(id){
+  rows=rows.filter(r=>r.id!==id);
+  renderRows();
+  calcAll();
+}
+function renderRows(){
+  const tb=document.getElementById('tbody');
+  tb.innerHTML='';
+  rows.forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.id='row-'+r.id;
+    tr.innerHTML=`
+      <td><input type="text" placeholder="Nombre del servicio" onchange="calcRow(${r.id})" id="n${r.id}"></td>
+      <td><input type="number" min="0" step="0.01" placeholder="0.00" onchange="calcRow(${r.id})" id="cd${r.id}"></td>
+      <td><input type="number" min="0" step="0.01" placeholder="0.00" onchange="calcRow(${r.id})" id="ci${r.id}"></td>
+      <td class="calc-cell" id="ct${r.id}">—</td>
+      <td><input type="number" min="0" max="100" step="0.1" placeholder="30" value="30" onchange="calcRow(${r.id})" id="mo${r.id}"></td>
+      <td class="calc-cell" id="pmv${r.id}">—</td>
+      <td><input type="number" min="0" step="0.01" placeholder="0.00" onchange="calcRow(${r.id})" id="pa${r.id}"></td>
+      <td class="calc-cell" id="gap${r.id}">—</td>
+      <td id="sem${r.id}"><span class="semaforo" style="background:#ccc"></span></td>
+      <td><button class="btn-del" onclick="delRow(${r.id})">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function fmt(n){return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function calcRow(id){
+  const cd=v('cd'+id), ci=v('ci'+id), mo=v('mo'+id), pa=v('pa'+id);
+  const ct=cd+ci;
+  const pmv=mo>=100?0:ct/(1-mo/100);
+  const gap=pa-pmv;
+  const el=n=>document.getElementById(n);
+  if(el('ct'+id)) el('ct'+id).textContent=fmt(ct)+'€';
+  if(el('pmv'+id)) el('pmv'+id).textContent=fmt(pmv)+'€';
+  if(el('gap'+id)){
+    el('gap'+id).textContent=(gap>=0?'+':'')+fmt(gap)+'€';
+    el('gap'+id).style.color=gap>=0?'#2ecc71':'#e74c3c';
+  }
+  if(el('sem'+id)){
+    const s=pa===0?'#ccc':gap>=0?'#2ecc71':gap>=-pmv*0.1?'#f39c12':'#e74c3c';
+    el('sem'+id).innerHTML=`<span class="semaforo" style="background:${s}"></span>`;
+  }
+  calcAll();
+}
+function calcAll(){
+  let total=0,bajo=0,gap_total=0,bajolista=[];
+  rows.forEach(r=>{
+    const cd=v('cd'+r.id), ci=v('ci'+r.id), mo=v('mo'+r.id), pa=v('pa'+r.id);
+    if(cd+ci===0&&pa===0) return;
+    total++;
+    const ct=cd+ci; const pmv=mo>=100?0:ct/(1-mo/100); const gap=pa-pmv;
+    if(gap<0){bajo++;gap_total+=gap;bajolista.push({n:document.getElementById('n'+r.id)?.value||'(sin nombre)',gap});}
+    else{gap_total+=gap;}
+  });
+  document.getElementById('m-total').textContent=total;
+  document.getElementById('m-bajo').textContent=bajo;
+  document.getElementById('m-gap').textContent=(gap_total>=0?'+':'')+fmt(gap_total)+'€';
+  document.getElementById('m-pct').textContent=total?Math.round(bajo/total*100)+'%':'0%';
+  const az=document.getElementById('alert-zone');
+  if(bajo>0){
+    az.innerHTML=`<div class="alert-box">⚠ <strong>${bajo} servicio${bajo>1?'s':''} vendiendo por debajo del precio mínimo viable.</strong> Riesgo de erosión de margen activo. Revisar política de precios inmediatamente.</div>`;
+  } else if(total>0){
+    az.innerHTML=`<div class="ok-box">✓ Todos los servicios analizados están por encima del precio mínimo viable.</div>`;
+  } else {az.innerHTML='';}
+  const lb=document.getElementById('lista-bajo');
+  if(bajolista.length>0){
+    lb.innerHTML=bajolista.map(b=>`<div style="padding:4px 0;border-bottom:1px solid #eee"><strong>${b.n}</strong> — Gap: <span style="color:#e74c3c;font-weight:700">${fmt(b.gap)}€</span></div>`).join('');
+  } else {
+    lb.innerHTML='<span style="color:#2ecc71;font-weight:600">✓ Ningún servicio por debajo del mínimo.</span>';
+  }
+}
+// Init con 3 filas de ejemplo
+addRow();addRow();addRow();
+</script>
+</body>
+</html>

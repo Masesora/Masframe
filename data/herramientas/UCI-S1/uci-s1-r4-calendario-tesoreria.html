@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R4 — Calendario de tesorería 90 días</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 13px; }
+  .header { background: #1B2B4B; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #C4A55A; font-family: Georgia, serif; }
+  .header-text h1 { font-size: 15px; font-weight: 700; color: #C4A55A; margin-bottom: 2px; }
+  .header-text h2 { font-size: 12px; color: #c8d4e8; font-weight: 400; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+  .section { background: #fff; border: 1px solid #dde3ef; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #C4A55A; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #1B2B4B; color: #C4A55A; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 9px 8px; text-align: left; }
+  td { border-bottom: 1px solid #eef0f5; padding: 6px 6px; vertical-align: middle; }
+  input[type="text"], input[type="number"] { border: 1px solid #ddd; border-radius: 3px; padding: 5px 7px; width: 100%; font-size: 12px; font-family: inherit; color: #1B2B4B; background: #fdfdff; }
+  input:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { font-weight: 700; text-align: right; padding: 6px 8px; }
+  .semaforo { display: inline-block; width: 16px; height: 16px; border-radius: 50%; vertical-align: middle; margin-right: 5px; }
+  .verde { background: #28a745; }
+  .amarillo { background: #ffc107; }
+  .rojo { background: #dc3545; }
+  .month-header td { background: #243655; color: #C4A55A; font-weight: 700; font-size: 11px; padding: 7px 8px; }
+  .config-row { display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 0; }
+  .config-row label { font-size: 11px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px; color: #1B2B4B; }
+  .config-row input { width: 160px; border: 1px solid #C4A55A; border-radius: 4px; padding: 7px 10px; font-size: 14px; font-weight: 700; }
+  .result-summary { display: flex; gap: 14px; flex-wrap: wrap; }
+  .result-card { background: #1B2B4B; color: #fff; border-radius: 6px; padding: 12px 18px; flex: 1; min-width: 140px; text-align: center; }
+  .result-card .label { font-size: 10px; color: #C4A55A; text-transform: uppercase; font-weight: 700; }
+  .result-card .value { font-size: 18px; font-weight: 800; margin-top: 4px; }
+  .print-btn { background: #1B2B4B; color: #C4A55A; border: none; border-radius: 4px; padding: 8px 20px; font-size: 12px; font-weight: 700; cursor: pointer; float: right; }
+  .decision-box { border: 2px solid #C4A55A; border-radius: 6px; padding: 16px; background: #fffdf5; }
+  textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 8px; font-family: inherit; font-size: 13px; resize: vertical; }
+  @media print { .print-btn { display: none; } body { background: #fff; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-text">
+    <h1>UCI-S1 — Obstrucción de Caja</h1>
+    <h2>R4 · Corregir el desfase entre el ciclo de cobros y el de pagos</h2>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">Configuración inicial</div>
+    <div class="config-row">
+      <div>
+        <label>Saldo inicial de caja (€)</label>
+        <input type="number" id="saldo-inicial" value="0" step="100" oninput="recalcAll()">
+      </div>
+      <div>
+        <label>Semana de inicio (etiqueta)</label>
+        <input type="text" id="semana-inicio" value="Sem 1" style="width:120px; border:1px solid #ddd; border-radius:4px; padding:7px 10px; font-size:13px;">
+      </div>
+      <div style="font-size:11px; color:#666; line-height:1.6; max-width:340px;">
+        Introduce cobros y pagos semana a semana durante 13 semanas (~90 días).<br>
+        El semáforo refleja el saldo acumulado: <span style="color:#28a745;">●</span> positivo &nbsp;<span style="color:#ffc107;">●</span> bajo (0–10% saldo inicial) &nbsp;<span style="color:#dc3545;">●</span> negativo
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Calendario de tesorería — 13 semanas / 90 días</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:12%">Semana</th>
+          <th style="width:18%">Cobros previstos (€)</th>
+          <th style="width:18%">Pagos comprometidos (€)</th>
+          <th style="width:14%">Saldo neto (€)</th>
+          <th style="width:16%">Saldo acumulado (€)</th>
+          <th style="width:8%">Estado</th>
+          <th style="width:14%">Notas</th>
+        </tr>
+      </thead>
+      <tbody id="cal-body"></tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resumen 90 días</div>
+    <div class="result-summary">
+      <div class="result-card">
+        <div class="label">Total cobros previstos</div>
+        <div class="value" id="s-cobros">0 €</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Total pagos comprometidos</div>
+        <div class="value" id="s-pagos">0 €</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Saldo neto período</div>
+        <div class="value" id="s-neto">0 €</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Saldo final estimado</div>
+        <div class="value" id="s-final">0 €</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Semanas en rojo</div>
+        <div class="value" id="s-rojas" style="color:#C4A55A;">0</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:right; margin-top:8px;">
+    <button class="print-btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+
+</div>
+
+<script>
+function fmt(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+
+const WEEKS = 13;
+
+function buildTable(){
+  const tbody = document.getElementById('cal-body');
+  tbody.innerHTML = '';
+  const months = ['Mes 1','Mes 1','Mes 1','Mes 1','Mes 2','Mes 2','Mes 2','Mes 2','Mes 3','Mes 3','Mes 3','Mes 3','Mes 3'];
+  let lastMonth = '';
+  for(let i=1; i<=WEEKS; i++){
+    if(months[i-1] !== lastMonth){
+      lastMonth = months[i-1];
+      const mr = document.createElement('tr');
+      mr.className = 'month-header';
+      mr.innerHTML = `<td colspan="7">${lastMonth}</td>`;
+      tbody.appendChild(mr);
+    }
+    const tr = document.createElement('tr');
+    tr.id = 'w-'+i;
+    tr.innerHTML = `
+      <td><input type="text" value="Sem ${i}" style="width:70px; border:1px solid #ddd; border-radius:3px; padding:4px 6px; font-size:12px;"></td>
+      <td><input type="number" min="0" step="100" value="0" class="cobros" oninput="recalcAll()"></td>
+      <td><input type="number" min="0" step="100" value="0" class="pagos" oninput="recalcAll()"></td>
+      <td class="calc neto" id="neto-${i}">0,00 €</td>
+      <td class="calc acum" id="acum-${i}">0,00 €</td>
+      <td class="calc" id="sem-${i}"><span class="semaforo verde"></span>OK</td>
+      <td><input type="text" placeholder="Nota..." style="border:1px solid #ddd; border-radius:3px; padding:4px 6px; font-size:11px; width:100%;"></td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+function recalcAll(){
+  const si = parseFloat(document.getElementById('saldo-inicial').value)||0;
+  let acum = si;
+  let totalCobros=0, totalPagos=0, semanasRojas=0;
+  const umbral = si * 0.1;
+  for(let i=1; i<=WEEKS; i++){
+    const tr = document.getElementById('w-'+i);
+    if(!tr) continue;
+    const cob = parseFloat(tr.querySelector('.cobros').value)||0;
+    const pag = parseFloat(tr.querySelector('.pagos').value)||0;
+    const neto = cob - pag;
+    acum += neto;
+    totalCobros += cob; totalPagos += pag;
+    document.getElementById('neto-'+i).textContent = fmt(neto);
+    document.getElementById('acum-'+i).textContent = fmt(acum);
+    const semCell = document.getElementById('sem-'+i);
+    if(acum < 0){ semCell.innerHTML='<span class="semaforo rojo"></span>Rojo'; semanasRojas++; }
+    else if(acum < Math.abs(umbral)+1){ semCell.innerHTML='<span class="semaforo amarillo"></span>Alerta'; }
+    else { semCell.innerHTML='<span class="semaforo verde"></span>OK'; }
+  }
+  const neto = totalCobros - totalPagos;
+  document.getElementById('s-cobros').textContent = fmt(totalCobros);
+  document.getElementById('s-pagos').textContent = fmt(totalPagos);
+  document.getElementById('s-neto').textContent = fmt(neto);
+  document.getElementById('s-final').textContent = fmt(si + neto);
+  document.getElementById('s-rojas').textContent = semanasRojas;
+}
+
+buildTable();
+recalcAll();
+</script>
+</body>
+</html>

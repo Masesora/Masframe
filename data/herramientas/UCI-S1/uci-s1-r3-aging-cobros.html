@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R3 — Aging de cobros</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 13px; }
+  .header { background: #1B2B4B; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #C4A55A; font-family: Georgia, serif; }
+  .header-text h1 { font-size: 15px; font-weight: 700; color: #C4A55A; margin-bottom: 2px; }
+  .header-text h2 { font-size: 12px; color: #c8d4e8; font-weight: 400; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+  .section { background: #fff; border: 1px solid #dde3ef; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #C4A55A; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #1B2B4B; color: #C4A55A; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 6px; text-align: left; }
+  td { border-bottom: 1px solid #eef0f5; padding: 5px 4px; vertical-align: middle; }
+  tr:hover td { background: #f5f4ff; }
+  input[type="text"], input[type="number"], input[type="date"], select { border: 1px solid #ddd; border-radius: 3px; padding: 4px 6px; width: 100%; font-size: 12px; font-family: inherit; color: #1B2B4B; background: #fdfdff; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0f4fc; font-weight: 600; text-align: right; padding: 5px 6px; }
+  .total-row td { background: #1B2B4B; color: #C4A55A; font-weight: 700; }
+  .total-row .calc { background: #1B2B4B; color: #fff; }
+  .add-row-btn { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+  .print-btn { background: #1B2B4B; color: #C4A55A; border: none; border-radius: 4px; padding: 8px 20px; font-size: 12px; font-weight: 700; cursor: pointer; float: right; }
+  .aging-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+  .aging-card { border-radius: 6px; padding: 14px 16px; text-align: center; }
+  .aging-card .label { font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+  .aging-card .value { font-size: 20px; font-weight: 800; }
+  .aging-card .count { font-size: 10px; margin-top: 2px; opacity: 0.8; }
+  .a0 { background: #d4edda; color: #155724; }
+  .a1 { background: #fff3cd; color: #856404; }
+  .a2 { background: #ffe5b4; color: #7d4e00; }
+  .a3 { background: #f8d7da; color: #721c24; }
+  .risk-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+  .risk-verde { background: #28a745; }
+  .risk-amarillo { background: #ffc107; }
+  .risk-naranja { background: #fd7e14; }
+  .risk-rojo { background: #dc3545; }
+  select.estado-pendiente { color: #856404; }
+  select.estado-prometido { color: #155724; }
+  select.estado-disputa { color: #7d4e00; }
+  select.estado-incobrable { color: #721c24; }
+  @media print { .add-row-btn, .print-btn { display: none; } body { background: #fff; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-text">
+    <h1>UCI-S1 — Obstrucción de Caja</h1>
+    <h2>R3 · Reducir la morosidad y acelerar los cobros activos</h2>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">Aging de cobros — Facturas vencidas</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:13%">Cliente</th>
+          <th style="width:9%">Factura nº</th>
+          <th style="width:9%">Importe (€)</th>
+          <th style="width:9%">Fecha emisión</th>
+          <th style="width:8%">Días vencida</th>
+          <th style="width:6%">Riesgo</th>
+          <th style="width:11%">Estado</th>
+          <th style="width:18%">Acción asignada</th>
+          <th style="width:9%">Fecha compromiso</th>
+          <th style="width:5%"></th>
+        </tr>
+      </thead>
+      <tbody id="aging-body"></tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="2"><strong>TOTAL PENDIENTE</strong></td>
+          <td class="calc" id="tot-importe">0,00 €</td>
+          <td colspan="7"></td>
+        </tr>
+      </tfoot>
+    </table>
+    <button class="add-row-btn" onclick="addRow()">+ Añadir factura</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Distribución por tramo de antigüedad</div>
+    <div class="aging-grid">
+      <div class="aging-card a0">
+        <div class="label">0 – 30 días</div>
+        <div class="value" id="t0-val">0 €</div>
+        <div class="count" id="t0-cnt">0 facturas</div>
+      </div>
+      <div class="aging-card a1">
+        <div class="label">31 – 60 días</div>
+        <div class="value" id="t1-val">0 €</div>
+        <div class="count" id="t1-cnt">0 facturas</div>
+      </div>
+      <div class="aging-card a2">
+        <div class="label">61 – 90 días</div>
+        <div class="value" id="t2-val">0 €</div>
+        <div class="count" id="t2-cnt">0 facturas</div>
+      </div>
+      <div class="aging-card a3">
+        <div class="label">+90 días ⚠</div>
+        <div class="value" id="t3-val">0 €</div>
+        <div class="count" id="t3-cnt">0 facturas</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:right; margin-top:8px;">
+    <button class="print-btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+
+</div>
+
+<script>
+let rc = 0;
+function fmt(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+function fmtK(n){ return n>=1000 ? (n/1000).toFixed(1)+'K €' : fmt(n); }
+
+function getRisk(dias){
+  if(dias<=30) return {cls:'risk-verde', label:'Bajo'};
+  if(dias<=60) return {cls:'risk-amarillo', label:'Medio'};
+  if(dias<=90) return {cls:'risk-naranja', label:'Alto'};
+  return {cls:'risk-rojo', label:'Crítico'};
+}
+
+function addRow(){
+  rc++;
+  const tbody = document.getElementById('aging-body');
+  const tr = document.createElement('tr');
+  tr.id = 'ar-'+rc;
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Cliente"></td>
+    <td><input type="text" placeholder="FAC-0001"></td>
+    <td><input type="number" min="0" step="0.01" value="0" class="imp" oninput="recalcTotals()"></td>
+    <td><input type="date" class="femision" oninput="calcDias(${rc})"></td>
+    <td class="calc dias-cell" id="dias-${rc}">—</td>
+    <td class="calc" id="risk-${rc}"><span class="risk-dot risk-verde"></span>Bajo</td>
+    <td>
+      <select class="estado" onchange="this.className='estado estado-'+this.value.replace(' ','-').toLowerCase()">
+        <option value="pendiente">Pendiente</option>
+        <option value="prometido">Prometido</option>
+        <option value="disputa">En disputa</option>
+        <option value="incobrable">Incobrable</option>
+      </select>
+    </td>
+    <td><input type="text" placeholder="Acción concreta"></td>
+    <td><input type="date"></td>
+    <td><button onclick="removeRow(${rc})" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:15px;">✕</button></td>`;
+  tbody.appendChild(tr);
+  recalcTotals();
+}
+
+function calcDias(id){
+  const tr = document.getElementById('ar-'+id);
+  const fe = tr.querySelector('.femision').value;
+  if(!fe){ tr.querySelector('#dias-'+id).textContent='—'; return; }
+  const dias = Math.floor((new Date()-new Date(fe))/(1000*60*60*24));
+  const diasCell = document.getElementById('dias-'+id);
+  diasCell.textContent = dias+'d';
+  const risk = getRisk(dias);
+  document.getElementById('risk-'+id).innerHTML = `<span class="risk-dot ${risk.cls}"></span>${risk.label}`;
+  recalcTotals();
+}
+
+function recalcTotals(){
+  let total=0, t=[0,0,0,0], cnt=[0,0,0,0];
+  document.querySelectorAll('#aging-body tr').forEach(tr=>{
+    const imp = parseFloat(tr.querySelector('.imp')?.value)||0;
+    total += imp;
+    const diasText = tr.querySelector('.dias-cell')?.textContent || '—';
+    const dias = parseInt(diasText)||0;
+    if(diasText==='—') return;
+    if(dias<=30){ t[0]+=imp; cnt[0]++; }
+    else if(dias<=60){ t[1]+=imp; cnt[1]++; }
+    else if(dias<=90){ t[2]+=imp; cnt[2]++; }
+    else { t[3]+=imp; cnt[3]++; }
+  });
+  document.getElementById('tot-importe').textContent = fmt(total);
+  ['t0','t1','t2','t3'].forEach((id,i)=>{
+    document.getElementById(id+'-val').textContent = fmtK(t[i]);
+    document.getElementById(id+'-cnt').textContent = cnt[i]+' factura'+(cnt[i]===1?'':'s');
+  });
+  document.getElementById('riesgo-alto').textContent = fmt(t[3]);
+}
+
+function removeRow(id){ document.getElementById('ar-'+id)?.remove(); recalcTotals(); }
+
+addRow(); addRow(); addRow();
+</script>
+</body>
+</html>

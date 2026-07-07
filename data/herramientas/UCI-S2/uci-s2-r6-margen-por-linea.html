@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R6 — Margen por Línea de Negocio | UCI-S2 Fuga Invisible | MASFRAME</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f8f7ff;font-family:system-ui,-apple-system,sans-serif;color:#1B2B4B;font-size:13px}
+.header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-family:Georgia,serif;font-size:22px;color:#C4A55A;font-weight:bold;letter-spacing:2px}
+.header-center{text-align:center}
+.sintoma{font-size:11px;color:#aab;letter-spacing:1px;text-transform:uppercase}
+.titulo{font-size:15px;font-weight:600;color:#fff;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:10px;font-weight:700;padding:4px 10px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.section{background:#fff;border-radius:6px;border:1px solid #e0dff0;padding:18px;margin-bottom:16px}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:12px;border-bottom:1px solid #f0efe8;padding-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#1B2B4B;color:#C4A55A;padding:7px 8px;text-align:left;font-weight:600;font-size:11px;letter-spacing:0.4px}
+td{padding:6px 8px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+tr:hover td{background:#f8f7ff}
+input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 6px;font-size:12px;color:#1B2B4B;background:#fafafa}
+input:focus{outline:none;border-color:#C4A55A;background:#fff}
+.calc{background:#f0efe8;font-weight:600;text-align:right;white-space:nowrap}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;border-radius:4px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer}
+.btn:hover{background:#b8944a}
+.btn-del{background:#e74c3c;color:#fff;border:none;border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
+.metric-card{background:#f8f7ff;border:1px solid #e0dff0;border-radius:5px;padding:14px;text-align:center}
+.metric-label{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:4px}
+.metric-value{font-size:20px;font-weight:700;color:#1B2B4B}
+.metric-sub{font-size:10px;color:#aaa;margin-top:2px}
+.totals-row td{background:#1B2B4B;color:#C4A55A;font-weight:700}
+.decision{border:2px solid #C4A55A;border-radius:5px;padding:14px;background:#fffdf4}
+.decision label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#C4A55A;margin-bottom:5px}
+textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:8px;font-size:12px;color:#1B2B4B;resize:vertical;background:#fafafa;min-height:60px}
+textarea:focus{outline:none;border-color:#C4A55A}
+.ranking-badge{display:inline-block;background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+.print-btn{background:#1B2B4B;color:#C4A55A;border:none;border-radius:4px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer}
+.toolbar{margin-bottom:12px}
+#grafico-container{background:#f8f7ff;border:1px solid #e0dff0;border-radius:5px;padding:16px;overflow-x:auto;min-height:120px}
+svg text{font-family:system-ui,-apple-system,sans-serif}
+@media print{.toolbar,.btn,.btn-del,.print-btn{display:none!important}body{background:#fff}.section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <div class="sintoma">UCI-S2 — Fuga Invisible</div>
+    <div class="titulo">R6 — Margen Real por Línea de Negocio</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+<div class="container">
+
+  <!-- MÉTRICAS -->
+  <div class="section">
+    <div class="section-title">Resumen Ejecutivo</div>
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Facturación Total</div>
+        <div class="metric-value" id="m-fact">0 €</div>
+        <div class="metric-sub">suma de líneas</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Margen Neto Total</div>
+        <div class="metric-value" id="m-mnet">0 €</div>
+        <div class="metric-sub">después de todos los costes</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Margen % Medio</div>
+        <div class="metric-value" id="m-mpct">0%</div>
+        <div class="metric-sub">ponderado</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Mejor línea</div>
+        <div class="metric-value" id="m-mejor" style="font-size:13px;padding-top:4px">—</div>
+        <div class="metric-sub">mayor margen €/h</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Línea que drena</div>
+        <div class="metric-value" id="m-peor" style="font-size:13px;color:#e74c3c;padding-top:4px">—</div>
+        <div class="metric-sub">menor margen €/h</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="section">
+    <div class="section-title">Tabla de Líneas de Negocio</div>
+    <div class="toolbar">
+      <button class="btn" onclick="addRow()">+ Añadir línea</button>
+    </div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:160px">Línea de negocio</th>
+          <th>Facturación/mes (€)</th>
+          <th>Costes directos (€)</th>
+          <th>Costes indirectos (€)</th>
+          <th>Margen neto (€)</th>
+          <th>Margen %</th>
+          <th>Horas equipo/mes</th>
+          <th>Margen/hora (€)</th>
+          <th>Ranking</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+      <tfoot>
+        <tr class="totals-row">
+          <td>TOTALES</td>
+          <td id="tot-fact" class="calc" style="background:#C4A55A;color:#1B2B4B">0 €</td>
+          <td id="tot-cd" class="calc" style="background:#C4A55A;color:#1B2B4B">0 €</td>
+          <td id="tot-ci" class="calc" style="background:#C4A55A;color:#1B2B4B">0 €</td>
+          <td id="tot-mn" class="calc" style="background:#C4A55A;color:#1B2B4B">0 €</td>
+          <td colspan="6"></td>
+        </tr>
+      </tfoot>
+    </table>
+    </div>
+  </div>
+
+  <!-- GRÁFICO -->
+  <div class="section">
+    <div class="section-title">Gráfico — Margen Neto por Línea de Negocio (€/mes)</div>
+    <div id="grafico-container">
+      <svg id="grafico" width="100%" height="40" viewBox="0 0 800 40">
+        <text x="400" y="26" text-anchor="middle" fill="#aaa" font-size="13">Añade líneas de negocio para ver el gráfico.</text>
+      </svg>
+    </div>
+  </div>
+
+  <div style="text-align:right;margin-bottom:16px">
+    <button class="print-btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+
+</div>
+<script>
+var rowCount=0;
+
+function addRow(linea,fact,cd,ci,horas){
+  rowCount++;
+  var id=rowCount;
+  var tbody=document.getElementById('tbody');
+  var tr=document.createElement('tr');
+  tr.id='row-'+id;
+  tr.innerHTML=`
+    <td><input type="text" id="lin${id}" value="${linea||''}" placeholder="Nombre línea" onchange="recalc()"></td>
+    <td><input type="number" id="fact${id}" value="${fact||''}" step="0.01" min="0" onchange="recalc()" placeholder="0"></td>
+    <td><input type="number" id="cd${id}" value="${cd||''}" step="0.01" min="0" onchange="recalc()" placeholder="0"></td>
+    <td><input type="number" id="ci${id}" value="${ci||''}" step="0.01" min="0" onchange="recalc()" placeholder="0"></td>
+    <td class="calc" id="mn${id}">0 €</td>
+    <td class="calc" id="mpct${id}">0%</td>
+    <td><input type="number" id="h${id}" value="${horas||''}" step="0.5" min="0" onchange="recalc()" placeholder="0"></td>
+    <td class="calc" id="mh${id}">—</td>
+    <td id="rank${id}" style="text-align:center"></td>
+    <td id="est${id}"></td>
+    <td><button class="btn-del" onclick="delRow(${id})">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+function delRow(id){var r=document.getElementById('row-'+id);if(r)r.remove();recalc();}
+function fmt(n){return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+
+function recalc(){
+  var rows=document.querySelectorAll('#tbody tr');
+  var data=[];
+  var totFact=0,totCd=0,totCi=0,totMn=0;
+
+  rows.forEach(function(tr){
+    var id=tr.id.replace('row-','');
+    var fact=parseFloat(document.getElementById('fact'+id)?.value)||0;
+    var cd=parseFloat(document.getElementById('cd'+id)?.value)||0;
+    var ci=parseFloat(document.getElementById('ci'+id)?.value)||0;
+    var h=parseFloat(document.getElementById('h'+id)?.value)||0;
+    var lin=document.getElementById('lin'+id)?.value||('Línea '+id);
+    var mn=fact-cd-ci;
+    var mpct=fact>0?mn/fact*100:0;
+    var mh=h>0?mn/h:null;
+    document.getElementById('mn'+id).textContent=fmt(mn);
+    document.getElementById('mpct'+id).textContent=mpct.toFixed(1)+'%';
+    document.getElementById('mh'+id).textContent=mh!==null?mh.toFixed(2)+' €/h':'—';
+    totFact+=fact;totCd+=cd;totCi+=ci;totMn+=mn;
+    data.push({id:id,lin:lin,fact:fact,cd:cd,ci:ci,mn:mn,mpct:mpct,h:h,mh:mh});
+  });
+
+  document.getElementById('tot-fact').textContent=fmt(totFact);
+  document.getElementById('tot-cd').textContent=fmt(totCd);
+  document.getElementById('tot-ci').textContent=fmt(totCi);
+  document.getElementById('tot-mn').textContent=fmt(totMn);
+  document.getElementById('m-fact').textContent=fmt(totFact);
+  document.getElementById('m-mnet').textContent=fmt(totMn);
+  document.getElementById('m-mpct').textContent=totFact>0?(totMn/totFact*100).toFixed(1)+'%':'0%';
+
+  // ranking por mh
+  var withH=data.filter(function(d){return d.mh!==null});
+  var sorted=withH.slice().sort(function(a,b){return b.mh-a.mh});
+  sorted.forEach(function(d,i){
+    var el=document.getElementById('rank'+d.id);
+    if(el) el.innerHTML='<span class="ranking-badge">#'+(i+1)+'</span>';
+  });
+  data.filter(function(d){return d.mh===null}).forEach(function(d){
+    var el=document.getElementById('rank'+d.id);
+    if(el) el.textContent='—';
+  });
+
+  if(sorted.length>0){
+    document.getElementById('m-mejor').textContent=sorted[0].lin;
+    document.getElementById('m-peor').textContent=sorted[sorted.length-1].lin;
+  } else {
+    document.getElementById('m-mejor').textContent='—';
+    document.getElementById('m-peor').textContent='—';
+  }
+
+  // badges estado
+  data.forEach(function(d){
+    var badge='';
+    if(d.mpct>=40) badge='<span style="background:#d5f5e3;color:#1e8449;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700">ESCALAR</span>';
+    else if(d.mpct>=20) badge='<span style="background:#fef9e7;color:#b7950b;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700">OPTIMIZAR</span>';
+    else if(d.mn<0) badge='<span style="background:#fdedec;color:#c0392b;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700">PÉRDIDA</span>';
+    else badge='<span style="background:#fdedec;color:#c0392b;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700">REVISAR</span>';
+    var el=document.getElementById('est'+d.id);
+    if(el) el.innerHTML=badge;
+  });
+
+  // GRÁFICO SVG HORIZONTAL
+  drawChart(data);
+}
+
+function drawChart(data){
+  if(data.length===0){
+    document.getElementById('grafico').innerHTML='<text x="400" y="26" text-anchor="middle" fill="#aaa" font-size="13">Añade líneas de negocio para ver el gráfico.</text>';
+    document.getElementById('grafico').setAttribute('height','40');
+    document.getElementById('grafico').setAttribute('viewBox','0 0 800 40');
+    return;
+  }
+
+  var BAR_H=28,GAP=10,LABEL_W=160,VALUE_W=80,PADDING=20,CHART_W=800;
+  var maxAbsMn=Math.max.apply(null,data.map(function(d){return Math.abs(d.mn);}));
+  if(maxAbsMn===0) maxAbsMn=1;
+  var BAR_AREA=CHART_W-LABEL_W-VALUE_W-PADDING*2;
+  var totalH=data.length*(BAR_H+GAP)+PADDING*2;
+
+  var svg='';
+  // fondo
+  svg+='<rect width="'+CHART_W+'" height="'+totalH+'" fill="#f8f7ff" rx="4"/>';
+  // línea cero
+  var zeroX=LABEL_W+PADDING+BAR_AREA/2;
+  svg+='<line x1="'+zeroX+'" y1="'+PADDING+'" x2="'+zeroX+'" y2="'+(totalH-PADDING)+'" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3"/>';
+
+  data.forEach(function(d,i){
+    var y=PADDING+i*(BAR_H+GAP);
+    var barLen=maxAbsMn>0?Math.abs(d.mn)/maxAbsMn*(BAR_AREA/2):0;
+    var barColor=d.mn>=0?'#C4A55A':'#e74c3c';
+    var barX=d.mn>=0?zeroX:zeroX-barLen;
+    // etiqueta línea
+    svg+='<text x="'+(LABEL_W+PADDING-8)+'" y="'+(y+BAR_H/2+5)+'" text-anchor="end" fill="#1B2B4B" font-size="11" font-weight="600">'+escXml(d.lin.substring(0,22))+'</text>';
+    // barra
+    if(barLen>0) svg+='<rect x="'+barX+'" y="'+(y+2)+'" width="'+barLen+'" height="'+(BAR_H-4)+'" fill="'+barColor+'" rx="2" opacity="0.85"/>';
+    // valor
+    svg+='<text x="'+(LABEL_W+PADDING+BAR_AREA+8)+'" y="'+(y+BAR_H/2+5)+'" fill="'+barColor+'" font-size="11" font-weight="700">'+fmt(d.mn)+'</text>';
+    // margen %
+    svg+='<text x="'+(zeroX+(d.mn>=0?barLen+4:-(barLen+4)))+'" y="'+(y+BAR_H/2+5)+'" text-anchor="'+(d.mn>=0?'start':'end')+'" fill="#555" font-size="10">'+d.mpct.toFixed(1)+'%</text>';
+  });
+
+  var svgEl=document.getElementById('grafico');
+  svgEl.setAttribute('viewBox','0 0 '+CHART_W+' '+totalH);
+  svgEl.setAttribute('height',totalH);
+  svgEl.innerHTML=svg;
+}
+
+function escXml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+addRow('Consultoría estratégica',5000,800,600,60);
+addRow('Formación y talleres',2000,300,400,30);
+addRow('Asesoría mensual recurrente',3000,500,500,40);
+addRow('Proyectos puntuales',1500,700,300,25);
+recalc();
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R3 — Impacto Subida de Costes | UCI-S3 MASFRAME</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:13px}
+  .header{background:#1B2B4B;color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{font-size:22px;font-weight:900;color:#C4A55A;letter-spacing:2px}
+  .header-titles{flex:1}
+  .header-sub{font-size:11px;color:#C4A55A;letter-spacing:1px;text-transform:uppercase}
+  .header-tool{font-size:15px;font-weight:700;margin-top:2px}
+  .badge{background:#C4A55A;color:#1B2B4B;font-size:9px;font-weight:800;padding:3px 8px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+  .main{padding:16px 20px;max-width:1400px;margin:0 auto}
+  h2{font-size:13px;font-weight:700;color:#1B2B4B;margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px;border-left:3px solid #C4A55A;padding-left:8px}
+  table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);border-radius:4px;overflow:hidden}
+  th{background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 5px;text-align:center}
+  td{padding:5px 4px;border-bottom:1px solid #eee;text-align:center;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:#f8f7ff}
+  input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 5px;font-size:12px;color:#1B2B4B;background:#fff;text-align:right}
+  input[type=text]{text-align:left}
+  input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .calc-cell{background:#f8f7ff;font-weight:700;font-size:12px}
+  .semaforo{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle}
+  .btn-add{background:#C4A55A;color:#1B2B4B;border:none;border-radius:3px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin:8px 0;letter-spacing:.5px}
+  .btn-add:hover{background:#b8943e}
+  .btn-del{background:#e74c3c;color:#fff;border:none;border-radius:2px;padding:2px 7px;font-size:11px;cursor:pointer}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+  .metric-card{background:#1B2B4B;color:#fff;border-radius:6px;padding:12px 14px}
+  .metric-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:4px}
+  .metric-value{font-size:20px;font-weight:900;color:#fff}
+  .alert-box{background:#ffeaea;border:1.5px solid #e74c3c;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:12px;color:#c0392b}
+  .warn-box{background:#fff8e1;border:1.5px solid #f39c12;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:12px;color:#7d5a00}
+  .decision-block{background:#fff;border:1.5px solid #C4A55A;border-radius:6px;padding:14px;margin:14px 0}
+  .decision-block h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:8px;font-weight:800}
+  textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:6px;font-size:12px;color:#1B2B4B;resize:vertical;min-height:52px;font-family:inherit}
+  textarea:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .btn-print{background:#1B2B4B;color:#C4A55A;border:none;border-radius:3px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:10px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:700px){.grid2{grid-template-columns:1fr}}
+  @media print{.btn-print,.btn-add,.btn-del{display:none!important}body{background:#fff}th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.metric-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-titles">
+    <div class="header-sub">UCI-S3 — Anemia de Margen</div>
+    <div class="header-tool">R3 — Impacto de la Subida de Costes y Repricing</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+<h2>Análisis de Erosión de Margen por Subida de Costes</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width:130px;text-align:left">Servicio / Producto</th>
+      <th>Coste Hace 12m (€)</th>
+      <th>Coste Actual (€)</th>
+      <th>Incr. Coste %</th>
+      <th>Precio Hace 12m (€)</th>
+      <th>Precio Actual (€)</th>
+      <th>Margen 12m atrás %</th>
+      <th>Margen Actual %</th>
+      <th>Erosión (pp)</th>
+      <th>Precio Correcto Hoy (€)</th>
+      <th>Gap Precio (€)</th>
+      <th>Estado</th>
+      <th>Uds/mes</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+<button class="btn-add" onclick="addRow()">+ Añadir servicio</button>
+
+<div class="metrics">
+  <div class="metric-card"><div class="metric-label">Servicios analizados</div><div class="metric-value" id="m-tot">0</div></div>
+  <div class="metric-card"><div class="metric-label">Erosión media de margen</div><div class="metric-value" id="m-eros" style="color:#e74c3c">0 pp</div></div>
+  <div class="metric-card"><div class="metric-label">Impacto en margen / mes</div><div class="metric-value" id="m-imp" style="color:#e74c3c">0€</div></div>
+  <div class="metric-card"><div class="metric-label">Impacto anual estimado</div><div class="metric-value" id="m-anual">0€</div></div>
+  <div class="metric-card"><div class="metric-label">Ingresos adicionales necesarios</div><div class="metric-value" id="m-reprice">0€/mes</div></div>
+</div>
+
+<div id="alert-zone"></div>
+
+<button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div>
+
+<script>
+let rows=[];
+function addRow(){rows.push({id:Date.now()});renderRows();}
+function delRow(id){rows=rows.filter(r=>r.id!==id);renderRows();calcAll();}
+function renderRows(){
+  const tb=document.getElementById('tbody');
+  tb.innerHTML='';
+  rows.forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><input type="text" placeholder="Servicio" id="n${r.id}" onchange="calcRow(${r.id})"></td>
+      <td><input type="number" min="0" step="0.01" placeholder="0.00" id="c12${r.id}" onchange="calcRow(${r.id})"></td>
+      <td><input type="number" min="0" step="0.01" placeholder="0.00" id="ca${r.id}" onchange="calcRow(${r.id})"></td>
+      <td class="calc-cell" id="ic${r.id}">—</td>
+      <td><input type="number" min="0" step="0.01" placeholder="0.00" id="p12${r.id}" onchange="calcRow(${r.id})"></td>
+      <td><input type="number" min="0" step="0.01" placeholder="0.00" id="pa${r.id}" onchange="calcRow(${r.id})"></td>
+      <td class="calc-cell" id="m12${r.id}">—</td>
+      <td class="calc-cell" id="ma${r.id}">—</td>
+      <td class="calc-cell" id="er${r.id}">—</td>
+      <td class="calc-cell" id="pc${r.id}">—</td>
+      <td class="calc-cell" id="gp${r.id}">—</td>
+      <td id="sem${r.id}"><span class="semaforo" style="background:#ccc"></span></td>
+      <td><input type="number" min="0" step="1" value="1" id="ud${r.id}" onchange="calcRow(${r.id})" style="width:50px"></td>
+      <td><button class="btn-del" onclick="delRow(${r.id})">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function fmt(n){return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtp(n){return n.toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';}
+function el(id){return document.getElementById(id);}
+function calcRow(id){
+  const c12=v('c12'+id), ca=v('ca'+id), p12=v('p12'+id), pa=v('pa'+id);
+  const ic=c12>0?(ca-c12)/c12*100:0;
+  const m12=p12>0?(p12-c12)/p12*100:0;
+  const ma=pa>0?(pa-ca)/pa*100:0;
+  const er=ma-m12;
+  // precio correcto hoy: mantener margen original con coste actual
+  const pc=m12<100&&m12>=0?ca/(1-m12/100):0;
+  const gp=pa-pc;
+  if(el('ic'+id)){el('ic'+id).textContent=(ic>=0?'+':'')+fmtp(ic);el('ic'+id).style.color=ic>10?'#e74c3c':ic>0?'#f39c12':'#2ecc71';}
+  if(el('m12'+id)){el('m12'+id).textContent=fmtp(m12);el('m12'+id).style.color=m12>=20?'#2ecc71':m12>=0?'#f39c12':'#e74c3c';}
+  if(el('ma'+id)){el('ma'+id).textContent=fmtp(ma);el('ma'+id).style.color=ma>=20?'#2ecc71':ma>=0?'#f39c12':'#e74c3c';}
+  if(el('er'+id)){el('er'+id).textContent=(er>=0?'+':'')+fmtp(er);el('er'+id).style.color=er>=0?'#2ecc71':'#e74c3c';}
+  if(el('pc'+id)) el('pc'+id).textContent=pc>0?fmt(pc)+'€':'—';
+  if(el('gp'+id)){el('gp'+id).textContent=gp!==0?(gp>=0?'+':'')+fmt(gp)+'€':'0€';el('gp'+id).style.color=gp>=0?'#2ecc71':'#e74c3c';}
+  if(el('sem'+id)){const s=er>=-5?'#2ecc71':er>=-15?'#f39c12':'#e74c3c';el('sem'+id).innerHTML=`<span class="semaforo" style="background:${s}"></span>`;}
+  calcAll();
+}
+function calcAll(){
+  let tot=0,erosSum=0,impacto=0,repriceNeed=0;
+  rows.forEach(r=>{
+    const c12=v('c12'+r.id),ca=v('ca'+r.id),p12=v('p12'+r.id),pa=v('pa'+r.id),ud=v('ud'+r.id)||1;
+    if(p12===0&&pa===0) return; tot++;
+    const m12=p12>0?(p12-c12)/p12*100:0;
+    const ma=pa>0?(pa-ca)/pa*100:0;
+    const er=ma-m12;
+    erosSum+=er;
+    // impacto mensual: diferencia de margen en €
+    const margenAntes=p12-c12, margenAhora=pa-ca;
+    impacto+=(margenAntes-margenAhora)*ud;
+    // repricing need
+    const pc=m12<100&&m12>=0?ca/(1-m12/100):0;
+    if(pa<pc) repriceNeed+=(pc-pa)*ud;
+  });
+  el('m-tot').textContent=tot;
+  el('m-eros').textContent=tot?(erosSum/tot).toFixed(1)+' pp':'0 pp';
+  el('m-imp').textContent=fmt(impacto)+'€';
+  el('m-anual').textContent=fmt(impacto*12)+'€';
+  el('m-reprice').textContent=fmt(repriceNeed)+'€/mes';
+  const az=el('alert-zone');
+  if(impacto>0) az.innerHTML=`<div class="alert-box">⚠ La subida de costes está erosionando <strong>${fmt(impacto)}€/mes</strong> de margen (${fmt(impacto*12)}€/año). Se necesita repricing inmediato.</div>`;
+  else if(tot>0) az.innerHTML=`<div style="background:#eafaf1;border:1.5px solid #2ecc71;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:12px;color:#1e8449">✓ Los precios están absorbiendo la subida de costes correctamente.</div>`;
+  else az.innerHTML='';
+}
+addRow();addRow();addRow();
+</script>
+</body>
+</html>

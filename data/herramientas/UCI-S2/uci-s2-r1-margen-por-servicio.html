@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R1 — Margen Real por Servicio | UCI-S2 Fuga Invisible | MASFRAME</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f8f7ff;font-family:system-ui,-apple-system,sans-serif;color:#1B2B4B;font-size:13px}
+.header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-family:Georgia,serif;font-size:22px;color:#C4A55A;font-weight:bold;letter-spacing:2px}
+.header-center{text-align:center}
+.header-center .sintoma{font-size:11px;color:#aab;letter-spacing:1px;text-transform:uppercase}
+.header-center .titulo{font-size:15px;font-weight:600;color:#fff;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:10px;font-weight:700;padding:4px 10px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.section{background:#fff;border-radius:6px;border:1px solid #e0dff0;padding:18px;margin-bottom:16px}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:12px;border-bottom:1px solid #f0efe8;padding-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#1B2B4B;color:#C4A55A;padding:7px 8px;text-align:left;font-weight:600;font-size:11px;letter-spacing:0.5px}
+td{padding:6px 8px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+tr:hover td{background:#f8f7ff}
+input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 6px;font-size:12px;color:#1B2B4B;background:#fafafa}
+input:focus{outline:none;border-color:#C4A55A;background:#fff}
+.calc{background:#f0efe8;color:#1B2B4B;font-weight:600;text-align:right;padding:6px 8px}
+.semaforo{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.verde{background:#2ecc71}
+.amarillo{background:#f39c12}
+.rojo{background:#e74c3c}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;border-radius:4px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:0.5px}
+.btn:hover{background:#b8944a}
+.btn-del{background:#e74c3c;color:#fff;border:none;border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:0}
+.metric-card{background:#f8f7ff;border:1px solid #e0dff0;border-radius:5px;padding:14px;text-align:center}
+.metric-label{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:4px}
+.metric-value{font-size:20px;font-weight:700;color:#1B2B4B}
+.metric-sub{font-size:10px;color:#aaa;margin-top:2px}
+.totals-row td{background:#1B2B4B;color:#C4A55A;font-weight:700}
+.decision{border:2px solid #C4A55A;border-radius:5px;padding:14px;background:#fffdf4}
+.decision label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#C4A55A;margin-bottom:5px}
+textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:8px;font-size:12px;color:#1B2B4B;resize:vertical;background:#fafafa;min-height:60px}
+textarea:focus{outline:none;border-color:#C4A55A}
+.ranking-badge{display:inline-block;background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+.print-btn{background:#1B2B4B;color:#C4A55A;border:none;border-radius:4px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:0.5px}
+.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+@media print{
+  .toolbar,.btn,.btn-del,.print-btn{display:none!important}
+  body{background:#fff}
+  .section{border:1px solid #ccc;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <div class="sintoma">UCI-S2 — Fuga Invisible</div>
+    <div class="titulo">R1 — Margen Real por Servicio</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+<div class="container">
+
+  <!-- MÉTRICAS RESUMEN -->
+  <div class="section">
+    <div class="section-title">Resumen de Márgenes</div>
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Facturación Total</div>
+        <div class="metric-value" id="m-facturacion">0 €</div>
+        <div class="metric-sub">contribución mensual</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Costes Totales</div>
+        <div class="metric-value" id="m-costes">0 €</div>
+        <div class="metric-sub">suma costes directos</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Margen Bruto Total</div>
+        <div class="metric-value" id="m-margen-total">0 €</div>
+        <div class="metric-sub">contribución neta</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Margen Medio</div>
+        <div class="metric-value" id="m-margen-pct">0%</div>
+        <div class="metric-sub">ponderado por facturación</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Servicios en Rojo</div>
+        <div class="metric-value" id="m-rojos" style="color:#e74c3c">0</div>
+        <div class="metric-sub">margen &lt; 20%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA SERVICIOS -->
+  <div class="section">
+    <div class="section-title">Tabla de Servicios / Productos</div>
+    <div class="toolbar">
+      <button class="btn" onclick="addRow()">+ Añadir servicio</button>
+    </div>
+    <div style="overflow-x:auto">
+    <table id="tabla">
+      <thead>
+        <tr>
+          <th style="width:180px">Servicio / Producto</th>
+          <th>Precio venta (€)</th>
+          <th>Coste directo (€)</th>
+          <th>Margen bruto (€)</th>
+          <th>Margen %</th>
+          <th>Unidades/mes</th>
+          <th>Contribución total (€)</th>
+          <th>Estado</th>
+          <th>Ranking</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+      </tbody>
+      <tfoot>
+        <tr class="totals-row">
+          <td colspan="6" style="text-align:right;font-size:11px;letter-spacing:0.5px">TOTALES</td>
+          <td id="tot-contribucion" class="calc" style="background:#C4A55A;color:#1B2B4B">0 €</td>
+          <td colspan="3"></td>
+        </tr>
+      </tfoot>
+    </table>
+    </div>
+  </div>
+
+  <!-- RANKING -->
+  <div class="section">
+    <div class="section-title">Ranking por Contribución Total</div>
+    <div id="ranking-list" style="font-size:12px;color:#888;font-style:italic">Añade servicios para ver el ranking automático.</div>
+  </div>
+
+  <div style="text-align:right;margin-bottom:16px">
+    <button class="print-btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+
+</div>
+<script>
+var rowCount = 0;
+function addRow(s,pv,cd,um){
+  rowCount++;
+  var id = rowCount;
+  var tbody = document.getElementById('tbody');
+  var tr = document.createElement('tr');
+  tr.id = 'row-'+id;
+  tr.innerHTML = `
+    <td><input type="text" id="s${id}" value="${s||''}" onchange="recalc()" placeholder="Nombre servicio"></td>
+    <td><input type="number" id="pv${id}" value="${pv||''}" step="0.01" min="0" onchange="recalc()" placeholder="0.00"></td>
+    <td><input type="number" id="cd${id}" value="${cd||''}" step="0.01" min="0" onchange="recalc()" placeholder="0.00"></td>
+    <td class="calc" id="mb${id}">0 €</td>
+    <td class="calc" id="mpct${id}"><span class="semaforo" id="sem${id}"></span>0%</td>
+    <td><input type="number" id="um${id}" value="${um||''}" step="1" min="0" onchange="recalc()" placeholder="0"></td>
+    <td class="calc" id="ct${id}">0 €</td>
+    <td id="badge${id}"></td>
+    <td id="rank${id}" style="text-align:center"></td>
+    <td><button class="btn-del" onclick="delRow(${id})">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+function delRow(id){
+  var r = document.getElementById('row-'+id);
+  if(r) r.remove();
+  recalc();
+}
+function fmt(n){return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function recalc(){
+  var rows = document.querySelectorAll('#tbody tr');
+  var data = [];
+  rows.forEach(function(tr){
+    var id = tr.id.replace('row-','');
+    var pv = parseFloat(document.getElementById('pv'+id)?.value)||0;
+    var cd = parseFloat(document.getElementById('cd'+id)?.value)||0;
+    var um = parseFloat(document.getElementById('um'+id)?.value)||0;
+    var s  = document.getElementById('s'+id)?.value||('Servicio '+id);
+    var mb = pv - cd;
+    var mpct = pv>0 ? (mb/pv*100) : 0;
+    var ct = mb * um;
+    if(document.getElementById('mb'+id)) document.getElementById('mb'+id).textContent = fmt(mb);
+    var semEl = document.getElementById('sem'+id);
+    var color='';
+    if(mpct>=40){color='verde';}else if(mpct>=20){color='amarillo';}else{color='rojo';}
+    if(semEl){semEl.className='semaforo '+color;}
+    if(document.getElementById('mpct'+id)) document.getElementById('mpct'+id).innerHTML = '<span class="semaforo '+color+'"></span>'+mpct.toFixed(1)+'%';
+    if(document.getElementById('ct'+id)) document.getElementById('ct'+id).textContent = fmt(ct);
+    // badge
+    var b='';
+    if(mpct>=40) b='<span style="background:#d5f5e3;color:#1e8449;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700">RENTABLE</span>';
+    else if(mpct>=20) b='<span style="background:#fef9e7;color:#b7950b;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700">REVISAR</span>';
+    else b='<span style="background:#fdedec;color:#c0392b;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700">DRENAR</span>';
+    if(document.getElementById('badge'+id)) document.getElementById('badge'+id).innerHTML = b;
+    data.push({id:id,s:s,pv:pv,cd:cd,mb:mb,mpct:mpct,um:um,ct:ct});
+  });
+  // totales
+  var totCt=0,totFact=0,totCost=0;
+  data.forEach(function(d){totCt+=d.ct;totFact+=d.pv*d.um;totCost+=d.cd*d.um;});
+  document.getElementById('tot-contribucion').textContent=fmt(totCt);
+  document.getElementById('m-facturacion').textContent=fmt(totFact);
+  document.getElementById('m-costes').textContent=fmt(totCost);
+  document.getElementById('m-margen-total').textContent=fmt(totFact-totCost);
+  document.getElementById('m-margen-pct').textContent=totFact>0?((totFact-totCost)/totFact*100).toFixed(1)+'%':'0%';
+  var rojos=data.filter(function(d){return d.mpct<20}).length;
+  document.getElementById('m-rojos').textContent=rojos;
+  // ranking
+  var sorted=data.slice().sort(function(a,b){return b.ct-a.ct});
+  sorted.forEach(function(d,i){
+    var el=document.getElementById('rank'+d.id);
+    if(el) el.innerHTML='<span class="ranking-badge">#'+(i+1)+'</span>';
+  });
+  var rl=document.getElementById('ranking-list');
+  if(sorted.length===0){rl.innerHTML='<span style="color:#888;font-style:italic">Añade servicios para ver el ranking automático.</span>';return;}
+  rl.innerHTML=sorted.map(function(d,i){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #f0eff8">'
+      +'<span class="ranking-badge">#'+(i+1)+'</span>'
+      +'<span style="flex:1;font-weight:600">'+d.s+'</span>'
+      +'<span style="color:#888">'+d.mpct.toFixed(1)+'% margen</span>'
+      +'<span style="font-weight:700;color:#1B2B4B">'+fmt(d.ct)+'</span>'
+      +'</div>';
+  }).join('');
+}
+// Filas iniciales de ejemplo
+addRow('Consultoría estratégica',1200,480,3);
+addRow('Formación grupal',400,120,5);
+addRow('Asesoría mensual',300,180,8);
+</script>
+</body>
+</html>

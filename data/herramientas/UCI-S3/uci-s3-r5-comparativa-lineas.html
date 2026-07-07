@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R5 — Comparativa de Líneas | UCI-S3 MASFRAME</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:13px}
+  .header{background:#1B2B4B;color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{font-size:22px;font-weight:900;color:#C4A55A;letter-spacing:2px}
+  .header-titles{flex:1}
+  .header-sub{font-size:11px;color:#C4A55A;letter-spacing:1px;text-transform:uppercase}
+  .header-tool{font-size:15px;font-weight:700;margin-top:2px}
+  .badge{background:#C4A55A;color:#1B2B4B;font-size:9px;font-weight:800;padding:3px 8px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+  .main{padding:16px 20px;max-width:1300px;margin:0 auto}
+  h2{font-size:13px;font-weight:700;color:#1B2B4B;margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px;border-left:3px solid #C4A55A;padding-left:8px}
+  table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);border-radius:4px;overflow:hidden}
+  th{background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 5px;text-align:center}
+  td{padding:5px 4px;border-bottom:1px solid #eee;text-align:center;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:#f8f7ff}
+  input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 5px;font-size:12px;color:#1B2B4B;background:#fff;text-align:right}
+  input[type=text]{text-align:left}
+  input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .calc-cell{background:#f8f7ff;font-weight:700;font-size:12px}
+  .btn-add{background:#C4A55A;color:#1B2B4B;border:none;border-radius:3px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin:8px 0;letter-spacing:.5px}
+  .btn-add:hover{background:#b8943e}
+  .btn-del{background:#e74c3c;color:#fff;border:none;border-radius:2px;padding:2px 7px;font-size:11px;cursor:pointer}
+  .tag{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:800;letter-spacing:.5px}
+  .tag-a{background:#2ecc71;color:#fff}
+  .tag-b{background:#f39c12;color:#fff}
+  .tag-c{background:#e74c3c;color:#fff}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
+  .metric-card{background:#1B2B4B;color:#fff;border-radius:6px;padding:12px 14px}
+  .metric-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:4px}
+  .metric-value{font-size:20px;font-weight:900;color:#fff}
+  .metric-sub{font-size:10px;color:#aaa;margin-top:2px}
+  .viz-box{background:#fff;border-radius:6px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin:14px 0}
+  .viz-box h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:12px;font-weight:800}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .bar-label{font-size:11px;color:#1B2B4B;width:140px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bar-track{flex:1;height:20px;background:#eee;border-radius:3px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:3px;transition:width .4s}
+  .bar-val{font-size:11px;font-weight:700;width:60px;text-align:right;flex-shrink:0}
+  .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+  @media(max-width:700px){.summary-grid{grid-template-columns:1fr}}
+  .sum-card{border-radius:6px;padding:12px 14px}
+  .sum-card-a{background:#eafaf1;border:1.5px solid #2ecc71}
+  .sum-card-b{background:#fff8e1;border:1.5px solid #f39c12}
+  .sum-card-c{background:#ffeaea;border:1.5px solid #e74c3c}
+  .sum-card h4{font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:800;margin-bottom:6px}
+  .sum-card-a h4{color:#1e8449}
+  .sum-card-b h4{color:#7d5a00}
+  .sum-card-c h4{color:#c0392b}
+  .sum-card ul{list-style:none;padding:0;font-size:11px}
+  .sum-card li{padding:2px 0;border-bottom:1px solid rgba(0,0,0,.05)}
+  .decision-block{background:#fff;border:1.5px solid #C4A55A;border-radius:6px;padding:14px;margin:14px 0}
+  .decision-block h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:8px;font-weight:800}
+  textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:6px;font-size:12px;color:#1B2B4B;resize:vertical;min-height:52px;font-family:inherit}
+  textarea:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .btn-print{background:#1B2B4B;color:#C4A55A;border:none;border-radius:3px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:10px}
+  @media print{.btn-print,.btn-add,.btn-del{display:none!important}body{background:#fff}th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.metric-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sum-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-titles">
+    <div class="header-sub">UCI-S3 — Anemia de Margen</div>
+    <div class="header-tool">R5 — Comparativa de Margen Real por Línea de Negocio</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+<h2>Análisis Cruzado de Líneas de Negocio</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width:120px;text-align:left">Línea de Negocio</th>
+      <th>Ventas/mes (€)</th>
+      <th>% s/Total</th>
+      <th>Margen Bruto %</th>
+      <th>Contribución Bruta (€)</th>
+      <th>Horas Equipo/mes</th>
+      <th>Coste Hora Eq. (€)</th>
+      <th>Coste Equipo/mes (€)</th>
+      <th>Margen Neto (€)</th>
+      <th>Margen Neto %</th>
+      <th>Clasif.</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+<button class="btn-add" onclick="addRow()">+ Añadir línea</button>
+
+<div class="metrics">
+  <div class="metric-card"><div class="metric-label">Total ventas / mes</div><div class="metric-value" id="m-ventas">0€</div></div>
+  <div class="metric-card"><div class="metric-label">Margen neto total / mes</div><div class="metric-value" id="m-neto">0€</div></div>
+  <div class="metric-card"><div class="metric-label">Margen neto medio %</div><div class="metric-value" id="m-pct">—</div></div>
+  <div class="metric-card"><div class="metric-label">Líneas que drenan (C)</div><div class="metric-value" id="m-c" style="color:#e74c3c">0</div></div>
+  <div class="metric-card"><div class="metric-label">Líneas que sostienen (A)</div><div class="metric-value" id="m-a" style="color:#2ecc71">0</div></div>
+</div>
+
+<div class="viz-box">
+  <h3>Mapa de Rentabilidad — Margen Neto % por Línea</h3>
+  <div id="heatmap"></div>
+</div>
+
+<div class="summary-grid" id="summary-grid">
+  <div class="sum-card sum-card-a"><h4>A — Sostienen el negocio</h4><ul id="lista-a"><li style="color:#999;font-style:italic">Sin datos</li></ul></div>
+  <div class="sum-card sum-card-b"><h4>B — Optimizables</h4><ul id="lista-b"><li style="color:#999;font-style:italic">Sin datos</li></ul></div>
+  <div class="sum-card sum-card-c"><h4>C — Drenan el negocio</h4><ul id="lista-c"><li style="color:#999;font-style:italic">Sin datos</li></ul></div>
+</div>
+
+<button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div>
+
+<script>
+let rows=[];
+function addRow(){rows.push({id:Date.now()});renderRows();}
+function delRow(id){rows=rows.filter(r=>r.id!==id);renderRows();calcAll();}
+function renderRows(){
+  const tb=document.getElementById('tbody');
+  tb.innerHTML='';
+  rows.forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><input type="text" placeholder="Línea de negocio" id="n${r.id}" onchange="calcRow(${r.id})"></td>
+      <td><input type="number" min="0" step="10" placeholder="0" id="v${r.id}" onchange="calcRow(${r.id})"></td>
+      <td class="calc-cell" id="pct${r.id}">—</td>
+      <td><input type="number" min="-100" max="100" step="0.1" placeholder="0" id="mb${r.id}" onchange="calcRow(${r.id})"></td>
+      <td class="calc-cell" id="cb${r.id}">—</td>
+      <td><input type="number" min="0" step="0.5" placeholder="0" id="he${r.id}" onchange="calcRow(${r.id})"></td>
+      <td><input type="number" min="0" step="1" placeholder="0" id="ch${r.id}" onchange="calcRow(${r.id})"></td>
+      <td class="calc-cell" id="ce${r.id}">—</td>
+      <td class="calc-cell" id="mn${r.id}">—</td>
+      <td class="calc-cell" id="mnp${r.id}">—</td>
+      <td id="cl${r.id}">—</td>
+      <td><button class="btn-del" onclick="delRow(${r.id})">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function fmt(n){return n.toLocaleString('es-ES',{minimumFractionDigits:0,maximumFractionDigits:0});}
+function fmt2(n){return n.toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1});}
+function el(id){return document.getElementById(id);}
+function getTotalVentas(){return rows.reduce((s,r)=>s+v('v'+r.id),0);}
+
+function calcRow(id){
+  const ven=v('v'+id), mb=v('mb'+id), he=v('he'+id), ch=v('ch'+id);
+  const total=getTotalVentas();
+  const pct=total>0?ven/total*100:0;
+  const cb=ven*mb/100;
+  const ce=he*ch;
+  const mn=cb-ce;
+  const mnp=ven>0?mn/ven*100:0;
+  // Clasificación: A>=25%, B=5-25%, C<5%
+  const cls=mnp>=25?'A':mnp>=5?'B':'C';
+  if(el('pct'+id)) el('pct'+id).textContent=fmt2(pct)+'%';
+  if(el('cb'+id)){el('cb'+id).textContent=fmt(cb)+'€';el('cb'+id).style.color=cb>=0?'#1B2B4B':'#e74c3c';}
+  if(el('ce'+id)) el('ce'+id).textContent=fmt(ce)+'€';
+  if(el('mn'+id)){el('mn'+id).textContent=fmt(mn)+'€';el('mn'+id).style.color=mn>=0?'#2ecc71':'#e74c3c';}
+  if(el('mnp'+id)){el('mnp'+id).textContent=fmt2(mnp)+'%';el('mnp'+id).style.color=mnp>=25?'#2ecc71':mnp>=5?'#f39c12':'#e74c3c';}
+  if(el('cl'+id)) el('cl'+id).innerHTML=ven>0?`<span class="tag tag-${cls.toLowerCase()}">${cls}</span>`:'—';
+  // Recalc pcts for all rows
+  rows.forEach(r=>{if(r.id!==id&&v('v'+r.id)>0){const p2=total>0?v('v'+r.id)/total*100:0;if(el('pct'+r.id))el('pct'+r.id).textContent=fmt2(p2)+'%';}});
+  calcAll();
+}
+function calcAll(){
+  let totalV=0,totalMN=0,cntA=0,cntC=0,lisA=[],lisB=[],lisC=[];
+  let barData=[];
+  rows.forEach(r=>{
+    const ven=v('v'+r.id),mb=v('mb'+r.id),he=v('he'+r.id),ch=v('ch'+r.id);
+    if(ven===0) return;
+    totalV+=ven;
+    const cb=ven*mb/100, ce=he*ch, mn=cb-ce, mnp=ven>0?mn/ven*100:0;
+    totalMN+=mn;
+    const cls=mnp>=25?'A':mnp>=5?'B':'C';
+    const nombre=el('n'+r.id)?.value||'(sin nombre)';
+    if(cls==='A'){cntA++;lisA.push({n:nombre,mnp});}
+    else if(cls==='B'){lisB.push({n:nombre,mnp});}
+    else{cntC++;lisC.push({n:nombre,mnp});}
+    barData.push({n:nombre,mnp,cls});
+  });
+  el('m-ventas').textContent=fmt(totalV)+'€';
+  el('m-neto').textContent=fmt(totalMN)+'€';
+  el('m-pct').textContent=totalV>0?fmt2(totalMN/totalV*100)+'%':'—';
+  el('m-c').textContent=cntC;
+  el('m-a').textContent=cntA;
+  // Heatmap
+  const hm=el('heatmap');
+  if(barData.length===0){hm.innerHTML='<div style="color:#999;font-size:12px">Introduce datos de líneas para ver el mapa de rentabilidad.</div>';return;}
+  barData.sort((a,b)=>b.mnp-a.mnp);
+  const maxAbs=Math.max(...barData.map(d=>Math.abs(d.mnp)),1);
+  hm.innerHTML=barData.map(d=>{
+    const pct=Math.min(Math.abs(d.mnp)/maxAbs*100,100);
+    const color=d.mnp>=25?'#2ecc71':d.mnp>=5?'#f39c12':'#e74c3c';
+    return `<div class="bar-row">
+      <div class="bar-label" title="${d.n}">${d.n}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div class="bar-val" style="color:${color}">${fmt2(d.mnp)}%</div>
+      <span class="tag tag-${d.cls.toLowerCase()}" style="margin-left:4px">${d.cls}</span>
+    </div>`;
+  }).join('');
+  // Summary lists
+  const renderList=(id,arr,color)=>{
+    const ul=el(id);
+    ul.innerHTML=arr.length?arr.map(x=>`<li><strong>${x.n}</strong> — ${fmt2(x.mnp)}%</li>`).join(''):`<li style="color:#999;font-style:italic">Ninguna</li>`;
+  };
+  renderList('lista-a',lisA,'#1e8449');
+  renderList('lista-b',lisB,'#7d5a00');
+  renderList('lista-c',lisC,'#c0392b');
+}
+addRow();addRow();addRow();
+</script>
+</body>
+</html>

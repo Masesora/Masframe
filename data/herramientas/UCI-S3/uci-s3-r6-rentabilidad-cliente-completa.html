@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R6 — Rentabilidad Real por Cliente | UCI-S3 MASFRAME</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:13px}
+  .header{background:#1B2B4B;color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{font-size:22px;font-weight:900;color:#C4A55A;letter-spacing:2px}
+  .header-titles{flex:1}
+  .header-sub{font-size:11px;color:#C4A55A;letter-spacing:1px;text-transform:uppercase}
+  .header-tool{font-size:15px;font-weight:700;margin-top:2px}
+  .badge{background:#C4A55A;color:#1B2B4B;font-size:9px;font-weight:800;padding:3px 8px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+  .main{padding:16px 20px;max-width:1400px;margin:0 auto}
+  h2{font-size:13px;font-weight:700;color:#1B2B4B;margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px;border-left:3px solid #C4A55A;padding-left:8px}
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);border-radius:4px;overflow:hidden;min-width:1100px}
+  th{background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 5px;text-align:center;white-space:nowrap}
+  td{padding:5px 4px;border-bottom:1px solid #eee;text-align:center;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:#f8f7ff}
+  input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 5px;font-size:12px;color:#1B2B4B;background:#fff;text-align:right}
+  input[type=text]{text-align:left}
+  select{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 3px;font-size:11px;color:#1B2B4B;background:#fff}
+  input:focus,select:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .calc-cell{background:#f8f7ff;font-weight:700;font-size:12px}
+  .semaforo{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle}
+  .btn-add{background:#C4A55A;color:#1B2B4B;border:none;border-radius:3px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin:8px 0;letter-spacing:.5px}
+  .btn-add:hover{background:#b8943e}
+  .btn-del{background:#e74c3c;color:#fff;border:none;border-radius:2px;padding:2px 7px;font-size:11px;cursor:pointer}
+  .tag{display:inline-block;padding:2px 6px;border-radius:10px;font-size:9px;font-weight:800;letter-spacing:.3px;white-space:nowrap}
+  .tag-est{background:#1B2B4B;color:#C4A55A}
+  .tag-ren{background:#2ecc71;color:#fff}
+  .tag-opt{background:#f39c12;color:#fff}
+  .tag-des{background:#e74c3c;color:#fff}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+  .metric-card{background:#1B2B4B;color:#fff;border-radius:6px;padding:12px 14px}
+  .metric-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:4px}
+  .metric-value{font-size:18px;font-weight:900;color:#fff}
+  .metric-sub{font-size:10px;color:#aaa;margin-top:2px}
+  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:12px 0}
+  .sum-card{border-radius:6px;padding:12px 14px}
+  .sum-est{background:#1B2B4B;border:1.5px solid #C4A55A}
+  .sum-ren{background:#eafaf1;border:1.5px solid #2ecc71}
+  .sum-opt{background:#fff8e1;border:1.5px solid #f39c12}
+  .sum-des{background:#ffeaea;border:1.5px solid #e74c3c}
+  .sum-card h4{font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:800;margin-bottom:6px}
+  .sum-est h4{color:#C4A55A}
+  .sum-ren h4{color:#1e8449}
+  .sum-opt h4{color:#7d5a00}
+  .sum-des h4{color:#c0392b}
+  .sum-card ul{list-style:none;padding:0;font-size:11px}
+  .sum-est ul{color:#fff}
+  .sum-card li{padding:2px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+  .alert-box{background:#ffeaea;border:1.5px solid #e74c3c;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:12px;color:#c0392b}
+  .decision-block{background:#fff;border:1.5px solid #C4A55A;border-radius:6px;padding:14px;margin:14px 0}
+  .decision-block h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:8px;font-weight:800}
+  .dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:700px){.dec-grid{grid-template-columns:1fr}}
+  textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:6px;font-size:12px;color:#1B2B4B;resize:vertical;min-height:52px;font-family:inherit}
+  textarea:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+  .btn-print{background:#1B2B4B;color:#C4A55A;border:none;border-radius:3px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:10px}
+  .nps-stars{color:#C4A55A;font-size:13px;letter-spacing:1px}
+  @media print{.btn-print,.btn-add,.btn-del{display:none!important}body{background:#fff}.table-wrap{overflow:visible}table{min-width:auto}th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.metric-card,.sum-est{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-titles">
+    <div class="header-sub">UCI-S3 — Anemia de Margen</div>
+    <div class="header-tool">R6 — Rentabilidad Real por Cliente (Coste Total de Servicio)</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+<h2>Análisis de Coste Total de Servir a Cada Cliente</h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left;width:110px">Cliente</th>
+      <th>Facturación/mes (€)</th>
+      <th>Horas Directas (h)</th>
+      <th>H. Soporte/Reuniones/Extras (h)</th>
+      <th>Total Horas Reales (h)</th>
+      <th>Coste Hora Propio (€)</th>
+      <th>Coste Total Servirle (€)</th>
+      <th>Margen Real (€)</th>
+      <th>Margen Real %</th>
+      <th>NPS (1-5)</th>
+      <th>Potencial</th>
+      <th>Clasificación</th>
+      <th>Estado</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+<button class="btn-add" onclick="addRow()">+ Añadir cliente</button>
+
+<div class="metrics">
+  <div class="metric-card"><div class="metric-label">Clientes analizados</div><div class="metric-value" id="m-tot">0</div></div>
+  <div class="metric-card"><div class="metric-label">Facturación total / mes</div><div class="metric-value" id="m-fac">0€</div></div>
+  <div class="metric-card"><div class="metric-label">Margen real total / mes</div><div class="metric-value" id="m-mar">0€</div></div>
+  <div class="metric-card"><div class="metric-label">Margen real medio %</div><div class="metric-value" id="m-pct">—</div></div>
+  <div class="metric-card"><div class="metric-label">Estratégicos</div><div class="metric-value" id="m-est" style="color:#C4A55A">0</div></div>
+  <div class="metric-card"><div class="metric-label">A desvincular</div><div class="metric-value" id="m-des" style="color:#e74c3c">0</div></div>
+</div>
+
+<div id="alert-zone"></div>
+
+<h2>Resumen Ejecutivo por Clasificación</h2>
+<div class="summary-grid">
+  <div class="sum-card sum-est"><h4>Estratégicos — proteger y crecer</h4><ul id="lista-est"><li style="color:#aaa;font-style:italic">Sin datos</li></ul><div id="val-est" style="color:#C4A55A;font-size:11px;font-weight:700;margin-top:6px"></div></div>
+  <div class="sum-card sum-ren"><h4>Rentables — mantener y optimizar</h4><ul id="lista-ren"><li style="color:#999;font-style:italic">Sin datos</li></ul><div id="val-ren" style="color:#1e8449;font-size:11px;font-weight:700;margin-top:6px"></div></div>
+  <div class="sum-card sum-opt"><h4>Optimizar — precio o condiciones</h4><ul id="lista-opt"><li style="color:#999;font-style:italic">Sin datos</li></ul><div id="val-opt" style="color:#7d5a00;font-size:11px;font-weight:700;margin-top:6px"></div></div>
+  <div class="sum-card sum-des"><h4>Desvincular — revisar urgente</h4><ul id="lista-des"><li style="color:#999;font-style:italic">Sin datos</li></ul><div id="val-des" style="color:#c0392b;font-size:11px;font-weight:700;margin-top:6px"></div></div>
+</div>
+
+<button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div>
+
+<script>
+let rows=[];
+function addRow(){rows.push({id:Date.now()});renderRows();}
+function delRow(id){rows=rows.filter(r=>r.id!==id);renderRows();calcAll();}
+function renderRows(){
+  const tb=document.getElementById('tbody');
+  tb.innerHTML='';
+  rows.forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><input type="text" placeholder="Nombre cliente" id="n${r.id}" onchange="calcRow(${r.id})"></td>
+      <td><input type="number" min="0" step="10" placeholder="0" id="fac${r.id}" onchange="calcRow(${r.id})"></td>
+      <td><input type="number" min="0" step="0.5" placeholder="0" id="hd${r.id}" onchange="calcRow(${r.id})"></td>
+      <td><input type="number" min="0" step="0.5" placeholder="0" id="he${r.id}" onchange="calcRow(${r.id})"></td>
+      <td class="calc-cell" id="ht${r.id}">—</td>
+      <td><input type="number" min="0" step="1" placeholder="0" id="ch${r.id}" onchange="calcRow(${r.id})"></td>
+      <td class="calc-cell" id="ct${r.id}">—</td>
+      <td class="calc-cell" id="mr${r.id}">—</td>
+      <td class="calc-cell" id="mrp${r.id}">—</td>
+      <td><input type="number" min="1" max="5" step="1" placeholder="3" id="nps${r.id}" onchange="calcRow(${r.id})" style="width:44px"></td>
+      <td><select id="pot${r.id}" onchange="calcRow(${r.id})"><option value="">—</option><option value="Alto">Alto</option><option value="Medio">Medio</option><option value="Bajo">Bajo</option></select></td>
+      <td id="cl${r.id}">—</td>
+      <td id="sem${r.id}"><span class="semaforo" style="background:#ccc"></span></td>
+      <td><button class="btn-del" onclick="delRow(${r.id})">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function sv(id){return document.getElementById(id)?.value||'';}
+function fmt(n){return n.toLocaleString('es-ES',{minimumFractionDigits:0,maximumFractionDigits:0});}
+function fmt1(n){return n.toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1});}
+function el(id){return document.getElementById(id);}
+
+function clasificar(mrp, nps, pot){
+  // Estratégico: margen>=20% Y (nps>=4 O potencial=Alto)
+  // Rentable: margen>=20% Y resto
+  // Optimizar: margen 0-20%
+  // Desvincular: margen<0
+  if(mrp>=20 && (nps>=4 || pot==='Alto')) return 'Estratégico';
+  if(mrp>=20) return 'Rentable';
+  if(mrp>=0) return 'Optimizar';
+  return 'Desvincular';
+}
+
+function calcRow(id){
+  const fac=v('fac'+id), hd=v('hd'+id), he=v('he'+id), ch=v('ch'+id);
+  const nps=v('nps'+id), pot=sv('pot'+id);
+  const ht=hd+he;
+  const ct=ht*ch;
+  const mr=fac-ct;
+  const mrp=fac>0?mr/fac*100:0;
+  const cls=fac>0?clasificar(mrp,nps,pot):'—';
+  if(el('ht'+id)) el('ht'+id).textContent=ht>0?ht.toFixed(1)+' h':'—';
+  if(el('ct'+id)) el('ct'+id).textContent=ct>0?fmt(ct)+'€':'—';
+  if(el('mr'+id)){el('mr'+id).textContent=fac>0?(mr>=0?'':'-')+fmt(Math.abs(mr))+'€':'—';el('mr'+id).style.color=mr>=0?'#2ecc71':'#e74c3c';}
+  if(el('mrp'+id)){el('mrp'+id).textContent=fac>0?fmt1(mrp)+'%':'—';el('mrp'+id).style.color=mrp>=20?'#2ecc71':mrp>=0?'#f39c12':'#e74c3c';}
+  const tagMap={Estratégico:'est',Rentable:'ren',Optimizar:'opt',Desvincular:'des'};
+  if(el('cl'+id)) el('cl'+id).innerHTML=fac>0?`<span class="tag tag-${tagMap[cls]||''}">${cls}</span>`:'—';
+  if(el('sem'+id)){
+    const s=mrp>=20?'#2ecc71':mrp>=0?'#f39c12':'#e74c3c';
+    el('sem'+id).innerHTML=`<span class="semaforo" style="background:${fac>0?s:'#ccc'}"></span>`;
+  }
+  calcAll();
+}
+
+function calcAll(){
+  let tot=0,totalFac=0,totalMar=0,cntEst=0,cntDes=0;
+  let lEst=[],lRen=[],lOpt=[],lDes=[];
+  let valEst=0,valRen=0,valOpt=0,valDes=0;
+  rows.forEach(r=>{
+    const fac=v('fac'+r.id),hd=v('hd'+r.id),he=v('he'+r.id),ch=v('ch'+r.id),nps=v('nps'+r.id),pot=sv('pot'+r.id);
+    if(fac===0) return; tot++;
+    totalFac+=fac;
+    const ht=hd+he, ct=ht*ch, mr=fac-ct, mrp=fac>0?mr/fac*100:0;
+    totalMar+=mr;
+    const cls=clasificar(mrp,nps,pot);
+    const nombre=el('n'+r.id)?.value||'(sin nombre)';
+    const item={n:nombre,mrp,fac,mr};
+    if(cls==='Estratégico'){cntEst++;lEst.push(item);valEst+=mr;}
+    else if(cls==='Rentable'){lRen.push(item);valRen+=mr;}
+    else if(cls==='Optimizar'){lOpt.push(item);valOpt+=mr;}
+    else{cntDes++;lDes.push(item);valDes+=mr;}
+  });
+  el('m-tot').textContent=tot;
+  el('m-fac').textContent=fmt(totalFac)+'€';
+  el('m-mar').textContent=fmt(totalMar)+'€';
+  el('m-pct').textContent=totalFac>0?fmt1(totalMar/totalFac*100)+'%':'—';
+  el('m-est').textContent=cntEst;
+  el('m-des').textContent=cntDes;
+
+  const renderList=(id,arr,valId,val)=>{
+    el(id).innerHTML=arr.length?arr.map(x=>`<li><strong>${x.n}</strong> — ${fmt1(x.mrp)}% (${fmt(x.mr)}€/mes)</li>`).join(''):`<li style="color:#999;font-style:italic">Ninguno</li>`;
+    if(valId) el(valId).textContent=arr.length?`Margen total: ${fmt(val)}€/mes`:'';
+  };
+  renderList('lista-est',lEst,'val-est',valEst);
+  renderList('lista-ren',lRen,'val-ren',valRen);
+  renderList('lista-opt',lOpt,'val-opt',valOpt);
+  renderList('lista-des',lDes,'val-des',valDes);
+
+  const az=el('alert-zone');
+  const alerts=[];
+  if(cntDes>0) alerts.push(`⚠ <strong>${cntDes} cliente${cntDes>1?'s':''} a desvincular</strong>: margen negativo, estás pagando por servirles.`);
+  if(lOpt.length>0) alerts.push(`⚠ <strong>${lOpt.length} cliente${lOpt.length>1?'s':''} a optimizar</strong>: margen insuficiente, requieren conversación de valor o repricing.`);
+  az.innerHTML=alerts.length?`<div class="alert-box">${alerts.join('<br>')}</div>`:'';
+}
+addRow();addRow();addRow();
+</script>
+</body>
+</html>
