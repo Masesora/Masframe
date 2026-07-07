@@ -87,7 +87,6 @@ async def redeem_beta_code(body: RedeemIn):
     Si válido: marca como usado + activa pago en ese/clients.
     """
     col      = get_collection("beta_codes")
-    ese_col  = get_collection("ese")
     cli_col  = get_collection("clients")
 
     code_doc = await col.find_one({"code": body.code.strip().upper()})
@@ -97,8 +96,8 @@ async def redeem_beta_code(body: RedeemIn):
     if code_doc.get("used"):
         raise HTTPException(status_code=409, detail="Este código ya ha sido utilizado")
 
-    # Verificar que el expediente existe ANTES de quemar el código
-    ese_doc = await ese_col.find_one({"codigo": body.ese_codigo})
+    # Verificar que el expediente existe en clients ANTES de quemar el código
+    ese_doc = await cli_col.find_one({"codigo": body.ese_codigo})
     if not ese_doc:
         raise HTTPException(
             status_code=404,
@@ -107,8 +106,8 @@ async def redeem_beta_code(body: RedeemIn):
 
     now = datetime.utcnow().isoformat()
 
-    # Activar pago en ese y clients
-    await ese_col.update_one(
+    # Activar pago en clients
+    await cli_col.update_one(
         {"codigo": body.ese_codigo},
         {"$set": {"pago_confirmado": True}},
     )
