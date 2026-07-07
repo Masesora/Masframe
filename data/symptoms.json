@@ -38,9 +38,9 @@
     "optimizer_decision": "Localizar el Dinero Invisible",
     "example": "Taller mecánico: 8500€ atrapados. Gastos fijos: 12000€/mes. Meses atrapados: 0.71. Tras aplicar el protocolo libera 6500€.",
     "capa_1_priorizacion": "El dinero está atrapado en stock inmovilizado; morosidad; anticipos no materializados; ciclo de cobro largo; gastos fijos altos; sin protocolo de rescate; dependencia de ventas futuras; caja insuficiente.",
-    "justi_capa1": "La mayor parte del dinero bloqueado proviene de stock inmovilizado y morosidad.",
+    "justi_capa1": "El dinero bloqueado puede tener seis orígenes distintos. Señala los que reconoces en tu negocio para localizar exactamente dónde está atrapado.",
     "capa_2_decision": "Impacto vs Esfuerzo",
-    "capa_2_options": "Liquidar el stock parado con descuento agresivo este mes; Activar protocolo de cobro urgente para las facturas más antiguas; Contactar directamente a los tres principales morosos; Reducir el plazo de cobro a 30 días en todos los contratos nuevos; Facturar o devolver los anticipos que llevan más de 60 días parados; Cerrar y facturar todos los trabajos que están a medio terminar",
+    "capa_2_options": "Liquidar capital inmovilizado en inventario sin rotación; Liberar liquidez bloqueada en trabajos y proyectos en curso; Reducir la morosidad y acelerar los cobros activos; Corregir el desfase entre el ciclo de cobros y el de pagos; Convertir los anticipos retenidos en ingresos ejecutados; Activar la facturación paralizada por procesos internos",
     "justi_capa2": "Necesitas priorizar qué libera liquidez más rápido.",
     "capa_3_comprension": "VSM (mapa de flujo de cobro)",
     "justi_capa3": "Estos son los elementos priorizados en el paso anterior. Añade observaciones, indica el responsable, estima qué valor se recuperaría al resolver cada uno y marca los que más bloquean el avance.",
@@ -50,7 +50,7 @@
     "justi_capa5": "Confirma las acciones y el valor recuperado.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Esta es la valoración de las acciones ejecutadas.",
-    "capa_1_options": "Tengo dinero parado en stock que no se mueve; Tengo facturas pendientes que tardan demasiado en pagarse; Hay clientes que me deben dinero desde hace meses; Cobro tarde y eso me deja sin liquidez; He cobrado anticipos que aún no he podido ejecutar; Tengo dinero retenido en trabajos a medio hacer"
+    "capa_1_options": "Mi stock está parado y tengo demasiado dinero atrapado en productos que no rotan.; Tengo proyectos a medio ejecutar que consumen recursos pero aún no generan ingresos.; Mis clientes tardan meses en pagar y eso me deja sin liquidez operativa.; Cobro demasiado tarde respecto a cuando tengo que pagar proveedores y nóminas.; He recibido anticipos que no puedo transformar en ingresos porque la ejecución está retrasada.; Tengo trabajos terminados que aún no he facturado por falta de procesos o validaciones."
   },
   {
     "specialty_id": "UCI FINANCIERA",
@@ -91,9 +91,9 @@
     "optimizer_decision": "Radiografía de Rentabilidad por Cliente",
     "example": "Peluquería: clienta VIP factura 800€/mes pero deja 31€/h reales. 8 clientas regulares dejan 95€/h. Reorientando esfuerzo triplica margen horario.",
     "capa_1_priorizacion": "Marca lo que reconoces. No hace falta saberlo todo — el ABC de la siguiente capa lo va a revelar.",
-    "justi_capa1": "El cliente reconoce el síntoma antes de saber el diagnóstico. La identificación del problema es el primer paso clínico.",
+    "justi_capa1": "La rentabilidad se pierde por distintas vías. Señala cuáles reconoces para localizar exactamente de dónde se escapa el dinero que ya has ganado.",
     "capa_2_decision": "Radiografía de retención",
-    "capa_2_options": "Calculando el margen real de cada servicio: precio menos coste directo de entregarlo; Calculando la rentabilidad real de cada cliente: lo que paga versus el tiempo que consume; Valorando el coste real de cada tarea que haces tú: si te lo pagaran a tarifa externa, ¿sale a cuenta?; Revisando cada proveedor o gasto fijo: cuánto cuesta y si realmente es necesario; Cuantificando el tiempo invertido en gestiones sin ingreso: cuánto vale ese tiempo parado; Comparando margen real de cada línea: no lo que más vendes sino lo que más te deja",
+    "capa_2_options": "Calcular el margen real de cada servicio: precio menos coste directo de entregarlo; Calcular la rentabilidad real de cada cliente: lo que paga versus el tiempo que consume; Valorar el coste real de cada hora propia: si te lo pagaran a tarifa externa, ¿sale a cuenta?; Revisar cada proveedor o gasto fijo: cuánto cuesta y si realmente es necesario; Cuantificar el tiempo invertido en gestiones sin ingreso: cuánto vale ese tiempo parado; Comparar el margen real de cada línea: no lo que más vendes sino lo que más te deja",
     "justi_capa2": "necesitas saber exactamente qué actividad, cliente o proveedor está vaciando tu caja — y cuánto dinero real recuperarías si lo corriges.",
     "capa_3_comprension": "Análisis causa–efecto",
     "justi_capa3": "Porque necesitas entender qué factores concretos erosionan el margen en cada elemento clasificado.",
@@ -103,7 +103,7 @@
     "justi_capa5": "Porque necesitas asegurar que los cambios se ejecutan y el margen real mejora.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la mejora del margen por cliente o servicio tras aplicar el rediseño.",
-    "capa_1_options": "No sé si mis tarifas cubren realmente lo que me cuesta cada servicio; Hay clientes o proyectos que ocupan mucho tiempo y pagan poco; Dedico horas a tareas que no sé si alguien podría hacer por mí; Tengo proveedores o gastos fijos que nunca he revisado en serio; Hago formaciones, reuniones o gestiones que no generan ingreso directo; Hay servicios o productos que vendo mucho pero no sé si son los que más me dejan",
+    "capa_1_options": "Mis tarifas no cubren realmente lo que me cuesta entregar cada servicio.; Tengo clientes o proyectos que consumen mucho tiempo pero generan poco ingreso real.; Dedico horas propias a tareas que podría externalizar por menos de lo que me cuestan.; Tengo proveedores o gastos fijos que nunca he revisado ni renegociado.; Invierto tiempo en gestiones, reuniones o formaciones que no generan ningún ingreso directo.; Vendo mucho de algunos servicios pero no sé cuáles son los que realmente me dejan margen.",
     "c2_herramienta": "retencion"
   },
   {
@@ -145,9 +145,9 @@
     "optimizer_decision": "Cálculo de Precio Mínimo Viable",
     "example": "Diseñadora freelance: facturaba 3.200€/mes con costes reales de 2.900€. Margen: 9%. Tras recalcular precio mínimo viable y eliminar servicios deficitarios, margen sube al 34%.",
     "capa_1_priorizacion": "Precio por debajo del coste real; márgenes no calculados; descuentos sin análisis; costes ocultos no incluidos; horas sin cobrar; servicios de bajo margen no identificados; competencia por precio; subida de costes sin repercutir al cliente.",
-    "justi_capa1": "El margen real está por debajo del mínimo viable porque el precio no cubre todos los costes reales del negocio.",
+    "justi_capa1": "El margen real se destruye por causas distintas. Señala cuáles reconoces para saber dónde está la mayor brecha entre lo que cobras y lo que realmente te queda.",
     "capa_2_decision": "Semáforo de Viabilidad",
-    "capa_2_options": "Calcular el precio mínimo por debajo del cual cada venta te cuesta dinero; Medir cuánto margen real te queda después de aplicar tus descuentos habituales; Cuantificar el impacto de la subida de costes y el precio al que deberías estar; Calcular tu hora real facturada incluyendo el tiempo que trabajas sin cobrar; Comparar el margen real de cada línea e identificar cuáles te sostienen y cuáles te drenan; Calcular la rentabilidad real de cada cliente incluyendo el tiempo y recursos que consume",
+    "capa_2_options": "Calcular el precio mínimo viable por debajo del cual cada venta pierde dinero; Medir el margen real después de aplicar los descuentos habituales; Cuantificar el impacto de la subida de costes y el precio al que deberías estar hoy; Calcular la hora real facturada incluyendo todo el tiempo trabajado sin cobrar; Comparar el margen real de cada línea e identificar cuáles sostienen y cuáles drenan; Analizar la rentabilidad real por cliente incluyendo tiempo y recursos consumidos",
     "justi_capa2": "Para cada problema que has marcado, calcula el margen real de tus servicios — incluyendo los costes que normalmente no aparecen en la factura.",
     "capa_3_comprension": "Análisis de estructura de costes",
     "justi_capa3": "Porque necesitas identificar qué coste concreto destruye tu margen en cada línea o servicio.",
@@ -157,7 +157,7 @@
     "justi_capa5": "Porque necesitas confirmar que los cambios de precio y coste se ejecutaron.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la mejora real del margen bruto tras ajustar precios y costes.",
-    "capa_1_options": "Dudo si mi carta de precios es la correcta; Hago descuentos para fidelizar y facturar más, pero no sé si me estoy pasando; Los costes han subido pero no he podido repercutirlos al cliente; Hay trabajo que hago y no cobro: soporte, cambios o revisiones fuera de precio; Tengo servicios o líneas pero no sé cuál me deja margen de verdad; Quiero analizar clientes en concreto",
+    "capa_1_options": "Fijo precios sin calcular si realmente cubren todos mis costes, incluidos los que no aparecen en la factura.; Hago descuentos para fidelizar o cerrar ventas sin saber si con eso me quedo en negativo.; Los costes han subido pero no he podido repercutirlos al cliente todavía.; Hay trabajo que realizo y no cobro: soporte, revisiones o cambios que doy por incluidos.; Tengo servicios o líneas pero no sé cuál de ellas me deja margen de verdad.; Hay clientes concretos que facturan razonablemente bien pero cuyo margen real es muy bajo.",
     "c2_herramienta": "margen"
   },
   {
@@ -199,9 +199,9 @@
     "optimizer_decision": "Mapeo de Esperas y Flujo Real",
     "example": "Taller de carpintería: pedidos tardaban 9 días pero solo 2 eran de trabajo real. Tras eliminar esperas, bajan a 4 días totales",
     "capa_1_priorizacion": "El proceso tiene demasiadas esperas; hay tiempos muertos entre tareas; el flujo operativo no es continuo; las tareas se acumulan en ciertos puntos; no existe un estándar de flujo; el equipo espera información o aprobaciones; hay cuellos de botella recurrentes; el proceso completo es más lento de lo necesario.",
-    "justi_capa1": "El flujo operativo presenta múltiples esperas y cuellos de botella, por lo que es necesario priorizar qué eliminar primero para acelerar el proceso.",
+    "justi_capa1": "La operación se ralentiza por causas concretas y distintas. Señala cuáles reconoces para saber dónde empieza el tratamiento.",
     "capa_2_decision": "Impacto vs Esfuerzo",
-    "capa_2_options": "Mapear el flujo operativo completo para ver dónde se pierde tiempo; Identificar las tres esperas críticas que más retrasan el proceso; Eliminar los pasos del proceso que no aportan valor real; Crear un estándar de cómo se hacen las tareas más repetidas; Implementar un tablero visual para que todos vean el estado del trabajo; Establecer tiempos máximos de respuesta para aprobaciones internas",
+    "capa_2_options": "Mapear el flujo operativo completo para ver exactamente dónde se pierde tiempo; Identificar y eliminar los cuellos de botella recurrentes que más retrasan el proceso; Establecer tiempos máximos de respuesta para aprobaciones e información interna; Crear un estándar documentado para las tareas más repetidas del proceso; Eliminar los pasos que no aportan valor real al resultado final; Redistribuir las dependencias humanas críticas para que el flujo no dependa de la presencia de nadie",
     "justi_capa2": "Con Impacto vs Esfuerzo, el cliente coloca cada opción en la matriz según su valor real y la dificultad de ejecutarla. Lo que queda en el cuadrante \"alto impacto / baja dificultad\" es donde empieza el tratamiento.",
     "capa_3_comprension": "VSM (flujo operativo)",
     "justi_capa3": "El VSM (flujo operativo) hace visible lo que todos conocen pero nadie ha visto junto: dónde se pierde tiempo, dónde se acumula trabajo y qué pasos no aportan valor. Sin ese mapa, las mejoras en C4 son parciales.",
@@ -211,7 +211,7 @@
     "justi_capa5": "Porque necesitas visualizar y controlar el flujo de trabajo.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción de tiempos de espera.",
-    "capa_1_options": "Algo que debería hacerse en un día nos lleva una semana; Siempre hay algo esperando a alguien para poder avanzar; El mismo punto del proceso se atasca una y otra vez; El equipo pierde tiempo esperando aprobaciones o información; No tenemos claro cómo se hacen las cosas cada uno lo hace a su manera; Hay procesos que nadie revisa y los errores se repiten sin resolverse"
+    "capa_1_options": "Hay tareas que deberían resolverse en horas y se alargan días por esperas internas que nadie ha eliminado.; El mismo punto del proceso se atasca de forma recurrente y nadie lo ha rediseñado todavía.; El equipo pierde tiempo esperando aprobaciones o información antes de poder avanzar.; Cada persona hace las tareas repetidas de una forma diferente porque no existe un estándar documentado.; El proceso incluye pasos que no aportan valor al resultado pero que nadie se ha atrevido a eliminar.; El avance depende de la disponibilidad de una persona concreta que actúa como cuello de botella humano."
   },
   {
     "specialty_id": "UNIDAD DE PROCESOS",
@@ -252,7 +252,7 @@
     "optimizer_decision": "Filtro de Entrada de Tareas",
     "example": "Agencia de diseño 41 por ciento de tareas llegaban incompletas Tras checklist baja a 8 por ciento y reduce tiempos un 37 por ciento",
     "capa_1_priorizacion": "La información entra incompleta hay errores frecuentes en la entrada de tareas el equipo pierde tiempo aclarando información no existe un estándar de intake las tareas llegan con datos inconsistentes hay confusión sobre qué se necesita el proceso se colapsa por mala entrada la calidad depende de quién envía la información",
-    "justi_capa1": "El sistema de entrada de tareas es inconsistente y genera colapso operativo por lo que es necesario entender causas internas y externas para rediseñar el intake",
+    "justi_capa1": "El colapso tiene un origen concreto. Señala dónde reconoces el problema para localizar qué parte del sistema está generando la sobrecarga.",
     "capa_2_decision": "Análisis de Carga",
     "capa_2_options": "Entrada de tareas (intake); Coordinación entre áreas; Gestión de colas y prioridades; Formación y onboarding de nuevas personas; Revisión y control de calidad; Comunicación con cliente o demandante",
     "justi_capa2": "El Análisis de Carga clasifica el origen del problema en categorías medibles. Lo que tiene mayor frecuencia e impacto es lo que el tratamiento atacará primero.",
@@ -264,7 +264,7 @@
     "justi_capa5": "Porque necesitas estandarizar qué información mínima debe llegar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción de errores de entrada",
-    "capa_1_options": "Trabajamos al máximo pero siempre hay tareas en cola sin terminar; Pierdo tiempo aclarando trabajos que llegan mal explicados; Cada uno hace las cosas a su manera sin un estándar; Cuando llega trabajo nuevo siempre falta información clave para empezar; Por más horas que metemos nunca llegamos a todo; Contratar más gente no resuelve el atasco real"
+    "capa_1_options": "Trabajamos al máximo pero siempre hay tareas en cola que no terminamos de resolver.; Pierdo tiempo aclarando trabajos que llegan mal explicados o con información incompleta.; La carga de trabajo no se distribuye con ningún criterio: unos están saturados y otros infrautilizados.; Cuando llega trabajo nuevo siempre falta información clave para empezarlo de inmediato.; Contratar más personas no resolvería el problema porque el atasco no es de capacidad sino de sistema.; Los nuevos tardan demasiado en integrarse porque no hay un proceso claro que los guíe."
   },
   {
     "specialty_id": "UNIDAD DE PROCESOS",
@@ -305,7 +305,7 @@
     "optimizer_decision": "Diagnóstico de Causa Raíz de Calidad",
     "example": "Estudio de arquitectura 27 por ciento de entregas requerían correcciones Tras protocolo baja a 6 por ciento y libera 42 horas al mes",
     "capa_1_priorizacion": "Se repiten defectos en las entregas hay demasiado retrabajo no existe un control de calidad consistente el equipo corrige errores en lugar de prevenirlos no se llega a la causa raíz la calidad depende de la persona no hay estándares claros el retrabajo consume demasiados recursos",
-    "justi_capa1": "Los fallos repetidos generan retrabajo y riesgo operativo por lo que es necesario identificar qué errores son críticos y eliminarlos desde la causa raíz",
+    "justi_capa1": "El retrabajo tiene orígenes distintos. Señala cuáles reconoces para localizar los fallos que más te cuestan y atacarlos desde la raíz.",
     "capa_2_decision": "Pareto de Fallos",
     "capa_2_options": "Frecuencia: qué tipo de error aparece más veces; Coste: qué defecto consume más horas de retrabajo; Origen: en qué fase del proceso ocurre el fallo; Impacto externo: qué errores generan quejas del cliente; Consistencia: si el fallo varía según quién entrega; Estándar: si hay protocolo definido para ese paso o no",
     "justi_capa2": "Porque necesitas identificar qué fallos generan más retrabajo",
@@ -317,7 +317,7 @@
     "justi_capa5": "Porque necesitas asegurar que cada entrega cumple estándar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción del retrabajo",
-    "capa_1_options": "Aparecen los mismos errores y las mismas quejas una y otra vez; Dedico demasiado tiempo a corregir y rehacer trabajo; No tengo un control de calidad que funcione de verdad; El equipo apaga fuegos en lugar de evitar que ocurran; Si entrega una persona sale bien y si entrega otra no; El retrabajo se está comiendo mi margen sin que lo vea"
+    "capa_1_options": "Siempre son los mismos tipos de error los que aparecen en las entregas, sin que nadie haya cerrado el origen.; El retrabajo consume horas que deberían ir a trabajo nuevo y está afectando al margen real.; Los fallos se concentran en la misma fase del proceso pero nadie la ha rediseñado.; Las quejas de clientes son recurrentes y siempre apuntan al mismo tipo de problema.; La calidad varía según quién entrega, no según lo que se entrega.; No hay un protocolo de verificación previo a la entrega que cierre los fallos en origen."
   },
   {
     "specialty_id": "CARDIOLOGIA COMERCIAL",
@@ -358,7 +358,7 @@
     "optimizer_decision": "Diagnóstico de Motor Comercial",
     "example": "Estudio de nutrición 11 oportunidades generadas necesitaba 20 Tras activar canal dominante genera 18 y duplica cierres",
     "capa_1_priorizacion": "Falta de oportunidades comerciales motor débil dependencia de recomendaciones ausencia de canal dominante captación irregular crecimiento impredecible ventas insuficientes falta de visibilidad falta de tráfico",
-    "justi_capa1": "No hay suficiente demanda para sostener crecimiento necesitas medir brecha real",
+    "justi_capa1": "El motor de captación está roto por distintas razones. Señala cuáles reconoces para identificar el riesgo estructural que bloquea tu crecimiento.",
     "capa_2_decision": "Análisis de Riesgos",
     "capa_2_options": [
       "Dependencia total del boca a boca: el negocio no tiene ningún canal activo y consistente de captación propia",
@@ -377,7 +377,7 @@
     "justi_capa5": "Porque necesitas constancia semanal",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir oportunidades generadas",
-    "capa_1_options": "La mayoría de mis clientes llegan por recomendación o de casualidad; No sé qué canal me trae clientes y cuál es perder el tiempo; Sigo invirtiendo en sitios sin saber si funcionan; Mi crecimiento es impredecible un mes va bien y al siguiente no; No tengo una forma constante de captar clientes nuevos; Dependo de que me conozcan no de que me encuentren"
+    "capa_1_options": "La mayoría de mis clientes llegan por recomendación o de casualidad, sin que yo haya generado nada para conseguirlos.; No tengo ninguna presencia digital que genere contactos de forma predecible y constante.; Cuando alguien se interesa por lo que hago, no tengo un protocolo para convertirlo en cliente.; He probado varios canales sin que ninguno haya funcionado de forma constante ni lo haya medido en serio.; Tengo clientes satisfechos pero ningún sistema para convertirlos en fuente activa de nuevos clientes.; No tengo una cifra mensual de clientes nuevos que buscar ni un sistema para alcanzarla."
   },
   {
     "specialty_id": "CARDIOLOGIA COMERCIAL",
@@ -418,7 +418,7 @@
     "optimizer_decision": "Diagnóstico de Cadencia Comercial",
     "example": "Agencia de marketing pipeline 8k objetivo 5k Tras rediseño pipeline sube a 18k y estabiliza cierres",
     "capa_1_priorizacion": "Pipeline vacío etapas sin definir falta de previsión fugas comerciales seguimiento débil oportunidades estancadas ventas impredecibles falta de cadencia",
-    "justi_capa1": "El pipeline no sostiene ventas necesitas medir fuerza real",
+    "justi_capa1": "La irregularidad comercial tiene causas concretas. Señala cuáles reconoces para saber qué elemento de tu cadencia está roto.",
     "capa_2_decision": "Regla 5/25",
     "capa_2_options": [
       "Sin reunión comercial semanal: sin revisión de pipeline no hay cadencia ni corrección de rumbo posible",
@@ -437,7 +437,7 @@
     "justi_capa5": "Porque necesitas constancia semanal",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir fuerza del pipeline",
-    "capa_1_options": "Un mes facturo bien y al siguiente cae sin saber por qué; No tengo previsión de lo que voy a vender el mes que viene; Tengo oportunidades paradas que no avanzan ni se cierran; Hago seguimiento a los clientes cuando me acuerdo; Mis ventas dependen de la suerte no de un sistema; No sé en qué punto está cada cliente potencial"
+    "capa_1_options": "Un mes facturo bien y al siguiente cae sin entender por qué cambia ni cómo controlarlo.; No tengo ninguna previsión fiable de lo que voy a facturar el mes que viene.; Tengo oportunidades en el pipeline que no avanzan ni se cierran ni desaparecen.; Hago seguimiento a los clientes potenciales cuando me acuerdo, sin cadencia definida.; Las ventas dependen de la racha o del momento, no de un sistema que funcione siempre.; No sé en qué punto está cada cliente potencial ni cuándo es el momento de actuar."
   },
   {
     "specialty_id": "CARDIOLOGIA COMERCIAL",
@@ -478,7 +478,7 @@
     "optimizer_decision": "Diagnóstico de Ruido Comercial",
     "example": "Academia de idiomas 312 contactos solo 41 reales Tras calificación suben a 96 oportunidades",
     "capa_1_priorizacion": "Demasiados leads no reales ruido comercial falta de foco peticiones de bajo valor falta de filtro dispersión actividad sin progreso",
-    "justi_capa1": "Mucho ruido necesitas filtrar",
+    "justi_capa1": "El ruido comercial tiene distintos orígenes. Señala cuáles reconoces para definir qué mecanismo de filtrado implantar primero.",
     "capa_2_decision": "Árbol de Decisiones",
     "capa_2_options": [
       "¿Definir un perfil de cliente ideal con criterios explícitos y dejar de atender a quien queda fuera de ese perfil?",
@@ -497,7 +497,7 @@
     "justi_capa5": "Porque necesitas asegurar que cada lead pasa por el mismo filtro antes de consumir tiempo del equipo.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir leads calificados",
-    "capa_1_options": "Recibo muchos contactos pero pocos son oportunidades reales; Pierdo tiempo atendiendo peticiones que no van a ningún lado; No tengo un filtro para saber a quién dedicarme; Me disperso entre clientes de bajo valor; Persigo oportunidades que nunca se cierran; No distingo el cliente bueno del que solo me hace perder tiempo"
+    "capa_1_options": "Recibo muchos contactos pero la mayoría no son oportunidades comerciales reales.; Pierdo tiempo atendiendo peticiones que no van a ningún lado y no se van a convertir en clientes.; No tengo ningún filtro para saber a quién dedicarme y a quién descartar.; Me disperso atendiendo clientes de bajo valor que consumen tiempo sin generar margen.; Persigo oportunidades durante meses que nunca llegan a cerrarse.; No distingo con criterio claro qué perfil de cliente es el que realmente me interesa."
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
@@ -538,9 +538,9 @@
     "optimizer_decision": "Diagnóstico de Claridad Estratégica",
     "example": "Empresa de reformas solo 27 por ciento del equipo conocía los objetivos Tras protocolo sube a 82 por ciento",
     "capa_1_priorizacion": "Estrategia difusa equipo desalineado prioridades cambiantes fortalezas infrautilizadas amenazas no mapeadas visión desconectada objetivos genéricos falta de marco",
-    "justi_capa1": "El equipo no comparte dirección necesitas medir claridad",
+    "justi_capa1": "La falta de dirección tiene distintas causas. Señala cuáles reconoces para saber dónde está la brecha entre el negocio que tienes y el que quieres.",
     "capa_2_decision": "Urgente vs Importante (estratégico)",
-    "capa_2_options": "Definir en una página adónde quiero que esté el negocio en 3 años; Establecer 3 objetivos anuales clave con métricas claras; Calcular cuánto vale el negocio hoy y qué habría que hacer para duplicarlo; Comunicar la visión al equipo y validar que la comprenden; Bloquear tiempo mensual para trabajar la estrategia sin interrupciones; Revisar trimestralmente si las acciones del día a día avanzan hacia el objetivo",
+    "capa_2_options": "Definir en una página adónde quiero que esté el negocio en 3 años con métricas claras; Calcular cuánto vale el negocio hoy y qué habría que hacer para duplicarlo; Comunicar la visión al equipo y validar que la comprenden y la comparten; Concretar los 3 objetivos anuales con indicadores que permitan saber si avanzas o no; Bloquear tiempo mensual para trabajar la estrategia sin que lo desplace el operativo; Revisar trimestralmente si las acciones del día a día avanzan hacia el objetivo definido",
     "justi_capa2": "Porque necesitas priorizar qué brechas cerrar",
     "capa_3_comprension": "Mapa Estratégico",
     "justi_capa3": "Porque necesitas visualizar dirección",
@@ -550,7 +550,7 @@
     "justi_capa5": "Porque necesitas sostener foco",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir alineación real",
-    "capa_1_options": "Mi empresa funciona hoy pero no sé hacia dónde va en 3 años; No tengo un plan escrito de a dónde quiero llegar; El equipo no está alineado con una dirección clara; No he pensado cuánto quiero que valga mi negocio; Voy llevando el día a día sin diseñar el futuro; No sé qué pasaría si quisiera salir o vender"
+    "capa_1_options": "Mi empresa funciona hoy pero no tengo ningún plan escrito de dónde quiero estar en 3 años.; No he definido cuánto quiero que valga el negocio ni qué tendría que pasar para llegar a eso.; El equipo no comparte una dirección común y cada uno interpreta lo que hay que hacer de forma distinta.; Tengo objetivos en la cabeza pero no están escritos ni tienen métricas claras para medirlos.; No reservo tiempo para trabajar la estrategia: siempre lo desplaza el día a día.; No reviso si lo que hago cada semana avanza hacia el negocio que tengo en mente."
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
@@ -591,9 +591,9 @@
     "optimizer_decision": "Diagnóstico de Uso del Tiempo Directivo",
     "example": "Clínica privada dueño dedicaba 6 por ciento a estrategia Tras protocolo sube a 24 por ciento",
     "capa_1_priorizacion": "Exceso de urgencias estrategia postergada falta de tiempo protegido prioridades por presión mezcla de tareas foco inestable sin agenda estratégica sin trabajo profundo",
-    "justi_capa1": "No hay foco estratégico necesitas medir tiempo real",
+    "justi_capa1": "La dispersión tiene distintas causas. Señala cuáles reconoces para saber qué frentes cerrar primero y cómo recuperar el foco.",
     "capa_2_decision": "Urgente vs Importante",
-    "capa_2_options": "Bloquear 2 horas diarias de trabajo estratégico sin interrupciones; Revisar y cerrar todos los proyectos a medias antes de abrir uno nuevo; Delegar las tareas urgentes que no requieren mi presencia personal; Definir las 3 prioridades de la semana cada lunes y no cambiarlas; Eliminar las reuniones y compromisos que no aportan valor real; Crear un sistema de filtro para decidir si algo requiere mi atención directa",
+    "capa_2_options": "Bloquear tiempo estratégico fijo que no se pueda interrumpir por operativo; Cerrar todos los proyectos a medias antes de abrir uno nuevo; Delegar las tareas urgentes que no requieren la presencia personal del líder; Definir las 3 prioridades de la semana cada lunes y no cambiarlas bajo ningún concepto; Eliminar las reuniones y compromisos que no aportan valor real al resultado; Crear un sistema de filtro para decidir si algo requiere la atención directa del líder o puede resolverse sin él",
     "justi_capa2": "Porque necesitas separar urgente de importante",
     "capa_3_comprension": "Mapa de Prioridades",
     "justi_capa3": "Porque necesitas ver qué mueve resultados",
@@ -603,7 +603,7 @@
     "justi_capa5": "Porque necesitas mantener dirección",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir tiempo estratégico real",
-    "capa_1_options": "Tengo demasiados proyectos a medias y ninguno termina; Cada semana aparece algo urgente que lo descoloca todo; Trabajo todo el día pero no avanzo en lo importante; No tengo tiempo protegido para pensar el negocio; Todo me parece prioritario así que nada lo es; Me cuesta decidir qué hacer primero y qué puede esperar"
+    "capa_1_options": "Tengo demasiados proyectos a medias y ninguno llega a terminarse de verdad.; Cada semana aparece algo urgente que descoloca lo que estaba planificado.; Trabajo todo el día con intensidad pero no avanzo en lo que realmente importa.; No tengo tiempo protegido para pensar el negocio sin interrupciones.; Todo parece prioritario así que al final nada lo es y las decisiones llegan tarde.; Me cuesta decidir qué hacer primero y qué puede esperar sin que el negocio pierda nada importante."
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
@@ -644,9 +644,16 @@
     "optimizer_decision": "Diagnóstico de Portafolio de Negocio",
     "example": "Agencia de marketing solo 38 por ciento decisiones con criterio Tras protocolo sube a 67 por ciento",
     "capa_1_priorizacion": "Productos dudosos decisiones difíciles portafolio amplio consumo de recursos criterios poco claros inercia falta de análisis margen no optimizado",
-    "justi_capa1": "El modelo factura pero no genera margen real porque crece en volumen sin diseñar rentabilidad.",
+    "justi_capa1": "El modelo crece pero no rentabiliza por distintas razones. Señala cuáles reconoces para saber qué decisión estructural está aplazando el margen real.",
     "capa_2_decision": "Árbol de Decisiones",
-    "capa_2_options": "¿Mantener servicios de bajo margen para completar oferta o eliminarlos?; ¿Crecer en volumen aceptando márgenes más bajos o priorizar rentabilidad?; ¿Subir precios arriesgando perder clientes o mantenerlos y perder margen?; ¿Especializarme en el servicio más rentable o mantener la diversidad?; ¿Invertir en automatización para reducir costes o en captación para crecer?; ¿Rediseñar el modelo de negocio ahora o esperar a que la situación empeore?",
+    "capa_2_options": [
+      "¿Mantener servicios de bajo margen para completar oferta o eliminarlos aunque pierda algún cliente?",
+      "¿Crecer en volumen aceptando márgenes más bajos o priorizar rentabilidad aunque venda menos?",
+      "¿Subir precios arriesgando perder clientes o mantenerlos y seguir perdiendo margen?",
+      "¿Especializarme en el servicio más rentable o mantener la diversidad del portafolio?",
+      "¿Invertir en automatización para reducir costes o en captación para crecer en volumen?",
+      "¿Rediseñar el modelo de negocio ahora o esperar a que la situación empeore por sí sola?"
+    ],
     "justi_capa2": "Porque necesitas comparar escenarios",
     "capa_3_comprension": "Análisis causa efecto",
     "justi_capa3": "Porque necesitas identificar qué línea, servicio o cliente está destruyendo el margen sin que aparezca en la facturación.",
@@ -656,7 +663,7 @@
     "justi_capa5": "Porque necesitas ejecutar sin dudar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la mejora del margen neto anual tras rediseñar el modelo.",
-    "capa_1_options": "Facturo más cada año pero no noto que gane más; Trabajo más para ganar lo mismo o menos; Tengo productos o servicios que no sé si son rentables; Mi portafolio es tan amplio que dispersa recursos; No analizo el margen real de cada cosa que vendo; Sigo ofreciendo cosas por inercia no por rentabilidad"
+    "capa_1_options": "Facturo más cada año pero no noto que gane más en proporción al esfuerzo.; Trabajo más horas para mantener el mismo nivel de ingresos reales.; Tengo servicios o líneas de negocio cuya rentabilidad nunca he calculado en detalle.; Mi portafolio es tan amplio que dispersa recursos sin que ninguna línea destaque de verdad.; No analizo el margen real de cada servicio o producto: me baso en que si vende, está bien.; Sigo ofreciendo cosas por inercia o por no querer perder ingresos, aunque no sé si son rentables."
   },
   {
     "specialty_id": "GESTION CLINICA",
@@ -697,9 +704,9 @@
     "optimizer_decision": "Diagnóstico de Visibilidad Financiera",
     "example": "Autónoma de servicios: nunca había calculado su margen neto real. Tras instalar dashboard con 5 métricas clave, descubre que trabaja con margen del 8% y toma decisiones inmediatas de pricing y coste.",
     "capa_1_priorizacion": "Sin cuadro de mando propio; margen neto desconocido; decisiones sin datos fiables; números que llegan tarde o incompletos; dependencia total del asesor sin visibilidad propia; no saber cuánto queda tras pagarlo todo.",
-    "justi_capa1": "El negocio toma decisiones sin visibilidad financiera real porque nunca se ha instalado un sistema de control básico.",
+    "justi_capa1": "La falta de control tiene distintas causas. Señala cuáles reconoces para saber qué indicadores instalar primero.",
     "capa_2_decision": "Regla 5/25",
-    "capa_2_options": "Definir los 3 indicadores que muestran la salud real del negocio; Establecer un cierre contable mensual en los primeros 5 días del mes; Crear una hoja de caja previsional para los próximos 90 días; Implementar un dashboard financiero semanal con 5 métricas clave; Automatizar la extracción de datos del banco y contabilidad; Delegar o subcontratar las tareas administrativas de bajo valor (archivo, auxiliar)",
+    "capa_2_options": "Definir los 3 indicadores que muestran la salud real del negocio; Calcular el margen neto real mensual incluyendo impuestos y sueldo del dueño; Establecer un cierre contable en los primeros 5 días del mes; Implementar un dashboard financiero semanal con 5 métricas clave; Automatizar la extracción de datos para eliminar dependencia de tareas manuales; Delegar o subcontratar las tareas administrativas de bajo valor que bloquean la visibilidad",
     "justi_capa2": "Porque necesitas priorizar bloqueos del cierre",
     "capa_3_comprension": "VSM financiero",
     "justi_capa3": "Porque necesitas ver el flujo completo",
@@ -709,7 +716,7 @@
     "justi_capa5": "Porque necesitas estandarizar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir velocidad de cierre",
-    "capa_1_options": "Tomo decisiones con números que ya no son de fiar; No sé exactamente cuánto me queda tras pagarlo todo; Mi cierre de cuentas es lento y llega tarde; Repito errores porque no veo los números a tiempo; Dependo de tareas manuales para saber cómo voy; No tengo visibilidad clara de mi situación real"
+    "capa_1_options": "Tomo decisiones con números que ya no son de fiar o que recibo con demasiado retraso.; No sé exactamente cuánto me queda cada mes después de pagarlo todo, incluyendo impuestos y mi sueldo real.; Mi cierre contable es lento: los datos del mes llegan cuando el mes siguiente ya está avanzado.; Repito errores porque no tengo visibilidad de los números hasta que el daño ya está hecho.; Dependo de tareas manuales para saber cómo va el negocio y eso me roba tiempo y fiabilidad.; No tengo un cuadro de mando propio: toda la información financiera pasa por mi asesor y nunca la veo directamente."
   },
   {
     "specialty_id": "GESTION CLINICA",
@@ -750,9 +757,9 @@
     "optimizer_decision": "Diagnóstico de Eficiencia Fiscal",
     "example": "Autónomo de servicios pagaba un 38% de tipo efectivo. Tras revisar estructura, cambiar a SL y optimizar deducciones, baja al 26%. Ahorro anual: 7.200€.",
     "capa_1_priorizacion": "Pago elevado de impuestos sin revisión; régimen fiscal sin optimizar; deducciones no aplicadas; estructura jurídica no evaluada; dependencia total del asesor sin visibilidad; coste fiscal desconocido; diferencia autónomo vs SL no calculada.",
-    "justi_capa1": "El cliente reconoce que paga impuestos sin entender si es lo correcto o si podría pagar menos legalmente.",
+    "justi_capa1": "La carga fiscal tiene distintos puntos de mejora. Señala cuáles reconoces para priorizar los cambios con mayor impacto y menor complejidad.",
     "capa_2_decision": "Impacto vs Esfuerzo",
-    "capa_2_options": "Revisar si el régimen fiscal actual es el óptimo para tu nivel de ingresos (módulos, estimación directa, SL); Identificar gastos reales de negocio deducibles que no estás declarando; Evaluar si tu estructura jurídica (autónomo vs SL) está optimizada para tu facturación actual; Calcular cuánto ahorrarías fiscalmente con una estructura SL frente a autónomo con tu facturación; Documentar y justificar todos los gastos de negocio deducibles del último ejercicio; Establecer con tu asesor un plan de optimización fiscal para el próximo ejercicio",
+    "capa_2_options": "Revisar si el régimen fiscal actual es el óptimo para el nivel de ingresos actual; Identificar gastos reales de negocio deducibles que no se están declarando; Evaluar si la estructura jurídica está optimizada comparando autónomo vs SL a ingresos reales; Calcular el ahorro fiscal concreto que generaría un cambio de estructura este ejercicio; Documentar y justificar todos los gastos de negocio deducibles del último ejercicio cerrado; Establecer con el asesor un plan de optimización fiscal con objetivo para el próximo ejercicio",
     "justi_capa2": "Porque necesitas priorizar qué cambios fiscales tienen mayor impacto con menor complejidad de implementación.",
     "capa_3_comprension": "Mapa de carga fiscal",
     "justi_capa3": "Porque necesitas ver exactamente qué parte de tu facturación se va en cada tipo de impuesto y dónde está la mayor ineficiencia.",
@@ -762,7 +769,7 @@
     "justi_capa5": "Porque necesitas confirmar que cada medida acordada con tu asesor se ha ejecutado.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción real del tipo impositivo efectivo año a año.",
-    "capa_1_options": "Pago impuestos cada trimestre pero nunca sé exactamente cuánto voy a pagar hasta que llega la liquidación; Nunca he calculado si me convendría más tributar como SL que como autónomo; No tengo claro qué gastos del negocio puedo deducir realmente; Mi asesor gestiona mis impuestos pero yo no entiendo lo que pago ni por qué; Tengo la sensación de que pago demasiado en proporción a lo que gano; Nunca he revisado si el régimen fiscal en el que estoy es el más ventajoso para mí"
+    "capa_1_options": "Pago impuestos cada trimestre sin saber exactamente cuánto voy a pagar hasta que llega la liquidación.; Nunca he calculado si me convendría más tributar como SL que seguir como autónomo.; No tengo claro qué gastos del negocio puedo deducir realmente y cuáles no.; Mi asesor gestiona mis impuestos pero yo no entiendo qué pago ni por qué lo pago.; Tengo la sensación de que pago demasiado en proporción a lo que gano pero no tengo datos que lo confirmen.; Nunca he revisado si el régimen fiscal en el que estoy es el más ventajoso para mi nivel de ingresos."
   },
   {
     "specialty_id": "GESTION CLINICA",
@@ -803,9 +810,16 @@
     "optimizer_decision": "Diagnóstico de Autonomía de Roles",
     "example": "Empresa de servicios 47 por ciento tareas escaladas Tras protocolo baja a 14 por ciento",
     "capa_1_priorizacion": "Roles difusos duplicidades huecos dependencias ocultas dueño saturado conflictos suaves friccion interna tareas sin responsable",
-    "justi_capa1": "Tus roles son fragiles necesitas medir dependencia",
+    "justi_capa1": "Los roles difusos generan dependencias distintas. Señala cuáles reconoces para saber qué decisión de estructura tomar primero.",
     "capa_2_decision": "Árbol de Decisiones",
-    "capa_2_options": "¿Crear una matriz de responsabilidades aunque implique conversaciones incómodas sobre quién hace qué?; ¿Definir qué decisiones puede tomar cada persona sin consultarme aunque suponga ceder control?; ¿Documentar y reasignar las tareas huérfanas aunque nadie las haya reclamado hasta ahora?; ¿Establecer un protocolo de escalado aunque signifique que algunos temas ya no lleguen a mí?; ¿Revisar y reescribir la descripción de funciones de cada rol aunque genere resistencia?; ¿Hacer una sesión de aclaramiento de roles con todo el equipo aunque saque tensiones a la superficie?",
+    "capa_2_options": [
+      "¿Crear una matriz de responsabilidades aunque implique conversaciones incómodas sobre quién hace qué?",
+      "¿Definir qué decisiones puede tomar cada persona sin consultarme aunque suponga ceder control?",
+      "¿Documentar y reasignar las tareas huérfanas aunque nadie las haya reclamado hasta ahora?",
+      "¿Establecer un protocolo de escalado aunque signifique que algunos temas ya no lleguen a mí?",
+      "¿Revisar y reescribir la descripción de funciones de cada rol aunque genere resistencia?",
+      "¿Hacer una sesión de aclaramiento de roles con todo el equipo aunque saque tensiones a la superficie?"
+    ],
     "justi_capa2": "Porque necesitas priorizar huecos de responsabilidad",
     "capa_3_comprension": "Mapa de Responsabilidades",
     "justi_capa3": "Porque necesitas visualizar quien hace que",
@@ -815,7 +829,7 @@
     "justi_capa5": "Porque necesitas sostener estructura",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir dependencia real",
-    "capa_1_options": "Casi todas las decisiones acaban en mi mesa aunque no deberían; No están claros los límites de cada puesto; Hay tareas que nadie tiene claro de quién son; Se duplican esfuerzos y otras cosas quedan sin hacer; Hay roces entre el equipo por no saber quién hace qué; Sin mí las cosas se atascan"
+    "capa_1_options": "Casi todas las decisiones acaban en mi mesa aunque muchas no tendrían por qué llegar hasta mí.; No están claros los límites de cada puesto y eso genera confusión sobre quién decide qué.; Hay tareas que nadie tiene claro de quién son y que acaban sin hacerse o duplicándose.; Se duplican esfuerzos y otras cosas quedan sin responsable visible y sin que nadie las reclame.; Hay roces entre personas del equipo por no tener claro quién tiene autoridad sobre qué.; Sin mi intervención directa las cosas se atascan aunque no tendrían que necesitarme."
   },
   {
     "specialty_id": "CIRUGIA DE MARCA",
@@ -856,15 +870,15 @@
     "optimizer_decision": "Diagnóstico de Identidad Competitiva",
     "example": "Estudio creativo identidad alineada 28 por ciento Tras protocolo sube a 79 por ciento",
     "capa_1_priorizacion": "Identidad debil narrativa difusa incoherencia visual estilo generico baja percepcion de valor primera impresion pobre falta de guia de identidad",
-    "justi_capa1": "Tu identidad no refleja tu valor necesitas medir alineacion",
+    "justi_capa1": "La imagen débil tiene distintos focos. Señala cuáles reconoces para priorizar qué intervenir primero con mayor impacto.",
     "capa_2_decision": "Impacto vs Esfuerzo",
     "capa_2_options": [
-      "Crear un kit de marca básico con colores tipografía y logo coherentes",
-      "Reescribir el texto de presentación en web y redes con propuesta clara",
-      "Estandarizar la forma de presentar presupuestos y propuestas",
-      "Crear una plantilla de comunicación visual para redes sociales",
-      "Revisar y mejorar los puntos de contacto con el cliente más visibles",
-      "Documentar la identidad de marca para que todo el equipo la aplique igual"
+      "Crear un kit de marca básico con colores, tipografía y logo coherentes en todos los materiales",
+      "Reescribir el texto de presentación en web y redes con una propuesta de valor clara y diferenciadora",
+      "Estandarizar la forma de presentar presupuestos y propuestas comerciales",
+      "Crear una plantilla de comunicación visual para redes que garantice coherencia en cada publicación",
+      "Revisar y mejorar los puntos de contacto con mayor visibilidad e impacto en la primera impresión",
+      "Documentar la identidad de marca para que todo el equipo la aplique de forma consistente"
     ],
     "justi_capa2": "Porque necesitas priorizar elementos criticos",
     "capa_3_comprension": "Mapa de Identidad",
@@ -875,7 +889,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir identidad real",
-    "capa_1_options": "Mi marca no transmite lo bueno que es mi trabajo; Pierdo clientes antes de la primera conversación; Mi estilo es genérico y no destaca; La primera impresión que doy no me hace justicia; No tengo una identidad visual coherente; Mi negocio vale más de lo que aparenta"
+    "capa_1_options": "Mi marca no transmite el nivel real de mi trabajo y los clientes me perciben por debajo de lo que soy.; Pierdo clientes potenciales antes de la primera conversación porque la imagen no genera confianza inicial.; Mi estilo visual es genérico e intercambiable: no hay nada que me diferencie a primera vista.; La primera impresión que doy en mis materiales no me hace justicia frente a la calidad que entrego.; No tengo una identidad visual coherente entre mis canales: cada punto de contacto luce diferente.; Mi negocio vale más de lo que aparenta y ese gap me está costando clientes y precio."
   },
   {
     "specialty_id": "CIRUGIA DE MARCA",
@@ -916,15 +930,15 @@
     "optimizer_decision": "Diagnóstico de Diferenciación Real",
     "example": "Consultora atributos diferenciales 22 por ciento Tras protocolo sube a 67 por ciento",
     "capa_1_priorizacion": "Propuesta generica mensajes comunes falta de territorio propio valor poco claro marca sustituible narrativa sin enfoque baja diferenciacion",
-    "justi_capa1": "Tu propuesta unica es difusa necesitas medir diferenciacion",
+    "justi_capa1": "La falta de diferenciación tiene distintas causas. Señala cuáles reconoces para saber qué atributo construir y comunicar primero.",
     "capa_2_decision": "DAFO de Diferenciación",
     "capa_2_options": [
-      "Definir los 3 atributos que me diferencian y que ningún competidor puede copiar fácil",
-      "Crear una frase de posicionamiento de una línea que use todo el equipo",
-      "Documentar 3 casos de éxito con resultados reales y cuantificados",
-      "Auditar la comunicación de los competidores directos para identificar huecos",
-      "Reescribir la propuesta de valor en web y materiales de venta",
-      "Crear un argumentario de objeciones frecuentes con respuestas claras"
+      "Definir los 3 atributos que me diferencian y que ningún competidor puede copiar fácilmente",
+      "Crear una frase de posicionamiento de una línea que todo el equipo use de forma consistente",
+      "Documentar 3 casos de éxito con resultados reales y cuantificados que refuercen el argumento",
+      "Auditar la comunicación de los competidores directos para identificar huecos que pueda ocupar",
+      "Reescribir la propuesta de valor en web y materiales de venta con criterio diferencial",
+      "Crear un argumentario de objeciones frecuentes con respuestas claras y entrenadas"
     ],
     "justi_capa2": "Porque necesitas priorizar atributos diferenciales",
     "capa_3_comprension": "Mapa de Territorio",
@@ -935,7 +949,7 @@
     "justi_capa5": "Porque necesitas asegurar claridad",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir diferenciacion real",
-    "capa_1_options": "Cuando me preguntan por qué elegirme no sé qué responder; Doy una respuesta distinta cada vez sobre lo que me diferencia; Mi propuesta suena igual que la de la competencia; El cliente no tiene claro por qué contratarme a mí; Mi equipo comercial tampoco sabe explicar mi valor; No tengo un mensaje único y claro"
+    "capa_1_options": "Cuando me preguntan por qué deberían elegirme no tengo una respuesta clara y convincente.; Doy una respuesta distinta cada vez sobre qué me diferencia según con quién hablo o el contexto.; Mi propuesta de valor suena prácticamente igual que la de la competencia directa.; El cliente potencial no tiene claro por qué contratarme a mí en lugar de a otro.; Mi equipo comercial tampoco sabe explicar con seguridad qué nos hace distintos y por qué importa.; No tengo un mensaje único y claro que el equipo use de forma consistente en todas las conversaciones."
   },
   {
     "specialty_id": "CIRUGIA DE MARCA",
@@ -976,15 +990,15 @@
     "optimizer_decision": "Diagnóstico de Coherencia Comunicativa",
     "example": "Consultora mensajes alineados 32 por ciento Tras protocolo sube a 81 por ciento",
     "capa_1_priorizacion": "Mensajes contradictorios tono cambiante expresion desigual narrativa inconsistente equipo comunicando distinto perdida de reconocimiento falta de guia de comunicacion",
-    "justi_capa1": "Tu comunicacion es inconsistente necesitas medir alineacion",
+    "justi_capa1": "La comunicación inconsistente tiene distintas causas. Señala cuáles reconoces para saber qué estandarizar primero.",
     "capa_2_decision": "Regla 5/25",
     "capa_2_options": [
-      "Crear un calendario editorial mensual con temas y canales definidos",
-      "Escribir una guía de tono y voz de marca de una página para el equipo",
-      "Estandarizar los mensajes clave que se usan en ventas y atención",
-      "Revisar y unificar todos los perfiles digitales con el mismo mensaje",
-      "Crear plantillas de comunicación para las situaciones más frecuentes",
-      "Asignar a una persona la responsabilidad de la consistencia de marca"
+      "Crear un calendario editorial mensual con temas y canales definidos y responsable asignado",
+      "Escribir una guía de tono y voz de marca de una página para que el equipo la aplique igual",
+      "Establecer métricas de comunicación mínimas para medir si lo que se publica genera resultado",
+      "Estandarizar los mensajes clave que se usan en ventas, atención y comunicación externa",
+      "Revisar y unificar todos los perfiles digitales con el mismo mensaje y tono de marca",
+      "Asignar a una persona la responsabilidad de revisar que la comunicación sea consistente"
     ],
     "justi_capa2": "Porque necesitas priorizar mensajes criticos",
     "capa_3_comprension": "Mapa de Mensajes",
@@ -995,7 +1009,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir coherencia comunicativa",
-    "capa_1_options": "Comunico cuando me acuerdo sin un plan detrás; Mi marca habla con un tono distinto cada vez; No mido si lo que comunico funciona; Cada persona del equipo transmite un mensaje diferente; Me cuesta que me reconozcan por comunicar de forma irregular; No tengo una guía de cómo y cuándo comunicar"
+    "capa_1_options": "Comunico cuando me acuerdo o tengo tiempo, sin ningún plan ni calendario detrás.; Mi marca habla con un tono diferente según el canal o la persona que lo gestione ese día.; No mido si lo que comunico genera algún resultado real en captación o percepción de marca.; Cada persona del equipo transmite un mensaje distinto cuando habla de la empresa.; Es difícil que me reconozcan porque la comunicación es irregular y sin identidad constante.; No tengo una guía de cómo, cuándo y qué comunicar que el equipo pueda seguir de forma autónoma."
   },
   {
     "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
@@ -1036,11 +1050,11 @@
     "optimizer_decision": "Diagnóstico de Detonantes de Tensión",
     "example": "Despacho profesional 47 por ciento dias con tension Tras protocolo baja a 19 por ciento",
     "capa_1_priorizacion": "Urgencias falsas ruido emocional saturacion mental irritabilidad clima crispado decisiones impulsivas falta de regulacion emocional dias improductivos",
-    "justi_capa1": "Tu sistema emocional esta saturado necesitas medir tension",
+    "justi_capa1": "La sobrecarga emocional tiene distintos patrones. Señala cuáles reconoces para saber qué detonante atacar primero.",
     "capa_2_decision": "Urgente vs Importante",
     "capa_2_options": [
       "Patrón de escalado: decisiones que llegan arriba porque nadie abajo tiene autoridad para resolverlas",
-      "Patrón de urgencia cultural: el lenguaje de ‘para ya’ como norma que hace imposible planificar con antelación",
+      "Patrón de urgencia cultural: el lenguaje de 'para ya' como norma que hace imposible planificar con antelación",
       "Patrón de desbordamiento: personas que absorben la carga de otros sistemáticamente por ser percibidas como más capaces",
       "Patrón de interrupción: cuántos cambios de contexto diarios absorbe el equipo directivo por peticiones no planificadas",
       "Patrón de carga directiva: el dueño opera mayoritariamente en reactivo en lugar de en modo diseño",
@@ -1055,7 +1069,7 @@
     "justi_capa5": "Porque necesitas asegurar estabilidad",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de tension",
-    "capa_1_options": "Mi equipo vive en modo emergencia casi todos los días; Tomamos decisiones impulsivas por la presión; Noto más errores y absentismo de lo normal; El clima está crispado y se nota en el trabajo; Tratamos como urgente lo que no lo es; La saturación nos está pasando factura sin verlo en las cuentas"
+    "capa_1_options": "Mi equipo vive en modo emergencia casi todos los días y eso afecta a la calidad de las decisiones.; Tomamos decisiones impulsivas por la presión del momento que después hay que corregir.; Hay más errores y absentismo de lo normal y el ritmo de trabajo tiene algo que ver.; El clima está crispado y esa tensión afecta al rendimiento aunque nadie lo diga explícitamente.; Tratamos como urgente todo lo que llega, aunque la mayoría podría esperar sin consecuencias reales.; La saturación del equipo nos está costando margen y calidad aunque no aparezca en ninguna cuenta."
   },
   {
     "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
@@ -1096,10 +1110,10 @@
     "optimizer_decision": "Diagnóstico de Alineación Persona-Rol",
     "example": "Empresa de logistica 64 por ciento decisiones escaladas Tras protocolo baja a 18 por ciento",
     "capa_1_priorizacion": "Roles difusos decisiones atascadas dependencia del lider duplicidad de funciones falta de autonomia friccion interna desgaste emocional",
-    "justi_capa1": "Tu sistema de roles esta roto necesitas medir escalamiento",
+    "justi_capa1": "Los roles mal asignados generan problemas distintos. Señala cuáles reconoces para saber qué decisión de estructura tomar primero.",
     "capa_2_decision": "Árbol de Decisiones",
     "capa_2_options": [
-      "¿Asumir que la incompatibilidad entre el perfil de comportamiento natural de una persona y su rol es estructural y requiere decisión?",
+      "¿Asumir que la incompatibilidad entre el perfil natural de una persona y su rol es estructural y requiere decisión?",
       "¿Rediseñar la distribución de responsabilidades partiendo del perfil real de cada persona en lugar del organigrama formal?",
       "¿Revelar los perfiles al equipo para mejorar la comunicación interna aunque genere conversaciones delicadas?",
       "¿Reasignar a alguien a un rol más alineado con su perfil natural aunque implique rediseñar el equipo?",
@@ -1115,7 +1129,7 @@
     "justi_capa5": "Porque necesitas confirmar que cada persona opera desde el rol que le corresponde por perfil y capacidad.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de escalamiento",
-    "capa_1_options": "Tengo gente válida pero en el puesto equivocado; Siempre resuelve todo la misma persona; Hay duplicidad de funciones y fricción interna; Hay quien podría aportar más pero está ocupado en lo que no es suyo; El equipo trabaja duro pero el sistema falla igual; Falta autonomía para decidir sin pasar por mí"
+    "capa_1_options": "Tengo personas válidas pero que están en puestos que no se corresponden con su perfil real.; Siempre resuelve todo la misma persona y el resto no tiene la autoridad ni el criterio para actuar.; Hay duplicidad de funciones entre personas o áreas que genera roce y confusión constante.; Alguien del equipo podría aportar mucho más si estuviera en un rol más alineado con sus capacidades.; Todo el mundo trabaja duro pero el sistema falla igual porque los roles están mal asignados.; El equipo no tiene autonomía real para decidir sin pasar por mí en casi cualquier situación."
   },
   {
     "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
@@ -1156,15 +1170,15 @@
     "optimizer_decision": "Diagnóstico de Nivel de Conexión",
     "example": "Empresa industrial 9 por ciento iniciativas Tras protocolo sube a 34 por ciento",
     "capa_1_priorizacion": "Apatia baja energia falta de iniciativa clima apagado pertenencia erosionada equipo desconectado motivacion baja",
-    "justi_capa1": "Tu equipo esta desconectado necesitas medir implicacion",
+    "justi_capa1": "La desconexión del equipo tiene distintas causas. Señala cuáles reconoces para saber dónde se está perdiendo la energía.",
     "capa_2_decision": "Regla 5/25",
     "capa_2_options": [
       "Falta de visibilidad sobre el impacto del trabajo de cada persona en el resultado del negocio",
       "Ausencia de decisiones visibles tomadas a raíz de propuestas del equipo — se propone y nada cambia",
-      "Dinámicas repetitivas sin reto ni novedad que generan automatismo y desconexión",
+      "Dinámicas repetitivas sin reto ni novedad que generan automatismo y desconexión progresiva",
       "Sensación de que el esfuerzo extra no cambia nada ni es reconocido de ninguna forma",
       "Falta de información sobre hacia dónde va el negocio y cuál es el papel del equipo en ello",
-      "Microgestión percibida que elimina la autonomía y la iniciativa antes de que aparezca"
+      "Microgestión percibida que elimina la autonomía y la iniciativa antes de que pueda aparecer"
     ],
     "justi_capa2": "Porque necesitas saber donde se pierde energia",
     "capa_3_comprension": "Mapa de Energia",
@@ -1175,7 +1189,7 @@
     "justi_capa5": "Porque necesitas asegurar participacion",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir implicacion real",
-    "capa_1_options": "El equipo cumple pero no propone ni se implica más; Noto apatía y poca energía en el día a día; El sentido de pertenencia se ha ido enfriando; Hacen lo mínimo y poco más; El silencio del equipo me preocupa pero no sé por qué; Temo que alguien clave se vaya sin avisar"
+    "capa_1_options": "El equipo cumple lo que se le pide pero no propone mejoras ni se implica más allá de lo mínimo.; Hay apatía y poca energía en el día a día que se nota aunque nadie lo mencione.; El sentido de pertenencia se ha ido enfriando sin que haya habido ningún incidente concreto.; Hacen lo mínimo y nada más: no hay nadie que tome iniciativa de forma espontánea.; El silencio del equipo me preocupa pero no sé exactamente por qué está ahí.; Tengo miedo de que alguien clave se vaya sin avisar y sin que yo lo haya visto venir."
   },
   {
     "specialty_id": "RESCATE DE PERSONAS",
@@ -1216,9 +1230,9 @@
     "optimizer_decision": "Diagnóstico de Talento Crítico",
     "example": "Empresa tecnologica 9 por ciento A players Tras protocolo sube a 23 por ciento",
     "capa_1_priorizacion": "Perfiles criticos en riesgo A players sobrecargados falta de plan de retencion desmotivacion silenciosa senales tempranas de fuga carga desequilibrada falta de seguimiento",
-    "justi_capa1": "Tu empresa tiene perfiles criticos en riesgo necesitas medir talento clave",
+    "justi_capa1": "El talento crítico se pierde por distintas razones. Señala cuáles reconoces para priorizar qué riesgo actuar primero.",
     "capa_2_decision": "Analisis de riesgos",
-    "capa_2_options": "Que no hayas hecho nunca una conversación de retención con tus personas clave para saber qué las mantiene y qué las empujaría a irse; Que el coste total de una salida inesperada (sustitución, baja productividad y clientes perdidos) supere 6 meses de su coste laboral; Que haya personas en desconexión silenciosa rindiendo un 30% menos desde hace meses sin que nadie lo haya medido; Que tu estructura salarial esté por debajo del mercado sin saberlo, creando riesgo de fuga activo; Que la salida de una persona se lleve consigo relaciones con clientes clave no documentadas; Que la salida de 2 personas concretas paralizaría áreas enteras del negocio",
+    "capa_2_options": "Que no hayas hecho nunca una conversación de retención con tus personas clave para saber qué las mantiene y qué las empujaría a irse; Que el coste total de una salida inesperada supere 6 meses de coste laboral incluyendo sustitución y pérdida de productividad; Que haya personas en desconexión silenciosa rindiendo un 30% menos desde hace meses sin que nadie lo haya detectado; Que tu estructura salarial esté por debajo del mercado sin saberlo, creando un riesgo de fuga activo; Que la salida de una persona concreta se lleve relaciones con clientes clave que no están documentadas; Que la salida de 2 personas específicas paralizaría áreas enteras del negocio sin posibilidad de cobertura",
     "justi_capa2": "Porque necesitas identificar perfiles vulnerables",
     "capa_3_comprension": "5 Porqués",
     "justi_capa3": "Porque necesitas entender por que estan en riesgo",
@@ -1228,7 +1242,7 @@
     "justi_capa5": "Porque necesitas asegurar acciones consistentes",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir estabilidad del talento",
-    "capa_1_options": "Tengo miedo de que se vaya alguien clave y no sé cómo evitarlo; Mis mejores personas están sobrecargadas y quemadas; No sé qué retiene de verdad a la gente que más importa; Si se va una persona concreta se lleva conocimiento único; El trabajo está mal repartido y cargan siempre los mismos; Me entero tarde de que alguien está descontento"
+    "capa_1_options": "Tengo miedo de que se vaya alguien clave y no tengo ninguna estrategia para evitarlo.; Mis mejores personas están sobrecargadas y quemadas y no sé cómo equilibrar la carga.; No sé qué es lo que retiene de verdad a las personas que más importan para el negocio.; Si una persona concreta se fuera se llevaría consigo conocimiento que no está documentado en ningún sitio.; El trabajo está mal repartido y siempre cargan los mismos aunque no sea lo más justo ni eficiente.; Me entero tarde cuando alguien está descontento, cuando el problema ya es difícil de revertir."
   },
   {
     "specialty_id": "RESCATE DE PERSONAS",
@@ -1269,9 +1283,9 @@
     "optimizer_decision": "Diagnóstico de Distribución de Tiempo del Equipo",
     "example": "Empresa de consultoría: analista senior dedicaba el 60% del tiempo a informes de bajo valor. Tras reasignación, su tiempo en trabajo de alto impacto sube al 80% y el negocio cierra 2 proyectos nuevos sin contratar.",
     "capa_1_priorizacion": "Talento infrautilizado; potencial bloqueado; personas en tareas de bajo impacto; capacidades sin aprovechar; perfiles de alto valor en operativo; sin retos para los mejores; tiempo de alto coste mal asignado.",
-    "justi_capa1": "El talento existe pero el sistema no lo aprovecha — hay personas pagadas a su nivel máximo haciendo tareas por debajo de él.",
+    "justi_capa1": "El potencial bloqueado tiene distintas causas. Señala cuáles reconoces para saber dónde está el talento que ya tienes y no estás aprovechando.",
     "capa_2_decision": "Impacto vs Esfuerzo",
-    "capa_2_options": "Medir el porcentaje de tiempo que cada persona clave dedica a tareas por debajo de su nivel; Calcular el coste real de tener a tu perfil más caro haciendo tareas que podría hacer alguien con la mitad de su salario; Identificar qué capacidades tiene el equipo hoy que, si el negocio las aprovechara, cambiarían resultados en los próximos 6 meses; Reasignar las tareas de bajo valor a las personas con menor coste por hora; Liberar tiempo de los mejores eliminando o delegando tareas que no necesitan su nivel; Definir para cada persona de alto potencial un reto concreto que estire sus capacidades y mida su impacto real en el negocio",
+    "capa_2_options": "Medir el porcentaje de tiempo que cada persona clave dedica a tareas por debajo de su nivel; Calcular el coste real de tener a tu perfil más caro haciendo tareas de bajo valor; Identificar qué capacidades del equipo cambiarían resultados si el negocio las aprovechara en los próximos 6 meses; Reasignar las tareas de bajo valor a las personas con menor coste por hora; Liberar el tiempo de los mejores eliminando o delegando lo que no necesita su nivel; Definir para cada persona de alto potencial un reto que estire sus capacidades y genere impacto medible",
     "justi_capa2": "Porque necesitas priorizar mejoras criticas",
     "capa_3_comprension": "Mapa de competencias vs tareas reales",
     "justi_capa3": "Porque necesitas ver exactamente qué hace cada persona vs qué podría estar haciendo con su nivel real.",
@@ -1281,7 +1295,7 @@
     "justi_capa5": "Porque necesitas confirmar que las reasignaciones se ejecutaron y el tiempo liberado se usa bien.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion del tiempo de productividad",
-    "capa_1_options": "Pago talento que no estoy aprovechando; Mi equipo pasa el día en tareas de bajo impacto; La gente sabe y puede más de lo que les pido; Tengo gente buena haciendo cosas que no aportan; Desaprovecho capacidades que ya tengo en casa; Los nuevos tardan demasiado en rendir de verdad"
+    "capa_1_options": "Estoy pagando talento que el negocio no está aprovechando al nivel que debería.; Mi equipo pasa la mayor parte del día en tareas de bajo impacto o que no necesitan su nivel.; Las personas saben más y pueden más de lo que el negocio les está pidiendo en este momento.; Tengo personas buenas haciendo cosas que alguien con la mitad de su coste podría hacer igual.; Desaprovecho capacidades que ya tengo en casa porque el sistema no las activa ni las libera.; Las nuevas incorporaciones tardan demasiado en rendir de verdad porque no hay proceso que las guíe."
   },
   {
     "specialty_id": "RESCATE DE PERSONAS",
@@ -1322,9 +1336,16 @@
     "optimizer_decision": "Diagnóstico de Tensiones No Resueltas",
     "example": "Empresa de mantenimiento 47 por ciento dependencia Tras protocolo baja a 18 por ciento",
     "capa_1_priorizacion": "Tensiones no resueltas; conflictos silenciosos; clima deteriorado; fricciones acumuladas; personas que no se hablan; problemas que todos ven pero nadie nombra; desgaste colectivo sin salida.",
-    "justi_capa1": "Las tensiones no resueltas contaminan el ambiente sin que nadie las nombre — y lo que no se dice no se puede resolver.",
+    "justi_capa1": "Las tensiones internas tienen distintos orígenes. Señala cuáles reconoces para saber qué escenario priorizar antes de que el coste crezca.",
     "capa_2_decision": "Árbol de Decisiones",
-    "capa_2_options": "¿Cuantificar el coste mensual del conflicto en productividad perdida, errores y ausencias antes de decidir si actuar?; ¿Separar a dos personas que generan fricción aunque complique la operativa?; ¿Prescindir de quien genera mal ambiente aunque sea técnicamente bueno?; ¿Documentar el conocimiento crítico aunque la persona clave se sienta amenazada?; ¿Intervenir con ayuda externa o gestionar el clima internamente?; ¿Hacer una reunión abierta sobre el clima o hablar individualmente con cada persona?",
+    "capa_2_options": [
+      "¿Cuantificar el coste mensual del conflicto en productividad perdida, errores y ausencias antes de decidir si actuar?",
+      "¿Separar a dos personas que generan fricción aunque complique la operativa y genere incomodidad a corto plazo?",
+      "¿Prescindir de quien genera mal ambiente aunque sea técnicamente bueno y su salida genere riesgo operativo?",
+      "¿Documentar el conocimiento crítico aunque la persona clave se sienta amenazada por el proceso?",
+      "¿Intervenir con ayuda externa o gestionar el clima internamente con los recursos actuales?",
+      "¿Hacer una reunión abierta sobre el clima o hablar individualmente con cada persona del equipo?"
+    ],
     "justi_capa2": "Porque necesitas evaluar escenarios",
     "capa_3_comprension": "Mapa de clima y fricciones",
     "justi_capa3": "Porque necesitas ver exactamente dónde se concentran las tensiones y qué las alimenta.",
@@ -1334,7 +1355,7 @@
     "justi_capa5": "Porque necesitas confirmar que las tensiones bajan y el equipo recupera rendimiento.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción de conflictos no resueltos y la mejora del clima organizacional.",
-    "capa_1_options": "Hay tensiones que todos notan pero nadie menciona; El mal ambiente contamina el día a día; Demasiadas cosas dependen de una sola persona; Si esa persona falta nos paramos; No tenemos backup ni el conocimiento documentado; Las tensiones se acumulan hasta que explotan"
+    "capa_1_options": "Hay tensiones en el equipo que todos notan pero que nadie menciona ni se aborda directamente.; El mal ambiente contamina el día a día y se nota en el rendimiento aunque nadie lo diga explícitamente.; Demasiadas cosas dependen de una sola persona y eso genera fragilidad operativa y emocional.; Si esa persona faltara el negocio se pararía porque no hay backup ni nadie que pueda cubrirla.; No tenemos el conocimiento crítico documentado en ningún sitio y eso crea dependencia invisible.; Las tensiones se acumulan durante semanas o meses hasta que explotan de forma inesperada y difícil de gestionar."
   },
   {
     "specialty_id": "TERAPIA DE EXPERIENCIA",
@@ -1375,15 +1396,15 @@
     "optimizer_decision": "Diagnóstico de Consistencia de Experiencia",
     "example": "Centro estetica 52 por ciento consistencia Tras protocolo sube a 84 por ciento",
     "capa_1_priorizacion": "Experiencia variable pasos distintos segun canal falta de estandares micro momentos sin valor equipo improvisa cliente no sabe que esperar",
-    "justi_capa1": "Tu experiencia es inconsistente necesitas medir coherencia",
+    "justi_capa1": "La experiencia inconsistente tiene distintos focos. Señala cuáles reconoces para saber qué momentos clave diseñar primero.",
     "capa_2_decision": "Regla 5/25",
     "capa_2_options": [
-      "Ausencia de momentos diseñados intencionalmente para generar sorpresa positiva — el servicio es correcto, no memorable",
-      "El servicio es percibido como competente pero intercambiable — ningún elemento lo hace difícil de olvidar",
-      "Los touchpoints de mayor impacto emocional (inicio y cierre) no tienen un protocolo diferencial",
+      "Ausencia de momentos diseñados intencionalmente para generar sorpresa positiva — el servicio es correcto pero no memorable",
+      "El servicio es percibido como competente pero intercambiable — ningún elemento lo hace difícil de olvidar o recomendar",
+      "Los touchpoints de mayor impacto emocional (inicio y cierre) no tienen un protocolo diferencial definido",
       "El equipo gestiona las interacciones de forma funcional pero sin lenguaje ni comportamiento de experiencia diferencial",
-      "No hay ningún gesto de valor añadido que el cliente no haya pagado y no esperaba recibir",
-      "Los clientes satisfechos no recomiendan porque no tienen ninguna historia que contar sobre la empresa"
+      "No hay ningún gesto de valor añadido que el cliente no haya pagado y no esperaba recibir en ningún momento",
+      "Los clientes satisfechos no recomiendan porque no tienen ninguna historia memorable que contar sobre la empresa"
     ],
     "justi_capa2": "Porque necesitas identificar micro momentos clave",
     "capa_3_comprension": "Customer Journey Map",
@@ -1394,7 +1415,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir coherencia real",
-    "capa_1_options": "La experiencia del cliente cambia según el día o quién atiende; No tenemos un estándar de servicio improvisamos; Un mal día borra el esfuerzo de diez que salieron bien; El cliente no sabe qué esperar cada vez que viene; Cuidamos unos momentos y descuidamos otros; Mi reputación se resiente por esa irregularidad"
+    "capa_1_options": "La experiencia que recibe el cliente varía según el día o la persona que atiende, sin que exista un estándar.; No tenemos un protocolo de servicio definido: cada persona improvisa a su manera.; Un mal día borra el esfuerzo de diez atenciones que salieron bien, y eso afecta a la reputación.; El cliente no sabe qué esperar cada vez que viene porque la experiencia es impredecible.; Cuidamos bien algunos momentos del proceso pero descuidamos otros de igual o mayor impacto.; La irregularidad se está resintiendo en la reputación y en los comentarios que recibimos."
   },
   {
     "specialty_id": "TERAPIA DE EXPERIENCIA",
@@ -1435,7 +1456,7 @@
     "optimizer_decision": "Diagnóstico de Recuperación de Cliente",
     "example": "Centro estetica 18 por ciento recuperacion Tras protocolo sube a 67 por ciento",
     "capa_1_priorizacion": "Clientes molestos no detectados equipo no identifica senales cliente se desconecta experiencia se rompe reputacion cae no hay protocolo de recuperacion",
-    "justi_capa1": "Tu negocio pierde clientes molestos necesitas medir recuperacion",
+    "justi_capa1": "Los clientes se pierden por distintos motivos. Señala cuáles reconoces para saber qué riesgo está erosionando la reputación de forma silenciosa.",
     "capa_2_decision": "Análisis de Riesgos",
     "capa_2_options": [
       "Riesgo de invisibilidad: el cliente lleva más de 45 días sin ningún contacto proactivo de la empresa",
@@ -1454,7 +1475,7 @@
     "justi_capa5": "Porque necesitas asegurar pasos criticos",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir recuperacion real",
-    "capa_1_options": "Tengo clientes que se van sin decir nada; No detectamos cuándo un cliente está molesto; No tenemos un protocolo para recuperar a un cliente dolido; El cliente insatisfecho habla mal de mí por ahí; La experiencia se rompe sin que yo lo vea; Pierdo reputación en silencio mes a mes"
+    "capa_1_options": "Tengo clientes que se van sin decir nada y me entero cuando ya han desaparecido del todo.; No tenemos forma de detectar cuándo un cliente está molesto antes de que tome la decisión de irse.; No hay ningún protocolo para recuperar a un cliente que ha tenido una mala experiencia con nosotros.; El cliente insatisfecho no nos lo dice a nosotros: se lo cuenta a otros y daña la reputación en silencio.; La experiencia se rompe en algún punto del proceso sin que yo tenga visibilidad de cuándo ni dónde ocurre.; Estoy perdiendo reputación mes a mes de forma silenciosa sin ninguna señal de alerta clara."
   },
   {
     "specialty_id": "TERAPIA DE EXPERIENCIA",
@@ -1495,13 +1516,13 @@
     "optimizer_decision": "Diagnóstico de Gap de Valor Percibido",
     "example": "Clinica dental 38 por ciento valor percibido Tras protocolo sube a 79 por ciento",
     "capa_1_priorizacion": "Cliente no entiende valor experiencia funcional no diferenciada narrativa debil estetica pobre momentos sin impacto precio no justificado",
-    "justi_capa1": "Tu experiencia no transmite valor necesitas medir percepcion",
+    "justi_capa1": "El valor real no se percibe por distintas razones. Señala cuáles reconoces para saber dónde está el gap entre lo que entregas y lo que el cliente siente que recibe.",
     "capa_2_decision": "DAFO de valor",
     "capa_2_options": [
       "El cliente no tiene referencia de con qué comparar — nadie estableció una línea base al inicio del servicio",
       "La fluidez en la entrega hace invisible el expertise — el cliente subestima lo que requiere hacerlo bien",
       "Las expectativas fueron gestionadas hacia arriba al vender y ahora el resultado correcto parece insuficiente",
-      "El valor impacta en múltiples niveles de la organización del cliente pero solo se rinde cuentas a una sola persona",
+      "El valor impacta en múltiples niveles del cliente pero solo se rinde cuentas a una sola persona",
       "La competencia con menor resultado pero mejor presentación está ganando la comparación de valor percibido",
       "El ciclo pago-percepción está invertido: el cliente paga antes de sentir el valor, nunca después"
     ],
@@ -1514,7 +1535,7 @@
     "justi_capa5": "Porque necesitas asegurar ejecucion",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir aumento de valor percibido",
-    "capa_1_options": "Mis clientes pagan pero no me recomiendan; El cliente no percibe el valor que de verdad entrego; Pierdo renovaciones aunque hago bien el trabajo; Mi servicio funciona pero no emociona ni destaca; Justifico el precio con esfuerzo y aun así dudan; No consigo que el cliente sienta que acertó conmigo"
+    "capa_1_options": "Mis clientes pagan sin protestar pero tampoco me recomiendan de forma activa ni espontánea.; El cliente no percibe el valor real de lo que entrego aunque yo sepa que el trabajo es de calidad.; Pierdo renovaciones aunque hago bien el trabajo: el cliente no siente que haya valido lo que pagó.; Mi servicio funciona correctamente pero no genera ningún momento memorable ni impacto emocional.; Cuando justifico el precio con esfuerzo y dedicación, los clientes aún así lo ponen en duda.; No consigo que el cliente sienta que tomar la decisión de contratarme fue claramente la correcta."
   },
   {
     "specialty_id": "EXCELENCIA OPERATIVA",
@@ -1555,9 +1576,9 @@
     "optimizer_decision": "Diagnóstico de Sistema de Integración",
     "example": "Fabrica industrial 27 por ciento errores iniciales Tras protocolo baja a 8 por ciento",
     "capa_1_priorizacion": "Nuevas incorporaciones cometen errores repetidos no hay estandar de integracion curva de aprendizaje larga falta de acompanamiento procesos confusos impacto en calidad",
-    "justi_capa1": "Tu integracion es lenta necesitas medir errores iniciales",
+    "justi_capa1": "La integración lenta tiene distintas causas. Señala cuáles reconoces para saber qué riesgo está costando más y por dónde rediseñar el sistema.",
     "capa_2_decision": "Analisis de riesgos",
-    "capa_2_options": "Que el coste total de reemplazar a una persona supere el 30% de su salario anual (reclutamiento, formación y baja productividad); Que el conocimiento crítico de un rol esté en la cabeza de una sola persona y nadie más pueda cubrirlo; Que el equipo pierda más de 2 horas semanales por persona resolviendo dudas del nuevo en lugar de producir; Que un nuevo tarde más de 3 meses en rendir al nivel esperado por falta de proceso; Que la falta de estándar genere diferencias de calidad entre personas del mismo rol; Que solo el dueño pueda integrar nuevas incorporaciones porque el proceso no está delegado",
+    "capa_2_options": "Que el coste total de reemplazar a una persona supere el 30% de su salario anual en reclutamiento, formación y baja productividad; Que el conocimiento crítico de un rol esté en la cabeza de una sola persona y nadie más pueda cubrirlo; Que el equipo pierda más de 2 horas semanales por persona resolviendo dudas del nuevo en lugar de producir; Que un nuevo tarde más de 3 meses en rendir al nivel esperado por falta de proceso documentado; Que la falta de estándar genere diferencias de calidad entre personas del mismo rol; Que solo el dueño pueda integrar nuevas incorporaciones porque el proceso no está delegado",
     "justi_capa2": "Porque necesitas identificar errores iniciales",
     "capa_3_comprension": "5 Porqués",
     "justi_capa3": "Porque necesitas llegar a la causa raiz",
@@ -1567,7 +1588,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de errores iniciales",
-    "capa_1_options": "Cada persona nueva tarda meses en rendir de verdad; Los que entran cometen los mismos errores al principio; No tengo un sistema claro para integrar a alguien nuevo; El tiempo de adaptación lo pago yo en dinero y calidad; Mis procesos de entrada son confusos; La curva de aprendizaje es demasiado larga"
+    "capa_1_options": "Cada persona nueva tarda meses en rendir al nivel esperado y ese tiempo lo pago yo en coste y en calidad.; Los nuevos cometen siempre los mismos errores al principio porque nadie los guía con un proceso claro.; No tengo un sistema documentado de integración: cada entrada es diferente y depende de quién acompaña.; El tiempo de adaptación de cada nueva persona lo absorbe el equipo existente y resta productividad.; Los procesos de entrada son confusos y generan dudas que interrumpen al equipo más de lo que debería.; La curva de aprendizaje es demasiado larga comparada con la complejidad real del puesto."
   },
   {
     "specialty_id": "EXCELENCIA OPERATIVA",
@@ -1608,9 +1629,16 @@
     "optimizer_decision": "Diagnóstico de Dependencia del Líder",
     "example": "Empresa de servicios 49 por ciento dependencia Tras protocolo baja a 14 por ciento",
     "capa_1_priorizacion": "El lider toma demasiadas decisiones el equipo depende del lider no hay claridad sobre que delegar decisiones se atascan roles sin autonomia carga mal distribuida",
-    "justi_capa1": "Tu organizacion depende demasiado del lider necesitas medir dependencia",
+    "justi_capa1": "La dependencia del líder tiene distintos focos. Señala cuáles reconoces para saber qué decisión de delegación tomar primero.",
     "capa_2_decision": "Árbol de Decisiones",
-    "capa_2_options": "¿Asumir que ciertas decisiones se tomarán peor sin mí a cambio de liberar 10 o más horas semanales?; ¿Reducir margen este año para contratar un perfil que absorba mi dependencia en operaciones?; ¿Hacer explícito al equipo que voy a delegar aunque eso implique errores visibles en la transición?; ¿Documentar todo mi conocimiento tácito aunque revele que hay funciones que solo yo sé hacer?; ¿Establecer zonas donde el equipo tiene autoridad total y yo no intervengo aunque me cueste?; ¿Calcular cuánto vale hoy el negocio con mi dependencia y cuánto valdría si pudiera funcionar sin mí?",
+    "capa_2_options": [
+      "¿Asumir que ciertas decisiones se tomarán peor sin mí a cambio de liberar 10 o más horas semanales?",
+      "¿Reducir margen este año para contratar un perfil que absorba mi dependencia en operaciones críticas?",
+      "¿Hacer explícito al equipo que voy a delegar aunque eso implique errores visibles en la transición?",
+      "¿Documentar todo mi conocimiento tácito aunque revele que hay funciones que solo yo sé hacer?",
+      "¿Establecer zonas donde el equipo tiene autoridad total y yo no intervengo aunque me cueste?",
+      "¿Calcular cuánto vale hoy el negocio con mi dependencia y cuánto valdría si pudiera funcionar sin mí?"
+    ],
     "justi_capa2": "Porque necesitas definir que decisiones delegar",
     "capa_3_comprension": "SIPOC de roles",
     "justi_capa3": "Porque necesitas entender flujo de responsabilidad",
@@ -1620,7 +1648,7 @@
     "justi_capa5": "Porque necesitas asegurar ejecucion",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de dependencia",
-    "capa_1_options": "Si yo no estoy la empresa se para; Demasiadas decisiones dependen solo de mí; No tengo claro qué puedo delegar; No puedo tomarme vacaciones sin que todo se detenga; El equipo depende de mí para casi todo; He construido un puesto de trabajo no una empresa"
+    "capa_1_options": "Si yo no estoy disponible la empresa se para o toma decisiones malas que luego hay que corregir.; Demasiadas decisiones del día a día dependen exclusivamente de mí aunque no tendría que ser así.; No tengo claro qué puedo delegar sin que la calidad o el control se vean comprometidos.; No puedo ausentarme unos días sin que el equipo me llame para resolver situaciones que podría resolver solo.; El equipo depende de mí para casi cualquier decisión aunque tengan experiencia y criterio para tomarlas.; He construido un puesto de trabajo que me necesita a mí, no una empresa que funcione sin mí."
   },
   {
     "specialty_id": "EXCELENCIA OPERATIVA",
@@ -1661,7 +1689,7 @@
     "optimizer_decision": "Estabilizar el Ritmo Operativo",
     "example": "Empresa logística: 62% cumplimiento en plazo. Tras protocolo de nivelación: 88% entregas a tiempo, sin incremento de plantilla.",
     "capa_1_priorizacion": "Picos de carga impredecibles; semanas sin actividad y semanas de colapso; retrasos sistemáticos en entregas; urgencias constantes; planificación reactiva; sin estándares de producción; capacidad mal dimensionada; dependencia del esfuerzo individual.",
-    "justi_capa1": "La irregularidad proviene de carga no nivelada y falta de estándares de ritmo.",
+    "justi_capa1": "La irregularidad operativa tiene distintas causas. Señala cuáles reconoces para saber qué tipo de desajuste de carga está generando los picos.",
     "capa_2_decision": "Análisis de capacidad y carga",
     "capa_2_options": "Tiempo del dueño o responsable: horas semanales en operativo vs estratégico; Cola de proyectos: tiempo medio desde que se solicita hasta que se empieza realmente; Coste de urgencias: porcentaje del tiempo dedicado a imprevistos vs trabajo planificado; Picos de entrega: concentración de cierres en la última semana del mes vs distribución uniforme; Variabilidad de carga: diferencia entre la semana más intensa y la más tranquila del último mes; Cuello de botella: paso del proceso que más frecuentemente retrasa las entregas",
     "justi_capa2": "Necesitas identificar qué tipo de irregularidad tiene tu operación.",
@@ -1673,6 +1701,6 @@
     "justi_capa5": "Para estandarizar el ritmo operativo y medir cumplimiento.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Para medir el porcentaje de entregas a tiempo semana a semana.",
-    "capa_1_options": "Tengo semanas de colapso y semanas muertas sin término medio; Las urgencias de última hora rompen cualquier planificación; Los retrasos en entregas son habituales y los clientes lo notan; Dedico más tiempo a apagar fuegos que a producir; Mi equipo trabaja a tope en picos y está inactivo en valles; No puedo prever cuándo llegará el próximo colapso de trabajo"
+    "capa_1_options": "Tengo semanas de colapso y semanas muertas sin punto medio: la carga nunca está bien distribuida.; Las urgencias de última hora rompen cualquier planificación que haya intentado hacer.; Los retrasos en entregas son habituales y los clientes ya los descuentan aunque no lo digan.; Dedico más tiempo a apagar fuegos que a ejecutar el trabajo planificado con normalidad.; El equipo trabaja al máximo en los picos y queda infrautilizado en los valles de actividad.; No puedo prever cuándo llegará el próximo colapso de trabajo ni cómo prepararlo."
   }
 ]
