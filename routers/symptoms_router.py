@@ -11,6 +11,7 @@ router = APIRouter(prefix="/specialties", tags=["specialties"])
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # masesora_backend
 SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptoms.json")
+HERR_DIR = os.path.join(BASE_DIR, "data", "herramientas")
 
 
 def _load_catalog() -> list[dict]:
@@ -125,13 +126,26 @@ def get_symptoms_for_specialty(specialty_id: str):
     return symptoms
 
 
+def _get_herramientas(symptom_id: str) -> list:
+    """Devuelve los archivos HTML de herramientas del síntoma, ordenados por nombre."""
+    folder = os.path.join(HERR_DIR, symptom_id)
+    if not os.path.isdir(folder):
+        return []
+    return sorted(f for f in os.listdir(folder) if f.endswith(".html"))
+
+
 @router.get("/symptom/{symptom_id}")
 def get_symptom(symptom_id: str):
     """Síntoma individual por su ID (ej: UCI-S1)."""
     symptom = get_symptom_by_id(symptom_id)
     if not symptom:
         raise HTTPException(status_code=404, detail=f"Síntoma '{symptom_id}' no encontrado")
-    return symptom
+    result = dict(symptom)
+    if not result.get("capa_2_herramientas"):
+        herrs = _get_herramientas(symptom_id)
+        if herrs:
+            result["capa_2_herramientas"] = herrs
+    return result
 
 
 @router.get("/scanner/{codigo}")
