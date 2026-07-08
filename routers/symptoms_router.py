@@ -1,6 +1,7 @@
 import os
 import json
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
 
 router = APIRouter(prefix="/specialties", tags=["specialties"])
 
@@ -11,7 +12,13 @@ router = APIRouter(prefix="/specialties", tags=["specialties"])
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # masesora_backend
 SYMPTOMS_PATH = os.path.join(BASE_DIR, "data", "symptoms.json")
-HERR_DIR = os.path.join(BASE_DIR, "data", "herramientas")
+
+# Busca herramientas en el directorio correcto (prueba dos rutas posibles)
+_HERR_CANDIDATES = [
+    os.path.join(BASE_DIR, "data", "herramientas"),                  # masesora_backend/data/herramientas
+    os.path.join(os.path.dirname(BASE_DIR), "data", "herramientas"), # repo_root/data/herramientas
+]
+HERR_DIR = next((p for p in _HERR_CANDIDATES if os.path.isdir(p)), _HERR_CANDIDATES[0])
 
 
 def _load_catalog() -> list[dict]:
@@ -132,6 +139,15 @@ def _get_herramientas(symptom_id: str) -> list:
     if not os.path.isdir(folder):
         return []
     return sorted(f for f in os.listdir(folder) if f.endswith(".html"))
+
+
+@router.get("/herramienta/{symptom_id}/{filename}")
+def serve_herramienta(symptom_id: str, filename: str):
+    """Sirve el HTML de una herramienta operativa por síntoma."""
+    path = os.path.join(HERR_DIR, symptom_id, filename)
+    if not os.path.isfile(path):
+        raise HTTPException(status_code=404, detail=f"Herramienta no encontrada: {symptom_id}/{filename} (buscado en {HERR_DIR})")
+    return FileResponse(path, media_type="text/html")
 
 
 @router.get("/symptom/{symptom_id}")
