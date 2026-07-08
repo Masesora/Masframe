@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARDIO-S2 R5 — Tracker Propuestas Comerciales</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 14px; }
+  .header { background: #1B2B4B; color: #fff; display: flex; align-items: center; gap: 20px; padding: 16px 28px; }
+  .logo { font-size: 22px; font-weight: 800; color: #C4A55A; letter-spacing: 2px; white-space: nowrap; }
+  .header-text { flex: 1; }
+  .header-text h1 { font-size: 18px; font-weight: 700; }
+  .header-text h2 { font-size: 13px; font-weight: 400; color: #C4A55A; margin-top: 2px; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; white-space: nowrap; letter-spacing: 1px; }
+  .container { padding: 24px 28px; max-width: 1400px; margin: 0 auto; }
+  .section-title { font-size: 13px; font-weight: 700; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .table-wrap { overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(27,43,75,.10); background: #fff; margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: #1B2B4B; color: #C4A55A; padding: 10px 10px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .5px; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid #eee; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 8px 8px; vertical-align: middle; }
+  tfoot td { background: #f0efff; font-weight: 700; padding: 8px 8px; font-size: 12px; color: #1B2B4B; }
+  td input, td select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 13px; color: #1B2B4B; background: #fafafa; }
+  td input:focus, td select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; background: #fff; }
+  .calc-cell { background: #f0efff; font-weight: 600; text-align: center; white-space: nowrap; }
+  .status-Enviada { color: #555; }
+  .status-Vista { color: #2563eb; }
+  .status-Seguimiento { color: #d97706; }
+  .status-Ganada { color: #16a34a; font-weight: 700; }
+  .status-Perdida { color: #dc2626; }
+  .btn-add { background: #1B2B4B; color: #C4A55A; border: none; padding: 9px 20px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; margin-bottom: 20px; transition: background .2s; }
+  .btn-add:hover { background: #243a62; }
+  .btn-del { background: none; border: none; color: #dc2626; font-size: 16px; cursor: pointer; padding: 0 4px; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .metric-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(27,43,75,.09); border-left: 4px solid #C4A55A; }
+  .metric-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+  .metric-value { font-size: 26px; font-weight: 800; color: #1B2B4B; }
+  .metric-value.warning { color: #d97706; }
+  .metric-value.danger { color: #dc2626; }
+  .metric-value.ok { color: #16a34a; }
+  .semaforo { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 24px; }
+  .semaforo.verde { background: #dcfce7; color: #16a34a; }
+  .semaforo.amarillo { background: #fef9c3; color: #a16207; }
+  .semaforo.rojo { background: #fee2e2; color: #dc2626; }
+  .semaforo-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .semaforo.verde .semaforo-dot { background: #16a34a; }
+  .semaforo.amarillo .semaforo-dot { background: #ca8a04; }
+  .semaforo.rojo .semaforo-dot { background: #dc2626; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 11px 28px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: background .2s; }
+  .btn-print:hover { background: #b8943e; }
+  @media print {
+    .btn-add, .btn-del, .btn-print { display: none; }
+    body { background: #fff; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-text">
+    <h1>CARDIO-S2 — Hemorragia Comercial</h1>
+    <h2>R5 · Tracker de propuestas enviadas y seguimiento</h2>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+
+<div class="container">
+  <div class="section-title">Propuestas activas</div>
+  <button class="btn-add" onclick="addRow()">+ Añadir propuesta</button>
+  <div class="table-wrap">
+    <table id="tabla">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cliente</th>
+          <th>Fecha propuesta</th>
+          <th>Importe (€)</th>
+          <th>Servicio</th>
+          <th>Días desde envío</th>
+          <th>Estado</th>
+          <th>Motivo pérdida</th>
+          <th>Próximo paso</th>
+          <th>Fecha follow-up</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" style="text-align:right">TOTALES</td>
+          <td id="total-importe">0 €</td>
+          <td colspan="7"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="section-title">Semáforo de conversión</div>
+  <div id="semaforo-conv" class="semaforo rojo" style="margin-bottom:20px">
+    <span class="semaforo-dot"></span>
+    <span id="semaforo-texto">—</span>
+  </div>
+
+  <div class="section-title">Métricas clave</div>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total propuestas</div>
+      <div class="metric-value" id="m-total">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Valor total en juego (€)</div>
+      <div class="metric-value" id="m-valor">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Tasa de cierre</div>
+      <div class="metric-value" id="m-cierre">0%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Tiempo medio decisión (días)</div>
+      <div class="metric-value" id="m-tiempo">—</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Valor perdido (€)</div>
+      <div class="metric-value" id="m-perdido">0</div>
+    </div>
+  </div>
+
+  <button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div>
+
+<script>
+const tbody = document.getElementById('tbody');
+let rowCount = 0;
+
+function today() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function daysDiff(dateStr) {
+  if (!dateStr) return '—';
+  const d = new Date(dateStr);
+  const now = new Date();
+  now.setHours(0,0,0,0);
+  d.setHours(0,0,0,0);
+  const diff = Math.round((now - d) / 86400000);
+  return diff >= 0 ? diff : '—';
+}
+
+function fmt(n) {
+  return Number(n).toLocaleString('es-ES', {minimumFractionDigits:0, maximumFractionDigits:0});
+}
+
+function addRow(data) {
+  rowCount++;
+  const d = data || {};
+  const tr = document.createElement('tr');
+  tr.dataset.id = rowCount;
+  tr.innerHTML = `
+    <td style="text-align:center;color:#888;font-size:12px">${rowCount}</td>
+    <td><input type="text" class="f-cliente" placeholder="Nombre cliente" value="${d.cliente||''}"></td>
+    <td><input type="date" class="f-fecha" value="${d.fecha||today()}" onchange="recalc()"></td>
+    <td><input type="number" class="f-importe" placeholder="0" min="0" value="${d.importe||''}" onchange="recalc()"></td>
+    <td><input type="text" class="f-servicio" placeholder="Servicio" value="${d.servicio||''}"></td>
+    <td class="calc-cell f-dias">—</td>
+    <td>
+      <select class="f-estado" onchange="recalc(); colorEstado(this)">
+        <option ${d.estado==='Enviada'?'selected':''}>Enviada</option>
+        <option ${d.estado==='Vista'?'selected':''}>Vista</option>
+        <option ${d.estado==='Seguimiento'?'selected':''}>Seguimiento</option>
+        <option ${d.estado==='Ganada'?'selected':''}>Ganada</option>
+        <option ${d.estado==='Perdida'?'selected':''}>Perdida</option>
+      </select>
+    </td>
+    <td><input type="text" class="f-motivo" placeholder="Solo si Perdida" value="${d.motivo||''}"></td>
+    <td><input type="text" class="f-paso" placeholder="Acción siguiente" value="${d.paso||''}"></td>
+    <td><input type="date" class="f-followup" value="${d.followup||''}"></td>
+    <td><button class="btn-del" onclick="delRow(this)" title="Eliminar">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  colorEstado(tr.querySelector('.f-estado'));
+  recalc();
+}
+
+function colorEstado(sel) {
+  sel.className = 'f-estado status-' + sel.value;
+}
+
+function delRow(btn) {
+  btn.closest('tr').remove();
+  recalc();
+}
+
+function recalc() {
+  const rows = tbody.querySelectorAll('tr');
+  let total = 0, ganadas = 0, perdidas = 0, valorPerdido = 0;
+  let sumaGanadasDias = 0, countGanadas = 0;
+
+  rows.forEach(tr => {
+    const fechaInput = tr.querySelector('.f-fecha');
+    const importeInput = tr.querySelector('.f-importe');
+    const estadoSel = tr.querySelector('.f-estado');
+    const diasCell = tr.querySelector('.f-dias');
+
+    const dias = fechaInput ? daysDiff(fechaInput.value) : '—';
+    if (diasCell) diasCell.textContent = dias !== '—' ? dias + ' d' : '—';
+
+    const importe = parseFloat(importeInput?.value) || 0;
+    const estado = estadoSel?.value || '';
+    total += importe;
+    if (estado === 'Ganada') { ganadas++; sumaGanadasDias += (dias === '—' ? 0 : dias); countGanadas++; }
+    if (estado === 'Perdida') { perdidas++; valorPerdido += importe; }
+  });
+
+  const nProp = rows.length;
+  const tasaCierre = nProp > 0 ? Math.round(ganadas / nProp * 100) : 0;
+  const tiempoMedio = countGanadas > 0 ? Math.round(sumaGanadasDias / countGanadas) : null;
+
+  document.getElementById('total-importe').textContent = fmt(total) + ' €';
+  document.getElementById('m-total').textContent = nProp;
+  document.getElementById('m-valor').textContent = fmt(total) + ' €';
+  document.getElementById('m-cierre').textContent = tasaCierre + '%';
+  document.getElementById('m-tiempo').textContent = tiempoMedio !== null ? tiempoMedio + ' d' : '—';
+  document.getElementById('m-perdido').textContent = fmt(valorPerdido) + ' €';
+
+  const sDiv = document.getElementById('semaforo-conv');
+  const sTxt = document.getElementById('semaforo-texto');
+  sDiv.className = 'semaforo ' + (tasaCierre >= 30 ? 'verde' : tasaCierre >= 15 ? 'amarillo' : 'rojo');
+  sTxt.textContent = 'Conversión: ' + tasaCierre + '% — ' + (tasaCierre >= 30 ? 'Nivel óptimo' : tasaCierre >= 15 ? 'Mejora necesaria' : 'Crítico — acción urgente');
+}
+
+// Fila de ejemplo
+addRow({cliente:'Ejemplo S.L.', fecha: today(), importe:'3500', servicio:'Asesoría fiscal', estado:'Enviada', paso:'Llamar el lunes'});
+</script>
+</body>
+</html>

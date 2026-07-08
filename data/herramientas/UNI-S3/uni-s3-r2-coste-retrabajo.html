@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coste de Retrabajo — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .trend-box { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+  .trend-col { flex: 1; min-width: 140px; }
+  .trend-label { font-size: 0.8rem; color: #666; margin-bottom: 4px; }
+  .trend-input { border: 1px solid #ddd; border-radius: 4px; padding: 8px 10px; font-size: 1rem; font-weight: 700; width: 100%; }
+  .trend-arrow { font-size: 2rem; font-weight: 900; display: flex; align-items: center; padding-bottom: 4px; }
+  .trend-up { color: #e53e3e; }
+  .trend-down { color: #38a169; }
+  .trend-flat { color: #d69e2e; }
+  .param-row { display: flex; align-items: center; gap: 16px; padding: 12px; background: #f8f7ff; border-radius: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+  .param-label { font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+  .param-input { width: 120px; border: 1px solid #C4A55A; border-radius: 4px; padding: 6px 10px; font-size: 0.9rem; font-weight: 700; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S3 — Fuga de Calidad Crónica</div>
+    <div class="header-title">R2 — Coste de Retrabajo</div>
+    <div class="header-sub">Cuantificación económica del retrabajo y evolución de tendencia</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Total Horas Retrabajo</div>
+      <div class="metric-value" id="m-horas">0</div>
+      <div class="metric-unit">horas consumidas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Coste Total Retrabajo</div>
+      <div class="metric-value" id="m-coste">0 €</div>
+      <div class="metric-unit">impacto económico total</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Coste Absorbido</div>
+      <div class="metric-value" id="m-absorbido">0 €</div>
+      <div class="metric-unit">no cobrado al cliente</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Horas en Retrabajo</div>
+      <div class="metric-value" id="m-pct">0%</div>
+      <div class="metric-unit">sobre horas producidas</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Parámetros</div>
+    <div class="param-row">
+      <span class="param-label">Total horas producidas este mes:</span>
+      <input class="param-input" type="number" id="horas-producidas" value="160" oninput="updateAll()">
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Registro de Retrabajo por Entrega</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Proyecto / Entrega</th>
+          <th>Tipo de error</th>
+          <th style="width:90px">Horas retrabajo</th>
+          <th style="width:80px">Coste hora (€)</th>
+          <th style="width:100px">Coste retrabajo (€)</th>
+          <th style="width:100px">¿Se cobró al cliente?</th>
+          <th style="width:110px">Coste absorbido (€)</th>
+          <th>Causa raíz</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="ejemplo">
+          <td><input value="Proyecto Empresa A — Fase 2" oninput="updateAll()"></td>
+          <td><input value="Datos incorrectos en entregable" oninput="updateAll()"></td>
+          <td><input type="number" value="4" oninput="updateAll()"></td>
+          <td><input type="number" value="35" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Falta de validación previa" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Informe mensual — Julio" oninput="updateAll()"></td>
+          <td><input value="Cálculos erróneos" oninput="updateAll()"></td>
+          <td><input type="number" value="2" oninput="updateAll()"></td>
+          <td><input type="number" value="30" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Sin checklist de revisión" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Contrato cliente nuevo B" oninput="updateAll()"></td>
+          <td><input value="Cláusula desactualizada" oninput="updateAll()"></td>
+          <td><input type="number" value="1.5" oninput="updateAll()"></td>
+          <td><input type="number" value="40" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Plantilla sin actualizar" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Propuesta comercial empresa C" oninput="updateAll()"></td>
+          <td><input value="Precio desactualizado" oninput="updateAll()"></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><input type="number" value="35" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Lista de precios no comunicada" oninput="updateAll()"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir retrabajo</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tendencia Mensual de Coste de Retrabajo</div>
+    <div class="trend-box">
+      <div class="trend-col">
+        <div class="trend-label">Mes -2 (€)</div>
+        <input class="trend-input" type="number" id="t-m2" placeholder="0" oninput="updateTrend()">
+      </div>
+      <div class="trend-arrow" id="arrow1">→</div>
+      <div class="trend-col">
+        <div class="trend-label">Mes -1 (€)</div>
+        <input class="trend-input" type="number" id="t-m1" placeholder="0" oninput="updateTrend()">
+      </div>
+      <div class="trend-arrow" id="arrow2">→</div>
+      <div class="trend-col">
+        <div class="trend-label">Mes actual (€)</div>
+        <input class="trend-input" type="number" id="t-m0" placeholder="0" oninput="updateTrend()">
+      </div>
+      <div id="trend-desc" style="flex:1;min-width:160px;padding:8px;font-size:0.85rem;color:#666;align-self:center"></div>
+    </div>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s3-r2-coste-retrabajo · Herramienta Operativa UNI-S3-R2</div>
+
+<script>
+function addRow() {
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Proyecto / Entrega" oninput="updateAll()"></td>
+    <td><input placeholder="Tipo de error" oninput="updateAll()"></td>
+    <td><input type="number" value="1" oninput="updateAll()"></td>
+    <td><input type="number" value="30" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>No</option></select></td>
+    <td><input class="calc" readonly></td>
+    <td><input placeholder="Causa raíz" oninput="updateAll()"></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  const rows = document.querySelectorAll('#tbody tr');
+  const hProd = parseFloat(document.getElementById('horas-producidas').value) || 160;
+  let totalHoras = 0, totalCoste = 0, totalAbsorbido = 0;
+
+  rows.forEach(tr => {
+    const cols = tr.querySelectorAll('input, select');
+    const h = parseFloat(cols[2].value) || 0;
+    const ch = parseFloat(cols[3].value) || 0;
+    const coste = h * ch;
+    const cobrado = cols[5].value;
+    const absorbido = cobrado === 'No' ? coste : 0;
+    cols[4].value = coste.toFixed(2);
+    cols[6].value = absorbido.toFixed(2);
+    totalHoras += h;
+    totalCoste += coste;
+    totalAbsorbido += absorbido;
+  });
+
+  const pct = hProd > 0 ? ((totalHoras / hProd) * 100).toFixed(1) : '0.0';
+  document.getElementById('m-horas').textContent = totalHoras.toFixed(1);
+  document.getElementById('m-coste').textContent = totalCoste.toFixed(0) + ' €';
+  document.getElementById('m-absorbido').textContent = totalAbsorbido.toFixed(0) + ' €';
+  document.getElementById('m-pct').textContent = pct + '%';
+
+  // Auto-fill current month trend with table total
+  document.getElementById('t-m0').placeholder = totalCoste.toFixed(0);
+  updateTrend();
+}
+
+function updateTrend() {
+  const m2 = parseFloat(document.getElementById('t-m2').value) || 0;
+  const m1 = parseFloat(document.getElementById('t-m1').value) || 0;
+  const m0 = parseFloat(document.getElementById('t-m0').value) || 0;
+
+  function arrow(from, to) {
+    if (from === 0) return '<span class="trend-flat">→</span>';
+    if (to > from * 1.05) return '<span class="trend-up">↑</span>';
+    if (to < from * 0.95) return '<span class="trend-down">↓</span>';
+    return '<span class="trend-flat">→</span>';
+  }
+
+  document.getElementById('arrow1').innerHTML = arrow(m2, m1);
+  document.getElementById('arrow2').innerHTML = arrow(m1, m0);
+
+  let desc = '';
+  if (m1 > 0 && m0 > 0) {
+    const chg = (((m0 - m1) / m1) * 100).toFixed(1);
+    desc = chg > 0
+      ? `<span style="color:#e53e3e;font-weight:700">↑ +${chg}% vs mes anterior.</span> El coste de retrabajo está aumentando.`
+      : `<span style="color:#38a169;font-weight:700">↓ ${chg}% vs mes anterior.</span> Mejora respecto al mes anterior.`;
+  }
+  document.getElementById('trend-desc').innerHTML = desc;
+}
+
+updateAll();
+</script>
+</body>
+</html>

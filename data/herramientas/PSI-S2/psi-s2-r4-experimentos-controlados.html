@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSI-S2-R4 · Registro de Experimentos Controlados</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1e293b; }
+  header { background: #1B2B4B; color: #fff; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+  .logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+  .badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+  main { padding: 28px 32px; max-width: 1400px; margin: 0 auto; }
+  h2 { font-size: 17px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; }
+  .desc { background: #fff; border-left: 4px solid #C4A55A; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #475569; }
+  .params { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #475569; }
+  .params input { border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 8px; font-size: 13px; width: 80px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); min-width: 1200px; }
+  th { background: #1B2B4B; color: #fff; padding: 10px 9px; text-align: left; font-size: 11px; font-weight: 600; }
+  td { padding: 8px 7px; border-bottom: 1px solid #e2e8f0; font-size: 11px; vertical-align: middle; }
+  tr:hover td { background: #f0f4ff; }
+  tr.positivo td { border-left: 4px solid #22c55e; }
+  tr.negativo td { border-left: 4px solid #ef4444; }
+  tr.en-curso td { border-left: 4px solid #3b82f6; }
+  input[type="text"], input[type="number"], textarea { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 5px; width: 95%; font-size: 11px; font-family: system-ui; }
+  textarea { resize: vertical; min-height: 32px; }
+  select { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 5px; width: 95%; font-size: 11px; font-family: system-ui; }
+  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin: 12px 0; font-size: 13px; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; margin: 28px 0 20px; }
+  .metric-card { background: #fff; border: 2px solid #C4A55A; border-radius: 12px; padding: 20px; text-align: center; min-width: 150px; flex: 1; }
+  .metric-value { font-size: 26px; font-weight: 800; color: #1B2B4B; }
+  .metric-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .result-bar { display: flex; gap: 8px; margin: 16px 0; align-items: center; }
+  .result-seg { height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; transition: width .3s; min-width: 30px; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; margin: 24px 0; }
+  @media print { .no-print { display: none !important; } body { background: white; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">M</div>
+  <div>
+    <div style="font-size:11px;letter-spacing:2px;opacity:.7;text-transform:uppercase;">MASFRAME · PSI-S2</div>
+    <div style="font-size:20px;font-weight:700;">Registro de Experimentos Controlados</div>
+  </div>
+  <span class="badge">HERRAMIENTA OPERATIVA</span>
+</header>
+<main>
+  <div class="desc">Registro de pilotos y experimentos organizacionales. Fomenta la cultura de ensayo-aprendizaje. Seguimiento de ratio de éxito, documentación de aprendizajes y decisiones de escalado.</div>
+
+  <div class="params no-print">
+    <label>Meses del período de análisis: <input type="number" id="mesesPeriodo" value="6" min="1" max="24" oninput="recalcular()"></label>
+  </div>
+
+  <h2>Registro de Experimentos / Pilotos</h2>
+  <div class="table-wrap">
+  <table id="tablaExp">
+    <thead>
+      <tr>
+        <th>Experimento</th>
+        <th>Objetivo</th>
+        <th>Responsable</th>
+        <th>Duración (días)</th>
+        <th>Recursos (€)</th>
+        <th>Horas</th>
+        <th>Hipótesis</th>
+        <th>Resultado</th>
+        <th>¿Aprendizaje capturado?</th>
+        <th>¿Escalar?</th>
+      </tr>
+    </thead>
+    <tbody id="tablaBody">
+      <tr>
+        <td><input type="text" value="Reunión de pie (stand-up diario)"></td>
+        <td><textarea placeholder="Objetivo del experimento...">Reducir tiempo de reuniones</textarea></td>
+        <td><input type="text" placeholder="Responsable"></td>
+        <td><input type="number" min="1" value="30" oninput="recalcular()"></td>
+        <td><input type="number" min="0" value="0" oninput="recalcular()"></td>
+        <td><input type="number" min="0" value="2" oninput="recalcular()"></td>
+        <td><textarea placeholder="Hipótesis a probar...">Si hacemos reuniones de pie, reduciremos el tiempo un 40%</textarea></td>
+        <td><select onchange="recalcular()"><option>En curso</option><option>Positivo</option><option>Negativo</option><option>Neutro</option></select></td>
+        <td><select onchange="recalcular()"><option value="">-</option><option>Sí</option><option>No</option></select></td>
+        <td><select onchange="recalcular()"><option value="">-</option><option>Sí</option><option>No</option></select></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Viernes sin reuniones"></td>
+        <td><textarea placeholder="Objetivo...">Proteger tiempo de trabajo profundo</textarea></td>
+        <td><input type="text" placeholder="Responsable"></td>
+        <td><input type="number" min="1" value="60" oninput="recalcular()"></td>
+        <td><input type="number" min="0" value="0" oninput="recalcular()"></td>
+        <td><input type="number" min="0" value="0" oninput="recalcular()"></td>
+        <td><textarea placeholder="Hipótesis...">Aumentará la productividad individual un 20%</textarea></td>
+        <td><select onchange="recalcular()"><option>Positivo</option><option>En curso</option><option>Negativo</option><option>Neutro</option></select></td>
+        <td><select onchange="recalcular()"><option>Sí</option><option>No</option></select></td>
+        <td><select onchange="recalcular()"><option>Sí</option><option>No</option></select></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Canal de ideas anónimo"></td>
+        <td><textarea placeholder="Objetivo...">Capturar ideas sin filtro jerárquico</textarea></td>
+        <td><input type="text" placeholder="Responsable"></td>
+        <td><input type="number" min="1" value="90" oninput="recalcular()"></td>
+        <td><input type="number" min="0" value="200" oninput="recalcular()"></td>
+        <td><input type="number" min="0" value="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Hipótesis...">Se generarán más ideas accionables por semana</textarea></td>
+        <td><select onchange="recalcular()"><option>Neutro</option><option>Positivo</option><option>Negativo</option><option>En curso</option></select></td>
+        <td><select onchange="recalcular()"><option>No</option><option>Sí</option></select></td>
+        <td><select onchange="recalcular()"><option>No</option><option>Sí</option></select></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <button class="btn-add no-print" onclick="addRow()">+ Añadir experimento</button>
+
+  <div style="background:#fff;border-radius:10px;padding:16px 20px;margin:16px 0;box-shadow:0 1px 6px rgba(0,0,0,.07);">
+    <div style="font-size:13px;font-weight:700;color:#1B2B4B;margin-bottom:10px;">Distribución de Resultados</div>
+    <div class="result-bar" id="resultBar">—</div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-value" id="totalExp">—</div>
+      <div class="metric-label">Total experimentos</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="ratioMes">—</div>
+      <div class="metric-label">Ratio experimentos/mes</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="pctPositivo">—</div>
+      <div class="metric-label">% Resultado positivo</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="pctAprendizaje">—</div>
+      <div class="metric-label">% Aprendizajes documentados</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="pctEscalar">—</div>
+      <div class="metric-label">% Aprobados para escalar</div>
+    </div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
+</main>
+
+<script>
+function addRow() {
+  const tbody = document.getElementById('tablaBody');
+  const tr = document.createElement('tr');
+  const s = 'border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:11px;font-family:system-ui;';
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Nombre del experimento" style="${s}"></td>
+    <td><textarea placeholder="Objetivo..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
+    <td><input type="text" placeholder="Responsable" style="${s}"></td>
+    <td><input type="number" min="1" value="30" oninput="recalcular()" style="${s}"></td>
+    <td><input type="number" min="0" value="0" oninput="recalcular()" style="${s}"></td>
+    <td><input type="number" min="0" value="0" oninput="recalcular()" style="${s}"></td>
+    <td><textarea placeholder="Hipótesis..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
+    <td><select onchange="recalcular()" style="${s}"><option>En curso</option><option>Positivo</option><option>Negativo</option><option>Neutro</option></select></td>
+    <td><select onchange="recalcular()" style="${s}"><option value="">-</option><option>Sí</option><option>No</option></select></td>
+    <td><select onchange="recalcular()" style="${s}"><option value="">-</option><option>Sí</option><option>No</option></select></td>`;
+  tbody.appendChild(tr);
+}
+
+function recalcular() {
+  const filas = document.querySelectorAll('#tablaBody tr');
+  const meses = parseFloat(document.getElementById('mesesPeriodo').value) || 6;
+  let total = 0, positivos = 0, negativos = 0, neutros = 0, enCurso = 0, aprendizajes = 0, escalar = 0;
+
+  filas.forEach(tr => {
+    const resultado = tr.querySelectorAll('select')[0]?.value;
+    const aprendizaje = tr.querySelectorAll('select')[1]?.value;
+    const escalarVal = tr.querySelectorAll('select')[2]?.value;
+
+    total++;
+    tr.classList.remove('positivo','negativo','en-curso');
+    if (resultado === 'Positivo') { positivos++; tr.classList.add('positivo'); }
+    else if (resultado === 'Negativo') { negativos++; tr.classList.add('negativo'); }
+    else if (resultado === 'En curso') { enCurso++; tr.classList.add('en-curso'); }
+    else neutros++;
+    if (aprendizaje === 'Sí') aprendizajes++;
+    if (escalarVal === 'Sí') escalar++;
+  });
+
+  document.getElementById('totalExp').textContent = total;
+  document.getElementById('ratioMes').textContent = (total / meses).toFixed(1);
+  document.getElementById('pctPositivo').textContent = total ? Math.round(positivos/total*100)+'%' : '—';
+  document.getElementById('pctAprendizaje').textContent = total ? Math.round(aprendizajes/total*100)+'%' : '—';
+  document.getElementById('pctEscalar').textContent = total ? Math.round(escalar/total*100)+'%' : '—';
+
+  const barW = 400;
+  document.getElementById('resultBar').innerHTML = total ? `
+    <div class="result-seg" style="width:${positivos/total*barW}px;background:#22c55e;">✓ ${positivos}</div>
+    <div class="result-seg" style="width:${enCurso/total*barW}px;background:#3b82f6;">⏳ ${enCurso}</div>
+    <div class="result-seg" style="width:${neutros/total*barW}px;background:#f59e0b;">→ ${neutros}</div>
+    <div class="result-seg" style="width:${negativos/total*barW}px;background:#ef4444;">✗ ${negativos}</div>
+    <span style="font-size:11px;color:#64748b;margin-left:8px;">Verde=Positivo · Azul=En curso · Amarillo=Neutro · Rojo=Negativo</span>` : '—';
+}
+
+recalcular();
+</script>
+</body>
+</html>

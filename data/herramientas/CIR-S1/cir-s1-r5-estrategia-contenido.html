@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa de Temas de Autoridad · CIR-S1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:      #1B2B4B;
+    --gold:      #C4A55A;
+    --bg:        #f8f7ff;
+    --row-alt:   #f0f4f8;
+    --score-bg:  #f0f4f8;
+    --border:    #d0d8e8;
+    --text:      #1a1a2e;
+    --muted:     #5a6478;
+    --green:     #2d7a4f;
+    --yellow:    #b8860b;
+    --red:       #c0392b;
+    --green-bg:  #eaf5ef;
+    --yellow-bg: #fdf6e3;
+    --red-bg:    #fdecea;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--navy);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    height: 68px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .logo-circle {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 800;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+
+  .header-text { flex: 1; }
+  .header-title { color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: 0.01em; line-height: 1.2; }
+  .header-sub   { color: rgba(255,255,255,0.55); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+  .badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.62rem; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 2px; white-space: nowrap;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 7px 14px; border-radius: 3px;
+    font-size: 0.78rem; font-weight: 700;
+    cursor: pointer; border: none;
+    font-family: system-ui, sans-serif;
+    letter-spacing: 0.04em;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .btn-secondary { background: #fff; color: var(--navy); border: 1.5px solid var(--border); }
+  .btn-add       { background: var(--gold); color: var(--navy); }
+
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex; flex-direction: column; gap: 1.75rem;
+  }
+
+  /* CARDS */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .card {
+    background: #fff;
+    border-top: 4px solid var(--navy);
+    border-radius: 4px;
+    padding: 1.1rem 1.25rem 1rem;
+    box-shadow: 0 1px 4px rgba(27,43,75,0.07);
+  }
+
+  .card-label {
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.45rem;
+  }
+
+  .card-value {
+    font-size: 1.75rem; font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--navy); line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .card-value.green  { color: var(--green); }
+  .card-value.yellow { color: var(--yellow); }
+  .card-value.red    { color: var(--red); }
+
+  .card-hint { font-size: 0.7rem; color: var(--muted); margin-top: 0.3rem; }
+
+  /* top-3 list */
+  .top3-list { margin-top: 4px; }
+  .top3-item {
+    display: flex; align-items: baseline; gap: 6px;
+    font-size: 0.82rem; color: var(--text); line-height: 1.7;
+  }
+  .top3-rank {
+    font-size: 0.65rem; font-weight: 800;
+    color: var(--gold); letter-spacing: 0.06em;
+    min-width: 18px;
+  }
+
+  .semaphore-dot {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; margin-right: 4px; vertical-align: middle;
+  }
+  .dot-green  { background: var(--green); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-red    { background: var(--red); }
+
+  /* TABLE SECTION */
+  .section-header {
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .table-wrap { overflow-x: auto; border-radius: 4px; box-shadow: 0 1px 4px rgba(27,43,75,0.07); }
+
+  table {
+    width: 100%; min-width: 1100px;
+    border-collapse: collapse; background: #fff;
+  }
+
+  thead th {
+    background: var(--navy); color: #fff;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 10px 10px; text-align: left; white-space: nowrap;
+  }
+
+  tbody tr:nth-child(even) td { background: var(--row-alt); }
+  tbody tr:nth-child(odd)  td { background: #fff; }
+
+  tbody td {
+    padding: 8px 10px;
+    font-size: 0.83rem; color: var(--text);
+    border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+    vertical-align: middle;
+  }
+
+  td.score-cell {
+    background: var(--score-bg) !important;
+    font-weight: 800; font-size: 1rem;
+    color: var(--navy); text-align: center;
+    letter-spacing: -0.01em;
+  }
+
+  td.col-num { text-align: right; }
+
+  [contenteditable="true"] {
+    outline: none; border-radius: 2px;
+    transition: box-shadow 0.12s, background 0.12s;
+    min-width: 40px; display: inline-block;
+  }
+  [contenteditable="true"]:focus {
+    box-shadow: 0 0 0 2px var(--gold); background: #fffdf5;
+  }
+
+  select {
+    border: 1.5px solid var(--border); border-radius: 3px;
+    padding: 3px 6px;
+    font-family: system-ui, sans-serif;
+    font-size: 0.8rem; color: var(--text); background: #fff;
+    cursor: pointer; outline: none;
+  }
+  select:focus { border-color: var(--gold); }
+
+  footer {
+    text-align: center; color: var(--muted);
+    font-size: 0.68rem; letter-spacing: 0.05em;
+    padding-bottom: 2rem;
+  }
+
+  @media print {
+    header { position: static; }
+    .btn, .header-actions { display: none !important; }
+    body { background: #fff; }
+    .card { box-shadow: none; border: 1px solid #ccc; border-top: 4px solid var(--navy); }
+    .table-wrap { box-shadow: none; overflow: visible; }
+    thead { display: table-header-group; }
+    tbody tr { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 900px) {
+    .cards-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    header { padding: 0 1rem; }
+    .badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-circle">M</div>
+  <div class="header-text">
+    <div class="header-title">Mapa de Temas de Autoridad</div>
+    <div class="header-sub">CIR-S1 · Invisibilidad de Marca</div>
+  </div>
+  <span class="badge">Herramienta Operativa</span>
+  <div style="display:flex;gap:.5rem;align-items:center;">
+    <button class="btn btn-secondary" onclick="window.print()">⎙ Imprimir</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- CARDS -->
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-label">Top 3 Temas por Score</div>
+      <div class="top3-list" id="card-top3">—</div>
+      <div class="card-hint">Ordenados por score de oportunidad desc.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Temas sin Contenido</div>
+      <div class="card-value" id="card-sin">—</div>
+      <div class="card-hint"><span class="semaphore-dot" id="dot-sin"></span>Verde=0 · Amarillo=1-2 · Rojo≥3</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Score Promedio</div>
+      <div class="card-value" id="card-avg">—</div>
+      <div class="card-hint"><span class="semaphore-dot" id="dot-avg"></span>Verde&gt;30 · Amarillo 15-30 · Rojo&lt;15</div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div>
+    <div class="section-header">
+      <span class="section-title">Temas y pilares de contenido</span>
+      <button class="btn btn-add" onclick="addRow()">+ Añadir tema</button>
+    </div>
+    <div class="table-wrap">
+      <table id="contenido-table">
+        <thead>
+          <tr>
+            <th>Tema / Pilar</th>
+            <th>Audiencia objetivo</th>
+            <th>Competencia<br>1–10</th>
+            <th>Relevancia<br>negocio 1–10</th>
+            <th>Volumen<br>búsqueda</th>
+            <th>¿Perspectiva<br>única?</th>
+            <th>Formatos adecuados</th>
+            <th>¿Tenemos<br>contenido?</th>
+            <th>Piezas<br>planificadas</th>
+            <th>Score<br>oportunidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td contenteditable="true">Marketing de contenidos</td>
+            <td contenteditable="true">Emprendedores y pymes</td>
+            <td class="col-num" contenteditable="true" data-col="competencia">7</td>
+            <td class="col-num" contenteditable="true" data-col="relevancia">9</td>
+            <td><select data-col="volumen"><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+            <td><select data-col="perspectiva"><option>Sí</option><option>No</option></select></td>
+            <td contenteditable="true">Blog, vídeo, podcast</td>
+            <td><select data-col="tenemos"><option>Sí</option><option>Parcial</option><option>No</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="piezas">6</td>
+            <td class="score-cell col-num" data-col="score" contenteditable="false">18</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Finanzas para empresas</td>
+            <td contenteditable="true">Directivos financieros</td>
+            <td class="col-num" contenteditable="true" data-col="competencia">5</td>
+            <td class="col-num" contenteditable="true" data-col="relevancia">8</td>
+            <td><select data-col="volumen"><option>Alto</option><option selected>Medio</option><option>Bajo</option></select></td>
+            <td><select data-col="perspectiva"><option>Sí</option><option selected>No</option></select></td>
+            <td contenteditable="true">Artículos, infografías</td>
+            <td><select data-col="tenemos"><option>Sí</option><option>Parcial</option><option selected>No</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="piezas">4</td>
+            <td class="score-cell col-num" data-col="score" contenteditable="false">40</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Transformación digital</td>
+            <td contenteditable="true">CTOs y directores IT</td>
+            <td class="col-num" contenteditable="true" data-col="competencia">8</td>
+            <td class="col-num" contenteditable="true" data-col="relevancia">7</td>
+            <td><select data-col="volumen"><option selected>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+            <td><select data-col="perspectiva"><option>Sí</option><option selected>No</option></select></td>
+            <td contenteditable="true">Webinar, whitepaper</td>
+            <td><select data-col="tenemos"><option selected>Sí</option><option>Parcial</option><option>No</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="piezas">3</td>
+            <td class="score-cell col-num" data-col="score" contenteditable="false">14</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Liderazgo y gestión</td>
+            <td contenteditable="true">Managers y CEOs</td>
+            <td class="col-num" contenteditable="true" data-col="competencia">4</td>
+            <td class="col-num" contenteditable="true" data-col="relevancia">9</td>
+            <td><select data-col="volumen"><option selected>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+            <td><select data-col="perspectiva"><option selected>Sí</option><option>No</option></select></td>
+            <td contenteditable="true">Newsletter, posts</td>
+            <td><select data-col="tenemos"><option>Sí</option><option selected>Parcial</option><option>No</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="piezas">8</td>
+            <td class="score-cell col-num" data-col="score" contenteditable="false">54</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Sostenibilidad empresarial</td>
+            <td contenteditable="true">Empresas medianas</td>
+            <td class="col-num" contenteditable="true" data-col="competencia">3</td>
+            <td class="col-num" contenteditable="true" data-col="relevancia">6</td>
+            <td><select data-col="volumen"><option>Alto</option><option>Medio</option><option selected>Bajo</option></select></td>
+            <td><select data-col="perspectiva"><option selected>Sí</option><option>No</option></select></td>
+            <td contenteditable="true">Informe, vídeo</td>
+            <td><select data-col="tenemos"><option>Sí</option><option>Parcial</option><option selected>No</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="piezas">5</td>
+            <td class="score-cell col-num" data-col="score" contenteditable="false">42</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer>MASESORA · CIR-S1 Invisibilidad de Marca · Herramienta Operativa R5 — Mapa de Temas de Autoridad</footer>
+
+<script>
+  function num(el) {
+    if (!el) return 0;
+    const txt = el.textContent !== undefined ? el.textContent : el.value;
+    return parseFloat((txt || '').replace(/[^\d.\-]/g, '')) || 0;
+  }
+
+  function applyColor(el, cls) {
+    el.classList.remove('green','yellow','red');
+    if (cls) el.classList.add(cls);
+  }
+  function applyDot(dot, cls) {
+    dot.className = 'semaphore-dot dot-' + cls;
+  }
+
+  function recalc() {
+    const tbody = document.querySelector('#contenido-table tbody');
+    const rows = Array.from(tbody.rows);
+
+    const rowData = rows.map(row => {
+      const compCell = row.querySelector('[data-col="competencia"]');
+      const relCell  = row.querySelector('[data-col="relevancia"]');
+      const temaCell = row.cells[0];
+      const tienesEl = row.querySelector('[data-col="tenemos"]');
+      const scoreCell = row.querySelector('[data-col="score"]');
+
+      const comp = num(compCell);
+      const rel  = num(relCell);
+      const score = rel * (10 - comp);
+
+      if (scoreCell) scoreCell.textContent = score;
+
+      return {
+        tema: temaCell ? temaCell.textContent.trim() : '',
+        tenemos: tienesEl ? tienesEl.value : '',
+        score
+      };
+    });
+
+    // Top 3 by score
+    const sorted = [...rowData].sort((a,b) => b.score - a.score);
+    const top3El = document.getElementById('card-top3');
+    top3El.innerHTML = sorted.slice(0,3).map((r,i) =>
+      `<div class="top3-item"><span class="top3-rank">${i+1}º</span><span>${r.tema || '—'}</span></div>`
+    ).join('');
+
+    // Sin contenido
+    const sinCount = rowData.filter(r => r.tenemos === 'No').length;
+    const sinEl = document.getElementById('card-sin');
+    const dotSin = document.getElementById('dot-sin');
+    sinEl.textContent = sinCount;
+    const sinCls = sinCount === 0 ? 'green' : sinCount <= 2 ? 'yellow' : 'red';
+    applyColor(sinEl, sinCls);
+    applyDot(dotSin, sinCls);
+
+    // Score promedio
+    const scores = rowData.map(r => r.score);
+    const avg = scores.length ? scores.reduce((a,b)=>a+b,0) / scores.length : 0;
+    const avgEl = document.getElementById('card-avg');
+    const dotAvg = document.getElementById('dot-avg');
+    avgEl.textContent = avg.toFixed(1);
+    const avgCls = avg > 30 ? 'green' : avg >= 15 ? 'yellow' : 'red';
+    applyColor(avgEl, avgCls);
+    applyDot(dotAvg, avgCls);
+  }
+
+  function addRow() {
+    const tbody = document.querySelector('#contenido-table tbody');
+    const lastRow = tbody.rows[tbody.rows.length - 1];
+    const newRow = lastRow.cloneNode(true);
+
+    // Reset contenteditable
+    newRow.querySelectorAll('[contenteditable="true"]').forEach((cell, i) => {
+      if (i === 0) cell.textContent = 'Nuevo tema';
+      else if (cell.dataset.col === 'competencia' || cell.dataset.col === 'relevancia' || cell.dataset.col === 'piezas') cell.textContent = '5';
+      else cell.textContent = '';
+    });
+    // Reset selects to first option
+    newRow.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    // Score cell
+    const scoreCell = newRow.querySelector('[data-col="score"]');
+    if (scoreCell) scoreCell.textContent = '0';
+
+    tbody.appendChild(newRow);
+    bindEvents(newRow);
+    recalc();
+  }
+
+  function bindEvents(row) {
+    row.querySelectorAll('[contenteditable="true"]').forEach(cell => {
+      cell.addEventListener('input', recalc);
+    });
+    row.querySelectorAll('select').forEach(sel => {
+      sel.addEventListener('change', recalc);
+    });
+  }
+
+  document.querySelectorAll('#contenido-table tbody tr').forEach(bindEvents);
+  recalc();
+</script>
+</body>
+</html>

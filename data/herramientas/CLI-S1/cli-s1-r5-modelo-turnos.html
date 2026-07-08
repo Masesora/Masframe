@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI-S1 R5 · Diseñador de Turnos Semanal</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:17px;font-weight:700}
+.badge{font-size:11px;color:#C4A55A;font-weight:600;border:1px solid #C4A55A;padding:3px 10px;border-radius:20px}
+.btn-print{background:#C4A55A;color:#1B2B4B;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px}
+.container{padding:24px 28px;max-width:1100px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.metric-card{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:16px 20px;border-left:4px solid #C4A55A}
+.metric-card .label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.metric-card .value{font-size:26px;font-weight:700;color:#1B2B4B}
+.metric-card .sub{font-size:11px;color:#888;margin-top:2px}
+section{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:20px;margin-bottom:20px}
+section h2{font-size:13px;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #C4A55A}
+table{width:100%;border-collapse:collapse}
+th{background:#1B2B4B;color:#C4A55A;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:9px 10px;text-align:left;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #f0eff8;vertical-align:middle;text-align:center}
+td:first-child{text-align:left;font-weight:600}
+tr:hover td{background:#f5f4fc}
+[contenteditable="true"]{cursor:text;outline:none}
+[contenteditable="true"]:focus{background:#fffbe6;box-shadow:0 0 0 2px #C4A55A55;border-radius:3px}
+.calc{background:#f8f7ff;font-weight:700}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle;margin-right:5px}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}
+@media print{.btn-print{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>CLI-S1 · R5 &nbsp; Diseñador de Turnos Semanal</h1>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="badge">Saturación del Sistema</span>
+    <button class="btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</header>
+<div class="container">
+  <div class="metrics">
+    <div class="metric-card"><div class="label">Total slots semana</div><div class="value" id="m-slots">—</div><div class="sub">suma de todos los turnos</div></div>
+    <div class="metric-card"><div class="label">Demanda semana</div><div class="value" id="m-dem">—</div><div class="sub">pacientes previstos</div></div>
+    <div class="metric-card"><div class="label">Cobertura global</div><div class="value" id="m-cob">—</div><div class="sub">slots / demanda x 100</div></div>
+  </div>
+  <section>
+    <h2>Distribución de turnos por día</h2>
+    <div style="overflow-x:auto"><table>
+      <thead><tr>
+        <th>Día</th><th>Slots mañana</th><th>Slots tarde</th><th>Slots especial</th>
+        <th>Total/día [calc]</th><th>Demanda prevista</th><th>Cobertura % [calc]</th><th>Estado</th>
+      </tr></thead>
+      <tbody id="main-body"></tbody>
+    </table></div>
+  </section>
+</div>
+<script>
+const DIAS=['Lunes','Martes','Miércoles','Jueves','Viernes'];
+let rows=DIAS.map((d,i)=>({dia:d,man:8,tar:6,esp:i===2?2:0,dem:16}));
+function cobertura(r){
+  const total=(parseInt(r.man)||0)+(parseInt(r.tar)||0)+(parseInt(r.esp)||0);
+  const dem=parseInt(r.dem)||1;
+  return {total,pct:Math.round(total/dem*100)};
+}
+function sema(pct){
+  if(pct>=90) return '<span class="dot verde"></span>'+pct+'%';
+  if(pct>=70) return '<span class="dot amarillo"></span>'+pct+'%';
+  return '<span class="dot rojo"></span>'+pct+'%';
+}
+function renderMain(){
+  const b=document.getElementById('main-body'); b.innerHTML='';
+  let totalSlots=0,totalDem=0;
+  rows.forEach((r,i)=>{
+    const {total,pct}=cobertura(r);
+    totalSlots+=total; totalDem+=(parseInt(r.dem)||0);
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td>'+r.dia+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].man=this.innerText;recalc()">'+r.man+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].tar=this.innerText;recalc()">'+r.tar+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].esp=this.innerText;recalc()">'+r.esp+'</td>'
+      +'<td class="calc">'+total+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].dem=this.innerText;recalc()">'+r.dem+'</td>'
+      +'<td class="calc">'+pct+'%</td>'
+      +'<td>'+sema(pct)+'</td>';
+    b.appendChild(tr);
+  });
+  document.getElementById('m-slots').textContent=totalSlots;
+  document.getElementById('m-dem').textContent=totalDem;
+  const cobGlobal=totalDem>0?Math.round(totalSlots/totalDem*100):0;
+  document.getElementById('m-cob').textContent=cobGlobal+'%';
+}
+function recalc(){renderMain();}
+renderMain();
+</script>
+</body>
+</html>

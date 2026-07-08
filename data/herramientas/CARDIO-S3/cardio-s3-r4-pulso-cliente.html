@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARDIO-S3 R4 — Pulso Cliente</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 14px; }
+  .header { background: #1B2B4B; color: #fff; display: flex; align-items: center; gap: 20px; padding: 16px 28px; }
+  .logo { font-size: 22px; font-weight: 800; color: #C4A55A; letter-spacing: 2px; white-space: nowrap; }
+  .header-text { flex: 1; }
+  .header-text h1 { font-size: 18px; font-weight: 700; }
+  .header-text h2 { font-size: 13px; font-weight: 400; color: #C4A55A; margin-top: 2px; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; white-space: nowrap; letter-spacing: 1px; }
+  .container { padding: 24px 28px; max-width: 1500px; margin: 0 auto; }
+  .section-title { font-size: 13px; font-weight: 700; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .table-wrap { overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(27,43,75,.10); background: #fff; margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+  thead th { background: #1B2B4B; color: #C4A55A; padding: 10px 8px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .5px; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid #eee; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 7px 8px; vertical-align: middle; }
+  tfoot td { background: #f0efff; font-weight: 700; padding: 8px 8px; font-size: 12px; }
+  td input, td select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 6px; font-family: inherit; font-size: 12px; color: #1B2B4B; background: #fafafa; }
+  td input:focus, td select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; background: #fff; }
+  .calc-cell { background: #f0efff; font-weight: 600; text-align: center; white-space: nowrap; }
+  .riesgo-Verde { background: #dcfce7; color: #16a34a; font-weight: 700; border-radius: 12px; padding: 3px 10px; display:inline-block; }
+  .riesgo-Amarillo { background: #fef9c3; color: #a16207; font-weight: 700; border-radius: 12px; padding: 3px 10px; display:inline-block; }
+  .riesgo-Rojo { background: #fee2e2; color: #dc2626; font-weight: 700; border-radius: 12px; padding: 3px 10px; display:inline-block; }
+  .stars { color: #C4A55A; font-size: 13px; letter-spacing: 1px; }
+  .btn-add { background: #1B2B4B; color: #C4A55A; border: none; padding: 9px 20px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; margin-bottom: 20px; }
+  .btn-add:hover { background: #243a62; }
+  .btn-del { background: none; border: none; color: #dc2626; font-size: 16px; cursor: pointer; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .metric-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(27,43,75,.09); border-left: 4px solid #C4A55A; }
+  .metric-card.rojo { border-left-color: #dc2626; }
+  .metric-card.amarillo { border-left-color: #ca8a04; }
+  .metric-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+  .metric-value { font-size: 26px; font-weight: 800; color: #1B2B4B; }
+  .metric-value.danger { color: #dc2626; }
+  .metric-value.warning { color: #d97706; }
+  .mes-row { display: flex; align-items: center; gap: 16px; background: #fff; border-radius: 8px; padding: 14px 20px; box-shadow: 0 2px 8px rgba(27,43,75,.08); margin-bottom: 20px; }
+  .mes-row label { font-size: 13px; font-weight: 600; }
+  .mes-row input { border: 1px solid #ddd; border-radius: 4px; padding: 6px 10px; font-family: inherit; font-size: 14px; color: #1B2B4B; width: 200px; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 11px 28px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+  .btn-print:hover { background: #b8943e; }
+  @media print {
+    .btn-add, .btn-del, .btn-print { display: none; }
+    body { background: #fff; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-text">
+    <h1>CARDIO-S3 — Falta de Retención</h1>
+    <h2>R4 · Pulso Cliente — Check-in mensual de salud de cartera</h2>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+
+<div class="container">
+  <div class="section-title">Período de check-in</div>
+  <div class="mes-row" style="margin-bottom:20px">
+    <label>Mes del check-in</label>
+    <input type="text" id="mes-checkin" placeholder="Ej: julio 2026" value="">
+  </div>
+
+  <div class="section-title">Check-in por cliente</div>
+  <button class="btn-add" onclick="addRow()">+ Añadir cliente</button>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cliente</th>
+          <th>Mes</th>
+          <th>Uso servicio (1-5)</th>
+          <th>Satisfacción (1-5)</th>
+          <th>Cambios en su negocio</th>
+          <th>Riesgo de baja</th>
+          <th>Acción proactiva</th>
+          <th>Próximo contacto</th>
+          <th>Score salud</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9" style="text-align:right">SCORE MEDIO CARTERA</td>
+          <td id="tf-score" class="calc-cell">—</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="section-title">Métricas de salud</div>
+  <div class="metrics-grid">
+    <div class="metric-card rojo">
+      <div class="metric-label">Clientes en riesgo ROJO</div>
+      <div class="metric-value danger" id="m-rojo">0</div>
+    </div>
+    <div class="metric-card amarillo">
+      <div class="metric-label">Clientes en riesgo AMARILLO</div>
+      <div class="metric-value warning" id="m-amarillo">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% clientes contactados este mes</div>
+      <div class="metric-value" id="m-contactados">—</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Score salud cartera (media)</div>
+      <div class="metric-value" id="m-score">—</div>
+    </div>
+  </div>
+
+  <button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div>
+
+<script>
+const tbody = document.getElementById('tbody');
+let rowCount = 0;
+
+function fmt(n, dec=1) {
+  return Number(n).toLocaleString('es-ES', {minimumFractionDigits:dec, maximumFractionDigits:dec});
+}
+
+function stars(n) {
+  const v = parseInt(n) || 0;
+  return '<span class="stars">' + '★'.repeat(v) + '☆'.repeat(5-v) + '</span>';
+}
+
+function scoreColor(s) {
+  if (s >= 4) return '#16a34a';
+  if (s >= 2.5) return '#d97706';
+  return '#dc2626';
+}
+
+function addRow(data) {
+  rowCount++;
+  const d = data || {};
+  const mesVal = document.getElementById('mes-checkin').value || '';
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td style="text-align:center;color:#888;font-size:12px">${rowCount}</td>
+    <td><input type="text" class="f-cliente" placeholder="Nombre cliente" value="${d.cliente||''}"></td>
+    <td><input type="text" class="f-mes" placeholder="Mes" value="${d.mes||mesVal}"></td>
+    <td>
+      <select class="f-uso" onchange="recalc()">
+        ${[1,2,3,4,5].map(i=>`<option value="${i}" ${(d.uso||3)==i?'selected':''}>${i}</option>`).join('')}
+      </select>
+    </td>
+    <td>
+      <select class="f-sat" onchange="recalc()">
+        ${[1,2,3,4,5].map(i=>`<option value="${i}" ${(d.sat||3)==i?'selected':''}>${i}</option>`).join('')}
+      </select>
+    </td>
+    <td><input type="text" class="f-cambios" placeholder="Notas relevantes" value="${d.cambios||''}"></td>
+    <td>
+      <select class="f-riesgo" onchange="recalc(); colorRiesgo(this)">
+        <option ${d.riesgo==='Verde'?'selected':''}>Verde</option>
+        <option ${(d.riesgo==='Amarillo'||!d.riesgo)?'selected':''}>Amarillo</option>
+        <option ${d.riesgo==='Rojo'?'selected':''}>Rojo</option>
+      </select>
+    </td>
+    <td><input type="text" class="f-accion" placeholder="Acción asignada" value="${d.accion||''}"></td>
+    <td><input type="date" class="f-contacto" value="${d.contacto||''}"></td>
+    <td class="calc-cell f-score">—</td>
+    <td><button class="btn-del" onclick="delRow(this)">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  colorRiesgo(tr.querySelector('.f-riesgo'));
+  recalc();
+}
+
+function colorRiesgo(sel) {
+  const badge = sel.closest('tr').querySelector('.f-riesgo');
+  // color handled in recalc via riesgoCell
+}
+
+function delRow(btn) {
+  btn.closest('tr').remove();
+  recalc();
+}
+
+function recalc() {
+  const rows = tbody.querySelectorAll('tr');
+  let rojos=0, amarillos=0, sumScore=0, countScore=0;
+
+  rows.forEach(tr => {
+    const uso = parseInt(tr.querySelector('.f-uso').value) || 0;
+    const sat = parseInt(tr.querySelector('.f-sat').value) || 0;
+    const riesgo = tr.querySelector('.f-riesgo').value;
+    const score = (uso + sat) / 2;
+    const scoreEl = tr.querySelector('.f-score');
+    scoreEl.textContent = fmt(score);
+    scoreEl.style.color = scoreColor(score);
+
+    // color riesgo select via inline styling
+    const rSel = tr.querySelector('.f-riesgo');
+    if (riesgo === 'Rojo') { rSel.style.color = '#dc2626'; rSel.style.fontWeight = '700'; rojos++; }
+    else if (riesgo === 'Amarillo') { rSel.style.color = '#d97706'; rSel.style.fontWeight = '600'; amarillos++; }
+    else { rSel.style.color = '#16a34a'; rSel.style.fontWeight = '700'; }
+
+    sumScore += score; countScore++;
+  });
+
+  const avgScore = countScore > 0 ? sumScore / countScore : null;
+  const pctContactados = countScore > 0 ? 100 : 0; // todos los de la tabla = contactados
+
+  document.getElementById('tf-score').textContent = avgScore !== null ? fmt(avgScore) : '—';
+  document.getElementById('m-rojo').textContent = rojos;
+  document.getElementById('m-amarillo').textContent = amarillos;
+  document.getElementById('m-contactados').textContent = countScore > 0 ? '100% (' + countScore + ')' : '—';
+  document.getElementById('m-score').textContent = avgScore !== null ? fmt(avgScore) + ' / 5' : '—';
+}
+
+addRow({cliente:'Empresa Ejemplo A', uso:4, sat:4, riesgo:'Verde', accion:'Llamada de seguimiento'});
+addRow({cliente:'Empresa Ejemplo B', uso:2, sat:2, riesgo:'Rojo', accion:'Reunión urgente retención'});
+addRow({cliente:'Empresa Ejemplo C', uso:3, sat:3, riesgo:'Amarillo', accion:'Enviar informe de valor'});
+</script>
+</body>
+</html>

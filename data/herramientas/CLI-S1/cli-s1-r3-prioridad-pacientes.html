@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI-S1 R3 · Lista Priorizada de Pacientes en Espera</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:17px;font-weight:700}
+.badge{font-size:11px;color:#C4A55A;font-weight:600;border:1px solid #C4A55A;padding:3px 10px;border-radius:20px}
+.btn-print{background:#C4A55A;color:#1B2B4B;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px}
+.container{padding:24px 28px;max-width:1350px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.metric-card{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:16px 20px;border-left:4px solid #C4A55A}
+.metric-card .label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.metric-card .value{font-size:26px;font-weight:700;color:#1B2B4B}
+.metric-card .sub{font-size:11px;color:#888;margin-top:2px}
+section{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:20px;margin-bottom:20px}
+section h2{font-size:13px;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #C4A55A}
+table{width:100%;border-collapse:collapse}
+th{background:#1B2B4B;color:#C4A55A;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:9px 10px;text-align:left;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+tr:hover td{background:#f5f4fc}
+[contenteditable="true"]{cursor:text;outline:none}
+[contenteditable="true"]:focus{background:#fffbe6;box-shadow:0 0 0 2px #C4A55A55;border-radius:3px}
+.calc{background:#f8f7ff;font-weight:600;text-align:center}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle;margin-right:5px}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}.gris{background:#6b7280}
+.urg-alta td{background:#fff5f5}
+.urg-critica td{background:#fee2e2}
+.nota{font-size:11px;color:#888;margin-top:8px}
+@media print{.btn-print{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>CLI-S1 · R3 &nbsp; Lista Priorizada de Pacientes en Espera</h1>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="badge">Saturación del Sistema</span>
+    <button class="btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</header>
+<div class="container">
+  <div class="metrics">
+    <div class="metric-card"><div class="label">Total en espera</div><div class="value" id="m-total">—</div><div class="sub">pacientes registrados</div></div>
+    <div class="metric-card"><div class="label">Pacientes críticos</div><div class="value" id="m-crit">—</div><div class="sub">urgencia 4-5 o riesgo Crítico</div></div>
+    <div class="metric-card"><div class="label">Días espera media</div><div class="value" id="m-avg">—</div><div class="sub">calculado desde fecha solicitud</div></div>
+  </div>
+  <section>
+    <h2>Lista priorizada — filas urgencia &gt; 3 resaltadas automáticamente</h2>
+    <div style="overflow-x:auto"><table>
+      <thead><tr>
+        <th>Paciente</th><th>Fecha solicitud</th><th>Días en espera</th><th>Motivo</th>
+        <th>Urgencia (1-5)</th><th>Riesgo si espera</th><th>Consultor asignado</th>
+        <th>Fecha 1ª cita</th><th>Estado</th>
+      </tr></thead>
+      <tbody id="main-body"></tbody>
+    </table></div>
+    <p class="nota">* Haga clic en cualquier celda para editar. Los días en espera se calculan automáticamente desde la fecha de solicitud.</p>
+  </section>
+</div>
+<script>
+const TODAY=new Date();
+function diasDesde(fecha){
+  if(!fecha) return 0;
+  const d=new Date(fecha);
+  if(isNaN(d)) return 0;
+  return Math.max(0,Math.round((TODAY-d)/(1000*60*60*24)));
+}
+const RIESGOS=['Bajo','Medio','Alto','Crítico'];
+const RIESGO_COLOR={Bajo:'verde',Medio:'amarillo',Alto:'rojo',Crítico:'rojo'};
+let rows=[
+  {pac:'PAC-001',fecha:'2026-06-01',motivo:'Ansiedad aguda',urg:5,riesgo:'Crítico',consultor:'Dra. García',cita:'2026-07-10'},
+  {pac:'PAC-002',fecha:'2026-06-10',motivo:'Depresión moderada',urg:4,riesgo:'Alto',consultor:'Dr. López',cita:'2026-07-15'},
+  {pac:'PAC-003',fecha:'2026-06-20',motivo:'Orientación vocacional',urg:2,riesgo:'Bajo',consultor:'Sin asignar',cita:''},
+  {pac:'PAC-004',fecha:'2026-06-25',motivo:'Conflicto pareja',urg:3,riesgo:'Medio',consultor:'Dra. Ruiz',cita:'2026-07-20'},
+  {pac:'PAC-005',fecha:'2026-06-28',motivo:'Duelo',urg:4,riesgo:'Alto',consultor:'Dr. López',cita:'2026-07-12'},
+  {pac:'PAC-006',fecha:'2026-07-01',motivo:'Estrés laboral',urg:2,riesgo:'Bajo',consultor:'Sin asignar',cita:''},
+  {pac:'PAC-007',fecha:'2026-07-03',motivo:'Trastorno alimentación',urg:5,riesgo:'Crítico',consultor:'Dra. García',cita:'2026-07-09'},
+  {pac:'PAC-008',fecha:'2026-07-05',motivo:'Fobia social',urg:3,riesgo:'Medio',consultor:'Dra. Ruiz',cita:'2026-07-22'},
+];
+function urgColor(u){
+  if(u>=5) return 'rojo';
+  if(u>=4) return 'rojo';
+  if(u>=3) return 'amarillo';
+  return 'verde';
+}
+function rowClass(u){
+  if(u>=5) return 'urg-critica';
+  if(u>=4) return 'urg-alta';
+  return '';
+}
+function renderMain(){
+  const b=document.getElementById('main-body'); b.innerHTML='';
+  rows.forEach((r,i)=>{
+    const dias=diasDesde(r.fecha);
+    const tr=document.createElement('tr');
+    if(rowClass(r.urg)) tr.className=rowClass(r.urg);
+    tr.innerHTML='<td contenteditable="true" onblur="rows['+i+'].pac=this.innerText;recalc()">'+r.pac+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].fecha=this.innerText;recalc()">'+r.fecha+'</td>'
+      +'<td class="calc">'+dias+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].motivo=this.innerText">'+r.motivo+'</td>'
+      +'<td contenteditable="true" style="text-align:center;font-weight:700" onblur="rows['+i+'].urg=parseInt(this.innerText)||1;recalc()"><span class="dot '+urgColor(r.urg)+'"></span>'+r.urg+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].riesgo=this.innerText;recalc()"><span class="dot '+(RIESGO_COLOR[r.riesgo]||'gris')+'"></span>'+r.riesgo+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].consultor=this.innerText">'+r.consultor+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].cita=this.innerText">'+r.cita+'</td>'
+      +'<td>'+(r.urg>=4?'<span class="dot rojo"></span>Prioritario':'<span class="dot amarillo"></span>En espera')+'</td>';
+    b.appendChild(tr);
+  });
+}
+function recalc(){
+  renderMain();
+  document.getElementById('m-total').textContent=rows.length;
+  const crit=rows.filter(r=>r.urg>=4||r.riesgo==='Crítico').length;
+  document.getElementById('m-crit').textContent=crit;
+  const dias=rows.map(r=>diasDesde(r.fecha));
+  const avg=(dias.reduce((a,b)=>a+b,0)/dias.length).toFixed(1);
+  document.getElementById('m-avg').textContent=avg+' días';
+}
+renderMain(); recalc();
+</script>
+</body>
+</html>

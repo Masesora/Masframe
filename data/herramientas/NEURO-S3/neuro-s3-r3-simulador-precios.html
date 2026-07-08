@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEURO-S3 R3 — Simulador Subida Precios</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+.header{background:#1B2B4B;color:#fff;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-size:20px;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-info{flex:1}
+.symptom{font-size:11px;color:#aab;text-transform:uppercase;letter-spacing:.5px}
+.tool-name{font-size:16px;font-weight:700;color:#fff;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.content{padding:20px 24px}
+.section-title{font-size:15px;font-weight:700;color:#1B2B4B;margin-bottom:12px}
+.table-wrap{overflow-x:auto;margin-bottom:10px}
+table{border-collapse:collapse;width:100%;min-width:960px;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(27,43,75,.08)}
+thead{background:#1B2B4B;color:#fff}
+thead th{padding:10px 8px;font-size:11px;text-align:center;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+tbody td{padding:7px 6px;border-bottom:1px solid #f0eef8;text-align:center;vertical-align:middle}
+tbody tr:hover{background:#f5f4fc}
+input[type=text],input[type=number]{border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:13px;width:100%;color:#1B2B4B;background:#fff}
+input[type=text]{text-align:left}
+.auto{background:#f8f7ff;border-radius:5px;padding:5px 7px;font-size:12px;min-width:60px;display:block;text-align:center}
+.btn{background:#1B2B4B;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;margin-top:10px}
+.btn:hover{background:#253d6e}
+.btn-print{background:#1B2B4B;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;float:right}
+.semaph{font-size:18px}
+.semaph-green{color:#22c55e}
+.semaph-red{color:#ef4444}
+.equilibrio{background:#fff;border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(27,43,75,.08);margin:20px 0}
+.equilibrio-title{font-size:14px;font-weight:700;color:#1B2B4B;margin-bottom:12px}
+.eq-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.eq-item{background:#f8f7ff;border-left:3px solid #C4A55A;border-radius:6px;padding:10px 14px;font-size:13px}
+.eq-item strong{color:#1B2B4B}
+.cards{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px}
+.card{background:#fff;border-left:4px solid #C4A55A;border-radius:8px;padding:14px 18px;min-width:150px;flex:1;box-shadow:0 1px 3px rgba(27,43,75,.07)}
+.card-label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.card-value{font-size:22px;font-weight:700;color:#1B2B4B}
+@media print{.btn,.btn-print{display:none}body{background:#fff}table{min-width:auto;font-size:11px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="symptom">NEURO-S3 — Ilusión de Crecimiento</div>
+    <div class="tool-name">Simulador Subida Precios</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+  <button class="btn-print" onclick="window.print()">Imprimir</button>
+</div>
+
+<div class="content">
+  <div class="section-title">Análisis de impacto por subida de precios</div>
+  <div class="table-wrap">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th style="width:120px">Servicio</th>
+          <th>Precio<br>actual €</th>
+          <th>Clientes<br>actuales</th>
+          <th>Ingresos<br>actuales €</th>
+          <th>Precio<br>propuesto €</th>
+          <th>% subida</th>
+          <th>Clientes<br>perdidos est.</th>
+          <th>Clientes<br>restantes</th>
+          <th>Ingresos<br>nuevos €</th>
+          <th>Diferencia €</th>
+          <th>¿Sale<br>a cuenta?</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+  <button class="btn" onclick="addRow()">+ Añadir fila</button>
+
+  <div class="equilibrio">
+    <div class="equilibrio-title">Punto de Equilibrio de Fuga</div>
+    <ul class="eq-list" id="eqList">
+      <li class="eq-item" style="color:#999">Introduce datos en la tabla para ver el análisis.</li>
+    </ul>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="card-label">Total ingresos actuales €</div><div class="card-value" id="cIngAct">—</div></div>
+    <div class="card"><div class="card-label">Total ingresos propuestos €</div><div class="card-value" id="cIngProp">—</div></div>
+    <div class="card"><div class="card-label">Diferencia total €</div><div class="card-value" id="cDiff">—</div></div>
+    <div class="card"><div class="card-label">Servicios que mejoran</div><div class="card-value" id="cMejoran">—</div></div>
+  </div>
+</div>
+
+<script>
+let rowCount=0;
+function fmt(n,dec=2){return isNaN(n)||!isFinite(n)?'—':n.toFixed(dec);}
+
+function addRow(){
+  rowCount++;
+  const tbody=document.getElementById('tableBody');
+  const tr=document.createElement('tr');
+  tr.setAttribute('data-row',rowCount);
+  tr.innerHTML=`
+    <td><input type="text" class="f-serv" placeholder="Servicio ${rowCount}"></td>
+    <td><input type="number" class="f-pact" min="0" step="0.01" value=""></td>
+    <td><input type="number" class="f-clact" min="0" step="1" value=""></td>
+    <td><span class="auto f-ingact">—</span></td>
+    <td><input type="number" class="f-pprop" min="0" step="0.01" value=""></td>
+    <td><span class="auto f-subida">—</span></td>
+    <td><input type="number" class="f-perdidos" min="0" step="1" value=""></td>
+    <td><span class="auto f-restantes">—</span></td>
+    <td><span class="auto f-ingnuev">—</span></td>
+    <td><span class="auto f-diff">—</span></td>
+    <td><span class="f-cuenta" style="font-size:20px">—</span></td>
+  `;
+  tbody.appendChild(tr);
+  calcRow(tr);
+}
+
+function calcRow(tr){
+  const pact=parseFloat(tr.querySelector('.f-pact').value)||0;
+  const clact=parseFloat(tr.querySelector('.f-clact').value)||0;
+  const pprop=parseFloat(tr.querySelector('.f-pprop').value)||0;
+  const perd=parseFloat(tr.querySelector('.f-perdidos').value)||0;
+
+  const ingact=pact*clact;
+  const subida=pact>0?((pprop-pact)/pact*100):null;
+  const rest=Math.max(0,clact-perd);
+  const ingnuev=pprop*rest;
+  const diff=pprop>0&&pprop!==pact ? ingnuev-ingact : null;
+
+  tr.querySelector('.f-ingact').textContent=ingact>0?ingact.toLocaleString('es-ES')+'€':'—';
+  tr.querySelector('.f-subida').textContent=subida!==null?(subida>=0?'+':'')+fmt(subida,1)+'%':'—';
+  tr.querySelector('.f-restantes').textContent=pprop>0||perd>0?rest:'—';
+  tr.querySelector('.f-ingnuev').textContent=pprop>0?ingnuev.toLocaleString('es-ES')+'€':'—';
+  tr.querySelector('.f-diff').textContent=diff!==null?(diff>=0?'+':'')+diff.toLocaleString('es-ES')+'€':'—';
+
+  const cuentaEl=tr.querySelector('.f-cuenta');
+  if(diff===null){cuentaEl.textContent='—';}
+  else if(diff>0){cuentaEl.innerHTML='<span class="semaph semaph-green">●</span>';}
+  else{cuentaEl.innerHTML='<span class="semaph semaph-red">●</span>';}
+
+  updateEquilibrio();
+  updateSummary();
+}
+
+function updateEquilibrio(){
+  const rows=document.querySelectorAll('#tableBody tr');
+  const items=[];
+  rows.forEach(tr=>{
+    const serv=tr.querySelector('.f-serv').value||'(sin nombre)';
+    const pact=parseFloat(tr.querySelector('.f-pact').value)||0;
+    const pprop=parseFloat(tr.querySelector('.f-pprop').value)||0;
+    if(pact>0&&pprop>pact){
+      const perc=(1-pact/pprop)*100;
+      items.push(`<li class="eq-item"><strong>${serv}:</strong> puedes perder hasta <strong>${fmt(perc,1)}%</strong> de clientes antes de ganar menos</li>`);
+    }
+  });
+  const list=document.getElementById('eqList');
+  list.innerHTML=items.length>0?items.join(''):'<li class="eq-item" style="color:#999">Introduce precio actual y precio propuesto (mayor) para ver el análisis.</li>';
+}
+
+function updateSummary(){
+  const rows=document.querySelectorAll('#tableBody tr');
+  let ingAct=0,ingProp=0,mejoran=0;
+  rows.forEach(tr=>{
+    const pact=parseFloat(tr.querySelector('.f-pact').value)||0;
+    const clact=parseFloat(tr.querySelector('.f-clact').value)||0;
+    const pprop=parseFloat(tr.querySelector('.f-pprop').value)||0;
+    const perd=parseFloat(tr.querySelector('.f-perdidos').value)||0;
+    if(pact>0&&clact>0){ingAct+=pact*clact;}
+    if(pprop>0){
+      const rest=Math.max(0,clact-perd);
+      const nw=pprop*rest;
+      ingProp+=nw;
+      if(nw>pact*clact) mejoran++;
+    }
+  });
+  const diff=ingProp-ingAct;
+  document.getElementById('cIngAct').textContent=ingAct>0?ingAct.toLocaleString('es-ES')+'€':'—';
+  document.getElementById('cIngProp').textContent=ingProp>0?ingProp.toLocaleString('es-ES')+'€':'—';
+  document.getElementById('cDiff').textContent=ingAct>0||ingProp>0?(diff>=0?'+':'')+diff.toLocaleString('es-ES')+'€':'—';
+  document.getElementById('cMejoran').textContent=mejoran;
+}
+
+document.getElementById('mainTable').addEventListener('input',function(e){
+  const tr=e.target.closest('tr');
+  if(tr) calcRow(tr);
+});
+
+for(let i=0;i<4;i++) addRow();
+</script>
+</body>
+</html>

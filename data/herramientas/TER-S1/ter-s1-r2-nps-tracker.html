@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPS Tracker Mensual — MASFRAME</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+.header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+.logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+.header-text h1 { font-size: 18px; font-weight: 700; }
+.header-text p { font-size: 13px; opacity: 0.75; margin-top: 2px; }
+.badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+.container { max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+.section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(27,43,75,0.08); }
+.section h2 { font-size: 15px; color: #1B2B4B; margin-bottom: 14px; border-left: 3px solid #C4A55A; padding-left: 10px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #1B2B4B; color: white; padding: 8px 10px; text-align: left; font-size: 12px; font-weight: 600; white-space: nowrap; }
+td { padding: 7px 10px; border-bottom: 1px solid #e8e8f0; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f0f0fa; }
+input[type=text], input[type=number], input[type=date], select, textarea { border: 1px solid #d0d0e0; border-radius: 5px; padding: 4px 7px; font-size: 12px; font-family: inherit; background: white; }
+input[type=text] { width: 130px; }
+input[type=number] { width: 65px; }
+.calc-cell { background: #f8f7ff; font-weight: 600; color: #1B2B4B; text-align: center; }
+.btn-add { background: #1B2B4B; color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 13px; cursor: pointer; margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; }
+.btn-add:hover { background: #2a3d63; }
+.btn-print { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 6px; padding: 10px 24px; font-size: 14px; font-weight: 700; cursor: pointer; display: block; margin: 0 auto; }
+.btn-print:hover { background: #b8963e; }
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.metric-card { background: #1B2B4B; color: white; border-radius: 10px; padding: 16px; text-align: center; }
+.metric-card .value { font-size: 26px; font-weight: 800; color: #C4A55A; }
+.metric-card .label { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+.semaforo-verde { color: #16a34a; font-weight: 700; }
+.semaforo-amarillo { color: #ca8a04; font-weight: 700; }
+.semaforo-rojo { color: #dc2626; font-weight: 700; }
+.chart-container { padding: 10px 0; }
+.chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 120px; padding: 0 10px; }
+.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bar { width: 100%; border-radius: 4px 4px 0 0; transition: height 0.3s; }
+.bar-label { font-size: 11px; color: #1B2B4B; font-weight: 600; }
+.bar-name { font-size: 10px; color: #666; text-align: center; }
+@media print { .btn-add, .btn-print, .no-print { display: none !important; } body { background: white; } .section { box-shadow: none; border: 1px solid #ccc; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">M</div>
+  <div class="header-text">
+    <h1>Satisfacción de Clientes — NPS Tracker Mensual</h1>
+    <p>TER · S1-R2 · Terapia de Experiencia de Cliente</p>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+<div class="container">
+  <div class="section">
+    <h2>Evolución NPS Mensual</h2>
+    <div class="table-wrap">
+    <table id="nps-table">
+      <thead>
+        <tr>
+          <th>Mes</th>
+          <th>Promotores (9-10)</th>
+          <th>Pasivos (7-8)</th>
+          <th>Detractores (0-6)</th>
+          <th>Total</th>
+          <th>NPS</th>
+          <th>% Respuesta</th>
+          <th>Comentario promotores</th>
+          <th>Comentario detractores</th>
+        </tr>
+      </thead>
+      <tbody id="nps-body">
+        <tr>
+          <td><input type="text" value="Enero 2026"></td>
+          <td><input type="number" value="28" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="12" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="5" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">45</td>
+          <td class="calc-cell">—</td>
+          <td><input type="text" value="72%"></td>
+          <td><input type="text" value="Muy profesionales"></td>
+          <td><input type="text" value="Precio alto"></td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Febrero 2026"></td>
+          <td><input type="number" value="22" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="15" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="8" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">45</td>
+          <td class="calc-cell">—</td>
+          <td><input type="text" value="65%"></td>
+          <td><input type="text" value="Atención personalizada"></td>
+          <td><input type="text" value="Tiempos de espera"></td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Marzo 2026"></td>
+          <td><input type="number" value="35" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="10" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="3" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">48</td>
+          <td class="calc-cell">—</td>
+          <td><input type="text" value="80%"></td>
+          <td><input type="text" value="Resultados claros"></td>
+          <td><input type="text" value="Comunicación mejorable"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add no-print" onclick="addRow()">+ Añadir fila</button>
+  </div>
+
+  <div class="section">
+    <h2>Evolución del NPS — Gráfico</h2>
+    <div class="chart-container">
+      <div class="chart-bars" id="npsChart"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Métricas NPS</h2>
+    <div class="metrics-grid" id="metricsGrid"></div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+</div>
+
+<script>
+function calcNPS(prom, det, total) {
+  if (!total) return 0;
+  return Math.round((prom / total * 100) - (det / total * 100));
+}
+
+function npsColor(nps) {
+  if (nps > 50) return '#16a34a';
+  if (nps >= 20) return '#ca8a04';
+  return '#dc2626';
+}
+
+function npsLabel(nps) {
+  if (nps > 50) return `<span class="semaforo-verde">▲ ${nps}</span>`;
+  if (nps >= 20) return `<span class="semaforo-amarillo">◆ ${nps}</span>`;
+  return `<span class="semaforo-rojo">▼ ${nps}</span>`;
+}
+
+function recalc() {
+  const rows = document.querySelectorAll('#nps-body tr');
+  const npsValues = [];
+  const labels = [];
+
+  rows.forEach(row => {
+    const cells = row.cells;
+    const prom = parseInt(cells[1].querySelector('input').value) || 0;
+    const pas = parseInt(cells[2].querySelector('input').value) || 0;
+    const det = parseInt(cells[3].querySelector('input').value) || 0;
+    const total = prom + pas + det;
+    const nps = calcNPS(prom, det, total);
+    cells[4].textContent = total;
+    cells[5].innerHTML = npsLabel(nps);
+    npsValues.push(nps);
+    labels.push(cells[0].querySelector('input').value);
+  });
+
+  updateChart(npsValues, labels);
+  updateMetrics(npsValues, labels);
+}
+
+function updateChart(values, labels) {
+  const chart = document.getElementById('npsChart');
+  if (!values.length) { chart.innerHTML = ''; return; }
+  const maxAbs = Math.max(...values.map(Math.abs), 10);
+  const maxH = 100;
+  chart.innerHTML = values.map((v, i) => {
+    const h = Math.max(4, Math.round(Math.abs(v) / maxAbs * maxH));
+    const color = npsColor(v);
+    return `<div class="bar-wrap">
+      <div class="bar-label" style="color:${color}">${v}</div>
+      <div class="bar" style="height:${h}px; background:${color};"></div>
+      <div class="bar-name">${labels[i] ? labels[i].split(' ')[0] : ''}</div>
+    </div>`;
+  }).join('');
+}
+
+function updateMetrics(npsValues, labels) {
+  if (!npsValues.length) return;
+  const actual = npsValues[npsValues.length - 1];
+  const prev = npsValues.length > 1 ? npsValues[npsValues.length - 2] : null;
+  const tendencia = prev !== null ? (actual - prev > 0 ? `+${actual - prev}` : `${actual - prev}`) : '—';
+  const mejor = Math.max(...npsValues);
+  const peor = Math.min(...npsValues);
+  const mejorMes = labels[npsValues.indexOf(mejor)] || '—';
+  const peorMes = labels[npsValues.indexOf(peor)] || '—';
+
+  document.getElementById('metricsGrid').innerHTML = `
+    <div class="metric-card"><div class="value">${actual}</div><div class="label">NPS Actual</div></div>
+    <div class="metric-card"><div class="value">${tendencia}</div><div class="label">Tendencia vs mes anterior</div></div>
+    <div class="metric-card"><div class="value">${mejor}</div><div class="label">Mejor NPS — ${mejorMes}</div></div>
+    <div class="metric-card"><div class="value">${peor}</div><div class="label">Peor NPS — ${peorMes}</div></div>
+  `;
+}
+
+function addRow() {
+  const tbody = document.getElementById('nps-body');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Mes YYYY"></td>
+    <td><input type="number" value="0" min="0" onchange="recalc()"></td>
+    <td><input type="number" value="0" min="0" onchange="recalc()"></td>
+    <td><input type="number" value="0" min="0" onchange="recalc()"></td>
+    <td class="calc-cell">0</td>
+    <td class="calc-cell">—</td>
+    <td><input type="text" placeholder="75%"></td>
+    <td><input type="text" placeholder="Comentario"></td>
+    <td><input type="text" placeholder="Comentario"></td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+
+recalc();
+</script>
+</body>
+</html>

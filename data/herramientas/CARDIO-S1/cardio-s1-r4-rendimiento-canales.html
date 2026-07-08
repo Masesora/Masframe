@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R4 · Rendimiento Histórico de Canales — CARDIO-S1</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:13px;font-weight:700;letter-spacing:2px;color:#C4A55A;text-transform:uppercase}
+header h1{font-size:22px;font-weight:800;margin:4px 0}
+.subtitle{font-size:13px;opacity:.8}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.container{max-width:1280px;margin:0 auto;padding:28px 20px}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(27,43,75,.08);padding:24px;margin-bottom:24px}
+.section-title{font-size:15px;font-weight:800;color:#1B2B4B;border-left:4px solid #C4A55A;padding-left:12px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#1B2B4B;color:#C4A55A;padding:10px 8px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid #eee;vertical-align:middle}
+tr:hover td{background:#f8f7ff}
+input[type=text],input[type=number],select{width:100%;border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:12px;font-family:system-ui;background:#f8f7ff;color:#1B2B4B}
+input:focus,select:focus{outline:2px solid #C4A55A;background:#fff}
+.calc-cell{background:#eef2ff;font-weight:700;font-size:12px;white-space:nowrap}
+.dot{width:16px;height:16px;border-radius:50%;display:inline-block}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}.gris{background:#9ca3af}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}
+.btn:hover{background:#b8943f}
+.btn-add{background:#1B2B4B;color:#C4A55A;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn-del{background:#ef4444;color:#fff;border:none;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:11px}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.metric-card{background:#1B2B4B;border-radius:10px;padding:18px;text-align:center}
+.metric-label{color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.metric-value{color:#fff;font-size:22px;font-weight:800}
+.ranking-list{list-style:none}
+.ranking-list li{display:flex;align-items:center;gap:12px;padding:8px 14px;border-radius:8px;margin-bottom:6px;background:#f8f7ff;font-size:13px}
+.rank-pos{background:#1B2B4B;color:#C4A55A;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
+.rank-name{flex:1;font-weight:600}
+.rank-roi{font-weight:800}
+.neg{color:#ef4444}.pos{color:#22c55e}
+@media print{.btn,.btn-add,.btn-del{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">MASFRAME · CARDIO-Sx</div>
+    <h1>Rendimiento Histórico de Canales</h1>
+    <div class="subtitle">Atrofia Comercial · Herramienta R4</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</header>
+<div class="container">
+
+  <div class="card">
+    <div class="section-title">Canales de Captación</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Canal</th>
+            <th>Meses trabajado</th>
+            <th>Inversión (€)</th>
+            <th>Leads</th>
+            <th>Clientes</th>
+            <th>Ticket medio (€)</th>
+            <th>Ingresos (€)</th>
+            <th>ROI %</th>
+            <th>¿Constante y medido?</th>
+            <th>Estado</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir canal</button>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Ranking por ROI</div>
+    <ul class="ranking-list" id="ranking"></ul>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Métricas Globales</div>
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="metric-label">ROI Medio Global</div><div class="metric-value" id="m1">—</div></div>
+      <div class="metric-card"><div class="metric-label">Ingresos Totales</div><div class="metric-value" id="m2">—</div></div>
+      <div class="metric-card"><div class="metric-label">Inversión Total</div><div class="metric-value" id="m3">—</div></div>
+      <div class="metric-card"><div class="metric-label">Mejor Canal</div><div class="metric-value" id="m4" style="font-size:16px">—</div></div>
+    </div>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+  </div>
+</div>
+<script>
+const DEFAULTS = [
+  {canal:'LinkedIn', meses:6, inv:800, leads:45, clientes:8, ticket:1200, constante:'Sí'},
+  {canal:'Referidos', meses:12, inv:0, leads:20, clientes:10, ticket:1800, constante:'Sí'},
+  {canal:'Web-SEO', meses:3, inv:400, leads:15, clientes:2, ticket:1500, constante:'No'},
+  {canal:'Eventos', meses:2, inv:1200, leads:30, clientes:3, ticket:1200, constante:'No'},
+];
+
+function sem(roi, inv){
+  if(inv===0) return '<span class="dot gris" title="Sin inversión"></span>';
+  if(roi>=100) return '<span class="dot verde" title="ROI ≥ 100%"></span>';
+  if(roi>=0)   return '<span class="dot amarillo" title="ROI positivo"></span>';
+  return '<span class="dot rojo" title="ROI negativo"></span>';
+}
+
+function addRow(d={}){
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" class="f-canal" value="${d.canal||''}" oninput="recalc()"></td>
+    <td><input type="number" class="f-meses" value="${d.meses||''}" min="0" style="width:70px" oninput="recalc()"></td>
+    <td><input type="number" class="f-inv" value="${d.inv||0}" min="0" oninput="recalc()"></td>
+    <td><input type="number" class="f-leads" value="${d.leads||''}" min="0" oninput="recalc()"></td>
+    <td><input type="number" class="f-cli" value="${d.clientes||''}" min="0" oninput="recalc()"></td>
+    <td><input type="number" class="f-tk" value="${d.ticket||''}" min="0" oninput="recalc()"></td>
+    <td class="calc-cell f-ing">—</td>
+    <td class="calc-cell f-roi">—</td>
+    <td><select class="f-const" onchange="recalc()"><option>Sí</option><option>No</option></select></td>
+    <td class="f-sem">—</td>
+    <td><button class="btn-del" onclick="this.closest('tr').remove();recalc()">✕</button></td>
+  `;
+  if(d.constante) tr.querySelector('.f-const').value = d.constante;
+  document.getElementById('tbody').appendChild(tr);
+  recalc();
+}
+
+function recalc(){
+  const rows = [...document.querySelectorAll('#tbody tr')];
+  let totIng=0, totInv=0, roisArr=[], data=[];
+  rows.forEach(tr=>{
+    const inv=+tr.querySelector('.f-inv').value||0;
+    const cli=+tr.querySelector('.f-cli').value||0;
+    const tk=+tr.querySelector('.f-tk').value||0;
+    const ing=cli*tk;
+    const roi=inv===0 ? (ing>0?Infinity:NaN) : (ing-inv)/inv*100;
+    tr.querySelector('.f-ing').textContent='€'+ing.toLocaleString('es-ES');
+    if(isNaN(roi)) tr.querySelector('.f-roi').textContent='—';
+    else if(!isFinite(roi)) tr.querySelector('.f-roi').textContent='∞';
+    else { tr.querySelector('.f-roi').textContent=roi.toFixed(1)+'%'; tr.querySelector('.f-roi').style.color=roi<0?'#ef4444':roi>=100?'#22c55e':'#f59e0b'; }
+    tr.querySelector('.f-sem').innerHTML=sem(isNaN(roi)?0:roi, inv);
+    totIng+=ing; totInv+=inv;
+    const roiNum=isNaN(roi)?-Infinity:!isFinite(roi)?999999:roi;
+    if(!isNaN(roi)) roisArr.push(roiNum);
+    data.push({canal:tr.querySelector('.f-canal').value||'—', roi:roiNum, valid:!isNaN(roi)});
+  });
+  // ranking
+  const sorted=[...data].filter(d=>d.valid).sort((a,b)=>b.roi-a.roi);
+  const rl=document.getElementById('ranking');
+  rl.innerHTML='';
+  sorted.forEach((d,i)=>{
+    const li=document.createElement('li');
+    const roiStr=d.roi===999999?'∞':d.roi.toFixed(1)+'%';
+    li.innerHTML=`<span class="rank-pos">${i+1}</span><span class="rank-name">${d.canal}</span><span class="rank-roi ${d.roi<0?'neg':'pos'}">${roiStr}</span>`;
+    rl.appendChild(li);
+  });
+  const roiMed=roisArr.filter(r=>r!==999999).length ? roisArr.filter(r=>r!==999999).reduce((a,b)=>a+b,0)/roisArr.filter(r=>r!==999999).length : NaN;
+  document.getElementById('m1').textContent=isNaN(roiMed)?'—':roiMed.toFixed(1)+'%';
+  document.getElementById('m2').textContent='€'+totIng.toLocaleString('es-ES');
+  document.getElementById('m3').textContent='€'+totInv.toLocaleString('es-ES');
+  document.getElementById('m4').textContent=sorted[0]?sorted[0].canal:'—';
+}
+
+DEFAULTS.forEach(addRow);
+</script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tracker Relaciones con Medios y PR · CIR-S1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:      #1B2B4B;
+    --gold:      #C4A55A;
+    --bg:        #f8f7ff;
+    --row-alt:   #f0f4f8;
+    --border:    #d0d8e8;
+    --text:      #1a1a2e;
+    --muted:     #5a6478;
+    --green:     #2d7a4f;
+    --yellow:    #b8860b;
+    --red:       #c0392b;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--navy);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 1.25rem;
+    height: 68px;
+    position: sticky; top: 0; z-index: 10;
+  }
+
+  .logo-circle {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 800; color: var(--navy);
+    flex-shrink: 0;
+  }
+
+  .header-text { flex: 1; }
+  .header-title { color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: 0.01em; line-height: 1.2; }
+  .header-sub   { color: rgba(255,255,255,0.55); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+  .badge {
+    background: var(--gold); color: var(--navy);
+    font-size: 0.62rem; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 2px; white-space: nowrap;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 7px 14px; border-radius: 3px;
+    font-size: 0.78rem; font-weight: 700;
+    cursor: pointer; border: none;
+    font-family: system-ui, sans-serif; letter-spacing: 0.04em;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .btn-secondary { background: #fff; color: var(--navy); border: 1.5px solid var(--border); }
+  .btn-add       { background: var(--gold); color: var(--navy); }
+
+  main {
+    max-width: 1400px; margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex; flex-direction: column; gap: 1.75rem;
+  }
+
+  /* CARDS */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .card {
+    background: #fff;
+    border-top: 4px solid var(--navy);
+    border-radius: 4px;
+    padding: 1.1rem 1.25rem 1rem;
+    box-shadow: 0 1px 4px rgba(27,43,75,0.07);
+  }
+
+  .card-label {
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.45rem;
+  }
+
+  .card-value {
+    font-size: 1.75rem; font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--navy); line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .card-value.green  { color: var(--green); }
+  .card-value.yellow { color: var(--yellow); }
+  .card-value.red    { color: var(--red); }
+
+  .card-hint { font-size: 0.7rem; color: var(--muted); margin-top: 0.3rem; }
+
+  .semaphore-dot {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; margin-right: 4px; vertical-align: middle;
+  }
+  .dot-green  { background: var(--green); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-red    { background: var(--red); }
+
+  /* Estado pill */
+  .pill {
+    display: inline-block;
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 20px;
+  }
+  .pill-frio      { background: #e8eaf0; color: #4a5368; }
+  .pill-tibio     { background: var(--yellow-bg, #fdf6e3); color: var(--yellow); }
+  .pill-activo    { background: #eaf5ef; color: var(--green); }
+  .pill-publicado { background: var(--navy); color: var(--gold); }
+
+  /* TABLE SECTION */
+  .section-header {
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .table-wrap { overflow-x: auto; border-radius: 4px; box-shadow: 0 1px 4px rgba(27,43,75,0.07); }
+
+  table {
+    width: 100%; min-width: 1100px;
+    border-collapse: collapse; background: #fff;
+  }
+
+  thead th {
+    background: var(--navy); color: #fff;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 10px 10px; text-align: left; white-space: nowrap;
+  }
+
+  tbody tr:nth-child(even) td { background: var(--row-alt); }
+  tbody tr:nth-child(odd)  td { background: #fff; }
+
+  tbody td {
+    padding: 8px 10px;
+    font-size: 0.83rem; color: var(--text);
+    border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+    vertical-align: middle;
+  }
+
+  td.col-num { text-align: right; }
+
+  [contenteditable="true"] {
+    outline: none; border-radius: 2px;
+    transition: box-shadow 0.12s, background 0.12s;
+    min-width: 40px; display: inline-block;
+  }
+  [contenteditable="true"]:focus {
+    box-shadow: 0 0 0 2px var(--gold); background: #fffdf5;
+  }
+
+  select {
+    border: 1.5px solid var(--border); border-radius: 3px;
+    padding: 3px 6px;
+    font-family: system-ui, sans-serif;
+    font-size: 0.8rem; color: var(--text); background: #fff;
+    cursor: pointer; outline: none;
+  }
+  select:focus { border-color: var(--gold); }
+
+  /* Estado select — styled per value via JS class on cell */
+  td.estado-cell { white-space: nowrap; }
+
+  footer {
+    text-align: center; color: var(--muted);
+    font-size: 0.68rem; letter-spacing: 0.05em;
+    padding-bottom: 2rem;
+  }
+
+  @media print {
+    header { position: static; }
+    .btn, .header-actions { display: none !important; }
+    body { background: #fff; }
+    .card { box-shadow: none; border: 1px solid #ccc; border-top: 4px solid var(--navy); }
+    .table-wrap { box-shadow: none; overflow: visible; }
+    thead { display: table-header-group; }
+    tbody tr { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 1024px) { .cards-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 520px)  {
+    .cards-grid { grid-template-columns: 1fr; }
+    header { padding: 0 1rem; }
+    .badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-circle">M</div>
+  <div class="header-text">
+    <div class="header-title">Tracker Relaciones con Medios y PR</div>
+    <div class="header-sub">CIR-S1 · Invisibilidad de Marca</div>
+  </div>
+  <span class="badge">Herramienta Operativa</span>
+  <div style="display:flex;gap:.5rem;align-items:center;">
+    <button class="btn btn-secondary" onclick="window.print()">⎙ Imprimir</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- METRIC CARDS -->
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-label">Apariciones Conseguidas</div>
+      <div class="card-value" id="card-apariciones">—</div>
+      <div class="card-hint"><span class="semaphore-dot" id="dot-apariciones"></span>Estado = Publicado · Verde≥3 · Rojo=0</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Alcance Total Acumulado</div>
+      <div class="card-value" style="font-size:1.4rem" id="card-alcance">—</div>
+      <div class="card-hint">Suma de audiencia donde Estado=Publicado</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Coste Equiv. Publicidad</div>
+      <div class="card-value" style="font-size:1.3rem" id="card-coste">—</div>
+      <div class="card-hint">Alcance publicado × 0,02 €</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Contactos Activos</div>
+      <div class="card-value" id="card-activos">—</div>
+      <div class="card-hint"><span class="semaphore-dot" id="dot-activos"></span>Estado=Activo o Publicado · Verde≥3 · Rojo=0</div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div>
+    <div class="section-header">
+      <span class="section-title">Medios y periodistas</span>
+      <button class="btn btn-add" onclick="addRow()">+ Añadir contacto</button>
+    </div>
+    <div class="table-wrap">
+      <table id="pr-table">
+        <thead>
+          <tr>
+            <th>Medio / Periodista</th>
+            <th>Tipo</th>
+            <th class="col-num">Audiencia<br>estimada</th>
+            <th>Sector que cubre</th>
+            <th>Último<br>contacto</th>
+            <th>¿Tenemos<br>relación?</th>
+            <th>Propuesta de valor</th>
+            <th>Próxima acción</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td contenteditable="true">El Economista / Laura Sanz</td>
+            <td><select data-col="tipo"><option>Prensa</option><option>Radio</option><option>TV</option><option>Podcast</option><option>Newsletter</option><option>Influencer</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="audiencia">180000</td>
+            <td contenteditable="true">Economía y empresa</td>
+            <td contenteditable="true">15/03/2025</td>
+            <td><select data-col="relacion"><option>Sí</option><option>No</option><option selected>En proceso</option></select></td>
+            <td contenteditable="true">Caso de éxito exclusivo</td>
+            <td contenteditable="true">Enviar dossier</td>
+            <td class="estado-cell"><select data-col="estado"><option>Frío</option><option selected>Tibio</option><option>Activo</option><option>Publicado</option></select></td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Podcast Emprende Digital</td>
+            <td><select data-col="tipo"><option>Prensa</option><option>Radio</option><option>TV</option><option selected>Podcast</option><option>Newsletter</option><option>Influencer</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="audiencia">45000</td>
+            <td contenteditable="true">Marketing digital</td>
+            <td contenteditable="true">22/01/2025</td>
+            <td><select data-col="relacion"><option selected>Sí</option><option>No</option><option>En proceso</option></select></td>
+            <td contenteditable="true">Entrevista CEO sobre tendencias</td>
+            <td contenteditable="true">Confirmar fecha grabación</td>
+            <td class="estado-cell"><select data-col="estado"><option>Frío</option><option>Tibio</option><option selected>Activo</option><option>Publicado</option></select></td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Expansión</td>
+            <td><select data-col="tipo"><option selected>Prensa</option><option>Radio</option><option>TV</option><option>Podcast</option><option>Newsletter</option><option>Influencer</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="audiencia">320000</td>
+            <td contenteditable="true">Finanzas y negocios</td>
+            <td contenteditable="true">—</td>
+            <td><select data-col="relacion"><option>Sí</option><option selected>No</option><option>En proceso</option></select></td>
+            <td contenteditable="true">Estudio sectorial propio</td>
+            <td contenteditable="true">Identificar periodista clave</td>
+            <td class="estado-cell"><select data-col="estado"><option selected>Frío</option><option>Tibio</option><option>Activo</option><option>Publicado</option></select></td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Newsletter B2B Weekly</td>
+            <td><select data-col="tipo"><option>Prensa</option><option>Radio</option><option>TV</option><option>Podcast</option><option selected>Newsletter</option><option>Influencer</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="audiencia">28000</td>
+            <td contenteditable="true">Empresas B2B</td>
+            <td contenteditable="true">10/05/2025</td>
+            <td><select data-col="relacion"><option selected>Sí</option><option>No</option><option>En proceso</option></select></td>
+            <td contenteditable="true">Artículo invitado mensual</td>
+            <td contenteditable="true">Enviar propuesta tema junio</td>
+            <td class="estado-cell"><select data-col="estado"><option>Frío</option><option>Tibio</option><option>Activo</option><option selected>Publicado</option></select></td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Influencer LinkedIn Carmen R.</td>
+            <td><select data-col="tipo"><option>Prensa</option><option>Radio</option><option>TV</option><option>Podcast</option><option>Newsletter</option><option selected>Influencer</option></select></td>
+            <td class="col-num" contenteditable="true" data-col="audiencia">95000</td>
+            <td contenteditable="true">RRHH y management</td>
+            <td contenteditable="true">02/06/2025</td>
+            <td><select data-col="relacion"><option>Sí</option><option>No</option><option selected>En proceso</option></select></td>
+            <td contenteditable="true">Co-creación contenido</td>
+            <td contenteditable="true">Reunión virtual</td>
+            <td class="estado-cell"><select data-col="estado"><option>Frío</option><option>Tibio</option><option selected>Activo</option><option>Publicado</option></select></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer>MASESORA · CIR-S1 Invisibilidad de Marca · Herramienta Operativa R6 — Tracker Relaciones con Medios y PR</footer>
+
+<script>
+  function num(el) {
+    if (!el) return 0;
+    const txt = el.textContent !== undefined ? el.textContent : el.value;
+    return parseFloat((txt || '').replace(/[^\d.\-]/g, '')) || 0;
+  }
+
+  function applyColor(el, cls) {
+    el.classList.remove('green','yellow','red');
+    if (cls) el.classList.add(cls);
+  }
+  function applyDot(dot, cls) {
+    dot.className = 'semaphore-dot dot-' + cls;
+  }
+
+  function formatNumber(n) {
+    return n.toLocaleString('es-ES');
+  }
+
+  function formatEuro(n) {
+    return '€ ' + n.toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
+
+  function updateEstadoStyles() {
+    document.querySelectorAll('#pr-table [data-col="estado"]').forEach(sel => {
+      const td = sel.closest('td');
+      if (!td) return;
+      td.classList.remove('estado-frio','estado-tibio','estado-activo','estado-publicado');
+      const v = sel.value;
+      if (v === 'Frío')      sel.style.cssText = 'background:#e8eaf0;color:#4a5368;font-weight:700;border-color:#c8ccd8';
+      if (v === 'Tibio')     sel.style.cssText = 'background:#fdf6e3;color:#b8860b;font-weight:700;border-color:#e8d58a';
+      if (v === 'Activo')    sel.style.cssText = 'background:#eaf5ef;color:#2d7a4f;font-weight:700;border-color:#a8d8b8';
+      if (v === 'Publicado') sel.style.cssText = 'background:#1B2B4B;color:#C4A55A;font-weight:700;border-color:#1B2B4B';
+    });
+  }
+
+  function recalc() {
+    updateEstadoStyles();
+
+    const tbody = document.querySelector('#pr-table tbody');
+    const rows = Array.from(tbody.rows);
+
+    const rowData = rows.map(row => {
+      const audienciaCell = row.querySelector('[data-col="audiencia"]');
+      const estadoSel     = row.querySelector('[data-col="estado"]');
+      return {
+        audiencia: num(audienciaCell),
+        estado: estadoSel ? estadoSel.value : ''
+      };
+    });
+
+    // Apariciones = count Publicado
+    const publicadoRows = rowData.filter(r => r.estado === 'Publicado');
+    const apariciones = publicadoRows.length;
+    const apEl = document.getElementById('card-apariciones');
+    const dotAp = document.getElementById('dot-apariciones');
+    apEl.textContent = apariciones;
+    const apCls = apariciones >= 3 ? 'green' : apariciones >= 1 ? 'yellow' : 'red';
+    applyColor(apEl, apCls);
+    applyDot(dotAp, apCls);
+
+    // Alcance acumulado
+    const alcance = publicadoRows.reduce((a, r) => a + r.audiencia, 0);
+    document.getElementById('card-alcance').textContent = formatNumber(alcance);
+
+    // Coste equivalente
+    document.getElementById('card-coste').textContent = formatEuro(alcance * 0.02);
+
+    // Contactos activos = Activo OR Publicado
+    const activos = rowData.filter(r => r.estado === 'Activo' || r.estado === 'Publicado').length;
+    const acEl = document.getElementById('card-activos');
+    const dotAc = document.getElementById('dot-activos');
+    acEl.textContent = activos;
+    const acCls = activos >= 3 ? 'green' : activos >= 1 ? 'yellow' : 'red';
+    applyColor(acEl, acCls);
+    applyDot(dotAc, acCls);
+  }
+
+  function addRow() {
+    const tbody = document.querySelector('#pr-table tbody');
+    const lastRow = tbody.rows[tbody.rows.length - 1];
+    const newRow = lastRow.cloneNode(true);
+
+    newRow.querySelectorAll('[contenteditable="true"]').forEach((cell, i) => {
+      if (i === 0) cell.textContent = 'Nuevo contacto';
+      else if (cell.dataset.col === 'audiencia') cell.textContent = '0';
+      else cell.textContent = '';
+    });
+    newRow.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+
+    tbody.appendChild(newRow);
+    bindEvents(newRow);
+    recalc();
+  }
+
+  function bindEvents(row) {
+    row.querySelectorAll('[contenteditable="true"]').forEach(cell => {
+      cell.addEventListener('input', recalc);
+    });
+    row.querySelectorAll('select').forEach(sel => {
+      sel.addEventListener('change', recalc);
+    });
+  }
+
+  document.querySelectorAll('#pr-table tbody tr').forEach(bindEvents);
+  recalc();
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSI-S1-R2 · Registro de Incidentes de Toxicidad</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1e293b; }
+  header { background: #1B2B4B; color: #fff; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+  .logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+  .badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+  main { padding: 28px 32px; max-width: 1400px; margin: 0 auto; }
+  h2 { font-size: 17px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; }
+  .desc { background: #fff; border-left: 4px solid #C4A55A; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #475569; }
+  .params { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .params label { font-size: 13px; color: #475569; display: flex; align-items: center; gap: 8px; }
+  .params input { border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 8px; font-size: 13px; width: 100px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); min-width: 1100px; }
+  th { background: #1B2B4B; color: #fff; padding: 10px 10px; text-align: left; font-size: 12px; font-weight: 600; }
+  td { padding: 8px 8px; border-bottom: 1px solid #e2e8f0; font-size: 12px; vertical-align: middle; }
+  tr:hover td { background: #f0f4ff; }
+  input[type="text"], input[type="date"], input[type="number"] { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 5px; width: 95%; font-size: 12px; font-family: system-ui; }
+  select { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 5px; width: 95%; font-size: 12px; font-family: system-ui; }
+  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin: 12px 0; font-size: 13px; }
+  .btn-add:hover { background: #243c6a; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; margin: 28px 0 20px; }
+  .metric-card { background: #fff; border: 2px solid #C4A55A; border-radius: 12px; padding: 20px; text-align: center; min-width: 160px; flex: 1; }
+  .metric-value { font-size: 26px; font-weight: 800; color: #1B2B4B; }
+  .metric-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .freq-section { background: #fff; border-radius: 10px; padding: 16px 20px; margin: 20px 0; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+  .freq-section h3 { font-size: 14px; font-weight: 700; color: #1B2B4B; margin-bottom: 12px; }
+  .freq-bar { display: flex; align-items: center; gap: 10px; margin: 6px 0; font-size: 13px; }
+  .freq-bar-inner { height: 18px; background: #C4A55A; border-radius: 4px; min-width: 4px; transition: width .3s; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; margin: 24px 0; }
+  @media print { .no-print { display: none !important; } body { background: white; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">M</div>
+  <div>
+    <div style="font-size:11px;letter-spacing:2px;opacity:.7;text-transform:uppercase;">MASFRAME · PSI-S1</div>
+    <div style="font-size:20px;font-weight:700;">Registro de Incidentes de Toxicidad</div>
+  </div>
+  <span class="badge">HERRAMIENTA OPERATIVA</span>
+</header>
+<main>
+  <div class="desc">Registro de incidentes de comportamiento tóxico en la organización. Datos anonimizados para análisis de patrones, frecuencia y coste estimado de rotación asociado.</div>
+
+  <div class="params no-print">
+    <label>Coste estimado por incidente (€): <input type="number" id="costeIncidente" value="500" min="0" oninput="recalcular()"></label>
+  </div>
+
+  <h2>Registro de Incidentes</h2>
+  <div class="table-wrap">
+  <table id="tablaIncidentes">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Tipo incidente</th>
+        <th>Personas involucradas (anonimizado)</th>
+        <th>Testigos</th>
+        <th>Impacto (1-5)</th>
+        <th>¿Reportado?</th>
+        <th>Respuesta dada</th>
+        <th>Fecha resolución</th>
+        <th>¿Reincidente?</th>
+      </tr>
+    </thead>
+    <tbody id="tablaBody">
+      <tr>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td><select onchange="recalcular()"><option value="">-- Seleccionar --</option><option>Descalificación</option><option>Exclusión</option><option>Favoritismo</option><option>Comunicación agresiva</option><option>Rumores</option><option>Otro</option></select></td>
+        <td><input type="text" placeholder="Persona A, Persona B"></td>
+        <td><input type="text" placeholder="Nº testigos o descripción"></td>
+        <td><select onchange="recalcular()"><option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+        <td><select onchange="recalcular()"><option value="">-</option><option>Sí</option><option>No</option></select></td>
+        <td><input type="text" placeholder="Acción tomada"></td>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td><select onchange="recalcular()"><option value="">-</option><option>Sí</option><option>No</option></select></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <button class="btn-add no-print" onclick="addRow()">+ Añadir incidente</button>
+
+  <div class="freq-section">
+    <h3>Frecuencia por tipo de incidente</h3>
+    <div id="freqChart">—</div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-value" id="totalIncidentes">0</div>
+      <div class="metric-label">Total incidentes registrados</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="sinResolver">0</div>
+      <div class="metric-label">Sin resolver (sin fecha resolución)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="reincidentes">0</div>
+      <div class="metric-label">Casos reincidentes</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="costeTotal">0 €</div>
+      <div class="metric-label">Coste estimado en rotación</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="impactoMedio">—</div>
+      <div class="metric-label">Impacto medio</div>
+    </div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
+</main>
+
+<script>
+const TIPOS = ['Descalificación','Exclusión','Favoritismo','Comunicación agresiva','Rumores','Otro'];
+
+function addRow() {
+  const tbody = document.getElementById('tablaBody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="date" onchange="recalcular()" style="border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:12px;"></td>
+    <td><select onchange="recalcular()" style="border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:12px;"><option value="">-- Seleccionar --</option><option>Descalificación</option><option>Exclusión</option><option>Favoritismo</option><option>Comunicación agresiva</option><option>Rumores</option><option>Otro</option></select></td>
+    <td><input type="text" placeholder="Persona A, Persona B" style="border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:12px;"></td>
+    <td><input type="text" placeholder="Nº testigos" style="border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:12px;"></td>
+    <td><select onchange="recalcular()" style="border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:12px;"><option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+    <td><select onchange="recalcular()" style="border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:12px;"><option value="">-</option><option>Sí</option><option>No</option></select></td>
+    <td><input type="text" placeholder="Acción tomada" style="border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:12px;"></td>
+    <td><input type="date" onchange="recalcular()" style="border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:12px;"></td>
+    <td><select onchange="recalcular()" style="border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:12px;"><option value="">-</option><option>Sí</option><option>No</option></select></td>`;
+  tbody.appendChild(tr);
+}
+
+function recalcular() {
+  const filas = document.querySelectorAll('#tablaBody tr');
+  const costeUnit = parseFloat(document.getElementById('costeIncidente').value) || 500;
+  let total = 0, sinResolver = 0, reincidentes = 0, impactos = [], freq = {};
+  TIPOS.forEach(t => freq[t] = 0);
+
+  filas.forEach(tr => {
+    const tipo = tr.querySelectorAll('select')[0]?.value;
+    const impacto = parseInt(tr.querySelectorAll('select')[1]?.value);
+    const fechaRes = tr.querySelectorAll('input[type="date"]')[1]?.value;
+    const reincidente = tr.querySelectorAll('select')[3]?.value;
+
+    if (tipo && tipo !== '-- Seleccionar --') {
+      total++;
+      if (freq[tipo] !== undefined) freq[tipo]++; else freq['Otro']++;
+    }
+    if (!isNaN(impacto) && impacto > 0) impactos.push(impacto);
+    if (!fechaRes && tipo) sinResolver++;
+    if (reincidente === 'Sí') reincidentes++;
+  });
+
+  document.getElementById('totalIncidentes').textContent = total;
+  document.getElementById('sinResolver').textContent = sinResolver;
+  document.getElementById('reincidentes').textContent = reincidentes;
+  document.getElementById('costeTotal').textContent = (total * costeUnit).toLocaleString('es-ES') + ' €';
+  document.getElementById('impactoMedio').textContent = impactos.length ? (impactos.reduce((a,b)=>a+b,0)/impactos.length).toFixed(1) : '—';
+
+  const maxFreq = Math.max(...Object.values(freq), 1);
+  const chart = document.getElementById('freqChart');
+  chart.innerHTML = TIPOS.map(t => `
+    <div class="freq-bar">
+      <span style="width:160px;font-size:12px;">${t}</span>
+      <div class="freq-bar-inner" style="width:${(freq[t]/maxFreq)*200}px;"></div>
+      <span style="font-size:12px;font-weight:600;">${freq[t]}</span>
+    </div>`).join('');
+}
+
+recalcular();
+</script>
+</body>
+</html>

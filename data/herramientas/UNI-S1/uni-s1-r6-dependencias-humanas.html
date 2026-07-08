@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dependencias Humanas Críticas — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .semaforo { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .s-rojo { background: #e53e3e; }
+  .s-amarillo { background: #d69e2e; }
+  .s-verde { background: #38a169; }
+  .rank-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-bottom: 1px solid #e0dff5; }
+  .rank-num { font-size: 1.1rem; font-weight: 800; color: #C4A55A; min-width: 28px; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S1 — Esclerosis Operativa</div>
+    <div class="header-title">R6 — Redistribución de Dependencias Humanas</div>
+    <div class="header-sub">Identificación de tareas críticas con persona indispensable y plan de backup</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Tareas Críticas</div>
+      <div class="metric-value" id="m-total">0</div>
+      <div class="metric-unit">identificadas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Sin Backup</div>
+      <div class="metric-value" id="m-sinbackup">0%</div>
+      <div class="metric-unit">exposición de riesgo</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Coste Dependencias/mes</div>
+      <div class="metric-value" id="m-coste">0 €</div>
+      <div class="metric-unit">impacto estimado</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Índice de Riesgo</div>
+      <div class="metric-value" id="m-riesgo">0%</div>
+      <div class="metric-unit">tareas sin backup</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Mapa de Dependencias Críticas</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Tarea crítica</th>
+          <th>Persona indispensable</th>
+          <th style="width:80px">¿Hay backup?</th>
+          <th style="width:100px">Impacto si falta</th>
+          <th style="width:110px">Coste dep./mes (€)</th>
+          <th style="width:110px">T. formar backup (h)</th>
+          <th style="width:100px">Coste resolver (€)</th>
+          <th style="width:60px">Semáforo</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="ejemplo">
+          <td><input value="Gestión de contratos con clientes clave" oninput="updateAll()"></td>
+          <td><input value="Ana García" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><select onchange="updateAll()"><option selected>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+          <td><input type="number" value="1200" oninput="updateAll()"></td>
+          <td><input type="number" value="16" oninput="updateAll()"></td>
+          <td><input type="number" value="480" oninput="updateAll()"></td>
+          <td id="sem0"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Administración del sistema contable" oninput="updateAll()"></td>
+          <td><input value="Carlos Ruiz" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><select onchange="updateAll()"><option>Alto</option><option selected>Medio</option><option>Bajo</option></select></td>
+          <td><input type="number" value="800" oninput="updateAll()"></td>
+          <td><input type="number" value="24" oninput="updateAll()"></td>
+          <td><input type="number" value="720" oninput="updateAll()"></td>
+          <td id="sem1"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Atención a proveedor principal" oninput="updateAll()"></td>
+          <td><input value="María López" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><select onchange="updateAll()"><option selected>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+          <td><input type="number" value="400" oninput="updateAll()"></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td><input type="number" value="240" oninput="updateAll()"></td>
+          <td id="sem2"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Informe de KPIs para dirección" oninput="updateAll()"></td>
+          <td><input value="Pedro Sanz" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><select onchange="updateAll()"><option>Alto</option><option>Medio</option><option selected>Bajo</option></select></td>
+          <td><input type="number" value="200" oninput="updateAll()"></td>
+          <td><input type="number" value="4" oninput="updateAll()"></td>
+          <td><input type="number" value="120" oninput="updateAll()"></td>
+          <td id="sem3"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir dependencia</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Top 3 Dependencias Más Críticas (Sin Backup + Alto Impacto)</div>
+    <div id="ranking"></div>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s1-r6-dependencias-humanas · Herramienta Operativa UNI-S1-R6</div>
+
+<script>
+let rowCount = 4;
+
+function addRow() {
+  const idx = rowCount++;
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Tarea crítica" oninput="updateAll()"></td>
+    <td><input placeholder="Persona" oninput="updateAll()"></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>No</option></select></td>
+    <td><select onchange="updateAll()"><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td id="sem${idx}"></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  const rows = document.querySelectorAll('#tbody tr');
+  let total = 0, sinBackup = 0, costeTotal = 0;
+  const criticas = [];
+
+  rows.forEach((tr, i) => {
+    const cols = tr.querySelectorAll('input, select');
+    const backup = cols[2].value;
+    const impacto = cols[3].value;
+    const coste = parseFloat(cols[4].value) || 0;
+    total++;
+    costeTotal += coste;
+    if (backup === 'No') sinBackup++;
+
+    let cls = 's-verde';
+    if (backup === 'No' && impacto === 'Alto') cls = 's-rojo';
+    else if (backup === 'No' && impacto === 'Medio') cls = 's-amarillo';
+
+    const semEl = document.getElementById(`sem${i}`);
+    if (semEl) semEl.innerHTML = `<span class="semaforo ${cls}"></span>`;
+
+    if (backup === 'No' && impacto === 'Alto') {
+      criticas.push({ name: cols[0].value || '(sin nombre)', persona: cols[1].value, coste });
+    }
+  });
+
+  const pctSinBackup = total > 0 ? ((sinBackup / total) * 100).toFixed(0) : 0;
+  document.getElementById('m-total').textContent = total;
+  document.getElementById('m-sinbackup').textContent = pctSinBackup + '%';
+  document.getElementById('m-coste').textContent = costeTotal.toFixed(0) + ' €';
+  document.getElementById('m-riesgo').textContent = pctSinBackup + '%';
+
+  criticas.sort((a, b) => b.coste - a.coste);
+  const rkEl = document.getElementById('ranking');
+  if (criticas.length === 0) {
+    rkEl.innerHTML = '<p style="color:#999;font-size:0.85rem">No hay dependencias sin backup de alto impacto.</p>';
+  } else {
+    rkEl.innerHTML = criticas.slice(0, 3).map((c, i) => `
+      <div class="rank-item">
+        <div class="rank-num">#${i+1}</div>
+        <span class="semaforo s-rojo"></span>
+        <div style="flex:1"><strong>${c.name}</strong><br><span style="font-size:0.8rem;color:#888">${c.persona}</span></div>
+        <div style="font-weight:700;color:#e53e3e">${c.coste.toFixed(0)} €/mes</div>
+      </div>`).join('');
+  }
+}
+
+updateAll();
+</script>
+</body>
+</html>

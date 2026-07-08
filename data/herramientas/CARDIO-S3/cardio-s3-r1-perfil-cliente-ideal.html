@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R1 · Perfil de Cliente Ideal (ICP) — CARDIO-S3</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:13px;font-weight:700;letter-spacing:2px;color:#C4A55A;text-transform:uppercase}
+header h1{font-size:22px;font-weight:800;margin:4px 0}
+.subtitle{font-size:13px;opacity:.8}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.container{max-width:1200px;margin:0 auto;padding:28px 20px}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(27,43,75,.08);padding:24px;margin-bottom:24px}
+.section-title{font-size:15px;font-weight:800;color:#1B2B4B;border-left:4px solid #C4A55A;padding-left:12px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+.icp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.icp-field{display:flex;flex-direction:column;gap:6px}
+.icp-field label{font-size:12px;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.3px}
+.icp-field input{border:1px solid #ddd;border-radius:6px;padding:8px 10px;font-size:13px;background:#f8f7ff;color:#1B2B4B;width:100%}
+.icp-field input:focus{outline:2px solid #C4A55A;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#1B2B4B;color:#C4A55A;padding:10px 8px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid #eee;vertical-align:middle}
+tr:hover td{background:#f8f7ff}
+input[type=text],input[type=number],select{width:100%;border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:12px;font-family:system-ui;background:#f8f7ff;color:#1B2B4B}
+input:focus,select:focus{outline:2px solid #C4A55A;background:#fff}
+.calc-cell{background:#eef2ff;font-weight:700;font-size:12px}
+.dot{width:14px;height:14px;border-radius:50%;display:inline-block}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}
+.btn-add{background:#1B2B4B;color:#C4A55A;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn-del{background:#ef4444;color:#fff;border:none;border-radius:4px;padding:3px 7px;cursor:pointer;font-size:11px}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.metric-card{background:#1B2B4B;border-radius:10px;padding:18px;text-align:center}
+.metric-label{color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.metric-value{color:#fff;font-size:18px;font-weight:800}
+.rec-box{background:#f0f4ff;border-radius:8px;padding:14px;font-size:13px;font-weight:600;margin-top:12px;color:#1B2B4B}
+@media print{.btn,.btn-add,.btn-del{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">MASFRAME · CARDIO-Sx</div>
+    <h1>Perfil de Cliente Ideal (ICP)</h1>
+    <div class="subtitle">Síndrome del Origen · Herramienta R1</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</header>
+<div class="container">
+
+  <div class="card">
+    <div class="section-title">Sección 1 — Canvas ICP</div>
+    <div class="icp-grid">
+      <div class="icp-field"><label>Sector</label><input type="text" id="icp-sector" value="Consultoría y servicios B2B"></div>
+      <div class="icp-field"><label>Tamaño empresa</label><input type="text" id="icp-tamano" value="1-10 empleados"></div>
+      <div class="icp-field"><label>Facturación anual (€)</label><input type="number" id="icp-factu" value="200000" min="0" oninput="recalc()"></div>
+      <div class="icp-field"><label>Cargo decisor</label><input type="text" id="icp-cargo" value="CEO / Fundador"></div>
+      <div class="icp-field"><label>Problema principal</label><input type="text" id="icp-problema" value="Estancamiento de ingresos"></div>
+      <div class="icp-field"><label>Señal de compra</label><input type="text" id="icp-compra" value="Busca activamente solución"></div>
+      <div class="icp-field"><label>Señal de descarte</label><input type="text" id="icp-descarte" value="Startup sin budget confirmado"></div>
+      <div class="icp-field"><label>Ticket medio (€)</label><input type="number" id="icp-ticket" value="3000" min="0" oninput="recalc()"></div>
+      <div class="icp-field"><label>Ciclo de venta (días)</label><input type="number" id="icp-ciclo" value="30" min="0"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Sección 2 — Validación: Últimos 10 clientes vs ICP</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th><th>Sector</th><th>¿Coincide sector ICP?</th>
+            <th>Cargo decisor real</th><th>¿Coincide cargo?</th>
+            <th>Ticket real (€)</th><th>¿Supera ticket ICP?</th>
+            <th>Score alineación</th><th>Estado</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir cliente</button>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Métricas</div>
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="metric-label">Score medio alineación</div><div class="metric-value" id="m1">—</div></div>
+      <div class="metric-card"><div class="metric-label">% Clientes bien alineados</div><div class="metric-value" id="m2">—</div></div>
+      <div class="metric-card"><div class="metric-label">Ticket medio real vs ICP</div><div class="metric-value" id="m3" style="font-size:13px">—</div></div>
+      <div class="metric-card"><div class="metric-label">Recomendación</div><div class="metric-value" id="m4" style="font-size:11px">—</div></div>
+    </div>
+    <div class="rec-box" id="rec-box"></div>
+  </div>
+
+  <div style="text-align:right"><button class="btn" onclick="window.print()">🖨 Imprimir / Exportar PDF</button></div>
+</div>
+<script>
+const DEFS=[
+  {c:'Empresa Alfa',sec:'Consultoría',coinc_sec:'Sí',cargo:'CEO',coinc_cargo:'Sí',ticket:3500},
+  {c:'Startup Beta',sec:'Tech',coinc_sec:'No',cargo:'CTO',coinc_cargo:'No',ticket:1200},
+  {c:'Despacho Gamma',sec:'Consultoría',coinc_sec:'Sí',cargo:'Fundador',coinc_cargo:'Sí',ticket:4000},
+  {c:'Freelance Delta',sec:'Diseño',coinc_sec:'No',cargo:'Autónomo',coinc_cargo:'No',ticket:800},
+  {c:'Agencia Epsilon',sec:'Marketing',coinc_sec:'No',cargo:'Directora',coinc_cargo:'Sí',ticket:2500},
+];
+function addRow(d={}){
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td><input type="text" class="f-c" value="${d.c||''}"></td>
+    <td><input type="text" class="f-sec" value="${d.sec||''}"></td>
+    <td><select class="f-coinc-sec" onchange="recalc()"><option>Sí</option><option>No</option></select></td>
+    <td><input type="text" class="f-cargo" value="${d.cargo||''}"></td>
+    <td><select class="f-coinc-cargo" onchange="recalc()"><option>Sí</option><option>No</option></select></td>
+    <td><input type="number" class="f-tk" value="${d.ticket||0}" min="0" oninput="recalc()"></td>
+    <td class="calc-cell f-supera">—</td>
+    <td class="calc-cell f-score">—</td>
+    <td class="f-dot">—</td>
+    <td><button class="btn-del" onclick="this.closest('tr').remove();recalc()">✕</button></td>
+  `;
+  if(d.coinc_sec) tr.querySelector('.f-coinc-sec').value=d.coinc_sec;
+  if(d.coinc_cargo) tr.querySelector('.f-coinc-cargo').value=d.coinc_cargo;
+  document.getElementById('tbody').appendChild(tr);
+  recalc();
+}
+function recalc(){
+  const icpTk=+document.getElementById('icp-ticket').value||0;
+  let scores=[], tkSuma=0, alineados=0;
+  document.querySelectorAll('#tbody tr').forEach(tr=>{
+    const cs=tr.querySelector('.f-coinc-sec').value==='Sí';
+    const cc=tr.querySelector('.f-coinc-cargo').value==='Sí';
+    const tk=+tr.querySelector('.f-tk').value||0;
+    const supera=tk>=icpTk;
+    let score=(cs?20:0)+(cc?20:0)+(supera?20:0)+40; // base 40 + 3 criterios×20 → max 100
+    score=Math.min(100,score);
+    tr.querySelector('.f-supera').textContent=supera?'Sí ✓':'No ✗';
+    tr.querySelector('.f-supera').style.color=supera?'#22c55e':'#ef4444';
+    tr.querySelector('.f-score').textContent=score;
+    const d=score>=80?'verde':score>=50?'amarillo':'rojo';
+    tr.querySelector('.f-dot').innerHTML=`<span class="dot ${d}"></span>`;
+    scores.push(score); tkSuma+=tk;
+    if(score>=80) alineados++;
+  });
+  const n=scores.length;
+  const scoreMed=n?scores.reduce((a,b)=>a+b,0)/n:0;
+  const tkMed=n?tkSuma/n:0;
+  const pctAlin=n?alineados/n*100:0;
+  document.getElementById('m1').textContent=n?scoreMed.toFixed(0)+'/100':'—';
+  document.getElementById('m2').textContent=n?pctAlin.toFixed(0)+'%':'—';
+  document.getElementById('m3').textContent=n?'Real €'+Math.round(tkMed).toLocaleString('es-ES')+' / ICP €'+icpTk.toLocaleString('es-ES'):'—';
+  let rec='';
+  if(pctAlin<50) rec='⚠ Menos del 50% de tus clientes actuales coincide con tu ICP. Revisa tu estrategia de captación.';
+  else if(tkMed<icpTk) rec='Tu perfil de cliente es correcto pero el ticket medio real está por debajo del ICP. Refuerza el posicionamiento de precio.';
+  else rec='Buen nivel de alineación. Focaliza en canales que ya te traen clientes con perfil ICP.';
+  document.getElementById('m4').textContent=pctAlin>=50?(tkMed>=icpTk?'Óptimo':'Revisar ticket'):'Revisar ICP';
+  document.getElementById('rec-box').textContent=rec;
+}
+DEFS.forEach(addRow);
+</script>
+</body>
+</html>

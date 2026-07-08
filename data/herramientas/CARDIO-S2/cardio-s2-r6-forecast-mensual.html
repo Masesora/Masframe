@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R6 · Forecast Mensual de Cierre — CARDIO-S2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:13px;font-weight:700;letter-spacing:2px;color:#C4A55A;text-transform:uppercase}
+header h1{font-size:22px;font-weight:800;margin:4px 0}
+.subtitle{font-size:13px;opacity:.8}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.container{max-width:1200px;margin:0 auto;padding:28px 20px}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(27,43,75,.08);padding:24px;margin-bottom:24px}
+.section-title{font-size:15px;font-weight:800;color:#1B2B4B;border-left:4px solid #C4A55A;padding-left:12px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#1B2B4B;color:#C4A55A;padding:10px 8px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid #eee;vertical-align:middle}
+tr:hover td{background:#f8f7ff}
+input[type=text],input[type=number],select{width:100%;border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:12px;font-family:system-ui;background:#f8f7ff;color:#1B2B4B}
+input:focus,select:focus{outline:2px solid #C4A55A;background:#fff}
+.calc-cell{background:#eef2ff;font-weight:700;font-size:12px}
+.dot{width:16px;height:16px;border-radius:50%;display:inline-block}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}
+.btn-add{background:#1B2B4B;color:#C4A55A;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn-del{background:#ef4444;color:#fff;border:none;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:11px}
+.param-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.param-row label{font-weight:700;font-size:13px}
+.param-row input,.param-row select{max-width:160px;border:1px solid #ddd;border-radius:6px;padding:6px 10px;font-size:14px;background:#f8f7ff}
+.viab-box{border-radius:10px;padding:14px 18px;margin-top:16px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:12px}
+.v-verde{background:#dcfce7;color:#166534}.v-amarillo{background:#fef3c7;color:#92400e}.v-rojo{background:#fee2e2;color:#991b1b}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.metric-card{background:#1B2B4B;border-radius:10px;padding:18px;text-align:center}
+.metric-label{color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.metric-value{color:#fff;font-size:20px;font-weight:800}
+.agrup-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.agrup-table th{background:#1B2B4B;color:#C4A55A;padding:8px;font-size:11px;font-weight:700;text-transform:uppercase}
+.agrup-table td{padding:8px;border-bottom:1px solid #eee}
+@media print{.btn,.btn-add,.btn-del{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">MASFRAME · CARDIO-Sx</div>
+    <h1>Forecast Mensual de Cierre</h1>
+    <div class="subtitle">Arritmia Comercial · Herramienta R6</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</header>
+<div class="container">
+
+  <div class="card">
+    <div class="section-title">Oportunidades en Pipeline</div>
+    <div class="param-row">
+      <label>Objetivo mensual (€):</label>
+      <input type="number" id="obj-mes" value="10000" min="0" oninput="recalc()">
+      <label>Mes actual:</label>
+      <select id="mes-actual" onchange="recalc()">
+        <option>Enero</option><option>Febrero</option><option>Marzo</option><option>Abril</option>
+        <option>Mayo</option><option>Junio</option><option selected>Julio</option><option>Agosto</option>
+        <option>Septiembre</option><option>Octubre</option><option>Noviembre</option><option>Diciembre</option>
+      </select>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr><th>Oportunidad</th><th>Valor (€)</th><th>Probabilidad %</th><th>Valor ponderado (€)</th><th>Mes cierre</th><th>Responsable</th><th></th></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir oportunidad</button>
+    <div class="viab-box v-amarillo" id="viab-box" style="margin-top:20px">
+      <span class="dot amarillo" id="viab-dot"></span>
+      <span id="viab-txt">Calculando forecast...</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Agrupación por Mes de Cierre</div>
+    <table class="agrup-table">
+      <thead><tr><th>Mes</th><th>Num oportunidades</th><th>Valor total (€)</th><th>Valor ponderado (€)</th></tr></thead>
+      <tbody id="agrup-body"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Métricas</div>
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="metric-label">Forecast mes actual</div><div class="metric-value" id="m1">—</div></div>
+      <div class="metric-card"><div class="metric-label">Forecast 3 meses</div><div class="metric-value" id="m2">—</div></div>
+      <div class="metric-card"><div class="metric-label">vs Objetivo mes</div><div class="metric-value" id="m3">—</div></div>
+      <div class="metric-card"><div class="metric-label">Oportunidades activas</div><div class="metric-value" id="m4">—</div></div>
+    </div>
+  </div>
+
+  <div style="text-align:right"><button class="btn" onclick="window.print()">🖨 Imprimir / Exportar PDF</button></div>
+</div>
+<script>
+const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const DEFS=[
+  {op:'Empresa Alpha',val:8000,prob:70,mes:'Julio',resp:'Maite'},
+  {op:'Consultora Beta',val:5000,prob:50,mes:'Julio',resp:'Maite'},
+  {op:'Miguel F.',val:3000,prob:30,mes:'Agosto',resp:'Maite'},
+  {op:'Grupo Gamma',val:12000,prob:80,mes:'Agosto',resp:'Maite'},
+  {op:'Sara M.',val:2000,prob:20,mes:'Septiembre',resp:'Maite'},
+];
+function mesesOpts(sel){return MESES.map(m=>`<option${m===sel?' selected':''}>${m}</option>`).join('');}
+function addRow(d={}){
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td><input type="text" class="f-op" value="${d.op||''}"></td>
+    <td><input type="number" class="f-val" value="${d.val||0}" min="0" oninput="recalc()"></td>
+    <td><input type="number" class="f-prob" value="${d.prob||50}" min="0" max="100" style="width:65px" oninput="recalc()"></td>
+    <td class="calc-cell f-pond">—</td>
+    <td><select class="f-mes" onchange="recalc()">${mesesOpts(d.mes)}</select></td>
+    <td><input type="text" class="f-resp" value="${d.resp||''}"></td>
+    <td><button class="btn-del" onclick="this.closest('tr').remove();recalc()">✕</button></td>
+  `;
+  document.getElementById('tbody').appendChild(tr);
+  recalc();
+}
+function recalc(){
+  const obj=+document.getElementById('obj-mes').value||0;
+  const mesActual=document.getElementById('mes-actual').value;
+  const mesIdx=MESES.indexOf(mesActual);
+  const prox3=MESES.slice(mesIdx,mesIdx+3);
+  let forecastActual=0,forecast3=0,agrup={};
+  let nActivas=0;
+  document.querySelectorAll('#tbody tr').forEach(tr=>{
+    const val=+tr.querySelector('.f-val').value||0;
+    const prob=+tr.querySelector('.f-prob').value||0;
+    const mes=tr.querySelector('.f-mes').value;
+    const pond=val*prob/100;
+    tr.querySelector('.f-pond').textContent='€'+Math.round(pond).toLocaleString('es-ES');
+    if(mes===mesActual) forecastActual+=pond;
+    if(prox3.includes(mes)) forecast3+=pond;
+    if(!agrup[mes]) agrup[mes]={n:0,val:0,pond:0};
+    agrup[mes].n++; agrup[mes].val+=val; agrup[mes].pond+=pond;
+    nActivas++;
+  });
+  // agrupación
+  const ab=document.getElementById('agrup-body');
+  ab.innerHTML='';
+  MESES.filter(m=>agrup[m]).forEach(m=>{
+    const g=agrup[m];
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><strong>${m}</strong></td><td>${g.n}</td><td>€${g.val.toLocaleString('es-ES')}</td><td>€${Math.round(g.pond).toLocaleString('es-ES')}</td>`;
+    ab.appendChild(tr);
+  });
+  // semáforo
+  const pct=obj>0?forecastActual/obj*100:0;
+  let cls,dot,txt;
+  if(pct>=100){cls='v-verde';dot='verde';txt='FORECAST ALCANZA OBJETIVO — €'+Math.round(forecastActual).toLocaleString('es-ES')+' vs €'+obj.toLocaleString('es-ES');}
+  else if(pct>=50){cls='v-amarillo';dot='amarillo';txt='FORECAST PARCIAL ('+pct.toFixed(0)+'%) — Reforzar pipeline este mes';}
+  else{cls='v-rojo';dot='rojo';txt='FORECAST INSUFICIENTE ('+pct.toFixed(0)+'%) — Acción urgente en captación';}
+  document.getElementById('viab-box').className='viab-box '+cls;
+  document.getElementById('viab-dot').className='dot '+dot;
+  document.getElementById('viab-txt').textContent=txt;
+  const vsObj=forecastActual-obj;
+  document.getElementById('m1').textContent='€'+Math.round(forecastActual).toLocaleString('es-ES');
+  document.getElementById('m2').textContent='€'+Math.round(forecast3).toLocaleString('es-ES');
+  document.getElementById('m3').textContent=(vsObj>=0?'+':'')+Math.round(vsObj).toLocaleString('es-ES')+'€';
+  document.getElementById('m3').style.color=vsObj>=0?'#C4A55A':'#ef4444';
+  document.getElementById('m4').textContent=nActivas;
+}
+DEFS.forEach(addRow);
+</script>
+</body>
+</html>

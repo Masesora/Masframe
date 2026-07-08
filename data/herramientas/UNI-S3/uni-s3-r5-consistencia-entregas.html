@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consistencia de Entregas por Persona — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .semaforo { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; }
+  .s-rojo { background: #e53e3e; }
+  .s-amarillo { background: #d69e2e; }
+  .s-verde { background: #38a169; }
+  .index-box { background: #1B2B4B; color: white; border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 20px; }
+  .index-val { font-size: 3rem; font-weight: 900; color: #C4A55A; line-height: 1; }
+  .index-label { font-size: 0.85rem; margin-top: 6px; opacity: 0.85; }
+  .index-note { font-size: 0.78rem; margin-top: 8px; opacity: 0.7; }
+  .alert-box { padding: 12px 16px; border-radius: 6px; margin-top: 12px; font-size: 0.85rem; font-weight: 600; }
+  .alert-rojo { background: #fff5f5; border-left: 4px solid #e53e3e; color: #c53030; }
+  .alert-amarillo { background: #fffff0; border-left: 4px solid #d69e2e; color: #975a16; }
+  .alert-verde { background: #f0fff4; border-left: 4px solid #38a169; color: #276749; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S3 — Fuga de Calidad Crónica</div>
+    <div class="header-title">R5 — Consistencia de Entregas por Persona</div>
+    <div class="header-sub">Variabilidad de calidad según quién entrega — índice de consistencia del equipo</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Total Personas</div>
+      <div class="metric-value" id="m-personas">0</div>
+      <div class="metric-unit">evaluadas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Tasa de Error Promedio</div>
+      <div class="metric-value" id="m-tasa">0%</div>
+      <div class="metric-unit">media del equipo</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Índice de Consistencia</div>
+      <div class="metric-value" id="m-desv">0</div>
+      <div class="metric-unit">desviación estándar (%)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Mayor Variabilidad</div>
+      <div class="metric-value" id="m-worst" style="font-size:1rem">—</div>
+      <div class="metric-unit">persona con mayor tasa error</div>
+    </div>
+  </div>
+
+  <div class="index-box">
+    <div class="index-val" id="idx-val">—</div>
+    <div class="index-label">Índice de Consistencia del Equipo (Desviación Estándar de Tasa de Error)</div>
+    <div class="index-note">Una desviación &gt; 15% indica variabilidad crítica en el equipo</div>
+    <div id="idx-alert" style="margin-top:10px;font-size:0.85rem"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Análisis por Persona</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Persona</th>
+          <th style="width:90px">Entregas/mes</th>
+          <th style="width:80px">Errores detectados</th>
+          <th style="width:90px">Tasa error (%)</th>
+          <th style="width:90px">Revisiones necesarias</th>
+          <th style="width:90px">T. retrabajo (h)</th>
+          <th style="width:110px">¿Sigue protocolo?</th>
+          <th style="width:60px">Semáforo</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="ejemplo">
+          <td><input value="Ana García" oninput="updateAll()"></td>
+          <td><input type="number" value="22" oninput="updateAll()"></td>
+          <td><input type="number" value="1" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input type="number" value="1" oninput="updateAll()"></td>
+          <td><input type="number" value="0.5" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option><option>Parcial</option></select></td>
+          <td id="sem0"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Carlos Ruiz" oninput="updateAll()"></td>
+          <td><input type="number" value="18" oninput="updateAll()"></td>
+          <td><input type="number" value="5" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input type="number" value="4" oninput="updateAll()"></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option><option>Parcial</option></select></td>
+          <td id="sem1"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="María López" oninput="updateAll()"></td>
+          <td><input type="number" value="25" oninput="updateAll()"></td>
+          <td><input type="number" value="2" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input type="number" value="2" oninput="updateAll()"></td>
+          <td><input type="number" value="1" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option>No</option><option selected>Parcial</option></select></td>
+          <td id="sem2"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Pedro Sanz" oninput="updateAll()"></td>
+          <td><input type="number" value="15" oninput="updateAll()"></td>
+          <td><input type="number" value="6" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input type="number" value="5" oninput="updateAll()"></td>
+          <td><input type="number" value="4" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option><option>Parcial</option></select></td>
+          <td id="sem3"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir persona</button>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s3-r5-consistencia-entregas · Herramienta Operativa UNI-S3-R5</div>
+
+<script>
+let rowCount = 4;
+
+function addRow() {
+  const idx = rowCount++;
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Nombre" oninput="updateAll()"></td>
+    <td><input type="number" value="10" oninput="updateAll()"></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>No</option><option>Parcial</option></select></td>
+    <td id="sem${idx}"></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function stdDev(arr) {
+  if (arr.length < 2) return 0;
+  const mean = arr.reduce((s, v) => s + v, 0) / arr.length;
+  const variance = arr.reduce((s, v) => s + Math.pow(v - mean, 2), 0) / arr.length;
+  return Math.sqrt(variance);
+}
+
+function updateAll() {
+  const rows = document.querySelectorAll('#tbody tr');
+  const tasas = [];
+  let worstName = '—', worstTasa = -1;
+
+  rows.forEach((tr, i) => {
+    const cols = tr.querySelectorAll('input, select');
+    const entregas = parseFloat(cols[1].value) || 0;
+    const errores = parseFloat(cols[2].value) || 0;
+    const tasa = entregas > 0 ? ((errores / entregas) * 100) : 0;
+    cols[3].value = tasa.toFixed(1) + '%';
+    tasas.push(tasa);
+
+    if (tasa > worstTasa) { worstTasa = tasa; worstName = cols[0].value || '—'; }
+
+    const semEl = document.getElementById(`sem${i}`);
+    if (semEl) {
+      const cls = tasa > 20 ? 's-rojo' : tasa > 10 ? 's-amarillo' : 's-verde';
+      semEl.innerHTML = `<span class="semaforo ${cls}"></span>`;
+    }
+  });
+
+  const mean = tasas.length > 0 ? (tasas.reduce((s, v) => s + v, 0) / tasas.length) : 0;
+  const desv = stdDev(tasas);
+
+  document.getElementById('m-personas').textContent = rows.length;
+  document.getElementById('m-tasa').textContent = mean.toFixed(1) + '%';
+  document.getElementById('m-desv').textContent = desv.toFixed(1);
+  document.getElementById('m-worst').textContent = worstName.length > 14 ? worstName.slice(0, 13) + '…' : worstName;
+
+  document.getElementById('idx-val').textContent = desv.toFixed(1) + '%';
+
+  const alertEl = document.getElementById('idx-alert');
+  if (desv > 15) {
+    alertEl.innerHTML = '⚠ Variabilidad crítica detectada. El equipo no aplica el proceso de forma homogénea.';
+    alertEl.style.color = '#e53e3e';
+  } else if (desv > 8) {
+    alertEl.innerHTML = 'Variabilidad moderada. Revisar casos con mayor tasa de error.';
+    alertEl.style.color = '#d69e2e';
+  } else {
+    alertEl.innerHTML = 'Consistencia aceptable. Equipo trabajando de forma homogénea.';
+    alertEl.style.color = '#68d391';
+  }
+}
+
+updateAll();
+</script>
+</body>
+</html>

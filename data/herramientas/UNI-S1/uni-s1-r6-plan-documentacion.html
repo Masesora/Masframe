@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNI-S1-R6 · Plan de Documentación de Procesos Críticos</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+header{background:#1B2B4B;color:#f8f7ff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:17px;font-weight:700}
+header p{font-size:12px;opacity:.75;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.container{padding:20px 24px;max-width:1400px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.metric{background:#fff;border:1px solid #e0dff5;border-radius:10px;padding:16px 18px}
+.metric label{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
+.metric span{font-size:26px;font-weight:700;color:#1B2B4B}
+.metric .sub{font-size:11px;color:#9ca3af;margin-top:2px}
+.actions{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+button{cursor:pointer;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;font-family:inherit}
+.btn-add{background:#C4A55A;color:#1B2B4B}
+.btn-add:hover{background:#b8964e}
+.btn-print{background:#1B2B4B;color:#fff}
+.btn-print:hover{background:#253d6b}
+.btn-del{background:#fee2e2;color:#dc2626;padding:4px 10px;font-size:12px}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #e0dff5;background:#fff;margin-bottom:20px}
+table{width:100%;border-collapse:collapse;min-width:1100px}
+th{background:#1B2B4B;color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;white-space:nowrap;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+td input,td select{border:1px solid #d1d5db;border-radius:5px;padding:5px 8px;font-size:13px;font-family:inherit;color:#1B2B4B;width:100%;background:#fff}
+td input[type=number]{min-width:70px}
+td input:focus,td select:focus{outline:2px solid #C4A55A;border-color:transparent}
+.calc{background:#f8f7ff;font-weight:600;color:#1B2B4B;text-align:right}
+.prio-1{color:#dc2626;font-weight:700}
+.prio-2{color:#ea580c;font-weight:700}
+.prio-3{color:#ca8a04;font-weight:700}
+.prio-4{color:#16a34a}
+.prio-5{color:#6b7280}
+.urgente td{background:#fef2f2}
+.gantt-section{background:#fff;border:1px solid #e0dff5;border-radius:10px;padding:20px;margin-bottom:20px}
+.gantt-section h2{font-size:14px;font-weight:700;color:#1B2B4B;margin-bottom:14px;border-bottom:2px solid #C4A55A;padding-bottom:6px}
+.gantt-row{display:flex;align-items:center;margin-bottom:8px;gap:10px;font-size:12px}
+.gantt-label{width:200px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#1B2B4B;font-weight:500}
+.gantt-bar-wrap{flex:1;background:#f0eff8;border-radius:4px;height:18px;position:relative;min-width:100px}
+.gantt-bar{height:100%;border-radius:4px;background:#C4A55A;position:absolute;left:0;top:0;transition:width .3s}
+.gantt-pct{position:absolute;right:6px;top:0;line-height:18px;font-size:11px;font-weight:700;color:#1B2B4B}
+.gantt-date{width:90px;flex-shrink:0;text-align:right;color:#6b7280;font-size:11px}
+.progreso-bar-wrap{background:#f0eff8;border-radius:4px;height:10px;min-width:80px;position:relative;display:inline-block;width:90%}
+.progreso-bar{height:100%;border-radius:4px;position:absolute;left:0;top:0}
+.footer-note{font-size:12px;color:#9ca3af;margin-top:8px}
+@media print{
+  .actions{display:none}
+  body{background:#fff}
+  th{background:#1B2B4B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>UNI-S1-R6 · Plan de Documentación de Procesos Críticos</h1>
+    <p>Síntoma: Caos de Procesos · Seguimiento del avance de documentación</p>
+  </div>
+  <span class="badge">UNI · MASFRAME</span>
+</header>
+
+<div class="container">
+  <div class="metrics">
+    <div class="metric">
+      <label>Procesos registrados</label>
+      <span id="v-total">0</span>
+      <div class="sub">en el plan</div>
+    </div>
+    <div class="metric">
+      <label>% total documentado</label>
+      <span id="v-pct">0%</span>
+      <div class="sub">media % completado</div>
+    </div>
+    <div class="metric">
+      <label>Horas pendientes</label>
+      <span id="v-horas">0 h</span>
+      <div class="sub">suma estimadas sin completar</div>
+    </div>
+    <div class="metric">
+      <label>Completados</label>
+      <span id="v-completados">0</span>
+      <div class="sub">estado Documentado o Validado</div>
+    </div>
+    <div class="metric">
+      <label>Vencidos / urgentes</label>
+      <span id="v-vencidos" style="color:#dc2626">0</span>
+      <div class="sub">días restantes ≤ 0</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th>Proceso</th>
+          <th>Prioridad (1-5)</th>
+          <th>Responsable documentar</th>
+          <th>Estado</th>
+          <th>% Completado</th>
+          <th>Horas estimadas</th>
+          <th>Fecha límite</th>
+          <th>Días restantes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="gantt-section" id="gantt-section">
+    <h2>Gantt simplificado por fecha límite</h2>
+    <div id="gantt-rows"><em style="color:#9ca3af;font-size:12px">Añade procesos con fecha límite para ver el Gantt.</em></div>
+  </div>
+
+  <p class="footer-note">Prioridad 1 = máxima urgencia. Estado "Documentado/Validado" cuenta como completado. Días restantes = fecha límite − hoy.</p>
+</div>
+
+<script>
+const ESTADOS = ['Sin documentar','En proceso','Documentado','Validado'];
+const HOY = new Date(); HOY.setHours(0,0,0,0);
+
+function diasRestantes(fechaStr){
+  if(!fechaStr) return null;
+  const f = new Date(fechaStr); f.setHours(0,0,0,0);
+  return Math.round((f-HOY)/(1000*60*60*24));
+}
+
+function addRow(d={}){
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" value="${d.proceso||''}" placeholder="Nombre del proceso" onchange="recalc()"></td>
+    <td>
+      <select onchange="recalc()">
+        ${[1,2,3,4,5].map(n=>`<option value="${n}" ${(d.prio||1)==n?'selected':''}>${n}</option>`).join('')}
+      </select>
+    </td>
+    <td><input type="text" value="${d.resp||''}" placeholder="Nombre" onchange="recalc()"></td>
+    <td>
+      <select onchange="recalc()">
+        ${ESTADOS.map(e=>`<option ${(d.estado||'Sin documentar')===e?'selected':''}>${e}</option>`).join('')}
+      </select>
+    </td>
+    <td><input type="number" value="${d.pct||0}" min="0" max="100" placeholder="0" onchange="recalc()"></td>
+    <td><input type="number" value="${d.horas||''}" placeholder="0" min="0" onchange="recalc()"></td>
+    <td><input type="date" value="${d.fecha||''}" onchange="recalc()"></td>
+    <td class="calc" data-dias>—</td>
+    <td><button class="btn-del" onclick="delRow(this)">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+
+function delRow(btn){ btn.closest('tr').remove(); recalc(); }
+
+function recalc(){
+  const trs = document.querySelectorAll('#tbody tr');
+  let total=0, sumPct=0, horasPend=0, completados=0, vencidos=0;
+  const ganttData = [];
+
+  trs.forEach(tr=>{
+    total++;
+    const proceso = tr.querySelectorAll('input[type=text]')[0].value.trim();
+    const prio = parseInt(tr.querySelector('select').value)||1;
+    const estado = tr.querySelectorAll('select')[1].value;
+    const pct = parseFloat(tr.querySelector('input[type=number]').value)||0;
+    const horas = parseFloat(tr.querySelectorAll('input[type=number]')[1].value)||0;
+    const fechaStr = tr.querySelector('input[type=date]').value;
+    const dias = diasRestantes(fechaStr);
+    const diasCell = tr.querySelector('[data-dias]');
+
+    sumPct += pct;
+    const completado = estado==='Documentado'||estado==='Validado';
+    if(completado) completados++;
+    if(!completado) horasPend += horas*(1-pct/100);
+
+    if(dias !== null){
+      diasCell.textContent = dias;
+      diasCell.style.color = dias<0?'#dc2626':dias<=7?'#ca8a04':'#16a34a';
+    } else {
+      diasCell.textContent = '—';
+      diasCell.style.color = '';
+    }
+
+    if(dias !== null && dias <= 0 && !completado) vencidos++;
+    tr.classList.toggle('urgente', dias !== null && dias <= 0 && !completado);
+
+    // Prio color
+    const prioSel = tr.querySelector('select');
+    prioSel.className = ['','prio-1','prio-2','prio-3','prio-4','prio-5'][prio]||'';
+
+    if(proceso && fechaStr){
+      ganttData.push({proceso, pct, fecha:fechaStr, dias, estado, prio});
+    }
+  });
+
+  document.getElementById('v-total').textContent = total;
+  document.getElementById('v-pct').textContent = total ? (sumPct/total).toFixed(1)+'%' : '0%';
+  document.getElementById('v-horas').textContent = horasPend.toFixed(1)+' h';
+  document.getElementById('v-completados').textContent = completados;
+  document.getElementById('v-vencidos').textContent = vencidos;
+
+  renderGantt(ganttData);
+}
+
+function renderGantt(data){
+  const container = document.getElementById('gantt-rows');
+  if(!data.length){ container.innerHTML='<em style="color:#9ca3af;font-size:12px">Añade procesos con fecha límite para ver el Gantt.</em>'; return; }
+  data.sort((a,b)=> new Date(a.fecha)-new Date(b.fecha));
+  container.innerHTML = data.map(d=>{
+    const color = d.dias<0?'#dc2626':d.dias<=7?'#ca8a04':'#C4A55A';
+    return `<div class="gantt-row">
+      <div class="gantt-label" title="${d.proceso}">${d.proceso}</div>
+      <div class="gantt-bar-wrap">
+        <div class="gantt-bar" style="width:${d.pct}%;background:${color}"></div>
+        <span class="gantt-pct">${d.pct}%</span>
+      </div>
+      <div class="gantt-date">${d.fecha}</div>
+    </div>`;
+  }).join('');
+}
+
+addRow({proceso:'Manual de atención al cliente',prio:1,resp:'Ana García',estado:'En proceso',pct:40,horas:8,fecha:futureDate(14)});
+addRow({proceso:'Proceso de facturación',prio:1,resp:'Luis Martín',estado:'Sin documentar',pct:0,horas:6,fecha:futureDate(7)});
+addRow({proceso:'Protocolo de onboarding',prio:2,resp:'Sara López',estado:'En proceso',pct:65,horas:10,fecha:futureDate(21)});
+addRow({proceso:'Gestión de incidencias',prio:2,resp:'Pedro Ruiz',estado:'Documentado',pct:100,horas:4,fecha:futureDate(-5)});
+addRow({proceso:'Procedimiento de compras',prio:3,resp:'María Vega',estado:'Sin documentar',pct:0,horas:5,fecha:futureDate(30)});
+
+function futureDate(days){
+  const d = new Date(); d.setDate(d.getDate()+days);
+  return d.toISOString().split('T')[0];
+}
+</script>
+</body>
+</html>

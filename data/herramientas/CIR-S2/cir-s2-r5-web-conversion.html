@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIR-S2 R5 · Análisis de Conversión Web</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #222; font-size: 14px; }
+
+  .header { background: #1B2B4B; padding: 18px 28px; display: flex; align-items: center; gap: 16px; }
+  .logo-circle { width: 44px; height: 44px; border-radius: 50%; background: #C4A55A; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #1B2B4B; flex-shrink: 0; }
+  .header-info { flex: 1; }
+  .symptom-label { font-size: 11px; color: #C4A55A; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
+  .tool-title { font-size: 20px; color: #fff; font-weight: 700; }
+  .badge { background: transparent; border: 1.5px solid #C4A55A; color: #C4A55A; font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 4px 10px; border-radius: 4px; align-self: center; white-space: nowrap; }
+
+  .main { padding: 24px 28px; }
+  .section-title { font-size: 13px; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; min-width: 1200px; }
+  thead tr { background: #1B2B4B; }
+  thead th { color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 11px 10px; text-align: left; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid #e4e4f0; }
+  tbody tr:nth-child(even) { background: #f0f4f8; }
+  tbody tr:nth-child(odd) { background: #fff; }
+  tbody td { padding: 9px 10px; vertical-align: middle; min-width: 90px; }
+  tbody td[contenteditable="true"] { outline: none; cursor: text; }
+  tbody td[contenteditable="true"]:focus { background: #fffbe6; border-radius: 3px; outline: 1px solid #C4A55A; }
+  .tasa-cell { font-weight: 700; white-space: nowrap; }
+
+  /* Semaphore */
+  .sem { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: middle; flex-shrink: 0; }
+  .sem-green { background: #2e7d32; }
+  .sem-yellow { background: #f9a825; }
+  .sem-red { background: #c62828; }
+
+  /* Ticket input */
+  .extra-inputs { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .extra-inputs label { font-size: 13px; font-weight: 600; color: #1B2B4B; }
+  .extra-inputs input { border: 1.5px solid #1B2B4B; border-radius: 5px; padding: 6px 10px; font-size: 14px; font-family: inherit; width: 120px; color: #1B2B4B; font-weight: 700; }
+  .extra-inputs input:focus { outline: 1px solid #C4A55A; }
+
+  .metrics { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .metric-card { background: #fff; border-radius: 8px; border-top: 4px solid #1B2B4B; padding: 16px 20px; flex: 1; min-width: 170px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+  .metric-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 6px; }
+  .metric-value { font-size: 24px; font-weight: 800; color: #C4A55A; line-height: 1; display: flex; align-items: center; gap: 6px; }
+  .metric-value.danger { color: #c62828; }
+  .metric-sub { font-size: 12px; color: #999; margin-top: 4px; }
+
+  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 9px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 16px; }
+  .btn-add:hover { background: #243a63; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 11px 28px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; display: block; margin: 8px auto 0; }
+  .btn-print:hover { background: #b8943f; }
+
+  @media print {
+    .btn-add, .btn-print, .extra-inputs input { display: none !important; }
+    body { background: #fff; }
+    .header, thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .metric-card { box-shadow: none; border: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-circle">M</div>
+  <div class="header-info">
+    <div class="symptom-label">CIR-S2 · Propuesta Confusa</div>
+    <div class="tool-title">Análisis de Conversión Web</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA · R5</div>
+</div>
+
+<div class="main">
+
+  <div class="section-title">Páginas y Rendimiento de Conversión</div>
+
+  <div class="table-wrap">
+    <table id="convTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Página</th>
+          <th>Visitas/mes</th>
+          <th>Tiempo medio (s)</th>
+          <th>% Rebote</th>
+          <th>Conversiones</th>
+          <th>Tasa Conv. % ↗</th>
+          <th>CTA Principal</th>
+          <th>Claridad mensaje (1-10)</th>
+          <th>Fricción identificada</th>
+          <th>Mejora propuesta</th>
+          <th>Impacto estimado (+%)</th>
+        </tr>
+      </thead>
+      <tbody id="convBody">
+        <tr>
+          <td>1</td>
+          <td contenteditable="true">Home</td>
+          <td contenteditable="true" data-col="visitas">4200</td>
+          <td contenteditable="true">45</td>
+          <td contenteditable="true">72</td>
+          <td contenteditable="true" data-col="conv">38</td>
+          <td class="tasa-cell" data-col="tasa"></td>
+          <td contenteditable="true">Ver servicios</td>
+          <td contenteditable="true">6</td>
+          <td contenteditable="true">Hero poco claro</td>
+          <td contenteditable="true">Headline con beneficio directo</td>
+          <td contenteditable="true">+1.2</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td contenteditable="true">Servicios</td>
+          <td contenteditable="true" data-col="visitas">1800</td>
+          <td contenteditable="true">90</td>
+          <td contenteditable="true">58</td>
+          <td contenteditable="true" data-col="conv">27</td>
+          <td class="tasa-cell" data-col="tasa"></td>
+          <td contenteditable="true">Solicitar propuesta</td>
+          <td contenteditable="true">7</td>
+          <td contenteditable="true">Demasiado texto</td>
+          <td contenteditable="true">Comparativa visual de paquetes</td>
+          <td contenteditable="true">+2.1</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td contenteditable="true">Sobre nosotros</td>
+          <td contenteditable="true" data-col="visitas">950</td>
+          <td contenteditable="true">30</td>
+          <td contenteditable="true">81</td>
+          <td contenteditable="true" data-col="conv">4</td>
+          <td class="tasa-cell" data-col="tasa"></td>
+          <td contenteditable="true">Ninguno</td>
+          <td contenteditable="true">4</td>
+          <td contenteditable="true">Sin llamada a la acción</td>
+          <td contenteditable="true">Añadir CTA hacia casos de éxito</td>
+          <td contenteditable="true">+0.8</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td contenteditable="true">Blog</td>
+          <td contenteditable="true" data-col="visitas">3100</td>
+          <td contenteditable="true">120</td>
+          <td contenteditable="true">65</td>
+          <td contenteditable="true" data-col="conv">12</td>
+          <td class="tasa-cell" data-col="tasa"></td>
+          <td contenteditable="true">Suscríbete</td>
+          <td contenteditable="true">5</td>
+          <td contenteditable="true">CTA desconectado del contenido</td>
+          <td contenteditable="true">CTAs contextuales por artículo</td>
+          <td contenteditable="true">+0.5</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td contenteditable="true">Contacto</td>
+          <td contenteditable="true" data-col="visitas">620</td>
+          <td contenteditable="true">60</td>
+          <td contenteditable="true">44</td>
+          <td contenteditable="true" data-col="conv">31</td>
+          <td class="tasa-cell" data-col="tasa"></td>
+          <td contenteditable="true">Enviar mensaje</td>
+          <td contenteditable="true">8</td>
+          <td contenteditable="true">Formulario largo</td>
+          <td contenteditable="true">Reducir campos a 3</td>
+          <td contenteditable="true">+3.0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn-add" id="btnAdd">+ Añadir fila</button>
+
+  <div class="extra-inputs">
+    <label for="ticketMedio">Ticket medio (€):</label>
+    <input type="number" id="ticketMedio" value="500" min="0">
+  </div>
+
+  <div class="section-title">Resumen de Métricas</div>
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Tasa Conv. Promedio</div>
+      <div class="metric-value" id="metTasaPromedio">—</div>
+      <div class="metric-sub">Media de todas las páginas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Visitas Totales/mes</div>
+      <div class="metric-value" id="metVisitas">0</div>
+      <div class="metric-sub">Suma de visitas mensuales</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Conversiones Totales</div>
+      <div class="metric-value" id="metConversiones">0</div>
+      <div class="metric-sub">Suma de conversiones</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Ticket Medio</div>
+      <div class="metric-value" id="metTicket">0 €</div>
+      <div class="metric-sub">Valor medio por conversión</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Ingresos Perdidos Est.</div>
+      <div class="metric-value danger" id="metIngresosPerdidos">0 €</div>
+      <div class="metric-sub">Potencial no capturado (5% bench.)</div>
+    </div>
+  </div>
+
+  <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+
+</div>
+
+<script>
+  function semClass(tasa) {
+    if (tasa > 3) return 'sem-green';
+    if (tasa >= 1) return 'sem-yellow';
+    return 'sem-red';
+  }
+
+  function recalc() {
+    const tbody = document.getElementById('convBody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const ticket = parseFloat(document.getElementById('ticketMedio').value) || 0;
+
+    let totalVisitas = 0;
+    let totalConv = 0;
+    let tasaSum = 0;
+    let tasaCount = 0;
+
+    rows.forEach((row, i) => {
+      row.cells[0].textContent = i + 1;
+
+      const visitasCell = row.querySelector('[data-col="visitas"]');
+      const convCell = row.querySelector('[data-col="conv"]');
+      const tasaCell = row.querySelector('[data-col="tasa"]');
+
+      const visitas = parseFloat(visitasCell ? visitasCell.textContent : 0) || 0;
+      const conv = parseFloat(convCell ? convCell.textContent : 0) || 0;
+      const tasa = visitas > 0 ? (conv / visitas * 100) : 0;
+
+      totalVisitas += visitas;
+      totalConv += conv;
+      tasaSum += tasa;
+      tasaCount++;
+
+      if (tasaCell) {
+        const sc = semClass(tasa);
+        tasaCell.innerHTML = '<span class="sem ' + sc + '"></span>' + tasa.toFixed(2) + '%';
+      }
+    });
+
+    const tasaPromedio = tasaCount > 0 ? tasaSum / tasaCount : 0;
+    const sc = semClass(tasaPromedio);
+    const metTasa = document.getElementById('metTasaPromedio');
+    metTasa.innerHTML = '<span class="sem ' + sc + '"></span>' + tasaPromedio.toFixed(2) + '%';
+
+    document.getElementById('metVisitas').textContent = totalVisitas.toLocaleString('es-ES');
+    document.getElementById('metConversiones').textContent = totalConv.toLocaleString('es-ES');
+    document.getElementById('metTicket').textContent = ticket.toLocaleString('es-ES') + ' €';
+
+    const benchmark = totalVisitas * 0.05;
+    const perdidas = (benchmark - totalConv) * ticket;
+    const metPerd = document.getElementById('metIngresosPerdidos');
+    metPerd.textContent = (perdidas > 0 ? perdidas.toLocaleString('es-ES', {maximumFractionDigits: 0}) : '0') + ' €';
+    metPerd.className = 'metric-value' + (perdidas > 0 ? ' danger' : '');
+  }
+
+  document.getElementById('convBody').addEventListener('input', recalc);
+  document.getElementById('ticketMedio').addEventListener('input', recalc);
+
+  document.getElementById('btnAdd').addEventListener('click', () => {
+    const tbody = document.getElementById('convBody');
+    const rows = tbody.querySelectorAll('tr');
+    const lastRow = rows[rows.length - 1];
+    const newRow = lastRow.cloneNode(true);
+
+    Array.from(newRow.querySelectorAll('[contenteditable="true"]')).forEach(cell => {
+      cell.textContent = '';
+    });
+    // Clear calculated tasa cell
+    const tasaCell = newRow.querySelector('[data-col="tasa"]');
+    if (tasaCell) tasaCell.innerHTML = '';
+
+    tbody.appendChild(newRow);
+    recalc();
+  });
+
+  recalc();
+</script>
+</body>
+</html>

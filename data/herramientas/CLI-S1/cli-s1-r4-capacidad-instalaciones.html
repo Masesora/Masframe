@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R4 — Capacidad de Instalaciones · CLI-S1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 14px; }
+
+  /* HEADER */
+  .header { background: #1B2B4B; padding: 16px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .logo-box { background: #C4A55A; color: #1B2B4B; font-weight: 900; font-size: 20px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 6px; flex-shrink: 0; }
+  .header-labels { flex: 1; }
+  .symptom-label { color: #C4A55A; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  .tool-title { color: #fff; font-size: 18px; font-weight: 700; margin-top: 2px; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.08em; text-transform: uppercase; align-self: center; }
+
+  /* LAYOUT */
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+
+  /* CARDS */
+  .card { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); padding: 20px 24px; margin-bottom: 20px; }
+  .card-title { font-size: 13px; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; border-bottom: 2px solid #f0eeff; padding-bottom: 8px; }
+
+  /* SUMMARY METRICS */
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); padding: 18px 22px; flex: 1; min-width: 180px; border-top: 4px solid #C4A55A; }
+  .metric-label { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .metric-value { font-size: 26px; font-weight: 800; color: #1B2B4B; }
+  .metric-sub { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: #1B2B4B; color: #fff; }
+  thead th { padding: 11px 12px; text-align: left; font-weight: 600; font-size: 12px; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid #e8e8f0; transition: background 0.15s; }
+  tbody tr:hover { background: #fafaf8; }
+  tbody td { padding: 9px 12px; vertical-align: middle; }
+
+  /* Traffic light */
+  .tl-cell { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  tr.tl-green { border-left: 4px solid #22c55e; }
+  tr.tl-yellow { border-left: 4px solid #f59e0b; }
+  tr.tl-red { border-left: 4px solid #ef4444; }
+  .dot-green { background: #22c55e; }
+  .dot-yellow { background: #f59e0b; }
+  .dot-red { background: #ef4444; }
+
+  /* Inputs */
+  td input[type="number"], td input[type="text"] {
+    width: 100%; border: 1px solid #e2e8f0; border-radius: 6px; padding: 5px 8px;
+    font-family: inherit; font-size: 13px; color: #1B2B4B; background: #fff;
+    outline: none; transition: border-color 0.15s;
+  }
+  td input:focus { border-color: #C4A55A; box-shadow: 0 0 0 2px rgba(196,165,90,0.15); }
+  td[contenteditable="true"] {
+    outline: none; min-width: 120px; cursor: text;
+    border-radius: 6px; padding: 5px 8px;
+  }
+  td[contenteditable="true"]:focus { background: #fffbf0; box-shadow: 0 0 0 2px rgba(196,165,90,0.2); }
+  .calc-cell { background: #f0eeff; font-weight: 700; border-radius: 4px; padding: 5px 8px; text-align: center; white-space: nowrap; }
+
+  /* SELECT */
+  td select { border: 1px solid #e2e8f0; border-radius: 6px; padding: 5px 8px; font-family: inherit; font-size: 13px; color: #1B2B4B; background: #fff; outline: none; width: 100%; }
+  td select:focus { border-color: #C4A55A; }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+  .btn-add { background: #1B2B4B; color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .btn-add:hover { background: #253d6a; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .btn-print:hover { background: #b8953f; }
+
+  .fecha-calc { font-size: 11px; color: #9ca3af; margin-bottom: 12px; }
+
+  @media print {
+    body { background: #fff; }
+    .btn-row, .btn-add, .btn-print { display: none !important; }
+    .card { box-shadow: none; border: 1px solid #ddd; }
+    .metric-card { box-shadow: none; border: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-box">M</div>
+  <div class="header-labels">
+    <div class="symptom-label">CLI-S1 · Capacidad y Tiempos de Espera</div>
+    <div class="tool-title">R4 — Capacidad de Instalaciones</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="container">
+  <p class="fecha-calc">Fecha de cálculo: <strong>08/07/2026</strong></p>
+
+  <!-- SUMMARY CARDS -->
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Total horas recuperables</div>
+      <div class="metric-value" id="m-recuperables">—</div>
+      <div class="metric-sub">Suma (disponibles − ocupadas)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% utilización media</div>
+      <div class="metric-value" id="m-util-media">—</div>
+      <div class="metric-sub">Promedio todas las salas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Salas en saturación (&gt;90%)</div>
+      <div class="metric-value" id="m-saturacion">—</div>
+      <div class="metric-sub">Requieren acción inmediata</div>
+    </div>
+  </div>
+
+  <!-- TABLE CARD -->
+  <div class="card">
+    <div class="card-title">Registro de salas e instalaciones</div>
+    <div class="table-wrap">
+      <table id="tabla">
+        <thead>
+          <tr>
+            <th>Sala</th>
+            <th>Horas disp./semana</th>
+            <th>Horas ocupadas</th>
+            <th>% Utilización</th>
+            <th>Tipo de uso</th>
+            <th>Restricciones</th>
+            <th>Oportunidad de optimización</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <!-- Rows injected by JS -->
+        </tbody>
+      </table>
+    </div>
+    <div class="btn-row">
+      <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+      <button class="btn-print" onclick="window.print()">Imprimir</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const INITIAL_DATA = [
+  { sala: "Sala A — Consultas",      disp: 40, ocup: 28, tipo: "Consultas individuales",         restricciones: "Insonorización",           oportunidad: "Liberar 2 horas tarde" },
+  { sala: "Sala B — Grupos",         disp: 30, ocup: 27, tipo: "Terapia grupal",                 restricciones: "Aforo máx 12",             oportunidad: "Reorganizar horarios" },
+  { sala: "Sala C — Evaluación",     disp: 35, ocup: 34, tipo: "Evaluaciones psicológicas",      restricciones: "Equipamiento específico",   oportunidad: "Escalar prioridad urgente" },
+  { sala: "Despacho 1",              disp: 40, ocup: 22, tipo: "Consultas + informes",           restricciones: "Ninguna",                  oportunidad: "Habilitar más franjas" },
+  { sala: "Sala espera",             disp: 45, ocup: 15, tipo: "Recepción",                      restricciones: "Aforo limitado",           oportunidad: "Ampliar horario tarde" }
+];
+
+function tlClass(pct) {
+  if (pct > 90) return "red";
+  if (pct >= 75) return "yellow";
+  return "green";
+}
+
+function buildRow(data, idx) {
+  const tr = document.createElement("tr");
+  tr.dataset.idx = idx;
+
+  // Sala — text input
+  const tdSala = document.createElement("td");
+  const inSala = document.createElement("input");
+  inSala.type = "text"; inSala.value = data.sala; inSala.style.minWidth = "140px";
+  inSala.addEventListener("input", () => recalc());
+  tdSala.appendChild(inSala);
+  tr.appendChild(tdSala);
+
+  // Horas disp
+  const tdDisp = document.createElement("td");
+  const inDisp = document.createElement("input");
+  inDisp.type = "number"; inDisp.min = 0; inDisp.value = data.disp; inDisp.style.width = "80px";
+  inDisp.addEventListener("input", () => recalcRow(tr));
+  tdDisp.appendChild(inDisp);
+  tr.appendChild(tdDisp);
+
+  // Horas ocup
+  const tdOcup = document.createElement("td");
+  const inOcup = document.createElement("input");
+  inOcup.type = "number"; inOcup.min = 0; inOcup.value = data.ocup; inOcup.style.width = "80px";
+  inOcup.addEventListener("input", () => recalcRow(tr));
+  tdOcup.appendChild(inOcup);
+  tr.appendChild(tdOcup);
+
+  // % utilización — calc
+  const tdUtil = document.createElement("td");
+  tdUtil.className = "calc-cell";
+  const utilSpan = document.createElement("span");
+  utilSpan.className = "tl-cell";
+  const dot = document.createElement("span");
+  dot.className = "dot";
+  const val = document.createElement("span");
+  utilSpan.appendChild(dot);
+  utilSpan.appendChild(val);
+  tdUtil.appendChild(utilSpan);
+  tr.appendChild(tdUtil);
+
+  // Tipo uso
+  const tdTipo = document.createElement("td");
+  const inTipo = document.createElement("input");
+  inTipo.type = "text"; inTipo.value = data.tipo; inTipo.style.minWidth = "140px";
+  tdTipo.appendChild(inTipo);
+  tr.appendChild(tdTipo);
+
+  // Restricciones
+  const tdRest = document.createElement("td");
+  const inRest = document.createElement("input");
+  inRest.type = "text"; inRest.value = data.restricciones; inRest.style.minWidth = "120px";
+  tdRest.appendChild(inRest);
+  tr.appendChild(tdRest);
+
+  // Oportunidad — contenteditable
+  const tdOp = document.createElement("td");
+  tdOp.contentEditable = "true";
+  tdOp.textContent = data.oportunidad;
+  tdOp.addEventListener("input", () => {});
+  tr.appendChild(tdOp);
+
+  return tr;
+}
+
+function recalcRow(tr) {
+  const inputs = tr.querySelectorAll("input[type='number']");
+  const disp = parseFloat(inputs[0].value) || 0;
+  const ocup = parseFloat(inputs[1].value) || 0;
+  const pct = disp > 0 ? (ocup / disp) * 100 : 0;
+  const cl = tlClass(pct);
+
+  // Update calc cell
+  const utilCell = tr.querySelector("td.calc-cell");
+  const dot = utilCell.querySelector(".dot");
+  const val = utilCell.querySelector("span:last-child");
+  dot.className = "dot dot-" + cl;
+  val.textContent = pct.toFixed(1) + "%";
+
+  // Row border
+  tr.classList.remove("tl-green", "tl-yellow", "tl-red");
+  tr.classList.add("tl-" + cl);
+
+  recalcSummary();
+}
+
+function recalc() {
+  document.querySelectorAll("#tbody tr").forEach(tr => recalcRow(tr));
+}
+
+function recalcSummary() {
+  const rows = document.querySelectorAll("#tbody tr");
+  let totalRecup = 0, sumUtil = 0, satCount = 0, n = 0;
+  rows.forEach(tr => {
+    const inputs = tr.querySelectorAll("input[type='number']");
+    const disp = parseFloat(inputs[0].value) || 0;
+    const ocup = parseFloat(inputs[1].value) || 0;
+    totalRecup += Math.max(0, disp - ocup);
+    const pct = disp > 0 ? (ocup / disp) * 100 : 0;
+    sumUtil += pct;
+    if (pct > 90) satCount++;
+    n++;
+  });
+  document.getElementById("m-recuperables").textContent = totalRecup.toFixed(1) + " h";
+  document.getElementById("m-util-media").textContent = n > 0 ? (sumUtil / n).toFixed(1) + "%" : "—";
+  document.getElementById("m-saturacion").textContent = satCount;
+}
+
+function addRow() {
+  const tbody = document.getElementById("tbody");
+  const idx = tbody.children.length;
+  const tr = buildRow({ sala: "", disp: 0, ocup: 0, tipo: "", restricciones: "", oportunidad: "" }, idx);
+  tbody.appendChild(tr);
+  recalcRow(tr);
+}
+
+// Init
+const tbody = document.getElementById("tbody");
+INITIAL_DATA.forEach((d, i) => {
+  const tr = buildRow(d, i);
+  tbody.appendChild(tr);
+});
+recalc();
+</script>
+</body>
+</html>

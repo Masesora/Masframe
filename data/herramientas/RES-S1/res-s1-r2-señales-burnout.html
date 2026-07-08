@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tracker Semanal de Señales de Burnout — MASFRAME</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .logo { width: 48px; height: 48px; background: #1B2B4B; border: 2px solid #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; color: #C4A55A; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 12px; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 20px; font-weight: 700; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; }
+  .section { background: white; margin: 24px 32px; border-radius: 12px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); overflow: hidden; }
+  .section-header { background: #1B2B4B; color: white; padding: 14px 20px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .section-body { padding: 20px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: #1B2B4B; color: #C4A55A; padding: 10px 8px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  tbody tr:nth-child(even) { background: #f0f0f8; }
+  tbody tr:nth-child(odd) { background: white; }
+  tbody td { padding: 6px 8px; vertical-align: middle; }
+  tbody td input[type="number"], tbody td input[type="text"] { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 4px 6px; font-size: 13px; background: transparent; }
+  tbody td input:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .score-cell { font-weight: 700; text-align: center; border-radius: 6px; padding: 4px 8px; }
+  .score-green { background: #dcfce7; color: #166534; }
+  .score-yellow { background: #fef9c3; color: #854d0e; }
+  .score-red { background: #fee2e2; color: #991b1b; }
+  .btn-print { background: #1B2B4B; color: #C4A55A; border: none; padding: 12px 32px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 700; margin: 0 32px 32px; display: block; }
+  .btn-print:hover { background: #C4A55A; color: #1B2B4B; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; padding: 20px 32px; }
+  .card { background: white; border-radius: 12px; padding: 20px 24px; flex: 1; min-width: 180px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); border-top: 4px solid #C4A55A; }
+  .card-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 8px; }
+  .card-value { font-size: 28px; font-weight: 800; color: #1B2B4B; }
+  .card-sub { font-size: 12px; color: #888; margin-top: 4px; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .dot-green { background: #22c55e; }
+  .dot-yellow { background: #eab308; }
+  .dot-red { background: #ef4444; }
+  .info-bar { background: #fffbeb; border-left: 4px solid #C4A55A; padding: 12px 16px; margin: 0 32px 16px; border-radius: 0 8px 8px 0; font-size: 13px; color: #1B2B4B; }
+  @media print {
+    .btn-print { display: none !important; }
+    .section { box-shadow: none; margin: 10px 0; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .score-cell { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">M</div>
+  <div class="header-info">
+    <div class="header-symptom">RES-S1 — Agotamiento directivo</div>
+    <div class="header-title">Tracker Semanal de Señales de Burnout</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="info-bar">
+  Registra semanalmente los indicadores clave de bienestar. El score bienestar se calcula automáticamente. Irritabilidad (columna inversa): valores altos = poca irritabilidad = mejor estado.
+</div>
+
+<div class="section">
+  <div class="section-header">Seguimiento Semanal de Bienestar</div>
+  <div class="section-body">
+    <div class="table-wrap">
+      <table id="mainTable">
+        <thead>
+          <tr>
+            <th style="min-width:80px">Semana</th>
+            <th style="min-width:110px">Energía al despertar (1-10)</th>
+            <th style="min-width:120px">Concentración (1-10)</th>
+            <th style="min-width:130px">Motivación negocio (1-10)</th>
+            <th style="min-width:120px">Calidad sueño (1-10)</th>
+            <th style="min-width:130px">Irritabilidad (1-10 inv.)</th>
+            <th style="min-width:110px">Síntomas físicos (0-3)</th>
+            <th style="min-width:130px">Desconexión total h/sem</th>
+            <th style="min-width:110px">Score bienestar</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="card">
+    <div class="card-label">Score Bienestar Actual</div>
+    <div class="card-value" id="scoreActual"><span class="dot dot-green" id="dotActual"></span>—</div>
+    <div class="card-sub">promedio últimas 8 semanas</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Semanas en Alerta</div>
+    <div class="card-value" id="semanasAlerta">—</div>
+    <div class="card-sub">semanas con score inferior a 6</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Tendencia 8 Semanas</div>
+    <div class="card-value" id="tendencia">—</div>
+    <div class="card-sub">comparativa primera vs segunda mitad</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Desconexión Media</div>
+    <div class="card-value" id="desconexionMedia">—</div>
+    <div class="card-sub">horas/semana de descanso real</div>
+  </div>
+</div>
+
+<button class="btn-print" onclick="window.print()">Imprimir / Exportar PDF</button>
+
+<script>
+const seedData = [
+  ['Semana 1', 7, 7, 8, 7, 6, 1, 4],
+  ['Semana 2', 6, 6, 7, 6, 5, 1, 3],
+  ['Semana 3', 5, 5, 6, 5, 4, 2, 2],
+  ['Semana 4', 4, 5, 5, 4, 4, 2, 1],
+  ['Semana 5', 5, 6, 6, 5, 5, 1, 3],
+  ['Semana 6', 6, 7, 7, 6, 6, 1, 4],
+  ['Semana 7', 7, 7, 8, 7, 7, 0, 5],
+  ['Semana 8', 8, 8, 8, 8, 8, 0, 6],
+];
+
+function buildRow(data) {
+  const [sem, energia, conc, motiv, sueno, irrit, sintomas, desconexion] = data;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" value="${sem}"></td>
+    <td><input type="number" min="1" max="10" value="${energia}" class="scoreInput"></td>
+    <td><input type="number" min="1" max="10" value="${conc}" class="scoreInput"></td>
+    <td><input type="number" min="1" max="10" value="${motiv}" class="scoreInput"></td>
+    <td><input type="number" min="1" max="10" value="${sueno}" class="scoreInput"></td>
+    <td><input type="number" min="1" max="10" value="${irrit}" class="scoreInput"></td>
+    <td><input type="number" min="0" max="3" value="${sintomas}"></td>
+    <td><input type="number" min="0" max="168" value="${desconexion}"></td>
+    <td class="score-cell score-green" id="scoreRow_${Math.random().toString(36).substr(2,5)}">—</td>
+  `;
+  return tr;
+}
+
+function calc() {
+  const tbody = document.getElementById('tableBody');
+  const rows = tbody.querySelectorAll('tr');
+  let scores = [];
+  let desconexiones = [];
+
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll('.scoreInput');
+    let sum = 0, count = 0;
+    inputs.forEach(inp => {
+      const v = parseFloat(inp.value);
+      if (!isNaN(v)) { sum += v; count++; }
+    });
+    const score = count > 0 ? sum / count : 0;
+    scores.push(score);
+
+    const scoreCell = row.querySelector('td:last-child');
+    scoreCell.textContent = score.toFixed(1);
+    scoreCell.className = 'score-cell';
+    if (score >= 7) scoreCell.classList.add('score-green');
+    else if (score >= 6) scoreCell.classList.add('score-yellow');
+    else { scoreCell.classList.add('score-red'); }
+
+    // highlight entire row if score <6
+    row.querySelectorAll('td:not(:last-child)').forEach(td => {
+      td.style.background = '';
+    });
+    if (score < 6) {
+      row.querySelectorAll('td:not(:last-child)').forEach(td => {
+        td.style.background = '#fff1f2';
+      });
+    }
+
+    const desconexion = parseFloat(row.querySelectorAll('input')[7]?.value) || 0;
+    desconexiones.push(desconexion);
+  });
+
+  const avg = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
+  const alerta = scores.filter(s => s < 6).length;
+  const desconexionMed = desconexiones.length > 0 ? desconexiones.reduce((a, b) => a + b, 0) / desconexiones.length : 0;
+
+  // tendencia
+  let tendenciaText = '—';
+  if (scores.length >= 4) {
+    const mitad = Math.floor(scores.length / 2);
+    const primera = scores.slice(0, mitad).reduce((a, b) => a + b, 0) / mitad;
+    const segunda = scores.slice(mitad).reduce((a, b) => a + b, 0) / (scores.length - mitad);
+    const diff = segunda - primera;
+    if (diff > 0.5) tendenciaText = '↑ Mejora';
+    else if (diff < -0.5) tendenciaText = '↓ Deterioro';
+    else tendenciaText = '→ Estable';
+  }
+
+  const dot = avg >= 7 ? 'green' : avg >= 6 ? 'yellow' : 'red';
+  document.getElementById('scoreActual').innerHTML = `<span class="dot dot-${dot}"></span>${avg.toFixed(1)}`;
+  document.getElementById('semanasAlerta').textContent = alerta;
+  document.getElementById('tendencia').textContent = tendenciaText;
+  document.getElementById('desconexionMedia').textContent = desconexionMed.toFixed(1) + ' h';
+}
+
+const tbody = document.getElementById('tableBody');
+seedData.forEach(d => tbody.appendChild(buildRow(d)));
+document.addEventListener('input', calc);
+calc();
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TER-S2 R4 — Casos de Éxito | MASFRAME</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+  header{background:#1B2B4B;color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+  header h1{font-size:18px;font-weight:700}
+  header span{font-size:12px;color:#C4A55A;font-weight:600;letter-spacing:.5px}
+  .toolbar{padding:12px 24px;background:#fff;border-bottom:2px solid #C4A55A;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .toolbar button{background:#1B2B4B;color:#fff;border:none;padding:7px 14px;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600}
+  .toolbar button:hover{background:#C4A55A}
+  .toolbar button.print{background:#C4A55A;color:#1B2B4B}
+  .metrics{display:flex;gap:12px;padding:16px 24px;flex-wrap:wrap}
+  .metric{background:#fff;border:1px solid #ddd;border-radius:6px;padding:12px 18px;min-width:160px;text-align:center;border-top:3px solid #C4A55A}
+  .metric .val{font-size:22px;font-weight:700;color:#1B2B4B}
+  .metric .lbl{font-size:11px;color:#666;margin-top:2px}
+  .alerta{background:#fff3cd;border:1px solid #ffc107;border-radius:6px;margin:0 24px 12px;padding:10px 14px;font-size:13px;color:#856404}
+  .wrap{padding:0 24px 24px;overflow-x:auto}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  thead tr{background:#1B2B4B;color:#fff}
+  th{padding:9px 8px;text-align:left;font-size:12px;font-weight:600;white-space:nowrap}
+  td{padding:7px 8px;border-bottom:1px solid #eee;font-size:12px;vertical-align:top}
+  td[contenteditable]{outline:none;cursor:text}
+  td[contenteditable]:focus{background:#fffde7;border-bottom:2px solid #C4A55A}
+  tr:hover td{background:#fafafa}
+  .calc{background:#f0f4ff;color:#1B2B4B;font-weight:600;pointer-events:none}
+  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+  .verde{background:#d4edda;color:#155724}
+  .amarillo{background:#fff3cd;color:#856404}
+  .rojo{background:#f8d7da;color:#721c24}
+  .alerta-cell{background:#f8d7da;color:#721c24;font-weight:700}
+  tfoot td{background:#1B2B4B;color:#fff;font-weight:700;font-size:12px;padding:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>TER-S2 R4 — Casos de Éxito</h1>
+  <span>MASFRAME · Pérdida de Referidos</span>
+</header>
+<div class="toolbar">
+  <button onclick="addRow()">+ Añadir fila</button>
+  <button class="print" onclick="window.print()">🖨 Imprimir</button>
+</div>
+<div class="metrics">
+  <div class="metric"><div class="val" id="m-total">0</div><div class="lbl">Total casos</div></div>
+  <div class="metric"><div class="val" id="m-con-test">0</div><div class="lbl">Con testimonio</div></div>
+  <div class="metric"><div class="val" id="m-sin-test">0</div><div class="lbl">Sin testimonio (alerta)</div></div>
+  <div class="metric"><div class="val" id="m-leads">0</div><div class="lbl">Leads generados total</div></div>
+</div>
+<div id="alerta-box" class="alerta" style="display:none">⚠ Hay casos de éxito sin testimonio recogido. Contactar con el cliente para solicitarlo.</div>
+<div class="wrap">
+<table id="tbl">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Cliente</th>
+      <th>Sector</th>
+      <th>Reto</th>
+      <th>Resultado</th>
+      <th>KPI medido + valor</th>
+      <th>Tiempo (meses)</th>
+      <th>¿Testimonio?</th>
+      <th>¿Caso estudio?</th>
+      <th>Plataformas</th>
+      <th>Leads generados</th>
+      <th>ROI publicar</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="10">TOTAL</td>
+      <td id="f-leads">0</td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<script>
+const COLS=['Cliente','Sector','Reto','Resultado','KPI medido + valor','Tiempo (meses)','¿Testimonio?','¿Caso estudio?','Plataformas','Leads generados'];
+let rowCount=0;
+function addRow(data={}){
+  rowCount++;
+  const tbody=document.getElementById('tbody');
+  const tr=document.createElement('tr');
+  tr.dataset.id=rowCount;
+  let html=`<td style="color:#999;font-size:11px">${rowCount}</td>`;
+  COLS.forEach(c=>{
+    const val=data[c]||'';
+    html+=`<td contenteditable="true" data-col="${c}" oninput="calc()">${val}</td>`;
+  });
+  // ROI calc
+  html+=`<td class="calc" data-roi>—</td>`;
+  tr.innerHTML=html;
+  tbody.appendChild(tr);
+  calc();
+}
+function calc(){
+  const rows=document.querySelectorAll('#tbody tr');
+  let totalLeads=0,total=rows.length,conTest=0,sinTest=0;
+  rows.forEach(tr=>{
+    const cells=tr.querySelectorAll('td[contenteditable]');
+    const testimonio=(cells[6]?.textContent||'').toLowerCase();
+    const leads=parseFloat(cells[9]?.textContent)||0;
+    const tieneTest=testimonio==='sí'||testimonio==='si'||testimonio==='yes';
+    if(tieneTest) conTest++; else sinTest++;
+    totalLeads+=leads;
+    // ROI simple: leads * 500 (valor estimado lead)
+    const roi=leads>0?(leads*500).toFixed(0)+'€':'-';
+    const roiCell=tr.querySelector('[data-roi]');
+    if(roiCell) roiCell.textContent=leads>0?'~'+roi:'-';
+    // resaltar sin testimonio
+    cells[6].style.background=tieneTest?'':'#f8d7da';
+  });
+  document.getElementById('m-total').textContent=total;
+  document.getElementById('m-con-test').textContent=conTest;
+  document.getElementById('m-sin-test').textContent=sinTest;
+  document.getElementById('m-leads').textContent=totalLeads;
+  document.getElementById('f-leads').textContent=totalLeads;
+  document.getElementById('alerta-box').style.display=sinTest>0?'block':'none';
+  const tfoot=document.querySelector('tfoot tr td:first-child');
+  if(tfoot) tfoot.textContent=`TOTAL (${total} casos)`;
+}
+// filas iniciales demo
+addRow({'Cliente':'Empresa A','Sector':'Retail','Reto':'Reducir costes','Resultado':'Costes -30%','KPI medido + valor':'Margen +8pp','Tiempo (meses)':'4','¿Testimonio?':'Sí','¿Caso estudio?':'Sí','Plataformas':'Web, LinkedIn','Leads generados':'12'});
+addRow({'Cliente':'Empresa B','Sector':'Hostelería','Reto':'Incrementar facturación','Resultado':'+45% ventas','KPI medido + valor':'Facturación +62K€','Tiempo (meses)':'6','¿Testimonio?':'No','¿Caso estudio?':'No','Plataformas':'—','Leads generados':'0'});
+</script>
+</body>
+</html>

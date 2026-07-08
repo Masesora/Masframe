@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARDIO-S1 · Tracker de Seguimiento de Leads</title>
+<style>
+:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--white:#fff;--red:#e74c3c;--yellow:#f39c12;--green:#27ae60;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:#222;}
+header{background:var(--navy);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.brand{color:var(--gold);font-weight:700;font-size:1.1rem;letter-spacing:1px;}
+.symptom{color:#fff;font-size:0.78rem;margin-top:2px;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.tool-name{color:#fff;font-size:0.9rem;font-weight:600;}
+.badge-h{background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:4px;text-transform:uppercase;}
+main{padding:24px;max-width:1400px;margin:0 auto;}
+h2{color:var(--navy);font-size:1.1rem;margin-bottom:14px;}
+.table-wrap{overflow-x:auto;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+thead{background:var(--navy);}
+thead th{color:var(--gold);font-size:.74rem;font-weight:700;padding:10px 8px;text-align:left;white-space:nowrap;}
+tbody tr:nth-child(even){background:#f4f3fc;}
+tbody td{padding:8px 6px;font-size:.82rem;vertical-align:middle;}
+input,select{border:1px solid #ccc;border-radius:4px;padding:5px 6px;font-size:.82rem;font-family:inherit;width:100%;background:#fff;}
+input[type=date]{min-width:130px;}
+.auto{background:#f0eeff;color:var(--navy);font-weight:600;text-align:center;white-space:nowrap;padding:8px 6px;}
+.tl-wrap{display:flex;justify-content:center;}
+.tl{width:14px;height:14px;border-radius:50%;display:inline-block;}
+.tl-green{background:var(--green);}
+.tl-yellow{background:var(--yellow);}
+.tl-red{background:var(--red);}
+.tl-gray{background:#aaa;}
+.stage-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.pill{background:var(--navy);color:#fff;border-radius:20px;padding:4px 12px;font-size:.75rem;font-weight:600;}
+.pill span{background:var(--gold);color:var(--navy);border-radius:10px;padding:1px 7px;margin-left:5px;font-weight:700;}
+.alert-box{background:#fff3cd;border:1px solid var(--yellow);border-left:4px solid var(--red);border-radius:8px;padding:14px 18px;margin-bottom:24px;}
+.alert-box h3{color:var(--red);font-size:.9rem;margin-bottom:8px;}
+.alert-box ul{padding-left:18px;font-size:.83rem;color:#333;}
+.alert-box ul li{margin-bottom:3px;}
+.btn-add{background:var(--gold);color:var(--navy);border:none;border-radius:6px;padding:9px 18px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:28px;}
+.btn-add:hover{opacity:.85;}
+.cards{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:70px;}
+.card{background:var(--white);border-left:4px solid var(--gold);padding:16px;border-radius:8px;flex:1;min-width:180px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.card-label{font-size:.72rem;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.card-value{font-size:1.25rem;font-weight:700;color:var(--navy);}
+.card-sub{font-size:.75rem;color:#888;margin-top:4px;}
+.btn-print{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;padding:12px 20px;font-size:.85rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:100;}
+.btn-print:hover{opacity:.85;}
+@media print{.btn-print,.btn-add{display:none;}header,thead{print-color-adjust:exact;-webkit-print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">MASFRAME</div>
+    <div class="symptom">CARDIO-S1 · Dependencia del boca a boca</div>
+  </div>
+  <div class="header-right">
+    <span class="tool-name">Tracker de Seguimiento de Leads</span>
+    <span class="badge-h">Herramienta Operativa</span>
+  </div>
+</header>
+<main>
+  <h2>Leads</h2>
+  <div class="table-wrap">
+    <table id="t">
+      <thead><tr>
+        <th>Lead / Empresa</th>
+        <th>Origen</th>
+        <th>Fecha primer contacto</th>
+        <th>Días sin contacto</th>
+        <th>Etapa</th>
+        <th>Próxima acción</th>
+        <th>Fecha próximo contacto</th>
+        <th>Responsable</th>
+        <th>TL</th>
+      </tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+  <div class="stage-pills" id="pills"></div>
+  <button class="btn-add" onclick="addRow()">+ Añadir lead</button>
+  <div class="alert-box" id="alertBox" style="display:none">
+    <h3>⚠ Leads calientes enfriándose</h3>
+    <ul id="alertList"></ul>
+  </div>
+  <h2>Resumen</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Total leads activos</div>
+      <div class="card-value" id="sActivos">—</div>
+      <div class="card-sub">no Cerrado ni Perdido</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Leads en riesgo</div>
+      <div class="card-value" id="sRiesgo">—</div>
+      <div class="card-sub">activos con más de 7 días</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Leads esta semana</div>
+      <div class="card-value" id="sSemana">—</div>
+      <div class="card-sub">primer contacto últimos 7 días</div>
+    </div>
+  </div>
+</main>
+<button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+<script>
+var TODAY=new Date("2026-07-08");
+var STAGES=["Nuevo","Contactado","Reunión","Propuesta","Negociación","Cerrado","Perdido"];
+var CLOSED_STAGES=["Cerrado","Perdido"];
+var INIT=[
+  {lead:"Empresa Alfa SL",origen:"Referido",fecha:"2026-06-28",etapa:"Propuesta",accion:"Enviar propuesta revisada",proxFecha:"2026-07-10",resp:"Ana García"},
+  {lead:"Tech Solutions SA",origen:"LinkedIn",fecha:"2026-07-06",etapa:"Nuevo",accion:"Llamada de presentación",proxFecha:"2026-07-09",resp:"Carlos Ruiz"}
+];
+var rc=0;
+function addRow(d){
+  d=d||{};
+  var id=rc++;
+  var tr=document.createElement("tr");
+  tr.dataset.id=id;
+  var stageOpts=STAGES.map(function(s){return "<option value='"+s+"' "+(d.etapa===s?"selected":"")+">"+s+"</option>";}).join("");
+  tr.innerHTML=
+    "<td><input type='text' class='flead' value='"+esc(d.lead||"")+"' oninput='upd("+id+")'></td>"
+    +"<td><input type='text' class='forigen' value='"+esc(d.origen||"")+"' oninput='upd("+id+")'></td>"
+    +"<td><input type='date' class='ffecha' value='"+(d.fecha||"")+"' onchange='upd("+id+")'></td>"
+    +"<td class='auto'><span class='fdias'>—</span></td>"
+    +"<td><select class='fetapa' onchange='upd("+id+")'><option value=''>—</option>"+stageOpts+"</select></td>"
+    +"<td><input type='text' class='faccion' value='"+esc(d.accion||"")+"' oninput='upd("+id+")'></td>"
+    +"<td><input type='date' class='fprox' value='"+(d.proxFecha||"")+"' onchange='upd("+id+")'></td>"
+    +"<td><input type='text' class='fresp' value='"+esc(d.resp||"")+"' oninput='upd("+id+")'></td>"
+    +"<td class='auto'><div class='tl-wrap'><div class='tl tl-gray ftl'></div></div></td>";
+  document.getElementById("tb").appendChild(tr);
+  upd(id);
+}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/'/g,"&#39;");}
+function diffDays(dateStr){
+  if(!dateStr)return null;
+  var d=new Date(dateStr);
+  if(isNaN(d))return null;
+  return Math.floor((TODAY-d)/(1000*60*60*24));
+}
+function isActive(etapa){return CLOSED_STAGES.indexOf(etapa)<0&&etapa;}
+function upd(id){
+  var tr=document.querySelector("tr[data-id='"+id+"']");
+  if(!tr)return;
+  var fecha=tr.querySelector(".ffecha").value;
+  var etapa=tr.querySelector(".fetapa").value;
+  var dias=diffDays(fecha);
+  tr.querySelector(".fdias").textContent=(dias!==null)?dias+"d":"—";
+  var tlEl=tr.querySelector(".ftl");
+  if(!isActive(etapa)){tlEl.className="tl tl-gray";}
+  else if(dias===null){tlEl.className="tl tl-gray";}
+  else if(dias>7){tlEl.className="tl tl-red";}
+  else if(dias>=4){tlEl.className="tl tl-yellow";}
+  else{tlEl.className="tl tl-green";}
+  calcSum();
+}
+function getRows(){
+  return Array.from(document.querySelectorAll("#tb tr")).map(function(tr){
+    return{
+      lead:tr.querySelector(".flead").value.trim(),
+      fecha:tr.querySelector(".ffecha").value,
+      etapa:tr.querySelector(".fetapa").value,
+      dias:diffDays(tr.querySelector(".ffecha").value)
+    };
+  });
+}
+function calcSum(){
+  var rs=getRows();
+  // Stage pills
+  var counts={};
+  STAGES.forEach(function(s){counts[s]=0;});
+  rs.forEach(function(r){if(r.etapa&&counts[r.etapa]!==undefined)counts[r.etapa]++;});
+  var pillsEl=document.getElementById("pills");
+  pillsEl.innerHTML=STAGES.map(function(s){
+    return "<div class='pill'>"+s+"<span>"+counts[s]+"</span></div>";
+  }).join("");
+  // Alert
+  var calientes=rs.filter(function(r){return isActive(r.etapa)&&r.dias!==null&&r.dias>7;});
+  var alertBox=document.getElementById("alertBox");
+  var alertList=document.getElementById("alertList");
+  if(calientes.length>0){
+    alertBox.style.display="";
+    alertList.innerHTML=calientes.map(function(r){
+      return "<li><strong>"+esc(r.lead||"(sin nombre)")+"</strong> — "+r.dias+" días sin actividad (etapa: "+r.etapa+")";
+    }).join("");
+  }else{alertBox.style.display="none";}
+  // Summary cards
+  var activos=rs.filter(function(r){return isActive(r.etapa);}).length;
+  var riesgo=rs.filter(function(r){return isActive(r.etapa)&&r.dias!==null&&r.dias>7;}).length;
+  var semana=rs.filter(function(r){
+    var d=diffDays(r.fecha);
+    return d!==null&&d<=7;
+  }).length;
+  document.getElementById("sActivos").textContent=activos;
+  document.getElementById("sRiesgo").textContent=riesgo;
+  document.getElementById("sSemana").textContent=semana;
+}
+INIT.forEach(function(r){addRow(r);});
+</script>
+</body>
+</html>

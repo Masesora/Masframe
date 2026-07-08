@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión de Comunidad de Clientes — MASFRAME</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+.header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+.logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+.header-text h1 { font-size: 18px; font-weight: 700; }
+.header-text p { font-size: 13px; opacity: 0.75; margin-top: 2px; }
+.badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+.container { max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+.section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(27,43,75,0.08); }
+.section h2 { font-size: 15px; color: #1B2B4B; margin-bottom: 14px; border-left: 3px solid #C4A55A; padding-left: 10px; }
+.config-box { background: #f0f0fa; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; }
+.config-box input { border: 1px solid #C4A55A; border-radius: 5px; padding: 4px 10px; font-size: 14px; font-weight: 700; width: 90px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #1B2B4B; color: white; padding: 8px 10px; text-align: left; font-size: 12px; font-weight: 600; white-space: nowrap; }
+td { padding: 7px 10px; border-bottom: 1px solid #e8e8f0; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f0f0fa; }
+input[type=text], input[type=number], select { border: 1px solid #d0d0e0; border-radius: 5px; padding: 4px 7px; font-size: 12px; font-family: inherit; background: white; }
+input[type=text] { width: 160px; }
+input[type=number] { width: 70px; }
+.calc-cell { background: #f8f7ff; font-weight: 600; color: #1B2B4B; text-align: center; }
+.btn-add { background: #1B2B4B; color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 13px; cursor: pointer; margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; }
+.btn-add:hover { background: #2a3d63; }
+.btn-print { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 6px; padding: 10px 24px; font-size: 14px; font-weight: 700; cursor: pointer; display: block; margin: 0 auto; }
+.btn-print:hover { background: #b8963e; }
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.metric-card { background: #1B2B4B; color: white; border-radius: 10px; padding: 16px; text-align: center; }
+.metric-card .value { font-size: 26px; font-weight: 800; color: #C4A55A; }
+.metric-card .label { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+@media print { .btn-add, .btn-print, .no-print { display: none !important; } body { background: white; } .section { box-shadow: none; border: 1px solid #ccc; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">M</div>
+  <div class="header-text">
+    <h1>Fidelización — Gestión de Comunidad de Clientes</h1>
+    <p>TER · S2-R6 · Terapia de Experiencia de Cliente</p>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+<div class="container">
+  <div class="section">
+    <h2>Configuración</h2>
+    <div class="config-box">
+      Total clientes activos: <input type="number" id="totalClientes" value="135" min="1" onchange="recalc()">
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Iniciativas de Comunidad</h2>
+    <div class="table-wrap">
+    <table id="com-table">
+      <thead>
+        <tr>
+          <th>Iniciativa</th>
+          <th>Tipo</th>
+          <th>Frecuencia</th>
+          <th>Participantes activos</th>
+          <th>Engagement %</th>
+          <th>Referidos generados</th>
+          <th>Coste €/mes</th>
+          <th>ROI %</th>
+        </tr>
+      </thead>
+      <tbody id="com-body">
+        <tr>
+          <td><input type="text" value="Newsletter mensual"></td>
+          <td><select><option>Evento</option><option selected>Newsletter</option><option>Grupo</option><option>Formación</option><option>Otro</option></select></td>
+          <td><input type="text" value="Mensual"></td>
+          <td><input type="number" value="98" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+          <td><input type="number" value="8" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="150" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Grupo WhatsApp clientes VIP"></td>
+          <td><select><option>Evento</option><option>Newsletter</option><option selected>Grupo</option><option>Formación</option><option>Otro</option></select></td>
+          <td><input type="text" value="Continuo"></td>
+          <td><input type="number" value="25" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+          <td><input type="number" value="12" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="0" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Webinar trimestral"></td>
+          <td><select><option>Evento</option><option>Newsletter</option><option>Grupo</option><option selected>Formación</option><option>Otro</option></select></td>
+          <td><input type="text" value="Trimestral"></td>
+          <td><input type="number" value="45" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+          <td><input type="number" value="6" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="200" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Desayuno networking"></td>
+          <td><select><option selected>Evento</option><option>Newsletter</option><option>Grupo</option><option>Formación</option><option>Otro</option></select></td>
+          <td><input type="text" value="Semestral"></td>
+          <td><input type="number" value="20" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+          <td><input type="number" value="4" min="0" onchange="recalc()"></td>
+          <td><input type="number" value="300" min="0" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add no-print" onclick="addRow()">+ Añadir fila</button>
+  </div>
+
+  <div class="section">
+    <h2>Top Clientes Activos</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Cliente</th><th>Actividad score</th><th>Referidos generados</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><input type="text" value="María García"></td><td><input type="text" value="9/10"></td><td><input type="number" value="12"></td></tr>
+        <tr><td><input type="text" value="Carlos López"></td><td><input type="text" value="8/10"></td><td><input type="number" value="8"></td></tr>
+        <tr><td><input type="text" value="Ana Martínez"></td><td><input type="text" value="7/10"></td><td><input type="number" value="5"></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Métricas de Comunidad</h2>
+    <div class="metrics-grid" id="metricsGrid"></div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+</div>
+
+<script>
+const AVG_TICKET = 350;
+
+function recalc() {
+  const totalClientes = parseInt(document.getElementById('totalClientes').value) || 1;
+  const rows = document.querySelectorAll('#com-body tr');
+  let totalRef = 0, engagements = [], roiVals = [];
+
+  rows.forEach(row => {
+    const cells = row.cells;
+    const part = parseInt(cells[3].querySelector('input').value) || 0;
+    const ref = parseInt(cells[5].querySelector('input').value) || 0;
+    const coste = parseFloat(cells[6].querySelector('input').value) || 0;
+
+    const eng = Math.round(part / totalClientes * 100);
+    cells[4].textContent = eng + '%';
+    engagements.push(eng);
+
+    let roi;
+    if (coste === 0) {
+      roi = '∞';
+      cells[7].textContent = '∞';
+    } else {
+      roi = Math.round((ref * AVG_TICKET - coste) / coste * 100);
+      cells[7].textContent = roi + '%';
+      roiVals.push(roi);
+    }
+    totalRef += ref;
+  });
+
+  const engMedia = engagements.length ? Math.round(engagements.reduce((a,b)=>a+b,0)/engagements.length) : 0;
+  const roiMedia = roiVals.length ? Math.round(roiVals.reduce((a,b)=>a+b,0)/roiVals.length) : '∞';
+
+  document.getElementById('metricsGrid').innerHTML = `
+    <div class="metric-card"><div class="value">${rows.length}</div><div class="label">Iniciativas activas</div></div>
+    <div class="metric-card"><div class="value">${engMedia}%</div><div class="label">Engagement medio</div></div>
+    <div class="metric-card"><div class="value">${totalRef}</div><div class="label">Referidos totales de comunidad</div></div>
+    <div class="metric-card"><div class="value">${roiMedia}${roiMedia !== '∞' ? '%' : ''}</div><div class="label">ROI medio %</div></div>
+  `;
+}
+
+function addRow() {
+  const tbody = document.getElementById('com-body');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Iniciativa"></td>
+    <td><select><option>Evento</option><option>Newsletter</option><option>Grupo</option><option>Formación</option><option>Otro</option></select></td>
+    <td><input type="text" placeholder="Frecuencia"></td>
+    <td><input type="number" value="0" min="0" onchange="recalc()"></td>
+    <td class="calc-cell">—</td>
+    <td><input type="number" value="0" min="0" onchange="recalc()"></td>
+    <td><input type="number" value="0" min="0" onchange="recalc()"></td>
+    <td class="calc-cell">—</td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+
+recalc();
+</script>
+</body>
+</html>

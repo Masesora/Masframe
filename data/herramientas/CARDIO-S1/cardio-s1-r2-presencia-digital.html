@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARDIO-S1 · Auditoría de Presencia Digital</title>
+<style>
+:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--white:#fff;--red:#e74c3c;--yellow:#f39c12;--green:#27ae60;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:#222;}
+header{background:var(--navy);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.brand{color:var(--gold);font-weight:700;font-size:1.1rem;letter-spacing:1px;}
+.symptom{color:#fff;font-size:0.78rem;margin-top:2px;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.tool-name{color:#fff;font-size:0.9rem;font-weight:600;}
+.badge-h{background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:4px;text-transform:uppercase;}
+main{padding:24px;max-width:1200px;margin:0 auto;}
+h2{color:var(--navy);font-size:1.1rem;margin-bottom:14px;}
+.table-wrap{overflow-x:auto;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+thead{background:var(--navy);}
+thead th{color:var(--gold);font-size:.74rem;font-weight:700;padding:10px 8px;text-align:left;white-space:nowrap;}
+tbody tr:nth-child(even){background:#f4f3fc;}
+tbody td{padding:8px 6px;font-size:.82rem;vertical-align:middle;}
+input,select{border:1px solid #ccc;border-radius:4px;padding:5px 6px;font-size:.82rem;font-family:inherit;width:100%;background:#fff;}
+.auto{background:#f0eeff;color:var(--navy);font-weight:600;text-align:center;white-space:nowrap;padding:8px 6px;}
+.tl-wrap{display:flex;justify-content:center;}
+.tl{width:14px;height:14px;border-radius:50%;display:inline-block;}
+.tl-green{background:var(--green);}
+.tl-yellow{background:var(--yellow);}
+.tl-red{background:var(--red);}
+.tl-gray{background:#aaa;}
+.badge-pill{display:inline-block;padding:3px 9px;border-radius:12px;font-size:.72rem;font-weight:700;}
+.badge-activo{background:var(--gold);color:var(--navy);}
+.badge-decorativo{background:#f39c12;color:#fff;}
+.badge-ausente{background:#e74c3c;color:#fff;}
+.btn-add{background:var(--gold);color:var(--navy);border:none;border-radius:6px;padding:9px 18px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:28px;}
+.btn-add:hover{opacity:.85;}
+.cards{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:70px;}
+.card{background:var(--white);border-left:4px solid var(--gold);padding:16px;border-radius:8px;flex:1;min-width:200px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.card-label{font-size:.72rem;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.card-value{font-size:1.25rem;font-weight:700;color:var(--navy);}
+.card-sub{font-size:.75rem;color:#888;margin-top:4px;}
+.score-tl{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:middle;margin-left:6px;}
+.btn-print{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;padding:12px 20px;font-size:.85rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:100;}
+.btn-print:hover{opacity:.85;}
+@media print{.btn-print,.btn-add{display:none;}header,thead{print-color-adjust:exact;-webkit-print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">MASFRAME</div>
+    <div class="symptom">CARDIO-S1 · Dependencia del boca a boca</div>
+  </div>
+  <div class="header-right">
+    <span class="tool-name">Auditoría de Presencia Digital</span>
+    <span class="badge-h">Herramienta Operativa</span>
+  </div>
+</header>
+<main>
+  <h2>Canales Digitales</h2>
+  <div class="table-wrap">
+    <table id="t">
+      <thead><tr>
+        <th>Canal digital</th>
+        <th>¿Existe?</th>
+        <th>Actualizado 30 días</th>
+        <th>Seguidores/visitas/mes</th>
+        <th>Leads/mes</th>
+        <th>¿Genera contactos?</th>
+        <th>Badge</th>
+      </tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+  <button class="btn-add" onclick="addRow()">+ Añadir canal</button>
+  <h2>Resumen</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Score total presencia</div>
+      <div class="card-value" id="sScore">—<span class="score-tl tl-gray" id="sTL"></span></div>
+      <div class="card-sub">0–100</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Canales activos</div>
+      <div class="card-value" id="sActivos">—</div>
+      <div class="card-sub">con ¿Existe? = Sí</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Generando demanda</div>
+      <div class="card-value" id="sGen">—</div>
+      <div class="card-sub" id="sGenSub"></div>
+    </div>
+  </div>
+</main>
+<button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+<script>
+var INIT=[
+  {canal:"Web",existe:"Si",actualizado:"Si",seguidores:"",leads:"",genera:"Si"},
+  {canal:"LinkedIn",existe:"Si",actualizado:"Si",seguidores:"",leads:"",genera:"Parcial"},
+  {canal:"Instagram",existe:"Si",actualizado:"No",seguidores:"",leads:"",genera:"No"},
+  {canal:"Google My Business",existe:"Si",actualizado:"Si",seguidores:"",leads:"",genera:"Parcial"},
+  {canal:"Email Marketing",existe:"No",actualizado:"No",seguidores:"",leads:"",genera:"No"},
+  {canal:"Otro",existe:"No",actualizado:"No",seguidores:"",leads:"",genera:"No"}
+];
+var rc=0;
+function addRow(d){
+  d=d||{};
+  var id=rc++;
+  var tr=document.createElement("tr");
+  tr.dataset.id=id;
+  function sel(cls,opts,val){
+    return "<select class='"+cls+"' onchange='upd("+id+")'>"
+      +opts.map(function(o){return "<option value='"+o+"' "+(val===o?"selected":"")+">"+o+"</option>";}).join("")
+      +"</select>";
+  }
+  tr.innerHTML=
+    "<td><input type='text' class='fc' value='"+esc(d.canal||"")+"' oninput='upd("+id+")'></td>"
+    +"<td>"+sel("fe",["Si","No"],d.existe||"No")+"</td>"
+    +"<td>"+sel("fa",["Si","No"],d.actualizado||"No")+"</td>"
+    +"<td><input type='number' class='fs' min='0' value='"+nv(d.seguidores)+"' oninput='upd("+id+")'></td>"
+    +"<td><input type='number' class='fl' min='0' value='"+nv(d.leads)+"' oninput='upd("+id+")'></td>"
+    +"<td>"+sel("fg",["Si","No","Parcial"],d.genera||"No")+"</td>"
+    +"<td class='auto'><span class='badge-pill fbadge'>—</span></td>";
+  document.getElementById("tb").appendChild(tr);
+  upd(id);
+}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/'/g,"&#39;");}
+function nv(v){return (v===undefined||v===null||v==="")?"":(v===0?"0":v);}
+function upd(id){
+  var tr=document.querySelector("tr[data-id='"+id+"']");
+  if(!tr)return;
+  var existe=tr.querySelector(".fe").value;
+  var genera=tr.querySelector(".fg").value;
+  var b=tr.querySelector(".fbadge");
+  if(existe==="Si"&&genera==="Si"){b.textContent="Activo y eficaz";b.className="badge-pill badge-activo";}
+  else if(existe==="Si"&&genera!=="Si"){b.textContent="Existe pero no genera";b.className="badge-pill badge-decorativo";}
+  else{b.textContent="Ausente";b.className="badge-pill badge-ausente";}
+  calcSum();
+}
+function getRows(){
+  return Array.from(document.querySelectorAll("#tb tr")).map(function(tr){
+    var existe=tr.querySelector(".fe").value;
+    var actualizado=tr.querySelector(".fa").value;
+    var genera=tr.querySelector(".fg").value;
+    var score=(existe==="Si"?33:0)+(actualizado==="Si"?33:0)+(genera==="Si"?34:genera==="Parcial"?17:0);
+    return{existe:existe,genera:genera,score:score};
+  });
+}
+function calcSum(){
+  var rs=getRows();
+  if(!rs.length)return;
+  var avg=rs.reduce(function(s,r){return s+r.score;},0)/rs.length;
+  document.getElementById("sScore").innerHTML=avg.toFixed(0)
+    +"<span class='score-tl tl "+(avg>=60?"tl-green":avg>=30?"tl-yellow":"tl-red")+"' id='sTL'></span>";
+  var activos=rs.filter(function(r){return r.existe==="Si";}).length;
+  document.getElementById("sActivos").textContent=activos;
+  var gen=rs.filter(function(r){return r.existe==="Si"&&r.genera==="Si";}).length;
+  var dec=rs.filter(function(r){return r.existe==="Si"&&r.genera!=="Si";}).length;
+  document.getElementById("sGen").textContent=gen+" generando / "+dec+" decorativos";
+  document.getElementById("sGenSub").textContent="de "+activos+" canales existentes";
+}
+INIT.forEach(function(r){addRow(r);});
+</script>
+</body>
+</html>

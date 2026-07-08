@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSI-S3 R5 — Coherencia de Decisiones con los Valores Declarados</title>
+<style>
+  :root { --navy: #1B2B4B; --gold: #C4A55A; --bg: #f8f7ff; --white: #ffffff; --red: #c0392b; --yellow: #f39c12; --green: #27ae60; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--navy); padding: 24px; }
+  header { background: var(--navy); color: var(--white); padding: 20px 28px; border-radius: 10px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { font-size: 1.3rem; font-weight: 700; }
+  header p { font-size: 0.85rem; opacity: 0.75; margin-top: 4px; }
+  .badge { background: var(--gold); color: var(--navy); font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+  .metrics { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .metric { background: var(--white); border: 1px solid #ddd; border-radius: 8px; padding: 16px 22px; flex: 1; min-width: 150px; }
+  .metric .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+  .metric .value { font-size: 1.8rem; font-weight: 700; color: var(--navy); margin-top: 4px; }
+  .metric.gold .value { color: var(--gold); }
+  .metric.red .value { color: var(--red); }
+  .metric.orange .value { color: var(--yellow); }
+  .toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  button { background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; cursor: pointer; font-family: system-ui; }
+  button:hover { background: var(--gold); color: var(--navy); }
+  button.secondary { background: var(--white); color: var(--navy); border: 1px solid #ccc; }
+  button.secondary:hover { background: var(--bg); }
+  button.print-btn { background: var(--gold); color: var(--navy); font-weight: 700; }
+  .table-wrap { overflow-x: auto; background: var(--white); border-radius: 10px; border: 1px solid #ddd; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  thead th { background: var(--navy); color: var(--white); padding: 10px 9px; text-align: left; white-space: nowrap; }
+  thead th:first-child { border-radius: 10px 0 0 0; }
+  thead th:last-child { border-radius: 0 10px 0 0; }
+  tbody tr { border-bottom: 1px solid #eee; }
+  tbody tr:hover { background: #f0f4ff; }
+  tbody tr.friction-high { background: #fff0f0; }
+  td { padding: 8px 9px; vertical-align: middle; }
+  td input, td select, td textarea { border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: system-ui; font-size: 0.84rem; background: var(--bg); width: 100%; resize: vertical; }
+  td input[type="number"] { width: 60px; }
+  td input:focus, td select:focus, td textarea:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
+  .score-cell { font-weight: 700; text-align: center; }
+  .score-hi { color: var(--green); }
+  .score-lo { color: var(--red); }
+  .score-mid { color: var(--yellow); }
+  .brecha-card { background: var(--white); border: 2px solid var(--gold); border-radius: 10px; padding: 18px 22px; margin-bottom: 20px; display: flex; gap: 32px; flex-wrap: wrap; align-items: center; }
+  .brecha-card .item { text-align: center; }
+  .brecha-card .item .lbl { font-size: 0.75rem; color: #666; text-transform: uppercase; }
+  .brecha-card .item .val { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .brecha-card .item.brecha .val { color: var(--red); }
+  .brecha-card .desc { font-size: 0.88rem; color: #444; max-width: 400px; }
+  .tag-fri { background: #ffe5e5; color: var(--red); font-size: 0.75rem; padding: 2px 7px; border-radius: 10px; }
+  .note { font-size: 0.78rem; color: #555; font-style: italic; }
+  @media print { button, .toolbar { display: none; } body { padding: 10px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>PSI-S3 R5 — Coherencia de Decisiones con los Valores Declarados</h1>
+    <p>Desalineación de Valores · Mide la brecha entre el discurso de valores y las decisiones reales</p>
+  </div>
+  <span class="badge">PSI-S3</span>
+</header>
+
+<div class="brecha-card" id="brecha-card">
+  <div class="item"><div class="lbl">Coherencia media (líder)</div><div class="val" id="bc-coh">—</div></div>
+  <div class="item"><div class="lbl">Percepción media (equipo)</div><div class="val" id="bc-perc">—</div></div>
+  <div class="item brecha"><div class="lbl">Brecha líder-equipo</div><div class="val" id="bc-brecha">—</div></div>
+  <div class="desc">La brecha indica cuánto difiere la autopercepción del líder respecto a cómo el equipo vive las decisiones. Valores &gt;1 punto requieren atención.</div>
+</div>
+
+<div class="metrics">
+  <div class="metric gold"><div class="label">Score coherencia decisiones</div><div class="value" id="m-coh">—</div></div>
+  <div class="metric red"><div class="label">Decisiones con alta fricción (&gt;3)</div><div class="value" id="m-fri">—</div></div>
+  <div class="metric"><div class="label">Decisiones evaluadas</div><div class="value" id="m-total">—</div></div>
+  <div class="metric orange"><div class="label">¿Evaluaron impacto en valores?</div><div class="value" id="m-evaluo">—</div></div>
+</div>
+
+<div class="toolbar">
+  <button onclick="addRow()">+ Añadir decisión</button>
+  <button class="secondary" onclick="recalcAll()">↻ Recalcular</button>
+  <button class="print-btn" onclick="window.print()">🖨 Imprimir</button>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Decisión tomada</th>
+      <th>Área</th>
+      <th>¿Se evaluó impacto en valores?</th>
+      <th>Valor afectado</th>
+      <th>¿Decisión coherente? (1-5)</th>
+      <th>Percepción del equipo (1-5)</th>
+      <th>¿Generó fricción?</th>
+      <th>Cómo se gestionó</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+<p class="note">Filas con fricción &gt;3 resaltadas en rojo. Brecha = media coherencia − media percepción equipo.</p>
+
+<script>
+const DEFAULTS = [
+  {decision:"Reducción horario flexible por picos de trabajo",area:"RRHH",evaluo:"No",valor:"Confianza / Autonomía",coherente:"2",percepcion:"1",friccion:"Sí",gestion:"Se explicó en reunión pero sin consenso"},
+  {decision:"Subida de precio sin comunicación previa al equipo",area:"Comercial",evaluo:"No",valor:"Transparencia",coherente:"2",percepcion:"2",friccion:"Sí",gestion:"Email posterior con justificación"},
+  {decision:"Contratación externa sobre promoción interna",area:"RRHH",evaluo:"Sí",valor:"Crecimiento / Reconocimiento",coherente:"3",percepcion:"2",friccion:"Sí",gestion:"Conversación individual con afectados"},
+  {decision:"Cambio de proveedor por coste",area:"Operaciones",evaluo:"Sí",valor:"Calidad",coherente:"4",percepcion:"3",friccion:"No",gestion:"—"},
+  {decision:"Inversión en formación del equipo",area:"RRHH",evaluo:"Sí",valor:"Desarrollo / Crecimiento",coherente:"5",percepcion:"5",friccion:"No",gestion:"—"},
+];
+
+let rows = [];
+function init() { rows = DEFAULTS.map(r=>Object.assign({},r)); renderTable(); }
+
+function renderTable() {
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = "";
+  rows.forEach((r,i) => {
+    const coh = parseInt(r.coherente)||0;
+    const perc = parseInt(r.percepcion)||0;
+    const hasFriction = r.friccion==="Sí";
+    const tr = document.createElement("tr");
+    if (hasFriction) tr.classList.add("friction-high");
+    const cohClass = coh>=4?"score-hi":coh>=3?"score-mid":"score-lo";
+    const percClass = perc>=4?"score-hi":perc>=3?"score-mid":"score-lo";
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td><input value="${r.decision}" oninput="rows[${i}].decision=this.value" /></td>
+      <td><input value="${r.area}" oninput="rows[${i}].area=this.value" /></td>
+      <td><select onchange="rows[${i}].evaluo=this.value;refresh()">
+        <option value="Sí" ${r.evaluo==="Sí"?"selected":""}>Sí</option>
+        <option value="No" ${r.evaluo==="No"?"selected":""}>No</option>
+        <option value="Parcial" ${r.evaluo==="Parcial"?"selected":""}>Parcial</option>
+      </select></td>
+      <td><input value="${r.valor}" oninput="rows[${i}].valor=this.value" /></td>
+      <td>
+        <input type="number" min="1" max="5" value="${r.coherente}" oninput="rows[${i}].coherente=this.value;refresh()" />
+        <span class="score-cell ${cohClass}" style="font-size:0.8rem">${coh||"—"}/5</span>
+      </td>
+      <td>
+        <input type="number" min="1" max="5" value="${r.percepcion}" oninput="rows[${i}].percepcion=this.value;refresh()" />
+        <span class="score-cell ${percClass}" style="font-size:0.8rem">${perc||"—"}/5</span>
+      </td>
+      <td><select onchange="rows[${i}].friccion=this.value;refresh()">
+        <option value="Sí" ${r.friccion==="Sí"?"selected":""}>Sí</option>
+        <option value="No" ${r.friccion==="No"?"selected":""}>No</option>
+      </select>${hasFriction?'<span class="tag-fri">Alta fricción</span>':""}</td>
+      <td><textarea rows="2" oninput="rows[${i}].gestion=this.value">${r.gestion}</textarea></td>
+      <td><button class="secondary" style="padding:4px 10px;font-size:0.78rem" onclick="removeRow(${i})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  refresh();
+}
+
+function refresh() {
+  const cohs = rows.map(r=>parseInt(r.coherente)).filter(v=>!isNaN(v)&&v>0);
+  const percs = rows.map(r=>parseInt(r.percepcion)).filter(v=>!isNaN(v)&&v>0);
+  const fricciones = rows.filter(r=>r.friccion==="Sí").length;
+  const evaluaron = rows.filter(r=>r.evaluo==="Sí").length;
+  const avgCoh = cohs.length?(cohs.reduce((a,b)=>a+b,0)/cohs.length):null;
+  const avgPerc = percs.length?(percs.reduce((a,b)=>a+b,0)/percs.length):null;
+  const brecha = avgCoh!==null&&avgPerc!==null?(avgCoh-avgPerc):null;
+
+  document.getElementById("m-total").textContent = rows.length;
+  document.getElementById("m-coh").textContent = avgCoh!==null?avgCoh.toFixed(1)+"/5":"—";
+  document.getElementById("m-fri").textContent = fricciones;
+  document.getElementById("m-evaluo").textContent = rows.length?Math.round(evaluaron/rows.length*100)+"%":"—";
+  document.getElementById("bc-coh").textContent = avgCoh!==null?avgCoh.toFixed(1):"—";
+  document.getElementById("bc-perc").textContent = avgPerc!==null?avgPerc.toFixed(1):"—";
+  const brechaEl = document.getElementById("bc-brecha");
+  if (brecha!==null) {
+    brechaEl.textContent = (brecha>0?"+":"")+brecha.toFixed(1);
+    brechaEl.style.color = Math.abs(brecha)>1?"var(--red)":"var(--green)";
+  } else {
+    brechaEl.textContent = "—";
+  }
+}
+
+function recalcAll() { renderTable(); }
+function addRow() { rows.push({decision:"",area:"",evaluo:"No",valor:"",coherente:"",percepcion:"",friccion:"No",gestion:""}); renderTable(); }
+function removeRow(i) { rows.splice(i,1); renderTable(); }
+
+init();
+</script>
+</body>
+</html>

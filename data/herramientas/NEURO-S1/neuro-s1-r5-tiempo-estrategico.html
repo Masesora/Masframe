@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEURO-S1 — Auditoría Tiempo Estratégico</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B;min-height:100vh}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:1.4rem;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-center{display:flex;flex-direction:column;align-items:center;gap:4px}
+.symptom-label{font-size:.8rem;color:#C4A55A;letter-spacing:2px;text-transform:uppercase}
+.tool-name{font-size:1.1rem;font-weight:700;color:#fff}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:.7rem;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+main{max-width:1100px;margin:32px auto;padding:0 24px}
+.section-title{font-size:1.1rem;font-weight:700;color:#1B2B4B;margin:28px 0 12px;border-left:4px solid #C4A55A;padding-left:12px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:16px}
+th{background:#1B2B4B;color:#C4A55A;padding:11px 14px;text-align:left;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+td{padding:9px 12px;border-bottom:1px solid #eee;font-size:.9rem;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+input[type=number],input[type=text],input[type=date]{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;font-family:inherit;color:#1B2B4B;background:#f8f7ff}
+input:focus,select:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+select{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;font-family:inherit;background:#f8f7ff;color:#1B2B4B}
+.calc-ro{background:#e8eaf0;color:#555;display:block;padding:6px 8px;font-size:.88rem;border-radius:5px;text-align:right}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:6px;font-weight:700;font-size:.85rem;cursor:pointer}
+.btn:hover{background:#b8943e}
+.btn-print{background:#1B2B4B;color:#C4A55A;margin-left:8px}
+.btn-print:hover{background:#243554}
+.btn-row{margin:8px 0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:24px 0}
+.card{background:#fff;border:2px solid #C4A55A;border-radius:10px;padding:18px 20px;text-align:center}
+.card-label{font-size:.75rem;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-value{font-size:1.5rem;font-weight:800;color:#C4A55A;line-height:1.2}
+.sem-row{display:flex;align-items:center;gap:14px;background:#fff;border-radius:8px;padding:14px 20px;margin:12px 0;box-shadow:0 2px 8px rgba(27,43,75,.08)}
+.dot{width:22px;height:22px;border-radius:50%;display:inline-block;flex-shrink:0}
+.g{background:#22c55e}.y{background:#eab308}.r{background:#ef4444}.grey{background:#d1d5db}
+.sem-desc{font-size:.88rem;color:#555;font-weight:600}
+@media print{.btn,.btn-print,.btn-row{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <span class="symptom-label">NEURO-S1 — Amnesia Estratégica</span>
+    <span class="tool-name">Auditoría de Tiempo Estratégico</span>
+  </div>
+  <span class="badge">R5</span>
+</header>
+<main>
+  <div class="section-title">Registro Semanal de Tiempo</div>
+  <div class="btn-row">
+    <button class="btn" onclick="addTimeRow()">+ Añadir semana</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Semana</th>
+        <th>H. Operativo</th>
+        <th>H. Estratégico</th>
+        <th>H. Comercial</th>
+        <th>H. Admin</th>
+        <th>Total h</th>
+        <th>% Estratégico</th>
+      </tr>
+    </thead>
+    <tbody id="timeBody"></tbody>
+  </table>
+
+  <div class="section-title">Semáforo: % de Tiempo Estratégico</div>
+  <div class="sem-row">
+    <span class="dot grey" id="semDot"></span>
+    <span class="sem-desc" id="semText">Introduce datos para ver el semáforo</span>
+  </div>
+  <div style="font-size:.82rem;color:#666;margin-bottom:8px">
+    <span style="color:#22c55e;font-weight:700">Verde</span> &gt;20% &nbsp;|&nbsp;
+    <span style="color:#eab308;font-weight:700">Amarillo</span> 10-20% &nbsp;|&nbsp;
+    <span style="color:#ef4444;font-weight:700">Rojo</span> &lt;10%
+  </div>
+
+  <div class="section-title">Registro de Sesiones Estratégicas</div>
+  <div class="btn-row">
+    <button class="btn" onclick="addSessionRow()">+ Añadir sesión</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Duración (h)</th>
+        <th>Temas tratados</th>
+        <th>¿Se respetó el bloque?</th>
+      </tr>
+    </thead>
+    <tbody id="sessionBody"></tbody>
+  </table>
+
+  <div class="section-title">Resumen</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">% Estratégico promedio</div><div class="card-value" id="c1">—</div></div>
+    <div class="card"><div class="card-label">H. Estratégicas/sem</div><div class="card-value" id="c2">—</div></div>
+    <div class="card"><div class="card-label">Semanas registradas</div><div class="card-value" id="c3">—</div></div>
+    <div class="card"><div class="card-label">% Bloques respetados</div><div class="card-value" id="c4">—</div></div>
+    <div class="card"><div class="card-label">Sesiones estratégicas</div><div class="card-value" id="c5">—</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</main>
+<script>
+let timeRowCount = 0;
+
+function addTimeRow(label) {
+  timeRowCount++;
+  const lbl = label || ('Sem ' + timeRowCount);
+  const tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td><input type="text" value="' + lbl + '"></td>' +
+    '<td><input type="number" min="0" step="0.5" value="0" oninput="calcTimeRow(this)"></td>' +
+    '<td><input type="number" min="0" step="0.5" value="0" oninput="calcTimeRow(this)"></td>' +
+    '<td><input type="number" min="0" step="0.5" value="0" oninput="calcTimeRow(this)"></td>' +
+    '<td><input type="number" min="0" step="0.5" value="0" oninput="calcTimeRow(this)"></td>' +
+    '<td><span class="calc-ro" data-total>0</span></td>' +
+    '<td><span class="calc-ro" data-pct>0%</span></td>';
+  document.getElementById('timeBody').appendChild(tr);
+  updateSummary();
+}
+
+function calcTimeRow(el) {
+  const tr = el.closest('tr');
+  const nums = tr.querySelectorAll('input[type=number]');
+  const vals = Array.from(nums).map(i => parseFloat(i.value) || 0);
+  const total = vals.reduce((a, b) => a + b, 0);
+  const pct = total > 0 ? (vals[1] / total * 100).toFixed(1) : 0;
+  tr.querySelector('[data-total]').textContent = total.toFixed(1);
+  tr.querySelector('[data-pct]').textContent = pct + '%';
+  updateSummary();
+}
+
+function addSessionRow() {
+  const tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td><input type="date"></td>' +
+    '<td><input type="number" min="0" step="0.5" value="1" oninput="updateSummary()"></td>' +
+    '<td><input type="text" placeholder="Ej: OKRs, estrategia comercial..."></td>' +
+    '<td><select onchange="updateSummary()"><option>Si</option><option>No</option><option>Parcial</option></select></td>';
+  document.getElementById('sessionBody').appendChild(tr);
+  updateSummary();
+}
+
+function updateSummary() {
+  const timeRows = document.querySelectorAll('#timeBody tr');
+  let sumPct = 0, sumStrat = 0, count = 0;
+  timeRows.forEach(tr => {
+    const pctEl = tr.querySelector('[data-pct]');
+    const nums = tr.querySelectorAll('input[type=number]');
+    if (!pctEl || nums.length < 2) return;
+    sumPct += parseFloat(pctEl.textContent) || 0;
+    sumStrat += parseFloat(nums[1].value) || 0;
+    count++;
+  });
+  const avgPct = count > 0 ? (sumPct / count).toFixed(1) : null;
+  const avgStrat = count > 0 ? (sumStrat / count).toFixed(1) : null;
+
+  const dot = document.getElementById('semDot');
+  const txt = document.getElementById('semText');
+  if (!avgPct) {
+    dot.className = 'dot grey';
+    txt.textContent = 'Introduce datos para ver el semáforo';
+  } else {
+    const p = parseFloat(avgPct);
+    dot.className = 'dot ' + (p > 20 ? 'g' : p >= 10 ? 'y' : 'r');
+    txt.textContent = p > 20
+      ? 'Tiempo estrategico saludable: ' + p + '% promedio'
+      : p >= 10
+        ? 'Tiempo estrategico insuficiente: ' + p + '% promedio'
+        : 'Tiempo estrategico critico: ' + p + '% promedio';
+  }
+
+  const sesRows = document.querySelectorAll('#sessionBody tr');
+  let resp = 0;
+  sesRows.forEach(tr => {
+    const sel = tr.querySelector('select');
+    if (sel && sel.value === 'Si') resp++;
+  });
+  const pctResp = sesRows.length > 0 ? (resp / sesRows.length * 100).toFixed(0) + '%' : '—';
+
+  document.getElementById('c1').textContent = avgPct !== null ? avgPct + '%' : '—';
+  document.getElementById('c2').textContent = avgStrat !== null ? avgStrat + 'h' : '—';
+  document.getElementById('c3').textContent = count > 0 ? count : '—';
+  document.getElementById('c4').textContent = pctResp;
+  document.getElementById('c5').textContent = sesRows.length;
+}
+
+['Sem 1','Sem 2','Sem 3','Sem 4'].forEach(l => addTimeRow(l));
+</script>
+</body>
+</html>

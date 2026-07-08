@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIR-S2 R6 · Inventario de Objeciones de Venta</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #222; font-size: 14px; }
+
+  .header { background: #1B2B4B; padding: 18px 28px; display: flex; align-items: center; gap: 16px; }
+  .logo-circle { width: 44px; height: 44px; border-radius: 50%; background: #C4A55A; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #1B2B4B; flex-shrink: 0; }
+  .header-info { flex: 1; }
+  .symptom-label { font-size: 11px; color: #C4A55A; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
+  .tool-title { font-size: 20px; color: #fff; font-weight: 700; }
+  .badge { background: transparent; border: 1.5px solid #C4A55A; color: #C4A55A; font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 4px 10px; border-radius: 4px; align-self: center; white-space: nowrap; }
+
+  .main { padding: 24px 28px; }
+  .section-title { font-size: 13px; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+  thead tr { background: #1B2B4B; }
+  thead th { color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 11px 10px; text-align: left; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid #e4e4f0; }
+  tbody tr:nth-child(even) { background: #f0f4f8; }
+  tbody tr:nth-child(odd) { background: #fff; }
+  tbody td { padding: 9px 10px; vertical-align: middle; min-width: 90px; }
+  tbody td[contenteditable="true"] { outline: none; cursor: text; }
+  tbody td[contenteditable="true"]:focus { background: #fffbe6; border-radius: 3px; outline: 1px solid #C4A55A; }
+
+  /* Select cells */
+  td select { border: 1px solid #ccc; border-radius: 4px; padding: 5px 6px; font-family: inherit; font-size: 13px; background: #fff; color: #222; width: 100%; cursor: pointer; }
+  td select:focus { outline: 1px solid #C4A55A; border-color: #C4A55A; }
+
+  .efect-cell { font-weight: 700; white-space: nowrap; }
+
+  /* Semaphore */
+  .sem { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  .sem-green { background: #2e7d32; }
+  .sem-yellow { background: #f9a825; }
+  .sem-red { background: #c62828; }
+
+  /* Extra inputs */
+  .extra-inputs { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; padding: 14px 18px; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .input-group { display: flex; align-items: center; gap: 10px; }
+  .input-group label { font-size: 13px; font-weight: 600; color: #1B2B4B; white-space: nowrap; }
+  .input-group input { border: 1.5px solid #1B2B4B; border-radius: 5px; padding: 6px 10px; font-size: 14px; font-family: inherit; width: 120px; color: #1B2B4B; font-weight: 700; }
+  .input-group input:focus { outline: 1px solid #C4A55A; }
+
+  .metrics { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .metric-card { background: #fff; border-radius: 8px; border-top: 4px solid #1B2B4B; padding: 16px 20px; flex: 1; min-width: 180px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+  .metric-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 6px; }
+  .metric-value { font-size: 26px; font-weight: 800; color: #C4A55A; line-height: 1; }
+  .metric-value.danger { color: #c62828; }
+  .metric-value.alert { color: #c62828; }
+  .metric-sub { font-size: 12px; color: #999; margin-top: 4px; }
+
+  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 9px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 16px; }
+  .btn-add:hover { background: #243a63; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 11px 28px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; display: block; margin: 8px auto 0; }
+  .btn-print:hover { background: #b8943f; }
+
+  @media print {
+    .btn-add, .btn-print { display: none !important; }
+    body { background: #fff; }
+    .header, thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .metric-card { box-shadow: none; border: 1px solid #ddd; }
+    td select { border: none; appearance: none; -webkit-appearance: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-circle">M</div>
+  <div class="header-info">
+    <div class="symptom-label">CIR-S2 · Propuesta Confusa</div>
+    <div class="tool-title">Inventario de Objeciones de Venta</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA · R6</div>
+</div>
+
+<div class="main">
+
+  <div class="section-title">Registro de Objeciones y Respuestas</div>
+
+  <div class="table-wrap">
+    <table id="objTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Objeción</th>
+          <th>Frecuencia (1-5)</th>
+          <th>Etapa del proceso</th>
+          <th>Tipo</th>
+          <th>Respuesta actual</th>
+          <th>Efectividad (1-10)</th>
+          <th>Respuesta optimizada</th>
+          <th>Recurso de apoyo</th>
+        </tr>
+      </thead>
+      <tbody id="objBody">
+        <tr>
+          <td>1</td>
+          <td contenteditable="true">Es demasiado caro</td>
+          <td contenteditable="true" data-col="freq">5</td>
+          <td contenteditable="true">Cierre</td>
+          <td>
+            <select class="tipo-select">
+              <option value="Precio" selected>Precio</option>
+              <option value="Confianza">Confianza</option>
+              <option value="Urgencia">Urgencia</option>
+              <option value="Alternativa">Alternativa</option>
+              <option value="Necesidad">Necesidad</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+          <td contenteditable="true">Le explicamos el ROI</td>
+          <td class="efect-cell" data-col="efect" contenteditable="true">5</td>
+          <td contenteditable="true">¿Cuánto te cuesta no resolverlo? + caso de cliente</td>
+          <td>
+            <select class="recurso-select">
+              <option value="Caso" selected>Caso</option>
+              <option value="Dato">Dato</option>
+              <option value="Demo">Demo</option>
+              <option value="Garantía">Garantía</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td contenteditable="true">No es el momento</td>
+          <td contenteditable="true" data-col="freq">4</td>
+          <td contenteditable="true">Prospección</td>
+          <td>
+            <select class="tipo-select">
+              <option value="Precio">Precio</option>
+              <option value="Confianza">Confianza</option>
+              <option value="Urgencia" selected>Urgencia</option>
+              <option value="Alternativa">Alternativa</option>
+              <option value="Necesidad">Necesidad</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+          <td contenteditable="true">Le decimos que cuando quiera nos llame</td>
+          <td class="efect-cell" data-col="efect" contenteditable="true">3</td>
+          <td contenteditable="true">¿Qué tendría que pasar para que fuera el momento?</td>
+          <td>
+            <select class="recurso-select">
+              <option value="Caso">Caso</option>
+              <option value="Dato" selected>Dato</option>
+              <option value="Demo">Demo</option>
+              <option value="Garantía">Garantía</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td contenteditable="true">Ya lo tenemos cubierto internamente</td>
+          <td contenteditable="true" data-col="freq">3</td>
+          <td contenteditable="true">Presentación</td>
+          <td>
+            <select class="tipo-select">
+              <option value="Precio">Precio</option>
+              <option value="Confianza">Confianza</option>
+              <option value="Urgencia">Urgencia</option>
+              <option value="Alternativa" selected>Alternativa</option>
+              <option value="Necesidad">Necesidad</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+          <td contenteditable="true">Diferenciamos nuestra especialización</td>
+          <td class="efect-cell" data-col="efect" contenteditable="true">6</td>
+          <td contenteditable="true">¿Qué resultados está dando ese enfoque interno?</td>
+          <td>
+            <select class="recurso-select">
+              <option value="Caso">Caso</option>
+              <option value="Dato">Dato</option>
+              <option value="Demo" selected>Demo</option>
+              <option value="Garantía">Garantía</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td contenteditable="true">No me fío / No os conozco</td>
+          <td contenteditable="true" data-col="freq">4</td>
+          <td contenteditable="true">Propuesta</td>
+          <td>
+            <select class="tipo-select">
+              <option value="Precio">Precio</option>
+              <option value="Confianza" selected>Confianza</option>
+              <option value="Urgencia">Urgencia</option>
+              <option value="Alternativa">Alternativa</option>
+              <option value="Necesidad">Necesidad</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+          <td contenteditable="true">Enviamos referencias</td>
+          <td class="efect-cell" data-col="efect" contenteditable="true">7</td>
+          <td contenteditable="true">Propón llamada con cliente actual + garantía de resultado</td>
+          <td>
+            <select class="recurso-select">
+              <option value="Caso">Caso</option>
+              <option value="Dato">Dato</option>
+              <option value="Demo">Demo</option>
+              <option value="Garantía" selected>Garantía</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td contenteditable="true">No lo necesito ahora mismo</td>
+          <td contenteditable="true" data-col="freq">2</td>
+          <td contenteditable="true">Descubrimiento</td>
+          <td>
+            <select class="tipo-select">
+              <option value="Precio">Precio</option>
+              <option value="Confianza">Confianza</option>
+              <option value="Urgencia">Urgencia</option>
+              <option value="Alternativa">Alternativa</option>
+              <option value="Necesidad" selected>Necesidad</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+          <td contenteditable="true">Le preguntamos sus objetivos</td>
+          <td class="efect-cell" data-col="efect" contenteditable="true">4</td>
+          <td contenteditable="true">Muestra el coste de la inacción con datos del sector</td>
+          <td>
+            <select class="recurso-select">
+              <option value="Caso">Caso</option>
+              <option value="Dato" selected>Dato</option>
+              <option value="Demo">Demo</option>
+              <option value="Garantía">Garantía</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td contenteditable="true">Lo tengo que consultar con mi socio</td>
+          <td contenteditable="true" data-col="freq">3</td>
+          <td contenteditable="true">Cierre</td>
+          <td>
+            <select class="tipo-select">
+              <option value="Precio">Precio</option>
+              <option value="Confianza">Confianza</option>
+              <option value="Urgencia">Urgencia</option>
+              <option value="Alternativa">Alternativa</option>
+              <option value="Necesidad">Necesidad</option>
+              <option value="Otro" selected>Otro</option>
+            </select>
+          </td>
+          <td contenteditable="true">Le enviamos resumen por email</td>
+          <td class="efect-cell" data-col="efect" contenteditable="true">5</td>
+          <td contenteditable="true">¿Puedo estar en esa reunión para resolver dudas directamente?</td>
+          <td>
+            <select class="recurso-select">
+              <option value="Caso">Caso</option>
+              <option value="Dato">Dato</option>
+              <option value="Demo" selected>Demo</option>
+              <option value="Garantía">Garantía</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn-add" id="btnAdd">+ Añadir fila</button>
+
+  <div class="extra-inputs">
+    <div class="input-group">
+      <label for="ventasPerdidas">Ventas perdidas/mes:</label>
+      <input type="number" id="ventasPerdidas" value="8" min="0">
+    </div>
+    <div class="input-group">
+      <label for="ticketMedio2">Ticket medio (€):</label>
+      <input type="number" id="ticketMedio2" value="1200" min="0">
+    </div>
+  </div>
+
+  <div class="section-title">Resumen de Métricas</div>
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Objeciones No Resueltas</div>
+      <div class="metric-value alert" id="metNoResueltas">0</div>
+      <div class="metric-sub">Efectividad &lt; 6</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Objeción Más Frecuente</div>
+      <div class="metric-value" id="metMasFrecuente" style="font-size:15px; padding-top:4px;">—</div>
+      <div class="metric-sub">Mayor frecuencia registrada</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Efectividad Media</div>
+      <div class="metric-value" id="metEfectMedia">—</div>
+      <div class="metric-sub">Promedio de respuestas actuales</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Coste Estimado/mes</div>
+      <div class="metric-value danger" id="metCoste">0 €</div>
+      <div class="metric-sub">Ventas perdidas × ticket medio</div>
+    </div>
+  </div>
+
+  <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+
+</div>
+
+<script>
+  function semClass(efect) {
+    if (efect >= 8) return 'sem-green';
+    if (efect >= 6) return 'sem-yellow';
+    return 'sem-red';
+  }
+
+  function recalc() {
+    const tbody = document.getElementById('objBody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const ventasPerdidas = parseFloat(document.getElementById('ventasPerdidas').value) || 0;
+    const ticketMedio = parseFloat(document.getElementById('ticketMedio2').value) || 0;
+
+    let noResueltas = 0;
+    let maxFreq = -Infinity;
+    let masFrecuente = '—';
+    let efectSum = 0;
+    let efectCount = 0;
+
+    rows.forEach((row, i) => {
+      row.cells[0].textContent = i + 1;
+
+      const freqCell = row.querySelector('[data-col="freq"]');
+      const efectCell = row.querySelector('[data-col="efect"]');
+      const objCell = row.cells[1];
+
+      const freq = parseFloat(freqCell ? freqCell.textContent : 0) || 0;
+      const efect = parseFloat(efectCell ? efectCell.textContent : 0) || 0;
+
+      if (efect < 6) noResueltas++;
+
+      if (freq > maxFreq) {
+        maxFreq = freq;
+        masFrecuente = objCell ? objCell.textContent.trim() : '—';
+      }
+
+      efectSum += efect;
+      efectCount++;
+
+      // Update semaphore on efectividad cell
+      if (efectCell) {
+        const val = efectCell.textContent.replace(/[^0-9.]/g, '');
+        const sc = semClass(parseFloat(val) || 0);
+        // Only update if no cursor active (avoid disrupting editing)
+        if (document.activeElement !== efectCell) {
+          efectCell.innerHTML = '<span class="sem ' + sc + '"></span>' + val;
+        }
+      }
+    });
+
+    const metNo = document.getElementById('metNoResueltas');
+    metNo.textContent = noResueltas;
+    metNo.className = 'metric-value' + (noResueltas > 0 ? ' alert' : '');
+
+    document.getElementById('metMasFrecuente').textContent = masFrecuente || '—';
+
+    const efectMedia = efectCount > 0 ? efectSum / efectCount : 0;
+    document.getElementById('metEfectMedia').textContent = efectMedia.toFixed(1);
+
+    const coste = ventasPerdidas * ticketMedio;
+    document.getElementById('metCoste').textContent = coste.toLocaleString('es-ES', { maximumFractionDigits: 0 }) + ' €';
+  }
+
+  // Handle editing of efect cells — strip semaphore span before reading
+  document.getElementById('objBody').addEventListener('focus', (e) => {
+    if (e.target.matches('[data-col="efect"]')) {
+      const raw = e.target.textContent.replace(/[^0-9.]/g, '');
+      e.target.textContent = raw;
+      // Move cursor to end
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(e.target);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }, true);
+
+  document.getElementById('objBody').addEventListener('blur', (e) => {
+    if (e.target.matches('[data-col="efect"]')) {
+      recalc();
+    }
+  }, true);
+
+  document.getElementById('objBody').addEventListener('input', recalc);
+  document.getElementById('objBody').addEventListener('change', recalc);
+  document.getElementById('ventasPerdidas').addEventListener('input', recalc);
+  document.getElementById('ticketMedio2').addEventListener('input', recalc);
+
+  document.getElementById('btnAdd').addEventListener('click', () => {
+    const tbody = document.getElementById('objBody');
+    const rows = tbody.querySelectorAll('tr');
+    const lastRow = rows[rows.length - 1];
+    const newRow = lastRow.cloneNode(true);
+
+    // Reset contenteditable cells
+    Array.from(newRow.querySelectorAll('[contenteditable="true"]')).forEach(cell => {
+      cell.textContent = '';
+    });
+
+    // Reset selects to first option
+    Array.from(newRow.querySelectorAll('select')).forEach(sel => {
+      sel.selectedIndex = 0;
+    });
+
+    tbody.appendChild(newRow);
+    recalc();
+  });
+
+  recalc();
+</script>
+</body>
+</html>

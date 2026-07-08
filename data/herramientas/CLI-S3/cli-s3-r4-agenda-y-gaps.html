@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI-S3 R4 · Eficiencia de Agenda Semanal</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:17px;font-weight:700}
+.badge{font-size:11px;color:#C4A55A;font-weight:600;border:1px solid #C4A55A;padding:3px 10px;border-radius:20px}
+.btn-print{background:#C4A55A;color:#1B2B4B;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px}
+.container{padding:24px 28px;max-width:1200px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.metric-card{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:14px 18px;border-left:4px solid #C4A55A}
+.metric-card .label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.metric-card .value{font-size:22px;font-weight:700;color:#1B2B4B}
+.metric-card .sub{font-size:11px;color:#888;margin-top:2px}
+section{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:20px;margin-bottom:20px}
+section h2{font-size:13px;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #C4A55A}
+table{width:100%;border-collapse:collapse}
+th{background:#1B2B4B;color:#C4A55A;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:9px 10px;text-align:left;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #f0eff8;vertical-align:middle;text-align:center}
+td:first-child{text-align:left;font-weight:600}
+tr:hover td{background:#f5f4fc}
+[contenteditable="true"]{cursor:text;outline:none}
+[contenteditable="true"]:focus{background:#fffbe6;box-shadow:0 0 0 2px #C4A55A55;border-radius:3px}
+.calc{background:#f8f7ff;font-weight:700}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle;margin-right:5px}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}
+tfoot td{background:#1B2B4B;color:#C4A55A;font-weight:700;text-align:center}
+tfoot td:first-child{text-align:left}
+@media print{.btn-print{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>CLI-S3 · R4 &nbsp; Eficiencia de Agenda Semanal</h1>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="badge">Desorganización Asistencial</span>
+    <button class="btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</header>
+<div class="container">
+  <div class="metrics">
+    <div class="metric-card"><div class="label">Eficiencia de agenda</div><div class="value" id="m-efic">—</div><div class="sub">% ocupación global semana</div></div>
+    <div class="metric-card"><div class="label">Horas perdidas/semana</div><div class="value" id="m-horas">—</div><div class="sub">slots libres × 1h estimada</div></div>
+    <div class="metric-card"><div class="label">Total huecos &gt;1h</div><div class="value" id="m-huecos">—</div><div class="sub">suma semanal</div></div>
+    <div class="metric-card"><div class="label">Citas solapadas total</div><div class="value" id="m-sol">—</div><div class="sub">incidencias de solapamiento</div></div>
+  </div>
+  <section>
+    <h2>Eficiencia por día — semáforo verde: ocupación &gt;85%</h2>
+    <div style="overflow-x:auto"><table>
+      <thead><tr>
+        <th>Día</th><th>Slots programados</th><th>Slots ocupados</th><th>% ocupación</th>
+        <th>Huecos &gt;1h</th><th>Tiempo entre citas (min prom.)</th><th>Citas solapadas</th><th>Estado</th>
+      </tr></thead>
+      <tbody id="main-body"></tbody>
+      <tfoot><tr id="foot-row"></tr></tfoot>
+    </table></div>
+  </section>
+</div>
+<script>
+const DIAS=['Lunes','Martes','Miércoles','Jueves','Viernes'];
+let rows=[
+  {dia:'Lunes',prog:10,ocup:9,huecos:1,entre:15,solap:0},
+  {dia:'Martes',prog:10,ocup:7,huecos:3,entre:25,solap:1},
+  {dia:'Miércoles',prog:8,ocup:8,huecos:0,entre:10,solap:0},
+  {dia:'Jueves',prog:10,ocup:6,huecos:4,entre:30,solap:2},
+  {dia:'Viernes',prog:8,ocup:8,huecos:0,entre:12,solap:0},
+];
+function pct(ocup,prog){return prog>0?Math.round(ocup/prog*100):0;}
+function sema(p){if(p>=85) return 'verde'; if(p>=70) return 'amarillo'; return 'rojo';}
+function semaLabel(s){return {verde:'Óptimo',amarillo:'Mejorable',rojo:'Ineficiente'}[s];}
+function renderMain(){
+  const b=document.getElementById('main-body'); b.innerHTML='';
+  let totProg=0,totOcup=0,totHuecos=0,totSolap=0;
+  rows.forEach((r,i)=>{
+    const p=pct(r.ocup,r.prog);
+    const s=sema(p);
+    totProg+=parseInt(r.prog)||0; totOcup+=parseInt(r.ocup)||0;
+    totHuecos+=parseInt(r.huecos)||0; totSolap+=parseInt(r.solap)||0;
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td>'+r.dia+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].prog=parseInt(this.innerText)||0;recalc()">'+r.prog+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].ocup=parseInt(this.innerText)||0;recalc()">'+r.ocup+'</td>'
+      +'<td class="calc">'+p+'%</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].huecos=parseInt(this.innerText)||0;recalc()">'+r.huecos+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].entre=parseInt(this.innerText)||0">'+r.entre+' min</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].solap=parseInt(this.innerText)||0;recalc()" style="color:'+(r.solap>0?'#ef4444':'inherit');fontWeight:r.solap>0?'700':'400'+'">'+r.solap+'</td>'
+      +'<td><span class="dot '+s+'"></span>'+semaLabel(s)+'</td>';
+    b.appendChild(tr);
+  });
+  const pGlobal=pct(totOcup,totProg);
+  const horasPerd=totProg-totOcup;
+  document.getElementById('m-efic').textContent=pGlobal+'%';
+  document.getElementById('m-horas').textContent=horasPerd+' h';
+  document.getElementById('m-huecos').textContent=totHuecos;
+  document.getElementById('m-sol').textContent=totSolap;
+  document.getElementById('foot-row').innerHTML='<td>TOTAL SEMANA</td>'
+    +'<td>'+totProg+'</td><td>'+totOcup+'</td>'
+    +'<td>'+pGlobal+'%</td>'
+    +'<td>'+totHuecos+'</td><td>—</td>'
+    +'<td>'+totSolap+'</td>'
+    +'<td><span class="dot '+sema(pGlobal)+'"></span>'+semaLabel(sema(pGlobal))+'</td>';
+}
+function recalc(){renderMain();}
+renderMain();
+</script>
+</body>
+</html>

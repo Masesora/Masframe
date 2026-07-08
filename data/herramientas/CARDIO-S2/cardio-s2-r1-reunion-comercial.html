@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tracker de Reuniones Comerciales Semanales - CARDIO-S2</title>
+<style>
+:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--white:#fff;--red:#e74c3c;--yellow:#f39c12;--green:#27ae60;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:#333;}
+.header{background:var(--navy);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.header-left .brand{color:var(--gold);font-weight:700;font-size:1.1rem;letter-spacing:1px;}
+.header-left .symptom{color:#fff;font-size:0.78rem;margin-top:2px;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.tool-name{color:#fff;font-weight:600;font-size:0.95rem;}
+.badge-op{background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.5px;}
+.main{max-width:1280px;margin:0 auto;padding:24px 16px 100px;}
+h1{font-size:1.25rem;color:var(--navy);margin-bottom:6px;}
+.subtitle{font-size:0.85rem;color:#666;margin-bottom:20px;}
+.trend-wrapper{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.trend-label{font-size:0.9rem;color:#555;font-weight:600;}
+.trend-badge{font-size:0.95rem;font-weight:700;padding:6px 18px;border-radius:20px;}
+.trend-green{background:#d4edda;color:var(--green);border:1.5px solid var(--green);}
+.trend-yellow{background:#fff3cd;color:#856404;border:1.5px solid var(--yellow);}
+.trend-red{background:#f8d7da;color:var(--red);border:1.5px solid var(--red);}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px;}
+.card{background:var(--white);border-left:4px solid var(--gold);padding:16px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+.card-label{font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+.card-value{font-size:1.4rem;font-weight:700;color:var(--navy);}
+.card-sub{font-size:0.78rem;color:#999;margin-top:4px;}
+.table-wrapper{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+table{width:100%;border-collapse:collapse;background:var(--white);font-size:0.84rem;}
+thead tr{background:var(--navy);color:#fff;}
+thead th{padding:10px 8px;text-align:left;font-weight:600;white-space:nowrap;font-size:0.78rem;}
+tbody tr:nth-child(even){background:#f4f3fb;}
+tbody tr:hover{background:#ede9fb;}
+td{padding:6px;vertical-align:middle;}
+td input{width:100%;border:1px solid #ddd;border-radius:4px;padding:5px 6px;font-size:0.82rem;background:transparent;color:#333;}
+td input:focus{outline:2px solid var(--gold);border-color:var(--gold);}
+.gap-cell{font-weight:700;padding:6px 8px;}
+.gap-neg{color:var(--red);}
+.gap-pos{color:var(--green);}
+.print-btn{position:fixed;bottom:24px;right:24px;background:var(--navy);color:var(--gold);border:none;padding:12px 22px;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:999;}
+.print-btn:hover{opacity:0.9;}
+@media print{.print-btn{display:none;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left">
+    <div class="brand">MASFRAME</div>
+    <div class="symptom">CARDIO-S2 &middot; Sin reuni&oacute;n comercial semanal</div>
+  </div>
+  <div class="header-right">
+    <span class="tool-name">Tracker de Reuniones Comerciales Semanales</span>
+    <span class="badge-op">HERRAMIENTA OPERATIVA</span>
+  </div>
+</div>
+<div class="main">
+  <h1>Tracker de Reuniones Comerciales Semanales</h1>
+  <p class="subtitle">Fecha de referencia: 2026-07-08 &middot; Registra cada semana y observa la tendencia de mejora comercial</p>
+  <div class="trend-wrapper">
+    <span class="trend-label">Tendencia (semanas 5-8 vs 1-4):</span>
+    <span class="trend-badge trend-yellow" id="trend-badge">Calculando...</span>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Total ingresos 8 semanas</div>
+      <div class="card-value" id="sum-ingresos">-</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Promedio semanal</div>
+      <div class="card-value" id="avg-ingresos">-</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Semana mayor rendimiento</div>
+      <div class="card-value" id="best-week">-</div>
+      <div class="card-sub" id="best-week-val"></div>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Semana</th>
+          <th>Nuevos leads</th>
+          <th>Avances pipeline</th>
+          <th>Propuestas enviadas</th>
+          <th>Cierres</th>
+          <th>Ingresos cerrados &euro;</th>
+          <th>Objetivo semana &euro;</th>
+          <th>Gap &euro;</th>
+          <th>Acci&oacute;n correctora</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+<button class="print-btn" onclick="window.print()">Imprimir</button>
+<script>
+var R=[
+  {s:"Semana 1",l:4,a:2,p:1,c:0,i:0,o:5000,ac:"Ampliar red de contactos"},
+  {s:"Semana 2",l:5,a:3,p:2,c:1,i:2000,o:5000,ac:"Seguimiento propuestas pendientes"},
+  {s:"Semana 3",l:6,a:3,p:2,c:1,i:3500,o:5000,ac:"Mejorar argumentario de cierre"},
+  {s:"Semana 4",l:5,a:4,p:2,c:1,i:2800,o:5000,ac:"Reforzar seguimiento a los 3 dias"},
+  {s:"Semana 5",l:8,a:5,p:3,c:2,i:6000,o:6000,ac:""},
+  {s:"Semana 6",l:9,a:6,p:4,c:2,i:7500,o:6000,ac:""},
+  {s:"Semana 7",l:10,a:7,p:5,c:3,i:9200,o:7000,ac:""},
+  {s:"Semana 8",l:11,a:8,p:5,c:3,i:10000,o:8000,ac:""}
+];
+function fmt(n){return isNaN(n)?"-":n.toLocaleString("es-ES",{minimumFractionDigits:0,maximumFractionDigits:0})+" €";}
+function mkR(d){
+  var t=document.createElement("tr");
+  t.innerHTML="<td><input class=\"cs\" value=\""+d.s+"\"></td>"+
+    "<td><input type=\"number\" class=\"cl\" value=\""+d.l+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"ca\" value=\""+d.a+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"cp\" value=\""+d.p+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"cc\" value=\""+d.c+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"ci\" value=\""+d.i+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"co\" value=\""+d.o+"\" min=\"0\"></td>"+
+    "<td class=\"gap-cell gd\">-</td>"+
+    "<td><input class=\"cac\" value=\""+d.ac+"\" style=\"min-width:140px\"></td>";
+  return t;
+}
+function calc(){
+  var trs=document.querySelectorAll("#tbody tr"),il=[],nl=[];
+  trs.forEach(function(t){
+    var i=parseFloat(t.querySelector(".ci").value)||0,o=parseFloat(t.querySelector(".co").value)||0,g=o-i;
+    var gc=t.querySelector(".gd");
+    gc.textContent=isNaN(g)?"-":((g>=0?"+":"")+g.toLocaleString("es-ES")+" €");
+    gc.className="gap-cell gd "+(g<0?"gap-neg":"gap-pos");
+    il.push(i);nl.push(t.querySelector(".cs").value||"Sem "+(il.length));
+  });
+  var tot=il.reduce(function(a,b){return a+b;},0);
+  document.getElementById("sum-ingresos").textContent=fmt(tot);
+  document.getElementById("avg-ingresos").textContent=fmt(il.length?tot/il.length:0);
+  var bi=0,bv=-Infinity;il.forEach(function(v,i){if(v>bv){bv=v;bi=i;}});
+  document.getElementById("best-week").textContent=nl[bi]||"-";
+  document.getElementById("best-week-val").textContent=bv>-Infinity?fmt(bv):"";
+  var a1=il.slice(0,4).reduce(function(a,b){return a+b;},0)/4;
+  var a2=il.slice(4,8).reduce(function(a,b){return a+b;},0)/4;
+  var bd=document.getElementById("trend-badge");
+  if(!a1&&!a2){bd.textContent="Sin datos";bd.className="trend-badge trend-yellow";}
+  else{var r=a1>0?a2/a1:2;
+    if(r>1.1){bd.textContent="Mejorando";bd.className="trend-badge trend-green";}
+    else if(r<0.9){bd.textContent="Empeorando";bd.className="trend-badge trend-red";}
+    else{bd.textContent="Estable";bd.className="trend-badge trend-yellow";}}
+}
+var tb=document.getElementById("tbody");
+R.forEach(function(d){tb.appendChild(mkR(d));});
+tb.addEventListener("input",calc);calc();
+</script>
+</body>
+</html>

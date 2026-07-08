@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI-S3 R1 · Auditoría de Historias Clínicas</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:17px;font-weight:700}
+.badge{font-size:11px;color:#C4A55A;font-weight:600;border:1px solid #C4A55A;padding:3px 10px;border-radius:20px}
+.btn-print{background:#C4A55A;color:#1B2B4B;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px}
+.container{padding:24px 28px;max-width:1350px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.metric-card{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:14px 18px;border-left:4px solid #C4A55A}
+.metric-card .label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.metric-card .value{font-size:22px;font-weight:700;color:#1B2B4B}
+.metric-card .sub{font-size:11px;color:#888;margin-top:2px}
+section{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:20px;margin-bottom:20px}
+section h2{font-size:13px;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #C4A55A}
+table{width:100%;border-collapse:collapse}
+th{background:#1B2B4B;color:#C4A55A;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:9px 10px;text-align:left;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #f0eff8;vertical-align:middle;text-align:center}
+td:first-child{text-align:left;font-weight:600}
+tr:hover td{background:#f5f4fc}
+[contenteditable="true"]{cursor:text;outline:none}
+[contenteditable="true"]:focus{background:#fffbe6;box-shadow:0 0 0 2px #C4A55A55;border-radius:3px}
+.calc{background:#f8f7ff;font-weight:700}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle;margin-right:5px}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}
+.row-ko td{background:#fee2e2}
+.incid-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:0}
+.incid-card{background:#f8f7ff;border:1px solid #e0dff5;border-radius:6px;padding:12px 16px;text-align:center}
+.incid-card .num{font-size:28px;font-weight:700;color:#1B2B4B}
+.incid-card .lab{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.4px}
+@media print{.btn-print{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>CLI-S3 · R1 &nbsp; Auditoría de Historias Clínicas</h1>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="badge">Desorganización Asistencial</span>
+    <button class="btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</header>
+<div class="container">
+  <div class="metrics">
+    <div class="metric-card"><div class="label">% cumplimiento global</div><div class="value" id="m-cum">—</div><div class="sub">historias sin incidencia</div></div>
+    <div class="metric-card"><div class="label">Estado semáforo</div><div class="value" id="m-sem">—</div><div class="sub">verde &gt;95% · amarillo 85-95% · rojo &lt;85%</div></div>
+    <div class="metric-card"><div class="label">Historias auditadas</div><div class="value" id="m-tot">—</div><div class="sub">total registros</div></div>
+    <div class="metric-card"><div class="label">Días sin actualizar (max)</div><div class="value" id="m-max">—</div><div class="sub">peor historia</div></div>
+  </div>
+  <section>
+    <h2>Tabla de auditoría — filas con incidencia resaltadas</h2>
+    <div style="overflow-x:auto"><table>
+      <thead><tr>
+        <th>Paciente (código)</th><th>Historia completa</th><th>Consentimiento</th>
+        <th>Plan documentado</th><th>Evolución al día</th><th>Informes en plazo</th>
+        <th>Última actualización</th><th>Días sin actualizar</th><th>Estado</th>
+      </tr></thead>
+      <tbody id="main-body"></tbody>
+    </table></div>
+  </section>
+  <section>
+    <h2>Incidencias por tipo</h2>
+    <div class="incid-grid" id="incid-grid"></div>
+  </section>
+</div>
+<script>
+const TODAY=new Date();
+function diasDesde(f){if(!f)return 0;const d=new Date(f);return isNaN(d)?0:Math.max(0,Math.round((TODAY-d)/(1000*60*60*24)));}
+function dotSN(v){return '<span class="dot '+(v==='Sí'?'verde':'rojo')+'"></span>'+v;}
+let rows=[
+  {pac:'PAC-001',hist:'Sí',cons:'Sí',plan:'Sí',evol:'Sí',inf:'Sí',upd:'2026-07-06'},
+  {pac:'PAC-002',hist:'Sí',cons:'No',plan:'Sí',evol:'Sí',inf:'No',upd:'2026-07-05'},
+  {pac:'PAC-003',hist:'No',cons:'Sí',plan:'No',evol:'No',inf:'Sí',upd:'2026-06-20'},
+  {pac:'PAC-004',hist:'Sí',cons:'Sí',plan:'Sí',evol:'Sí',inf:'Sí',upd:'2026-07-07'},
+  {pac:'PAC-005',hist:'Sí',cons:'Sí',plan:'No',evol:'Sí',inf:'Sí',upd:'2026-07-04'},
+  {pac:'PAC-006',hist:'Sí',cons:'No',plan:'Sí',evol:'No',inf:'No',upd:'2026-06-15'},
+  {pac:'PAC-007',hist:'Sí',cons:'Sí',plan:'Sí',evol:'Sí',inf:'Sí',upd:'2026-07-07'},
+  {pac:'PAC-008',hist:'No',cons:'Sí',plan:'Sí',evol:'Sí',inf:'Sí',upd:'2026-07-01'},
+  {pac:'PAC-009',hist:'Sí',cons:'Sí',plan:'Sí',evol:'No',inf:'Sí',upd:'2026-06-28'},
+  {pac:'PAC-010',hist:'Sí',cons:'Sí',plan:'Sí',evol:'Sí',inf:'Sí',upd:'2026-07-06'},
+];
+function tieneIncidencia(r){return r.hist==='No'||r.cons==='No'||r.plan==='No'||r.evol==='No'||r.inf==='No'||diasDesde(r.upd)>30;}
+function renderMain(){
+  const b=document.getElementById('main-body'); b.innerHTML='';
+  let ok=0,maxDias=0;
+  let c={hist:0,cons:0,plan:0,evol:0,inf:0};
+  let diasArr=[];
+  rows.forEach((r,i)=>{
+    const dias=diasDesde(r.upd);
+    diasArr.push(dias);
+    if(dias>maxDias) maxDias=dias;
+    if(r.hist==='No') c.hist++;
+    if(r.cons==='No') c.cons++;
+    if(r.plan==='No') c.plan++;
+    if(r.evol==='No') c.evol++;
+    if(r.inf==='No') c.inf++;
+    const inc=tieneIncidencia(r);
+    if(!inc) ok++;
+    const tr=document.createElement('tr');
+    if(inc) tr.className='row-ko';
+    tr.innerHTML='<td contenteditable="true" onblur="rows['+i+'].pac=this.innerText">'+r.pac+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].hist=this.innerText;recalc()">'+dotSN(r.hist)+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].cons=this.innerText;recalc()">'+dotSN(r.cons)+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].plan=this.innerText;recalc()">'+dotSN(r.plan)+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].evol=this.innerText;recalc()">'+dotSN(r.evol)+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].inf=this.innerText;recalc()">'+dotSN(r.inf)+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].upd=this.innerText;recalc()">'+r.upd+'</td>'
+      +'<td class="calc" style="color:'+(dias>30?'#ef4444':'inherit')+'">'+dias+'</td>'
+      +'<td>'+(inc?'<span class="dot rojo"></span>Incidencia':'<span class="dot verde"></span>OK')+'</td>';
+    b.appendChild(tr);
+  });
+  const pct=Math.round(ok/rows.length*100);
+  document.getElementById('m-cum').textContent=pct+'%';
+  document.getElementById('m-tot').textContent=rows.length;
+  document.getElementById('m-max').textContent=maxDias+' días';
+  const cls=pct>=95?'verde':pct>=85?'amarillo':'rojo';
+  const lbl=pct>=95?'VERDE — Óptimo':pct>=85?'AMARILLO — Atención':'ROJO — Crítico';
+  document.getElementById('m-sem').textContent=lbl;
+  document.getElementById('m-sem').style.color=cls==='verde'?'#22c55e':cls==='amarillo'?'#f59e0b':'#ef4444';
+  document.getElementById('incid-grid').innerHTML=[
+    {lab:'Sin historia',n:c.hist},{lab:'Sin consentimiento',n:c.cons},
+    {lab:'Sin plan',n:c.plan},{lab:'Evolución no al día',n:c.evol},{lab:'Informes fuera plazo',n:c.inf}
+  ].map(x=>'<div class="incid-card"><div class="num" style="color:'+(x.n>0?'#ef4444':'#22c55e')+'">'+x.n+'</div><div class="lab">'+x.lab+'</div></div>').join('');
+}
+function recalc(){renderMain();}
+renderMain();
+</script>
+</body>
+</html>

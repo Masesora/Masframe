@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIR-S3 · Auditoría de Reputación Online</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 14px; }
+
+  /* HEADER */
+  header { background: #1B2B4B; padding: 20px 32px; }
+  .header-inner { display: flex; align-items: center; gap: 18px; }
+  .logo-circle { width: 52px; height: 52px; border-radius: 50%; background: #C4A55A; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; color: #1B2B4B; flex-shrink: 0; }
+  .header-text { flex: 1; }
+  .symptom-badge { color: #C4A55A; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .header-text h1 { color: #fff; font-size: 22px; font-weight: 700; line-height: 1.2; }
+  .op-badge { background: transparent; border: 2px solid #C4A55A; color: #C4A55A; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 4px; white-space: nowrap; }
+
+  /* MAIN CONTENT */
+  main { padding: 28px 32px; }
+  .section-title { font-size: 16px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; padding-left: 10px; border-left: 4px solid #C4A55A; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; min-width: 1100px; }
+  thead tr { background: #1B2B4B; }
+  thead th { color: #fff; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 10px; text-align: left; white-space: nowrap; }
+  tbody tr:nth-child(even) { background: #f0f4f8; }
+  tbody tr:nth-child(odd) { background: #fff; }
+  tbody tr:hover { background: #e8edf5; }
+  td { padding: 8px 10px; vertical-align: middle; border-bottom: 1px solid #e2e8f0; }
+  [contenteditable="true"] { outline: none; min-width: 40px; display: inline-block; }
+  [contenteditable="true"]:focus { background: #fffbe6; border-radius: 3px; }
+  td select { border: 1px solid #c9d5e0; border-radius: 4px; padding: 3px 6px; background: #fff; color: #1B2B4B; font-size: 13px; font-family: system-ui; cursor: pointer; }
+  td select:focus { outline: 2px solid #C4A55A; }
+
+  /* SEMAPHORE DOTS */
+  .sem-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: middle; flex-shrink: 0; }
+  .dot-green { background: #22c55e; }
+  .dot-yellow { background: #eab308; }
+  .dot-red { background: #ef4444; }
+
+  /* ADD ROW BUTTON */
+  .btn-add { display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 2px dashed #C4A55A; color: #C4A55A; font-weight: 600; font-size: 13px; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin-bottom: 28px; transition: background 0.15s; }
+  .btn-add:hover { background: #fffbe6; }
+
+  /* METRICS */
+  .metrics-section { margin-bottom: 28px; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .metric-card { background: #fff; border-radius: 8px; padding: 20px; border-top: 4px solid #1B2B4B; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+  .metric-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #64748b; margin-bottom: 8px; }
+  .metric-value { font-size: 28px; font-weight: 800; color: #C4A55A; }
+  .metric-sub { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  /* SEMAPHORE VISUAL */
+  .semaphore-card { background: #fff; border-radius: 8px; padding: 20px; border-top: 4px solid #1B2B4B; box-shadow: 0 2px 6px rgba(0,0,0,0.07); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .semaphore-circle { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: #fff; margin: 8px 0; transition: background 0.3s; }
+  .sem-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #64748b; margin-bottom: 4px; }
+  .sem-status { font-size: 12px; font-weight: 600; margin-top: 4px; }
+
+  /* PRINT BUTTON */
+  .btn-print { display: inline-flex; align-items: center; gap: 8px; background: #1B2B4B; color: #fff; border: none; padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background 0.15s; }
+  .btn-print:hover { background: #2a3f6b; }
+
+  /* PRINT */
+  @media print {
+    .btn-print, .btn-add { display: none !important; }
+    body { background: #fff; }
+    .table-wrap { box-shadow: none; }
+    main { padding: 16px; }
+    header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .metric-card, .semaphore-card { box-shadow: none; border: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-circle">M</div>
+    <div class="header-text">
+      <div class="symptom-badge">CIR-S3 · Reputación Dañada</div>
+      <h1>Auditoría de Reputación Online</h1>
+    </div>
+    <div class="op-badge">HERRAMIENTA OPERATIVA</div>
+  </div>
+</header>
+
+<main>
+  <p class="section-title">Registro por fuente de reputación</p>
+
+  <div class="table-wrap">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th>Fuente</th>
+          <th>Puntuación (0-5)</th>
+          <th>Nº valoraciones</th>
+          <th>Tendencia</th>
+          <th>% positivas</th>
+          <th>% negativas</th>
+          <th>Tema positivo dominante</th>
+          <th>Tema negativo dominante</th>
+          <th>¿Respondemos?</th>
+          <th>Tiempo medio resp. (h)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span contenteditable="true" data-col="fuente">Google Business</span></td>
+          <td><span class="sem-dot"></span><span contenteditable="true" data-col="puntuacion">4.3</span></td>
+          <td><span contenteditable="true" data-col="valoraciones">287</span></td>
+          <td>
+            <select data-col="tendencia">
+              <option value="↑" selected>↑ Sube</option>
+              <option value="↓">↓ Baja</option>
+              <option value="=">=  Estable</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="pct_pos">89</span>%</td>
+          <td><span contenteditable="true" data-col="pct_neg">11</span>%</td>
+          <td><span contenteditable="true" data-col="tema_pos">Atención al cliente</span></td>
+          <td><span contenteditable="true" data-col="tema_neg">Tiempo de entrega</span></td>
+          <td>
+            <select data-col="respondemos">
+              <option value="Sí" selected>Sí</option>
+              <option value="No">No</option>
+              <option value="Parcial">Parcial</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="tiempo">2</span></td>
+        </tr>
+        <tr>
+          <td><span contenteditable="true" data-col="fuente">Trustpilot</span></td>
+          <td><span class="sem-dot"></span><span contenteditable="true" data-col="puntuacion">3.8</span></td>
+          <td><span contenteditable="true" data-col="valoraciones">94</span></td>
+          <td>
+            <select data-col="tendencia">
+              <option value="↑">↑ Sube</option>
+              <option value="↓">↓ Baja</option>
+              <option value="=" selected>=  Estable</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="pct_pos">76</span>%</td>
+          <td><span contenteditable="true" data-col="pct_neg">24</span>%</td>
+          <td><span contenteditable="true" data-col="tema_pos">Precio/valor</span></td>
+          <td><span contenteditable="true" data-col="tema_neg">Comunicación</span></td>
+          <td>
+            <select data-col="respondemos">
+              <option value="Sí">Sí</option>
+              <option value="No">No</option>
+              <option value="Parcial" selected>Parcial</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="tiempo">6</span></td>
+        </tr>
+        <tr>
+          <td><span contenteditable="true" data-col="fuente">LinkedIn</span></td>
+          <td><span class="sem-dot"></span><span contenteditable="true" data-col="puntuacion">4.6</span></td>
+          <td><span contenteditable="true" data-col="valoraciones">43</span></td>
+          <td>
+            <select data-col="tendencia">
+              <option value="↑" selected>↑ Sube</option>
+              <option value="↓">↓ Baja</option>
+              <option value="=">=  Estable</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="pct_pos">95</span>%</td>
+          <td><span contenteditable="true" data-col="pct_neg">5</span>%</td>
+          <td><span contenteditable="true" data-col="tema_pos">Expertise</span></td>
+          <td><span contenteditable="true" data-col="tema_neg">-</span></td>
+          <td>
+            <select data-col="respondemos">
+              <option value="Sí" selected>Sí</option>
+              <option value="No">No</option>
+              <option value="Parcial">Parcial</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="tiempo">1</span></td>
+        </tr>
+        <tr>
+          <td><span contenteditable="true" data-col="fuente">Facebook</span></td>
+          <td><span class="sem-dot"></span><span contenteditable="true" data-col="puntuacion">3.2</span></td>
+          <td><span contenteditable="true" data-col="valoraciones">156</span></td>
+          <td>
+            <select data-col="tendencia">
+              <option value="↑">↑ Sube</option>
+              <option value="↓" selected>↓ Baja</option>
+              <option value="=">=  Estable</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="pct_pos">62</span>%</td>
+          <td><span contenteditable="true" data-col="pct_neg">38</span>%</td>
+          <td><span contenteditable="true" data-col="tema_pos">Precio</span></td>
+          <td><span contenteditable="true" data-col="tema_neg">Calidad producto</span></td>
+          <td>
+            <select data-col="respondemos">
+              <option value="Sí">Sí</option>
+              <option value="No" selected>No</option>
+              <option value="Parcial">Parcial</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="tiempo">-</span></td>
+        </tr>
+        <tr>
+          <td><span contenteditable="true" data-col="fuente">Plataforma sectorial</span></td>
+          <td><span class="sem-dot"></span><span contenteditable="true" data-col="puntuacion">4.1</span></td>
+          <td><span contenteditable="true" data-col="valoraciones">67</span></td>
+          <td>
+            <select data-col="tendencia">
+              <option value="↑">↑ Sube</option>
+              <option value="↓">↓ Baja</option>
+              <option value="=" selected>=  Estable</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="pct_pos">82</span>%</td>
+          <td><span contenteditable="true" data-col="pct_neg">18</span>%</td>
+          <td><span contenteditable="true" data-col="tema_pos">Fiabilidad</span></td>
+          <td><span contenteditable="true" data-col="tema_neg">Soporte</span></td>
+          <td>
+            <select data-col="respondemos">
+              <option value="Sí" selected>Sí</option>
+              <option value="No">No</option>
+              <option value="Parcial">Parcial</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="tiempo">4</span></td>
+        </tr>
+        <tr>
+          <td><span contenteditable="true" data-col="fuente">Web propia</span></td>
+          <td><span class="sem-dot"></span><span contenteditable="true" data-col="puntuacion">4.8</span></td>
+          <td><span contenteditable="true" data-col="valoraciones">38</span></td>
+          <td>
+            <select data-col="tendencia">
+              <option value="↑" selected>↑ Sube</option>
+              <option value="↓">↓ Baja</option>
+              <option value="=">=  Estable</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="pct_pos">97</span>%</td>
+          <td><span contenteditable="true" data-col="pct_neg">3</span>%</td>
+          <td><span contenteditable="true" data-col="tema_pos">Resultados</span></td>
+          <td><span contenteditable="true" data-col="tema_neg">-</span></td>
+          <td>
+            <select data-col="respondemos">
+              <option value="Sí" selected>Sí</option>
+              <option value="No">No</option>
+              <option value="Parcial">Parcial</option>
+            </select>
+          </td>
+          <td><span contenteditable="true" data-col="tiempo">1</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+
+  <!-- METRICS -->
+  <p class="section-title metrics-section">Resumen de métricas</p>
+  <div class="metrics-grid" style="margin-bottom:28px;">
+    <div class="metric-card">
+      <div class="metric-label">Reputación Score Global</div>
+      <div class="metric-value" id="m-score">–</div>
+      <div class="metric-sub">Media ponderada por nº valoraciones</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total Valoraciones</div>
+      <div class="metric-value" id="m-total">–</div>
+      <div class="metric-sub">Suma de todas las fuentes</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Positivas Global</div>
+      <div class="metric-value" id="m-pct-pos">–</div>
+      <div class="metric-sub">Media simple % positivas</div>
+    </div>
+    <div class="semaphore-card">
+      <div class="sem-label">Estado Reputacional</div>
+      <div class="semaphore-circle" id="semaphore-circle">–</div>
+      <div class="sem-status" id="semaphore-status">–</div>
+    </div>
+  </div>
+
+  <button class="btn-print" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+</main>
+
+<script>
+  function getSemColor(score) {
+    if (score > 4.2) return '#22c55e';
+    if (score >= 3.5) return '#eab308';
+    return '#ef4444';
+  }
+
+  function getSemLabel(score) {
+    if (score > 4.2) return 'Reputación BUENA';
+    if (score >= 3.5) return 'Reputación MEDIA';
+    return 'Reputación EN RIESGO';
+  }
+
+  function getDotClass(score) {
+    if (score > 4.2) return 'dot-green';
+    if (score >= 3.5) return 'dot-yellow';
+    return 'dot-red';
+  }
+
+  function recalc() {
+    const tbody = document.querySelector('#mainTable tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    let weightedSum = 0;
+    let totalVal = 0;
+    let pctPosSum = 0;
+    let pctPosCount = 0;
+
+    rows.forEach(row => {
+      const punEl = row.querySelector('[data-col="puntuacion"]');
+      const valEl = row.querySelector('[data-col="valoraciones"]');
+      const pctEl = row.querySelector('[data-col="pct_pos"]');
+      const dot = row.querySelector('.sem-dot');
+
+      const pun = parseFloat(punEl ? punEl.textContent.trim() : '') || 0;
+      const val = parseFloat(valEl ? valEl.textContent.trim() : '') || 0;
+      const pct = parseFloat(pctEl ? pctEl.textContent.trim() : '');
+
+      // Update semaphore dot
+      if (dot) {
+        dot.className = 'sem-dot ' + getDotClass(pun);
+      }
+
+      if (val > 0) {
+        weightedSum += pun * val;
+        totalVal += val;
+      }
+
+      if (!isNaN(pct)) {
+        pctPosSum += pct;
+        pctPosCount++;
+      }
+    });
+
+    const globalScore = totalVal > 0 ? (weightedSum / totalVal) : 0;
+    const globalPct = pctPosCount > 0 ? (pctPosSum / pctPosCount) : 0;
+
+    document.getElementById('m-score').textContent = globalScore > 0 ? globalScore.toFixed(2) : '–';
+    document.getElementById('m-total').textContent = totalVal > 0 ? totalVal.toLocaleString('es-ES') : '–';
+    document.getElementById('m-pct-pos').textContent = pctPosCount > 0 ? globalPct.toFixed(1) + '%' : '–';
+
+    // Big semaphore
+    const circle = document.getElementById('semaphore-circle');
+    const statusEl = document.getElementById('semaphore-status');
+    if (globalScore > 0) {
+      circle.style.background = getSemColor(globalScore);
+      circle.textContent = globalScore.toFixed(2);
+      statusEl.textContent = getSemLabel(globalScore);
+      statusEl.style.color = getSemColor(globalScore);
+    } else {
+      circle.style.background = '#94a3b8';
+      circle.textContent = '–';
+      statusEl.textContent = 'Sin datos';
+      statusEl.style.color = '#94a3b8';
+    }
+  }
+
+  function addRow() {
+    const tbody = document.querySelector('#mainTable tbody');
+    const lastRow = tbody.querySelector('tr:last-child');
+    const newRow = lastRow.cloneNode(true);
+    newRow.querySelectorAll('[contenteditable]').forEach(el => el.textContent = '');
+    newRow.querySelectorAll('select').forEach(sel => sel.selectedIndex = 0);
+    newRow.querySelector('.sem-dot').className = 'sem-dot';
+    tbody.appendChild(newRow);
+    recalc();
+  }
+
+  document.addEventListener('input', recalc);
+  document.addEventListener('change', recalc);
+  recalc();
+</script>
+</body>
+</html>

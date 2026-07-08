@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Precio de Entrada Mínimo — CARDIO-S3</title>
+<style>
+  :root {
+    --navy: #1B2B4B;
+    --gold: #C4A55A;
+    --bg: #f8f7ff;
+    --white: #fff;
+    --red: #e74c3c;
+    --yellow: #f39c12;
+    --green: #27ae60;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: var(--bg); color: #222; }
+
+  /* Header */
+  header {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .header-left .brand { color: var(--gold); font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; }
+  .header-left .symptom { color: #fff; font-size: 0.78rem; display: block; margin-top: 2px; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .header-right .tool-name { color: #fff; font-size: 0.95rem; font-weight: 600; }
+  .badge-op {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 100px; }
+  h2 { color: var(--navy); font-size: 1.1rem; margin: 32px 0 14px; border-bottom: 2px solid var(--gold); padding-bottom: 6px; }
+
+  /* Calculator card */
+  .calc-card {
+    background: var(--white);
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    padding: 24px 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .calc-card h2 { margin-top: 0; }
+  .calc-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .calc-row label { min-width: 280px; font-weight: 500; color: #333; font-size: 0.93rem; }
+  .calc-row input[type="number"] {
+    width: 120px;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: system-ui;
+  }
+  .output-val {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy);
+    min-width: 120px;
+    padding: 6px 12px;
+    background: var(--bg);
+    border-radius: 6px;
+    text-align: right;
+  }
+  .gap-positive { color: var(--green); }
+  .gap-negative { color: var(--red); }
+  .tl-row { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+  .tl-dot {
+    width: 14px; height: 14px; border-radius: 50%; display: inline-block;
+  }
+  .tl-green { background: var(--green); }
+  .tl-red { background: var(--red); }
+  .tl-yellow { background: var(--yellow); }
+  .tl-gray { background: #aaa; }
+  .tl-msg { font-weight: 600; font-size: 0.95rem; }
+
+  /* Table section */
+  .table-wrap { overflow-x: auto; margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  thead th {
+    background: var(--navy);
+    color: #fff;
+    padding: 9px 10px;
+    font-size: 0.8rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  tbody td { padding: 8px 10px; border-bottom: 1px solid #eee; font-size: 0.87rem; vertical-align: middle; }
+  tbody tr:hover { background: #f2f0fa; }
+  tbody input[type="text"], tbody input[type="number"], tbody select {
+    width: 100%;
+    padding: 5px 7px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-family: system-ui;
+  }
+  .btn-add {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.87rem;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .btn-add:hover { opacity: 0.88; }
+  .btn-del {
+    background: #f0f0f0;
+    border: none;
+    color: var(--red);
+    padding: 4px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  /* Info box */
+  .info-box {
+    background: #eaf4fb;
+    border-left: 4px solid var(--navy);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 0.88rem;
+  }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .info-box strong { color: var(--navy); }
+
+  /* Summary cards */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  .sum-card {
+    background: var(--white);
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .sum-card .sum-label { font-size: 0.78rem; color: #666; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sum-card .sum-value { font-size: 1.4rem; font-weight: 700; color: var(--navy); }
+  .sum-card .tl-inline { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+
+  /* Print */
+  .btn-print {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+  .btn-print:hover { opacity: 0.9; }
+
+  @media print {
+    .btn-print, .btn-add, .btn-del { display: none; }
+    body { background: #fff; }
+    header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="brand">MASFRAME</span>
+    <span class="symptom">CARDIO-S3 · Calidad del cliente captado</span>
+  </div>
+  <div class="header-right">
+    <span class="tool-name">Calculadora de Precio de Entrada Mínimo</span>
+    <span class="badge-op">Herramienta Operativa</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Section 1: Calculator -->
+  <div class="calc-card">
+    <h2>Calculadora de precio de entrada</h2>
+
+    <div class="calc-row">
+      <label for="coste_hora">Coste hora propio (€)</label>
+      <input type="number" id="coste_hora" value="80" min="0" step="1">
+    </div>
+    <div class="calc-row">
+      <label for="horas_min">Horas mínimas que justifican un proyecto</label>
+      <input type="number" id="horas_min" value="20" min="0" step="1">
+    </div>
+    <div class="calc-row">
+      <label>→ Precio mínimo de entrada (€)</label>
+      <span class="output-val" id="precio_minimo">1.600</span>
+    </div>
+    <hr style="border:none;border-top:1px solid #eee;margin:10px 0;">
+    <div class="calc-row">
+      <label for="ofertado">Precio actual mínimo ofertado (€)</label>
+      <input type="number" id="ofertado" value="1000" min="0" step="1">
+    </div>
+    <div class="calc-row">
+      <label>→ Gap (€)</label>
+      <span class="output-val" id="gap_val">—</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-dot tl-gray" id="tl_calc"></span>
+      <span class="tl-msg" id="tl_msg">—</span>
+    </div>
+  </div>
+
+  <!-- Section 2: Projects -->
+  <h2>Proyectos últimos 6 meses</h2>
+  <div class="table-wrap">
+    <table id="projects-table">
+      <thead>
+        <tr>
+          <th>Proyecto</th>
+          <th>Importe (€)</th>
+          <th>¿Supera mínimo?</th>
+          <th>Margen real (%)</th>
+          <th>¿Lo repetiría?</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="projects-body"></tbody>
+    </table>
+  </div>
+  <button class="btn-add" onclick="addProjectRow()">+ Añadir proyecto</button>
+
+  <div class="info-box" id="analysis-box">
+    <p><strong>% proyectos bajo mínimo:</strong> <span id="pct_bajo">—</span></p>
+    <p><strong>Margen medio proyectos BAJO mínimo:</strong> <span id="avg_bajo">—</span></p>
+    <p><strong>Margen medio proyectos POR ENCIMA:</strong> <span id="avg_encima">—</span></p>
+    <p><strong>Impacto en margen:</strong> <span id="impacto">—</span></p>
+  </div>
+
+  <!-- Summary cards -->
+  <h2>Resumen diagnóstico</h2>
+  <div class="summary-grid">
+    <div class="sum-card">
+      <div class="sum-label">Precio mínimo calculado</div>
+      <div class="sum-value" id="sc_precio">—</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">% Proyectos bajo mínimo</div>
+      <div class="sum-value" id="sc_pct">—</div>
+      <div class="tl-inline">
+        <span class="tl-dot tl-gray" id="tl_pct"></span>
+        <span id="tl_pct_msg" style="font-size:0.78rem;color:#555;"></span>
+      </div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Margen medio real</div>
+      <div class="sum-value" id="sc_margen">—</div>
+    </div>
+  </div>
+
+</main>
+
+<button class="btn-print" onclick="window.print()">Imprimir / PDF</button>
+
+<script>
+  // Prefill data
+  const prefill = [
+    { proyecto: "Proyecto Alpha", importe: 800, margen: 15, repetir: "No" },
+    { proyecto: "Proyecto Beta",  importe: 2400, margen: 35, repetir: "Sí" },
+    { proyecto: "Proyecto Gamma", importe: 1200, margen: 22, repetir: "Sí" },
+  ];
+
+  function getPrecioMinimo() {
+    const ch = parseFloat(document.getElementById('coste_hora').value) || 0;
+    const hm = parseFloat(document.getElementById('horas_min').value) || 0;
+    return ch * hm;
+  }
+
+  function calcMain() {
+    const ch = parseFloat(document.getElementById('coste_hora').value) || 0;
+    const hm = parseFloat(document.getElementById('horas_min').value) || 0;
+    const minimo = ch * hm;
+    const ofertado = parseFloat(document.getElementById('ofertado').value) || 0;
+    const gap = ofertado - minimo;
+
+    document.getElementById('precio_minimo').textContent = formatEur(minimo);
+    document.getElementById('sc_precio').textContent = formatEur(minimo);
+
+    const gapEl = document.getElementById('gap_val');
+    gapEl.textContent = (gap >= 0 ? '+' : '') + formatEur(gap);
+    gapEl.className = 'output-val ' + (gap >= 0 ? 'gap-positive' : 'gap-negative');
+
+    const tl = document.getElementById('tl_calc');
+    const msg = document.getElementById('tl_msg');
+    if (ofertado >= minimo) {
+      tl.className = 'tl-dot tl-green';
+      msg.textContent = 'Precio de entrada saludable';
+      msg.style.color = 'var(--green)';
+    } else {
+      tl.className = 'tl-dot tl-red';
+      msg.textContent = 'Estás trabajando por debajo del mínimo viable';
+      msg.style.color = 'var(--red)';
+    }
+
+    updateProjectTLs();
+    calcAnalysis();
+  }
+
+  function updateProjectTLs() {
+    const minimo = getPrecioMinimo();
+    const rows = document.querySelectorAll('#projects-body tr');
+    rows.forEach(row => {
+      const imp = parseFloat(row.querySelector('.proj-importe').value) || 0;
+      const dot = row.querySelector('.tl-proj');
+      const txt = row.querySelector('.tl-proj-txt');
+      if (imp >= minimo) {
+        dot.className = 'tl-dot tl-green';
+        txt.textContent = 'Sí';
+        txt.style.color = 'var(--green)';
+      } else {
+        dot.className = 'tl-dot tl-red';
+        txt.textContent = 'No';
+        txt.style.color = 'var(--red)';
+      }
+    });
+  }
+
+  function calcAnalysis() {
+    const minimo = getPrecioMinimo();
+    const rows = document.querySelectorAll('#projects-body tr');
+    let bajoCnt = 0, bajoMargen = 0, encimaMargen = 0, encimaCnt = 0, totalMargen = 0, total = 0;
+    rows.forEach(row => {
+      const imp = parseFloat(row.querySelector('.proj-importe').value) || 0;
+      const mg = parseFloat(row.querySelector('.proj-margen').value);
+      const mgVal = isNaN(mg) ? 0 : mg;
+      totalMargen += mgVal;
+      total++;
+      if (imp < minimo) { bajoCnt++; bajoMargen += mgVal; }
+      else { encimaCnt++; encimaMargen += mgVal; }
+    });
+    const pct = total > 0 ? (bajoCnt / total * 100) : 0;
+    const avgBajo = bajoCnt > 0 ? (bajoMargen / bajoCnt) : null;
+    const avgEncima = encimaCnt > 0 ? (encimaMargen / encimaCnt) : null;
+    const avgTotal = total > 0 ? (totalMargen / total) : null;
+
+    document.getElementById('pct_bajo').textContent = total > 0 ? pct.toFixed(1) + '%' : '—';
+    document.getElementById('avg_bajo').textContent = avgBajo !== null ? avgBajo.toFixed(1) + '%' : '—';
+    document.getElementById('avg_encima').textContent = avgEncima !== null ? avgEncima.toFixed(1) + '%' : '—';
+    if (avgBajo !== null && avgEncima !== null) {
+      const diff = avgBajo - avgEncima;
+      document.getElementById('impacto').textContent = (diff >= 0 ? '+' : '') + diff.toFixed(1) + ' pp de margen vs proyectos sobre mínimo';
+    } else {
+      document.getElementById('impacto').textContent = '—';
+    }
+
+    // Summary cards
+    document.getElementById('sc_pct').textContent = total > 0 ? pct.toFixed(1) + '%' : '—';
+    document.getElementById('sc_margen').textContent = avgTotal !== null ? avgTotal.toFixed(1) + '%' : '—';
+    const tlPct = document.getElementById('tl_pct');
+    const tlPctMsg = document.getElementById('tl_pct_msg');
+    if (total === 0) { tlPct.className = 'tl-dot tl-gray'; tlPctMsg.textContent = ''; }
+    else if (pct === 0) { tlPct.className = 'tl-dot tl-green'; tlPctMsg.textContent = 'Sin proyectos bajo mínimo'; }
+    else if (pct < 30) { tlPct.className = 'tl-dot tl-yellow'; tlPctMsg.textContent = 'Alerta moderada'; }
+    else { tlPct.className = 'tl-dot tl-red'; tlPctMsg.textContent = 'Riesgo alto'; }
+  }
+
+  function formatEur(v) {
+    return Number(v).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' €';
+  }
+
+  function addProjectRow(data) {
+    const tbody = document.getElementById('projects-body');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" class="proj-nombre" value="${data ? data.proyecto : ''}" placeholder="Nombre proyecto"></td>
+      <td><input type="number" class="proj-importe" value="${data ? data.importe : ''}" placeholder="0" min="0"></td>
+      <td style="text-align:center;"><span class="tl-dot tl-gray" style="display:inline-block;margin-right:4px;"></span><span class="tl-proj-txt" style="font-size:0.82rem;"></span></td>
+      <td><input type="number" class="proj-margen" value="${data ? data.margen : ''}" placeholder="0" min="-100" max="100" step="0.1"></td>
+      <td>
+        <select class="proj-repetir">
+          <option value="Sí" ${data && data.repetir === 'Sí' ? 'selected' : ''}>Sí</option>
+          <option value="No" ${data && data.repetir === 'No' ? 'selected' : ''}>No</option>
+        </select>
+      </td>
+      <td><button class="btn-del" onclick="this.closest('tr').remove(); calcMain();">✕</button></td>
+    `;
+    // Fix TL dot reference
+    const dot = tr.querySelector('td:nth-child(3) .tl-dot');
+    const txt = tr.querySelector('.tl-proj-txt');
+    dot.className = 'tl-dot tl-gray tl-proj';
+    tbody.appendChild(tr);
+    tr.querySelectorAll('input, select').forEach(el => el.addEventListener('input', calcMain));
+    calcMain();
+  }
+
+  // Init
+  prefill.forEach(d => addProjectRow(d));
+  ['coste_hora','horas_min','ofertado'].forEach(id => {
+    document.getElementById(id).addEventListener('input', calcMain);
+  });
+  calcMain();
+</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEURO-S3 R1 — Análisis Servicios por Margen</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+.header{background:#1B2B4B;color:#fff;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-size:20px;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-info{flex:1}
+.symptom{font-size:11px;color:#aab;text-transform:uppercase;letter-spacing:.5px}
+.tool-name{font-size:16px;font-weight:700;color:#fff;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.content{padding:20px 24px}
+.top-input{display:flex;align-items:center;gap:12px;margin-bottom:20px;background:#fff;border:1px solid #e2e0f0;border-radius:8px;padding:12px 16px;width:fit-content}
+.top-input label{font-weight:600;color:#1B2B4B;font-size:13px}
+.top-input input{border:1px solid #d0cee8;border-radius:6px;padding:6px 10px;font-size:14px;width:90px;color:#1B2B4B}
+.table-wrap{overflow-x:auto;margin-bottom:16px}
+table{border-collapse:collapse;width:100%;min-width:1100px;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(27,43,75,.08)}
+thead{background:#1B2B4B;color:#fff}
+thead th{padding:10px 8px;font-size:11px;text-align:center;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+tbody td{padding:7px 6px;border-bottom:1px solid #f0eef8;text-align:center;vertical-align:middle}
+tbody tr:hover{background:#f5f4fc}
+input[type=text],input[type=number]{border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:13px;width:100%;color:#1B2B4B;background:#fff}
+input[type=text]{text-align:left}
+select{border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:13px;color:#1B2B4B;background:#fff;width:100%}
+.auto{background:#f8f7ff;border-radius:5px;padding:5px 7px;font-size:12px;min-width:60px;display:block;text-align:center}
+.btn{background:#1B2B4B;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;margin-top:10px}
+.btn:hover{background:#253d6e}
+.btn-print{background:#1B2B4B;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;float:right}
+.pill{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap}
+.pill-green{background:#dcfce7;color:#166534}
+.pill-yellow{background:#fef9c3;color:#854d0e}
+.pill-red{background:#fee2e2;color:#991b1b}
+.td-green{background:#f0fdf4}
+.td-yellow{background:#fefce8}
+.td-red{background:#fff1f2}
+.cards{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px}
+.card{background:#fff;border-left:4px solid #C4A55A;border-radius:8px;padding:14px 18px;min-width:160px;flex:1;box-shadow:0 1px 3px rgba(27,43,75,.07)}
+.card-label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.card-value{font-size:22px;font-weight:700;color:#1B2B4B}
+.section-title{font-size:15px;font-weight:700;color:#1B2B4B;margin-bottom:12px}
+@media print{
+  .btn,.btn-print{display:none}
+  body{background:#fff}
+  table{min-width:auto;font-size:11px}
+  .cards{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="symptom">NEURO-S3 — Ilusión de Crecimiento</div>
+    <div class="tool-name">Análisis Servicios por Margen</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+  <button class="btn-print" onclick="window.print()">Imprimir</button>
+</div>
+
+<div class="content">
+  <div class="top-input">
+    <label for="costeHora">Coste €/hora equipo:</label>
+    <input type="number" id="costeHora" value="35" min="0" step="0.5">
+  </div>
+
+  <div class="section-title">Análisis de rentabilidad por servicio</div>
+  <div class="table-wrap">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th style="width:130px">Servicio</th>
+          <th>Facturación<br>/mes €</th>
+          <th>Coste<br>directo €</th>
+          <th>Margen<br>bruto %</th>
+          <th>Horas<br>equipo/mes</th>
+          <th>Coste<br>equipo €</th>
+          <th>Margen<br>neto €</th>
+          <th>Margen<br>neto %</th>
+          <th>Clientes</th>
+          <th>¿Puerta<br>entrada?</th>
+          <th>Clasificación</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+      </tbody>
+    </table>
+  </div>
+  <button class="btn" onclick="addRow()">+ Añadir fila</button>
+
+  <div class="cards" id="summaryCards">
+    <div class="card"><div class="card-label">Total facturación €</div><div class="card-value" id="cTotalFact">—</div></div>
+    <div class="card"><div class="card-label">Margen neto medio %</div><div class="card-value" id="cMargenMedio">—</div></div>
+    <div class="card"><div class="card-label">Servicios que drenan</div><div class="card-value" id="cDrenan">—</div></div>
+    <div class="card"><div class="card-label">Facturación en riesgo €</div><div class="card-value" id="cRiesgo">—</div></div>
+  </div>
+</div>
+
+<script>
+let rowCount = 0;
+
+function fmt(n, dec=2){ return isNaN(n)||!isFinite(n)?'—':n.toFixed(dec); }
+
+function addRow(){
+  rowCount++;
+  const tbody = document.getElementById('tableBody');
+  const tr = document.createElement('tr');
+  tr.setAttribute('data-row', rowCount);
+  tr.innerHTML = `
+    <td><input type="text" class="f-servicio" placeholder="Servicio ${rowCount}"></td>
+    <td><input type="number" class="f-fact" min="0" step="1" value=""></td>
+    <td><input type="number" class="f-coste" min="0" step="1" value=""></td>
+    <td><span class="auto f-mbruto">—</span></td>
+    <td><input type="number" class="f-horas" min="0" step="0.5" value=""></td>
+    <td><span class="auto f-cequipo">—</span></td>
+    <td><span class="auto f-mneto-eur">—</span></td>
+    <td><span class="auto f-mneto-pct">—</span></td>
+    <td><input type="number" class="f-clientes" min="0" step="1" value=""></td>
+    <td>
+      <select class="f-puerta">
+        <option value="No">No</option>
+        <option value="Sí">Sí</option>
+      </select>
+    </td>
+    <td class="f-clasif-cell"><span class="auto f-clasif">—</span></td>
+  `;
+  tbody.appendChild(tr);
+  calcRow(tr);
+}
+
+function calcRow(tr){
+  const fact = parseFloat(tr.querySelector('.f-fact').value)||0;
+  const coste = parseFloat(tr.querySelector('.f-coste').value)||0;
+  const horas = parseFloat(tr.querySelector('.f-horas').value)||0;
+  const costeH = parseFloat(document.getElementById('costeHora').value)||35;
+
+  const mbruto = fact>0 ? (fact-coste)/fact*100 : null;
+  const cequipo = horas*costeH;
+  const mneto_eur = fact>0 ? fact-coste-cequipo : null;
+  const mneto_pct = (fact>0 && mneto_eur!==null) ? mneto_eur/fact*100 : null;
+
+  tr.querySelector('.f-mbruto').textContent = mbruto!==null ? fmt(mbruto,1)+'%' : '—';
+  tr.querySelector('.f-cequipo').textContent = fact>0||horas>0 ? fmt(cequipo,0)+' €' : '—';
+  tr.querySelector('.f-mneto-eur').textContent = mneto_eur!==null ? fmt(mneto_eur,0)+' €' : '—';
+  tr.querySelector('.f-mneto-pct').textContent = mneto_pct!==null ? fmt(mneto_pct,1)+'%' : '—';
+
+  const cell = tr.querySelector('.f-clasif-cell');
+  const span = tr.querySelector('.f-clasif');
+  if(mneto_pct===null||!fact){
+    span.textContent='—'; span.className='auto f-clasif'; cell.className='f-clasif-cell';
+  } else if(mneto_pct>30){
+    span.innerHTML='<span class="pill pill-green">Sostiene</span>'; cell.className='f-clasif-cell td-green';
+  } else if(mneto_pct>=10){
+    span.innerHTML='<span class="pill pill-yellow">Optimizable</span>'; cell.className='f-clasif-cell td-yellow';
+  } else {
+    span.innerHTML='<span class="pill pill-red">Drena</span>'; cell.className='f-clasif-cell td-red';
+  }
+
+  updateSummary();
+}
+
+function updateSummary(){
+  const rows = document.querySelectorAll('#tableBody tr');
+  let totalFact=0, sumMneto=0, countMneto=0, drenan=0, riesgo=0;
+  rows.forEach(tr=>{
+    const fact=parseFloat(tr.querySelector('.f-fact').value)||0;
+    const coste=parseFloat(tr.querySelector('.f-coste').value)||0;
+    const horas=parseFloat(tr.querySelector('.f-horas').value)||0;
+    const costeH=parseFloat(document.getElementById('costeHora').value)||35;
+    if(fact>0){
+      totalFact+=fact;
+      const mneto_eur=fact-coste-horas*costeH;
+      const mneto_pct=mneto_eur/fact*100;
+      sumMneto+=mneto_pct; countMneto++;
+      if(mneto_pct<10){ drenan++; riesgo+=fact; }
+    }
+  });
+  document.getElementById('cTotalFact').textContent = totalFact>0?totalFact.toLocaleString('es-ES')+'€':'—';
+  document.getElementById('cMargenMedio').textContent = countMneto>0?fmt(sumMneto/countMneto,1)+'%':'—';
+  document.getElementById('cDrenan').textContent = drenan>0?drenan:0;
+  document.getElementById('cRiesgo').textContent = riesgo>0?riesgo.toLocaleString('es-ES')+'€':'0€';
+}
+
+document.getElementById('mainTable').addEventListener('input', function(e){
+  const tr = e.target.closest('tr');
+  if(tr) calcRow(tr);
+});
+document.getElementById('costeHora').addEventListener('input', function(){
+  document.querySelectorAll('#tableBody tr').forEach(tr=>calcRow(tr));
+});
+
+// Init 4 rows
+for(let i=0;i<4;i++) addRow();
+</script>
+</body>
+</html>

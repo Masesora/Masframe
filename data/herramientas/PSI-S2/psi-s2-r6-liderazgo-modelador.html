@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSI-S2-R6 · Liderazgo Modelador de Cultura</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1e293b; }
+  header { background: #1B2B4B; color: #fff; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+  .logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+  .badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+  main { padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
+  h2 { font-size: 17px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; }
+  .desc { background: #fff; border-left: 4px solid #C4A55A; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #475569; }
+  .lider-input { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .lider-input label { font-size: 13px; font-weight: 600; color: #1B2B4B; }
+  .lider-input input { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 10px; font-size: 13px; width: 220px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+  th { background: #1B2B4B; color: #fff; padding: 12px 14px; text-align: left; font-size: 13px; font-weight: 600; }
+  td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; vertical-align: middle; }
+  tr:hover td { background: #f0f4ff; }
+  tr.debil td { background: #fef2f2; }
+  tr.fuerte td { background: #f0fdf4; }
+  input[type="number"] { border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 7px; width: 80px; font-size: 13px; }
+  select { border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 7px; width: 100%; font-size: 13px; }
+  textarea { border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 7px; width: 100%; font-size: 13px; resize: vertical; min-height: 40px; }
+  .semaforo { width: 28px; height: 28px; border-radius: 50%; display: inline-block; }
+  .score-bar { height: 10px; border-radius: 5px; transition: width .3s; }
+  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin: 12px 0; font-size: 13px; }
+  .radar-section { background: #fff; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+  .radar-section h3 { font-size: 14px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; }
+  .radar-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+  .radar-label { width: 280px; font-size: 12px; color: #475569; }
+  .radar-bar-bg { flex: 1; height: 16px; background: #e2e8f0; border-radius: 8px; overflow: hidden; }
+  .radar-bar-fill { height: 100%; border-radius: 8px; transition: width .3s; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; margin: 28px 0 20px; }
+  .metric-card { background: #fff; border: 2px solid #C4A55A; border-radius: 12px; padding: 20px; text-align: center; min-width: 160px; flex: 1; }
+  .metric-value { font-size: 28px; font-weight: 800; color: #1B2B4B; }
+  .metric-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; margin: 24px 0; }
+  @media print { .no-print { display: none !important; } body { background: white; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">M</div>
+  <div>
+    <div style="font-size:11px;letter-spacing:2px;opacity:.7;text-transform:uppercase;">MASFRAME · PSI-S2</div>
+    <div style="font-size:20px;font-weight:700;">Liderazgo Modelador de Cultura</div>
+  </div>
+  <span class="badge">HERRAMIENTA OPERATIVA</span>
+</header>
+<main>
+  <div class="desc">Evaluación de los comportamientos del líder como modelador cultural. El líder es el espejo de la cultura. Una puntuación baja en estos comportamientos es el predictor más fuerte de cultura disfuncional.</div>
+
+  <div class="lider-input no-print">
+    <label>Líder evaluado:</label>
+    <input type="text" id="nombreLider" placeholder="Nombre / Rol del líder evaluado" oninput="recalcular()">
+    <label style="margin-left:20px;">Evaluado por:</label>
+    <input type="text" id="evaluador" placeholder="Equipo / Persona que evalúa">
+  </div>
+
+  <h2>Comportamientos de Liderazgo Modelador</h2>
+  <table id="tablaLiderazgo">
+    <thead>
+      <tr>
+        <th>Comportamiento</th>
+        <th style="width:120px;">Puntuación del líder (1-10)</th>
+        <th style="width:140px;">Frecuencia</th>
+        <th>Impacto observado en el equipo</th>
+        <th style="width:70px;">Semáforo</th>
+      </tr>
+    </thead>
+    <tbody id="tablaBody">
+      <tr>
+        <td style="font-weight:600;">Admite errores propios en público</td>
+        <td><input type="number" min="1" max="10" step="0.1" oninput="recalcular()"></td>
+        <td><select onchange="recalcular()"><option value="">- Frecuencia -</option><option>Nunca</option><option>Raro</option><option>Semanal</option><option>Diario</option></select></td>
+        <td><textarea placeholder="¿Qué impacto tiene este comportamiento en el equipo?"></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Pide opinión antes de decidir</td>
+        <td><input type="number" min="1" max="10" step="0.1" oninput="recalcular()"></td>
+        <td><select onchange="recalcular()"><option value="">- Frecuencia -</option><option>Nunca</option><option>Raro</option><option>Semanal</option><option>Diario</option></select></td>
+        <td><textarea placeholder="¿Qué impacto tiene en el equipo?"></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Da feedback positivo explícito</td>
+        <td><input type="number" min="1" max="10" step="0.1" oninput="recalcular()"></td>
+        <td><select onchange="recalcular()"><option value="">- Frecuencia -</option><option>Nunca</option><option>Raro</option><option>Semanal</option><option>Diario</option></select></td>
+        <td><textarea placeholder="¿Qué impacto tiene en el equipo?"></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Defiende al equipo frente a presiones externas</td>
+        <td><input type="number" min="1" max="10" step="0.1" oninput="recalcular()"></td>
+        <td><select onchange="recalcular()"><option value="">- Frecuencia -</option><option>Nunca</option><option>Raro</option><option>Semanal</option><option>Diario</option></select></td>
+        <td><textarea placeholder="¿Qué impacto tiene en el equipo?"></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Experimenta y comparte aprendizajes</td>
+        <td><input type="number" min="1" max="10" step="0.1" oninput="recalcular()"></td>
+        <td><select onchange="recalcular()"><option value="">- Frecuencia -</option><option>Nunca</option><option>Raro</option><option>Semanal</option><option>Diario</option></select></td>
+        <td><textarea placeholder="¿Qué impacto tiene en el equipo?"></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn-add no-print" onclick="addRow()">+ Añadir comportamiento</button>
+
+  <div class="radar-section">
+    <h3>Visualización de Fortalezas y Áreas de Mejora</h3>
+    <div id="radarContainer"></div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-value" id="scoreLiderazgo">—</div>
+      <div class="metric-label">Score Liderazgo Modelador (1-10)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="comportDebiles">—</div>
+      <div class="metric-label">Comportamientos débiles (&lt;6)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="comportFuertes">—</div>
+      <div class="metric-label">Comportamientos fuertes (&gt;7.5)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="estadoGlobal" style="font-size:32px;">—</div>
+      <div class="metric-label">Estado global del liderazgo</div>
+    </div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
+</main>
+
+<script>
+function colorSem(score) {
+  if (!score || isNaN(score)) return '#d1d5db';
+  if (score >= 7.5) return '#22c55e';
+  if (score >= 6) return '#f59e0b';
+  return '#ef4444';
+}
+
+function addRow() {
+  const tbody = document.getElementById('tablaBody');
+  const tr = document.createElement('tr');
+  const s = 'border:1px solid #cbd5e1;border-radius:4px;padding:4px 6px;font-size:13px;font-family:system-ui;';
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Nombre del comportamiento" style="${s}width:100%;"></td>
+    <td><input type="number" min="1" max="10" step="0.1" oninput="recalcular()" style="${s}width:80px;"></td>
+    <td><select onchange="recalcular()" style="${s}width:100%;"><option value="">- Frecuencia -</option><option>Nunca</option><option>Raro</option><option>Semanal</option><option>Diario</option></select></td>
+    <td><textarea placeholder="Impacto observado..." style="${s}width:100%;resize:vertical;min-height:40px;"></textarea></td>
+    <td><span class="semaforo" style="background:#d1d5db;width:28px;height:28px;border-radius:50%;display:inline-block;"></span></td>`;
+  tbody.appendChild(tr);
+}
+
+function getLabel(tr) {
+  const td = tr.querySelector('td:first-child');
+  const inp = td.querySelector('input[type="text"]');
+  return inp ? inp.value : td.textContent.trim();
+}
+
+function recalcular() {
+  const filas = document.querySelectorAll('#tablaBody tr');
+  let scores = [], debiles = 0, fuertes = 0, radarData = [];
+
+  filas.forEach(tr => {
+    const inp = tr.querySelector('input[type="number"]');
+    const sem = tr.querySelector('.semaforo');
+    const score = parseFloat(inp?.value);
+    const label = getLabel(tr);
+
+    if (!isNaN(score) && score > 0) {
+      scores.push(score);
+      radarData.push({ label, score });
+      if (score < 6) { debiles++; tr.classList.add('debil'); tr.classList.remove('fuerte'); }
+      else if (score > 7.5) { fuertes++; tr.classList.add('fuerte'); tr.classList.remove('debil'); }
+      else { tr.classList.remove('debil','fuerte'); }
+    } else {
+      tr.classList.remove('debil','fuerte');
+      if (label) radarData.push({ label, score: 0 });
+    }
+    if (sem) sem.style.background = colorSem(score);
+  });
+
+  const avg = scores.length ? scores.reduce((a,b)=>a+b,0)/scores.length : null;
+  document.getElementById('scoreLiderazgo').textContent = avg ? avg.toFixed(1) : '—';
+  document.getElementById('comportDebiles').textContent = debiles;
+  document.getElementById('comportFuertes').textContent = fuertes;
+
+  let emoji = '—';
+  if (avg !== null) emoji = avg >= 7.5 ? '🟢' : avg >= 6 ? '🟡' : '🔴';
+  document.getElementById('estadoGlobal').textContent = emoji;
+
+  // Radar bars
+  const container = document.getElementById('radarContainer');
+  container.innerHTML = radarData.map(d => `
+    <div class="radar-row">
+      <div class="radar-label">${d.label.substring(0,40)}${d.label.length>40?'…':''}</div>
+      <div class="radar-bar-bg">
+        <div class="radar-bar-fill" style="width:${d.score*10}%;background:${colorSem(d.score)};"></div>
+      </div>
+      <span style="width:36px;text-align:right;font-size:12px;font-weight:700;color:#1B2B4B;">${d.score > 0 ? d.score.toFixed(1) : '—'}</span>
+    </div>`).join('');
+}
+
+document.querySelectorAll('#tablaBody input, #tablaBody select').forEach(el => el.addEventListener('change', recalcular));
+</script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSI-S2-R2 · Registro de Decisiones No Tomadas</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1e293b; }
+  header { background: #1B2B4B; color: #fff; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+  .logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+  .badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+  main { padding: 28px 32px; max-width: 1400px; margin: 0 auto; }
+  h2 { font-size: 17px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; }
+  .desc { background: #fff; border-left: 4px solid #C4A55A; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #475569; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); min-width: 1200px; }
+  th { background: #1B2B4B; color: #fff; padding: 10px 8px; text-align: left; font-size: 11px; font-weight: 600; }
+  td { padding: 8px 6px; border-bottom: 1px solid #e2e8f0; font-size: 11px; vertical-align: middle; }
+  tr:hover td { background: #f0f4ff; }
+  tr.cara td { background: #fef2f2; }
+  input[type="text"], input[type="date"], input[type="number"], textarea { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 5px; width: 95%; font-size: 11px; font-family: system-ui; }
+  textarea { resize: vertical; min-height: 32px; }
+  select { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 5px; width: 95%; font-size: 11px; font-family: system-ui; }
+  .calc-cell { background: #f8fafc; font-weight: 600; text-align: right; padding-right: 8px; }
+  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin: 12px 0; font-size: 13px; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; margin: 28px 0 20px; }
+  .metric-card { background: #fff; border: 2px solid #C4A55A; border-radius: 12px; padding: 20px; text-align: center; min-width: 160px; flex: 1; }
+  .metric-value { font-size: 24px; font-weight: 800; color: #1B2B4B; }
+  .metric-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; margin: 24px 0; }
+  @media print { .no-print { display: none !important; } body { background: white; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">M</div>
+  <div>
+    <div style="font-size:11px;letter-spacing:2px;opacity:.7;text-transform:uppercase;">MASFRAME · PSI-S2</div>
+    <div style="font-size:20px;font-weight:700;">Registro de Decisiones No Tomadas</div>
+  </div>
+  <span class="badge">HERRAMIENTA OPERATIVA</span>
+</header>
+<main>
+  <div class="desc">Registro de parálisis decisional. Los días sin decidir se calculan automáticamente desde la fecha de detección. El coste total acumula el impacto económico de la inacción prolongada.</div>
+
+  <h2>Decisiones Evitadas / Paralizadas</h2>
+  <div class="table-wrap">
+  <table id="tablaDecisiones">
+    <thead>
+      <tr>
+        <th>Decisión evitada</th>
+        <th>Fecha detección</th>
+        <th class="calc-cell" style="color:#C4A55A;">Días sin decidir [calc]</th>
+        <th>Quién debería decidir</th>
+        <th>Miedo identificado</th>
+        <th>Consecuencia directa</th>
+        <th>Coste diario inacción (€)</th>
+        <th class="calc-cell" style="color:#C4A55A;">Coste total [calc]</th>
+        <th>¿Info suficiente?</th>
+        <th>¿Qué falta?</th>
+      </tr>
+    </thead>
+    <tbody id="tablaBody">
+      <tr>
+        <td><textarea placeholder="Descripción de la decisión pendiente..."></textarea></td>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td class="calc-cell" data-dias>—</td>
+        <td><input type="text" placeholder="Nombre / Rol"></td>
+        <td><input type="text" placeholder="Miedo subyacente..."></td>
+        <td><textarea placeholder="Consecuencia directa de no decidir..."></textarea></td>
+        <td><input type="number" min="0" value="500" oninput="recalcular()"></td>
+        <td class="calc-cell" data-coste>—</td>
+        <td><select onchange="recalcular()"><option value="">-</option><option>Sí</option><option>No</option></select></td>
+        <td><textarea placeholder="¿Qué información falta?"></textarea></td>
+      </tr>
+      <tr>
+        <td><textarea placeholder="Descripción de la decisión pendiente..."></textarea></td>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td class="calc-cell" data-dias>—</td>
+        <td><input type="text" placeholder="Nombre / Rol"></td>
+        <td><input type="text" placeholder="Miedo subyacente..."></td>
+        <td><textarea placeholder="Consecuencia directa de no decidir..."></textarea></td>
+        <td><input type="number" min="0" value="500" oninput="recalcular()"></td>
+        <td class="calc-cell" data-coste>—</td>
+        <td><select onchange="recalcular()"><option value="">-</option><option>Sí</option><option>No</option></select></td>
+        <td><textarea placeholder="¿Qué información falta?"></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <button class="btn-add no-print" onclick="addRow()">+ Añadir decisión paralizada</button>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-value" id="totalDecisiones">—</div>
+      <div class="metric-label">Total decisiones paralizadas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="costeTotal">—</div>
+      <div class="metric-label">Coste total parálisis (€)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="diasMedio">—</div>
+      <div class="metric-label">Días medios sin decidir</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="sinInfo">—</div>
+      <div class="metric-label">Casos sin info suficiente</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="peorCaso">—</div>
+      <div class="metric-label">Peor caso: días bloqueado</div>
+    </div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
+</main>
+
+<script>
+function diasDesde(fechaStr) {
+  if (!fechaStr) return null;
+  const hoy = new Date();
+  const fecha = new Date(fechaStr);
+  if (isNaN(fecha)) return null;
+  return Math.floor((hoy - fecha) / (1000 * 60 * 60 * 24));
+}
+
+function addRow() {
+  const tbody = document.getElementById('tablaBody');
+  const tr = document.createElement('tr');
+  const s = 'border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:11px;font-family:system-ui;';
+  tr.innerHTML = `
+    <td><textarea placeholder="Decisión pendiente..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
+    <td><input type="date" onchange="recalcular()" style="${s}"></td>
+    <td class="calc-cell" data-dias style="background:#f8fafc;font-weight:600;text-align:right;padding-right:8px;">—</td>
+    <td><input type="text" placeholder="Nombre / Rol" style="${s}"></td>
+    <td><input type="text" placeholder="Miedo subyacente..." style="${s}"></td>
+    <td><textarea placeholder="Consecuencia..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
+    <td><input type="number" min="0" value="500" oninput="recalcular()" style="${s}"></td>
+    <td class="calc-cell" data-coste style="background:#f8fafc;font-weight:600;text-align:right;padding-right:8px;">—</td>
+    <td><select onchange="recalcular()" style="${s}"><option value="">-</option><option>Sí</option><option>No</option></select></td>
+    <td><textarea placeholder="¿Qué falta?" style="${s}resize:vertical;min-height:32px;"></textarea></td>`;
+  tbody.appendChild(tr);
+}
+
+function recalcular() {
+  const filas = document.querySelectorAll('#tablaBody tr');
+  let costeAcum = 0, diasArr = [], sinInfo = 0, total = 0;
+
+  filas.forEach(tr => {
+    const fechaInp = tr.querySelector('input[type="date"]');
+    const costeDiario = parseFloat(tr.querySelector('input[type="number"]')?.value) || 0;
+    const info = tr.querySelector('select')?.value;
+    const diasCell = tr.querySelector('[data-dias]');
+    const costeCell = tr.querySelector('[data-coste]');
+
+    const dias = diasDesde(fechaInp?.value);
+    const coste = dias !== null ? dias * costeDiario : 0;
+
+    if (diasCell) diasCell.textContent = dias !== null ? dias + ' días' : '—';
+    if (costeCell) costeCell.textContent = dias !== null ? coste.toLocaleString('es-ES') + ' €' : '—';
+
+    if (dias !== null) { diasArr.push(dias); total++; costeAcum += coste; }
+    if (info === 'No') sinInfo++;
+    if (dias !== null && dias > 30) tr.classList.add('cara'); else tr.classList.remove('cara');
+  });
+
+  document.getElementById('totalDecisiones').textContent = total;
+  document.getElementById('costeTotal').textContent = costeAcum.toLocaleString('es-ES') + ' €';
+  document.getElementById('diasMedio').textContent = diasArr.length ? Math.round(diasArr.reduce((a,b)=>a+b,0)/diasArr.length) : '—';
+  document.getElementById('sinInfo').textContent = sinInfo;
+  document.getElementById('peorCaso').textContent = diasArr.length ? Math.max(...diasArr) : '—';
+}
+
+setInterval(recalcular, 60000);
+recalcular();
+</script>
+</body>
+</html>

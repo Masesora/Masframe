@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARDIO-S1 · Auditoría de Canales de Captación</title>
+<style>
+:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--white:#fff;--red:#e74c3c;--yellow:#f39c12;--green:#27ae60;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:#222;}
+header{background:var(--navy);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.brand{color:var(--gold);font-weight:700;font-size:1.1rem;letter-spacing:1px;}
+.symptom{color:#fff;font-size:0.78rem;margin-top:2px;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.tool-name{color:#fff;font-size:0.9rem;font-weight:600;}
+.badge-h{background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:4px;text-transform:uppercase;}
+main{padding:24px;max-width:1200px;margin:0 auto;}
+h2{color:var(--navy);font-size:1.1rem;margin-bottom:14px;}
+.table-wrap{overflow-x:auto;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+thead{background:var(--navy);}
+thead th{color:var(--gold);font-size:.74rem;font-weight:700;padding:10px 8px;text-align:left;white-space:nowrap;}
+tbody tr:nth-child(even){background:#f4f3fc;}
+tbody td{padding:8px 6px;font-size:.82rem;vertical-align:middle;}
+input,select{border:1px solid #ccc;border-radius:4px;padding:5px 6px;font-size:.82rem;font-family:inherit;width:100%;background:#fff;}
+.auto{background:#f0eeff;color:var(--navy);font-weight:600;text-align:center;white-space:nowrap;padding:8px 6px;}
+.tl-wrap{display:flex;justify-content:center;}
+.tl{width:14px;height:14px;border-radius:50%;display:inline-block;}
+.tl-green{background:var(--green);}
+.tl-yellow{background:var(--yellow);}
+.tl-red{background:var(--red);}
+.tl-gray{background:#aaa;}
+.btn-add{background:var(--gold);color:var(--navy);border:none;border-radius:6px;padding:9px 18px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:28px;}
+.btn-add:hover{opacity:.85;}
+.cards{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:70px;}
+.card{background:var(--white);border-left:4px solid var(--gold);padding:16px;border-radius:8px;flex:1;min-width:200px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.card-label{font-size:.72rem;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.card-value{font-size:1.25rem;font-weight:700;color:var(--navy);}
+.card-sub{font-size:.75rem;color:#888;margin-top:4px;}
+.btn-print{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;padding:12px 20px;font-size:.85rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:100;}
+.btn-print:hover{opacity:.85;}
+@media print{.btn-print,.btn-add{display:none;}header,thead{print-color-adjust:exact;-webkit-print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">MASFRAME</div>
+    <div class="symptom">CARDIO-S1 · Dependencia del boca a boca</div>
+  </div>
+  <div class="header-right">
+    <span class="tool-name">Auditoría de Canales de Captación</span>
+    <span class="badge-h">Herramienta Operativa</span>
+  </div>
+</header>
+<main>
+  <h2>Canales de Captación</h2>
+  <div class="table-wrap">
+    <table id="t">
+      <thead><tr>
+        <th>Canal</th>
+        <th>Activo</th>
+        <th>Leads/mes</th>
+        <th>Clientes cerrados/mes</th>
+        <th>Tasa conv %</th>
+        <th>Coste/lead €</th>
+        <th>Coste/cliente €</th>
+        <th>ROI %</th>
+        <th>TL</th>
+      </tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+  <button class="btn-add" onclick="addRow()">+ Añadir canal</button>
+  <h2>Resumen</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Canal dominante</div>
+      <div class="card-value" id="sDom">—</div>
+      <div class="card-sub" id="sDomSub"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Coste medio por cliente</div>
+      <div class="card-value" id="sCost">—</div>
+      <div class="card-sub">canales activos</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Tasa conversión global</div>
+      <div class="card-value" id="sTasa">—</div>
+      <div class="card-sub" id="sTasaSub"></div>
+    </div>
+  </div>
+</main>
+<button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+<script>
+var INIT=[
+  {canal:"Boca a boca",activo:"Si",leads:8,cerrados:3,costeLead:0,roi:0},
+  {canal:"LinkedIn",activo:"Si",leads:5,cerrados:1,costeLead:120,roi:0},
+  {canal:"Web/SEO",activo:"No",leads:2,cerrados:0,costeLead:80,roi:0}
+];
+var rc=0;
+function addRow(d){
+  d=d||{};
+  var id=rc++;
+  var tr=document.createElement("tr");
+  tr.dataset.id=id;
+  var aSi=(d.activo==="No")?"":"selected";
+  var aNo=(d.activo==="No")?"selected":"";
+  tr.innerHTML=
+    "<td><input type='text' class='fc' value='"+esc(d.canal||"")+"' oninput='upd("+id+")'></td>"
+    +"<td><select class='fa' onchange='upd("+id+")'><option value='Si' "+aSi+">Sí</option><option value='No' "+aNo+">No</option></select></td>"
+    +"<td><input type='number' class='fl' min='0' value='"+nv(d.leads)+"' oninput='upd("+id+")'></td>"
+    +"<td><input type='number' class='fce' min='0' value='"+nv(d.cerrados)+"' oninput='upd("+id+")'></td>"
+    +"<td class='auto'><span class='ft'>—</span></td>"
+    +"<td><input type='number' class='fcl' min='0' value='"+nv(d.costeLead)+"' oninput='upd("+id+")'></td>"
+    +"<td class='auto'><span class='fcc'>—</span></td>"
+    +"<td><input type='number' class='fr' value='"+nv(d.roi)+"' oninput='calcSum()'></td>"
+    +"<td class='auto'><div class='tl-wrap'><div class='tl tl-gray ftl'></div></div></td>";
+  document.getElementById("tb").appendChild(tr);
+  upd(id);
+}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/'/g,"&#39;");}
+function nv(v){return (v===undefined||v===null||v==="")?"":(v===0?"0":v);}
+function upd(id){
+  var tr=document.querySelector("tr[data-id='"+id+"']");
+  if(!tr)return;
+  var leads=parseFloat(tr.querySelector(".fl").value)||0;
+  var cerr=parseFloat(tr.querySelector(".fce").value)||0;
+  var cl=parseFloat(tr.querySelector(".fcl").value)||0;
+  var tasa=leads>0?(cerr/leads*100):0;
+  var cc=tasa>0?(cl/(tasa/100)):0;
+  tr.querySelector(".ft").textContent=leads>0?tasa.toFixed(1)+"%":"—";
+  tr.querySelector(".fcc").textContent=(cl>0&&tasa>0)?cc.toFixed(0)+"€":"—";
+  var tlEl=tr.querySelector(".ftl");
+  tlEl.className="tl "+(tasa>=15?"tl-green":tasa>=5?"tl-yellow":leads>0?"tl-red":"tl-gray");
+  calcSum();
+}
+function getRows(){
+  return Array.from(document.querySelectorAll("#tb tr")).map(function(tr){
+    var leads=parseFloat(tr.querySelector(".fl").value)||0;
+    var cerr=parseFloat(tr.querySelector(".fce").value)||0;
+    var cl=parseFloat(tr.querySelector(".fcl").value)||0;
+    var tasa=leads>0?(cerr/leads*100):0;
+    return{canal:tr.querySelector(".fc").value.trim(),activo:tr.querySelector(".fa").value,leads:leads,cerr:cerr,cl:cl,tasa:tasa,cc:tasa>0?cl/(tasa/100):0};
+  });
+}
+function calcSum(){
+  var rs=getRows();
+  if(!rs.length)return;
+  var best=rs.reduce(function(a,b){return b.leads>a.leads?b:a;},rs[0]);
+  document.getElementById("sDom").textContent=(best&&best.canal)?best.canal:"—";
+  document.getElementById("sDomSub").textContent=(best&&best.leads)?best.leads+" leads/mes":"";
+  var active=rs.filter(function(r){return r.activo==="Si"&&r.tasa>0&&r.cl>0;});
+  if(active.length){
+    var avg=active.reduce(function(s,r){return s+r.cc;},0)/active.length;
+    document.getElementById("sCost").textContent=avg.toFixed(0)+"€";
+  }else{document.getElementById("sCost").textContent="—";}
+  var tl=rs.reduce(function(s,r){return s+r.leads;},0);
+  var tc=rs.reduce(function(s,r){return s+r.cerr;},0);
+  if(tl>0){
+    document.getElementById("sTasa").textContent=(tc/tl*100).toFixed(1)+"%";
+    document.getElementById("sTasaSub").textContent=tc+" cerrados / "+tl+" leads";
+  }else{document.getElementById("sTasa").textContent="—";document.getElementById("sTasaSub").textContent="";}
+}
+INIT.forEach(function(r){addRow(r);});
+</script>
+</body>
+</html>

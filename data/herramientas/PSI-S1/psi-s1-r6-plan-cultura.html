@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSI-S1-R6 · Plan de Transformación Cultural</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1e293b; }
+  header { background: #1B2B4B; color: #fff; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+  .logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+  .badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+  main { padding: 28px 32px; max-width: 1400px; margin: 0 auto; }
+  h2 { font-size: 17px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; }
+  .desc { background: #fff; border-left: 4px solid #C4A55A; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #475569; }
+  .params { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .params label { font-size: 13px; color: #475569; display: flex; align-items: center; gap: 8px; }
+  .params input { border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 8px; font-size: 13px; width: 140px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); min-width: 1200px; }
+  th { background: #1B2B4B; color: #fff; padding: 10px 10px; text-align: left; font-size: 12px; font-weight: 600; }
+  td { padding: 8px 8px; border-bottom: 1px solid #e2e8f0; font-size: 12px; vertical-align: middle; }
+  tr:hover td { background: #f0f4ff; }
+  input[type="text"], input[type="date"], input[type="number"], textarea { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 6px; width: 95%; font-size: 12px; font-family: system-ui; }
+  textarea { resize: vertical; min-height: 36px; }
+  .avance-bar { height: 14px; background: #e2e8f0; border-radius: 7px; width: 100px; display: inline-block; vertical-align: middle; overflow: hidden; }
+  .avance-inner { height: 100%; border-radius: 7px; transition: width .3s; }
+  .semaforo { width: 26px; height: 26px; border-radius: 50%; display: inline-block; }
+  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin: 12px 0; font-size: 13px; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; margin: 28px 0 20px; }
+  .metric-card { background: #fff; border: 2px solid #C4A55A; border-radius: 12px; padding: 20px; text-align: center; min-width: 160px; flex: 1; }
+  .metric-value { font-size: 26px; font-weight: 800; color: #1B2B4B; }
+  .metric-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; margin: 24px 0; }
+  @media print { .no-print { display: none !important; } body { background: white; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">M</div>
+  <div>
+    <div style="font-size:11px;letter-spacing:2px;opacity:.7;text-transform:uppercase;">MASFRAME · PSI-S1</div>
+    <div style="font-size:20px;font-weight:700;">Plan de Transformación Cultural</div>
+  </div>
+  <span class="badge">HERRAMIENTA OPERATIVA</span>
+</header>
+<main>
+  <div class="desc">Seguimiento de iniciativas del plan de transformación cultural. Semáforo automático por % de avance. El ROI estimado compara el coste del plan con la reducción proyectada en coste de rotación.</div>
+
+  <div class="params no-print">
+    <label>Ahorro rotación proyectado (€): <input type="number" id="ahorroRotacion" value="50000" min="0" oninput="recalcular()"></label>
+  </div>
+
+  <h2>Iniciativas del Plan Cultural</h2>
+  <div class="table-wrap">
+  <table id="tablaInic">
+    <thead>
+      <tr>
+        <th>Iniciativa</th>
+        <th>Valor que refuerza</th>
+        <th>Responsable</th>
+        <th>Recursos (€)</th>
+        <th>Horas</th>
+        <th>Fecha inicio</th>
+        <th>Fecha revisión</th>
+        <th>Indicador de éxito</th>
+        <th style="width:80px;">% Avance</th>
+        <th style="width:70px;">Semáforo</th>
+      </tr>
+    </thead>
+    <tbody id="tablaBody">
+      <tr>
+        <td><input type="text" value="Programa de reconocimiento entre pares"></td>
+        <td><input type="text" value="Reconocimiento"></td>
+        <td><input type="text" placeholder="Responsable"></td>
+        <td><input type="number" min="0" value="0" oninput="recalcular()"></td>
+        <td><input type="number" min="0" value="0" oninput="recalcular()"></td>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td><input type="text" placeholder="KPI de éxito..."></td>
+        <td><input type="number" min="0" max="100" value="0" oninput="recalcular()"></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Taller de comunicación no violenta"></td>
+        <td><input type="text" value="Comunicación abierta"></td>
+        <td><input type="text" placeholder="Responsable"></td>
+        <td><input type="number" min="0" value="0" oninput="recalcular()"></td>
+        <td><input type="number" min="0" value="0" oninput="recalcular()"></td>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td><input type="text" placeholder="KPI de éxito..."></td>
+        <td><input type="number" min="0" max="100" value="0" oninput="recalcular()"></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Encuesta de clima trimestral"></td>
+        <td><input type="text" value="Seguridad psicológica"></td>
+        <td><input type="text" placeholder="Responsable"></td>
+        <td><input type="number" min="0" value="0" oninput="recalcular()"></td>
+        <td><input type="number" min="0" value="0" oninput="recalcular()"></td>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td><input type="date" onchange="recalcular()"></td>
+        <td><input type="text" placeholder="KPI de éxito..."></td>
+        <td><input type="number" min="0" max="100" value="0" oninput="recalcular()"></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <button class="btn-add no-print" onclick="addRow()">+ Añadir iniciativa</button>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-value" id="costePlan">—</div>
+      <div class="metric-label">Coste total plan cultura (€)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="pctVerde">—</div>
+      <div class="metric-label">% Iniciativas en verde (&gt;60%)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="avgAvance">—</div>
+      <div class="metric-label">Avance medio del plan (%)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="roiEstimado">—</div>
+      <div class="metric-label">ROI estimado</div>
+    </div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
+</main>
+
+<script>
+function colorSem(avance) {
+  if (avance >= 60) return '#22c55e';
+  if (avance >= 30) return '#f59e0b';
+  return '#ef4444';
+}
+
+function addRow() {
+  const tbody = document.getElementById('tablaBody');
+  const tr = document.createElement('tr');
+  const s = 'border:1px solid #cbd5e1;border-radius:4px;padding:4px 6px;width:95%;font-size:12px;font-family:system-ui;';
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Iniciativa" style="${s}"></td>
+    <td><input type="text" placeholder="Valor" style="${s}"></td>
+    <td><input type="text" placeholder="Responsable" style="${s}"></td>
+    <td><input type="number" min="0" value="0" oninput="recalcular()" style="${s}"></td>
+    <td><input type="number" min="0" value="0" oninput="recalcular()" style="${s}"></td>
+    <td><input type="date" onchange="recalcular()" style="${s}"></td>
+    <td><input type="date" onchange="recalcular()" style="${s}"></td>
+    <td><input type="text" placeholder="Indicador éxito" style="${s}"></td>
+    <td><input type="number" min="0" max="100" value="0" oninput="recalcular()" style="${s}"></td>
+    <td><span class="semaforo" style="background:#d1d5db;width:26px;height:26px;border-radius:50%;display:inline-block;"></span></td>`;
+  tbody.appendChild(tr);
+}
+
+function recalcular() {
+  const filas = document.querySelectorAll('#tablaBody tr');
+  let costeTotal = 0, avances = [], enVerde = 0;
+
+  filas.forEach(tr => {
+    const nums = tr.querySelectorAll('input[type="number"]');
+    const recursos = parseFloat(nums[0]?.value) || 0;
+    const avance = parseFloat(nums[2]?.value) || 0;
+    const sem = tr.querySelector('.semaforo');
+
+    costeTotal += recursos;
+    avances.push(avance);
+    if (avance > 60) enVerde++;
+    if (sem) sem.style.background = colorSem(avance);
+  });
+
+  const avgAvance = avances.length ? avances.reduce((a,b)=>a+b,0)/avances.length : 0;
+  const pctVerde = avances.length ? (enVerde/avances.length*100) : 0;
+  const ahorro = parseFloat(document.getElementById('ahorroRotacion').value) || 0;
+  const roi = costeTotal > 0 ? ((ahorro - costeTotal) / costeTotal * 100).toFixed(0) + '%' : '—';
+
+  document.getElementById('costePlan').textContent = costeTotal.toLocaleString('es-ES') + ' €';
+  document.getElementById('pctVerde').textContent = pctVerde.toFixed(0) + '%';
+  document.getElementById('avgAvance').textContent = avgAvance.toFixed(0) + '%';
+  document.getElementById('roiEstimado').textContent = roi;
+}
+
+recalcular();
+</script>
+</body>
+</html>

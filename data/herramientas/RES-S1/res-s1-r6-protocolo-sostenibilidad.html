@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocolo de Sostenibilidad Directiva — MASFRAME</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .logo { width: 48px; height: 48px; background: #1B2B4B; border: 2px solid #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; color: #C4A55A; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 12px; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 20px; font-weight: 700; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; }
+  .section { background: white; margin: 24px 32px; border-radius: 12px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); overflow: hidden; }
+  .section-header { background: #1B2B4B; color: white; padding: 14px 20px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .section-body { padding: 20px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: #1B2B4B; color: #C4A55A; padding: 10px 8px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  tbody tr:nth-child(even) { background: #f0f0f8; }
+  tbody tr:nth-child(odd) { background: white; }
+  tbody td { padding: 6px 8px; vertical-align: middle; }
+  tbody td input[type="number"], tbody td input[type="text"], tbody td input[type="date"] { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 4px 6px; font-size: 13px; background: transparent; }
+  tbody td input:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .row-red td { background: #fee2e2 !important; }
+  .row-yellow td { background: #fef9c3 !important; }
+  .btn-add { background: white; border: 2px dashed #C4A55A; color: #1B2B4B; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: white; }
+  .btn-print { background: #1B2B4B; color: #C4A55A; border: none; padding: 12px 32px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 700; margin: 0 32px 32px; display: block; }
+  .btn-print:hover { background: #C4A55A; color: #1B2B4B; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; padding: 20px 32px; }
+  .card { background: white; border-radius: 12px; padding: 20px 24px; flex: 1; min-width: 180px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); border-top: 4px solid #C4A55A; }
+  .card-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 8px; }
+  .card-value { font-size: 28px; font-weight: 800; color: #1B2B4B; }
+  .card-sub { font-size: 12px; color: #888; margin-top: 4px; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .dot-green { background: #22c55e; }
+  .dot-yellow { background: #eab308; }
+  .dot-red { background: #ef4444; }
+  .gauge-bar { height: 12px; border-radius: 6px; background: #e5e7eb; overflow: hidden; margin-top: 8px; }
+  .gauge-fill { height: 100%; border-radius: 6px; transition: width 0.3s; }
+  .info-bar { background: #fffbeb; border-left: 4px solid #C4A55A; padding: 12px 16px; margin: 0 32px 16px; border-radius: 0 8px 8px 0; font-size: 13px; }
+  @media print {
+    .btn-add, .btn-print { display: none !important; }
+    .section { box-shadow: none; margin: 10px 0; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">M</div>
+  <div class="header-info">
+    <div class="header-symptom">RES-S1 — Agotamiento directivo</div>
+    <div class="header-title">Protocolo de Sostenibilidad Directiva</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="info-bar">
+  Define acuerdos de sostenibilidad y evalúa su cumplimiento. Filas con cumplimiento bajo (menor a 5) se señalan en rojo. El score de sostenibilidad mide la salud de tus protocolos.
+</div>
+
+<div class="section">
+  <div class="section-header">Acuerdos de Sostenibilidad por Área</div>
+  <div class="section-body">
+    <div class="table-wrap">
+      <table id="mainTable">
+        <thead>
+          <tr>
+            <th style="min-width:160px">Área</th>
+            <th style="min-width:220px">Acuerdo establecido</th>
+            <th style="min-width:120px">¿Se cumple? (1-10)</th>
+            <th style="min-width:180px">Barrera al cumplimiento</th>
+            <th style="min-width:160px">Apoyo necesario</th>
+            <th style="min-width:130px">Fecha revisión</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="card">
+    <div class="card-label">Score de Sostenibilidad</div>
+    <div class="card-value" id="scoreSosten"><span class="dot" id="dotSosten"></span>—</div>
+    <div class="card-sub">promedio de cumplimiento de acuerdos</div>
+    <div class="gauge-bar"><div class="gauge-fill" id="gaugeFill" style="width:0%;background:#22c55e"></div></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Riesgo de Recaída</div>
+    <div class="card-value" id="riesgoRecaida"><span class="dot" id="dotRiesgo"></span>—</div>
+    <div class="card-sub">inverso del score de sostenibilidad (1-10)</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Acuerdos en Riesgo</div>
+    <div class="card-value" id="acuerdosRiesgo">—</div>
+    <div class="card-sub">con cumplimiento inferior a 5 sobre 10</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Próxima Revisión</div>
+    <div class="card-value" id="proximaRevision" style="font-size:16px">—</div>
+    <div class="card-sub">fecha más cercana pendiente</div>
+  </div>
+</div>
+
+<button class="btn-print" onclick="window.print()">Imprimir / Exportar PDF</button>
+
+<script>
+const seedData = [
+  ['Límites horarios', 'No responder correos después de las 20h', 6, 'Urgencias de clientes', 'Protocolo de guardias rotativas', ''],
+  ['Tiempo estratégico', 'Bloque fijo de 3h los martes para estrategia', 5, 'Reuniones que invaden el bloque', 'Apoyo del equipo para filtrar', ''],
+  ['Vacaciones', 'Mínimo 20 días de vacaciones al año', 4, 'Sensación de que nadie puede sustituirme', 'Plan de cobertura documentado', ''],
+  ['Reuniones de equipo', 'Máximo 2 reuniones de equipo semanales de <45 min', 7, 'Temas no preparados que alargan', 'Agenda enviada 24h antes', ''],
+  ['Rutinas de salud', 'Ejercicio mínimo 3 veces por semana', 8, 'Viajes frecuentes', 'Planificación anticipada del calendario', ''],
+];
+
+function buildRow(data) {
+  const [area, acuerdo, cumple, barrera, apoyo, fecha] = data;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" value="${area}" placeholder="Área de sostenibilidad"></td>
+    <td><input type="text" value="${acuerdo}" placeholder="Describe el acuerdo establecido"></td>
+    <td><input type="number" min="1" max="10" value="${cumple}" class="cumpleInput"></td>
+    <td><input type="text" value="${barrera}" placeholder="Principal obstáculo"></td>
+    <td><input type="text" value="${apoyo}" placeholder="¿Qué necesitas?"></td>
+    <td><input type="date" value="${fecha}"></td>
+  `;
+  return tr;
+}
+
+function addRow() {
+  document.getElementById('tableBody').appendChild(buildRow(['', '', 5, '', '', '']));
+  calc();
+}
+
+function calc() {
+  const tbody = document.getElementById('tableBody');
+  const rows = tbody.querySelectorAll('tr');
+  let sum = 0, count = 0, enRiesgo = 0;
+  let fechas = [];
+
+  rows.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    const cumple = parseFloat(cells[2].querySelector('input').value) || 0;
+    const fecha = cells[5].querySelector('input').value;
+
+    sum += cumple; count++;
+    if (cumple < 5) enRiesgo++;
+    if (fecha) fechas.push(fecha);
+
+    row.classList.remove('row-red', 'row-yellow');
+    if (cumple < 5) row.classList.add('row-red');
+    else if (cumple < 7) row.classList.add('row-yellow');
+  });
+
+  const avg = count > 0 ? sum / count : 0;
+  const riesgo = 10 - avg;
+  const dot = avg >= 7 ? 'green' : avg >= 5 ? 'yellow' : 'red';
+  const dotR = riesgo <= 3 ? 'green' : riesgo <= 5 ? 'yellow' : 'red';
+
+  document.getElementById('dotSosten').className = `dot dot-${dot}`;
+  document.getElementById('scoreSosten').innerHTML = `<span class="dot dot-${dot}"></span>${avg.toFixed(1)} / 10`;
+  document.getElementById('gaugeFill').style.width = (avg * 10) + '%';
+  document.getElementById('gaugeFill').style.background = dot === 'green' ? '#22c55e' : dot === 'yellow' ? '#eab308' : '#ef4444';
+
+  document.getElementById('dotRiesgo').className = `dot dot-${dotR}`;
+  document.getElementById('riesgoRecaida').innerHTML = `<span class="dot dot-${dotR}"></span>${riesgo.toFixed(1)} / 10`;
+  document.getElementById('acuerdosRiesgo').textContent = enRiesgo;
+
+  fechas.sort();
+  document.getElementById('proximaRevision').textContent = fechas.length > 0 ? fechas[0] : 'Sin fecha';
+}
+
+const tbody = document.getElementById('tableBody');
+seedData.forEach(d => tbody.appendChild(buildRow(d)));
+document.addEventListener('input', calc);
+calc();
+</script>
+</body>
+</html>

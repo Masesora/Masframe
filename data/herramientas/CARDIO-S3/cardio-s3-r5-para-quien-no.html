@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matriz de Exclusión de Perfiles — CARDIO-S3</title>
+<style>
+  :root {
+    --navy: #1B2B4B;
+    --gold: #C4A55A;
+    --bg: #f8f7ff;
+    --white: #fff;
+    --red: #e74c3c;
+    --yellow: #f39c12;
+    --green: #27ae60;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: var(--bg); color: #222; }
+
+  header {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .header-left .brand { color: var(--gold); font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; }
+  .header-left .symptom { color: #fff; font-size: 0.78rem; display: block; margin-top: 2px; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .header-right .tool-name { color: #fff; font-size: 0.95rem; font-weight: 600; }
+  .badge-op {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
+
+  h2 { color: var(--navy); font-size: 1.1rem; margin: 32px 0 14px; border-bottom: 2px solid var(--gold); padding-bottom: 6px; }
+
+  .table-wrap { overflow-x: auto; margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; min-width: 700px; }
+  thead th {
+    background: var(--navy);
+    color: #fff;
+    padding: 9px 10px;
+    font-size: 0.8rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  tbody td { padding: 8px 10px; border-bottom: 1px solid #eee; font-size: 0.85rem; vertical-align: middle; }
+  tbody tr:hover { background: #f2f0fa; }
+  tbody input[type="text"], tbody input[type="number"], tbody input[type="date"], tbody select {
+    width: 100%;
+    padding: 5px 7px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.84rem;
+    font-family: system-ui;
+  }
+
+  .btn-add {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.87rem;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .btn-add:hover { opacity: 0.88; }
+  .btn-del {
+    background: #f0f0f0;
+    border: none;
+    color: var(--red);
+    padding: 4px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  /* Coste hora input row */
+  .input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .input-row label { font-weight: 600; color: var(--navy); font-size: 0.93rem; }
+  .input-row input[type="number"] {
+    width: 110px;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: system-ui;
+  }
+
+  /* Warning box */
+  .warning-box {
+    background: #fff4e5;
+    border-left: 4px solid var(--yellow);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 14px;
+  }
+  .warning-box .wbox-title {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .warning-box .wbox-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .warning-box .witem { flex: 1; min-width: 160px; }
+  .warning-box .witem-label { font-size: 0.78rem; color: #777; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+  .warning-box .witem-val { font-size: 1.3rem; font-weight: 700; color: var(--red); }
+
+  /* Summary cards */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  .sum-card {
+    background: var(--white);
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .sum-card .sum-label { font-size: 0.75rem; color: #666; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sum-card .sum-value { font-size: 1.35rem; font-weight: 700; color: var(--navy); }
+
+  .btn-print {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+  .btn-print:hover { opacity: 0.9; }
+
+  @media print {
+    .btn-print, .btn-add, .btn-del { display: none; }
+    body { background: #fff; }
+    header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="brand">MASFRAME</span>
+    <span class="symptom">CARDIO-S3 · Calidad del cliente captado</span>
+  </div>
+  <div class="header-right">
+    <span class="tool-name">Matriz de Exclusión de Perfiles</span>
+    <span class="badge-op">Herramienta Operativa</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Section 1: Exclusion matrix -->
+  <h2>Matriz de exclusión de perfiles</h2>
+  <div class="table-wrap">
+    <table id="exclusion-table">
+      <thead>
+        <tr>
+          <th style="min-width:180px;">Perfil excluido</th>
+          <th style="min-width:200px;">Razón de exclusión</th>
+          <th style="min-width:220px;">Señal de identificación temprana</th>
+          <th style="min-width:240px;">Mensaje de redirección</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="exclusion-body"></tbody>
+    </table>
+  </div>
+  <button class="btn-add" onclick="addExclusionRow()">+ Añadir perfil</button>
+
+  <!-- Section 2: Discarded leads -->
+  <h2>Leads descartados últimos 3 meses</h2>
+
+  <div class="input-row">
+    <label for="coste_hora">Coste hora propio (€):</label>
+    <input type="number" id="coste_hora" value="80" min="0" step="1">
+  </div>
+
+  <div class="table-wrap">
+    <table id="leads-table">
+      <thead>
+        <tr>
+          <th style="min-width:140px;">Lead</th>
+          <th style="min-width:180px;">Motivo descarte</th>
+          <th style="min-width:120px;">Tiempo invertido (h)</th>
+          <th style="min-width:110px;">Coste (€)</th>
+          <th style="min-width:130px;">Fecha</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="leads-body"></tbody>
+    </table>
+  </div>
+  <button class="btn-add" onclick="addLeadRow()">+ Añadir lead</button>
+
+  <div class="warning-box" id="warning-box">
+    <div class="wbox-title">⚠ Coste total de leads mal calificados</div>
+    <div class="wbox-row">
+      <div class="witem">
+        <div class="witem-label">Total horas invertidas</div>
+        <div class="witem-val" id="total_horas">0 h</div>
+      </div>
+      <div class="witem">
+        <div class="witem-label">Coste total recuperable</div>
+        <div class="witem-val" id="total_coste">0 €</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary cards -->
+  <h2>Resumen diagnóstico</h2>
+  <div class="summary-grid">
+    <div class="sum-card">
+      <div class="sum-label">Leads descartados</div>
+      <div class="sum-value" id="sc_leads">0</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Tiempo total invertido</div>
+      <div class="sum-value" id="sc_horas">0 h</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Coste recuperable</div>
+      <div class="sum-value" id="sc_coste">0 €</div>
+    </div>
+  </div>
+
+</main>
+
+<button class="btn-print" onclick="window.print()">Imprimir / PDF</button>
+
+<script>
+  const exclusionPrefill = [
+    {
+      perfil: "Microempresas <3 empleados",
+      razon: "Presupuesto insuficiente para ROI",
+      senal: "Preguntan por precio antes de problema",
+      mensaje: "Nuestros servicios están diseñados para equipos en crecimiento"
+    },
+    {
+      perfil: "Empresas sin presupuesto definido",
+      razon: "Ciclo venta infinito sin decisión",
+      senal: "No pueden dar cifra de inversión máxima",
+      mensaje: "Cuando tengas budget definido, con gusto retomamos"
+    },
+    {
+      perfil: "Sectores sin margen suficiente",
+      razon: "Ticket medio no justifica la inversión",
+      senal: "Facturación <200K anuales",
+      mensaje: "Te recomiendo empezar con nuestra guía gratuita"
+    },
+  ];
+
+  const leadsPrefill = [
+    { lead: "Lead Ruiz", motivo: "Sin presupuesto", horas: 4, fecha: "2026-06-15" },
+    { lead: "Lead Torres", motivo: "Empresa <3 empleados", horas: 2, fecha: "2026-07-01" },
+  ];
+
+  function addExclusionRow(data) {
+    const tbody = document.getElementById('exclusion-body');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" value="${data ? esc(data.perfil) : ''}" placeholder="Nombre del perfil"></td>
+      <td><input type="text" value="${data ? esc(data.razon) : ''}" placeholder="¿Por qué se excluye?"></td>
+      <td><input type="text" value="${data ? esc(data.senal) : ''}" placeholder="Cómo detectarlo pronto"></td>
+      <td><input type="text" value="${data ? esc(data.mensaje) : ''}" placeholder="Qué decirle"></td>
+      <td><button class="btn-del" onclick="this.closest('tr').remove();">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  function addLeadRow(data) {
+    const tbody = document.getElementById('leads-body');
+    const tr = document.createElement('tr');
+    const costeVal = data ? (data.horas * getCosteHora()).toFixed(0) : '';
+    tr.innerHTML = `
+      <td><input type="text" class="lead-nombre" value="${data ? esc(data.lead) : ''}" placeholder="Nombre lead"></td>
+      <td><input type="text" class="lead-motivo" value="${data ? esc(data.motivo) : ''}" placeholder="Motivo"></td>
+      <td><input type="number" class="lead-horas" value="${data ? data.horas : ''}" placeholder="0" min="0" step="0.5"></td>
+      <td><span class="lead-coste-val" style="font-weight:700;color:var(--red);">${data ? formatEur(data.horas * getCosteHora()) : '—'}</span></td>
+      <td><input type="date" class="lead-fecha" value="${data ? data.fecha : ''}"></td>
+      <td><button class="btn-del" onclick="this.closest('tr').remove(); calcLeads();">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    tr.querySelector('.lead-horas').addEventListener('input', calcLeads);
+  }
+
+  function getCosteHora() {
+    return parseFloat(document.getElementById('coste_hora').value) || 0;
+  }
+
+  function calcLeads() {
+    const coste = getCosteHora();
+    let totalH = 0, totalC = 0, count = 0;
+    document.querySelectorAll('#leads-body tr').forEach(row => {
+      const h = parseFloat(row.querySelector('.lead-horas').value) || 0;
+      const c = h * coste;
+      row.querySelector('.lead-coste-val').textContent = formatEur(c);
+      totalH += h;
+      totalC += c;
+      count++;
+    });
+    document.getElementById('total_horas').textContent = totalH.toLocaleString('es-ES', {maximumFractionDigits:1}) + ' h';
+    document.getElementById('total_coste').textContent = formatEur(totalC);
+    document.getElementById('sc_leads').textContent = count;
+    document.getElementById('sc_horas').textContent = totalH.toLocaleString('es-ES', {maximumFractionDigits:1}) + ' h';
+    document.getElementById('sc_coste').textContent = formatEur(totalC);
+  }
+
+  function formatEur(v) {
+    return Number(v).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' €';
+  }
+
+  function esc(s) {
+    return (s || '').replace(/"/g, '&quot;');
+  }
+
+  // Init
+  exclusionPrefill.forEach(d => addExclusionRow(d));
+  leadsPrefill.forEach(d => addLeadRow(d));
+  document.getElementById('coste_hora').addEventListener('input', calcLeads);
+  calcLeads();
+</script>
+</body>
+</html>

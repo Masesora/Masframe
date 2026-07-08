@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoría de Dependencia del Fundador — MASFRAME</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+.header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+.logo { width: 48px; height: 48px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 900; color: #1B2B4B; flex-shrink: 0; }
+.header-info h1 { font-size: 20px; font-weight: 700; }
+.header-info p { font-size: 13px; color: #C4A55A; margin-top: 2px; }
+.badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; }
+.container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+.section { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); }
+.section h2 { font-size: 16px; font-weight: 700; color: #1B2B4B; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 1000px; }
+th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; white-space: nowrap; }
+td { padding: 7px 6px; border-bottom: 1px solid #e8e6f0; vertical-align: middle; }
+tr:hover td { background: #f0eeff; }
+tr.riesgo-alto td { background: #fff1f2 !important; }
+td input, td select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 4px 6px; font-size: 12px; font-family: inherit; background: #fafafa; }
+td input:focus, td select:focus { outline: none; border-color: #C4A55A; background: white; }
+.calc { background: #eef0ff !important; font-weight: 700; text-align: center; }
+.semaforo { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+.verde { background: #22c55e; }
+.amarillo { background: #f59e0b; }
+.rojo { background: #ef4444; }
+.btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-top: 12px; }
+.btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.metric-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); border-left: 4px solid #C4A55A; }
+.metric-card .label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+.metric-card .value { font-size: 26px; font-weight: 800; color: #1B2B4B; margin-top: 4px; }
+.metric-card.danger { border-left-color: #ef4444; }
+.metric-card.danger .value { color: #dc2626; }
+.btn-print { display: block; margin: 0 auto 32px; background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
+.btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+@media print { .btn-add, .btn-print { display: none; } body { background: white; } .section { box-shadow: none; border: 1px solid #ddd; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">M</div>
+  <div class="header-info">
+    <h1>Auditoría de Dependencia del Fundador</h1>
+    <p>OPE-S2 · Dependencia del Fundador · Mapa de dependencia y potencial de delegación</p>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+<div class="container">
+  <div class="section">
+    <h2>Inventario de Dependencia por Proceso/Área</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Proceso / Área</th>
+            <th>¿Solo el fundador?</th>
+            <th>Razón de dependencia</th>
+            <th>Riesgo si ausente (1-5)</th>
+            <th>Horas fundador/semana (h)</th>
+            <th>Potencial delegación (1-5)</th>
+            <th>¿Candidato para delegar?</th>
+            <th>Nombre candidato</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+  </div>
+
+  <div class="metrics">
+    <div class="metric-card danger">
+      <div class="label">Índice dependencia global</div>
+      <div class="value" id="m-indice">—</div>
+      <div style="font-size:10px;color:#999;margin-top:4px">Promedio riesgo (solo fundador)</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Horas recuperables/semana</div>
+      <div class="value" id="m-horas">0 h</div>
+    </div>
+    <div class="metric-card danger">
+      <div class="label">Procesos riesgo alto (≥4)</div>
+      <div class="value" id="m-riesgo">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">% Procesos delegables</div>
+      <div class="value" id="m-deleg">0%</div>
+    </div>
+  </div>
+
+  <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
+</div>
+<script>
+const RAZONES = ['Conocimiento','Confianza','Costumbre','Control'];
+const RIESGOS = ['1','2','3','4','5'];
+const POTS = ['1','2','3','4','5'];
+let rowCount = 0;
+
+function addRow() {
+  const tb = document.getElementById('tbody');
+  rowCount++;
+  const tr = tb.insertRow();
+  tr.innerHTML = `
+    <td>${rowCount}</td>
+    <td><input type="text" placeholder="Proceso o área" oninput="recalc()"></td>
+    <td><select class="solo-sel" oninput="recalc()"><option>Sí</option><option>No</option><option>Parcial</option></select></td>
+    <td><select oninput="recalc()">${RAZONES.map(r=>`<option>${r}</option>`).join('')}</select></td>
+    <td><select class="riesgo-sel" oninput="recalc()">${RIESGOS.map(r=>`<option value="${r}">${r}</option>`).join('')}</select></td>
+    <td><input type="number" min="0" step="0.5" placeholder="0" class="horas-input" oninput="recalc()"></td>
+    <td><select oninput="recalc()">${POTS.map(p=>`<option value="${p}">${p}</option>`).join('')}</select></td>
+    <td><select class="cand-sel" oninput="recalc()"><option>Sí</option><option>No</option></select></td>
+    <td><input type="text" placeholder="Nombre del candidato" oninput="recalc()"></td>`;
+}
+
+function recalc() {
+  const rows = document.querySelectorAll('#tbody tr');
+  let soloRiesgos = [], horasRecup = 0, riesgoAlto = 0, delegables = 0;
+
+  rows.forEach(tr => {
+    const solo = tr.querySelector('.solo-sel')?.value;
+    const riesgo = parseFloat(tr.querySelector('.riesgo-sel')?.value) || 1;
+    const horas = parseFloat(tr.querySelector('.horas-input')?.value) || 0;
+    const cand = tr.querySelector('.cand-sel')?.value === 'Sí';
+
+    if (solo === 'Sí') soloRiesgos.push(riesgo);
+    if (cand) { horasRecup += horas; delegables++; }
+    if (riesgo >= 4) riesgoAlto++;
+
+    if (riesgo >= 4 && solo === 'Sí') {
+      tr.classList.add('riesgo-alto');
+    } else {
+      tr.classList.remove('riesgo-alto');
+    }
+  });
+
+  const avgRiesgo = soloRiesgos.length > 0 ? (soloRiesgos.reduce((a,b)=>a+b,0)/soloRiesgos.length).toFixed(1) : '—';
+  const color = avgRiesgo >= 4 ? 'rojo' : avgRiesgo >= 2.5 ? 'amarillo' : 'verde';
+  document.getElementById('m-indice').innerHTML = avgRiesgo !== '—' ? `<span class="semaforo ${color}"></span>${avgRiesgo}/5` : '—';
+  document.getElementById('m-horas').textContent = horasRecup.toFixed(1) + ' h';
+  document.getElementById('m-riesgo').textContent = riesgoAlto;
+  document.getElementById('m-deleg').textContent = rows.length > 0 ? Math.round(delegables/rows.length*100)+'%' : '0%';
+}
+
+for (let i = 0; i < 5; i++) addRow();
+</script>
+</body>
+</html>

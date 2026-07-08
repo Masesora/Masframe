@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TER-S2 R5 — Satisfacción Post-Servicio | MASFRAME</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+  header{background:#1B2B4B;color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+  header h1{font-size:18px;font-weight:700}
+  header span{font-size:12px;color:#C4A55A;font-weight:600}
+  .toolbar{padding:12px 24px;background:#fff;border-bottom:2px solid #C4A55A;display:flex;gap:8px;flex-wrap:wrap}
+  .toolbar button{background:#1B2B4B;color:#fff;border:none;padding:7px 14px;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600}
+  .toolbar button:hover{background:#C4A55A}
+  .toolbar button.print{background:#C4A55A;color:#1B2B4B}
+  .metrics{display:flex;gap:12px;padding:16px 24px;flex-wrap:wrap}
+  .metric{background:#fff;border:1px solid #ddd;border-radius:6px;padding:12px 18px;min-width:170px;text-align:center;border-top:3px solid #C4A55A}
+  .metric .val{font-size:22px;font-weight:700;color:#1B2B4B}
+  .metric .lbl{font-size:11px;color:#666;margin-top:2px}
+  .wrap{padding:0 24px 24px;overflow-x:auto}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  thead tr{background:#1B2B4B;color:#fff}
+  th{padding:9px 8px;text-align:left;font-size:12px;font-weight:600;white-space:nowrap}
+  td{padding:7px 8px;border-bottom:1px solid #eee;font-size:12px;vertical-align:top}
+  td[contenteditable]:focus{background:#fffde7;border-bottom:2px solid #C4A55A;outline:none}
+  tr:hover td{background:#fafafa}
+  .calc{background:#f0f4ff;color:#1B2B4B;font-weight:600;pointer-events:none}
+  .sem-verde{background:#d4edda;color:#155724;font-weight:700;text-align:center}
+  .sem-amarillo{background:#fff3cd;color:#856404;font-weight:700;text-align:center}
+  .sem-rojo{background:#f8d7da;color:#721c24;font-weight:700;text-align:center}
+  tfoot td{background:#1B2B4B;color:#fff;font-weight:700;font-size:12px;padding:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>TER-S2 R5 — Satisfacción Post-Servicio</h1>
+  <span>MASFRAME · Pérdida de Referidos</span>
+</header>
+<div class="toolbar">
+  <button onclick="addRow()">+ Añadir fila</button>
+  <button class="print" onclick="window.print()">🖨 Imprimir</button>
+</div>
+<div class="metrics">
+  <div class="metric"><div class="val" id="m-total">0</div><div class="lbl">Total clientes</div></div>
+  <div class="metric"><div class="val" id="m-resultado">—%</div><div class="lbl">% mantienen resultado 180d</div></div>
+  <div class="metric"><div class="val" id="m-refieren">—%</div><div class="lbl">% refieren a 180d</div></div>
+  <div class="metric"><div class="val" id="m-recompra">—%</div><div class="lbl">% vuelven a comprar</div></div>
+</div>
+<div class="wrap">
+<table id="tbl">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Cliente</th>
+      <th>Fecha alta</th>
+      <th>Score 30d (1-10)</th>
+      <th>Score 90d (1-10)</th>
+      <th>Score 180d (1-10)</th>
+      <th>Tendencia</th>
+      <th>Resultado mantenido</th>
+      <th>¿Refirió?</th>
+      <th>¿Volvió a comprar?</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6">TOTALES</td>
+      <td></td>
+      <td id="f-resultado">—</td>
+      <td id="f-refiere">—</td>
+      <td id="f-recompra">—</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<script>
+let rowCount=0;
+function semScore(v){
+  if(v>=8) return 'sem-verde';
+  if(v>=5) return 'sem-amarillo';
+  return 'sem-rojo';
+}
+function addRow(data={}){
+  rowCount++;
+  const tbody=document.getElementById('tbody');
+  const tr=document.createElement('tr');
+  tr.dataset.id=rowCount;
+  const cols=['Cliente','Fecha alta','Score 30d','Score 90d','Score 180d','Resultado mantenido','¿Refirió?','¿Volvió a comprar?'];
+  let html=`<td style="color:#999;font-size:11px">${rowCount}</td>`;
+  cols.forEach(c=>{
+    const val=data[c]||'';
+    html+=`<td contenteditable="true" data-col="${c}" oninput="calc()">${val}</td>`;
+  });
+  tr.innerHTML=html;
+  // insert tendencia cell after score 180d (index 5 in editable = position 6 in tr)
+  tbody.appendChild(tr);
+  // add tendencia calc cell
+  const cells=tr.querySelectorAll('td');
+  const tendCell=document.createElement('td');
+  tendCell.className='calc';
+  tendCell.dataset.tend='true';
+  tr.insertBefore(tendCell, cells[6]);
+  calc();
+}
+function calcTendencia(s30,s90,s180){
+  const vals=[s30,s90,s180].filter(v=>!isNaN(v)&&v>0);
+  if(vals.length<2) return '—';
+  const last=vals[vals.length-1], first=vals[0];
+  if(last>first) return '↑ Mejora';
+  if(last<first) return '↓ Baja';
+  return '→ Estable';
+}
+function calc(){
+  const rows=document.querySelectorAll('#tbody tr');
+  let total=rows.length,resultado=0,refiere=0,recompra=0,cRes=0,cRef=0,cRec=0;
+  rows.forEach(tr=>{
+    const editable=tr.querySelectorAll('td[contenteditable]');
+    const s30=parseFloat(editable[2]?.textContent)||0;
+    const s90=parseFloat(editable[3]?.textContent)||0;
+    const s180=parseFloat(editable[4]?.textContent)||0;
+    const res=(editable[5]?.textContent||'').toLowerCase();
+    const ref=(editable[6]?.textContent||'').toLowerCase();
+    const rec=(editable[7]?.textContent||'').toLowerCase();
+    // semaforos
+    if(s30>0){editable[2].className='calc '+semScore(s30);}
+    if(s90>0){editable[3].className='calc '+semScore(s90);}
+    if(s180>0){editable[4].className='calc '+semScore(s180);}
+    // tendencia
+    const tendCell=tr.querySelector('[data-tend]');
+    if(tendCell) tendCell.textContent=calcTendencia(s30,s90,s180);
+    if(res==='sí'||res==='si'){resultado++;cRes++;}
+    if(ref==='sí'||ref==='si'){refiere++;cRef++;}
+    if(rec==='sí'||rec==='si'){recompra++;cRec++;}
+  });
+  document.getElementById('m-total').textContent=total;
+  document.getElementById('m-resultado').textContent=total>0?Math.round(resultado/total*100)+'%':'—%';
+  document.getElementById('m-refieren').textContent=total>0?Math.round(refiere/total*100)+'%':'—%';
+  document.getElementById('m-recompra').textContent=total>0?Math.round(recompra/total*100)+'%':'—%';
+  document.getElementById('f-resultado').textContent=total>0?Math.round(resultado/total*100)+'% mantienen':'—';
+  document.getElementById('f-refiere').textContent=total>0?Math.round(refiere/total*100)+'% refieren':'—';
+  document.getElementById('f-recompra').textContent=total>0?Math.round(recompra/total*100)+'% recompran':'—';
+}
+addRow({'Cliente':'Ana García','Fecha alta':'2025-10-01','Score 30d':'8','Score 90d':'9','Score 180d':'9','Resultado mantenido':'Sí','¿Refirió?':'Sí','¿Volvió a comprar?':'Sí'});
+addRow({'Cliente':'Marcos López','Fecha alta':'2025-09-15','Score 30d':'6','Score 90d':'5','Score 180d':'4','Resultado mantenido':'No','¿Refirió?':'No','¿Volvió a comprar?':'No'});
+addRow({'Cliente':'Lucía Pérez','Fecha alta':'2025-11-01','Score 30d':'9','Score 90d':'9','Score 180d':'8','Resultado mantenido':'Sí','¿Refirió?':'Sí','¿Volvió a comprar?':'No'});
+</script>
+</body>
+</html>

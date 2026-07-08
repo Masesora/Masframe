@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASFRAME | NEURO-S1 — OKRs Anuales</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B;min-height:100vh}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:1.4rem;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-center{display:flex;flex-direction:column;align-items:center;gap:4px}
+.symptom-label{font-size:.8rem;color:#C4A55A;letter-spacing:2px;text-transform:uppercase}
+.tool-name{font-size:1.1rem;font-weight:700;color:#fff}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:.7rem;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+main{max-width:1100px;margin:32px auto;padding:0 24px}
+.section-title{font-size:1.1rem;font-weight:700;color:#1B2B4B;margin:28px 0 12px;border-left:4px solid #C4A55A;padding-left:12px}
+.obj-block{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:24px;overflow:hidden}
+.obj-header{background:#1B2B4B;padding:14px 20px;display:flex;align-items:center;gap:14px}
+.obj-num{background:#C4A55A;color:#1B2B4B;font-weight:800;font-size:1rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.obj-header input[type=text]{flex:1;background:transparent;border:none;border-bottom:2px solid #C4A55A;color:#fff;font-size:1rem;font-weight:700;font-family:inherit;padding:4px 0;outline:none}
+.obj-header input[type=text]::placeholder{color:#8899bb}
+.obj-sem{display:flex;align-items:center;gap:8px;margin-left:auto}
+.dot{width:22px;height:22px;border-radius:50%;display:inline-block;border:2px solid rgba(255,255,255,.3);flex-shrink:0}
+.g{background:#22c55e}.y{background:#eab308}.r{background:#ef4444}.grey{background:#d1d5db}
+.obj-pct{color:#C4A55A;font-weight:800;font-size:.95rem;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th{background:#f0f2f8;color:#1B2B4B;padding:9px 14px;text-align:left;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+td{padding:8px 12px;border-bottom:1px solid #eee;font-size:.88rem}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+input[type=number],input[type=text]{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:5px 7px;font-size:.86rem;font-family:inherit;color:#1B2B4B;background:#f8f7ff}
+input[type=number]:focus,input[type=text]:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+.calc-ro{background:#e8eaf0;color:#555;cursor:not-allowed}
+.progress-wrap{padding:12px 20px;background:#f0f2f8}
+.progress-label{font-size:.8rem;font-weight:700;color:#1B2B4B;margin-bottom:6px}
+.progress-bar-bg{background:#dde1ec;border-radius:20px;height:14px;overflow:hidden}
+.progress-bar{height:100%;border-radius:20px;transition:width .4s,background .4s}
+table.hist-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:16px}
+table.hist-table th{background:#1B2B4B;color:#C4A55A;padding:11px 14px;text-align:left;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+table.hist-table td{padding:8px 12px;border-bottom:1px solid #eee;font-size:.88rem}
+table.hist-table tr:last-child td{border-bottom:none}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:6px;font-weight:700;font-size:.85rem;cursor:pointer;transition:background .2s}
+.btn:hover{background:#b8943e}
+.btn-sm{padding:4px 10px;font-size:.8rem}
+.btn-print{background:#1B2B4B;color:#C4A55A;margin-left:8px}
+.btn-print:hover{background:#243554}
+.btn-row{margin:8px 0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:24px 0}
+.card{background:#fff;border:2px solid #C4A55A;border-radius:10px;padding:18px 20px;text-align:center}
+.card-label{font-size:.75rem;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-value{font-size:1.6rem;font-weight:800;color:#C4A55A;line-height:1.2}
+@media print{.btn,.btn-print,.btn-row{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <div class="symptom-label">NEURO-S1 — Amnesia Estratégica</div>
+    <div class="tool-name">OKRs Anuales</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</header>
+<main>
+  <div class="section-title">Objetivos y Resultados Clave</div>
+
+  <div id="obj-container"></div>
+
+  <div class="section-title">Histórico Trimestral</div>
+  <table class="hist-table">
+    <thead>
+      <tr>
+        <th style="width:18%">Trimestre</th>
+        <th style="width:18%">Obj 1 %</th>
+        <th style="width:18%">Obj 2 %</th>
+        <th style="width:18%">Obj 3 %</th>
+        <th style="width:18%">Media %</th>
+        <th style="width:10%"></th>
+      </tr>
+    </thead>
+    <tbody id="hist-tbody">
+      <tr data-hist>
+        <td><input type="text" value="T1 2024" oninput="recalc()"></td>
+        <td><input type="number" class="h1" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="h2" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="h3" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="hm calc-ro" readonly></td>
+        <td><button class="btn btn-sm" onclick="this.closest('tr').remove();recalc()">✕</button></td>
+      </tr>
+      <tr data-hist>
+        <td><input type="text" value="T2 2024" oninput="recalc()"></td>
+        <td><input type="number" class="h1" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="h2" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="h3" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="hm calc-ro" readonly></td>
+        <td><button class="btn btn-sm" onclick="this.closest('tr').remove();recalc()">✕</button></td>
+      </tr>
+      <tr data-hist>
+        <td><input type="text" value="T3 2024" oninput="recalc()"></td>
+        <td><input type="number" class="h1" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="h2" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="h3" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="hm calc-ro" readonly></td>
+        <td><button class="btn btn-sm" onclick="this.closest('tr').remove();recalc()">✕</button></td>
+      </tr>
+      <tr data-hist>
+        <td><input type="text" value="T4 2024" oninput="recalc()"></td>
+        <td><input type="number" class="h1" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="h2" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="h3" min="0" max="100" oninput="recalc()"></td>
+        <td><input type="number" class="hm calc-ro" readonly></td>
+        <td><button class="btn btn-sm" onclick="this.closest('tr').remove();recalc()">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="btn-row">
+    <button class="btn" onclick="addHistRow()">+ Añadir trimestre</button>
+    <button class="btn btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+
+  <div class="section-title">Resumen Ejecutivo</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">% Objetivo global</div><div class="card-value" id="c-global">—</div></div>
+    <div class="card"><div class="card-label">Objetivos en verde</div><div class="card-value" id="c-verde" style="color:#22c55e">0</div></div>
+    <div class="card"><div class="card-label">Objetivos en amarillo</div><div class="card-value" id="c-amari" style="color:#eab308">0</div></div>
+    <div class="card"><div class="card-label">Objetivos en rojo</div><div class="card-value" id="c-rojo" style="color:#ef4444">0</div></div>
+  </div>
+</main>
+<script>
+const OBJ_DATA=[
+  {id:1,name:"Objetivo estratégico 1"},
+  {id:2,name:"Objetivo estratégico 2"},
+  {id:3,name:"Objetivo estratégico 3"},
+];
+
+function f(n,dec=1){return isFinite(n)?n.toLocaleString('es-ES',{maximumFractionDigits:dec}):'—'}
+
+function buildObjBlock(obj){
+  const div=document.createElement('div');
+  div.className='obj-block';
+  div.dataset.obj=obj.id;
+  div.innerHTML=`
+    <div class="obj-header">
+      <div class="obj-num">${obj.id}</div>
+      <input type="text" placeholder="Nombre del objetivo..." value="${obj.name}" oninput="recalc()">
+      <div class="obj-sem">
+        <span class="dot grey" id="sem-obj${obj.id}"></span>
+        <span class="obj-pct" id="pct-obj${obj.id}">—%</span>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34%">Key Result</th>
+          <th style="width:18%">Meta</th>
+          <th style="width:18%">Valor actual</th>
+          <th style="width:18%">% Avance</th>
+          <th style="width:12%"></th>
+        </tr>
+      </thead>
+      <tbody id="kr-tbody-${obj.id}">
+        ${[1,2,3].map(k=>`<tr>
+          <td><input type="text" placeholder="Key Result ${k}..." oninput="recalc()"></td>
+          <td><input type="number" class="kr-meta" min="0" placeholder="100" oninput="recalc()"></td>
+          <td><input type="number" class="kr-val" min="0" placeholder="0" oninput="recalc()"></td>
+          <td><input type="number" class="kr-pct calc-ro" readonly></td>
+          <td></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="progress-wrap">
+      <div class="progress-label">Progreso del objetivo <span id="prog-pct-${obj.id}">0%</span></div>
+      <div class="progress-bar-bg"><div class="progress-bar" id="prog-bar-${obj.id}" style="width:0%;background:#d1d5db"></div></div>
+    </div>
+  `;
+  return div;
+}
+
+function addHistRow(){
+  const tr=document.createElement('tr');
+  tr.dataset.hist='';
+  tr.innerHTML=`
+    <td><input type="text" placeholder="T1 2025" oninput="recalc()"></td>
+    <td><input type="number" class="h1" min="0" max="100" oninput="recalc()"></td>
+    <td><input type="number" class="h2" min="0" max="100" oninput="recalc()"></td>
+    <td><input type="number" class="h3" min="0" max="100" oninput="recalc()"></td>
+    <td><input type="number" class="hm calc-ro" readonly></td>
+    <td><button class="btn btn-sm" onclick="this.closest('tr').remove();recalc()">✕</button></td>
+  `;
+  document.getElementById('hist-tbody').appendChild(tr);
+  recalc();
+}
+
+function recalcObj(id){
+  const tbody=document.getElementById(`kr-tbody-${id}`);
+  const rows=[...tbody.querySelectorAll('tr')];
+  let pcts=[];
+  rows.forEach(tr=>{
+    const meta=parseFloat(tr.querySelector('.kr-meta')?.value);
+    const val=parseFloat(tr.querySelector('.kr-val')?.value);
+    let pct=NaN;
+    if(isFinite(meta)&&meta>0&&isFinite(val)){pct=Math.min(val/meta*100,100);}
+    tr.querySelector('.kr-pct').value=isFinite(pct)?pct.toFixed(1):'';
+    if(isFinite(pct))pcts.push(pct);
+  });
+  const avg=pcts.length?pcts.reduce((a,b)=>a+b,0)/pcts.length:NaN;
+  const bar=document.getElementById(`prog-bar-${id}`);
+  const pp=document.getElementById(`prog-pct-${id}`);
+  const sem=document.getElementById(`sem-obj${id}`);
+  const pctEl=document.getElementById(`pct-obj${id}`);
+  if(isFinite(avg)){
+    bar.style.width=avg+'%';
+    bar.style.background=avg>70?'#22c55e':avg>=40?'#eab308':'#ef4444';
+    pp.textContent=f(avg,0)+'%';
+    sem.className='dot '+(avg>70?'g':avg>=40?'y':'r');
+    pctEl.textContent=f(avg,0)+'%';
+  } else {
+    bar.style.width='0%';bar.style.background='#d1d5db';
+    pp.textContent='0%';sem.className='dot grey';pctEl.textContent='—%';
+  }
+  return avg;
+}
+
+function recalc(){
+  const avgs=[];
+  [1,2,3].forEach(id=>{const a=recalcObj(id);if(isFinite(a))avgs.push(a);});
+  const global=avgs.length?avgs.reduce((a,b)=>a+b,0)/avgs.length:NaN;
+  let verde=0,amari=0,rojo=0;
+  avgs.forEach(a=>{if(a>70)verde++;else if(a>=40)amari++;else rojo++;});
+  document.getElementById('c-global').textContent=isFinite(global)?f(global,0)+'%':'—';
+  document.getElementById('c-verde').textContent=verde;
+  document.getElementById('c-amari').textContent=amari;
+  document.getElementById('c-rojo').textContent=rojo;
+
+  // hist
+  [...document.querySelectorAll('#hist-tbody tr')].forEach(tr=>{
+    const h1=parseFloat(tr.querySelector('.h1')?.value);
+    const h2=parseFloat(tr.querySelector('.h2')?.value);
+    const h3=parseFloat(tr.querySelector('.h3')?.value);
+    const vals=[h1,h2,h3].filter(v=>isFinite(v));
+    const m=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:NaN;
+    tr.querySelector('.hm').value=isFinite(m)?m.toFixed(1):'';
+  });
+}
+
+(function init(){
+  const cont=document.getElementById('obj-container');
+  OBJ_DATA.forEach(o=>cont.appendChild(buildObjBlock(o)));
+  recalc();
+})();
+</script>
+</body>
+</html>

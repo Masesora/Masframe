@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEURO-S2 R4 — Tres Prioridades Semanales</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+  .header{background:#1B2B4B;color:#fff;padding:16px 24px;display:flex;flex-direction:column;gap:6px}
+  .header-top{display:flex;align-items:center;gap:12px}
+  .logo{font-size:20px;font-weight:800;color:#C4A55A;letter-spacing:2px}
+  .badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+  .symptom{font-size:12px;color:#aab;letter-spacing:1px}
+  .tool-name{font-size:18px;font-weight:700;color:#fff;margin-top:2px}
+  .container{max-width:1200px;margin:0 auto;padding:20px}
+  .section{background:#fff;border-radius:8px;padding:20px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,0.07)}
+  .section-title{font-size:15px;font-weight:700;color:#1B2B4B;margin-bottom:14px;border-bottom:2px solid #C4A55A;padding-bottom:6px}
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
+  th{background:#1B2B4B;color:#fff;padding:8px 8px;text-align:left;font-weight:600;white-space:nowrap}
+  td{padding:5px 6px;border-bottom:1px solid #eee;vertical-align:middle}
+  tr:nth-child(even) td{background:#f8f7ff}
+  td input,td select{width:100%;border:1px solid #d0d0e0;border-radius:4px;padding:4px 6px;font-size:13px;background:#fff}
+  .t2-table{min-width:500px}
+  .btn{padding:8px 18px;border:none;border-radius:5px;cursor:pointer;font-size:13px;font-weight:600}
+  .btn-navy{background:#1B2B4B;color:#fff}
+  .btn-navy:hover{background:#243a63}
+  .result-box{background:#f0eeff;border-left:4px solid #C4A55A;border-radius:6px;padding:16px 20px;margin-top:16px}
+  .result-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:14px;flex-wrap:wrap}
+  .result-row:last-child{margin-bottom:0}
+  .cards{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px}
+  .card{background:#fff;border-left:4px solid #C4A55A;border-radius:6px;padding:14px 18px;min-width:170px;flex:1;box-shadow:0 1px 4px rgba(0,0,0,0.07)}
+  .card-label{font-size:11px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+  .card-value{font-size:20px;font-weight:700;color:#1B2B4B}
+  .actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+  @media print{
+    .btn,.actions{display:none!important}
+    body{background:#fff}
+    .header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .section{box-shadow:none;border:1px solid #eee}
+    .table-wrap{overflow:visible}
+    table{min-width:unset}
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <span class="logo">MASFRAME</span>
+    <span class="badge">HERRAMIENTA OPERATIVA</span>
+  </div>
+  <div class="symptom">NEURO-S2 — Dispersión Directiva</div>
+  <div class="tool-name">Tres Prioridades Semanales</div>
+</div>
+
+<div class="container">
+  <div class="section">
+    <div class="section-title">Registro Semanal de Prioridades</div>
+    <div class="table-wrap">
+    <table id="tabla1">
+      <thead>
+        <tr>
+          <th>Semana</th>
+          <th>Prioridad 1</th>
+          <th>¿P1 completada?</th>
+          <th>Prioridad 2</th>
+          <th>¿P2 completada?</th>
+          <th>Prioridad 3</th>
+          <th>¿P3 completada?</th>
+          <th>Nº interrupciones</th>
+        </tr>
+      </thead>
+      <tbody id="tbody1">
+        <tr>
+          <td><input type="text" class="sem" value="Semana 1"></td>
+          <td><input type="text" class="p1" placeholder="Prioridad 1"></td>
+          <td><select class="c1"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="text" class="p2" placeholder="Prioridad 2"></td>
+          <td><select class="c2"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="text" class="p3" placeholder="Prioridad 3"></td>
+          <td><select class="c3"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="number" class="nint" min="0" step="1" placeholder="0"></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="sem" value="Semana 2"></td>
+          <td><input type="text" class="p1" placeholder="Prioridad 1"></td>
+          <td><select class="c1"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="text" class="p2" placeholder="Prioridad 2"></td>
+          <td><select class="c2"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="text" class="p3" placeholder="Prioridad 3"></td>
+          <td><select class="c3"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="number" class="nint" min="0" step="1" placeholder="0"></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="sem" value="Semana 3"></td>
+          <td><input type="text" class="p1" placeholder="Prioridad 1"></td>
+          <td><select class="c1"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="text" class="p2" placeholder="Prioridad 2"></td>
+          <td><select class="c2"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="text" class="p3" placeholder="Prioridad 3"></td>
+          <td><select class="c3"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="number" class="nint" min="0" step="1" placeholder="0"></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="sem" value="Semana 4"></td>
+          <td><input type="text" class="p1" placeholder="Prioridad 1"></td>
+          <td><select class="c1"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="text" class="p2" placeholder="Prioridad 2"></td>
+          <td><select class="c2"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="text" class="p3" placeholder="Prioridad 3"></td>
+          <td><select class="c3"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+          <td><input type="number" class="nint" min="0" step="1" placeholder="0"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-navy" onclick="addRow1()">+ Añadir fila</button>
+    </div>
+
+    <div class="result-box">
+      <div class="result-row">
+        <strong>% semanas con las 3 completadas:</strong>
+        <span id="r-3comp">—</span>%
+      </div>
+      <div class="result-row">
+        <strong>% completitud media:</strong>
+        <span id="r-media">—</span>%
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Análisis Tipos de Interrupción</div>
+    <div class="table-wrap">
+    <table id="tabla2" class="t2-table">
+      <thead>
+        <tr>
+          <th>Tipo interrupción</th>
+          <th>Frecuencia</th>
+          <th>Impacto</th>
+          <th>¿Evitable?</th>
+        </tr>
+      </thead>
+      <tbody id="tbody2">
+        <tr>
+          <td><input type="text" class="tipo" placeholder="Tipo de interrupción"></td>
+          <td><input type="number" class="frec" min="0" step="1" placeholder="0"></td>
+          <td><select class="impacto"><option value="">—</option><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+          <td><select class="evit"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="tipo" placeholder="Tipo de interrupción"></td>
+          <td><input type="number" class="frec" min="0" step="1" placeholder="0"></td>
+          <td><select class="impacto"><option value="">—</option><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+          <td><select class="evit"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="tipo" placeholder="Tipo de interrupción"></td>
+          <td><input type="number" class="frec" min="0" step="1" placeholder="0"></td>
+          <td><select class="impacto"><option value="">—</option><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+          <td><select class="evit"><option value="">—</option><option>Sí</option><option>No</option></select></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-navy" onclick="addRow2()">+ Añadir fila</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resumen</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Semanas registradas</div>
+        <div class="card-value" id="card-sems">—</div>
+      </div>
+      <div class="card">
+        <div class="card-label">% con 3 prioridades completadas</div>
+        <div class="card-value" id="card-3comp">—</div>
+      </div>
+      <div class="card">
+        <div class="card-label">% completitud media</div>
+        <div class="card-value" id="card-media">—</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Interrupciones totales</div>
+        <div class="card-value" id="card-int">—</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-navy" onclick="window.print()">Imprimir / Guardar PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function val(el){return parseFloat(el?el.value:0)||0;}
+
+function calcAll(){
+  var rows=document.querySelectorAll('#tbody1 tr');
+  var totalSems=0,cnt3=0,cntSi=0,cntTotal=0,sumInt=0;
+  rows.forEach(function(row){
+    var sem=row.querySelector('.sem').value.trim();
+    var c1=row.querySelector('.c1').value;
+    var c2=row.querySelector('.c2').value;
+    var c3=row.querySelector('.c3').value;
+    var nint=val(row.querySelector('.nint'));
+    if(sem){
+      totalSems++;
+      sumInt+=nint;
+      if(c1==='Sí')cntSi++;
+      if(c2==='Sí')cntSi++;
+      if(c3==='Sí')cntSi++;
+      if(c1||c2||c3){
+        cntTotal+=3;
+      }
+      if(c1==='Sí'&&c2==='Sí'&&c3==='Sí')cnt3++;
+    }
+  });
+
+  var pct3=totalSems>0?(cnt3/totalSems*100).toFixed(0):0;
+  var pctMedia=cntTotal>0?(cntSi/cntTotal*100).toFixed(0):0;
+
+  document.getElementById('r-3comp').textContent=pct3;
+  document.getElementById('r-media').textContent=pctMedia;
+  document.getElementById('card-sems').textContent=totalSems||'—';
+  document.getElementById('card-3comp').textContent=pct3+'%';
+  document.getElementById('card-media').textContent=pctMedia+'%';
+  document.getElementById('card-int').textContent=sumInt||'—';
+}
+
+function addRow1(){
+  var tbody=document.getElementById('tbody1');
+  var n=tbody.querySelectorAll('tr').length+1;
+  var tr=document.createElement('tr');
+  tr.innerHTML='<td><input type="text" class="sem" value="Semana '+n+'"></td>'+
+    '<td><input type="text" class="p1" placeholder="Prioridad 1"></td>'+
+    '<td><select class="c1"><option value="">—</option><option>Sí</option><option>No</option></select></td>'+
+    '<td><input type="text" class="p2" placeholder="Prioridad 2"></td>'+
+    '<td><select class="c2"><option value="">—</option><option>Sí</option><option>No</option></select></td>'+
+    '<td><input type="text" class="p3" placeholder="Prioridad 3"></td>'+
+    '<td><select class="c3"><option value="">—</option><option>Sí</option><option>No</option></select></td>'+
+    '<td><input type="number" class="nint" min="0" step="1" placeholder="0"></td>';
+  tbody.appendChild(tr);
+}
+
+function addRow2(){
+  var tbody=document.getElementById('tbody2');
+  var tr=document.createElement('tr');
+  tr.innerHTML='<td><input type="text" class="tipo" placeholder="Tipo de interrupción"></td>'+
+    '<td><input type="number" class="frec" min="0" step="1" placeholder="0"></td>'+
+    '<td><select class="impacto"><option value="">—</option><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>'+
+    '<td><select class="evit"><option value="">—</option><option>Sí</option><option>No</option></select></td>';
+  tbody.appendChild(tr);
+}
+
+document.getElementById('tabla1').addEventListener('input',calcAll);
+document.getElementById('tabla1').addEventListener('change',calcAll);
+
+calcAll();
+</script>
+</body>
+</html>

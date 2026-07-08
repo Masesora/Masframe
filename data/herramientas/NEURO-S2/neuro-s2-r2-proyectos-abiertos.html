@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEURO-S2 — Inventario de Proyectos Abiertos</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B;min-height:100vh}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:1.4rem;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-center{display:flex;flex-direction:column;align-items:center;gap:4px}
+.symptom-label{font-size:.8rem;color:#C4A55A;letter-spacing:2px;text-transform:uppercase}
+.tool-name{font-size:1.1rem;font-weight:700;color:#fff}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:.7rem;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+main{max-width:1200px;margin:32px auto;padding:0 24px}
+.section-title{font-size:1.1rem;font-weight:700;color:#1B2B4B;margin:28px 0 12px;border-left:4px solid #C4A55A;padding-left:12px}
+.params{background:#fff;border-radius:8px;padding:16px 20px;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.params label{font-size:.88rem;font-weight:700;color:#1B2B4B}
+.params input{width:110px;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;background:#f8f7ff;color:#1B2B4B}
+.params input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:16px}
+th{background:#1B2B4B;color:#C4A55A;padding:10px 8px;text-align:left;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+td{padding:7px 8px;border-bottom:1px solid #eee;font-size:.83rem;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+input[type=number],input[type=text],input[type=date]{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:5px 6px;font-size:.82rem;font-family:inherit;color:#1B2B4B;background:#f8f7ff}
+input:focus,select:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+select{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:5px 6px;font-size:.82rem;font-family:inherit;background:#f8f7ff;color:#1B2B4B}
+.calc-ro{background:#e8eaf0;color:#555;display:block;padding:5px 6px;font-size:.82rem;border-radius:5px;text-align:right}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:6px;font-weight:700;font-size:.85rem;cursor:pointer}
+.btn:hover{background:#b8943e}
+.btn-print{background:#1B2B4B;color:#C4A55A;margin-left:8px}
+.btn-print:hover{background:#243554}
+.btn-row{margin:8px 0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:24px 0}
+.card{background:#fff;border:2px solid #C4A55A;border-radius:10px;padding:18px 20px;text-align:center}
+.card-label{font-size:.75rem;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-value{font-size:1.5rem;font-weight:800;color:#C4A55A;line-height:1.2}
+.ranking-box{background:#fff;border-radius:8px;padding:16px 20px;box-shadow:0 2px 8px rgba(27,43,75,.08);margin:8px 0}
+.rank-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #eee}
+.rank-item:last-child{border-bottom:none}
+.rank-num{width:28px;height:28px;border-radius:50%;background:#1B2B4B;color:#C4A55A;font-weight:800;font-size:.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+@media print{.btn,.btn-print,.btn-row{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <span class="symptom-label">NEURO-S2 — Dispersión Directiva</span>
+    <span class="tool-name">Inventario de Proyectos Abiertos</span>
+  </div>
+  <span class="badge">R2</span>
+</header>
+<main>
+  <div class="section-title">Parámetros</div>
+  <div class="params">
+    <label>Coste horario equipo (€/h):</label>
+    <input type="number" id="hourlyRate" value="80" min="0" oninput="updateAll()">
+  </div>
+
+  <div class="section-title">Inventario de Proyectos</div>
+  <div class="btn-row"><button class="btn" onclick="addRow()">+ Añadir proyecto</button></div>
+  <div style="overflow-x:auto">
+  <table>
+    <thead>
+      <tr>
+        <th>Proyecto</th>
+        <th>Fecha inicio</th>
+        <th>% Completado</th>
+        <th>H. invertidas</th>
+        <th>H. para terminar</th>
+        <th>Valor al terminar €</th>
+        <th>Coste h. restantes €</th>
+        <th>Margen neto €</th>
+        <th>ROI %</th>
+        <th>Decisión</th>
+        <th>Fecha compromiso</th>
+      </tr>
+    </thead>
+    <tbody id="projBody"></tbody>
+  </table>
+  </div>
+
+  <div class="section-title">Ranking por Prioridad (valor / horas restantes)</div>
+  <div class="ranking-box" id="rankingBox"><em style="color:#888;font-size:.85rem">Añade proyectos para ver el ranking</em></div>
+
+  <div class="section-title">Resumen</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">Proyectos abiertos</div><div class="card-value" id="c1">—</div></div>
+    <div class="card"><div class="card-label">Total horas pendientes</div><div class="card-value" id="c2">—</div></div>
+    <div class="card"><div class="card-label">Coste total pendiente €</div><div class="card-value" id="c3">—</div></div>
+    <div class="card"><div class="card-label">Valor potencial total €</div><div class="card-value" id="c4">—</div></div>
+    <div class="card"><div class="card-label">Proyectos a cancelar</div><div class="card-value" id="c5">—</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</main>
+<script>
+function addRow() {
+  var tbody = document.getElementById('projBody');
+  var tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td><input type="text" placeholder="Nombre del proyecto" oninput="updateAll()"></td>' +
+    '<td><input type="date"></td>' +
+    '<td><input type="number" min="0" max="100" value="0" oninput="updateAll()"></td>' +
+    '<td><input type="number" min="0" value="0" oninput="updateAll()"></td>' +
+    '<td><input type="number" min="0" value="0" oninput="updateAll()"></td>' +
+    '<td><input type="number" min="0" value="0" oninput="updateAll()"></td>' +
+    '<td><span class="calc-ro" data-cost>0.00</span></td>' +
+    '<td><span class="calc-ro" data-margin>0.00</span></td>' +
+    '<td><span class="calc-ro" data-roi>—</span></td>' +
+    '<td><select onchange="updateAll()"><option>Terminar</option><option>Pausar</option><option>Cancelar</option></select></td>' +
+    '<td><input type="date"></td>';
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  var rate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+  var rows = document.querySelectorAll('#projBody tr');
+  var totalHPend = 0, totalCostPend = 0, totalValor = 0, cancelar = 0;
+  var projects = [];
+
+  rows.forEach(function(tr) {
+    var nums = tr.querySelectorAll('input[type=number]');
+    var nameEl = tr.querySelector('input[type=text]');
+    var hInv = parseFloat(nums[1] ? nums[1].value : 0) || 0;
+    var hRest = parseFloat(nums[2] ? nums[2].value : 0) || 0;
+    var valor = parseFloat(nums[3] ? nums[3].value : 0) || 0;
+    var costInv = hInv * rate;
+    var costRest = hRest * rate;
+    var margen = valor - costInv - costRest;
+    var roi = (costInv + costRest) > 0 ? (margen / (costInv + costRest) * 100).toFixed(1) : '—';
+    var costEl = tr.querySelector('[data-cost]');
+    var marEl = tr.querySelector('[data-margin]');
+    var roiEl = tr.querySelector('[data-roi]');
+    if (costEl) costEl.textContent = costRest.toFixed(2);
+    if (marEl) marEl.textContent = margen.toFixed(2);
+    if (roiEl) roiEl.textContent = roi !== '—' ? roi + '%' : '—';
+    totalHPend += hRest;
+    totalCostPend += costRest;
+    totalValor += valor;
+    var sel = tr.querySelector('select');
+    if (sel && sel.value === 'Cancelar') cancelar++;
+    var ratio = hRest > 0 ? valor / hRest : (valor > 0 ? 999999 : 0);
+    projects.push({ name: nameEl ? nameEl.value || '(sin nombre)' : '(sin nombre)', ratio: ratio, valor: valor, hRest: hRest });
+  });
+
+  var sorted = projects.slice().sort(function(a, b) { return b.ratio - a.ratio; });
+  var rb = document.getElementById('rankingBox');
+  if (sorted.length === 0) {
+    rb.innerHTML = '<em style="color:#888;font-size:.85rem">Anade proyectos para ver el ranking</em>';
+  } else {
+    rb.innerHTML = sorted.map(function(p, i) {
+      return '<div class="rank-item"><div class="rank-num">' + (i+1) + '</div><div><strong>' + p.name + '</strong><span style="color:#666;font-size:.8rem;margin-left:8px">Valor: ' + p.valor.toFixed(0) + 'EUR · H.rest.: ' + p.hRest + 'h · Ratio: ' + (p.hRest > 0 ? (p.valor/p.hRest).toFixed(1) : 'sin h') + '</span></div></div>';
+    }).join('');
+  }
+
+  document.getElementById('c1').textContent = rows.length;
+  document.getElementById('c2').textContent = totalHPend.toFixed(1) + 'h';
+  document.getElementById('c3').textContent = totalCostPend.toFixed(0) + '€';
+  document.getElementById('c4').textContent = totalValor.toFixed(0) + '€';
+  document.getElementById('c5').textContent = cancelar;
+}
+
+for (var i = 0; i < 3; i++) addRow();
+</script>
+</body>
+</html>

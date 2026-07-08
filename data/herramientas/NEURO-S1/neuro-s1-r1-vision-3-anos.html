@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASFRAME | NEURO-S1 — Canvas Visión 3 Años</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B;min-height:100vh}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:1.4rem;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-center{display:flex;flex-direction:column;align-items:center;gap:4px}
+.symptom-label{font-size:.8rem;color:#C4A55A;letter-spacing:2px;text-transform:uppercase}
+.tool-name{font-size:1.1rem;font-weight:700;color:#fff}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:.7rem;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+main{max-width:1100px;margin:32px auto;padding:0 24px}
+.section-title{font-size:1.1rem;font-weight:700;color:#1B2B4B;margin:28px 0 12px;border-left:4px solid #C4A55A;padding-left:12px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:16px}
+th{background:#1B2B4B;color:#C4A55A;padding:11px 14px;text-align:left;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+td{padding:9px 12px;border-bottom:1px solid #eee;font-size:.9rem}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+input[type=number],input[type=text]{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;font-family:inherit;color:#1B2B4B;background:#f8f7ff}
+input[type=number]:focus,input[type=text]:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+.calc-field{background:#e8eaf0;color:#555;cursor:not-allowed}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:6px;font-weight:700;font-size:.85rem;cursor:pointer;transition:background .2s}
+.btn:hover{background:#b8943e}
+.btn-print{background:#1B2B4B;color:#C4A55A;margin-left:8px}
+.btn-print:hover{background:#243554}
+.btn-row{margin:8px 0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0}
+.card{background:#fff;border:2px solid #C4A55A;border-radius:10px;padding:18px 20px;text-align:center}
+.card-label{font-size:.75rem;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-value{font-size:1.6rem;font-weight:800;color:#C4A55A;line-height:1.2}
+.sem-row{display:flex;align-items:center;gap:14px;background:#fff;border-radius:8px;padding:16px 20px;margin:12px 0;box-shadow:0 2px 8px rgba(27,43,75,.08)}
+.sem-label{font-weight:700;color:#1B2B4B;font-size:.95rem;white-space:nowrap}
+.dot{width:26px;height:26px;border-radius:50%;display:inline-block;border:2px solid rgba(0,0,0,.1);flex-shrink:0}
+.g{background:#22c55e}.y{background:#eab308}.r{background:#ef4444}.grey{background:#d1d5db}
+.sem-desc{font-size:.85rem;color:#555}
+.dash{text-align:center;color:#aaa;font-weight:700}
+@media print{.btn,.btn-print,.btn-row{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <div class="symptom-label">NEURO-S1 — Amnesia Estratégica</div>
+    <div class="tool-name">Canvas Visión 3 Años</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</header>
+<main>
+  <div class="section-title">Canvas de Visión a 3 Años</div>
+  <div class="sem-row">
+    <span class="sem-label">Semáforo global:</span>
+    <span class="dot grey" id="sem-dot"></span>
+    <span class="sem-desc" id="sem-desc">Introduce datos para calcular</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:22%">Métrica</th>
+        <th style="width:20%">Hoy</th>
+        <th style="width:20%">Objetivo 3 años</th>
+        <th style="width:18%">Gap</th>
+        <th style="width:20%">Crecimiento requerido %</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <div class="btn-row">
+    <button class="btn" onclick="addRow()">+ Añadir fila</button>
+    <button class="btn btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+  <div class="section-title">Resumen Ejecutivo</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">Gap Facturación (€)</div><div class="card-value" id="c-gap">—</div></div>
+    <div class="card"><div class="card-label">CAGR implícito %</div><div class="card-value" id="c-cagr">—</div></div>
+    <div class="card"><div class="card-label">Métricas definidas</div><div class="card-value" id="c-mets">0</div></div>
+    <div class="card"><div class="card-label">Crecimiento promedio %</div><div class="card-value" id="c-avg">—</div></div>
+  </div>
+</main>
+<script>
+const INIT=[
+  {label:"Facturación (€)",type:"num"},
+  {label:"Nº clientes",type:"num"},
+  {label:"Tamaño equipo",type:"num"},
+  {label:"Posicionamiento",type:"txt"},
+  {label:"Métrica éxito 1",type:"num"},
+  {label:"Métrica éxito 2",type:"num"},
+  {label:"Métrica éxito 3",type:"num"},
+];
+let rc=0;
+function f(n,dec=1){return isFinite(n)?n.toLocaleString('es-ES',{maximumFractionDigits:dec}):'—'}
+function makeRow(label,type){
+  const tr=document.createElement('tr');
+  tr.dataset.t=type;
+  if(type==='num'){
+    tr.innerHTML=`<td><input type="text" class="mn" value="${label}" placeholder="Métrica" oninput="recalc()"></td>
+      <td><input type="number" class="vh" placeholder="0" oninput="recalc()"></td>
+      <td><input type="number" class="vo" placeholder="0" oninput="recalc()"></td>
+      <td><input type="number" class="vg calc-field" readonly></td>
+      <td><input type="number" class="vp calc-field" readonly></td>`;
+  } else {
+    tr.innerHTML=`<td><input type="text" class="mn" value="${label}" placeholder="Métrica" oninput="recalc()"></td>
+      <td><input type="text" class="vh" placeholder="Estado actual" oninput="recalc()"></td>
+      <td><input type="text" class="vo" placeholder="Estado objetivo" oninput="recalc()"></td>
+      <td class="dash">—</td><td class="dash">—</td>`;
+  }
+  return tr;
+}
+function addRow(){document.getElementById('tbody').appendChild(makeRow('Nueva métrica','num'));recalc();}
+function recalc(){
+  const rows=[...document.querySelectorAll('#tbody tr')];
+  let pcts=[],mets=0,fh=NaN,fo=NaN;
+  rows.forEach((tr,i)=>{
+    const nm=tr.querySelector('.mn')?.value.trim()||'';
+    if(nm)mets++;
+    if(tr.dataset.t==='num'){
+      const h=parseFloat(tr.querySelector('.vh')?.value);
+      const o=parseFloat(tr.querySelector('.vo')?.value);
+      const gap=o-h;
+      const pct=h!==0?(gap/h)*100:NaN;
+      tr.querySelector('.vg').value=isFinite(gap)?gap.toFixed(2):'';
+      tr.querySelector('.vp').value=isFinite(pct)?pct.toFixed(1):'';
+      if(isFinite(pct))pcts.push(pct);
+      if(i===0){fh=h;fo=o;}
+    }
+  });
+  const avg=pcts.length?pcts.reduce((a,b)=>a+b,0)/pcts.length:NaN;
+  const dot=document.getElementById('sem-dot');
+  const desc=document.getElementById('sem-desc');
+  dot.className='dot';
+  if(!isFinite(avg)){dot.classList.add('grey');desc.textContent='Introduce datos para calcular';}
+  else if(avg>50){dot.classList.add('g');desc.textContent=`Crecimiento promedio ${f(avg)}% — Visión ambiciosa ✔`;}
+  else if(avg>=20){dot.classList.add('y');desc.textContent=`Crecimiento promedio ${f(avg)}% — Visión moderada`;}
+  else{dot.classList.add('r');desc.textContent=`Crecimiento promedio ${f(avg)}% — Visión conservadora, revisa objetivos`;}
+  const gapFac=fo-fh;
+  document.getElementById('c-gap').textContent=isFinite(gapFac)?f(gapFac,0)+' €':'—';
+  let cagr=NaN;
+  if(fh>0&&fo>0)cagr=(Math.pow(fo/fh,1/3)-1)*100;
+  document.getElementById('c-cagr').textContent=isFinite(cagr)?f(cagr)+'%':'—';
+  document.getElementById('c-mets').textContent=mets;
+  document.getElementById('c-avg').textContent=isFinite(avg)?f(avg)+'%':'—';
+}
+(function init(){const tb=document.getElementById('tbody');INIT.forEach(r=>tb.appendChild(makeRow(r.label,r.type)));recalc();})();
+</script>
+</body>
+</html>

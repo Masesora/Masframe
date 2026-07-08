@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis de Frecuencia de Errores — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  svg text { font-family: system-ui, sans-serif; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S3 — Fuga de Calidad Crónica</div>
+    <div class="header-title">R1 — Análisis de Frecuencia de Errores</div>
+    <div class="header-sub">Identificación y coste de errores recurrentes en el proceso</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Total Errores Registrados</div>
+      <div class="metric-value" id="m-total">0</div>
+      <div class="metric-unit">tipos de error</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Error Más Frecuente</div>
+      <div class="metric-value" id="m-top" style="font-size:0.95rem">—</div>
+      <div class="metric-unit">mayor número de ocurrencias</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Coste Total Retrabajo</div>
+      <div class="metric-value" id="m-coste">0 €</div>
+      <div class="metric-unit">impacto económico</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Sin Protocolo</div>
+      <div class="metric-value" id="m-sinprot">0%</div>
+      <div class="metric-unit">errores sin prevención</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Registro de Errores</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo de error</th>
+          <th>Fase del proceso</th>
+          <th style="width:80px">Nº ocurrencias</th>
+          <th style="width:110px">Detectado por</th>
+          <th style="width:90px">T. retrabajo (h)</th>
+          <th style="width:80px">Coste hora (€)</th>
+          <th style="width:90px">Coste (€)</th>
+          <th style="width:90px">¿Protocolo prev.?</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="ejemplo">
+          <td><input value="Datos incorrectos en informe" oninput="updateAll()"></td>
+          <td><input value="Elaboración" oninput="updateAll()"></td>
+          <td><input type="number" value="12" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>cliente</option><option selected>equipo</option><option>revisión</option></select></td>
+          <td><input type="number" value="1.5" oninput="updateAll()"></td>
+          <td><input type="number" value="30" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Error en precio propuesta" oninput="updateAll()"></td>
+          <td><input value="Comercial" oninput="updateAll()"></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>cliente</option><option>equipo</option><option>revisión</option></select></td>
+          <td><input type="number" value="2" oninput="updateAll()"></td>
+          <td><input type="number" value="35" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Entrega fuera de plazo" oninput="updateAll()"></td>
+          <td><input value="Operaciones" oninput="updateAll()"></td>
+          <td><input type="number" value="5" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>cliente</option><option>equipo</option><option>revisión</option></select></td>
+          <td><input type="number" value="0.5" oninput="updateAll()"></td>
+          <td><input type="number" value="40" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Documento sin firmar" oninput="updateAll()"></td>
+          <td><input value="Cierre" oninput="updateAll()"></td>
+          <td><input type="number" value="15" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>cliente</option><option>equipo</option><option selected>revisión</option></select></td>
+          <td><input type="number" value="0.25" oninput="updateAll()"></td>
+          <td><input type="number" value="25" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Fallo en cálculo de factura" oninput="updateAll()"></td>
+          <td><input value="Facturación" oninput="updateAll()"></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>cliente</option><option>equipo</option><option>revisión</option></select></td>
+          <td><input type="number" value="1" oninput="updateAll()"></td>
+          <td><input type="number" value="30" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir error</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Diagrama de Pareto — Errores por Frecuencia</div>
+    <div id="pareto-container"></div>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s3-r1-frecuencia-errores · Herramienta Operativa UNI-S3-R1</div>
+
+<script>
+function addRow() {
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Tipo de error" oninput="updateAll()"></td>
+    <td><input placeholder="Fase" oninput="updateAll()"></td>
+    <td><input type="number" value="1" oninput="updateAll()"></td>
+    <td><select onchange="updateAll()"><option>cliente</option><option>equipo</option><option>revisión</option></select></td>
+    <td><input type="number" value="0.5" oninput="updateAll()"></td>
+    <td><input type="number" value="30" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>No</option></select></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  const rows = document.querySelectorAll('#tbody tr');
+  let total = 0, costeTotal = 0, sinProtocolo = 0;
+  const items = [];
+
+  rows.forEach(tr => {
+    const cols = tr.querySelectorAll('input, select');
+    const nombre = cols[0].value || '(sin nombre)';
+    const ocurrencias = parseFloat(cols[2].value) || 0;
+    const tRetrabajo = parseFloat(cols[4].value) || 0;
+    const costeH = parseFloat(cols[5].value) || 0;
+    const coste = ocurrencias * tRetrabajo * costeH;
+    cols[6].value = coste.toFixed(2);
+    total++;
+    costeTotal += coste;
+    if (cols[7].value === 'No') sinProtocolo++;
+    items.push({ nombre, ocurrencias, coste });
+  });
+
+  items.sort((a, b) => b.ocurrencias - a.ocurrencias);
+  const topError = items.length > 0 ? items[0].nombre : '—';
+  const pctSinProt = total > 0 ? ((sinProtocolo / total) * 100).toFixed(0) : 0;
+
+  document.getElementById('m-total').textContent = total;
+  document.getElementById('m-top').textContent = topError.length > 20 ? topError.slice(0, 18) + '…' : topError;
+  document.getElementById('m-coste').textContent = costeTotal.toFixed(0) + ' €';
+  document.getElementById('m-sinprot').textContent = pctSinProt + '%';
+
+  // Pareto chart
+  renderPareto(items);
+}
+
+function renderPareto(items) {
+  const container = document.getElementById('pareto-container');
+  if (items.length === 0) { container.innerHTML = ''; return; }
+  const maxOcurr = Math.max(...items.map(i => i.ocurrencias), 1);
+  const totalOcurr = items.reduce((s, i) => s + i.ocurrencias, 0);
+  const W = 700, H = 220, PAD = { top: 20, right: 60, bottom: 60, left: 50 };
+  const chartW = W - PAD.left - PAD.right;
+  const chartH = H - PAD.top - PAD.bottom;
+  const barW = Math.max(20, Math.floor(chartW / items.length) - 6);
+
+  let cumPct = 0;
+  let bars = '', lines = '', dots = '', labels = '';
+  const points = [];
+
+  items.forEach((it, i) => {
+    const x = PAD.left + i * (chartW / items.length) + (chartW / items.length - barW) / 2;
+    const bh = (it.ocurrencias / maxOcurr) * chartH;
+    const by = PAD.top + chartH - bh;
+    const fill = i < 3 ? '#C4A55A' : '#1B2B4B';
+    bars += `<rect x="${x}" y="${by}" width="${barW}" height="${bh}" fill="${fill}" rx="3"/>`;
+    bars += `<text x="${x + barW/2}" y="${by - 5}" text-anchor="middle" font-size="11" fill="#1B2B4B" font-weight="700">${it.ocurrencias}</text>`;
+
+    const labelX = x + barW / 2;
+    const labelY = PAD.top + chartH + 14;
+    const shortName = it.nombre.length > 14 ? it.nombre.slice(0, 13) + '…' : it.nombre;
+    labels += `<text x="${labelX}" y="${labelY}" text-anchor="middle" font-size="10" fill="#555" transform="rotate(-30 ${labelX} ${labelY})">${shortName}</text>`;
+
+    cumPct += (it.ocurrencias / totalOcurr) * 100;
+    const px = x + barW / 2;
+    const py = PAD.top + chartH - (cumPct / 100) * chartH;
+    points.push([px, py]);
+  });
+
+  if (points.length > 1) {
+    lines = `<polyline points="${points.map(p => p.join(',')).join(' ')}" fill="none" stroke="#e53e3e" stroke-width="2"/>`;
+    dots = points.map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="#e53e3e"/>`).join('');
+  }
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;display:block;margin:0 auto">
+      <line x1="${PAD.left}" y1="${PAD.top}" x2="${PAD.left}" y2="${PAD.top+chartH}" stroke="#ccc" stroke-width="1"/>
+      <line x1="${PAD.left}" y1="${PAD.top+chartH}" x2="${PAD.left+chartW}" y2="${PAD.top+chartH}" stroke="#ccc" stroke-width="1"/>
+      ${bars}${lines}${dots}${labels}
+      <text x="${PAD.left-8}" y="${PAD.top+chartH/2}" text-anchor="middle" font-size="10" fill="#888" transform="rotate(-90 ${PAD.left-8} ${PAD.top+chartH/2})">Ocurrencias</text>
+      <text x="${W-10}" y="${PAD.top+chartH/2}" text-anchor="middle" font-size="10" fill="#e53e3e" transform="rotate(90 ${W-10} ${PAD.top+chartH/2})">% Acumulado</text>
+      <text x="${W/2}" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2B4B">Pareto — Errores por frecuencia</text>
+    </svg>
+    <p style="font-size:0.75rem;color:#888;text-align:center;margin-top:4px">Barras doradas = top 3 errores. Línea roja = % acumulado.</p>`;
+}
+
+updateAll();
+</script>
+</body>
+</html>

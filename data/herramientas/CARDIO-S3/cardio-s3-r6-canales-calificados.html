@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis de Canales con Leads Calificados — CARDIO-S3</title>
+<style>
+  :root {
+    --navy: #1B2B4B;
+    --gold: #C4A55A;
+    --bg: #f8f7ff;
+    --white: #fff;
+    --red: #e74c3c;
+    --yellow: #f39c12;
+    --green: #27ae60;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: var(--bg); color: #222; }
+
+  header {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .header-left .brand { color: var(--gold); font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; }
+  .header-left .symptom { color: #fff; font-size: 0.78rem; display: block; margin-top: 2px; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .header-right .tool-name { color: #fff; font-size: 0.95rem; font-weight: 600; }
+  .badge-op {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  main { max-width: 1280px; margin: 0 auto; padding: 28px 20px 100px; }
+  h2 { color: var(--navy); font-size: 1.1rem; margin: 32px 0 14px; border-bottom: 2px solid var(--gold); padding-bottom: 6px; }
+
+  .table-wrap { overflow-x: auto; margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+  thead th {
+    background: var(--navy);
+    color: #fff;
+    padding: 9px 8px;
+    font-size: 0.76rem;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 8px 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.84rem;
+    vertical-align: middle;
+  }
+  tbody tr:hover { background: #f2f0fa; }
+  tbody input[type="text"], tbody input[type="number"] {
+    width: 100%;
+    padding: 5px 6px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.83rem;
+    font-family: system-ui;
+  }
+
+  /* Auto-calc cells */
+  .auto-cell {
+    font-weight: 700;
+    font-size: 0.86rem;
+    white-space: nowrap;
+  }
+
+  /* Badge */
+  .badge-mantener {
+    background: var(--green);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .badge-optimizar {
+    background: var(--yellow);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .badge-abandonar {
+    background: var(--red);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  /* Rank badges */
+  .rank-gold {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-block;
+  }
+  .rank-plain {
+    color: #777;
+    font-size: 0.82rem;
+    font-weight: 600;
+    display: inline-block;
+    padding: 3px 6px;
+  }
+
+  .btn-add {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.87rem;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .btn-add:hover { opacity: 0.88; }
+  .btn-del {
+    background: #f0f0f0;
+    border: none;
+    color: var(--red);
+    padding: 4px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  /* Summary cards */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  .sum-card {
+    background: var(--white);
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .sum-card .sum-label { font-size: 0.75rem; color: #666; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sum-card .sum-value { font-size: 1.25rem; font-weight: 700; color: var(--navy); }
+  .sum-card .sum-sub { font-size: 0.8rem; color: #555; margin-top: 4px; }
+
+  .btn-print {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+  .btn-print:hover { opacity: 0.9; }
+
+  @media print {
+    .btn-print, .btn-add, .btn-del { display: none; }
+    body { background: #fff; }
+    header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="brand">MASFRAME</span>
+    <span class="symptom">CARDIO-S3 · Calidad del cliente captado</span>
+  </div>
+  <div class="header-right">
+    <span class="tool-name">Análisis de Canales con Leads Calificados</span>
+    <span class="badge-op">Herramienta Operativa</span>
+  </div>
+</header>
+
+<main>
+
+  <h2>Canales de captación</h2>
+  <div class="table-wrap">
+    <table id="canales-table">
+      <thead>
+        <tr>
+          <th style="min-width:110px;">Canal</th>
+          <th style="min-width:100px;">Leads totales/mes</th>
+          <th style="min-width:110px;">Leads calificados/mes</th>
+          <th style="min-width:100px;">% Calificados</th>
+          <th style="min-width:100px;">Clientes cerrados</th>
+          <th style="min-width:130px;">Tasa conv. cal.→cli. %</th>
+          <th style="min-width:100px;">Ticket medio €</th>
+          <th style="min-width:110px;">Coste canal €/mes</th>
+          <th style="min-width:100px;">Coste/cliente €</th>
+          <th style="min-width:80px;">ROI %</th>
+          <th style="min-width:100px;">Badge</th>
+          <th style="min-width:70px;">Rank</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="canales-body"></tbody>
+    </table>
+  </div>
+  <button class="btn-add" onclick="addCanalRow()">+ Añadir canal</button>
+
+  <!-- Summary cards -->
+  <h2>Resumen diagnóstico</h2>
+  <div class="summary-grid">
+    <div class="sum-card">
+      <div class="sum-label">Canal mayor calidad de leads</div>
+      <div class="sum-value" id="sc_calidad">—</div>
+      <div class="sum-sub" id="sc_calidad_sub"></div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Canal más rentable</div>
+      <div class="sum-value" id="sc_rentable">—</div>
+      <div class="sum-sub" id="sc_rentable_sub"></div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">% Medio calificación global</div>
+      <div class="sum-value" id="sc_medio_cal">—</div>
+    </div>
+  </div>
+
+</main>
+
+<button class="btn-print" onclick="window.print()">Imprimir / PDF</button>
+
+<script>
+  const prefill = [
+    { canal: "LinkedIn",    totales: 40, calificados: 18, cerrados: 6, ticket: 2500, coste: 800 },
+    { canal: "Boca a boca", totales: 20, calificados: 15, cerrados: 8, ticket: 2800, coste: 0   },
+    { canal: "Eventos",     totales: 30, calificados: 8,  cerrados: 2, ticket: 2000, coste: 600 },
+  ];
+
+  function safe(v, fallback) { return (isNaN(v) || !isFinite(v)) ? fallback : v; }
+  function pct(a, b) { return b > 0 ? (a / b * 100) : 0; }
+  function formatN(v, dec) { return safe(v, 0).toLocaleString('es-ES', { minimumFractionDigits: dec, maximumFractionDigits: dec }); }
+  function formatEur(v) { return formatN(safe(v,0), 0) + ' €'; }
+  function formatPct(v) { return formatN(safe(v,0), 1) + '%'; }
+
+  function addCanalRow(data) {
+    const tbody = document.getElementById('canales-body');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text"   class="c-canal"       value="${data ? esc(data.canal) : ''}"       placeholder="Nombre canal"></td>
+      <td><input type="number" class="c-totales"     value="${data ? data.totales : ''}"     min="0" placeholder="0"></td>
+      <td><input type="number" class="c-calificados" value="${data ? data.calificados : ''}" min="0" placeholder="0"></td>
+      <td><span class="auto-cell c-pct-cal">—</span></td>
+      <td><input type="number" class="c-cerrados"    value="${data ? data.cerrados : ''}"    min="0" placeholder="0"></td>
+      <td><span class="auto-cell c-tasa-conv">—</span></td>
+      <td><input type="number" class="c-ticket"      value="${data ? data.ticket : ''}"      min="0" placeholder="0"></td>
+      <td><input type="number" class="c-coste"       value="${data ? data.coste : ''}"       min="0" placeholder="0"></td>
+      <td><span class="auto-cell c-coste-cli">—</span></td>
+      <td><span class="auto-cell c-roi">—</span></td>
+      <td><span class="c-badge">—</span></td>
+      <td><span class="c-rank">—</span></td>
+      <td><button class="btn-del" onclick="this.closest('tr').remove(); recalcAll();">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    tr.querySelectorAll('input').forEach(el => el.addEventListener('input', recalcAll));
+    recalcAll();
+  }
+
+  function calcRow(tr) {
+    const totales     = parseFloat(tr.querySelector('.c-totales').value)     || 0;
+    const calificados = parseFloat(tr.querySelector('.c-calificados').value) || 0;
+    const cerrados    = parseFloat(tr.querySelector('.c-cerrados').value)    || 0;
+    const ticket      = parseFloat(tr.querySelector('.c-ticket').value)      || 0;
+    const coste       = parseFloat(tr.querySelector('.c-coste').value)       || 0;
+
+    const pctCal    = pct(calificados, totales);
+    const tasaConv  = pct(cerrados, calificados);
+    const costeCli  = cerrados > 0 ? coste / cerrados : coste;
+    const roi       = coste > 0
+      ? ((cerrados * ticket - coste) / coste * 100)
+      : (cerrados * ticket > 0 ? Infinity : 0);
+    const qualScore = pctCal * tasaConv;
+
+    tr.querySelector('.c-pct-cal').textContent   = formatPct(pctCal);
+    tr.querySelector('.c-tasa-conv').textContent  = formatPct(tasaConv);
+    tr.querySelector('.c-coste-cli').textContent  = formatEur(costeCli);
+
+    const roiEl = tr.querySelector('.c-roi');
+    if (!isFinite(roi)) {
+      roiEl.textContent = '∞';
+      roiEl.style.color = 'var(--green)';
+    } else {
+      roiEl.textContent = formatPct(roi);
+      roiEl.style.color = roi >= 0 ? 'var(--green)' : 'var(--red)';
+    }
+
+    // Badge logic
+    const roiNum = isFinite(roi) ? roi : 9999;
+    let badgeClass, badgeText;
+    if (pctCal > 30 && roiNum > 0) {
+      badgeClass = 'badge-mantener'; badgeText = 'Mantener';
+    } else if (pctCal > 15) {
+      badgeClass = 'badge-optimizar'; badgeText = 'Optimizar';
+    } else {
+      badgeClass = 'badge-abandonar'; badgeText = 'Abandonar';
+    }
+    const badgeEl = tr.querySelector('.c-badge');
+    badgeEl.className = 'c-badge';
+    const span = document.createElement('span');
+    span.className = badgeClass;
+    span.textContent = badgeText;
+    badgeEl.innerHTML = '';
+    badgeEl.appendChild(span);
+
+    return { pctCal, tasaConv, roi: roiNum, qualScore, canal: tr.querySelector('.c-canal').value || '—' };
+  }
+
+  function recalcAll() {
+    const rows = Array.from(document.querySelectorAll('#canales-body tr'));
+    const data = rows.map(tr => ({ tr, ...calcRow(tr) }));
+
+    // Rank by qualScore desc
+    const sorted = [...data].sort((a, b) => b.qualScore - a.qualScore);
+    data.forEach(d => {
+      const rank = sorted.findIndex(s => s.tr === d.tr) + 1;
+      const rankEl = d.tr.querySelector('.c-rank');
+      rankEl.innerHTML = '';
+      const span = document.createElement('span');
+      if (rank <= 3) {
+        span.className = 'rank-gold';
+        span.textContent = '#' + rank;
+      } else {
+        span.className = 'rank-plain';
+        span.textContent = '#' + rank;
+      }
+      rankEl.appendChild(span);
+    });
+
+    // Summary
+    if (data.length === 0) {
+      document.getElementById('sc_calidad').textContent = '—';
+      document.getElementById('sc_calidad_sub').textContent = '';
+      document.getElementById('sc_rentable').textContent = '—';
+      document.getElementById('sc_rentable_sub').textContent = '';
+      document.getElementById('sc_medio_cal').textContent = '—';
+      return;
+    }
+
+    // Canal mayor calidad (highest qualScore)
+    const bestQual = sorted[0];
+    document.getElementById('sc_calidad').textContent = bestQual.canal;
+    document.getElementById('sc_calidad_sub').textContent =
+      'Score calidad: ' + formatN(bestQual.qualScore, 1);
+
+    // Canal más rentable (highest ROI)
+    const bestRoi = [...data].sort((a, b) => b.roi - a.roi)[0];
+    document.getElementById('sc_rentable').textContent = bestRoi.canal;
+    document.getElementById('sc_rentable_sub').textContent =
+      'ROI: ' + (isFinite(bestRoi.roi) ? formatPct(bestRoi.roi) : '∞');
+
+    // % medio calificación global
+    let sumTotales = 0, sumCalificados = 0;
+    rows.forEach(tr => {
+      sumTotales     += parseFloat(tr.querySelector('.c-totales').value)     || 0;
+      sumCalificados += parseFloat(tr.querySelector('.c-calificados').value) || 0;
+    });
+    const medioCal = pct(sumCalificados, sumTotales);
+    document.getElementById('sc_medio_cal').textContent = formatPct(medioCal);
+  }
+
+  function esc(s) { return (s || '').replace(/"/g, '&quot;'); }
+
+  // Init
+  prefill.forEach(d => addCanalRow(d));
+</script>
+</body>
+</html>

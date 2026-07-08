@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TER-S3 R5 — Pipeline de Nuevos Servicios y Propuestas</title>
+<style>
+  :root { --navy: #1B2B4B; --gold: #C4A55A; --bg: #f8f7ff; --white: #ffffff; --red: #c0392b; --yellow: #f39c12; --green: #27ae60; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--navy); padding: 24px; }
+  header { background: var(--navy); color: var(--white); padding: 20px 28px; border-radius: 10px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { font-size: 1.3rem; font-weight: 700; }
+  header p { font-size: 0.85rem; opacity: 0.75; margin-top: 4px; }
+  .badge { background: var(--gold); color: var(--navy); font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+  .metrics { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .metric { background: var(--white); border: 1px solid #ddd; border-radius: 8px; padding: 16px 22px; flex: 1; min-width: 160px; }
+  .metric .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+  .metric .value { font-size: 1.8rem; font-weight: 700; color: var(--navy); margin-top: 4px; }
+  .metric.gold .value { color: var(--gold); }
+  .metric.green .value { color: var(--green); }
+  .toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  button { background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; cursor: pointer; font-family: system-ui; }
+  button:hover { background: var(--gold); color: var(--navy); }
+  button.secondary { background: var(--white); color: var(--navy); border: 1px solid #ccc; }
+  button.secondary:hover { background: var(--bg); }
+  button.print-btn { background: var(--gold); color: var(--navy); font-weight: 700; }
+  .table-wrap { overflow-x: auto; background: var(--white); border-radius: 10px; border: 1px solid #ddd; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+  thead th { background: var(--navy); color: var(--white); padding: 11px 10px; text-align: left; white-space: nowrap; }
+  thead th:first-child { border-radius: 10px 0 0 0; }
+  thead th:last-child { border-radius: 0 10px 0 0; }
+  tbody tr { border-bottom: 1px solid #eee; }
+  tbody tr:hover { background: #f0f4ff; }
+  tbody tr.top3 { background: #fffbf0; }
+  tbody tr.top3 td { font-weight: 600; }
+  tbody tr.top3-first { border: 3px solid var(--gold); }
+  td { padding: 9px 10px; vertical-align: middle; }
+  td input, td select { border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: system-ui; font-size: 0.85rem; background: var(--bg); width: 100%; }
+  td input[type="number"] { width: 75px; }
+  td input:focus, td select:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
+  .calc-cell { font-weight: 700; text-align: center; }
+  .rank-badge { display: inline-block; background: var(--gold); color: var(--navy); font-size: 0.72rem; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+  .note { font-size: 0.78rem; color: #555; font-style: italic; }
+  @media print { button, .toolbar { display: none; } body { padding: 10px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>TER-S3 R5 — Pipeline de Nuevos Servicios y Propuestas</h1>
+    <p>Comoditización · Prioriza las ideas con mayor retorno y menor esfuerzo</p>
+  </div>
+  <span class="badge">TER-S3</span>
+</header>
+
+<div class="metrics">
+  <div class="metric gold"><div class="label">Pipeline total (€/mes)</div><div class="value" id="m-pipeline">—</div></div>
+  <div class="metric green"><div class="label">Top 1 — Score prioridad</div><div class="value" id="m-top1">—</div></div>
+  <div class="metric"><div class="label">Ideas en pipeline</div><div class="value" id="m-total">—</div></div>
+  <div class="metric"><div class="label">Ingr. potencial top 3 (€/mes)</div><div class="value" id="m-top3ing" style="color:var(--gold)">—</div></div>
+</div>
+
+<div class="toolbar">
+  <button onclick="addRow()">+ Añadir idea</button>
+  <button class="secondary" onclick="sortByScore()">↓ Ordenar por Score</button>
+  <button class="secondary" onclick="recalcAll()">↻ Recalcular</button>
+  <button class="print-btn" onclick="window.print()">🖨 Imprimir</button>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Idea / Servicio</th>
+      <th>Origen</th>
+      <th>Problema que resuelve</th>
+      <th>Segmento</th>
+      <th>Demanda est. (clientes/mes)</th>
+      <th>Precio (€)</th>
+      <th>Ingresos potenciales (€/mes)</th>
+      <th>Esfuerzo (1-5)</th>
+      <th>Score prioridad</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+<p class="note">Ingresos potenciales = demanda × precio. Score prioridad = ingresos / esfuerzo. Top 3 resaltados; #1 con borde dorado.</p>
+
+<script>
+const DEFAULTS = [
+  {idea:"Auditoría express (1 día)",origen:"Feedback",problema:"No saben por dónde empezar",segmento:"Pymes",demanda:"8",precio:"500",esfuerzo:"2"},
+  {idea:"Formación online asíncrona",origen:"Tendencia",problema:"Coste alto formación presencial",segmento:"Autónomos",demanda:"20",precio:"150",esfuerzo:"4"},
+  {idea:"Retainer mensual premium",origen:"Equipo",problema:"Falta de acompañamiento continuo",segmento:"Empresas",demanda:"5",precio:"1800",esfuerzo:"3"},
+  {idea:"Toolkit implementación digital",origen:"Competencia",problema:"Implementan sin guía",segmento:"Pymes",demanda:"12",precio:"300",esfuerzo:"2"},
+  {idea:"Masterclass sector salud",origen:"Feedback",problema:"Falta formación específica",segmento:"Clínicas",demanda:"30",precio:"80",esfuerzo:"1"},
+];
+
+let rows = [];
+function init() { rows = DEFAULTS.map(r=>Object.assign({},r)); renderTable(); }
+
+function calcIngresos(r) {
+  const d = parseFloat(r.demanda), p = parseFloat(r.precio);
+  if (isNaN(d)||isNaN(p)) return null;
+  return d * p;
+}
+function calcScore(r) {
+  const ing = calcIngresos(r), e = parseFloat(r.esfuerzo);
+  if (ing===null||isNaN(e)||e===0) return null;
+  return ing / e;
+}
+
+function renderTable() {
+  // compute sorted indices for top3
+  const scored = rows.map((r,i)=>({i,s:calcScore(r)||0})).sort((a,b)=>b.s-a.s);
+  const top3idx = new Set(scored.slice(0,3).map(x=>x.i));
+  const top1idx = scored[0]?.i;
+
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = "";
+  rows.forEach((r,i) => {
+    const ing = calcIngresos(r);
+    const score = calcScore(r);
+    const isTop3 = top3idx.has(i);
+    const isTop1 = i === top1idx;
+    const tr = document.createElement("tr");
+    if (isTop1) tr.classList.add("top3","top3-first");
+    else if (isTop3) tr.classList.add("top3");
+    tr.innerHTML = `
+      <td>${i+1}${isTop3?` <span class="rank-badge">#${scored.findIndex(x=>x.i===i)+1}</span>`:""}</td>
+      <td><input value="${r.idea}" oninput="rows[${i}].idea=this.value" /></td>
+      <td><select onchange="rows[${i}].origen=this.value">
+        <option value="Feedback" ${r.origen==="Feedback"?"selected":""}>Feedback</option>
+        <option value="Tendencia" ${r.origen==="Tendencia"?"selected":""}>Tendencia</option>
+        <option value="Competencia" ${r.origen==="Competencia"?"selected":""}>Competencia</option>
+        <option value="Equipo" ${r.origen==="Equipo"?"selected":""}>Equipo</option>
+      </select></td>
+      <td><input value="${r.problema}" oninput="rows[${i}].problema=this.value" /></td>
+      <td><input value="${r.segmento}" oninput="rows[${i}].segmento=this.value" /></td>
+      <td><input type="number" min="0" value="${r.demanda}" oninput="rows[${i}].demanda=this.value;refresh()" /></td>
+      <td><input type="number" min="0" value="${r.precio}" oninput="rows[${i}].precio=this.value;refresh()" /></td>
+      <td class="calc-cell" id="ing-${i}">${ing!==null?"€"+ing.toLocaleString("es-ES"):"—"}</td>
+      <td><input type="number" min="1" max="5" value="${r.esfuerzo}" oninput="rows[${i}].esfuerzo=this.value;refresh()" /></td>
+      <td class="calc-cell" id="sc-${i}">${score!==null?score.toFixed(0):"—"}</td>
+      <td><button class="secondary" style="padding:4px 10px;font-size:0.78rem" onclick="removeRow(${i})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  updateMetrics(scored, top3idx);
+}
+
+function refresh() { renderTable(); }
+function recalcAll() { renderTable(); }
+
+function updateMetrics(scored, top3idx) {
+  const ings = rows.map(calcIngresos).filter(v=>v!==null);
+  const total = ings.reduce((a,b)=>a+b,0);
+  document.getElementById("m-pipeline").textContent = ings.length?"€"+total.toLocaleString("es-ES"):"—";
+  document.getElementById("m-total").textContent = rows.length;
+  const top1 = scored[0];
+  document.getElementById("m-top1").textContent = top1&&calcScore(rows[top1.i])!==null ? calcScore(rows[top1.i]).toFixed(0) : "—";
+  const top3ings = [...top3idx].map(i=>calcIngresos(rows[i])||0).reduce((a,b)=>a+b,0);
+  document.getElementById("m-top3ing").textContent = top3idx.size?"€"+top3ings.toLocaleString("es-ES"):"—";
+}
+
+function sortByScore() {
+  rows.sort((a,b)=>(calcScore(b)||0)-(calcScore(a)||0));
+  renderTable();
+}
+
+function addRow() { rows.push({idea:"",origen:"Feedback",problema:"",segmento:"",demanda:"",precio:"",esfuerzo:""}); renderTable(); }
+function removeRow(i) { rows.splice(i,1); renderTable(); }
+
+init();
+</script>
+</body>
+</html>

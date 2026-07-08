@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis de Comunicación del Equipo — MASFRAME</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .logo { width: 48px; height: 48px; background: #1B2B4B; border: 2px solid #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; color: #C4A55A; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 12px; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 20px; font-weight: 700; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; }
+  .section { background: white; margin: 24px 32px; border-radius: 12px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); overflow: hidden; }
+  .section-header { background: #1B2B4B; color: white; padding: 14px 20px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .section-body { padding: 20px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: #1B2B4B; color: #C4A55A; padding: 10px 8px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  tbody tr:nth-child(even) { background: #f0f0f8; }
+  tbody tr:nth-child(odd) { background: white; }
+  tbody td { padding: 6px 8px; vertical-align: middle; }
+  tbody td input[type="number"], tbody td input[type="text"] { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 4px 6px; font-size: 13px; background: transparent; }
+  tbody td select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 4px 6px; font-size: 13px; background: transparent; }
+  tbody td input:focus, tbody td select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .row-loweff td { background: #fee2e2 !important; }
+  .btn-add { background: white; border: 2px dashed #C4A55A; color: #1B2B4B; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: white; }
+  .btn-print { background: #1B2B4B; color: #C4A55A; border: none; padding: 12px 32px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 700; margin: 0 32px 32px; display: block; }
+  .btn-print:hover { background: #C4A55A; color: #1B2B4B; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; padding: 20px 32px; }
+  .card { background: white; border-radius: 12px; padding: 20px 24px; flex: 1; min-width: 180px; box-shadow: 0 2px 8px rgba(27,43,75,0.08); border-top: 4px solid #C4A55A; }
+  .card-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 8px; }
+  .card-value { font-size: 24px; font-weight: 800; color: #1B2B4B; }
+  .card-sub { font-size: 12px; color: #888; margin-top: 4px; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .dot-green { background: #22c55e; }
+  .dot-yellow { background: #eab308; }
+  .dot-red { background: #ef4444; }
+  .tipo-bars { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; }
+  .tipo-bar-row { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+  .tipo-bar { height: 8px; border-radius: 4px; background: #C4A55A; transition: width 0.3s; }
+  @media print {
+    .btn-add, .btn-print { display: none !important; }
+    .section { box-shadow: none; margin: 10px 0; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">M</div>
+  <div class="header-info">
+    <div class="header-symptom">RES-S2 — Conflictos de equipo</div>
+    <div class="header-title">Análisis de Comunicación del Equipo</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="section">
+  <div class="section-header">Sección 1 — Canales de Comunicación</div>
+  <div class="section-body">
+    <div class="table-wrap">
+      <table id="canalesTable">
+        <thead>
+          <tr>
+            <th style="min-width:140px">Canal</th>
+            <th style="min-width:120px">Frecuencia actual</th>
+            <th style="min-width:130px">¿Existe protocolo?</th>
+            <th style="min-width:140px">Tiempo invertido h/sem</th>
+            <th style="min-width:110px">Efectividad (1-5)</th>
+            <th style="min-width:200px">Principales malentendidos</th>
+          </tr>
+        </thead>
+        <tbody id="canalesBody">
+        </tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addCanalRow()">+ Añadir canal</button>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">Sección 2 — Incidencias de Comunicación</div>
+  <div class="section-body">
+    <div class="table-wrap">
+      <table id="incidenciasTable">
+        <thead>
+          <tr>
+            <th style="min-width:180px">Incidencia</th>
+            <th style="min-width:110px">Tipo</th>
+            <th style="min-width:100px">Impacto (1-5)</th>
+            <th style="min-width:180px">Causa</th>
+            <th style="min-width:180px">Resolución</th>
+          </tr>
+        </thead>
+        <tbody id="incidenciasBody">
+        </tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addIncRow()">+ Añadir incidencia</button>
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="card">
+    <div class="card-label">Total Tiempo en Comunicación</div>
+    <div class="card-value" id="totalTiempo">—</div>
+    <div class="card-sub">horas semanales en canales de comunicación</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Efectividad Media</div>
+    <div class="card-value" id="efectividadMedia"><span class="dot" id="dotEfec"></span>—</div>
+    <div class="card-sub">promedio de efectividad de canales (1-5)</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Total Incidencias</div>
+    <div class="card-value" id="totalIncidencias">—</div>
+    <div class="card-sub">registradas en este período</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Incidencias por Tipo</div>
+    <div class="card-value" style="font-size:13px" id="tipoDesglose">—</div>
+    <div class="card-sub">distribución por canal de origen</div>
+  </div>
+</div>
+
+<button class="btn-print" onclick="window.print()">Imprimir / Exportar PDF</button>
+
+<script>
+const seedCanales = [
+  ['Email interno', 'Diario', 'No', 3, 3, 'Respuestas tardías, hilos largos sin conclusión'],
+  ['Reunión semanal equipo', 'Semanal', 'Sí', 1.5, 4, 'Temas fuera de agenda'],
+  ['WhatsApp grupos', 'Varias veces/día', 'No', 2, 2, 'Mezcla de urgente y no urgente'],
+];
+
+const seedInc = [
+  ['Malentendido en cambio de prioridad', 'Verbal', 3, 'No se documentó el cambio', 'Reunión de aclaración y acta'],
+  ['Información no llegó a toda la cadena', 'Digital', 4, 'Canal sin protocolo definido', 'Redefinición del canal oficial'],
+  ['Conflicto por mensaje ambiguo', 'Escrito', 2, 'Falta de contexto en el mensaje', 'Revisión del protocolo escrito'],
+];
+
+function makeYNSelect(val) {
+  return `<select><option value="Sí"${val==='Sí'?' selected':''}>Sí</option><option value="No"${val==='No'?' selected':''}>No</option></select>`;
+}
+function makeTipoSelect(val) {
+  const opts = ['Verbal','Escrito','Digital','Reunión','Otro'];
+  return '<select>' + opts.map(o=>`<option value="${o}"${o===val?' selected':''}>${o}</option>`).join('') + '</select>';
+}
+
+function buildCanalRow(data) {
+  const [canal, freq, prot, tiempo, efect, malent] = data;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" value="${canal}" placeholder="Nombre del canal"></td>
+    <td><input type="text" value="${freq}" placeholder="ej. Diario, Semanal"></td>
+    <td>${makeYNSelect(prot)}</td>
+    <td><input type="number" min="0" max="40" step="0.5" value="${tiempo}" class="tiempoInput"></td>
+    <td><input type="number" min="1" max="5" value="${efect}" class="efectInput"></td>
+    <td><input type="text" value="${malent}" placeholder="Describe los principales malentendidos"></td>
+  `;
+  // highlight low effectiveness
+  if (efect <= 2) tr.classList.add('row-loweff');
+  return tr;
+}
+
+function buildIncRow(data) {
+  const [inc, tipo, imp, causa, resol] = data;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" value="${inc}" placeholder="Descripción de la incidencia"></td>
+    <td>${makeTipoSelect(tipo)}</td>
+    <td><input type="number" min="1" max="5" value="${imp}"></td>
+    <td><input type="text" value="${causa}" placeholder="Causa raíz"></td>
+    <td><input type="text" value="${resol}" placeholder="Cómo se resolvió"></td>
+  `;
+  return tr;
+}
+
+function addCanalRow() {
+  document.getElementById('canalesBody').appendChild(buildCanalRow(['', '', 'No', 0, 3, '']));
+  calc();
+}
+function addIncRow() {
+  document.getElementById('incidenciasBody').appendChild(buildIncRow(['', 'Digital', 2, '', '']));
+  calc();
+}
+
+function calc() {
+  // Canales
+  const cRows = document.getElementById('canalesBody').querySelectorAll('tr');
+  let totalT = 0, efecSum = 0, efecCount = 0;
+  cRows.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    const t = parseFloat(cells[3].querySelector('input').value) || 0;
+    const e = parseFloat(cells[4].querySelector('input').value) || 0;
+    totalT += t;
+    if (e) { efecSum += e; efecCount++; }
+    row.classList.remove('row-loweff');
+    if (e <= 2) row.classList.add('row-loweff');
+  });
+  const efecMed = efecCount > 0 ? (efecSum/efecCount).toFixed(1) : 0;
+
+  // Incidencias
+  const iRows = document.getElementById('incidenciasBody').querySelectorAll('tr');
+  const tipoCounts = {};
+  iRows.forEach(row => {
+    const tipo = row.querySelector('select').value;
+    tipoCounts[tipo] = (tipoCounts[tipo] || 0) + 1;
+  });
+
+  const dot = efecMed >= 4 ? 'green' : efecMed >= 3 ? 'yellow' : 'red';
+  document.getElementById('totalTiempo').textContent = totalT.toFixed(1) + ' h';
+  document.getElementById('dotEfec').className = `dot dot-${dot}`;
+  document.getElementById('efectividadMedia').innerHTML = `<span class="dot dot-${dot}"></span>${efecMed} / 5`;
+  document.getElementById('totalIncidencias').textContent = iRows.length;
+
+  const desglose = Object.entries(tipoCounts).map(([k,v]) => `${k}: ${v}`).join(' · ') || '—';
+  document.getElementById('tipoDesglose').textContent = desglose;
+}
+
+document.getElementById('canalesBody').append(...seedCanales.map(buildCanalRow));
+document.getElementById('incidenciasBody').append(...seedInc.map(buildIncRow));
+document.addEventListener('input', calc);
+calc();
+</script>
+</body>
+</html>

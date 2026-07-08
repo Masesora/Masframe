@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIR-S3 | Reputación en Buscadores — Control de Resultados</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 14px; }
+
+  /* HEADER */
+  .mas-header { background: #1B2B4B; padding: 18px 28px; display: flex; align-items: center; gap: 16px; }
+  .mas-logo { width: 44px; height: 44px; border-radius: 50%; background: #C4A55A; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+  .mas-header-text { flex: 1; }
+  .mas-header-symptom { color: #C4A55A; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2px; }
+  .mas-header-title { color: #ffffff; font-size: 18px; font-weight: 700; line-height: 1.2; }
+  .mas-badge { background: transparent; border: 1.5px solid #C4A55A; color: #C4A55A; font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
+
+  /* MAIN */
+  .container { max-width: 1300px; margin: 0 auto; padding: 24px 20px; }
+  .section-title { font-size: 13px; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #C4A55A; display: inline-block; }
+
+  /* TABLE */
+  .table-wrapper { overflow-x: auto; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 1px 6px rgba(27,43,75,0.10); }
+  table { width: 100%; border-collapse: collapse; background: #fff; min-width: 1100px; }
+  thead tr { background: #1B2B4B; }
+  thead th { color: #fff; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 10px; text-align: left; white-space: nowrap; }
+  tbody tr:nth-child(even) { background: #f0f4f8; }
+  tbody tr:nth-child(odd) { background: #ffffff; }
+  tbody tr:hover { background: #eaf0fa; }
+  td { padding: 8px 10px; font-size: 13px; color: #1B2B4B; vertical-align: middle; border-bottom: 1px solid #e8ecf2; }
+  td[contenteditable="true"] { outline: none; cursor: text; }
+  td[contenteditable="true"]:focus { background: #fffbe6; box-shadow: inset 0 0 0 2px #C4A55A; border-radius: 3px; }
+  select { border: 1px solid #c8d0dc; border-radius: 4px; padding: 4px 6px; font-size: 12px; color: #1B2B4B; background: #fff; width: 100%; }
+  select:focus { outline: none; border-color: #C4A55A; }
+
+  /* SEMAPHORE DOT */
+  .dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+  .dot-green { background: #22c55e; }
+  .dot-yellow { background: #f59e0b; }
+  .dot-red { background: #ef4444; }
+  .dot-grey { background: #94a3b8; }
+  td.col-status { text-align: center; width: 44px; }
+
+  /* METRICS */
+  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 24px 0; }
+  .metric-card { background: #fff; border-radius: 8px; border-top: 4px solid #1B2B4B; padding: 18px 20px; box-shadow: 0 1px 6px rgba(27,43,75,0.08); }
+  .metric-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 8px; }
+  .metric-value { font-size: 28px; font-weight: 800; color: #C4A55A; line-height: 1; }
+  .metric-value.red { color: #ef4444; }
+  .metric-value.green { color: #22c55e; }
+  .metric-sub { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
+  /* ADD ROW BUTTON */
+  .btn-add { display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 1.5px solid #1B2B4B; color: #1B2B4B; font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 6px; cursor: pointer; margin-bottom: 20px; transition: all 0.15s; }
+  .btn-add:hover { background: #1B2B4B; color: #fff; }
+
+  /* PRINT BUTTON */
+  .btn-print { display: inline-flex; align-items: center; gap: 8px; background: #C4A55A; border: none; color: #1B2B4B; font-size: 13px; font-weight: 700; padding: 10px 24px; border-radius: 6px; cursor: pointer; margin-top: 8px; }
+  .btn-print:hover { background: #b8944a; }
+
+  .actions-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+
+  @media print {
+    body { background: #fff; }
+    .btn-add, .btn-print, .actions-bar { display: none !important; }
+    .mas-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .metric-card { box-shadow: none; border: 1px solid #ddd; }
+    .table-wrapper { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="mas-header">
+  <div class="mas-logo">M</div>
+  <div class="mas-header-text">
+    <div class="mas-header-symptom">CIR-S3 · Reputación Dañada</div>
+    <div class="mas-header-title">Reputación en Buscadores — Control de Resultados</div>
+  </div>
+  <div class="mas-badge">Herramienta Operativa</div>
+</header>
+
+<div class="container">
+
+  <p class="section-title">Mapa de Resultados Google por Término</p>
+
+  <div class="table-wrapper">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Término de búsqueda</th>
+          <th>Posición 1 en Google</th>
+          <th>Posición 2</th>
+          <th>Posición 3</th>
+          <th>Posición 4</th>
+          <th>Posición 5</th>
+          <th>¿Controlamos pos.1?</th>
+          <th>Tipo resultado pos.1</th>
+          <th>Impacto (1-5)</th>
+          <th>Acción SEO reputacional</th>
+          <th>Responsable</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre empresa opiniones</td>
+          <td contenteditable="true">TrustPilot — 2.1 estrellas</td>
+          <td contenteditable="true">Google Maps — 3.4 estrellas</td>
+          <td contenteditable="true">Web propia (nosotros)</td>
+          <td contenteditable="true">Artículo blog externo</td>
+          <td contenteditable="true">Foro quejas consumidores</td>
+          <td class="col-control">
+            <select class="sel-control" onchange="recalc()">
+              <option value="No" selected>No</option>
+              <option value="Sí">Sí</option>
+            </select>
+          </td>
+          <td class="col-tipo">
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Reseña" selected>Reseña</option>
+              <option value="Web propia">Web propia</option>
+              <option value="Artículo">Artículo</option>
+              <option value="Competidor">Competidor</option>
+              <option value="Negativo">Negativo</option>
+              <option value="Neutro">Neutro</option>
+            </select>
+          </td>
+          <td class="col-impacto" contenteditable="true" oninput="recalc()">5</td>
+          <td contenteditable="true">Campaña de captación de reseñas positivas</td>
+          <td contenteditable="true">Marketing</td>
+        </tr>
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre empresa estafa</td>
+          <td contenteditable="true">Foro.es — denuncia pública</td>
+          <td contenteditable="true">Twitter/X hilo viral</td>
+          <td contenteditable="true">Artículo prensa digital</td>
+          <td contenteditable="true">Respuesta empresa en foro</td>
+          <td contenteditable="true">Web propia blog</td>
+          <td class="col-control">
+            <select class="sel-control" onchange="recalc()">
+              <option value="No" selected>No</option>
+              <option value="Sí">Sí</option>
+            </select>
+          </td>
+          <td class="col-tipo">
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Reseña">Reseña</option>
+              <option value="Web propia">Web propia</option>
+              <option value="Artículo">Artículo</option>
+              <option value="Competidor">Competidor</option>
+              <option value="Negativo" selected>Negativo</option>
+              <option value="Neutro">Neutro</option>
+            </select>
+          </td>
+          <td class="col-impacto" contenteditable="true" oninput="recalc()">5</td>
+          <td contenteditable="true">Crear contenido optimizado "nombre empresa confianza"</td>
+          <td contenteditable="true">SEO / Dirección</td>
+        </tr>
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre empresa</td>
+          <td contenteditable="true">Web oficial empresa</td>
+          <td contenteditable="true">LinkedIn empresa</td>
+          <td contenteditable="true">Google Maps</td>
+          <td contenteditable="true">Artículo sector</td>
+          <td contenteditable="true">Competidor directo</td>
+          <td class="col-control">
+            <select class="sel-control" onchange="recalc()">
+              <option value="No">No</option>
+              <option value="Sí" selected>Sí</option>
+            </select>
+          </td>
+          <td class="col-tipo">
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Reseña">Reseña</option>
+              <option value="Web propia" selected>Web propia</option>
+              <option value="Artículo">Artículo</option>
+              <option value="Competidor">Competidor</option>
+              <option value="Negativo">Negativo</option>
+              <option value="Neutro">Neutro</option>
+            </select>
+          </td>
+          <td class="col-impacto" contenteditable="true" oninput="recalc()">4</td>
+          <td contenteditable="true">Mantener posicionamiento — publicar blog mensual</td>
+          <td contenteditable="true">SEO</td>
+        </tr>
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre empresa vs competidor</td>
+          <td contenteditable="true">Artículo comparativa blog</td>
+          <td contenteditable="true">Competidor — página propia</td>
+          <td contenteditable="true">Web empresa</td>
+          <td contenteditable="true">Foro sector</td>
+          <td contenteditable="true">Reddit hilo comparativa</td>
+          <td class="col-control">
+            <select class="sel-control" onchange="recalc()">
+              <option value="No" selected>No</option>
+              <option value="Sí">Sí</option>
+            </select>
+          </td>
+          <td class="col-tipo">
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Reseña">Reseña</option>
+              <option value="Web propia">Web propia</option>
+              <option value="Artículo" selected>Artículo</option>
+              <option value="Competidor">Competidor</option>
+              <option value="Negativo">Negativo</option>
+              <option value="Neutro">Neutro</option>
+            </select>
+          </td>
+          <td class="col-impacto" contenteditable="true" oninput="recalc()">3</td>
+          <td contenteditable="true">Crear landing comparativa propia optimizada</td>
+          <td contenteditable="true">Marketing / SEO</td>
+        </tr>
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre empresa CEO nombre</td>
+          <td contenteditable="true">LinkedIn CEO — perfil</td>
+          <td contenteditable="true">Artículo prensa positivo</td>
+          <td contenteditable="true">Web empresa equipo</td>
+          <td contenteditable="true">Entrevista podcast sector</td>
+          <td contenteditable="true">Noticia negativa antigua</td>
+          <td class="col-control">
+            <select class="sel-control" onchange="recalc()">
+              <option value="No">No</option>
+              <option value="Sí" selected>Sí</option>
+            </select>
+          </td>
+          <td class="col-tipo">
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Reseña">Reseña</option>
+              <option value="Web propia">Web propia</option>
+              <option value="Artículo">Artículo</option>
+              <option value="Competidor">Competidor</option>
+              <option value="Negativo">Negativo</option>
+              <option value="Neutro" selected>Neutro</option>
+            </select>
+          </td>
+          <td class="col-impacto" contenteditable="true" oninput="recalc()">3</td>
+          <td contenteditable="true">Reforzar presencia LinkedIn y medios sectoriales</td>
+          <td contenteditable="true">Comunicación</td>
+        </tr>
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre empresa contacto precio</td>
+          <td contenteditable="true">Web empresa — contacto</td>
+          <td contenteditable="true">Google Maps ficha</td>
+          <td contenteditable="true">Comparador precios sector</td>
+          <td contenteditable="true">Artículo review producto</td>
+          <td contenteditable="true">Foro precio abusivo</td>
+          <td class="col-control">
+            <select class="sel-control" onchange="recalc()">
+              <option value="No">No</option>
+              <option value="Sí" selected>Sí</option>
+            </select>
+          </td>
+          <td class="col-tipo">
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Reseña">Reseña</option>
+              <option value="Web propia" selected>Web propia</option>
+              <option value="Artículo">Artículo</option>
+              <option value="Competidor">Competidor</option>
+              <option value="Negativo">Negativo</option>
+              <option value="Neutro">Neutro</option>
+            </select>
+          </td>
+          <td class="col-impacto" contenteditable="true" oninput="recalc()">4</td>
+          <td contenteditable="true">Optimizar ficha GMB y página de precios</td>
+          <td contenteditable="true">SEO / Ventas</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+  </div>
+
+  <!-- METRICS -->
+  <p class="section-title" style="margin-top:28px;">Métricas de Control</p>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Resultados negativos en posición 1</div>
+      <div class="metric-value red" id="m-negativos">0</div>
+      <div class="metric-sub">Tipo resultado = Negativo en pos.1</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Primeras posiciones controladas</div>
+      <div class="metric-value" id="m-pct-control">0%</div>
+      <div class="metric-sub">Controlamos pos.1 = Sí / total</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Términos alto impacto no controlados</div>
+      <div class="metric-value red" id="m-alto-impacto">0</div>
+      <div class="metric-sub">Impacto ≥ 4 y no controlados</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total términos analizados</div>
+      <div class="metric-value" id="m-total">0</div>
+      <div class="metric-sub">Filas en la tabla</div>
+    </div>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+  </div>
+
+</div>
+
+<script>
+  function getDotClass(tipo) {
+    if (tipo === 'Web propia') return 'dot-green';
+    if (tipo === 'Negativo' || tipo === 'Competidor') return 'dot-red';
+    if (tipo === 'Reseña' || tipo === 'Artículo' || tipo === 'Neutro') return 'dot-yellow';
+    return 'dot-grey';
+  }
+
+  function recalc() {
+    const rows = document.querySelectorAll('#tableBody tr');
+    let negativos = 0, controlados = 0, altoImpactoNoControl = 0, total = 0;
+
+    rows.forEach(tr => {
+      total++;
+      const selControl = tr.querySelector('.sel-control');
+      const selTipo = tr.querySelector('.sel-tipo');
+      const impactoCell = tr.querySelector('.col-impacto');
+      const dotSpan = tr.querySelector('.col-status .dot');
+
+      const ctrl = selControl ? selControl.value : 'No';
+      const tipo = selTipo ? selTipo.value : '';
+      const impacto = parseFloat(impactoCell ? impactoCell.textContent : 0) || 0;
+
+      // Update semaphore dot
+      if (dotSpan) {
+        dotSpan.className = 'dot ' + getDotClass(tipo);
+      }
+
+      if (tipo === 'Negativo') negativos++;
+      if (ctrl === 'Sí') controlados++;
+      if (impacto >= 4 && ctrl === 'No') altoImpactoNoControl++;
+    });
+
+    document.getElementById('m-negativos').textContent = negativos;
+    const pct = total > 0 ? Math.round(controlados / total * 100) : 0;
+    document.getElementById('m-pct-control').textContent = pct + '%';
+    document.getElementById('m-alto-impacto').textContent = altoImpactoNoControl;
+    document.getElementById('m-total').textContent = total;
+  }
+
+  function addRow() {
+    const tbody = document.getElementById('tableBody');
+    const lastRow = tbody.querySelector('tr:last-child');
+    const newRow = lastRow.cloneNode(true);
+
+    // Reset contenteditable cells
+    newRow.querySelectorAll('[contenteditable="true"]').forEach(cell => {
+      if (cell.classList.contains('col-impacto')) {
+        cell.textContent = '3';
+      } else {
+        cell.textContent = '';
+      }
+      cell.addEventListener('input', recalc);
+    });
+
+    // Reset selects to first option
+    newRow.querySelectorAll('select').forEach(sel => {
+      sel.selectedIndex = 0;
+      sel.addEventListener('change', recalc);
+    });
+
+    // Reset dot
+    const dot = newRow.querySelector('.dot');
+    if (dot) dot.className = 'dot dot-grey';
+
+    tbody.appendChild(newRow);
+    recalc();
+  }
+
+  // Bind events to existing rows
+  document.querySelectorAll('#tableBody [contenteditable="true"]').forEach(cell => {
+    cell.addEventListener('input', recalc);
+  });
+  document.querySelectorAll('#tableBody select').forEach(sel => {
+    sel.addEventListener('change', recalc);
+  });
+
+  // Initial calculation
+  recalc();
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEURO-S1 — Revisión Trimestral</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B;min-height:100vh}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:1.4rem;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-center{display:flex;flex-direction:column;align-items:center;gap:4px}
+.symptom-label{font-size:.8rem;color:#C4A55A;letter-spacing:2px;text-transform:uppercase}
+.tool-name{font-size:1.1rem;font-weight:700;color:#fff}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:.7rem;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+main{max-width:1100px;margin:32px auto;padding:0 24px}
+.section-title{font-size:1.1rem;font-weight:700;color:#1B2B4B;margin:28px 0 12px;border-left:4px solid #C4A55A;padding-left:12px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:16px}
+th{background:#1B2B4B;color:#C4A55A;padding:11px 14px;text-align:left;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+td{padding:9px 12px;border-bottom:1px solid #eee;font-size:.9rem;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+input[type=number],input[type=text]{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;font-family:inherit;color:#1B2B4B;background:#f8f7ff}
+input:focus,select:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+select{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;font-family:inherit;background:#f8f7ff;color:#1B2B4B}
+.calc-ro{background:#e8eaf0;color:#555;display:block;padding:6px 8px;font-size:.88rem;border-radius:5px;text-align:right}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:6px;font-weight:700;font-size:.85rem;cursor:pointer}
+.btn:hover{background:#b8943e}
+.btn-print{background:#1B2B4B;color:#C4A55A;margin-left:8px}
+.btn-print:hover{background:#243554}
+.btn-row{margin:8px 0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:24px 0}
+.card{background:#fff;border:2px solid #C4A55A;border-radius:10px;padding:18px 20px;text-align:center}
+.card-label{font-size:.75rem;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-value{font-size:1.5rem;font-weight:800;color:#C4A55A;line-height:1.2}
+.q-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.q-box{background:#fff;border-radius:8px;padding:18px;box-shadow:0 2px 8px rgba(27,43,75,.08);text-align:center}
+.q-label{font-size:.85rem;font-weight:800;color:#C4A55A;margin-bottom:10px;display:block;text-transform:uppercase}
+.obj-block{background:#fff;border-radius:10px;padding:20px;margin:16px 0;box-shadow:0 2px 8px rgba(27,43,75,.08)}
+.obj-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.align-badge{background:#1B2B4B;color:#C4A55A;padding:4px 16px;border-radius:20px;font-size:.82rem;font-weight:800;white-space:nowrap}
+@media print{.btn,.btn-print,.btn-row{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <span class="symptom-label">NEURO-S1 — Amnesia Estratégica</span>
+    <span class="tool-name">Revisión Trimestral de Alineamiento</span>
+  </div>
+  <span class="badge">R6</span>
+</header>
+<main>
+  <div class="section-title">Comparativa Trimestral — % Alineamiento por Trimestre</div>
+  <div class="q-grid">
+    <div class="q-box"><span class="q-label">Q1</span><input type="number" id="q1" min="0" max="100" placeholder="%" oninput="updateSummary()"></div>
+    <div class="q-box"><span class="q-label">Q2</span><input type="number" id="q2" min="0" max="100" placeholder="%" oninput="updateSummary()"></div>
+    <div class="q-box"><span class="q-label">Q3</span><input type="number" id="q3" min="0" max="100" placeholder="%" oninput="updateSummary()"></div>
+    <div class="q-box"><span class="q-label">Q4</span><input type="number" id="q4" min="0" max="100" placeholder="%" oninput="updateSummary()"></div>
+  </div>
+
+  <div class="section-title">Objetivo 1</div>
+  <div class="obj-block">
+    <div class="obj-header">
+      <strong style="font-size:.95rem">Objetivo:</strong>
+      <input type="text" id="obj1name" placeholder="Ej: Aumentar facturación 30%" style="max-width:320px">
+      <span class="align-badge">Alineamiento: <span id="obj1score">—</span></span>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="addAction(1)">+ Añadir acción</button></div>
+    <table><thead><tr><th>Acción</th><th>¿Contribuye?</th><th>Horas invertidas</th><th>Resultado obtenido</th><th>¿Repetir próximo Q?</th></tr></thead>
+    <tbody id="actions1"></tbody></table>
+  </div>
+
+  <div class="section-title">Objetivo 2</div>
+  <div class="obj-block">
+    <div class="obj-header">
+      <strong style="font-size:.95rem">Objetivo:</strong>
+      <input type="text" id="obj2name" placeholder="Ej: Abrir canal de ventas digital" style="max-width:320px">
+      <span class="align-badge">Alineamiento: <span id="obj2score">—</span></span>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="addAction(2)">+ Añadir acción</button></div>
+    <table><thead><tr><th>Acción</th><th>¿Contribuye?</th><th>Horas invertidas</th><th>Resultado obtenido</th><th>¿Repetir próximo Q?</th></tr></thead>
+    <tbody id="actions2"></tbody></table>
+  </div>
+
+  <div class="section-title">Objetivo 3</div>
+  <div class="obj-block">
+    <div class="obj-header">
+      <strong style="font-size:.95rem">Objetivo:</strong>
+      <input type="text" id="obj3name" placeholder="Ej: Sistematizar procesos clave" style="max-width:320px">
+      <span class="align-badge">Alineamiento: <span id="obj3score">—</span></span>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="addAction(3)">+ Añadir acción</button></div>
+    <table><thead><tr><th>Acción</th><th>¿Contribuye?</th><th>Horas invertidas</th><th>Resultado obtenido</th><th>¿Repetir próximo Q?</th></tr></thead>
+    <tbody id="actions3"></tbody></table>
+  </div>
+
+  <div class="section-title">Resumen</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">Alineamiento Obj 1</div><div class="card-value" id="c1">—</div></div>
+    <div class="card"><div class="card-label">Alineamiento Obj 2</div><div class="card-value" id="c2">—</div></div>
+    <div class="card"><div class="card-label">Alineamiento Obj 3</div><div class="card-value" id="c3">—</div></div>
+    <div class="card"><div class="card-label">Score Global Q Actual</div><div class="card-value" id="c4">—</div></div>
+    <div class="card"><div class="card-label">Tendencia vs Q Anterior</div><div class="card-value" id="c5">—</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</main>
+<script>
+function addAction(n) {
+  const tbody = document.getElementById('actions' + n);
+  const tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td><input type="text" placeholder="Descripcion de la accion"></td>' +
+    '<td><select onchange="calcObj(' + n + ')"><option>Si</option><option>No</option><option>Parcial</option></select></td>' +
+    '<td><input type="number" min="0" step="0.5" value="0"></td>' +
+    '<td><input type="text" placeholder="Resultado obtenido"></td>' +
+    '<td><select><option>Si</option><option>No</option></select></td>';
+  tbody.appendChild(tr);
+  calcObj(n);
+}
+
+function calcObj(n) {
+  const rows = document.querySelectorAll('#actions' + n + ' tr');
+  let si = 0, parcial = 0, total = rows.length;
+  rows.forEach(tr => {
+    const sel = tr.querySelector('select');
+    if (!sel) return;
+    if (sel.value === 'Si') si++;
+    else if (sel.value === 'Parcial') parcial++;
+  });
+  const score = total > 0 ? Math.round((si + parcial * 0.5) / total * 100) : null;
+  document.getElementById('obj' + n + 'score').textContent = score !== null ? score + '%' : '—';
+  updateSummary();
+}
+
+function updateSummary() {
+  const scores = [1, 2, 3].map(n => {
+    const t = document.getElementById('obj' + n + 'score').textContent;
+    return t === '—' ? NaN : parseFloat(t);
+  });
+  scores.forEach((s, i) => {
+    document.getElementById('c' + (i + 1)).textContent = isNaN(s) ? '—' : s + '%';
+  });
+  const valid = scores.filter(s => !isNaN(s));
+  const global = valid.length > 0 ? Math.round(valid.reduce((a, b) => a + b, 0) / valid.length) : null;
+  document.getElementById('c4').textContent = global !== null ? global + '%' : '—';
+
+  const qs = ['q1','q2','q3','q4'].map(id => parseFloat(document.getElementById(id).value)).filter(v => !isNaN(v));
+  if (qs.length >= 2) {
+    const diff = qs[qs.length - 1] - qs[qs.length - 2];
+    document.getElementById('c5').textContent = diff > 0 ? '+' + diff.toFixed(0) + 'pp' : diff < 0 ? diff.toFixed(0) + 'pp' : 'Sin cambio';
+  } else {
+    document.getElementById('c5').textContent = '—';
+  }
+}
+
+[1, 2, 3].forEach(n => { addAction(n); addAction(n); });
+</script>
+</body>
+</html>

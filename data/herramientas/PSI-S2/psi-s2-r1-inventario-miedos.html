@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSI-S2-R1 · Inventario de Miedos Organizacionales</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1e293b; }
+  header { background: #1B2B4B; color: #fff; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+  .logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+  .badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+  main { padding: 28px 32px; max-width: 1300px; margin: 0 auto; }
+  h2 { font-size: 17px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; }
+  .desc { background: #fff; border-left: 4px solid #C4A55A; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #475569; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); min-width: 1000px; }
+  th { background: #1B2B4B; color: #fff; padding: 10px 10px; text-align: left; font-size: 12px; font-weight: 600; }
+  td { padding: 8px 8px; border-bottom: 1px solid #e2e8f0; font-size: 12px; vertical-align: middle; }
+  tr:hover td { background: #f0f4ff; }
+  tr.top-bloqueante td { background: #fef2f2; border-left: 4px solid #ef4444; }
+  input[type="text"], input[type="number"], textarea { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 6px; width: 95%; font-size: 12px; font-family: system-ui; }
+  textarea { resize: vertical; min-height: 36px; }
+  select { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 6px; width: 95%; font-size: 12px; font-family: system-ui; }
+  .semaforo { width: 26px; height: 26px; border-radius: 50%; display: inline-block; }
+  .top-badge { background: #ef4444; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 10px; margin-left: 4px; }
+  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin: 12px 0; font-size: 13px; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; margin: 28px 0 20px; }
+  .metric-card { background: #fff; border: 2px solid #C4A55A; border-radius: 12px; padding: 20px; text-align: center; min-width: 160px; flex: 1; }
+  .metric-value { font-size: 26px; font-weight: 800; color: #1B2B4B; }
+  .metric-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .top3-section { background: #fff; border-radius: 10px; padding: 16px 20px; margin: 16px 0; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+  .top3-section h3 { font-size: 14px; font-weight: 700; color: #1B2B4B; margin-bottom: 10px; }
+  .top3-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f4ff; font-size: 13px; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; margin: 24px 0; }
+  @media print { .no-print { display: none !important; } body { background: white; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">M</div>
+  <div>
+    <div style="font-size:11px;letter-spacing:2px;opacity:.7;text-transform:uppercase;">MASFRAME · PSI-S2</div>
+    <div style="font-size:20px;font-weight:700;">Inventario de Miedos Organizacionales</div>
+  </div>
+  <span class="badge">HERRAMIENTA OPERATIVA</span>
+</header>
+<main>
+  <div class="desc">Mapeo de los miedos sistémicos que bloquean decisiones e innovación. El score de parálisis combina impacto en decisiones e impacto en innovación. Los top 3 miedos más bloqueantes se destacan automáticamente.</div>
+
+  <h2>Registro de Miedos Organizacionales</h2>
+  <div class="table-wrap">
+  <table id="tablaMiedos">
+    <thead>
+      <tr>
+        <th>Miedo</th>
+        <th>Área donde se manifiesta</th>
+        <th>¿Lo verbalizan?</th>
+        <th style="width:100px;">Impacto decisiones (1-5)</th>
+        <th style="width:100px;">Impacto innovación (1-5)</th>
+        <th>Origen probable</th>
+        <th>Evidencias concretas</th>
+        <th style="width:70px;">Semáforo</th>
+      </tr>
+    </thead>
+    <tbody id="tablaBody">
+      <tr>
+        <td><input type="text" value="Miedo al fracaso público"></td>
+        <td><input type="text" placeholder="Área..."></td>
+        <td><select onchange="recalcular()"><option>Sí</option><option>No</option><option>Implícito</option></select></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Origen probable..."></textarea></td>
+        <td><textarea placeholder="Evidencias concretas..."></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Miedo a opinar diferente al jefe"></td>
+        <td><input type="text" placeholder="Área..."></td>
+        <td><select onchange="recalcular()"><option>Implícito</option><option>Sí</option><option>No</option></select></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Origen probable..."></textarea></td>
+        <td><textarea placeholder="Evidencias concretas..."></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Miedo a perder el puesto por proponer cambios"></td>
+        <td><input type="text" placeholder="Área..."></td>
+        <td><select onchange="recalcular()"><option>No</option><option>Sí</option><option>Implícito</option></select></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Origen probable..."></textarea></td>
+        <td><textarea placeholder="Evidencias concretas..."></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Miedo a la evaluación del desempeño"></td>
+        <td><input type="text" placeholder="Área..."></td>
+        <td><select onchange="recalcular()"><option>Implícito</option><option>Sí</option><option>No</option></select></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Origen probable..."></textarea></td>
+        <td><textarea placeholder="Evidencias concretas..."></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Miedo al conflicto interpersonal"></td>
+        <td><input type="text" placeholder="Área..."></td>
+        <td><select onchange="recalcular()"><option>No</option><option>Sí</option><option>Implícito</option></select></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Origen probable..."></textarea></td>
+        <td><textarea placeholder="Evidencias concretas..."></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <button class="btn-add no-print" onclick="addRow()">+ Añadir miedo</button>
+
+  <div class="top3-section">
+    <h3>🔴 Top 3 Miedos Más Bloqueantes</h3>
+    <div id="top3List"><em style="color:#94a3b8;font-size:13px;">Introduce datos para ver el ranking.</em></div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-value" id="scoreParalisis">—</div>
+      <div class="metric-label">Score Parálisis Medio (1-5)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="miedosCriticos">—</div>
+      <div class="metric-label">Miedos críticos (impacto ≥4)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="totalMiedos">—</div>
+      <div class="metric-label">Total miedos identificados</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="implicitoPct">—</div>
+      <div class="metric-label">% No verbalizados / Implícitos</div>
+    </div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
+</main>
+
+<script>
+function colorSem(score) {
+  if (!score || isNaN(score)) return '#d1d5db';
+  if (score >= 4) return '#ef4444';
+  if (score >= 2.5) return '#f59e0b';
+  return '#22c55e';
+}
+
+function addRow() {
+  const tbody = document.getElementById('tablaBody');
+  const tr = document.createElement('tr');
+  const s = 'border:1px solid #cbd5e1;border-radius:4px;padding:4px 6px;width:95%;font-size:12px;font-family:system-ui;';
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Descripción del miedo" style="${s}"></td>
+    <td><input type="text" placeholder="Área..." style="${s}"></td>
+    <td><select onchange="recalcular()" style="${s}"><option>Sí</option><option>No</option><option>Implícito</option></select></td>
+    <td><input type="number" min="1" max="5" oninput="recalcular()" style="${s}"></td>
+    <td><input type="number" min="1" max="5" oninput="recalcular()" style="${s}"></td>
+    <td><textarea placeholder="Origen probable..." style="${s}resize:vertical;min-height:36px;"></textarea></td>
+    <td><textarea placeholder="Evidencias concretas..." style="${s}resize:vertical;min-height:36px;"></textarea></td>
+    <td><span class="semaforo" style="background:#d1d5db;width:26px;height:26px;border-radius:50%;display:inline-block;"></span></td>`;
+  tbody.appendChild(tr);
+}
+
+function recalcular() {
+  const filas = document.querySelectorAll('#tablaBody tr');
+  let datos = [], implicitoCount = 0;
+
+  filas.forEach((tr, idx) => {
+    const nombreEl = tr.querySelector('input[type="text"]');
+    const verbaliza = tr.querySelector('select')?.value;
+    const impDec = parseFloat(tr.querySelectorAll('input[type="number"]')[0]?.value);
+    const impInn = parseFloat(tr.querySelectorAll('input[type="number"]')[1]?.value);
+    const sem = tr.querySelector('.semaforo');
+
+    const scoreParalisis = (!isNaN(impDec) && !isNaN(impInn)) ? (impDec + impInn) / 2 : null;
+    if (sem) sem.style.background = colorSem(scoreParalisis);
+    if (verbaliza === 'No' || verbaliza === 'Implícito') implicitoCount++;
+
+    if (scoreParalisis !== null) {
+      datos.push({ idx, nombre: nombreEl?.value || `Miedo ${idx+1}`, score: scoreParalisis });
+    }
+    tr.classList.remove('top-bloqueante');
+  });
+
+  // Top 3
+  datos.sort((a,b) => b.score - a.score);
+  const top3 = datos.slice(0, 3);
+  top3.forEach(d => {
+    document.querySelectorAll('#tablaBody tr')[d.idx]?.classList.add('top-bloqueante');
+  });
+
+  const top3El = document.getElementById('top3List');
+  if (top3.length) {
+    top3El.innerHTML = top3.map((d,i) => `
+      <div class="top3-item">
+        <span style="background:#1B2B4B;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">${i+1}</span>
+        <span style="font-weight:600;">${d.nombre}</span>
+        <span style="margin-left:auto;background:#fef2f2;color:#ef4444;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;">Score ${d.score.toFixed(1)}</span>
+      </div>`).join('');
+  } else {
+    top3El.innerHTML = '<em style="color:#94a3b8;font-size:13px;">Introduce datos para ver el ranking.</em>';
+  }
+
+  const scores = datos.map(d => d.score);
+  const avg = scores.length ? scores.reduce((a,b)=>a+b,0)/scores.length : null;
+  const criticos = datos.filter(d => d.score >= 4).length;
+
+  document.getElementById('scoreParalisis').textContent = avg ? avg.toFixed(1) : '—';
+  document.getElementById('miedosCriticos').textContent = criticos;
+  document.getElementById('totalMiedos').textContent = filas.length;
+  document.getElementById('implicitoPct').textContent = filas.length ? Math.round(implicitoCount/filas.length*100)+'%' : '—';
+}
+
+document.querySelectorAll('#tablaBody input, #tablaBody select').forEach(el => el.addEventListener('change', recalcular));
+</script>
+</body>
+</html>

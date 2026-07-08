@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocolo de Verificación Previa a Entrega — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .alert-box { padding: 12px 16px; border-radius: 6px; margin-top: 12px; font-size: 0.85rem; font-weight: 600; }
+  .alert-rojo { background: #fff5f5; border-left: 4px solid #e53e3e; color: #c53030; }
+  .alert-verde { background: #f0fff4; border-left: 4px solid #38a169; color: #276749; }
+  .alert-amarillo { background: #fffff0; border-left: 4px solid #d69e2e; color: #975a16; }
+  .critico-row td { border-left: 3px solid #C4A55A; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S3 — Fuga de Calidad Crónica</div>
+    <div class="header-title">R6 — Protocolo de Verificación Previa a Entrega</div>
+    <div class="header-sub">Constructor de checklist + tracker de uso y efectividad</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">% Entregas con Checklist</div>
+      <div class="metric-value" id="m-uso">0%</div>
+      <div class="metric-unit">aplicación del protocolo</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Errores Prom. ANTES de entregar</div>
+      <div class="metric-value" id="m-antes">0</div>
+      <div class="metric-unit">con checklist aplicado</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Errores Prom. DESPUÉS de entregar</div>
+      <div class="metric-value" id="m-despues">0</div>
+      <div class="metric-unit">detectados por cliente</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Reducción de Errores</div>
+      <div class="metric-value" id="m-reduccion">0%</div>
+      <div class="metric-unit">efectividad del protocolo</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tabla 1 — Constructor de Checklist de Verificación</div>
+    <p style="font-size:0.8rem;color:#888;margin-bottom:12px">Borde dorado = ítem crítico</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Paso del proceso</th>
+          <th>Ítem a verificar</th>
+          <th>Responsable</th>
+          <th style="width:70px">¿Crítico?</th>
+          <th style="width:130px">Evidencia requerida</th>
+        </tr>
+      </thead>
+      <tbody id="tbody1">
+        <tr class="ejemplo critico-row">
+          <td><input value="Elaboración" oninput="updateAll()"></td>
+          <td><input value="Los datos coinciden con la fuente original" oninput="updateAll()"></td>
+          <td><input value="Autor" oninput="updateAll()"></td>
+          <td><select onchange="updateAll(); markCritico(this)"><option selected>Sí</option><option>No</option></select></td>
+          <td><select onchange="updateAll()"><option>ninguna</option><option selected>screenshot</option><option>firma</option><option>documento</option></select></td>
+        </tr>
+        <tr class="ejemplo critico-row">
+          <td><input value="Elaboración" oninput="updateAll()"></td>
+          <td><input value="Los cálculos han sido verificados dos veces" oninput="updateAll()"></td>
+          <td><input value="Autor" oninput="updateAll()"></td>
+          <td><select onchange="updateAll(); markCritico(this)"><option selected>Sí</option><option>No</option></select></td>
+          <td><select onchange="updateAll()"><option>ninguna</option><option>screenshot</option><option>firma</option><option selected>documento</option></select></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Revisión interna" oninput="updateAll()"></td>
+          <td><input value="El formato cumple la plantilla corporativa" oninput="updateAll()"></td>
+          <td><input value="Revisor" oninput="updateAll()"></td>
+          <td><select onchange="updateAll(); markCritico(this)"><option>Sí</option><option selected>No</option></select></td>
+          <td><select onchange="updateAll()"><option selected>ninguna</option><option>screenshot</option><option>firma</option><option>documento</option></select></td>
+        </tr>
+        <tr class="ejemplo critico-row">
+          <td><input value="Entrega" oninput="updateAll()"></td>
+          <td><input value="El destinatario y canal de envío son correctos" oninput="updateAll()"></td>
+          <td><input value="Gestor" oninput="updateAll()"></td>
+          <td><select onchange="updateAll(); markCritico(this)"><option selected>Sí</option><option>No</option></select></td>
+          <td><select onchange="updateAll()"><option>ninguna</option><option>screenshot</option><option selected>firma</option><option>documento</option></select></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Cierre" oninput="updateAll()"></td>
+          <td><input value="La factura refleja el servicio prestado" oninput="updateAll()"></td>
+          <td><input value="Admin" oninput="updateAll()"></td>
+          <td><select onchange="updateAll(); markCritico(this)"><option>Sí</option><option selected>No</option></select></td>
+          <td><select onchange="updateAll()"><option selected>ninguna</option><option>screenshot</option><option>firma</option><option>documento</option></select></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addChecklist()">+ Añadir ítem</button>
+    <p style="margin-top:12px;font-size:0.8rem;color:#888">Total ítems críticos: <strong id="criticos-count">0</strong></p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tabla 2 — Tracker de Uso del Checklist</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Entrega</th>
+          <th style="width:110px">¿Se aplicó checklist?</th>
+          <th style="width:120px">Errores ANTES de entregar</th>
+          <th style="width:120px">Errores DESPUÉS (cliente)</th>
+          <th style="width:100px">Diferencia</th>
+        </tr>
+      </thead>
+      <tbody id="tbody2">
+        <tr class="ejemplo">
+          <td><input value="Informe julio Empresa A" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="number" value="2" oninput="updateAll()"></td>
+          <td><input type="number" value="0" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Propuesta Empresa B" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="number" value="1" oninput="updateAll()"></td>
+          <td><input type="number" value="0" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Contrato cliente C" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input type="number" value="0" oninput="updateAll()"></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Informe julio Empresa D" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><input type="number" value="0" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addTracker()">+ Añadir entrega</button>
+    <div id="alert-box"></div>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s3-r6-protocolo-verificacion · Herramienta Operativa UNI-S3-R6</div>
+
+<script>
+function markCritico(sel) {
+  const tr = sel.closest('tr');
+  if (sel.value === 'Sí') tr.classList.add('critico-row');
+  else tr.classList.remove('critico-row');
+}
+
+function addChecklist() {
+  const tbody = document.getElementById('tbody1');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Paso" oninput="updateAll()"></td>
+    <td><input placeholder="Ítem a verificar" oninput="updateAll()"></td>
+    <td><input placeholder="Responsable" oninput="updateAll()"></td>
+    <td><select onchange="updateAll(); markCritico(this)"><option>Sí</option><option>No</option></select></td>
+    <td><select onchange="updateAll()"><option>ninguna</option><option>screenshot</option><option>firma</option><option>documento</option></select></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function addTracker() {
+  const tbody = document.getElementById('tbody2');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Entrega" oninput="updateAll()"></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>No</option></select></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  // Checklist counts
+  const rows1 = document.querySelectorAll('#tbody1 tr');
+  let criticos = 0;
+  rows1.forEach(tr => {
+    const sel = tr.querySelectorAll('select')[0];
+    if (sel && sel.value === 'Sí') { criticos++; tr.classList.add('critico-row'); }
+    else tr.classList.remove('critico-row');
+  });
+  document.getElementById('criticos-count').textContent = criticos;
+
+  // Tracker
+  const rows2 = document.querySelectorAll('#tbody2 tr');
+  let conChecklist = 0, totalEntregas = 0;
+  let sumAntes = 0, cntAntes = 0, sumDespues = 0, cntDespues = 0;
+
+  rows2.forEach(tr => {
+    const cols = tr.querySelectorAll('input, select');
+    const uso = cols[1].value;
+    const antes = parseFloat(cols[2].value) || 0;
+    const despues = parseFloat(cols[3].value) || 0;
+    const diff = antes - despues;
+    cols[4].value = diff > 0 ? '+' + diff + ' (mejor)' : diff < 0 ? diff + ' (peor)' : '0 (igual)';
+    cols[4].style.color = diff > 0 ? '#38a169' : diff < 0 ? '#e53e3e' : '#888';
+    totalEntregas++;
+    if (uso === 'Sí') {
+      conChecklist++;
+      sumAntes += antes; cntAntes++;
+    }
+    sumDespues += despues; cntDespues++;
+  });
+
+  const pctUso = totalEntregas > 0 ? ((conChecklist / totalEntregas) * 100).toFixed(0) : 0;
+  const promAntes = cntAntes > 0 ? (sumAntes / cntAntes).toFixed(1) : 0;
+  const promDespues = cntDespues > 0 ? (sumDespues / cntDespues).toFixed(1) : 0;
+
+  let reduccion = 0;
+  if (parseFloat(promAntes) > 0 || parseFloat(promDespues) > 0) {
+    const total = parseFloat(promAntes) + parseFloat(promDespues);
+    if (total > 0) reduccion = ((parseFloat(promAntes) / total) * 100).toFixed(0);
+  }
+
+  document.getElementById('m-uso').textContent = pctUso + '%';
+  document.getElementById('m-antes').textContent = promAntes;
+  document.getElementById('m-despues').textContent = promDespues;
+  document.getElementById('m-reduccion').textContent = reduccion + '%';
+
+  const alertEl = document.getElementById('alert-box');
+  const dAntes = parseFloat(promAntes);
+  const dDespues = parseFloat(promDespues);
+  if (dAntes > 0 && dDespues < dAntes) {
+    const red = (((dAntes - dDespues) / (dAntes + dDespues)) * 100).toFixed(0);
+    alertEl.innerHTML = `<div class="alert-box alert-verde">El protocolo está funcionando. El checklist intercepta errores antes de la entrega. Promedio de errores ANTES: ${promAntes} vs DESPUÉS: ${promDespues}.</div>`;
+  } else if (parseInt(pctUso) < 50) {
+    alertEl.innerHTML = `<div class="alert-box alert-amarillo">Solo el ${pctUso}% de las entregas aplican el checklist. Aumentar la adopción para obtener datos comparables.</div>`;
+  } else if (dDespues >= dAntes && totalEntregas > 1) {
+    alertEl.innerHTML = `<div class="alert-box alert-rojo">Los errores posteriores a la entrega superan a los detectados con checklist. Revisar los ítems del protocolo.</div>`;
+  } else {
+    alertEl.innerHTML = '';
+  }
+}
+
+updateAll();
+</script>
+</body>
+</html>

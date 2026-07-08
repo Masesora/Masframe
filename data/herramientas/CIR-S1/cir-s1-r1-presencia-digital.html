@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoría de Presencia Digital · CIR-S1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1B2B4B;
+    --gold: #C4A55A;
+    --gold-light: #e8d5a0;
+    --bg: #f8f7ff;
+    --white: #ffffff;
+    --row-alt: #f0f4f8;
+    --border: #d0d8e8;
+    --text: #1a1a2e;
+    --muted: #5a6480;
+    --green: #2e7d32;
+    --green-bg: #e8f5e9;
+    --yellow: #e65100;
+    --yellow-bg: #fff3e0;
+    --red: #c62828;
+    --red-bg: #ffebee;
+    --radius: 6px;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* HEADER */
+  .tool-header {
+    background: var(--navy);
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .m-circle {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800;
+    color: var(--navy);
+    flex-shrink: 0;
+    letter-spacing: -1px;
+  }
+  .header-text { flex: 1; }
+  .header-symptom {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+  }
+  .header-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .header-badge {
+    background: transparent;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+
+  /* CONTENT */
+  .content { padding: 28px 32px; }
+
+  /* METRICS */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .metric-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border-top: 3px solid var(--navy);
+    padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(27,43,75,0.08);
+  }
+  .metric-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .metric-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  /* TABLE SECTION */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: 0 1px 4px rgba(27,43,75,0.08); margin-bottom: 20px; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 960px;
+    background: var(--white);
+  }
+  thead th {
+    background: var(--navy);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 11px 10px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:nth-child(odd) { background: var(--white); }
+  tbody tr:hover { background: #e8ecf5; }
+
+  td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    vertical-align: middle;
+  }
+  td[contenteditable="true"] {
+    outline: none;
+    min-width: 80px;
+  }
+  td[contenteditable="true"]:focus {
+    background: #fffbe6;
+    box-shadow: inset 0 0 0 2px var(--gold);
+    border-radius: 3px;
+  }
+  td[data-readonly="true"] {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+
+  select {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 6px;
+    font-size: 12px;
+    font-family: inherit;
+    background: var(--white);
+    color: var(--text);
+    cursor: pointer;
+  }
+  select:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+
+  /* SEMAPHORE */
+  .sem {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .sem-green { background: #43a047; }
+  .sem-yellow { background: #f57c00; }
+  .sem-red { background: #e53935; }
+
+  .engagement-cell {
+    display: flex;
+    align-items: center;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ACTIONS */
+  .actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-add {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .btn-print {
+    background: var(--gold);
+    color: var(--navy);
+  }
+
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white; }
+    .tool-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .metric-card { box-shadow: none; border: 1px solid var(--border); border-top: 3px solid var(--navy); }
+    .table-wrap { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="tool-header">
+  <div class="m-circle">M</div>
+  <div class="header-text">
+    <div class="header-symptom">CIR-S1 · Invisibilidad de Marca</div>
+    <div class="header-title">Auditoría de Presencia Digital</div>
+  </div>
+  <div class="header-badge">Herramienta Operativa</div>
+</header>
+
+<div class="content">
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Alcance Total Estimado</div>
+      <div class="metric-value" id="m-alcance">—</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Canales Activos / Total</div>
+      <div class="metric-value" id="m-canales">—</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Coste Total Mensual (€)</div>
+      <div class="metric-value" id="m-coste">—</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Engagement Promedio %</div>
+      <div class="metric-value" id="m-engagement">—</div>
+    </div>
+  </div>
+
+  <p class="section-label">Canales y Plataformas</p>
+
+  <div class="actions no-print">
+    <button class="btn btn-add" onclick="addRow()">+ Añadir fila</button>
+    <button class="btn btn-print" onclick="window.print()">Imprimir / Exportar PDF</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="main-table">
+      <thead>
+        <tr>
+          <th>Canal / Plataforma</th>
+          <th>¿Activo?</th>
+          <th>Seguidores / Visitas</th>
+          <th>Interacciones</th>
+          <th>Engagement %</th>
+          <th>Crecimiento Mensual %</th>
+          <th>Frec. Publicación Actual</th>
+          <th>Frec. Objetivo</th>
+          <th>Contenido más Efectivo</th>
+          <th>Coste (€/mes)</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr>
+          <td contenteditable="true">Instagram</td>
+          <td><select class="sel-activo"><option value="Sí" selected>Sí</option><option value="No">No</option></select></td>
+          <td contenteditable="true" data-col="seguidores">3200</td>
+          <td contenteditable="true" data-col="interacciones">280</td>
+          <td data-col="engagement" data-readonly="true"><div class="engagement-cell"><span class="sem"></span><span class="eng-val"></span></div></td>
+          <td contenteditable="true" data-col="crecimiento">4.5</td>
+          <td contenteditable="true">3x semana</td>
+          <td contenteditable="true">5x semana</td>
+          <td contenteditable="true">Reels tutoriales</td>
+          <td contenteditable="true" data-col="coste">0</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">LinkedIn</td>
+          <td><select class="sel-activo"><option value="Sí" selected>Sí</option><option value="No">No</option></select></td>
+          <td contenteditable="true" data-col="seguidores">890</td>
+          <td contenteditable="true" data-col="interacciones">45</td>
+          <td data-col="engagement" data-readonly="true"><div class="engagement-cell"><span class="sem"></span><span class="eng-val"></span></div></td>
+          <td contenteditable="true" data-col="crecimiento">2.1</td>
+          <td contenteditable="true">2x semana</td>
+          <td contenteditable="true">4x semana</td>
+          <td contenteditable="true">Artículos de autoridad</td>
+          <td contenteditable="true" data-col="coste">0</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">Web/Blog</td>
+          <td><select class="sel-activo"><option value="Sí" selected>Sí</option><option value="No">No</option></select></td>
+          <td contenteditable="true" data-col="seguidores">1500</td>
+          <td contenteditable="true" data-col="interacciones">38</td>
+          <td data-col="engagement" data-readonly="true"><div class="engagement-cell"><span class="sem"></span><span class="eng-val"></span></div></td>
+          <td contenteditable="true" data-col="crecimiento">1.2</td>
+          <td contenteditable="true">1x mes</td>
+          <td contenteditable="true">2x semana</td>
+          <td contenteditable="true">Guías prácticas</td>
+          <td contenteditable="true" data-col="coste">120</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">YouTube</td>
+          <td><select class="sel-activo"><option value="Sí">Sí</option><option value="No" selected>No</option></select></td>
+          <td contenteditable="true" data-col="seguidores">210</td>
+          <td contenteditable="true" data-col="interacciones">8</td>
+          <td data-col="engagement" data-readonly="true"><div class="engagement-cell"><span class="sem"></span><span class="eng-val"></span></div></td>
+          <td contenteditable="true" data-col="crecimiento">0.0</td>
+          <td contenteditable="true">Ocasional</td>
+          <td contenteditable="true">1x semana</td>
+          <td contenteditable="true">Vídeos caso práctico</td>
+          <td contenteditable="true" data-col="coste">0</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">Newsletter</td>
+          <td><select class="sel-activo"><option value="Sí" selected>Sí</option><option value="No">No</option></select></td>
+          <td contenteditable="true" data-col="seguidores">620</td>
+          <td contenteditable="true" data-col="interacciones">95</td>
+          <td data-col="engagement" data-readonly="true"><div class="engagement-cell"><span class="sem"></span><span class="eng-val"></span></div></td>
+          <td contenteditable="true" data-col="crecimiento">3.8</td>
+          <td contenteditable="true">Mensual</td>
+          <td contenteditable="true">Quincenal</td>
+          <td contenteditable="true">Consejos exclusivos</td>
+          <td contenteditable="true" data-col="coste">0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  function getSem(val, greenThresh, yellowThresh, higherIsBetter) {
+    if (higherIsBetter) {
+      if (val >= greenThresh) return 'sem-green';
+      if (val >= yellowThresh) return 'sem-yellow';
+      return 'sem-red';
+    } else {
+      if (val <= greenThresh) return 'sem-green';
+      if (val <= yellowThresh) return 'sem-yellow';
+      return 'sem-red';
+    }
+  }
+
+  function fmt(n) {
+    return n.toLocaleString('es-ES');
+  }
+
+  function recalc() {
+    const rows = document.querySelectorAll('#tbody tr');
+    let totalSeg = 0, totalCoste = 0, activos = 0, engSum = 0, engCount = 0;
+
+    rows.forEach(row => {
+      const segCell = row.querySelector('[data-col="seguidores"]');
+      const intCell = row.querySelector('[data-col="interacciones"]');
+      const engCell = row.querySelector('[data-col="engagement"]');
+      const costeCell = row.querySelector('[data-col="coste"]');
+      const activoSel = row.querySelector('.sel-activo');
+
+      const seg = parseFloat(segCell ? segCell.textContent.trim() : 0) || 0;
+      const inter = parseFloat(intCell ? intCell.textContent.trim() : 0) || 0;
+      const coste = parseFloat(costeCell ? costeCell.textContent.trim() : 0) || 0;
+      const activo = activoSel ? activoSel.value : 'No';
+
+      // Engagement
+      let eng = 0;
+      if (seg > 0) eng = (inter / seg) * 100;
+
+      if (engCell) {
+        const dot = engCell.querySelector('.sem');
+        const val = engCell.querySelector('.eng-val');
+        const cls = getSem(eng, 5, 2, true);
+        if (dot) { dot.className = 'sem ' + cls; }
+        if (val) val.textContent = eng.toFixed(1) + '%';
+      }
+
+      totalSeg += seg;
+      totalCoste += coste;
+      if (activo === 'Sí') activos++;
+      if (seg > 0) { engSum += eng; engCount++; }
+    });
+
+    document.getElementById('m-alcance').textContent = fmt(totalSeg);
+    document.getElementById('m-canales').textContent = activos + ' / ' + rows.length;
+    document.getElementById('m-coste').textContent = fmt(Math.round(totalCoste)) + ' €';
+    document.getElementById('m-engagement').textContent = engCount > 0 ? (engSum / engCount).toFixed(1) + '%' : '—';
+  }
+
+  function addRow() {
+    const tbody = document.getElementById('tbody');
+    const lastRow = tbody.querySelector('tr:last-child');
+    const newRow = lastRow.cloneNode(true);
+
+    newRow.querySelectorAll('[contenteditable="true"]').forEach(cell => {
+      if (!cell.hasAttribute('data-col') || cell.getAttribute('data-col') !== 'engagement') {
+        cell.textContent = '';
+      }
+    });
+    newRow.querySelectorAll('select').forEach(sel => { sel.selectedIndex = 0; });
+    const engCell = newRow.querySelector('[data-col="engagement"]');
+    if (engCell) {
+      const dot = engCell.querySelector('.sem');
+      const val = engCell.querySelector('.eng-val');
+      if (dot) dot.className = 'sem';
+      if (val) val.textContent = '';
+    }
+
+    tbody.appendChild(newRow);
+    recalc();
+  }
+
+  const table = document.getElementById('main-table');
+  table.addEventListener('input', recalc);
+  table.addEventListener('change', recalc);
+
+  document.addEventListener('DOMContentLoaded', recalc);
+  recalc();
+</script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Definicion de Criterios de Pipeline - CARDIO-S2</title>
+<style>
+:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--white:#fff;--red:#e74c3c;--yellow:#f39c12;--green:#27ae60;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:#333;}
+.header{background:var(--navy);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.header-left .brand{color:var(--gold);font-weight:700;font-size:1.1rem;letter-spacing:1px;}
+.header-left .symptom{color:#fff;font-size:0.78rem;margin-top:2px;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.tool-name{color:#fff;font-weight:600;font-size:0.95rem;}
+.badge-op{background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.5px;}
+.main{max-width:1280px;margin:0 auto;padding:24px 16px 100px;}
+h1{font-size:1.25rem;color:var(--navy);margin-bottom:6px;}
+h2{font-size:1.05rem;color:var(--navy);margin:28px 0 12px;}
+.subtitle{font-size:0.85rem;color:#666;margin-bottom:20px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px;}
+.card{background:var(--white);border-left:4px solid var(--gold);padding:16px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+.card-label{font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+.card-value{font-size:1.4rem;font-weight:700;color:var(--navy);}
+.card-sub{font-size:0.78rem;color:#999;margin-top:4px;}
+.table-wrapper{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:24px;}
+table{width:100%;border-collapse:collapse;background:var(--white);font-size:0.82rem;}
+thead tr{background:var(--navy);color:#fff;}
+thead th{padding:10px 8px;text-align:left;font-weight:600;white-space:nowrap;font-size:0.76rem;}
+tbody tr:nth-child(even){background:#f4f3fb;}
+tbody tr:hover{background:#ede9fb;}
+td{padding:5px 6px;vertical-align:middle;}
+td input,td select{width:100%;border:1px solid #ddd;border-radius:4px;padding:4px 6px;font-size:0.81rem;background:transparent;color:#333;}
+td input:focus,td select:focus{outline:2px solid var(--gold);border-color:var(--gold);}
+.auto-cell{font-weight:700;padding:5px 8px;}
+.tl-dot{width:14px;height:14px;border-radius:50%;display:inline-block;margin:auto;}
+.tl-green{background:var(--green);}
+.tl-yellow{background:var(--yellow);}
+.tl-red{background:var(--red);}
+.tl-gray{background:#ccc;}
+.tl-td{text-align:center;}
+.add-row-btn{background:var(--gold);color:var(--navy);border:none;padding:9px 18px;border-radius:6px;font-size:0.85rem;font-weight:700;cursor:pointer;margin-bottom:20px;}
+.add-row-btn:hover{opacity:0.85;}
+.pills-wrapper{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.pill{background:var(--white);border:2px solid var(--gold);border-radius:20px;padding:6px 14px;font-size:0.8rem;}
+.pill-name{font-weight:700;color:var(--navy);}
+.pill-val{color:var(--gold);font-weight:700;}
+.print-btn{position:fixed;bottom:24px;right:24px;background:var(--navy);color:var(--gold);border:none;padding:12px 22px;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:999;}
+.print-btn:hover{opacity:0.9;}
+@media print{.print-btn{display:none;}.add-row-btn{display:none;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left">
+    <div class="brand">MASFRAME</div>
+    <div class="symptom">CARDIO-S2 &middot; Pipeline sin criterio</div>
+  </div>
+  <div class="header-right">
+    <span class="tool-name">Definici&oacute;n de Criterios de Pipeline</span>
+    <span class="badge-op">HERRAMIENTA OPERATIVA</span>
+  </div>
+</div>
+<div class="main">
+  <h1>Definici&oacute;n de Criterios de Pipeline</h1>
+  <p class="subtitle">Fecha de referencia: 2026-07-08 &middot; Define los criterios de cada etapa y controla tus oportunidades activas</p>
+
+  <h2>Secci&oacute;n 1 &mdash; Definici&oacute;n de etapas</h2>
+  <div class="table-wrapper">
+    <table id="stages-table">
+      <thead>
+        <tr>
+          <th>Etapa</th>
+          <th>Criterio entrada</th>
+          <th>Criterio salida</th>
+          <th>Tiempo m&aacute;x (d&iacute;as)</th>
+          <th>Acci&oacute;n si supera</th>
+          <th>Probabilidad %</th>
+          <th>Responsable</th>
+        </tr>
+      </thead>
+      <tbody id="stages-body"></tbody>
+    </table>
+  </div>
+
+  <h2>Secci&oacute;n 2 &mdash; Oportunidades actuales</h2>
+  <div class="table-wrapper">
+    <table id="opps-table">
+      <thead>
+        <tr>
+          <th>Oportunidad</th>
+          <th>Etapa</th>
+          <th>Fecha entrada</th>
+          <th>D&iacute;as en etapa</th>
+          <th>Supera m&aacute;x?</th>
+          <th>Valor &euro;</th>
+          <th>Valor ponderado &euro;</th>
+          <th>Pr&oacute;xima acci&oacute;n</th>
+        </tr>
+      </thead>
+      <tbody id="opps-body"></tbody>
+    </table>
+  </div>
+
+  <button class="add-row-btn" onclick="addOpp()">+ Agregar oportunidad</button>
+
+  <h2>Pipeline por etapa</h2>
+  <div class="pills-wrapper" id="pills-wrapper"></div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Total pipeline ponderado</div>
+      <div class="card-value" id="total-pond">-</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Oportunidades en riesgo</div>
+      <div class="card-value" id="count-riesgo">-</div>
+      <div class="card-sub">superan tiempo m&aacute;x</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Cierre proyectado</div>
+      <div class="card-value" id="cierre-proy">-</div>
+      <div class="card-sub">etapas prob &ge;70%</div>
+    </div>
+  </div>
+</div>
+<button class="print-btn" onclick="window.print()">Imprimir</button>
+<script>
+var TODAY=new Date("2026-07-08");
+var STAGES_DEF=[
+  {name:"Nuevo Lead",entrada:"Contacto identificado con necesidad potencial",salida:"Primer contacto realizado",maxd:7,accion:"Contactar en 24h o descartar",prob:5,resp:"Comercial"},
+  {name:"Contactado",entrada:"Primer contacto establecido, hay respuesta",salida:"Reunion agendada o propuesta solicitada",maxd:14,accion:"Cambiar de canal de contacto",prob:20,resp:"Comercial"},
+  {name:"Reunion",entrada:"Reunion confirmada en agenda",salida:"Propuesta enviada o necesidad descartada",maxd:10,accion:"Llamar para reagendar o cerrar",prob:40,resp:"Comercial senior"},
+  {name:"Propuesta",entrada:"Propuesta formal enviada al cliente",salida:"Negociacion iniciada o propuesta rechazada",maxd:21,accion:"Follow-up y ajuste de propuesta",prob:60,resp:"Comercial senior"},
+  {name:"Negociacion",entrada:"Cliente solicita cambios o negocia condiciones",salida:"Contrato firmado o negociacion rota",maxd:14,accion:"Escalar a direccion",prob:80,resp:"Director"},
+  {name:"Cerrado",entrada:"Contrato firmado y pago confirmado",salida:"Cliente activo en onboarding",maxd:3,accion:"Activar proceso de onboarding",prob:100,resp:"CS Manager"}
+];
+var OPPS_DEF=[
+  {opp:"Empresa Textil SL",stage:"Propuesta",fecha:"2026-06-20",valor:8000,accion:"Llamar el lunes para seguimiento"},
+  {opp:"Logistica Norte SA",stage:"Reunion",fecha:"2026-07-01",valor:12000,accion:"Enviar propuesta esta semana"}
+];
+
+function getStageData(){
+  var rows=document.querySelectorAll("#stages-body tr"),data=[];
+  rows.forEach(function(tr){
+    data.push({
+      name:tr.querySelector(".stn").value||"",
+      maxd:parseFloat(tr.querySelector(".stm").value)||0,
+      prob:parseFloat(tr.querySelector(".stp").value)||0
+    });
+  });
+  return data;
+}
+
+function buildStageRow(d){
+  var tr=document.createElement("tr");
+  tr.innerHTML="<td><input class=\"stn\" value=\""+d.name+"\"></td>"+
+    "<td><input class=\"ste\" value=\""+d.entrada+"\" style=\"min-width:160px\"></td>"+
+    "<td><input class=\"sts\" value=\""+d.salida+"\" style=\"min-width:160px\"></td>"+
+    "<td><input type=\"number\" class=\"stm\" value=\""+d.maxd+"\" min=\"1\" style=\"width:60px\"></td>"+
+    "<td><input class=\"sta\" value=\""+d.accion+"\" style=\"min-width:160px\"></td>"+
+    "<td><input type=\"number\" class=\"stp\" value=\""+d.prob+"\" min=\"0\" max=\"100\" style=\"width:65px\"></td>"+
+    "<td><input class=\"str\" value=\""+d.resp+"\"></td>";
+  return tr;
+}
+
+function buildStageSelect(selectedName){
+  var sd=getStageData();
+  var opts=sd.map(function(s){
+    return "<option value=\""+s.name+"\""+((s.name===selectedName)?" selected":"")+">"+s.name+"</option>";
+  }).join("");
+  return "<select class=\"opp-stage\">"+opts+"</select>";
+}
+
+function buildOppRow(d){
+  var tr=document.createElement("tr");
+  var entryDate=d.fecha?new Date(d.fecha):TODAY;
+  var diffMs=TODAY-entryDate;
+  var dias=Math.max(0,Math.floor(diffMs/(1000*60*60*24)));
+  tr.innerHTML="<td><input class=\"opp-name\" value=\""+d.opp+"\" style=\"min-width:120px\"></td>"+
+    "<td>"+buildStageSelect(d.stage)+"</td>"+
+    "<td><input type=\"date\" class=\"opp-fecha\" value=\""+d.fecha+"\"></td>"+
+    "<td class=\"auto-cell opp-dias\">"+dias+"</td>"+
+    "<td class=\"tl-td\"><span class=\"tl-dot tl-gray opp-tl\"></span></td>"+
+    "<td><input type=\"number\" class=\"opp-valor\" value=\""+d.valor+"\" min=\"0\"></td>"+
+    "<td class=\"auto-cell opp-pond\">-</td>"+
+    "<td><input class=\"opp-accion\" value=\""+d.accion+"\" style=\"min-width:140px\"></td>";
+  return tr;
+}
+
+function addOpp(){
+  var n=document.querySelectorAll("#opps-body tr").length+1;
+  var tr=buildOppRow({opp:"Oportunidad "+n,stage:STAGES_DEF[0].name,fecha:"2026-07-08",valor:0,accion:""});
+  document.getElementById("opps-body").appendChild(tr);
+  calcOpps();
+}
+
+function calcOpps(){
+  var sd=getStageData();
+  var stageMap={};
+  sd.forEach(function(s){stageMap[s.name]=s;});
+  var trs=document.querySelectorAll("#opps-body tr");
+  var pondByStage={};sd.forEach(function(s){pondByStage[s.name]=0;});
+  var totalPond=0,countRisk=0,cierreProy=0;
+  trs.forEach(function(tr){
+    var fecha=tr.querySelector(".opp-fecha").value;
+    var entryDate=fecha?new Date(fecha):TODAY;
+    var dias=Math.max(0,Math.floor((TODAY-entryDate)/(1000*60*60*24)));
+    tr.querySelector(".opp-dias").textContent=dias;
+    var stageName=tr.querySelector(".opp-stage").value;
+    var stg=stageMap[stageName]||{maxd:99,prob:0};
+    var over=dias>stg.maxd;
+    var tlEl=tr.querySelector(".opp-tl");
+    tlEl.className="tl-dot "+(over?"tl-red":"tl-green")+" opp-tl";
+    if(over)countRisk++;
+    var valor=parseFloat(tr.querySelector(".opp-valor").value)||0;
+    var pond=Math.round(valor*(stg.prob/100));
+    tr.querySelector(".opp-pond").textContent=pond.toLocaleString("es-ES")+" €";
+    if(pondByStage.hasOwnProperty(stageName))pondByStage[stageName]+=pond;
+    totalPond+=pond;
+    if(stg.prob>=70)cierreProy+=pond;
+  });
+  document.getElementById("total-pond").textContent=totalPond.toLocaleString("es-ES")+" €";
+  document.getElementById("count-riesgo").textContent=countRisk;
+  document.getElementById("cierre-proy").textContent=cierreProy.toLocaleString("es-ES")+" €";
+  var pw=document.getElementById("pills-wrapper");
+  pw.innerHTML="";
+  sd.forEach(function(s){
+    var pill=document.createElement("div");pill.className="pill";
+    pill.innerHTML="<span class=\"pill-name\">"+s.name+"</span> <span class=\"pill-val\">"+(pondByStage[s.name]||0).toLocaleString("es-ES")+" €</span>";
+    pw.appendChild(pill);
+  });
+}
+
+function rebuildOppStages(){
+  document.querySelectorAll("#opps-body tr").forEach(function(tr){
+    var cur=tr.querySelector(".opp-stage").value;
+    var td=tr.querySelector(".opp-stage").parentNode;
+    td.innerHTML=buildStageSelect(cur);
+  });
+  calcOpps();
+}
+
+var sb=document.getElementById("stages-body");
+STAGES_DEF.forEach(function(d){sb.appendChild(buildStageRow(d));});
+var ob=document.getElementById("opps-body");
+OPPS_DEF.forEach(function(d){ob.appendChild(buildOppRow(d));});
+document.getElementById("stages-body").addEventListener("input",function(){rebuildOppStages();});
+document.getElementById("opps-body").addEventListener("input",calcOpps);
+document.getElementById("opps-body").addEventListener("change",calcOpps);
+calcOpps();
+</script>
+</body>
+</html>

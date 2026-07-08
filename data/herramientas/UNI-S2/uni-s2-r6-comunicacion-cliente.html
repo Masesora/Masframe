@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comunicación con Cliente — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .param-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px; background: #f8f7ff; border-radius: 6px; }
+  .param-label { font-size: 0.85rem; font-weight: 600; color: #1B2B4B; white-space: nowrap; }
+  .param-input { width: 100px; border: 1px solid #C4A55A; border-radius: 4px; padding: 6px 10px; font-size: 0.9rem; font-weight: 700; }
+  .alert-box { padding: 12px 16px; border-radius: 6px; margin-top: 12px; font-size: 0.85rem; font-weight: 600; }
+  .alert-rojo { background: #fff5f5; border-left: 4px solid #e53e3e; color: #c53030; }
+  .alert-verde { background: #f0fff4; border-left: 4px solid #38a169; color: #276749; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S2 — Colapso de Capacidad</div>
+    <div class="header-title">R6 — Comunicación con Cliente o Demandante</div>
+    <div class="header-sub">Auditoría de canales, volumen y ratio reactivo/proactivo</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Total Contactos/semana</div>
+      <div class="metric-value" id="m-total">0</div>
+      <div class="metric-unit">interacciones registradas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Tiempo Total/semana</div>
+      <div class="metric-value" id="m-tiempo">0</div>
+      <div class="metric-unit">minutos</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Contactos Reactivos</div>
+      <div class="metric-value" id="m-reactivos">0%</div>
+      <div class="metric-unit">iniciados por cliente</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Coste Mensual Comunicación</div>
+      <div class="metric-value" id="m-coste">0 €</div>
+      <div class="metric-unit">estimación ×4 semanas</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Parámetro de Cálculo</div>
+    <div class="param-row">
+      <span class="param-label">Coste hora equipo (€/h):</span>
+      <input class="param-input" type="number" id="coste-hora" value="30" oninput="updateAll()">
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Auditoría por Canal</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Canal</th>
+          <th style="width:90px">Nº contactos/sem</th>
+          <th style="width:100px">T. medio/contacto (min)</th>
+          <th style="width:100px">% iniciados cliente</th>
+          <th style="width:100px">% iniciados equipo</th>
+          <th style="width:110px">¿Reactivos o proactivos?</th>
+          <th>Motivo principal</th>
+          <th style="width:110px">Total tiempo/sem (min)</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="ejemplo">
+          <td><input value="Email" oninput="updateAll()"></td>
+          <td><input type="number" value="20" oninput="updateAll()"></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td><input type="number" value="70" min="0" max="100" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Consultas sobre estado de pedidos" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Teléfono" oninput="updateAll()"></td>
+          <td><input type="number" value="10" oninput="updateAll()"></td>
+          <td><input type="number" value="15" oninput="updateAll()"></td>
+          <td><input type="number" value="80" min="0" max="100" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Reclamaciones y dudas" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Reunión presencial" oninput="updateAll()"></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><input type="number" value="60" oninput="updateAll()"></td>
+          <td><input type="number" value="30" min="0" max="100" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Seguimiento proyectos en curso" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="WhatsApp / Mensajería" oninput="updateAll()"></td>
+          <td><input type="number" value="30" oninput="updateAll()"></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><input type="number" value="90" min="0" max="100" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Urgencias y confirmaciones" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir canal</button>
+    <div id="alert-box"></div>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s2-r6-comunicacion-cliente · Herramienta Operativa UNI-S2-R6</div>
+
+<script>
+function addRow() {
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Canal" oninput="updateAll()"></td>
+    <td><input type="number" value="5" oninput="updateAll()"></td>
+    <td><input type="number" value="10" oninput="updateAll()"></td>
+    <td><input type="number" value="50" min="0" max="100" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+    <td><input class="calc" readonly></td>
+    <td><input placeholder="Motivo principal" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  const rows = document.querySelectorAll('#tbody tr');
+  const costeH = parseFloat(document.getElementById('coste-hora').value) || 30;
+  let totalContactos = 0, totalTiempo = 0, sumReactivoPonderado = 0;
+
+  rows.forEach(tr => {
+    const cols = tr.querySelectorAll('input, select');
+    const num = parseFloat(cols[1].value) || 0;
+    const tMedio = parseFloat(cols[2].value) || 0;
+    const pctCliente = Math.min(100, Math.max(0, parseFloat(cols[3].value) || 0));
+    const pctEquipo = 100 - pctCliente;
+    const tipo = pctCliente > 50 ? 'Reactivo' : 'Proactivo';
+    const tTotal = num * tMedio;
+
+    cols[4].value = pctEquipo.toFixed(0) + '%';
+    cols[5].value = tipo;
+    cols[7].value = tTotal.toFixed(0);
+
+    totalContactos += num;
+    totalTiempo += tTotal;
+    sumReactivoPonderado += (pctCliente / 100) * num;
+  });
+
+  const pctReactivo = totalContactos > 0 ? ((sumReactivoPonderado / totalContactos) * 100).toFixed(0) : 0;
+  const costeMes = ((totalTiempo / 60) * costeH * 4).toFixed(0);
+
+  document.getElementById('m-total').textContent = totalContactos;
+  document.getElementById('m-tiempo').textContent = totalTiempo.toFixed(0);
+  document.getElementById('m-reactivos').textContent = pctReactivo + '%';
+  document.getElementById('m-coste').textContent = costeMes + ' €';
+
+  const alertEl = document.getElementById('alert-box');
+  if (parseInt(pctReactivo) > 60) {
+    alertEl.innerHTML = `<div class="alert-box alert-rojo">⚠ Más del ${pctReactivo}% de los contactos son reactivos. Revisar causas raíz: comunicación proactiva insuficiente, problemas recurrentes sin resolver o expectativas mal gestionadas.</div>`;
+  } else {
+    alertEl.innerHTML = `<div class="alert-box alert-verde">Ratio reactivo/proactivo bajo control (${pctReactivo}% reactivo). Mantener cadencia de comunicación proactiva.</div>`;
+  }
+}
+
+updateAll();
+</script>
+</body>
+</html>

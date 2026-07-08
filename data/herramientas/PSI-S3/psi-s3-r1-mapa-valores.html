@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSI-S3-R1 · Mapa de Valores Declarados vs Vividos</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1e293b; }
+  header { background: #1B2B4B; color: #fff; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+  .logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+  .badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+  main { padding: 28px 32px; max-width: 1400px; margin: 0 auto; }
+  h2 { font-size: 17px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; }
+  .desc { background: #fff; border-left: 4px solid #C4A55A; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #475569; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); min-width: 1200px; }
+  th { background: #1B2B4B; color: #fff; padding: 10px 10px; text-align: left; font-size: 11px; font-weight: 600; }
+  td { padding: 8px 8px; border-bottom: 1px solid #e2e8f0; font-size: 11px; vertical-align: middle; }
+  tr:hover td { background: #f0f4ff; }
+  tr.brecha-alta td { background: #fef2f2; border-left: 4px solid #ef4444; }
+  input[type="text"], input[type="number"], textarea { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 5px; width: 95%; font-size: 11px; font-family: system-ui; }
+  textarea { resize: vertical; min-height: 32px; }
+  select { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 5px; width: 95%; font-size: 11px; font-family: system-ui; }
+  .calc-cell { background: #f8fafc; font-weight: 700; text-align: center; }
+  .semaforo { width: 24px; height: 24px; border-radius: 50%; display: inline-block; }
+  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin: 12px 0; font-size: 13px; }
+  .gap-legend { display: flex; gap: 16px; margin: 12px 0; font-size: 12px; }
+  .gap-legend span { display: flex; align-items: center; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 16px; margin: 28px 0 20px; }
+  .metric-card { background: #fff; border: 2px solid #C4A55A; border-radius: 12px; padding: 20px; text-align: center; min-width: 160px; flex: 1; }
+  .metric-value { font-size: 26px; font-weight: 800; color: #1B2B4B; }
+  .metric-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; margin: 24px 0; }
+  @media print { .no-print { display: none !important; } body { background: white; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">M</div>
+  <div>
+    <div style="font-size:11px;letter-spacing:2px;opacity:.7;text-transform:uppercase;">MASFRAME · PSI-S3</div>
+    <div style="font-size:20px;font-weight:700;">Mapa de Valores: Declarados vs Vividos</div>
+  </div>
+  <span class="badge">HERRAMIENTA OPERATIVA</span>
+</header>
+<main>
+  <div class="desc">Análisis de la brecha entre los valores declarados y los valores realmente vividos. El Gap (1-5) mide la distancia entre lo que se dice y lo que se hace. Gap ≥ 3 = brecha crítica marcada en rojo.</div>
+
+  <div class="gap-legend no-print">
+    <span><span class="dot" style="background:#22c55e;"></span> Gap ≤ 2: Coherente</span>
+    <span><span class="dot" style="background:#f59e0b;"></span> Gap = 3: Tensión</span>
+    <span><span class="dot" style="background:#ef4444;"></span> Gap ≥ 4: Brecha crítica</span>
+  </div>
+
+  <h2>Mapa de Valores Organizacionales</h2>
+  <div class="table-wrap">
+  <table id="tablaValores">
+    <thead>
+      <tr>
+        <th>Valor</th>
+        <th>¿Documentado?</th>
+        <th>¿Conocido por equipo? %</th>
+        <th>Comportamiento esperado</th>
+        <th>Comportamiento observado</th>
+        <th style="width:70px;">Gap (1-5)</th>
+        <th>Ejemplo coherencia</th>
+        <th>Ejemplo incoherencia</th>
+        <th>Acción inmediata</th>
+        <th style="width:60px;">Semáforo</th>
+      </tr>
+    </thead>
+    <tbody id="tablaBody">
+      <tr>
+        <td><input type="text" value="Transparencia"></td>
+        <td><select onchange="recalcular()"><option>Sí</option><option>No</option></select></td>
+        <td><input type="number" min="0" max="100" placeholder="%" oninput="recalcular()"></td>
+        <td><textarea placeholder="Lo que debería verse..."></textarea></td>
+        <td><textarea placeholder="Lo que realmente ocurre..."></textarea></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Ejemplo donde se vive el valor..."></textarea></td>
+        <td><textarea placeholder="Ejemplo donde se incumple..."></textarea></td>
+        <td><textarea placeholder="Acción concreta a tomar..."></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Respeto"></td>
+        <td><select onchange="recalcular()"><option>Sí</option><option>No</option></select></td>
+        <td><input type="number" min="0" max="100" placeholder="%" oninput="recalcular()"></td>
+        <td><textarea placeholder="Lo que debería verse..."></textarea></td>
+        <td><textarea placeholder="Lo que realmente ocurre..."></textarea></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Ejemplo de coherencia..."></textarea></td>
+        <td><textarea placeholder="Ejemplo de incoherencia..."></textarea></td>
+        <td><textarea placeholder="Acción inmediata..."></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Orientación a resultados"></td>
+        <td><select onchange="recalcular()"><option>Sí</option><option>No</option></select></td>
+        <td><input type="number" min="0" max="100" placeholder="%" oninput="recalcular()"></td>
+        <td><textarea placeholder="Lo que debería verse..."></textarea></td>
+        <td><textarea placeholder="Lo que realmente ocurre..."></textarea></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Ejemplo de coherencia..."></textarea></td>
+        <td><textarea placeholder="Ejemplo de incoherencia..."></textarea></td>
+        <td><textarea placeholder="Acción inmediata..."></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+      <tr>
+        <td><input type="text" value="Innovación"></td>
+        <td><select onchange="recalcular()"><option>No</option><option>Sí</option></select></td>
+        <td><input type="number" min="0" max="100" placeholder="%" oninput="recalcular()"></td>
+        <td><textarea placeholder="Lo que debería verse..."></textarea></td>
+        <td><textarea placeholder="Lo que realmente ocurre..."></textarea></td>
+        <td><input type="number" min="1" max="5" oninput="recalcular()"></td>
+        <td><textarea placeholder="Ejemplo de coherencia..."></textarea></td>
+        <td><textarea placeholder="Ejemplo de incoherencia..."></textarea></td>
+        <td><textarea placeholder="Acción inmediata..."></textarea></td>
+        <td><span class="semaforo" style="background:#d1d5db;"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <button class="btn-add no-print" onclick="addRow()">+ Añadir valor</button>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-value" id="scoreAlineacion">—</div>
+      <div class="metric-label">Score Alineación de Valores (1-5)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="brrechasAltas">—</div>
+      <div class="metric-label">Valores con brecha crítica (gap ≥ 4)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="conocimientoMedio">—</div>
+      <div class="metric-label">Conocimiento medio equipo (%)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="documentados">—</div>
+      <div class="metric-label">% Valores documentados</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="estadoSem" style="font-size:32px;">—</div>
+      <div class="metric-label">Estado global</div>
+    </div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
+</main>
+
+<script>
+function colorGap(gap) {
+  if (!gap || isNaN(gap)) return '#d1d5db';
+  if (gap <= 2) return '#22c55e';
+  if (gap === 3) return '#f59e0b';
+  return '#ef4444';
+}
+
+function addRow() {
+  const tbody = document.getElementById('tablaBody');
+  const tr = document.createElement('tr');
+  const s = 'border:1px solid #cbd5e1;border-radius:4px;padding:4px 5px;width:95%;font-size:11px;font-family:system-ui;';
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Valor" style="${s}"></td>
+    <td><select onchange="recalcular()" style="${s}"><option>Sí</option><option>No</option></select></td>
+    <td><input type="number" min="0" max="100" placeholder="%" oninput="recalcular()" style="${s}"></td>
+    <td><textarea placeholder="Comportamiento esperado..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
+    <td><textarea placeholder="Comportamiento observado..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
+    <td><input type="number" min="1" max="5" oninput="recalcular()" style="${s}"></td>
+    <td><textarea placeholder="Ejemplo coherencia..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
+    <td><textarea placeholder="Ejemplo incoherencia..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
+    <td><textarea placeholder="Acción inmediata..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
+    <td><span class="semaforo" style="background:#d1d5db;width:24px;height:24px;border-radius:50%;display:inline-block;"></span></td>`;
+  tbody.appendChild(tr);
+}
+
+function recalcular() {
+  const filas = document.querySelectorAll('#tablaBody tr');
+  let gaps = [], conocimientos = [], docs = 0, total = 0, brechasAltas = 0;
+
+  filas.forEach(tr => {
+    const gap = parseInt(tr.querySelector('input[type="number"]:last-of-type')?.value);
+    const conocimiento = parseFloat(tr.querySelectorAll('input[type="number"]')[0]?.value);
+    const documentado = tr.querySelector('select')?.value;
+    const sem = tr.querySelector('.semaforo');
+    total++;
+
+    if (!isNaN(gap) && gap > 0) {
+      gaps.push(gap);
+      if (gap >= 4) { brechasAltas++; tr.classList.add('brecha-alta'); } else tr.classList.remove('brecha-alta');
+    } else {
+      tr.classList.remove('brecha-alta');
+    }
+    if (!isNaN(conocimiento)) conocimientos.push(conocimiento);
+    if (documentado === 'Sí') docs++;
+    if (sem) sem.style.background = colorGap(gap);
+  });
+
+  const avgGap = gaps.length ? gaps.reduce((a,b)=>a+b,0)/gaps.length : null;
+  // Score alineación = 5 - avgGap (inverted: low gap = high alignment)
+  const scoreAlin = avgGap !== null ? Math.max(0, 5 - avgGap + 1).toFixed(1) : '—';
+  document.getElementById('scoreAlineacion').textContent = scoreAlin;
+  document.getElementById('brrechasAltas').textContent = brechasAltas;
+  document.getElementById('conocimientoMedio').textContent = conocimientos.length ? Math.round(conocimientos.reduce((a,b)=>a+b,0)/conocimientos.length)+'%' : '—';
+  document.getElementById('documentados').textContent = total ? Math.round(docs/total*100)+'%' : '—';
+
+  const sco = parseFloat(scoreAlin);
+  document.getElementById('estadoSem').textContent = isNaN(sco) ? '—' : sco >= 4 ? '🟢' : sco >= 3 ? '🟡' : '🔴';
+}
+
+document.querySelectorAll('#tablaBody input, #tablaBody select').forEach(el => el.addEventListener('change', recalcular));
+</script>
+</body>
+</html>

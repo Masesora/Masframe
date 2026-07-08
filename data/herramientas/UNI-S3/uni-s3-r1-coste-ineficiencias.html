@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNI-S3-R1 · Calculadora del Coste Real de las Ineficiencias</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+header{background:#1B2B4B;color:#f8f7ff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:17px;font-weight:700}
+header p{font-size:12px;opacity:.75;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.container{padding:20px 24px;max-width:1500px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.metric{background:#fff;border:1px solid #e0dff5;border-radius:10px;padding:16px 18px}
+.metric label{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
+.metric span{font-size:26px;font-weight:700;color:#1B2B4B}
+.metric .sub{font-size:11px;color:#9ca3af;margin-top:2px}
+.coste-hero{background:#1B2B4B;color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.coste-hero .label{font-size:13px;opacity:.75}
+.coste-hero .value{font-size:36px;font-weight:800;color:#C4A55A}
+.coste-hero .sub{font-size:12px;opacity:.6;margin-top:2px}
+.actions{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+button{cursor:pointer;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;font-family:inherit}
+.btn-add{background:#C4A55A;color:#1B2B4B}.btn-add:hover{background:#b8964e}
+.btn-print{background:#1B2B4B;color:#fff}.btn-print:hover{background:#253d6b}
+.btn-del{background:#fee2e2;color:#dc2626;padding:4px 10px;font-size:12px}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #e0dff5;background:#fff;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;min-width:1200px}
+th{background:#1B2B4B;color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;white-space:nowrap;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+td input,td select{border:1px solid #d1d5db;border-radius:5px;padding:5px 8px;font-size:13px;font-family:inherit;color:#1B2B4B;width:100%;background:#fff}
+td input:focus,td select:focus{outline:2px solid #C4A55A;border-color:transparent}
+.calc{background:#f8f7ff;font-weight:700;text-align:right}
+.sem{width:20px;height:20px;border-radius:50%;display:inline-block;vertical-align:middle}
+.sem-r{background:#dc2626}.sem-a{background:#ca8a04}.sem-v{background:#16a34a}
+.row-alto td{background:#fef2f2}
+.row-medio td{background:#fffbeb}
+.footer-note{font-size:12px;color:#9ca3af;margin-top:8px}
+@media print{.actions{display:none}body{background:#fff}.coste-hero{background:#1B2B4B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}th{background:#1B2B4B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>UNI-S3-R1 · Calculadora del Coste Real de las Ineficiencias</h1>
+    <p>Síntoma: Ineficiencia Sistémica · Cuantificación económica de las pérdidas operativas</p>
+  </div>
+  <span class="badge">UNI · MASFRAME</span>
+</header>
+<div class="container">
+  <div class="coste-hero">
+    <div>
+      <div class="label">Coste total ineficiencias</div>
+      <div class="value" id="hero-mes">0 €/mes</div>
+      <div class="sub" id="hero-anual">0 €/año</div>
+    </div>
+    <div style="margin-left:auto;text-align:right">
+      <div class="label">Horas perdidas/semana</div>
+      <div class="value" id="hero-horas">0 h</div>
+      <div class="sub" id="hero-personas">sobre todas las personas</div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric">
+      <label>Ineficiencias registradas</label>
+      <span id="v-total">0</span>
+      <div class="sub">identificadas</div>
+    </div>
+    <div class="metric">
+      <label>Horas perdidas/semana</label>
+      <span id="v-horas">0 h</span>
+      <div class="sub">suma todas las inef.</div>
+    </div>
+    <div class="metric">
+      <label>Coste/semana</label>
+      <span id="v-semana">0 €</span>
+      <div class="sub">total semana</div>
+    </div>
+    <div class="metric">
+      <label>Coste/mes</label>
+      <span id="v-mes">0 €</span>
+      <div class="sub">× 4,33 semanas</div>
+    </div>
+    <div class="metric">
+      <label>Ineficiencias críticas</label>
+      <span id="v-criticos" style="color:#dc2626">0</span>
+      <div class="sub">&gt; 1.000 €/mes</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Ineficiencia identificada</th>
+          <th>Proceso afectado</th>
+          <th>Tipo</th>
+          <th>Frecuencia/semana</th>
+          <th>Tiempo (min/ocurrencia)</th>
+          <th>Horas/semana</th>
+          <th>Coste hora (€)</th>
+          <th>Coste/semana (€)</th>
+          <th>Personas afectadas</th>
+          <th>Coste total/mes (€)</th>
+          <th>Semáforo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p class="footer-note">Horas/semana = (frecuencia × tiempo min) / 60. Coste/semana = horas/sem × coste hora × personas. Coste/mes = coste/sem × 4,33. Rojo &gt;1.000€/mes · Amarillo 300-1.000€ · Verde &lt;300€.</p>
+</div>
+<script>
+const TIPOS=['Retrabajo','Espera','Error','Duplicidad','Manual evitable','Otro'];
+function semClass(mes){
+  if(mes>1000) return 'sem-r';
+  if(mes>=300) return 'sem-a';
+  return 'sem-v';
+}
+function addRow(d={}){
+  const tbody=document.getElementById('tbody');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td><input type="text" value="${d.inef||''}" placeholder="Descripción de la ineficiencia" onchange="recalc()"></td>
+    <td><input type="text" value="${d.proceso||''}" placeholder="Proceso" onchange="recalc()"></td>
+    <td><select onchange="recalc()">${TIPOS.map(t=>`<option ${(d.tipo||'Retrabajo')===t?'selected':''}>${t}</option>`).join('')}</select></td>
+    <td><input type="number" value="${d.freq||''}" min="0" step="0.5" placeholder="0" onchange="recalc()"></td>
+    <td><input type="number" value="${d.min||''}" min="0" placeholder="0" onchange="recalc()"></td>
+    <td class="calc" data-horas>—</td>
+    <td><input type="number" value="${d.costeh||25}" min="0" placeholder="25" onchange="recalc()"></td>
+    <td class="calc" data-csem>—</td>
+    <td><input type="number" value="${d.personas||1}" min="1" placeholder="1" onchange="recalc()"></td>
+    <td class="calc" data-cmes>—</td>
+    <td data-sem style="text-align:center"><span class="sem sem-v"></span></td>
+    <td><button class="btn-del" onclick="delRow(this)">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+function delRow(btn){btn.closest('tr').remove();recalc();}
+function recalc(){
+  const trs=document.querySelectorAll('#tbody tr');
+  let total=0,horasSum=0,csemSum=0,cmesSum=0,criticos=0;
+  trs.forEach(tr=>{
+    total++;
+    const nums=tr.querySelectorAll('input[type=number]');
+    const freq=parseFloat(nums[0].value)||0;
+    const min=parseFloat(nums[1].value)||0;
+    const costeh=parseFloat(nums[2].value)||0;
+    const personas=parseFloat(nums[3].value)||1;
+    const horas=(freq*min)/60;
+    const csem=horas*costeh*personas;
+    const cmes=csem*4.33;
+    tr.querySelector('[data-horas]').textContent=horas.toFixed(2);
+    tr.querySelector('[data-csem]').textContent=csem.toFixed(0)+'€';
+    tr.querySelector('[data-cmes]').textContent=cmes.toFixed(0)+'€';
+    horasSum+=horas;csemSum+=csem;cmesSum+=cmes;
+    if(cmes>1000) criticos++;
+    const cls=semClass(cmes);
+    tr.querySelector('[data-sem] span').className='sem '+cls;
+    tr.classList.toggle('row-alto',cls==='sem-r');
+    tr.classList.toggle('row-medio',cls==='sem-a'&&!tr.classList.contains('row-alto'));
+  });
+  document.getElementById('v-total').textContent=total;
+  document.getElementById('v-horas').textContent=horasSum.toFixed(1)+' h';
+  document.getElementById('v-semana').textContent=csemSum.toFixed(0)+' €';
+  document.getElementById('v-mes').textContent=cmesSum.toFixed(0)+' €';
+  document.getElementById('v-criticos').textContent=criticos;
+  document.getElementById('hero-mes').textContent=cmesSum.toLocaleString('es-ES',{maximumFractionDigits:0})+' €/mes';
+  document.getElementById('hero-anual').textContent=(cmesSum*12).toLocaleString('es-ES',{maximumFractionDigits:0})+' €/año';
+  document.getElementById('hero-horas').textContent=horasSum.toFixed(1)+' h';
+}
+addRow({inef:'Reuniones sin agenda ni acta',proceso:'Gestión interna',tipo:'Espera',freq:5,min:30,costeh:30,personas:5});
+addRow({inef:'Correcciones por errores de datos en facturas',proceso:'Facturación',tipo:'Error',freq:3,min:45,costeh:35,personas:1});
+addRow({inef:'Introducción manual de datos en dos sistemas',proceso:'Administración',tipo:'Duplicidad',freq:10,min:15,costeh:25,personas:2});
+addRow({inef:'Re-envío de emails por falta de respuesta',proceso:'Atención cliente',tipo:'Retrabajo',freq:8,min:10,costeh:28,personas:2});
+addRow({inef:'Generación manual de informes semanales',proceso:'Reporting',tipo:'Manual evitable',freq:1,min:120,costeh:40,personas:1});
+</script>
+</body>
+</html>

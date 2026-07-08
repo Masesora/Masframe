@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEURO-S2 — Tiempo Estratégico Bloqueado</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B;min-height:100vh}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:1.4rem;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-center{display:flex;flex-direction:column;align-items:center;gap:4px}
+.symptom-label{font-size:.8rem;color:#C4A55A;letter-spacing:2px;text-transform:uppercase}
+.tool-name{font-size:1.1rem;font-weight:700;color:#fff}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:.7rem;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+main{max-width:1200px;margin:32px auto;padding:0 24px}
+.section-title{font-size:1.1rem;font-weight:700;color:#1B2B4B;margin:28px 0 12px;border-left:4px solid #C4A55A;padding-left:12px}
+.params{background:#fff;border-radius:8px;padding:16px 20px;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.params label{font-size:.88rem;font-weight:700;color:#1B2B4B}
+.params input{width:110px;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;background:#f8f7ff;color:#1B2B4B}
+.params input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:16px}
+th{background:#1B2B4B;color:#C4A55A;padding:10px 9px;text-align:left;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+td{padding:7px 8px;border-bottom:1px solid #eee;font-size:.84rem;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+input[type=number],input[type=text]{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:5px 6px;font-size:.82rem;font-family:inherit;color:#1B2B4B;background:#f8f7ff}
+input:focus,select:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+select{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:5px 6px;font-size:.82rem;font-family:inherit;background:#f8f7ff;color:#1B2B4B}
+.calc-ro{background:#e8eaf0;color:#555;display:block;padding:5px 6px;font-size:.82rem;border-radius:5px;text-align:right}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:6px;font-weight:700;font-size:.85rem;cursor:pointer}
+.btn:hover{background:#b8943e}
+.btn-print{background:#1B2B4B;color:#C4A55A;margin-left:8px}
+.btn-print:hover{background:#243554}
+.btn-row{margin:8px 0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:24px 0}
+.card{background:#fff;border:2px solid #C4A55A;border-radius:10px;padding:18px 20px;text-align:center}
+.card-label{font-size:.75rem;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-value{font-size:1.5rem;font-weight:800;color:#C4A55A;line-height:1.2}
+.sem-row{display:flex;align-items:center;gap:14px;background:#fff;border-radius:8px;padding:14px 20px;margin:12px 0;box-shadow:0 2px 8px rgba(27,43,75,.08)}
+.dot{width:22px;height:22px;border-radius:50%;display:inline-block;flex-shrink:0}
+.g{background:#22c55e}.y{background:#eab308}.r{background:#ef4444}.grey{background:#d1d5db}
+.sem-desc{font-size:.88rem;color:#555;font-weight:600}
+@media print{.btn,.btn-print,.btn-row{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <span class="symptom-label">NEURO-S2 — Dispersión Directiva</span>
+    <span class="tool-name">Planificador de Agenda Estratégica Semanal</span>
+  </div>
+  <span class="badge">R1</span>
+</header>
+<main>
+  <div class="section-title">Parámetros</div>
+  <div class="params">
+    <label>Coste horario líder (€/h):</label>
+    <input type="number" id="hourlyRate" value="150" min="0" oninput="updateAll()">
+  </div>
+
+  <div class="section-title">Planificador Semanal de Agenda</div>
+  <div class="btn-row"><button class="btn" onclick="addDayRow()">+ Añadir día</button></div>
+  <div style="overflow-x:auto">
+  <table>
+    <thead>
+      <tr>
+        <th>Día</th>
+        <th>Bloque Mañana</th>
+        <th>Bloque Tarde</th>
+        <th>H. Estratégicas</th>
+        <th>H. Operativas</th>
+        <th>H. Comerciales</th>
+        <th>Interrupciones</th>
+        <th>Coste interrup. €</th>
+        <th>¿Bloques respetados?</th>
+      </tr>
+    </thead>
+    <tbody id="planBody"></tbody>
+  </table>
+  </div>
+
+  <div class="section-title">Semáforo: % Bloques Respetados</div>
+  <div class="sem-row">
+    <span class="dot grey" id="semDot"></span>
+    <span class="sem-desc" id="semText">Introduce datos para ver el semáforo</span>
+  </div>
+  <div style="font-size:.82rem;color:#666;margin-bottom:8px">
+    <span style="color:#22c55e;font-weight:700">Verde</span> &ge;80% &nbsp;|&nbsp;
+    <span style="color:#eab308;font-weight:700">Amarillo</span> 50-79% &nbsp;|&nbsp;
+    <span style="color:#ef4444;font-weight:700">Rojo</span> &lt;50%
+  </div>
+
+  <div class="section-title">Resumen</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">% Bloques respetados</div><div class="card-value" id="c1">—</div></div>
+    <div class="card"><div class="card-label">H. estratégicas prom/sem</div><div class="card-value" id="c2">—</div></div>
+    <div class="card"><div class="card-label">Total interrupciones</div><div class="card-value" id="c3">—</div></div>
+    <div class="card"><div class="card-label">Coste interrupciones €</div><div class="card-value" id="c4">—</div></div>
+    <div class="card"><div class="card-label">Días registrados</div><div class="card-value" id="c5">—</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</main>
+<script>
+var dayCount = 0;
+var weekDays = ['Lunes','Martes','Miercoles','Jueves','Viernes'];
+var blockOpts = ['Estrategico','Operativo','Comercial','Admin','Mixto'];
+
+function makeSelect() {
+  return '<select onchange="updateAll()">' + blockOpts.map(function(o){return '<option>'+o+'</option>';}).join('') + '</select>';
+}
+
+function addDayRow() {
+  dayCount++;
+  var week = Math.ceil(dayCount / 5);
+  var dayIdx = (dayCount - 1) % 5;
+  var lbl = 'Sem' + week + ' ' + weekDays[dayIdx];
+  var tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td><input type="text" value="' + lbl + '" style="min-width:90px"></td>' +
+    '<td>' + makeSelect() + '</td>' +
+    '<td>' + makeSelect() + '</td>' +
+    '<td><input type="number" min="0" step="0.5" value="0" oninput="updateAll()"></td>' +
+    '<td><input type="number" min="0" step="0.5" value="0" oninput="updateAll()"></td>' +
+    '<td><input type="number" min="0" step="0.5" value="0" oninput="updateAll()"></td>' +
+    '<td><input type="number" min="0" value="0" oninput="updateAll()"></td>' +
+    '<td><span class="calc-ro" data-cost>0.00</span></td>' +
+    '<td><select onchange="updateAll()"><option>Si</option><option>No</option><option>Parcial</option></select></td>';
+  document.getElementById('planBody').appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  var rate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+  var rows = document.querySelectorAll('#planBody tr');
+  var totalStrat = 0, totalInter = 0, totalCost = 0;
+  var si = 0, parcial = 0, rowCount = rows.length;
+
+  rows.forEach(function(tr) {
+    var nums = tr.querySelectorAll('input[type=number]');
+    var sels = tr.querySelectorAll('select');
+    var stratH = parseFloat(nums[0] ? nums[0].value : 0) || 0;
+    var inter = parseFloat(nums[3] ? nums[3].value : 0) || 0;
+    var cost = inter * 0.5 * rate;
+    totalStrat += stratH;
+    totalInter += inter;
+    totalCost += cost;
+    var costEl = tr.querySelector('[data-cost]');
+    if (costEl) costEl.textContent = cost.toFixed(2);
+    var respSel = sels[2];
+    if (respSel) {
+      if (respSel.value === 'Si') si++;
+      else if (respSel.value === 'Parcial') parcial++;
+    }
+  });
+
+  var weeksCount = rowCount > 0 ? Math.ceil(rowCount / 5) : 1;
+  var avgStrat = rowCount > 0 ? (totalStrat / weeksCount).toFixed(1) : 0;
+  var pctResp = rowCount > 0 ? Math.round((si + parcial * 0.5) / rowCount * 100) : 0;
+
+  var dot = document.getElementById('semDot');
+  var txt = document.getElementById('semText');
+  if (rowCount === 0) {
+    dot.className = 'dot grey';
+    txt.textContent = 'Introduce datos para ver el semaforo';
+  } else {
+    dot.className = 'dot ' + (pctResp >= 80 ? 'g' : pctResp >= 50 ? 'y' : 'r');
+    txt.textContent = pctResp >= 80
+      ? 'Excelente respeto de bloques: ' + pctResp + '%'
+      : pctResp >= 50
+        ? 'Respeto de bloques mejorable: ' + pctResp + '%'
+        : 'Bloques muy poco respetados: ' + pctResp + '%';
+  }
+
+  document.getElementById('c1').textContent = rowCount > 0 ? pctResp + '%' : '—';
+  document.getElementById('c2').textContent = rowCount > 0 ? avgStrat + 'h' : '—';
+  document.getElementById('c3').textContent = totalInter;
+  document.getElementById('c4').textContent = totalCost.toFixed(2) + '€';
+  document.getElementById('c5').textContent = rowCount;
+}
+
+for (var i = 0; i < 20; i++) addDayRow();
+</script>
+</body>
+</html>

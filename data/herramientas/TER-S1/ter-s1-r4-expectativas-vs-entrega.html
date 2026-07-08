@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expectativas vs Entrega Real — MASFRAME</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+.header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+.logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+.header-text h1 { font-size: 18px; font-weight: 700; }
+.header-text p { font-size: 13px; opacity: 0.75; margin-top: 2px; }
+.badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+.container { max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+.section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(27,43,75,0.08); }
+.section h2 { font-size: 15px; color: #1B2B4B; margin-bottom: 14px; border-left: 3px solid #C4A55A; padding-left: 10px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #1B2B4B; color: white; padding: 8px 10px; text-align: left; font-size: 12px; font-weight: 600; white-space: nowrap; }
+td { padding: 7px 10px; border-bottom: 1px solid #e8e8f0; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f0f0fa; }
+input[type=text], input[type=number], select { border: 1px solid #d0d0e0; border-radius: 5px; padding: 4px 7px; font-size: 12px; font-family: inherit; background: white; }
+input[type=text] { width: 180px; }
+input[type=number] { width: 65px; }
+.calc-cell { background: #f8f7ff; font-weight: 700; text-align: center; }
+.gap-neg { color: #16a34a; }
+.gap-pos-big { color: #dc2626; }
+.gap-pos-med { color: #ca8a04; }
+.btn-add { background: #1B2B4B; color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 13px; cursor: pointer; margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; }
+.btn-add:hover { background: #2a3d63; }
+.btn-print { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 6px; padding: 10px 24px; font-size: 14px; font-weight: 700; cursor: pointer; display: block; margin: 0 auto; }
+.btn-print:hover { background: #b8963e; }
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.metric-card { background: #1B2B4B; color: white; border-radius: 10px; padding: 16px; text-align: center; }
+.metric-card .value { font-size: 26px; font-weight: 800; color: #C4A55A; }
+.metric-card .label { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+.row-alert td { background: #fff1f1 !important; }
+.row-warning td { background: #fffbeb !important; }
+.row-good td { background: #f0fdf4 !important; }
+@media print { .btn-add, .btn-print, .no-print { display: none !important; } body { background: white; } .section { box-shadow: none; border: 1px solid #ccc; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">M</div>
+  <div class="header-text">
+    <h1>Experiencia de Cliente — Expectativas vs Entrega en el Journey</h1>
+    <p>TER · S1-R4 · Terapia de Experiencia de Cliente</p>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+<div class="container">
+  <div class="section">
+    <h2>Análisis de Gaps por Punto de Contacto</h2>
+    <div class="table-wrap">
+    <table id="gap-table">
+      <thead>
+        <tr>
+          <th>Punto de contacto</th>
+          <th>Expectativa cliente (1-10)</th>
+          <th>Entrega real percibida (1-10)</th>
+          <th>Gap</th>
+          <th>¿Momento de la verdad?</th>
+          <th>Impacto decisión (1-5)</th>
+          <th>Acción de mejora</th>
+        </tr>
+      </thead>
+      <tbody id="gap-body">
+        <tr>
+          <td><input type="text" value="Primera consulta gratuita"></td>
+          <td><input type="number" value="8" min="1" max="10" onchange="recalc()"></td>
+          <td><input type="number" value="9" min="1" max="10" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+          <td><select><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="number" value="5" min="1" max="5"></td>
+          <td><input type="text" value="Mantener calidad"></td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Propuesta económica"></td>
+          <td><input type="number" value="7" min="1" max="10" onchange="recalc()"></td>
+          <td><input type="number" value="6" min="1" max="10" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+          <td><select><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="number" value="5" min="1" max="5"></td>
+          <td><input type="text" value="Mejorar presentación"></td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Onboarding cliente"></td>
+          <td><input type="number" value="8" min="1" max="10" onchange="recalc()"></td>
+          <td><input type="number" value="5" min="1" max="10" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+          <td><select><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="number" value="4" min="1" max="5"></td>
+          <td><input type="text" value="Crear kit bienvenida"></td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Comunicación mensual"></td>
+          <td><input type="number" value="6" min="1" max="10" onchange="recalc()"></td>
+          <td><input type="number" value="4" min="1" max="10" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+          <td><select><option>Sí</option><option selected>No</option></select></td>
+          <td><input type="number" value="3" min="1" max="5"></td>
+          <td><input type="text" value="Newsletter mensual"></td>
+        </tr>
+        <tr>
+          <td><input type="text" value="Entrega de resultados"></td>
+          <td><input type="number" value="9" min="1" max="10" onchange="recalc()"></td>
+          <td><input type="number" value="7" min="1" max="10" onchange="recalc()"></td>
+          <td class="calc-cell">—</td>
+          <td><select><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="number" value="5" min="1" max="5"></td>
+          <td><input type="text" value="Dashboard cliente"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add no-print" onclick="addRow()">+ Añadir fila</button>
+  </div>
+
+  <div class="section">
+    <h2>Métricas del Journey</h2>
+    <div class="metrics-grid" id="metricsGrid"></div>
+  </div>
+
+  <button class="btn-print no-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+</div>
+
+<script>
+function recalc() {
+  const rows = document.querySelectorAll('#gap-body tr');
+  const gaps = [];
+
+  rows.forEach(row => {
+    const exp = parseFloat(row.cells[1].querySelector('input').value) || 0;
+    const ent = parseFloat(row.cells[2].querySelector('input').value) || 0;
+    const gap = exp - ent;
+    gaps.push({ gap, row });
+    const cell = row.cells[3];
+    const sign = gap > 0 ? '+' : '';
+    let cls = 'gap-neg';
+    if (gap > 2) cls = 'gap-pos-big';
+    else if (gap > 0) cls = 'gap-pos-med';
+    cell.innerHTML = `<span class="${cls}">${sign}${gap.toFixed(0)}</span>`;
+    row.classList.remove('row-alert', 'row-warning', 'row-good');
+  });
+
+  // Top 3 largest gaps (most positive = worst)
+  const sorted = [...gaps].sort((a, b) => b.gap - a.gap);
+  sorted.slice(0, 3).forEach(item => {
+    if (item.gap > 0) item.row.classList.add('row-alert');
+  });
+
+  updateMetrics(rows, gaps);
+}
+
+function updateMetrics(rows, gaps) {
+  let entregas = [], criticos = 0, momentos = 0;
+  rows.forEach((row, i) => {
+    const ent = parseFloat(row.cells[2].querySelector('input').value) || 0;
+    if (ent) entregas.push(ent);
+    if (gaps[i].gap > 2) criticos++;
+    if (row.cells[4].querySelector('select').value === 'Sí') momentos++;
+  });
+  const scoreGlobal = entregas.length ? (entregas.reduce((a,b)=>a+b,0)/entregas.length).toFixed(1) : '—';
+
+  document.getElementById('metricsGrid').innerHTML = `
+    <div class="metric-card"><div class="value">${scoreGlobal}/10</div><div class="label">Score Journey Global</div></div>
+    <div class="metric-card"><div class="value">${criticos}</div><div class="label">Puntos críticos (gap &gt;2)</div></div>
+    <div class="metric-card"><div class="value">${momentos}</div><div class="label">Momentos de la verdad</div></div>
+    <div class="metric-card"><div class="value">${rows.length}</div><div class="label">Puntos de contacto analizados</div></div>
+  `;
+}
+
+function addRow() {
+  const tbody = document.getElementById('gap-body');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Punto de contacto"></td>
+    <td><input type="number" value="7" min="1" max="10" onchange="recalc()"></td>
+    <td><input type="number" value="7" min="1" max="10" onchange="recalc()"></td>
+    <td class="calc-cell">—</td>
+    <td><select><option>Sí</option><option>No</option></select></td>
+    <td><input type="number" value="3" min="1" max="5"></td>
+    <td><input type="text" placeholder="Acción de mejora"></td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+
+recalc();
+</script>
+</body>
+</html>

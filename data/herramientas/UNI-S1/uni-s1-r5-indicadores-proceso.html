@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNI-S1-R5 · Panel de Indicadores de Rendimiento por Proceso</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+header{background:#1B2B4B;color:#f8f7ff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:17px;font-weight:700;letter-spacing:.3px}
+header p{font-size:12px;opacity:.75;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.container{padding:20px 24px;max-width:1400px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.metric{background:#fff;border:1px solid #e0dff5;border-radius:10px;padding:16px 18px}
+.metric label{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
+.metric span{font-size:26px;font-weight:700;color:#1B2B4B}
+.metric .sub{font-size:11px;color:#9ca3af;margin-top:2px}
+.metric.alerta span{color:#dc2626}
+.metric.ok span{color:#16a34a}
+.actions{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+button{cursor:pointer;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;font-family:inherit}
+.btn-add{background:#C4A55A;color:#1B2B4B}
+.btn-add:hover{background:#b8964e}
+.btn-print{background:#1B2B4B;color:#fff}
+.btn-print:hover{background:#253d6b}
+.btn-del{background:#fee2e2;color:#dc2626;padding:4px 10px;font-size:12px}
+.btn-del:hover{background:#fecaca}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #e0dff5;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:1100px}
+th{background:#1B2B4B;color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;white-space:nowrap;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+td input,td select{border:1px solid #d1d5db;border-radius:5px;padding:5px 8px;font-size:13px;font-family:inherit;color:#1B2B4B;width:100%;min-width:80px;background:#fff}
+td input:focus,td select:focus{outline:2px solid #C4A55A;border-color:transparent}
+.calc{background:#f8f7ff;font-weight:600;color:#1B2B4B;text-align:right}
+.sem{width:22px;height:22px;border-radius:50%;display:inline-block;vertical-align:middle}
+.sem-verde{background:#16a34a}
+.sem-amarillo{background:#ca8a04}
+.sem-rojo{background:#dc2626}
+.sem-gris{background:#9ca3af}
+.alerta-row td{background:#fef2f2}
+.footer-note{margin-top:14px;font-size:12px;color:#9ca3af}
+@media print{
+  .actions,.btn-print{display:none}
+  body{background:#fff}
+  .table-wrap{border:1px solid #ccc}
+  th{background:#1B2B4B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>UNI-S1-R5 · Panel de Indicadores de Rendimiento por Proceso</h1>
+    <p>Síntoma: Caos de Procesos · Herramienta de seguimiento de KPIs operativos</p>
+  </div>
+  <span class="badge">UNI · MASFRAME</span>
+</header>
+
+<div class="container">
+  <div class="metrics">
+    <div class="metric" id="m-procesos">
+      <label>Procesos registrados</label>
+      <span id="v-procesos">0</span>
+      <div class="sub">con al menos un KPI</div>
+    </div>
+    <div class="metric" id="m-score">
+      <label>Score salud global</label>
+      <span id="v-score">—</span>
+      <div class="sub">media semáforos (0-100)</div>
+    </div>
+    <div class="metric" id="m-verde">
+      <label>En objetivo</label>
+      <span id="v-verde">0</span>
+      <div class="sub">KPIs ≥ 100% meta</div>
+    </div>
+    <div class="metric alerta" id="m-sin-kpi">
+      <label>Sin KPI definido</label>
+      <span id="v-sin-kpi">0</span>
+      <div class="sub">procesos sin medición</div>
+    </div>
+    <div class="metric" id="m-rojo">
+      <label>KPIs críticos</label>
+      <span id="v-rojo">0</span>
+      <div class="sub">bajo 70% de meta</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th>Proceso</th>
+          <th>KPI medido</th>
+          <th>Unidad</th>
+          <th>Meta</th>
+          <th>Valor actual</th>
+          <th>% vs Meta</th>
+          <th>Semáforo</th>
+          <th>Frecuencia medición</th>
+          <th>Responsable</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p class="footer-note">Semáforo: 🟢 ≥100% · 🟡 70-99% · 🔴 &lt;70% · ⚫ Sin KPI o valor. Score salud = media de valores semáforo (verde=100, amarillo=50, rojo=0).</p>
+</div>
+
+<script>
+const FREQS = ['Diaria','Semanal','Quincenal','Mensual','Trimestral','Semestral','Anual'];
+const rows = [];
+
+function semVal(pct, hasKpi){
+  if(!hasKpi) return 0;
+  if(pct >= 100) return 100;
+  if(pct >= 70) return 50;
+  return 0;
+}
+function semClass(pct, hasKpi){
+  if(!hasKpi) return 'sem-gris';
+  if(pct >= 100) return 'sem-verde';
+  if(pct >= 70) return 'sem-amarillo';
+  return 'sem-rojo';
+}
+
+function addRow(data={}){
+  const id = Date.now() + Math.random();
+  rows.push(id);
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.dataset.id = id;
+  tr.innerHTML = `
+    <td><input type="text" value="${data.proceso||''}" placeholder="Nombre del proceso" onchange="recalc()"></td>
+    <td><input type="text" value="${data.kpi||''}" placeholder="Tiempo de entrega, Tasa de error…" onchange="recalc()"></td>
+    <td><input type="text" value="${data.unidad||''}" placeholder="h, %, €, unidades" style="min-width:70px" onchange="recalc()"></td>
+    <td><input type="number" value="${data.meta||''}" placeholder="0" step="any" style="min-width:80px" onchange="recalc()"></td>
+    <td><input type="number" value="${data.actual||''}" placeholder="0" step="any" style="min-width:80px" onchange="recalc()"></td>
+    <td class="calc" data-pct></td>
+    <td data-sem style="text-align:center"><span class="sem sem-gris"></span></td>
+    <td>
+      <select onchange="recalc()">
+        ${FREQS.map(f=>`<option ${data.freq===f?'selected':''}>${f}</option>`).join('')}
+      </select>
+    </td>
+    <td><input type="text" value="${data.resp||''}" placeholder="Nombre"></td>
+    <td><button class="btn-del" onclick="delRow(this)">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+
+function delRow(btn){
+  btn.closest('tr').remove();
+  recalc();
+}
+
+function recalc(){
+  const tbody = document.getElementById('tbody');
+  const trs = tbody.querySelectorAll('tr');
+  let sinKpi=0, totSem=0, semCount=0, verde=0, rojo=0, procesos=0;
+
+  trs.forEach(tr=>{
+    const inputs = tr.querySelectorAll('input[type=number]');
+    const meta = parseFloat(inputs[0]?.value);
+    const actual = parseFloat(inputs[1]?.value);
+    const proceso = tr.querySelector('input[type=text]')?.value?.trim();
+    const kpi = tr.querySelectorAll('input[type=text]')[1]?.value?.trim();
+
+    if(proceso) procesos++;
+
+    const pctCell = tr.querySelector('[data-pct]');
+    const semCell = tr.querySelector('[data-sem] span');
+
+    const hasKpi = kpi && kpi.length > 0;
+    if(!hasKpi){ sinKpi++; }
+
+    if(!isNaN(meta) && meta !== 0 && !isNaN(actual) && hasKpi){
+      const pct = (actual/meta)*100;
+      pctCell.textContent = pct.toFixed(1)+'%';
+      semCell.className = 'sem ' + semClass(pct, hasKpi);
+      totSem += semVal(pct, hasKpi);
+      semCount++;
+      if(pct>=100) verde++;
+      if(pct<70) rojo++;
+      tr.classList.toggle('alerta-row', pct<70);
+    } else {
+      pctCell.textContent = '—';
+      semCell.className = 'sem sem-gris';
+      tr.classList.remove('alerta-row');
+    }
+  });
+
+  document.getElementById('v-procesos').textContent = procesos;
+  document.getElementById('v-score').textContent = semCount ? (totSem/semCount).toFixed(0) : '—';
+  document.getElementById('v-verde').textContent = verde;
+  document.getElementById('v-sin-kpi').textContent = sinKpi;
+  document.getElementById('v-rojo').textContent = rojo;
+
+  const scoreEl = document.getElementById('v-score');
+  const score = semCount ? totSem/semCount : -1;
+  scoreEl.style.color = score<0?'#1B2B4B':score>=80?'#16a34a':score>=50?'#ca8a04':'#dc2626';
+}
+
+// Datos de ejemplo
+addRow({proceso:'Atención al cliente',kpi:'Tiempo respuesta email',unidad:'h',meta:4,actual:5.2,freq:'Semanal',resp:'Ana García'});
+addRow({proceso:'Facturación',kpi:'Facturas emitidas a tiempo',unidad:'%',meta:100,actual:87,freq:'Mensual',resp:'Luis Martín'});
+addRow({proceso:'Onboarding cliente',kpi:'Días hasta primer servicio',unidad:'días',meta:3,actual:3,freq:'Mensual',resp:'Sara López'});
+addRow({proceso:'Gestión de incidencias',kpi:'Resolución en 24h',unidad:'%',meta:90,actual:62,freq:'Semanal',resp:'Pedro Ruiz'});
+addRow({proceso:'Reuniones internas',kpi:'',unidad:'',meta:'',actual:'',freq:'Semanal',resp:''});
+</script>
+</body>
+</html>

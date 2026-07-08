@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliminación de Pasos Sin Valor — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .alert-box { padding: 12px 16px; border-radius: 6px; margin-top: 12px; font-size: 0.85rem; font-weight: 600; }
+  .alert-rojo { background: #fff5f5; border-left: 4px solid #e53e3e; color: #c53030; }
+  .alert-amarillo { background: #fffff0; border-left: 4px solid #d69e2e; color: #975a16; }
+  .alert-verde { background: #f0fff4; border-left: 4px solid #38a169; color: #276749; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S1 — Esclerosis Operativa</div>
+    <div class="header-title">R5 — Eliminación de Pasos Sin Valor</div>
+    <div class="header-sub">Cuantificación del tiempo y coste en actividades que no generan valor</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Total Actividades</div>
+      <div class="metric-value" id="m-total">0</div>
+      <div class="metric-unit">registradas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Tiempo Sin Valor/mes</div>
+      <div class="metric-value" id="m-horas">0</div>
+      <div class="metric-unit">horas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Coste Sin Valor/mes</div>
+      <div class="metric-value" id="m-coste">0 €</div>
+      <div class="metric-unit">impacto económico</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Jornada en No-Valor</div>
+      <div class="metric-value" id="m-pct">0%</div>
+      <div class="metric-unit">sobre 160h/mes disponibles</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Inventario de Actividades</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Actividad</th>
+          <th style="width:160px">Tipo</th>
+          <th style="width:100px">Tiempo/mes (h)</th>
+          <th style="width:90px">Coste hora (€)</th>
+          <th style="width:100px">Coste/mes (€)</th>
+          <th style="width:100px">¿Puede eliminarse?</th>
+          <th>Responsable decisión</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="ejemplo">
+          <td><input value="Reunión de seguimiento sin agenda" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Valor añadido</option><option>Control redundante</option><option selected>Espera</option><option>Retrabajo</option><option>Aprobación innecesaria</option></select></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td><input type="number" value="30" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>Parcial</option><option>No</option></select></td>
+          <td><input value="Dirección" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Doble validación de facturas" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Valor añadido</option><option selected>Control redundante</option><option>Espera</option><option>Retrabajo</option><option>Aprobación innecesaria</option></select></td>
+          <td><input type="number" value="6" oninput="updateAll()"></td>
+          <td><input type="number" value="25" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>Parcial</option><option>No</option></select></td>
+          <td><input value="Finanzas" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Elaboración de propuesta comercial" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Valor añadido</option><option>Control redundante</option><option>Espera</option><option>Retrabajo</option><option>Aprobación innecesaria</option></select></td>
+          <td><input type="number" value="20" oninput="updateAll()"></td>
+          <td><input type="number" value="40" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option>Parcial</option><option selected>No</option></select></td>
+          <td><input value="Comercial" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Corrección de errores en informes" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Valor añadido</option><option>Control redundante</option><option>Espera</option><option selected>Retrabajo</option><option>Aprobación innecesaria</option></select></td>
+          <td><input type="number" value="10" oninput="updateAll()"></td>
+          <td><input type="number" value="30" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>Parcial</option><option>No</option></select></td>
+          <td><input value="Operaciones" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Aprobación firma director para gastos &lt;50€" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Valor añadido</option><option>Control redundante</option><option>Espera</option><option>Retrabajo</option><option selected>Aprobación innecesaria</option></select></td>
+          <td><input type="number" value="4" oninput="updateAll()"></td>
+          <td><input type="number" value="50" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>Parcial</option><option>No</option></select></td>
+          <td><input value="Dirección" oninput="updateAll()"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir actividad</button>
+    <div id="alert-box"></div>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s1-r5-pasos-sin-valor · Herramienta Operativa UNI-S1-R5</div>
+
+<script>
+function addRow() {
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Actividad" oninput="updateAll()"></td>
+    <td><select onchange="updateAll()"><option>Valor añadido</option><option>Control redundante</option><option>Espera</option><option>Retrabajo</option><option>Aprobación innecesaria</option></select></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input type="number" value="30" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>Parcial</option><option>No</option></select></td>
+    <td><input placeholder="Responsable" oninput="updateAll()"></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  const rows = document.querySelectorAll('#tbody tr');
+  let total = 0, horasSinValor = 0, costeSinValor = 0;
+
+  rows.forEach(tr => {
+    const cols = tr.querySelectorAll('input, select');
+    const tipo = cols[1].value;
+    const horas = parseFloat(cols[2].value) || 0;
+    const costeH = parseFloat(cols[3].value) || 0;
+    const coste = horas * costeH;
+    cols[4].value = coste.toFixed(2);
+    total++;
+    if (tipo !== 'Valor añadido') {
+      horasSinValor += horas;
+      costeSinValor += coste;
+    }
+  });
+
+  const pctJornada = ((horasSinValor / 160) * 100).toFixed(1);
+  document.getElementById('m-total').textContent = total;
+  document.getElementById('m-horas').textContent = horasSinValor.toFixed(1);
+  document.getElementById('m-coste').textContent = costeSinValor.toFixed(0) + ' €';
+  document.getElementById('m-pct').textContent = pctJornada + '%';
+
+  const alertEl = document.getElementById('alert-box');
+  const pct = parseFloat(pctJornada);
+  if (pct > 30) {
+    alertEl.innerHTML = `<div class="alert-box alert-rojo">⚠ El ${pctJornada}% de la jornada disponible se invierte en actividades sin valor. Umbral crítico superado (>30%). Prioridad máxima de eliminación.</div>`;
+  } else if (pct > 15) {
+    alertEl.innerHTML = `<div class="alert-box alert-amarillo">El ${pctJornada}% de la jornada se consume en no-valor. Revisar y reducir.</div>`;
+  } else {
+    alertEl.innerHTML = `<div class="alert-box alert-verde">El ${pctJornada}% de la jornada en no-valor. Nivel aceptable — mantener vigilancia.</div>`;
+  }
+}
+
+updateAll();
+</script>
+</body>
+</html>

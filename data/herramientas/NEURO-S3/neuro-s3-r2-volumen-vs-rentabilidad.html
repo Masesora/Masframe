@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEURO-S3 R2 — Simulador Volumen vs Rentabilidad</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+.header{background:#1B2B4B;color:#fff;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-size:20px;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-info{flex:1}
+.symptom{font-size:11px;color:#aab;text-transform:uppercase;letter-spacing:.5px}
+.tool-name{font-size:16px;font-weight:700;color:#fff;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.content{padding:20px 24px}
+.section-title{font-size:15px;font-weight:700;color:#1B2B4B;margin-bottom:14px}
+.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+@media(max-width:768px){.scenarios{grid-template-columns:1fr}}
+.panel{background:#fff;border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(27,43,75,.09);border:2px solid transparent;transition:border-color .2s}
+.panel.winner{border-color:#C4A55A}
+.panel-title{font-size:14px;font-weight:700;color:#1B2B4B;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #f0eef8}
+.form-row{margin-bottom:10px}
+.form-row label{display:block;font-size:11px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
+.form-row input{border:1px solid #ddd;border-radius:6px;padding:7px 10px;font-size:14px;width:100%;color:#1B2B4B}
+.computed{background:#f8f7ff;border-radius:6px;padding:8px 12px;margin-top:10px;border-left:3px solid #C4A55A}
+.computed-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.3px}
+.computed-value{font-size:18px;font-weight:700;color:#1B2B4B}
+.table-wrap{overflow-x:auto;margin-bottom:16px}
+table{border-collapse:collapse;width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(27,43,75,.08)}
+thead{background:#1B2B4B;color:#fff}
+thead th{padding:10px 12px;font-size:12px;font-weight:600;text-align:center}
+tbody td{padding:9px 12px;border-bottom:1px solid #f0eef8;text-align:center}
+tbody tr.best-row{background:#f0fdf4}
+.recomendacion{background:#fff;border-left:4px solid #C4A55A;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:14px;color:#1B2B4B}
+.recomendacion strong{color:#C4A55A}
+.cards{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px}
+.card{background:#fff;border-left:4px solid #C4A55A;border-radius:8px;padding:14px 18px;min-width:150px;flex:1;box-shadow:0 1px 3px rgba(27,43,75,.07)}
+.card-label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.card-value{font-size:20px;font-weight:700;color:#1B2B4B}
+.btn-print{background:#1B2B4B;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600}
+@media print{.btn-print{display:none}body{background:#fff}.scenarios{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="symptom">NEURO-S3 — Ilusión de Crecimiento</div>
+    <div class="tool-name">Simulador Volumen vs Rentabilidad</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+  <button class="btn-print" onclick="window.print()">Imprimir</button>
+</div>
+
+<div class="content">
+  <div class="section-title">Compara tres escenarios de negocio</div>
+
+  <div class="scenarios" id="scenariosGrid">
+
+    <div class="panel" id="panel-0">
+      <div class="panel-title">Escenario Actual</div>
+      <div class="form-row"><label>Clientes</label><input type="number" class="f-clientes" min="0" value="" oninput="calcAll()"></div>
+      <div class="form-row"><label>Precio medio €</label><input type="number" class="f-precio" min="0" value="" oninput="calcAll()"></div>
+      <div class="form-row"><label>Margen %</label><input type="number" class="f-margen" min="0" max="100" value="" oninput="calcAll()"></div>
+      <div class="form-row"><label>Horas necesarias</label><input type="number" class="f-horas" min="0" value="" oninput="calcAll()"></div>
+      <div class="computed"><div class="computed-label">Ingresos €</div><div class="computed-value" id="ing-0">—</div></div>
+      <div class="computed"><div class="computed-label">Margen total €</div><div class="computed-value" id="mt-0">—</div></div>
+      <div class="computed"><div class="computed-label">Margen/hora €</div><div class="computed-value" id="mh-0">—</div></div>
+    </div>
+
+    <div class="panel" id="panel-1">
+      <div class="panel-title">Más Volumen</div>
+      <div class="form-row"><label>Clientes</label><input type="number" class="f-clientes" min="0" value="" oninput="calcAll()"></div>
+      <div class="form-row"><label>Precio medio €</label><input type="number" class="f-precio" min="0" value="" oninput="calcAll()"></div>
+      <div class="form-row"><label>Margen %</label><input type="number" class="f-margen" min="0" max="100" value="" oninput="calcAll()"></div>
+      <div class="form-row"><label>Horas necesarias</label><input type="number" class="f-horas" min="0" value="" oninput="calcAll()"></div>
+      <div class="computed"><div class="computed-label">Ingresos €</div><div class="computed-value" id="ing-1">—</div></div>
+      <div class="computed"><div class="computed-label">Margen total €</div><div class="computed-value" id="mt-1">—</div></div>
+      <div class="computed"><div class="computed-label">Margen/hora €</div><div class="computed-value" id="mh-1">—</div></div>
+    </div>
+
+    <div class="panel" id="panel-2">
+      <div class="panel-title">Más Margen</div>
+      <div class="form-row"><label>Clientes</label><input type="number" class="f-clientes" min="0" value="" oninput="calcAll()"></div>
+      <div class="form-row"><label>Precio medio €</label><input type="number" class="f-precio" min="0" value="" oninput="calcAll()"></div>
+      <div class="form-row"><label>Margen %</label><input type="number" class="f-margen" min="0" max="100" value="" oninput="calcAll()"></div>
+      <div class="form-row"><label>Horas necesarias</label><input type="number" class="f-horas" min="0" value="" oninput="calcAll()"></div>
+      <div class="computed"><div class="computed-label">Ingresos €</div><div class="computed-value" id="ing-2">—</div></div>
+      <div class="computed"><div class="computed-label">Margen total €</div><div class="computed-value" id="mt-2">—</div></div>
+      <div class="computed"><div class="computed-label">Margen/hora €</div><div class="computed-value" id="mh-2">—</div></div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Tabla comparativa</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Escenario</th>
+          <th>Ingresos €</th>
+          <th>Margen total €</th>
+          <th>Margen/hora €</th>
+          <th>Posición</th>
+        </tr>
+      </thead>
+      <tbody id="compTable">
+        <tr id="ctr-0"><td>Escenario Actual</td><td id="ct-ing-0">—</td><td id="ct-mt-0">—</td><td id="ct-mh-0">—</td><td id="ct-pos-0">—</td></tr>
+        <tr id="ctr-1"><td>Más Volumen</td><td id="ct-ing-1">—</td><td id="ct-mt-1">—</td><td id="ct-mh-1">—</td><td id="ct-pos-1">—</td></tr>
+        <tr id="ctr-2"><td>Más Margen</td><td id="ct-ing-2">—</td><td id="ct-mt-2">—</td><td id="ct-mh-2">—</td><td id="ct-pos-2">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="recomendacion" id="recomendacion"><strong>Recomendación:</strong> Introduce los datos de los tres escenarios para obtener la recomendación.</div>
+
+  <div class="cards">
+    <div class="card"><div class="card-label">Mejor escenario</div><div class="card-value" id="cBest">—</div></div>
+    <div class="card"><div class="card-label">Ingresos mejor escenario €</div><div class="card-value" id="cIngBest">—</div></div>
+    <div class="card"><div class="card-label">Margen/hora mejor escenario €</div><div class="card-value" id="cMhBest">—</div></div>
+    <div class="card"><div class="card-label">Diferencia vs actual €</div><div class="card-value" id="cDiff">—</div></div>
+  </div>
+</div>
+
+<script>
+const names = ['Escenario Actual','Más Volumen','Más Margen'];
+const results = [{},{},{}];
+
+function fmt(n,dec=0){return isNaN(n)||!isFinite(n)?'—':n.toFixed(dec);}
+
+function calcAll(){
+  const panels = document.querySelectorAll('.panel');
+  panels.forEach((panel,i)=>{
+    const cl = parseFloat(panel.querySelector('.f-clientes').value)||0;
+    const pr = parseFloat(panel.querySelector('.f-precio').value)||0;
+    const mg = parseFloat(panel.querySelector('.f-margen').value)||0;
+    const hr = parseFloat(panel.querySelector('.f-horas').value)||0;
+    const ing = cl*pr;
+    const mt = ing*mg/100;
+    const mh = hr>0 ? mt/hr : null;
+    results[i] = {ing, mt, mh, valid: cl>0||pr>0};
+    document.getElementById('ing-'+i).textContent = ing>0 ? ing.toLocaleString('es-ES')+'€' : '—';
+    document.getElementById('mt-'+i).textContent = mt>0 ? mt.toLocaleString('es-ES')+'€' : '—';
+    document.getElementById('mh-'+i).textContent = mh!==null ? fmt(mh,2)+'€' : '—';
+    document.getElementById('ct-ing-'+i).textContent = ing>0?ing.toLocaleString('es-ES')+'€':'—';
+    document.getElementById('ct-mt-'+i).textContent = mt>0?mt.toLocaleString('es-ES')+'€':'—';
+    document.getElementById('ct-mh-'+i).textContent = mh!==null?fmt(mh,2)+'€':'—';
+  });
+
+  // Find winner
+  let bestIdx = -1, bestMh = -Infinity;
+  results.forEach((r,i)=>{
+    if(r.mh!==null && r.mh>bestMh){ bestMh=r.mh; bestIdx=i; }
+  });
+
+  // Highlight panels
+  document.querySelectorAll('.panel').forEach((p,i)=>{
+    p.classList.toggle('winner', i===bestIdx);
+  });
+
+  // Highlight table rows
+  for(let i=0;i<3;i++){
+    const tr = document.getElementById('ctr-'+i);
+    tr.classList.toggle('best-row', i===bestIdx);
+    document.getElementById('ct-pos-'+i).textContent = i===bestIdx ? '🥇 Mejor' : (bestIdx===-1 ? '—' : `${i<bestIdx?'↑':'↓'} ${i+1}º`);
+  }
+
+  // Recommendation
+  const recEl = document.getElementById('recomendacion');
+  const msgs = [
+    'Tu modelo actual ya es el más eficiente. Optimiza sin cambiar estructura.',
+    'Crecer en volumen mejora tu eficiencia. Considera escalar capacidad operativa.',
+    'Subir precios o especializar mejora más tu rentabilidad que captar más clientes.'
+  ];
+  if(bestIdx>=0){
+    recEl.innerHTML = `<strong>Recomendación:</strong> ${msgs[bestIdx]}`;
+  } else {
+    recEl.innerHTML = '<strong>Recomendación:</strong> Introduce los datos de los tres escenarios para obtener la recomendación.';
+  }
+
+  // Summary cards
+  if(bestIdx>=0){
+    const br = results[bestIdx];
+    const diff = br.ing - results[0].ing;
+    document.getElementById('cBest').textContent = names[bestIdx];
+    document.getElementById('cIngBest').textContent = br.ing.toLocaleString('es-ES')+'€';
+    document.getElementById('cMhBest').textContent = br.mh!==null ? fmt(br.mh,2)+'€' : '—';
+    document.getElementById('cDiff').textContent = bestIdx===0 ? '0€' : (diff>=0?'+':'')+diff.toLocaleString('es-ES')+'€';
+  } else {
+    ['cBest','cIngBest','cMhBest','cDiff'].forEach(id=>document.getElementById(id).textContent='—');
+  }
+}
+
+calcAll();
+</script>
+</body>
+</html>

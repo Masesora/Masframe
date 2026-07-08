@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIR-S2 R1 · Test de Claridad del Mensaje</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1B2B4B;
+    --gold: #C4A55A;
+    --bg: #f8f7ff;
+    --alt-row: #f0f4f8;
+    --white: #ffffff;
+    --border: #d6dae6;
+    --text: #1a1a2e;
+    --muted: #5a6178;
+    --red: #c0392b;
+    --yellow: #d4a017;
+    --green: #1e8449;
+    --red-bg: #fdf0ef;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────── */
+  .mas-header {
+    background: var(--navy);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .mas-logo {
+    width: 44px; height: 44px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800;
+    color: var(--navy);
+    flex-shrink: 0;
+    letter-spacing: -1px;
+  }
+  .mas-header-text { flex: 1; min-width: 200px; }
+  .mas-symptom {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .mas-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    text-wrap: balance;
+  }
+  .mas-badge {
+    background: transparent;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  /* ── MAIN CONTENT ───────────────────────────────────── */
+  .mas-main { padding: 28px 32px; max-width: 100%; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* ── TABLE ──────────────────────────────────────────── */
+  .table-wrap { overflow-x: auto; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 24px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 900px;
+  }
+  thead tr {
+    background: var(--navy);
+  }
+  thead th {
+    color: var(--white);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 11px 12px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(odd) { background: var(--white); }
+  tbody tr:nth-child(even) { background: var(--alt-row); }
+  tbody tr:hover { background: #e8edf5; }
+
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  td[contenteditable="true"] {
+    cursor: text;
+    outline: none;
+    min-width: 60px;
+  }
+  td[contenteditable="true"]:focus {
+    background: #eef1fb;
+    box-shadow: inset 0 0 0 2px var(--gold);
+    border-radius: 3px;
+  }
+  td[data-type="score"] {
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    max-width: 70px;
+  }
+  td[data-calc] {
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: var(--navy);
+    background: transparent !important;
+  }
+
+  /* ── SEMAPHORE ──────────────────────────────────────── */
+  .dot {
+    display: inline-block;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .dot-green { background: var(--green); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-red { background: var(--red); }
+
+  .score-cell { display: flex; align-items: center; justify-content: center; gap: 2px; }
+
+  /* ── ADD ROW BUTTON ─────────────────────────────────── */
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1.5px solid var(--navy);
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 7px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 32px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-add:hover { background: var(--navy); color: var(--white); }
+
+  /* ── METRICS ────────────────────────────────────────── */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .metric-card {
+    background: var(--white);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--navy);
+    padding: 16px 18px 14px;
+  }
+  .metric-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .metric-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .metric-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .metric-value.danger { color: var(--red); }
+
+  /* ── PRINT BUTTON ───────────────────────────────────── */
+  .actions { display: flex; gap: 12px; align-items: center; }
+  .btn-print {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: opacity 0.15s;
+  }
+  .btn-print:hover { opacity: 0.88; }
+
+  /* ── PRINT MEDIA ────────────────────────────────────── */
+  @media print {
+    body { background: white; font-size: 11px; }
+    .mas-header { padding: 14px 20px; }
+    .mas-main { padding: 16px 20px; }
+    .actions, .btn-add { display: none !important; }
+    .table-wrap { overflow: visible; border: none; }
+    table { min-width: unset; }
+    .metric-card { border: 1px solid #ccc; }
+    thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header class="mas-header">
+  <div class="mas-logo">M</div>
+  <div class="mas-header-text">
+    <div class="mas-symptom">CIR-S2 · Propuesta Confusa</div>
+    <div class="mas-title">Test de Claridad del Mensaje</div>
+  </div>
+  <span class="mas-badge">Herramienta Operativa</span>
+</header>
+
+<main class="mas-main">
+
+  <p class="section-label">Evaluación por frase · Escala 1–5 por criterio · Máximo posible: 25 puntos</p>
+
+  <div class="table-wrap">
+    <table id="clarity-table">
+      <thead>
+        <tr>
+          <th style="min-width:220px">Frase / Mensaje evaluado</th>
+          <th style="min-width:110px">Evaluador</th>
+          <th style="width:80px">¿Entiende a quién va? (1-5)</th>
+          <th style="width:80px">¿Qué problema resuelve? (1-5)</th>
+          <th style="width:80px">¿Entiende el resultado? (1-5)</th>
+          <th style="width:80px">¿Genera credibilidad? (1-5)</th>
+          <th style="width:80px">¿Le habla directamente? (1-5)</th>
+          <th style="width:90px">Score total</th>
+          <th style="min-width:180px">Qué falta o sobra</th>
+        </tr>
+      </thead>
+      <tbody id="clarity-body">
+        <tr>
+          <td contenteditable="true">Ayudo a autónomos a recuperar el IVA que pierden cada trimestre</td>
+          <td contenteditable="true">Ana García</td>
+          <td contenteditable="true" data-type="score">5</td>
+          <td contenteditable="true" data-type="score">5</td>
+          <td contenteditable="true" data-type="score">4</td>
+          <td contenteditable="true" data-type="score">3</td>
+          <td contenteditable="true" data-type="score">4</td>
+          <td data-calc="score-total"><div class="score-cell"><span class="dot dot-green"></span>21</div></td>
+          <td contenteditable="true">Falta prueba de resultado concreto</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">Servicios de consultoría financiera integral para empresas</td>
+          <td contenteditable="true">Carlos M.</td>
+          <td contenteditable="true" data-type="score">2</td>
+          <td contenteditable="true" data-type="score">3</td>
+          <td contenteditable="true" data-type="score">2</td>
+          <td contenteditable="true" data-type="score">3</td>
+          <td contenteditable="true" data-type="score">2</td>
+          <td data-calc="score-total"><div class="score-cell"><span class="dot dot-red"></span>12</div></td>
+          <td contenteditable="true">Demasiado genérico, no hay destinatario claro</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">Tu negocio merece crecer sin ahogarse en gestiones fiscales</td>
+          <td contenteditable="true">Lucía P.</td>
+          <td contenteditable="true" data-type="score">4</td>
+          <td contenteditable="true" data-type="score">4</td>
+          <td contenteditable="true" data-type="score">5</td>
+          <td contenteditable="true" data-type="score">4</td>
+          <td contenteditable="true" data-type="score">5</td>
+          <td data-calc="score-total"><div class="score-cell"><span class="dot dot-green"></span>22</div></td>
+          <td contenteditable="true">Añadir quién lo firma o prueba social</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">Soluciones avanzadas de optimización tributaria empresarial</td>
+          <td contenteditable="true">Javier R.</td>
+          <td contenteditable="true" data-type="score">2</td>
+          <td contenteditable="true" data-type="score">2</td>
+          <td contenteditable="true" data-type="score">3</td>
+          <td contenteditable="true" data-type="score">3</td>
+          <td contenteditable="true" data-type="score">2</td>
+          <td data-calc="score-total"><div class="score-cell"><span class="dot dot-red"></span>12</div></td>
+          <td contenteditable="true">Jerga técnica. Sin beneficio tangible</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn-add" id="btn-add-row">+ Añadir fila</button>
+
+  <p class="section-label">Resumen de métricas</p>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Clarity Score promedio</div>
+      <div class="metric-value" id="m-avg">—</div>
+      <div class="metric-sub">Media de todos los mensajes</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Versión ganadora</div>
+      <div class="metric-value" style="font-size:14px; padding-top:4px;" id="m-winner">—</div>
+      <div class="metric-sub">Mensaje con mayor score</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Mensajes con score &lt; 15</div>
+      <div class="metric-value" id="m-low">—</div>
+      <div class="metric-sub">Requieren revisión urgente</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Score máximo posible</div>
+      <div class="metric-value">25</div>
+      <div class="metric-sub">5 criterios × 5 puntos</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-print" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Imprimir / Guardar PDF
+    </button>
+  </div>
+
+</main>
+
+<script>
+(function () {
+
+  function getDotClass(score) {
+    if (score >= 20) return 'dot-green';
+    if (score >= 15) return 'dot-yellow';
+    return 'dot-red';
+  }
+
+  function recalc() {
+    const tbody = document.getElementById('clarity-body');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const scores = [];
+    const frases = [];
+
+    rows.forEach(function (tr) {
+      const scoreCells = tr.querySelectorAll('td[data-type="score"]');
+      let sum = 0;
+      scoreCells.forEach(function (cell) {
+        const val = parseFloat(cell.textContent.trim()) || 0;
+        sum += val;
+      });
+      sum = Math.min(25, Math.max(0, sum));
+
+      const calcCell = tr.querySelector('td[data-calc="score-total"]');
+      if (calcCell) {
+        const dotClass = getDotClass(sum);
+        calcCell.innerHTML = '<div class="score-cell"><span class="dot ' + dotClass + '"></span>' + sum + '</div>';
+      }
+
+      scores.push(sum);
+      const fraseCell = tr.querySelector('td:first-child');
+      frases.push(fraseCell ? fraseCell.textContent.trim() : '');
+    });
+
+    // Metrics
+    const avg = scores.length ? (scores.reduce(function(a,b){return a+b;},0) / scores.length) : 0;
+    document.getElementById('m-avg').textContent = avg.toFixed(1);
+
+    const maxScore = Math.max.apply(null, scores);
+    const winnerIdx = scores.indexOf(maxScore);
+    const winnerText = frases[winnerIdx] || '—';
+    document.getElementById('m-winner').textContent = winnerText.length > 38 ? winnerText.slice(0, 36) + '…' : winnerText;
+
+    const lowCount = scores.filter(function(s){ return s < 15; }).length;
+    const mLow = document.getElementById('m-low');
+    mLow.textContent = lowCount;
+    mLow.className = 'metric-value' + (lowCount > 0 ? ' danger' : '');
+  }
+
+  function attachEvents(tr) {
+    tr.querySelectorAll('td[contenteditable="true"]').forEach(function (cell) {
+      cell.addEventListener('input', recalc);
+    });
+  }
+
+  document.getElementById('btn-add-row').addEventListener('click', function () {
+    const tbody = document.getElementById('clarity-body');
+    const rows = tbody.querySelectorAll('tr');
+    const last = rows[rows.length - 1];
+    const clone = last.cloneNode(true);
+
+    clone.querySelectorAll('td[contenteditable="true"]').forEach(function (cell) {
+      cell.textContent = '';
+    });
+    // Reset calc cell
+    const calcCell = clone.querySelector('td[data-calc="score-total"]');
+    if (calcCell) calcCell.innerHTML = '<div class="score-cell"><span class="dot dot-red"></span>0</div>';
+
+    tbody.appendChild(clone);
+    attachEvents(clone);
+    recalc();
+    clone.querySelector('td[contenteditable="true"]').focus();
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const tbody = document.getElementById('clarity-body');
+    tbody.querySelectorAll('tr').forEach(function (tr) {
+      attachEvents(tr);
+    });
+    recalc();
+  });
+
+  // Run immediately in case DOM is already ready
+  if (document.readyState !== 'loading') {
+    const tbody = document.getElementById('clarity-body');
+    tbody.querySelectorAll('tr').forEach(function (tr) {
+      attachEvents(tr);
+    });
+    recalc();
+  }
+
+})();
+</script>
+</body>
+</html>

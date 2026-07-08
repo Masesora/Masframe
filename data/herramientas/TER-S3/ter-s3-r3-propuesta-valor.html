@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TER-S3 R3 — Test de Mensajes de Propuesta de Valor</title>
+<style>
+  :root { --navy: #1B2B4B; --gold: #C4A55A; --bg: #f8f7ff; --white: #ffffff; --red: #c0392b; --yellow: #f39c12; --green: #27ae60; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--navy); padding: 24px; }
+  header { background: var(--navy); color: var(--white); padding: 20px 28px; border-radius: 10px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { font-size: 1.3rem; font-weight: 700; }
+  header p { font-size: 0.85rem; opacity: 0.75; margin-top: 4px; }
+  .badge { background: var(--gold); color: var(--navy); font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+  .metrics { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .metric { background: var(--white); border: 1px solid #ddd; border-radius: 8px; padding: 16px 22px; flex: 1; min-width: 160px; }
+  .metric .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+  .metric .value { font-size: 1.8rem; font-weight: 700; color: var(--navy); margin-top: 4px; }
+  .metric.gold .value { color: var(--gold); }
+  .toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  button { background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; cursor: pointer; font-family: system-ui; }
+  button:hover { background: var(--gold); color: var(--navy); }
+  button.secondary { background: var(--white); color: var(--navy); border: 1px solid #ccc; }
+  button.secondary:hover { background: var(--bg); }
+  button.print-btn { background: var(--gold); color: var(--navy); font-weight: 700; }
+  .table-wrap { overflow-x: auto; background: var(--white); border-radius: 10px; border: 1px solid #ddd; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+  thead th { background: var(--navy); color: var(--white); padding: 11px 10px; text-align: left; white-space: nowrap; }
+  thead th:first-child { border-radius: 10px 0 0 0; }
+  thead th:last-child { border-radius: 0 10px 0 0; }
+  tbody tr { border-bottom: 1px solid #eee; }
+  tbody tr:hover { background: #f0f4ff; }
+  tbody tr.winner { border: 3px solid var(--gold); background: #fffbf0; }
+  tbody tr.winner td { font-weight: 600; }
+  td { padding: 9px 10px; }
+  td input, td select { border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: system-ui; font-size: 0.85rem; background: var(--bg); width: 100%; }
+  td input[type="number"] { width: 60px; }
+  td input:focus, td select:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
+  .score-cell { font-weight: 700; font-size: 1rem; text-align: center; }
+  .score-hi { color: var(--green); }
+  .score-lo { color: var(--red); }
+  .score-mid { color: var(--yellow); }
+  .winner-badge { background: var(--gold); color: var(--navy); font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; font-weight: 700; }
+  .note { font-size: 0.78rem; color: #555; font-style: italic; }
+  @media print { button, .toolbar { display: none; } body { padding: 10px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>TER-S3 R3 — Test de Mensajes de Propuesta de Valor</h1>
+    <p>Comoditización · Evalúa qué mensajes conectan mejor con cada segmento</p>
+  </div>
+  <span class="badge">TER-S3</span>
+</header>
+
+<div class="metrics">
+  <div class="metric gold"><div class="label">Score medio global</div><div class="value" id="m-global">—</div></div>
+  <div class="metric"><div class="label">Mensaje ganador</div><div class="value" id="m-winner" style="font-size:1rem;padding-top:8px">—</div></div>
+  <div class="metric"><div class="label">Score máximo (sobre 30)</div><div class="value" id="m-max">—</div></div>
+  <div class="metric"><div class="label">Mensajes evaluados</div><div class="value" id="m-total">—</div></div>
+</div>
+
+<div class="toolbar">
+  <button onclick="addRow()">+ Añadir mensaje</button>
+  <button class="secondary" onclick="sortByScore()">↓ Ordenar por Score</button>
+  <button class="secondary" onclick="recalcAll()">↻ Recalcular</button>
+  <button class="print-btn" onclick="window.print()">🖨 Imprimir</button>
+</div>
+
+<div class="table-wrap">
+<table id="mainTable">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Mensaje</th>
+      <th>Segmento</th>
+      <th>Claridad (1-10)</th>
+      <th>Resonancia emocional (1-10)</th>
+      <th>Credibilidad (1-10)</th>
+      <th>Score total (máx 30)</th>
+      <th>Evidencia que lo respalda</th>
+      <th>¿Se usa en comunicación?</th>
+      <th>Canal</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+<p class="note">Score = Claridad + Resonancia + Credibilidad (máximo 30). Mensaje ganador destacado con borde dorado.</p>
+
+<script>
+const DEFAULTS = [
+  {mensaje:"Multiplica tus ingresos sin multiplicar tu equipo",segmento:"Autónomos",claridad:"8",resonancia:"9",credibilidad:"7",evidencia:"Casos de éxito documentados",usa:"Sí",canal:"LinkedIn"},
+  {mensaje:"Tu metodología, escalada sin perder calidad",segmento:"Pymes",claridad:"7",resonancia:"7",credibilidad:"8",evidencia:"Métricas de clientes 6m",usa:"No",canal:"Web"},
+  {mensaje:"El sistema que trabaja mientras tú descansas",segmento:"Empresas",claridad:"9",resonancia:"8",credibilidad:"6",evidencia:"Demo en vivo",usa:"Sí",canal:"Email"},
+  {mensaje:"Resultados medibles en 90 días o te devolvemos el dinero",segmento:"Pymes",claridad:"10",resonancia:"8",credibilidad:"7",evidencia:"Garantía contractual",usa:"No",canal:"Propuesta"},
+];
+
+let rows = [];
+function init() { rows = DEFAULTS.map(r=>Object.assign({},r)); renderTable(); }
+
+function calcScore(r) {
+  const c = parseFloat(r.claridad), res = parseFloat(r.resonancia), cr = parseFloat(r.credibilidad);
+  if (isNaN(c)||isNaN(res)||isNaN(cr)) return null;
+  return c + res + cr;
+}
+
+function scoreClass(s) {
+  if (s===null) return "";
+  if (s >= 24) return "score-hi";
+  if (s >= 15) return "score-mid";
+  return "score-lo";
+}
+
+function renderTable() {
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = "";
+  let maxScore = -1, maxIdx = -1;
+  rows.forEach((r,i)=>{ const s=calcScore(r); if(s!==null&&s>maxScore){maxScore=s;maxIdx=i;} });
+  rows.forEach((r,i) => {
+    const score = calcScore(r);
+    const isWinner = i === maxIdx;
+    const tr = document.createElement("tr");
+    if (isWinner) tr.classList.add("winner");
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td><input value="${r.mensaje}" oninput="rows[${i}].mensaje=this.value" /></td>
+      <td><input value="${r.segmento}" oninput="rows[${i}].segmento=this.value" /></td>
+      <td><input type="number" min="1" max="10" value="${r.claridad}" oninput="rows[${i}].claridad=this.value;recalcRow(${i})" /></td>
+      <td><input type="number" min="1" max="10" value="${r.resonancia}" oninput="rows[${i}].resonancia=this.value;recalcRow(${i})" /></td>
+      <td><input type="number" min="1" max="10" value="${r.credibilidad}" oninput="rows[${i}].credibilidad=this.value;recalcRow(${i})" /></td>
+      <td class="score-cell ${scoreClass(score)}" id="score-${i}">${score!==null?score:"—"}${isWinner?' <span class="winner-badge">★ Ganador</span>':''}</td>
+      <td><input value="${r.evidencia}" oninput="rows[${i}].evidencia=this.value" /></td>
+      <td><select onchange="rows[${i}].usa=this.value">
+        <option value="Sí" ${r.usa==="Sí"?"selected":""}>Sí</option>
+        <option value="No" ${r.usa==="No"?"selected":""}>No</option>
+      </select></td>
+      <td><input value="${r.canal}" oninput="rows[${i}].canal=this.value" /></td>
+      <td><button class="secondary" style="padding:4px 10px;font-size:0.78rem" onclick="removeRow(${i})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  updateMetrics(maxIdx, maxScore);
+}
+
+function recalcRow(i) { renderTable(); }
+function recalcAll() { renderTable(); }
+
+function updateMetrics(maxIdx, maxScore) {
+  const scores = rows.map(calcScore).filter(s=>s!==null);
+  document.getElementById("m-total").textContent = rows.length;
+  if (!scores.length) { document.getElementById("m-global").textContent="—"; document.getElementById("m-winner").textContent="—"; document.getElementById("m-max").textContent="—"; return; }
+  const avg = scores.reduce((a,b)=>a+b,0)/scores.length;
+  document.getElementById("m-global").textContent = avg.toFixed(1)+"/30";
+  document.getElementById("m-max").textContent = maxScore+"/30";
+  document.getElementById("m-winner").textContent = maxIdx>=0 ? (rows[maxIdx].mensaje.substring(0,40)+(rows[maxIdx].mensaje.length>40?"…":"")) : "—";
+}
+
+function sortByScore() {
+  rows.sort((a,b)=>(calcScore(b)||0)-(calcScore(a)||0));
+  renderTable();
+}
+
+function addRow() { rows.push({mensaje:"",segmento:"",claridad:"",resonancia:"",credibilidad:"",evidencia:"",usa:"No",canal:""}); renderTable(); }
+function removeRow(i) { rows.splice(i,1); renderTable(); }
+
+init();
+</script>
+</body>
+</html>

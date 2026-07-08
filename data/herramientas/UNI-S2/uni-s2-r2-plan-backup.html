@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNI-S2-R2 · Plan de Formación de Backups</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+header{background:#1B2B4B;color:#f8f7ff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:17px;font-weight:700}
+header p{font-size:12px;opacity:.75;margin-top:2px}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.container{padding:20px 24px;max-width:1400px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.metric{background:#fff;border:1px solid #e0dff5;border-radius:10px;padding:16px 18px}
+.metric label{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
+.metric span{font-size:26px;font-weight:700;color:#1B2B4B}
+.metric .sub{font-size:11px;color:#9ca3af;margin-top:2px}
+.actions{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+button{cursor:pointer;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;font-family:inherit}
+.btn-add{background:#C4A55A;color:#1B2B4B}.btn-add:hover{background:#b8964e}
+.btn-print{background:#1B2B4B;color:#fff}.btn-print:hover{background:#253d6b}
+.btn-del{background:#fee2e2;color:#dc2626;padding:4px 10px;font-size:12px}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #e0dff5;background:#fff;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;min-width:1100px}
+th{background:#1B2B4B;color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;white-space:nowrap;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+td input,td select{border:1px solid #d1d5db;border-radius:5px;padding:5px 8px;font-size:13px;font-family:inherit;color:#1B2B4B;width:100%;background:#fff}
+td input:focus,td select:focus{outline:2px solid #C4A55A;border-color:transparent}
+.calc{background:#f8f7ff;font-weight:600;text-align:right}
+.nivel-bajo td{background:#fef2f2}
+.nivel-ok td{background:#f0fdf4}
+.progreso-wrap{background:#e5e7eb;border-radius:4px;height:10px;min-width:80px;position:relative;display:inline-block;width:85%}
+.progreso-bar{height:100%;border-radius:4px;position:absolute;left:0;top:0;transition:width .3s}
+.footer-note{font-size:12px;color:#9ca3af;margin-top:8px}
+@media print{.actions{display:none}body{background:#fff}th{background:#1B2B4B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>UNI-S2-R2 · Plan de Formación de Backups</h1>
+    <p>Síntoma: Dependencia de Personas Clave · Seguimiento del plan de transferencia de conocimiento</p>
+  </div>
+  <span class="badge">UNI · MASFRAME</span>
+</header>
+<div class="container">
+  <div class="metrics">
+    <div class="metric">
+      <label>Conocimientos registrados</label>
+      <span id="v-total">0</span>
+      <div class="sub">en el plan</div>
+    </div>
+    <div class="metric">
+      <label>Backups ≥ nivel 3</label>
+      <span id="v-ok" style="color:#16a34a">0%</span>
+      <div class="sub">conocimientos con backup suficiente</div>
+    </div>
+    <div class="metric">
+      <label>Horas formación pendientes</label>
+      <span id="v-horas">0 h</span>
+      <div class="sub">estimadas × (1 − % completado)</div>
+    </div>
+    <div class="metric">
+      <label>Sin backup suficiente</label>
+      <span id="v-criticos" style="color:#dc2626">0</span>
+      <div class="sub">nivel backup &lt; 3</div>
+    </div>
+    <div class="metric">
+      <label>% completado global</label>
+      <span id="v-pct">0%</span>
+      <div class="sub">media % completado</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Conocimiento crítico</th>
+          <th>Persona que lo tiene</th>
+          <th>Backup designado</th>
+          <th>Nivel actual backup (1-5)</th>
+          <th>Plan de transferencia</th>
+          <th>Horas estimadas</th>
+          <th>% Completado</th>
+          <th>Progreso</th>
+          <th>Fecha objetivo</th>
+          <th>Horas pendientes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p class="footer-note">Verde = backup nivel ≥ 3. Rojo = nivel &lt; 3. Horas pendientes = horas estimadas × (1 − % completado / 100).</p>
+</div>
+<script>
+function addRow(d={}){
+  const tbody=document.getElementById('tbody');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td><input type="text" value="${d.conoc||''}" placeholder="Conocimiento crítico" onchange="recalc()"></td>
+    <td><input type="text" value="${d.emisor||''}" placeholder="Quien sabe" onchange="recalc()"></td>
+    <td><input type="text" value="${d.backup||''}" placeholder="Quien aprende" onchange="recalc()"></td>
+    <td><select onchange="recalc()">${[1,2,3,4,5].map(n=>`<option value="${n}" ${(d.nivel||1)==n?'selected':''}>${n}</option>`).join('')}</select></td>
+    <td><input type="text" value="${d.plan||''}" placeholder="Descripción del plan" onchange="recalc()"></td>
+    <td><input type="number" value="${d.horas||''}" min="0" placeholder="0" onchange="recalc()"></td>
+    <td><input type="number" value="${d.pct||0}" min="0" max="100" placeholder="0" onchange="recalc()"></td>
+    <td style="min-width:120px"><div class="progreso-wrap"><div class="progreso-bar" style="width:${d.pct||0}%;background:#C4A55A"></div></div></td>
+    <td><input type="date" value="${d.fecha||''}" onchange="recalc()"></td>
+    <td class="calc" data-pend>—</td>
+    <td><button class="btn-del" onclick="delRow(this)">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  recalc();
+}
+function delRow(btn){btn.closest('tr').remove();recalc();}
+function recalc(){
+  const trs=document.querySelectorAll('#tbody tr');
+  let total=0,okCount=0,horasPend=0,criticos=0,sumPct=0;
+  trs.forEach(tr=>{
+    total++;
+    const nivel=parseInt(tr.querySelector('select').value)||1;
+    const horas=parseFloat(tr.querySelectorAll('input[type=number]')[0].value)||0;
+    const pct=parseFloat(tr.querySelectorAll('input[type=number]')[1].value)||0;
+    const pend=horas*(1-pct/100);
+    tr.querySelector('[data-pend]').textContent=pend.toFixed(1)+' h';
+    horasPend+=pend;
+    sumPct+=pct;
+    if(nivel>=3) okCount++; else criticos++;
+    tr.classList.toggle('nivel-bajo',nivel<3);
+    tr.classList.toggle('nivel-ok',nivel>=3);
+    // update bar
+    const bar=tr.querySelector('.progreso-bar');
+    bar.style.width=pct+'%';
+    bar.style.background=pct>=80?'#16a34a':pct>=40?'#C4A55A':'#dc2626';
+  });
+  document.getElementById('v-total').textContent=total;
+  document.getElementById('v-ok').textContent=total?(okCount/total*100).toFixed(0)+'%':'0%';
+  document.getElementById('v-horas').textContent=horasPend.toFixed(1)+' h';
+  document.getElementById('v-criticos').textContent=criticos;
+  document.getElementById('v-pct').textContent=total?(sumPct/total).toFixed(1)+'%':'0%';
+}
+function fd(days){const d=new Date();d.setDate(d.getDate()+days);return d.toISOString().split('T')[0];}
+addRow({conoc:'Configuración servidor producción',emisor:'Carlos Méndez',backup:'Javier Ríos',nivel:1,plan:'Sesiones semanales + documentación técnica',horas:20,pct:10,fecha:fd(60)});
+addRow({conoc:'Negociación con proveedor principal',emisor:'Marta Blanco',backup:'Juan Torres',nivel:2,plan:'Acompañamiento en 3 reuniones + resumen criterios',horas:8,pct:35,fecha:fd(30)});
+addRow({conoc:'Cierre contable mensual',emisor:'Ana García',backup:'Rosa Díaz',nivel:2,plan:'Práctica supervisada próximos 2 cierres',horas:12,pct:20,fecha:fd(45)});
+addRow({conoc:'CRM y segmentación clientes',emisor:'Luis Martín',backup:'Sara López',nivel:4,plan:'Manual + sesión de práctica',horas:5,pct:80,fecha:fd(14)});
+addRow({conoc:'Gestión redes sociales',emisor:'Elena Vega',backup:'Rosa Díaz',nivel:5,plan:'Completo - backup operativo',horas:4,pct:100,fecha:fd(-10)});
+</script>
+</body>
+</html>

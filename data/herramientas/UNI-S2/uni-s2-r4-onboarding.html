@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formación y Onboarding — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .param-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .param-label { font-size: 0.85rem; font-weight: 600; color: #1B2B4B; }
+  .param-input { width: 220px; border: 2px solid #C4A55A; border-radius: 6px; padding: 8px 12px; font-size: 1rem; font-weight: 700; color: #1B2B4B; }
+  .progress-bar-bg { background: #e0dff5; border-radius: 20px; height: 24px; margin-top: 8px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; border-radius: 20px; background: #38a169; transition: width 0.3s; display: flex; align-items: center; padding-left: 10px; color: white; font-weight: 700; font-size: 0.85rem; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S2 — Colapso de Capacidad</div>
+    <div class="header-title">R4 — Formación y Onboarding</div>
+    <div class="header-sub">Plan estructurado de incorporación con seguimiento de avance</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Total Tareas Onboarding</div>
+      <div class="metric-value" id="m-total">0</div>
+      <div class="metric-unit">tareas planificadas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Completado</div>
+      <div class="metric-value" id="m-pct">0%</div>
+      <div class="metric-unit">del plan de incorporación</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total Horas Onboarding</div>
+      <div class="metric-value" id="m-horas">0</div>
+      <div class="metric-unit">horas invertidas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Horas Absorbidas Equipo</div>
+      <div class="metric-value" id="m-absorbidas">0</div>
+      <div class="metric-unit">tareas sin documentar</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Datos de la Persona</div>
+    <div class="param-row">
+      <span class="param-label">Nombre de la persona nueva:</span>
+      <input class="param-input" type="text" id="nombre" placeholder="Nombre completo" oninput="updateAll()">
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:0.85rem;font-weight:600">Progreso del plan de onboarding</span>
+        <span id="pct-label" style="font-size:0.85rem;font-weight:700;color:#38a169">0%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Plan de Onboarding</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Rol</th>
+          <th>Tarea de onboarding</th>
+          <th style="width:90px">Día objetivo</th>
+          <th>Responsable formación</th>
+          <th style="width:70px">Duración (h)</th>
+          <th style="width:80px">¿Documentada?</th>
+          <th style="width:80px">¿Completada?</th>
+          <th style="width:110px">Fecha real</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="ejemplo">
+          <td><input value="Comercial" oninput="updateAll()"></td>
+          <td><input value="Presentación empresa y equipo" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>1</option><option>3</option><option>7</option><option>14</option><option>30</option><option>60</option><option>90</option></select></td>
+          <td><input value="RRHH" oninput="updateAll()"></td>
+          <td><input type="number" value="2" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="date" value="2026-07-01" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Comercial" oninput="updateAll()"></td>
+          <td><input value="Acceso y formación CRM" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>1</option><option selected>3</option><option>7</option><option>14</option><option>30</option><option>60</option><option>90</option></select></td>
+          <td><input value="IT / Ventas" oninput="updateAll()"></td>
+          <td><input type="number" value="4" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="date" value="2026-07-03" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Comercial" oninput="updateAll()"></td>
+          <td><input value="Acompañar primera visita cliente" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>1</option><option>3</option><option selected>7</option><option>14</option><option>30</option><option>60</option><option>90</option></select></td>
+          <td><input value="Comercial senior" oninput="updateAll()"></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input type="date" oninput="updateAll()"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Comercial" oninput="updateAll()"></td>
+          <td><input value="Revisión independiente primer mes" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>1</option><option>3</option><option>7</option><option>14</option><option selected>30</option><option>60</option><option>90</option></select></td>
+          <td><input value="Director comercial" oninput="updateAll()"></td>
+          <td><input type="number" value="1" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input type="date" oninput="updateAll()"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir tarea</button>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s2-r4-onboarding · Herramienta Operativa UNI-S2-R4</div>
+
+<script>
+function addRow() {
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Rol" oninput="updateAll()"></td>
+    <td><input placeholder="Tarea" oninput="updateAll()"></td>
+    <td><select onchange="updateAll()"><option>1</option><option>3</option><option>7</option><option>14</option><option>30</option><option>60</option><option>90</option></select></td>
+    <td><input placeholder="Responsable" oninput="updateAll()"></td>
+    <td><input type="number" value="1" oninput="updateAll()"></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>No</option></select></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>No</option></select></td>
+    <td><input type="date" oninput="updateAll()"></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  const rows = document.querySelectorAll('#tbody tr');
+  let total = 0, completadas = 0, totalHoras = 0, horasAbsorbidas = 0;
+
+  rows.forEach(tr => {
+    const cols = tr.querySelectorAll('input, select');
+    const horas = parseFloat(cols[4].value) || 0;
+    const documentada = cols[5].value;
+    const completada = cols[6].value;
+    total++;
+    totalHoras += horas;
+    if (completada === 'Sí') completadas++;
+    if (documentada === 'No') horasAbsorbidas += horas;
+  });
+
+  const pct = total > 0 ? ((completadas / total) * 100).toFixed(0) : 0;
+  document.getElementById('m-total').textContent = total;
+  document.getElementById('m-pct').textContent = pct + '%';
+  document.getElementById('m-horas').textContent = totalHoras.toFixed(1);
+  document.getElementById('m-absorbidas').textContent = horasAbsorbidas.toFixed(1);
+
+  const fill = document.getElementById('progress-fill');
+  const pctLabel = document.getElementById('pct-label');
+  fill.style.width = pct + '%';
+  fill.textContent = pct > 10 ? pct + '%' : '';
+  fill.style.background = pct >= 80 ? '#38a169' : pct >= 50 ? '#d69e2e' : '#e53e3e';
+  pctLabel.textContent = pct + '%';
+  pctLabel.style.color = pct >= 80 ? '#38a169' : pct >= 50 ? '#d69e2e' : '#e53e3e';
+}
+
+updateAll();
+</script>
+</body>
+</html>

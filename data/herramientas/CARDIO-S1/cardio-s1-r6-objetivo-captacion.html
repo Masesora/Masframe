@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R6 · Calculadora de Objetivo de Captación — CARDIO-S1</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:13px;font-weight:700;letter-spacing:2px;color:#C4A55A;text-transform:uppercase}
+header h1{font-size:22px;font-weight:800;margin:4px 0}
+.subtitle{font-size:13px;opacity:.8}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.container{max-width:1100px;margin:0 auto;padding:28px 20px}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(27,43,75,.08);padding:24px;margin-bottom:24px}
+.section-title{font-size:15px;font-weight:800;color:#1B2B4B;border-left:4px solid #C4A55A;padding-left:12px;margin-bottom:20px;text-transform:uppercase;letter-spacing:.5px}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:640px){.calc-grid{grid-template-columns:1fr}}
+.crow{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.crow label{font-size:13px;font-weight:600;flex:1}
+.crow input{width:130px;border:1px solid #ddd;border-radius:6px;padding:7px 10px;font-size:14px;background:#f8f7ff;color:#1B2B4B}
+.crow input:focus{outline:2px solid #C4A55A;background:#fff}
+.out-box{background:#eef2ff;border-radius:8px;padding:9px 14px;font-weight:800;font-size:18px;color:#1B2B4B;min-width:130px;text-align:center}
+.viab-box{border-radius:10px;padding:14px 18px;margin-top:16px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:12px}
+.v-verde{background:#dcfce7;color:#166534}.v-amarillo{background:#fef3c7;color:#92400e}.v-rojo{background:#fee2e2;color:#991b1b}
+.dot{width:20px;height:20px;border-radius:50%;display:inline-block;flex-shrink:0}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#1B2B4B;color:#C4A55A;padding:10px 8px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase}
+td{padding:7px 8px;border-bottom:1px solid #eee;vertical-align:middle}
+tr:hover td{background:#f8f7ff}
+input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:12px;font-family:system-ui;background:#f8f7ff;color:#1B2B4B}
+input[type=text]:focus,input[type=number]:focus{outline:2px solid #C4A55A;background:#fff}
+.calc-cell{background:#eef2ff;font-weight:700;font-size:12px}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}
+.btn-add{background:#1B2B4B;color:#C4A55A;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn-del{background:#ef4444;color:#fff;border:none;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:11px}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
+.metric-card{background:#1B2B4B;border-radius:10px;padding:18px;text-align:center}
+.metric-label{color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.metric-value{color:#fff;font-size:22px;font-weight:800}
+@media print{.btn,.btn-add,.btn-del{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">MASFRAME · CARDIO-Sx</div>
+    <h1>Calculadora de Objetivo de Captación</h1>
+    <div class="subtitle">Atrofia Comercial · Herramienta R6</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</header>
+<div class="container">
+  <div class="card">
+    <div class="section-title">Calculadora de Captación</div>
+    <div class="calc-grid">
+      <div>
+        <div class="crow"><label>Ingresos objetivo (€/mes):</label><input type="number" id="ing-obj" value="8000" min="0" oninput="recalc()"></div>
+        <div class="crow"><label>Ticket medio (€):</label><input type="number" id="ticket" value="1500" min="1" oninput="recalc()"></div>
+        <div class="crow"><label>Retención % (clientes recurrentes):</label><input type="number" id="ret" value="70" min="0" max="100" oninput="recalc()"></div>
+        <div class="crow"><label>Clientes actuales:</label><input type="number" id="cli-act" value="12" min="0" oninput="recalc()"></div>
+        <div class="crow"><label>Tasa de conversión (%):</label><input type="number" id="tasa-conv" value="15" min="0.1" max="100" oninput="recalc()"></div>
+      </div>
+      <div>
+        <div class="crow"><label>Clientes necesarios:</label><div class="out-box" id="o-clin">—</div></div>
+        <div class="crow"><label>Nuevos clientes/mes necesarios:</label><div class="out-box" id="o-nmes">—</div></div>
+        <div class="crow"><label><strong>Leads/mes necesarios:</strong></label><div class="out-box" id="o-leads" style="font-size:24px">—</div></div>
+        <div class="viab-box v-amarillo" id="viab-box">
+          <span class="dot amarillo" id="viab-dot"></span>
+          <span id="viab-txt">Calculando...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">Histórico Mensual de Captación</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr><th>Mes</th><th>Leads obtenidos</th><th>Clientes cerrados</th><th>Objetivo leads</th><th>vs Objetivo</th><th>Estado</th><th></th></tr>
+        </thead>
+        <tbody id="hist-body"></tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addHistRow()">+ Añadir mes</button>
+  </div>
+  <div class="card">
+    <div class="section-title">Métricas</div>
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="metric-label">Leads/mes necesarios</div><div class="metric-value" id="m1">—</div></div>
+      <div class="metric-card"><div class="metric-label">Clientes necesarios</div><div class="metric-value" id="m2">—</div></div>
+      <div class="metric-card"><div class="metric-label">Gap actual</div><div class="metric-value" id="m3">—</div></div>
+      <div class="metric-card"><div class="metric-label">Viabilidad</div><div class="metric-value" id="m4">—</div></div>
+    </div>
+  </div>
+  <div style="text-align:right"><button class="btn" onclick="window.print()">🖨 Imprimir / Exportar PDF</button></div>
+</div>
+<script>
+const HIST=[
+  {mes:'Enero 2026',leads:18,clientes:2},
+  {mes:'Febrero 2026',leads:22,clientes:3},
+  {mes:'Marzo 2026',leads:15,clientes:2},
+  {mes:'Abril 2026',leads:30,clientes:5},
+];
+let leadsNec=0,cliNec=0;
+function recalc(){
+  const ingObj=+document.getElementById('ing-obj').value||0;
+  const ticket=+document.getElementById('ticket').value||1;
+  const ret=+document.getElementById('ret').value||0;
+  const cliAct=+document.getElementById('cli-act').value||0;
+  const tasa=+document.getElementById('tasa-conv').value||1;
+  cliNec=Math.ceil(ingObj/ticket);
+  const ingRec=cliAct*ticket*(ret/100);
+  const ingFalt=Math.max(0,ingObj-ingRec);
+  const nMes=Math.ceil(ingFalt/ticket);
+  leadsNec=Math.ceil(nMes/(tasa/100));
+  document.getElementById('o-clin').textContent=cliNec;
+  document.getElementById('o-nmes').textContent=nMes;
+  document.getElementById('o-leads').textContent=leadsNec;
+  let cls,dot,txt;
+  if(leadsNec<50){cls='v-verde';dot='verde';txt='VIABLE — Objetivo alcanzable con esfuerzo moderado';}
+  else if(leadsNec<=150){cls='v-amarillo';dot='amarillo';txt='ATENCIÓN — Objetivo exigente, revisar conversión o ticket';}
+  else{cls='v-rojo';dot='rojo';txt='CRÍTICO — Inalcanzable con estructura actual, replantear';}
+  document.getElementById('viab-box').className='viab-box '+cls;
+  document.getElementById('viab-dot').className='dot '+dot;
+  document.getElementById('viab-txt').textContent=txt;
+  const gap=cliNec-cliAct;
+  document.getElementById('m1').textContent=leadsNec;
+  document.getElementById('m2').textContent=cliNec;
+  document.getElementById('m3').textContent=(gap>0?'+':'')+gap+' clientes';
+  document.getElementById('m4').textContent=leadsNec<50?'Alta':leadsNec<=150?'Media':'Baja';
+  recalcHist();
+}
+function addHistRow(d={}){
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td><input type="text" class="h-mes" value="${d.mes||''}"></td>
+    <td><input type="number" class="h-leads" value="${d.leads||0}" min="0" oninput="recalcHist()"></td>
+    <td><input type="number" class="h-cli" value="${d.clientes||0}" min="0"></td>
+    <td class="calc-cell h-obj">—</td>
+    <td class="calc-cell h-vs">—</td>
+    <td class="h-sem">—</td>
+    <td><button class="btn-del" onclick="this.closest('tr').remove();recalcHist()">✕</button></td>
+  `;
+  document.getElementById('hist-body').appendChild(tr);
+  recalcHist();
+}
+function recalcHist(){
+  document.querySelectorAll('#hist-body tr').forEach(tr=>{
+    const leads=+tr.querySelector('.h-leads').value||0;
+    const vs=leads-leadsNec;
+    tr.querySelector('.h-obj').textContent=leadsNec;
+    tr.querySelector('.h-vs').textContent=(vs>=0?'+':'')+vs;
+    tr.querySelector('.h-vs').style.color=vs>=0?'#22c55e':'#ef4444';
+    const d=vs>=0?'verde':vs>=-10?'amarillo':'rojo';
+    tr.querySelector('.h-sem').innerHTML=`<span class="dot ${d}"></span>`;
+  });
+}
+HIST.forEach(addHistRow);
+recalc();
+</script>
+</body>
+</html>

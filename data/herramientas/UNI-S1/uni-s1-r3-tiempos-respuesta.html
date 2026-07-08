@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLAs Internos y Tiempos de Respuesta — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .semaforo { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; }
+  .s-rojo { background: #e53e3e; }
+  .s-amarillo { background: #d69e2e; }
+  .s-verde { background: #38a169; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S1 — Esclerosis Operativa</div>
+    <div class="header-title">R3 — SLAs Internos y Tiempos de Respuesta</div>
+    <div class="header-sub">Definición y seguimiento de compromisos de tiempo</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Tipos de Solicitud</div>
+      <div class="metric-value" id="m-tipos">0</div>
+      <div class="metric-unit">definidos</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Tipos con Brecha</div>
+      <div class="metric-value" id="m-brecha">0%</div>
+      <div class="metric-unit">por encima del SLA</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Mayor Brecha</div>
+      <div class="metric-value" id="m-mayor">0 h</div>
+      <div class="metric-unit">diferencia máxima</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% Cumplimiento Global</div>
+      <div class="metric-value" id="m-cumpl">0%</div>
+      <div class="metric-unit">tracker semanal</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tabla 1 — Definición de SLAs</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo de solicitud</th>
+          <th>Receptor</th>
+          <th style="width:90px">T. Máx comprometido (h)</th>
+          <th style="width:90px">T. Real Prom. (h)</th>
+          <th style="width:80px">Brecha (h)</th>
+          <th style="width:80px">¿Protocolo?</th>
+          <th>Consecuencia si incumple</th>
+          <th style="width:50px">Nivel</th>
+        </tr>
+      </thead>
+      <tbody id="tbody1">
+        <tr class="ejemplo">
+          <td><input value="Presupuesto cliente" oninput="updateAll()"></td>
+          <td><input value="Comercial" oninput="updateAll()"></td>
+          <td><input type="number" value="24" oninput="updateAll()"></td>
+          <td><input type="number" value="48" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input value="Pérdida de oportunidad" oninput="updateAll()"></td>
+          <td id="s1_0"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Incidencia técnica" oninput="updateAll()"></td>
+          <td><input value="Soporte IT" oninput="updateAll()"></td>
+          <td><input type="number" value="4" oninput="updateAll()"></td>
+          <td><input type="number" value="5" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><input value="Interrupción de servicio" oninput="updateAll()"></td>
+          <td id="s1_1"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Consulta interna" oninput="updateAll()"></td>
+          <td><input value="RRHH" oninput="updateAll()"></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input value="Bloqueo de gestión" oninput="updateAll()"></td>
+          <td id="s1_2"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRowSLA()">+ Añadir SLA</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tabla 2 — Tracker Semanal de Cumplimiento</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo de solicitud</th>
+          <th style="width:100px">Solicitudes recibidas</th>
+          <th style="width:100px">Dentro de SLA</th>
+          <th style="width:110px">% Cumplimiento</th>
+          <th style="width:50px">Nivel</th>
+        </tr>
+      </thead>
+      <tbody id="tbody2">
+        <tr class="ejemplo">
+          <td><input value="Presupuesto cliente" oninput="updateAll()"></td>
+          <td><input type="number" value="10" oninput="updateAll()"></td>
+          <td><input type="number" value="6" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td id="s2_0"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Incidencia técnica" oninput="updateAll()"></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td id="s2_1"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Consulta interna" oninput="updateAll()"></td>
+          <td><input type="number" value="5" oninput="updateAll()"></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td id="s2_2"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRowTracker()">+ Añadir registro</button>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s1-r3-tiempos-respuesta · Herramienta Operativa UNI-S1-R3</div>
+
+<script>
+let slaCount = 3, trackerCount = 3;
+
+function addRowSLA() {
+  const idx = slaCount++;
+  const tbody = document.getElementById('tbody1');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Tipo de solicitud" oninput="updateAll()"></td>
+    <td><input placeholder="Receptor" oninput="updateAll()"></td>
+    <td><input type="number" value="8" oninput="updateAll()"></td>
+    <td><input type="number" value="8" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>No</option></select></td>
+    <td><input placeholder="Consecuencia" oninput="updateAll()"></td>
+    <td id="s1_${idx}"></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function addRowTracker() {
+  const idx = trackerCount++;
+  const tbody = document.getElementById('tbody2');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Tipo de solicitud" oninput="updateAll()"></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+    <td id="s2_${idx}"></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function semColor(val) {
+  if (val >= 90) return 's-verde';
+  if (val >= 70) return 's-amarillo';
+  return 's-rojo';
+}
+
+function updateAll() {
+  // Table 1 - SLAs
+  const rows1 = document.querySelectorAll('#tbody1 tr');
+  let tipos = 0, brechaPositiva = 0, maxBrecha = 0, maxBrechaName = '';
+  rows1.forEach((tr, i) => {
+    const cols = tr.querySelectorAll('input, select');
+    const comp = parseFloat(cols[2].value) || 0;
+    const real = parseFloat(cols[3].value) || 0;
+    const brecha = real - comp;
+    cols[4].value = brecha.toFixed(1);
+    tipos++;
+    if (brecha > 0) brechaPositiva++;
+    if (brecha > maxBrecha) { maxBrecha = brecha; maxBrechaName = cols[0].value; }
+    const semEl = document.getElementById(`s1_${i}`);
+    if (semEl) {
+      const cls = brecha > 2 ? 's-rojo' : brecha > 0 ? 's-amarillo' : 's-verde';
+      semEl.innerHTML = `<span class="semaforo ${cls}"></span>`;
+    }
+  });
+
+  // Table 2 - Tracker
+  const rows2 = document.querySelectorAll('#tbody2 tr');
+  let totalRecib = 0, totalDentro = 0;
+  rows2.forEach((tr, i) => {
+    const cols = tr.querySelectorAll('input, select');
+    const recib = parseFloat(cols[1].value) || 0;
+    const dentro = parseFloat(cols[2].value) || 0;
+    const pct = recib > 0 ? ((dentro / recib) * 100).toFixed(1) : '0.0';
+    cols[3].value = pct + '%';
+    totalRecib += recib;
+    totalDentro += dentro;
+    const semEl = document.getElementById(`s2_${i}`);
+    if (semEl) {
+      const cls = semColor(parseFloat(pct));
+      semEl.innerHTML = `<span class="semaforo ${cls}"></span>`;
+    }
+  });
+
+  const cumplGlobal = totalRecib > 0 ? ((totalDentro / totalRecib) * 100).toFixed(1) : '0.0';
+
+  document.getElementById('m-tipos').textContent = tipos;
+  document.getElementById('m-brecha').textContent = tipos > 0 ? ((brechaPositiva / tipos) * 100).toFixed(0) + '%' : '0%';
+  document.getElementById('m-mayor').textContent = maxBrecha.toFixed(1) + ' h';
+  document.getElementById('m-cumpl').textContent = cumplGlobal + '%';
+}
+
+updateAll();
+</script>
+</body>
+</html>

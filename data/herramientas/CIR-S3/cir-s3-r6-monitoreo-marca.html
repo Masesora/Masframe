@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIR-S3 | Sistema de Monitoreo de Marca</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 14px; }
+
+  /* HEADER */
+  .mas-header { background: #1B2B4B; padding: 18px 28px; display: flex; align-items: center; gap: 16px; }
+  .mas-logo { width: 44px; height: 44px; border-radius: 50%; background: #C4A55A; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
+  .mas-header-text { flex: 1; }
+  .mas-header-symptom { color: #C4A55A; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2px; }
+  .mas-header-title { color: #ffffff; font-size: 18px; font-weight: 700; line-height: 1.2; }
+  .mas-badge { background: transparent; border: 1.5px solid #C4A55A; color: #C4A55A; font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
+
+  /* MAIN */
+  .container { max-width: 1300px; margin: 0 auto; padding: 24px 20px; }
+  .section-title { font-size: 13px; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #C4A55A; display: inline-block; }
+
+  /* TABLE */
+  .table-wrapper { overflow-x: auto; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 1px 6px rgba(27,43,75,0.10); }
+  table { width: 100%; border-collapse: collapse; background: #fff; }
+  thead tr { background: #1B2B4B; }
+  thead th { color: #fff; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 10px; text-align: left; white-space: nowrap; }
+  tbody tr:nth-child(even) { background: #f0f4f8; }
+  tbody tr:nth-child(odd) { background: #ffffff; }
+  tbody tr:hover { background: #eaf0fa; }
+  td { padding: 8px 10px; font-size: 13px; color: #1B2B4B; vertical-align: middle; border-bottom: 1px solid #e8ecf2; }
+  td[contenteditable="true"] { outline: none; cursor: text; }
+  td[contenteditable="true"]:focus { background: #fffbe6; box-shadow: inset 0 0 0 2px #C4A55A; border-radius: 3px; }
+  select { border: 1px solid #c8d0dc; border-radius: 4px; padding: 4px 6px; font-size: 12px; color: #1B2B4B; background: #fff; width: 100%; }
+  select:focus { outline: none; border-color: #C4A55A; }
+
+  /* SEMAPHORE DOT */
+  .dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; vertical-align: middle; }
+  .dot-green  { background: #22c55e; }
+  .dot-yellow { background: #f59e0b; }
+  .dot-red    { background: #ef4444; }
+  .dot-grey   { background: #94a3b8; }
+  .dot-blue   { background: #3b82f6; }
+  td.col-status { text-align: center; width: 44px; }
+
+  /* TENDENCIA TABLE */
+  #tendenciaTable { min-width: 500px; }
+  #tendenciaTable td.col-num { text-align: right; }
+  #tendenciaTable td.col-total { font-weight: 700; color: #1B2B4B; background: #f0f4f8; text-align: right; }
+  #tendenciaTable thead th { text-align: right; }
+  #tendenciaTable thead th:first-child { text-align: left; }
+
+  /* METRICS */
+  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
+  .metric-card { background: #fff; border-radius: 8px; border-top: 4px solid #1B2B4B; padding: 18px 20px; box-shadow: 0 1px 6px rgba(27,43,75,0.08); }
+  .metric-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 8px; }
+  .metric-value { font-size: 28px; font-weight: 800; color: #C4A55A; line-height: 1; }
+  .metric-value.red   { color: #ef4444; }
+  .metric-value.green { color: #22c55e; }
+  .metric-value.blue  { color: #3b82f6; }
+  .metric-sub { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
+  /* ADD ROW BUTTON */
+  .btn-add { display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 1.5px solid #1B2B4B; color: #1B2B4B; font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 6px; cursor: pointer; margin-bottom: 20px; transition: all 0.15s; }
+  .btn-add:hover { background: #1B2B4B; color: #fff; }
+
+  /* PRINT BUTTON */
+  .btn-print { display: inline-flex; align-items: center; gap: 8px; background: #C4A55A; border: none; color: #1B2B4B; font-size: 13px; font-weight: 700; padding: 10px 24px; border-radius: 6px; cursor: pointer; margin-top: 8px; }
+  .btn-print:hover { background: #b8944a; }
+  .actions-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+
+  .section-gap { margin-top: 32px; }
+
+  /* TENDENCIA LEGEND */
+  .tendencia-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #64748b; }
+
+  @media print {
+    body { background: #fff; }
+    .btn-add, .btn-print, .actions-bar { display: none !important; }
+    .mas-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .metric-card { box-shadow: none; border: 1px solid #ddd; }
+    .table-wrapper { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="mas-header">
+  <div class="mas-logo">M</div>
+  <div class="mas-header-text">
+    <div class="mas-header-symptom">CIR-S3 · Reputación Dañada</div>
+    <div class="mas-header-title">Sistema de Monitoreo de Marca</div>
+  </div>
+  <div class="mas-badge">Herramienta Operativa</div>
+</header>
+
+<div class="container">
+
+  <p class="section-title">Términos y Fuentes Monitoreados</p>
+
+  <div class="table-wrapper">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Término monitoreado</th>
+          <th>Herramienta / Fuente</th>
+          <th>Frecuencia revisión</th>
+          <th>Responsable</th>
+          <th>Alertas configuradas</th>
+          <th>Última alerta</th>
+          <th>Tipo mención</th>
+          <th>Acción tomada</th>
+        </tr>
+      </thead>
+      <tbody id="mainBody">
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre empresa + opiniones</td>
+          <td contenteditable="true">Google Alerts / Mention.com</td>
+          <td>
+            <select class="sel-frecuencia" onchange="recalc()">
+              <option value="Diaria" selected>Diaria</option>
+              <option value="Semanal">Semanal</option>
+              <option value="Quincenal">Quincenal</option>
+              <option value="Mensual">Mensual</option>
+            </select>
+          </td>
+          <td contenteditable="true">Marketing</td>
+          <td>
+            <select class="sel-alertas" onchange="recalc()">
+              <option value="Sí" selected>Sí</option>
+              <option value="No">No</option>
+            </select>
+          </td>
+          <td contenteditable="true">02/07/2026 — Reseña negativa TrustPilot</td>
+          <td>
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Positiva">Positiva</option>
+              <option value="Neutra">Neutra</option>
+              <option value="Negativa" selected>Negativa</option>
+              <option value="Sin menciones">Sin menciones</option>
+            </select>
+          </td>
+          <td contenteditable="true">Respuesta pública en 24h + escalado a dirección</td>
+        </tr>
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre empresa</td>
+          <td contenteditable="true">Google Alerts / Semrush Brand Monitor</td>
+          <td>
+            <select class="sel-frecuencia" onchange="recalc()">
+              <option value="Diaria" selected>Diaria</option>
+              <option value="Semanal">Semanal</option>
+              <option value="Quincenal">Quincenal</option>
+              <option value="Mensual">Mensual</option>
+            </select>
+          </td>
+          <td contenteditable="true">SEO</td>
+          <td>
+            <select class="sel-alertas" onchange="recalc()">
+              <option value="Sí" selected>Sí</option>
+              <option value="No">No</option>
+            </select>
+          </td>
+          <td contenteditable="true">28/06/2026 — Artículo positivo en blog sector</td>
+          <td>
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Positiva" selected>Positiva</option>
+              <option value="Neutra">Neutra</option>
+              <option value="Negativa">Negativa</option>
+              <option value="Sin menciones">Sin menciones</option>
+            </select>
+          </td>
+          <td contenteditable="true">Compartido en RRSS corporativas</td>
+        </tr>
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre CEO / fundador</td>
+          <td contenteditable="true">Google Alerts / LinkedIn</td>
+          <td>
+            <select class="sel-frecuencia" onchange="recalc()">
+              <option value="Diaria">Diaria</option>
+              <option value="Semanal" selected>Semanal</option>
+              <option value="Quincenal">Quincenal</option>
+              <option value="Mensual">Mensual</option>
+            </select>
+          </td>
+          <td contenteditable="true">Comunicación</td>
+          <td>
+            <select class="sel-alertas" onchange="recalc()">
+              <option value="Sí" selected>Sí</option>
+              <option value="No">No</option>
+            </select>
+          </td>
+          <td contenteditable="true">15/06/2026 — Mención en artículo sector</td>
+          <td>
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Positiva">Positiva</option>
+              <option value="Neutra" selected>Neutra</option>
+              <option value="Negativa">Negativa</option>
+              <option value="Sin menciones">Sin menciones</option>
+            </select>
+          </td>
+          <td contenteditable="true">Monitorización continua — sin acción requerida</td>
+        </tr>
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">nombre empresa estafa / fraude</td>
+          <td contenteditable="true">Google Alerts / BrandYourself</td>
+          <td>
+            <select class="sel-frecuencia" onchange="recalc()">
+              <option value="Diaria" selected>Diaria</option>
+              <option value="Semanal">Semanal</option>
+              <option value="Quincenal">Quincenal</option>
+              <option value="Mensual">Mensual</option>
+            </select>
+          </td>
+          <td contenteditable="true">Dirección / Legal</td>
+          <td>
+            <select class="sel-alertas" onchange="recalc()">
+              <option value="Sí" selected>Sí</option>
+              <option value="No">No</option>
+            </select>
+          </td>
+          <td contenteditable="true">05/07/2026 — Post en foro de consumidores</td>
+          <td>
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Positiva">Positiva</option>
+              <option value="Neutra">Neutra</option>
+              <option value="Negativa" selected>Negativa</option>
+              <option value="Sin menciones">Sin menciones</option>
+            </select>
+          </td>
+          <td contenteditable="true">Respuesta en foro + consulta legal en curso</td>
+        </tr>
+
+        <tr>
+          <td class="col-status"><span class="dot dot-grey"></span></td>
+          <td contenteditable="true">hashtag marca en RRSS</td>
+          <td contenteditable="true">Hootsuite / Brandwatch</td>
+          <td>
+            <select class="sel-frecuencia" onchange="recalc()">
+              <option value="Diaria">Diaria</option>
+              <option value="Semanal" selected>Semanal</option>
+              <option value="Quincenal">Quincenal</option>
+              <option value="Mensual">Mensual</option>
+            </select>
+          </td>
+          <td contenteditable="true">Community Manager</td>
+          <td>
+            <select class="sel-alertas" onchange="recalc()">
+              <option value="Sí">Sí</option>
+              <option value="No" selected>No</option>
+            </select>
+          </td>
+          <td contenteditable="true">Sin alertas — revisión manual</td>
+          <td>
+            <select class="sel-tipo" onchange="recalc()">
+              <option value="Positiva">Positiva</option>
+              <option value="Neutra" selected>Neutra</option>
+              <option value="Negativa">Negativa</option>
+              <option value="Sin menciones">Sin menciones</option>
+            </select>
+          </td>
+          <td contenteditable="true">Configurar alertas en Hootsuite — pendiente</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn-add" onclick="addMainRow()">+ Añadir término</button>
+  </div>
+
+  <!-- TENDENCIA MENSUAL -->
+  <div class="section-gap">
+    <p class="section-title">Tendencia Mensual de Menciones</p>
+    <div class="tendencia-legend">
+      <div class="legend-item"><span class="dot dot-green"></span> Positivas</div>
+      <div class="legend-item"><span class="dot dot-yellow"></span> Neutras</div>
+      <div class="legend-item"><span class="dot dot-red"></span> Negativas</div>
+    </div>
+    <div class="table-wrapper">
+      <table id="tendenciaTable">
+        <thead>
+          <tr>
+            <th style="text-align:left;">Mes</th>
+            <th>Menciones positivas</th>
+            <th>Menciones neutras</th>
+            <th>Menciones negativas</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="tendenciaBody">
+          <tr>
+            <td contenteditable="true">Mayo 2026</td>
+            <td class="col-num col-pos" contenteditable="true" oninput="recalc()">18</td>
+            <td class="col-num col-neu" contenteditable="true" oninput="recalc()">32</td>
+            <td class="col-num col-neg" contenteditable="true" oninput="recalc()">21</td>
+            <td class="col-total col-total-val">71</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Junio 2026</td>
+            <td class="col-num col-pos" contenteditable="true" oninput="recalc()">24</td>
+            <td class="col-num col-neu" contenteditable="true" oninput="recalc()">28</td>
+            <td class="col-num col-neg" contenteditable="true" oninput="recalc()">14</td>
+            <td class="col-total col-total-val">66</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">Julio 2026</td>
+            <td class="col-num col-pos" contenteditable="true" oninput="recalc()">31</td>
+            <td class="col-num col-neu" contenteditable="true" oninput="recalc()">25</td>
+            <td class="col-num col-neg" contenteditable="true" oninput="recalc()">9</td>
+            <td class="col-total col-total-val">65</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="actions-bar">
+      <button class="btn-add" onclick="addTendenciaRow()">+ Añadir mes</button>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <p class="section-title" style="margin-top:28px;">Métricas de Monitoreo</p>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Menciones positivas este mes</div>
+      <div class="metric-value green" id="m-pos">0</div>
+      <div class="metric-sub">Último mes en tendencia</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Menciones negativas este mes</div>
+      <div class="metric-value red" id="m-neg">0</div>
+      <div class="metric-sub">Último mes en tendencia</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Ratio positivas / negativas</div>
+      <div class="metric-value" id="m-ratio">—</div>
+      <div class="metric-sub">Últimas cifras mensuales</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Términos sin alertas</div>
+      <div class="metric-value red" id="m-sin-alertas">0</div>
+      <div class="metric-sub">Alertas configuradas = No</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Términos monitoreados activos</div>
+      <div class="metric-value blue" id="m-total-terminos">0</div>
+      <div class="metric-sub">Total filas en tabla principal</div>
+    </div>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+  </div>
+
+</div>
+
+<script>
+  function getTipoDotClass(tipo) {
+    if (tipo === 'Positiva') return 'dot-green';
+    if (tipo === 'Negativa') return 'dot-red';
+    if (tipo === 'Neutra') return 'dot-yellow';
+    return 'dot-grey';
+  }
+
+  function recalcTendenciaRow(tr) {
+    const pos = parseFloat(tr.querySelector('.col-pos') ? tr.querySelector('.col-pos').textContent : 0) || 0;
+    const neu = parseFloat(tr.querySelector('.col-neu') ? tr.querySelector('.col-neu').textContent : 0) || 0;
+    const neg = parseFloat(tr.querySelector('.col-neg') ? tr.querySelector('.col-neg').textContent : 0) || 0;
+    const totalCell = tr.querySelector('.col-total-val');
+    if (totalCell) totalCell.textContent = Math.round(pos + neu + neg);
+  }
+
+  function recalc() {
+    // Main table
+    const mainRows = document.querySelectorAll('#mainBody tr');
+    let sinAlertas = 0, totalTerminos = 0;
+
+    mainRows.forEach(tr => {
+      totalTerminos++;
+      const selAlertas = tr.querySelector('.sel-alertas');
+      const selTipo = tr.querySelector('.sel-tipo');
+      const dot = tr.querySelector('.dot');
+
+      const alertas = selAlertas ? selAlertas.value : 'Sí';
+      const tipo = selTipo ? selTipo.value : 'Neutra';
+
+      if (alertas === 'No') sinAlertas++;
+      if (dot) dot.className = 'dot ' + getTipoDotClass(tipo);
+    });
+
+    // Tendencia table
+    const tendRows = document.querySelectorAll('#tendenciaBody tr');
+    tendRows.forEach(tr => recalcTendenciaRow(tr));
+
+    // Read last row of tendencia
+    let lastPos = 0, lastNeg = 0;
+    if (tendRows.length > 0) {
+      const lastTr = tendRows[tendRows.length - 1];
+      lastPos = parseFloat(lastTr.querySelector('.col-pos') ? lastTr.querySelector('.col-pos').textContent : 0) || 0;
+      lastNeg = parseFloat(lastTr.querySelector('.col-neg') ? lastTr.querySelector('.col-neg').textContent : 0) || 0;
+    }
+
+    document.getElementById('m-pos').textContent = Math.round(lastPos);
+    document.getElementById('m-neg').textContent = Math.round(lastNeg);
+
+    let ratio = '—';
+    if (lastNeg > 0) {
+      ratio = (lastPos / lastNeg).toFixed(2) + 'x';
+    } else if (lastPos > 0) {
+      ratio = '∞';
+    }
+    document.getElementById('m-ratio').textContent = ratio;
+    document.getElementById('m-sin-alertas').textContent = sinAlertas;
+    document.getElementById('m-total-terminos').textContent = totalTerminos;
+  }
+
+  function addMainRow() {
+    const tbody = document.getElementById('mainBody');
+    const lastRow = tbody.querySelector('tr:last-child');
+    const newRow = lastRow.cloneNode(true);
+
+    newRow.querySelectorAll('[contenteditable="true"]').forEach(cell => {
+      cell.textContent = '';
+      cell.addEventListener('input', recalc);
+    });
+    newRow.querySelectorAll('select').forEach(sel => {
+      sel.selectedIndex = 0;
+      sel.addEventListener('change', recalc);
+    });
+    const dot = newRow.querySelector('.dot');
+    if (dot) dot.className = 'dot dot-grey';
+
+    tbody.appendChild(newRow);
+    recalc();
+  }
+
+  function addTendenciaRow() {
+    const tbody = document.getElementById('tendenciaBody');
+    const lastRow = tbody.querySelector('tr:last-child');
+    const newRow = lastRow.cloneNode(true);
+
+    newRow.querySelectorAll('[contenteditable="true"]').forEach(cell => {
+      const isMes = !cell.classList.contains('col-pos') && !cell.classList.contains('col-neu') && !cell.classList.contains('col-neg');
+      cell.textContent = isMes ? '' : '0';
+      cell.addEventListener('input', recalc);
+    });
+    const totalCell = newRow.querySelector('.col-total-val');
+    if (totalCell) totalCell.textContent = '0';
+
+    tbody.appendChild(newRow);
+    recalc();
+  }
+
+  // Bind existing events
+  document.querySelectorAll('#mainBody [contenteditable="true"]').forEach(cell => cell.addEventListener('input', recalc));
+  document.querySelectorAll('#mainBody select').forEach(sel => sel.addEventListener('change', recalc));
+  document.querySelectorAll('#tendenciaBody [contenteditable="true"]').forEach(cell => cell.addEventListener('input', recalc));
+
+  recalc();
+</script>
+</body>
+</html>

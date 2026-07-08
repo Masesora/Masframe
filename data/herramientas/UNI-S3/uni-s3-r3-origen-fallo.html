@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Origen del Fallo por Fase — MASFRAME</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
+  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  .header-info { flex: 1; }
+  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
+  .header-sub { font-size: 0.85rem; opacity: 0.8; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
+  tr:hover td { background: #f8f7ff; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
+  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .semaforo { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; }
+  .s-rojo { background: #e53e3e; }
+  .s-amarillo { background: #d69e2e; }
+  .s-verde { background: #38a169; }
+  .ejemplo td { opacity: 0.6; font-style: italic; }
+  .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
+  @media print { .btn-add, .btn-print { display: none; } body { background: white; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">MASFRAME</div>
+  <div class="header-info">
+    <div class="header-symptom">UNI-S3 — Fuga de Calidad Crónica</div>
+    <div class="header-title">R3 — Origen del Fallo por Fase</div>
+    <div class="header-sub">Localización exacta de dónde se generan los fallos en el proceso</div>
+  </div>
+  <div class="badge">Herramienta Operativa</div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Total Fallos</div>
+      <div class="metric-value" id="m-total">0</div>
+      <div class="metric-unit">último mes</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Fase con Más Fallos</div>
+      <div class="metric-value" id="m-top" style="font-size:1rem">—</div>
+      <div class="metric-unit">mayor concentración</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">% en Top 2 Fases</div>
+      <div class="metric-value" id="m-top2">0%</div>
+      <div class="metric-unit">concentración de fallos</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Fases Sin Checklist</div>
+      <div class="metric-value" id="m-sinchecklist">0</div>
+      <div class="metric-unit">sin control de salida</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Fallos por Fase del Proceso</div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Fase del proceso</th>
+          <th style="width:90px">Nº fallos/mes</th>
+          <th style="width:80px">% del total</th>
+          <th>Tipo de fallo más común</th>
+          <th style="width:100px">¿Checklist salida?</th>
+          <th style="width:110px">T. invertido/sem (h)</th>
+          <th style="width:60px">Riesgo</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="ejemplo">
+          <td><input value="Captación / Briefing" oninput="updateAll()"></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Requisitos incompletos" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input type="number" value="6" oninput="updateAll()"></td>
+          <td id="sem0"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Elaboración / Producción" oninput="updateAll()"></td>
+          <td><input type="number" value="14" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Errores de cálculo o formato" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input type="number" value="20" oninput="updateAll()"></td>
+          <td id="sem1"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Revisión interna" oninput="updateAll()"></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Criterios de aprobación ambiguos" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="number" value="8" oninput="updateAll()"></td>
+          <td id="sem2"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Entrega al cliente" oninput="updateAll()"></td>
+          <td><input type="number" value="5" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Formato o canal incorrecto" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option>Sí</option><option selected>No</option></select></td>
+          <td><input type="number" value="4" oninput="updateAll()"></td>
+          <td id="sem3"></td>
+        </tr>
+        <tr class="ejemplo">
+          <td><input value="Facturación y cierre" oninput="updateAll()"></td>
+          <td><input type="number" value="2" oninput="updateAll()"></td>
+          <td><input class="calc" readonly></td>
+          <td><input value="Importes incorrectos" oninput="updateAll()"></td>
+          <td><select onchange="updateAll()"><option selected>Sí</option><option>No</option></select></td>
+          <td><input type="number" value="3" oninput="updateAll()"></td>
+          <td id="sem4"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir fase</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Distribución de Fallos por Fase</div>
+    <div id="chart-container"></div>
+  </div>
+
+  <div style="text-align:right">
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar</button>
+  </div>
+</div>
+<div class="footer-note">MASFRAME · uni-s3-r3-origen-fallo · Herramienta Operativa UNI-S3-R3</div>
+
+<script>
+let rowCount = 5;
+
+function addRow() {
+  const idx = rowCount++;
+  const tbody = document.getElementById('tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input placeholder="Fase del proceso" oninput="updateAll()"></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td><input class="calc" readonly></td>
+    <td><input placeholder="Tipo de fallo" oninput="updateAll()"></td>
+    <td><select onchange="updateAll()"><option>Sí</option><option>No</option></select></td>
+    <td><input type="number" value="0" oninput="updateAll()"></td>
+    <td id="sem${idx}"></td>
+  `;
+  tbody.appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  const rows = document.querySelectorAll('#tbody tr');
+  let totalFallos = 0, sinChecklist = 0;
+  const items = [];
+
+  rows.forEach((tr, i) => {
+    const cols = tr.querySelectorAll('input, select');
+    const fallos = parseFloat(cols[1].value) || 0;
+    const checklist = cols[4].value;
+    totalFallos += fallos;
+    if (checklist === 'No') sinChecklist++;
+    items.push({ fase: cols[0].value || '(sin nombre)', fallos, checklist });
+  });
+
+  // Update % and semaforos
+  rows.forEach((tr, i) => {
+    const cols = tr.querySelectorAll('input, select');
+    const fallos = parseFloat(cols[1].value) || 0;
+    const pct = totalFallos > 0 ? ((fallos / totalFallos) * 100).toFixed(1) : '0.0';
+    cols[2].value = pct + '%';
+    const semEl = document.getElementById(`sem${i}`);
+    if (semEl) {
+      const p = parseFloat(pct);
+      const cls = p > 30 ? 's-rojo' : p > 15 ? 's-amarillo' : 's-verde';
+      semEl.innerHTML = `<span class="semaforo ${cls}"></span>`;
+    }
+  });
+
+  items.sort((a, b) => b.fallos - a.fallos);
+  const top1 = items[0] || { fase: '—', fallos: 0 };
+  const top2Pct = totalFallos > 0 && items.length >= 2
+    ? (((items[0].fallos + items[1].fallos) / totalFallos) * 100).toFixed(0)
+    : (totalFallos > 0 ? '100' : '0');
+
+  document.getElementById('m-total').textContent = totalFallos;
+  document.getElementById('m-top').textContent = top1.fase.length > 20 ? top1.fase.slice(0, 18) + '…' : top1.fase;
+  document.getElementById('m-top2').textContent = top2Pct + '%';
+  document.getElementById('m-sinchecklist').textContent = sinChecklist;
+
+  renderChart(items, totalFallos);
+}
+
+function renderChart(items, totalFallos) {
+  const container = document.getElementById('chart-container');
+  if (items.length === 0) { container.innerHTML = ''; return; }
+  const maxFallos = Math.max(...items.map(i => i.fallos), 1);
+  const rowH = 36, PAD = 160, W = 600;
+
+  let bars = '';
+  items.forEach((it, i) => {
+    const barW = Math.floor((it.fallos / maxFallos) * (W - PAD - 80));
+    const y = i * rowH + 10;
+    const fill = i === 0 ? '#C4A55A' : '#1B2B4B';
+    const shortName = it.fase.length > 20 ? it.fase.slice(0, 19) + '…' : it.fase;
+    bars += `<text x="${PAD - 8}" y="${y + 22}" text-anchor="end" font-size="12" fill="#333">${shortName}</text>`;
+    bars += `<rect x="${PAD}" y="${y + 8}" width="${barW}" height="20" fill="${fill}" rx="3"/>`;
+    bars += `<text x="${PAD + barW + 6}" y="${y + 22}" font-size="12" fill="#1B2B4B" font-weight="700">${it.fallos}</text>`;
+  });
+
+  const H = items.length * rowH + 20;
+  container.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;display:block">${bars}</svg>
+    <p style="font-size:0.75rem;color:#888;text-align:center;margin-top:4px">Barra dorada = fase con más fallos</p>`;
+}
+
+updateAll();
+</script>
+</body>
+</html>

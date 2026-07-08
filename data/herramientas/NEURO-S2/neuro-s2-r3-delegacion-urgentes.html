@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEURO-S2 — Delegación de Urgentes</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B;min-height:100vh}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:1.4rem;font-weight:800;color:#C4A55A;letter-spacing:1px}
+.header-center{display:flex;flex-direction:column;align-items:center;gap:4px}
+.symptom-label{font-size:.8rem;color:#C4A55A;letter-spacing:2px;text-transform:uppercase}
+.tool-name{font-size:1.1rem;font-weight:700;color:#fff}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:.7rem;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+main{max-width:1100px;margin:32px auto;padding:0 24px}
+.section-title{font-size:1.1rem;font-weight:700;color:#1B2B4B;margin:28px 0 12px;border-left:4px solid #C4A55A;padding-left:12px}
+.params{background:#fff;border-radius:8px;padding:16px 20px;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:20px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.params label{font-size:.88rem;font-weight:700;color:#1B2B4B}
+.params input{width:130px;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;background:#f8f7ff;color:#1B2B4B}
+.params input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(27,43,75,.08);margin-bottom:16px}
+th{background:#1B2B4B;color:#C4A55A;padding:11px 14px;text-align:left;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+td{padding:9px 12px;border-bottom:1px solid #eee;font-size:.9rem;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f7ff}
+input[type=number],input[type=text]{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;font-family:inherit;color:#1B2B4B;background:#f8f7ff}
+input:focus,select:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+select{width:100%;border:1px solid #d1d5db;border-radius:5px;padding:6px 8px;font-size:.88rem;font-family:inherit;background:#f8f7ff;color:#1B2B4B}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:6px;font-weight:700;font-size:.85rem;cursor:pointer}
+.btn:hover{background:#b8943e}
+.btn-print{background:#1B2B4B;color:#C4A55A;margin-left:8px}
+.btn-print:hover{background:#243554}
+.btn-row{margin:8px 0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:24px 0}
+.card{background:#fff;border:2px solid #C4A55A;border-radius:10px;padding:18px 20px;text-align:center}
+.card-label{font-size:.75rem;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-value{font-size:1.5rem;font-weight:800;color:#C4A55A;line-height:1.2}
+.sem-row{display:flex;align-items:center;gap:14px;background:#fff;border-radius:8px;padding:14px 20px;margin:12px 0;box-shadow:0 2px 8px rgba(27,43,75,.08)}
+.dot{width:22px;height:22px;border-radius:50%;display:inline-block;flex-shrink:0}
+.g{background:#22c55e}.y{background:#eab308}.r{background:#ef4444}.grey{background:#d1d5db}
+.sem-desc{font-size:.88rem;color:#555;font-weight:600}
+@media print{.btn,.btn-print,.btn-row{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MASFRAME</div>
+  <div class="header-center">
+    <span class="symptom-label">NEURO-S2 — Dispersión Directiva</span>
+    <span class="tool-name">Log de Interrupciones Semanales</span>
+  </div>
+  <span class="badge">R3</span>
+</header>
+<main>
+  <div class="section-title">Parámetros</div>
+  <div class="params">
+    <div>
+      <label>Coste horario líder (€/h):</label><br>
+      <input type="number" id="hourlyRate" value="150" min="0" oninput="updateAll()">
+    </div>
+    <div>
+      <label>Semana:</label><br>
+      <input type="text" id="weekLabel" placeholder="Ej: Semana 28 / 2025">
+    </div>
+  </div>
+
+  <div class="section-title">Log de Interrupciones</div>
+  <div class="btn-row"><button class="btn" onclick="addRow()">+ Añadir interrupción</button></div>
+  <table>
+    <thead>
+      <tr>
+        <th>Tarea / Solicitud</th>
+        <th>¿Requería al líder?</th>
+        <th>Tiempo (min)</th>
+        <th>¿A quién delegar?</th>
+        <th>¿Existe protocolo?</th>
+      </tr>
+    </thead>
+    <tbody id="logBody"></tbody>
+  </table>
+
+  <div class="section-title">Semáforo: Índice de Delegabilidad</div>
+  <div class="sem-row">
+    <span class="dot grey" id="semDot"></span>
+    <span class="sem-desc" id="semText">Introduce datos para ver el semáforo</span>
+  </div>
+  <div style="font-size:.82rem;color:#666;margin-bottom:8px">
+    <span style="color:#22c55e;font-weight:700">Verde</span> &gt;70% delegable &nbsp;|&nbsp;
+    <span style="color:#eab308;font-weight:700">Amarillo</span> 40-70% &nbsp;|&nbsp;
+    <span style="color:#ef4444;font-weight:700">Rojo</span> &lt;40%
+  </div>
+
+  <div class="section-title">Resumen</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">Total interrupciones</div><div class="card-value" id="c1">—</div></div>
+    <div class="card"><div class="card-label">H. delegables/semana</div><div class="card-value" id="c2">—</div></div>
+    <div class="card"><div class="card-label">Coste semanal delegables €</div><div class="card-value" id="c3">—</div></div>
+    <div class="card"><div class="card-label">Índice de delegabilidad %</div><div class="card-value" id="c4">—</div></div>
+    <div class="card"><div class="card-label">Sin protocolo definido</div><div class="card-value" id="c5">—</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</main>
+<script>
+function addRow() {
+  var tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td><input type="text" placeholder="Descripcion de la tarea o solicitud" oninput="updateAll()"></td>' +
+    '<td><select onchange="updateAll()"><option>Si</option><option>No</option></select></td>' +
+    '<td><input type="number" min="0" value="0" oninput="updateAll()"></td>' +
+    '<td><input type="text" placeholder="Ej: Asistente, equipo A..."></td>' +
+    '<td><select onchange="updateAll()"><option>Si</option><option>No</option></select></td>';
+  document.getElementById('logBody').appendChild(tr);
+  updateAll();
+}
+
+function updateAll() {
+  var rate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+  var rows = document.querySelectorAll('#logBody tr');
+  var total = rows.length, delegables = 0, minsDel = 0, sinProt = 0;
+
+  rows.forEach(function(tr) {
+    var sels = tr.querySelectorAll('select');
+    var reqLider = sels[0] ? sels[0].value : 'Si';
+    var mins = parseFloat(tr.querySelector('input[type=number]') ? tr.querySelector('input[type=number]').value : 0) || 0;
+    var protocolo = sels[1] ? sels[1].value : 'Si';
+    if (reqLider === 'No') { delegables++; minsDel += mins; }
+    if (protocolo === 'No') sinProt++;
+  });
+
+  var hDel = (minsDel / 60).toFixed(2);
+  var costDel = (minsDel / 60 * rate).toFixed(2);
+  var idx = total > 0 ? Math.round(delegables / total * 100) : null;
+
+  var dot = document.getElementById('semDot');
+  var txt = document.getElementById('semText');
+  if (idx === null) {
+    dot.className = 'dot grey';
+    txt.textContent = 'Introduce datos para ver el semaforo';
+  } else {
+    dot.className = 'dot ' + (idx > 70 ? 'g' : idx >= 40 ? 'y' : 'r');
+    txt.textContent = idx > 70
+      ? 'Alta delegabilidad: ' + idx + '% de tareas no requeran al lider'
+      : idx >= 40
+        ? 'Delegabilidad media: ' + idx + '% de tareas no requeran al lider'
+        : 'Delegabilidad baja: solo ' + idx + '% de tareas no requeran al lider';
+  }
+
+  document.getElementById('c1').textContent = total;
+  document.getElementById('c2').textContent = hDel + 'h';
+  document.getElementById('c3').textContent = costDel + '€';
+  document.getElementById('c4').textContent = idx !== null ? idx + '%' : '—';
+  document.getElementById('c5').textContent = sinProt;
+}
+
+for (var i = 0; i < 5; i++) addRow();
+</script>
+</body>
+</html>

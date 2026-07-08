@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tracker de Actividad Comercial Semanal - CARDIO-S2</title>
+<style>
+:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--white:#fff;--red:#e74c3c;--yellow:#f39c12;--green:#27ae60;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:#333;}
+.header{background:var(--navy);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.header-left .brand{color:var(--gold);font-weight:700;font-size:1.1rem;letter-spacing:1px;}
+.header-left .symptom{color:#fff;font-size:0.78rem;margin-top:2px;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.tool-name{color:#fff;font-weight:600;font-size:0.95rem;}
+.badge-op{background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.5px;}
+.main{max-width:1280px;margin:0 auto;padding:24px 16px 100px;}
+h1{font-size:1.25rem;color:var(--navy);margin-bottom:6px;}
+.subtitle{font-size:0.85rem;color:#666;margin-bottom:20px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px;}
+.card{background:var(--white);border-left:4px solid var(--gold);padding:16px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+.card-label{font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+.card-value{font-size:1.4rem;font-weight:700;color:var(--navy);}
+.card-sub{font-size:0.78rem;color:#999;margin-top:4px;}
+.table-wrapper{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:24px;}
+table{width:100%;border-collapse:collapse;background:var(--white);font-size:0.83rem;}
+thead tr{background:var(--navy);color:#fff;}
+thead th{padding:10px 8px;text-align:left;font-weight:600;white-space:nowrap;font-size:0.76rem;}
+tbody tr:nth-child(even){background:#f4f3fb;}
+tbody tr:hover{background:#ede9fb;}
+td{padding:5px 6px;vertical-align:middle;}
+td input{width:100%;border:1px solid #ddd;border-radius:4px;padding:4px 6px;font-size:0.81rem;background:transparent;color:#333;}
+td input:focus{outline:2px solid var(--gold);border-color:var(--gold);}
+.auto-cell{font-weight:700;padding:5px 8px;color:var(--navy);}
+.tl-dot{width:14px;height:14px;border-radius:50%;display:inline-block;margin:auto;}
+.tl-green{background:var(--green);}
+.tl-yellow{background:var(--yellow);}
+.tl-red{background:var(--red);}
+.tl-gray{background:#ccc;}
+.tl-td{text-align:center;}
+.add-row-btn{background:var(--gold);color:var(--navy);border:none;padding:9px 18px;border-radius:6px;font-size:0.85rem;font-weight:700;cursor:pointer;margin-bottom:20px;}
+.add-row-btn:hover{opacity:0.85;}
+.nota-section{margin-bottom:24px;}
+.nota-section label{font-size:0.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;}
+.nota-section textarea{width:100%;border:1px solid #ddd;border-radius:6px;padding:10px;font-size:0.84rem;font-family:system-ui,sans-serif;min-height:80px;resize:vertical;background:var(--white);}
+.nota-section textarea:focus{outline:2px solid var(--gold);}
+.print-btn{position:fixed;bottom:24px;right:24px;background:var(--navy);color:var(--gold);border:none;padding:12px 22px;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:999;}
+.print-btn:hover{opacity:0.9;}
+@media print{.print-btn{display:none;}.add-row-btn{display:none;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left">
+    <div class="brand">MASFRAME</div>
+    <div class="symptom">CARDIO-S2 &middot; Sin objetivo semanal de contactos</div>
+  </div>
+  <div class="header-right">
+    <span class="tool-name">Tracker de Actividad Comercial Semanal</span>
+    <span class="badge-op">HERRAMIENTA OPERATIVA</span>
+  </div>
+</div>
+<div class="main">
+  <h1>Tracker de Actividad Comercial Semanal</h1>
+  <p class="subtitle">Fecha de referencia: 2026-07-08 &middot; Registra tu actividad semanal y comprueba el cumplimiento del objetivo</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Actividad total acumulada</div>
+      <div class="card-value" id="total-actividad">-</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Cumplimiento promedio</div>
+      <div class="card-value" id="avg-cumplimiento">-</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Semana m&aacute;s activa</div>
+      <div class="card-value" id="best-active">-</div>
+      <div class="card-sub" id="best-active-val"></div>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Semana</th>
+          <th>Llamadas</th>
+          <th>Emails</th>
+          <th>LinkedIn</th>
+          <th>Reuniones</th>
+          <th>Propuestas</th>
+          <th>Seguimientos</th>
+          <th>Total</th>
+          <th>Objetivo</th>
+          <th>Cumplimiento %</th>
+          <th>TL</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <button class="add-row-btn" onclick="addRow()">+ Agregar semana</button>
+
+  <div class="nota-section">
+    <label>Nota de correlaci&oacute;n (actividad vs resultados)</label>
+    <textarea placeholder="Escribe aqu&iacute; tus observaciones sobre la correlaci&oacute;n entre actividad comercial y resultados obtenidos..."></textarea>
+  </div>
+</div>
+<button class="print-btn" onclick="window.print()">Imprimir</button>
+<script>
+var DEF=[
+  {s:"Semana 1",ll:12,em:20,li:8,re:3,pr:2,sg:5,ob:55},
+  {s:"Semana 2",ll:15,em:22,li:10,re:4,pr:2,sg:7,ob:60},
+  {s:"Semana 3",ll:18,em:25,li:12,re:5,pr:3,sg:8,ob:65},
+  {s:"Semana 4",ll:20,em:28,li:14,re:6,pr:4,sg:9,ob:70}
+];
+function mkR(d){
+  var t=document.createElement("tr");
+  var tot=(d.ll||0)+(d.em||0)+(d.li||0)+(d.re||0)+(d.pr||0)+(d.sg||0);
+  var cum=d.ob>0?Math.round(tot/d.ob*100):0;
+  var tlc=cum>=90?"tl-green":cum>=60?"tl-yellow":"tl-red";
+  t.innerHTML="<td><input class=\"cs\" value=\""+d.s+"\"></td>"+
+    "<td><input type=\"number\" class=\"cll\" value=\""+d.ll+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"cem\" value=\""+d.em+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"cli\" value=\""+d.li+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"cre\" value=\""+d.re+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"cpr\" value=\""+d.pr+"\" min=\"0\"></td>"+
+    "<td><input type=\"number\" class=\"csg\" value=\""+d.sg+"\" min=\"0\"></td>"+
+    "<td class=\"auto-cell ctot\">"+tot+"</td>"+
+    "<td><input type=\"number\" class=\"cob\" value=\""+d.ob+"\" min=\"1\"></td>"+
+    "<td class=\"auto-cell ccum\">"+cum+"%</td>"+
+    "<td class=\"tl-td\"><span class=\"tl-dot "+tlc+" ctl\"></span></td>";
+  return t;
+}
+function addRow(){
+  var n=document.querySelectorAll("#tbody tr").length+1;
+  document.getElementById("tbody").appendChild(mkR({s:"Semana "+n,ll:0,em:0,li:0,re:0,pr:0,sg:0,ob:60}));
+  calc();
+}
+function calc(){
+  var trs=document.querySelectorAll("#tbody tr"),tots=[],cums=[],names=[];
+  trs.forEach(function(t){
+    var ll=parseFloat(t.querySelector(".cll").value)||0;
+    var em=parseFloat(t.querySelector(".cem").value)||0;
+    var li=parseFloat(t.querySelector(".cli").value)||0;
+    var re=parseFloat(t.querySelector(".cre").value)||0;
+    var pr=parseFloat(t.querySelector(".cpr").value)||0;
+    var sg=parseFloat(t.querySelector(".csg").value)||0;
+    var ob=parseFloat(t.querySelector(".cob").value)||1;
+    var tot=ll+em+li+re+pr+sg;
+    var cum=ob>0?Math.round(tot/ob*100):0;
+    t.querySelector(".ctot").textContent=tot;
+    t.querySelector(".ccum").textContent=cum+"%";
+    var tlc=cum>=90?"tl-green":cum>=60?"tl-yellow":"tl-red";
+    t.querySelector(".ctl").className="tl-dot "+tlc+" ctl";
+    tots.push(tot);cums.push(cum);
+    names.push(t.querySelector(".cs").value||"Sem "+(tots.length));
+  });
+  var sumTot=tots.reduce(function(a,b){return a+b;},0);
+  var avgCum=cums.length?Math.round(cums.reduce(function(a,b){return a+b;},0)/cums.length):0;
+  document.getElementById("total-actividad").textContent=sumTot;
+  document.getElementById("avg-cumplimiento").textContent=avgCum+"%";
+  var bi=0,bv=-Infinity;tots.forEach(function(v,i){if(v>bv){bv=v;bi=i;}});
+  document.getElementById("best-active").textContent=names[bi]||"-";
+  document.getElementById("best-active-val").textContent=bv>-Infinity?bv+" contactos":"";
+}
+var tb=document.getElementById("tbody");
+DEF.forEach(function(d){tb.appendChild(mkR(d));});
+tb.addEventListener("input",calc);calc();
+</script>
+</body>
+</html>

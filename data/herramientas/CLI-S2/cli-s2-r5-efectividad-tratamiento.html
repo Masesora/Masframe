@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI-S2 R5 · Efectividad por Protocolo/Servicio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
+header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:17px;font-weight:700}
+.badge{font-size:11px;color:#C4A55A;font-weight:600;border:1px solid #C4A55A;padding:3px 10px;border-radius:20px}
+.btn-print{background:#C4A55A;color:#1B2B4B;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px}
+.container{padding:24px 28px;max-width:1350px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.metric-card{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:14px 18px;border-left:4px solid #C4A55A}
+.metric-card .label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.metric-card .value{font-size:22px;font-weight:700;color:#1B2B4B}
+.metric-card .sub{font-size:11px;color:#888;margin-top:2px}
+section{background:#fff;border:1px solid #e0dff5;border-radius:8px;padding:20px;margin-bottom:20px}
+section h2{font-size:13px;font-weight:700;color:#1B2B4B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #C4A55A}
+table{width:100%;border-collapse:collapse}
+th{background:#1B2B4B;color:#C4A55A;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:9px 10px;text-align:left;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #f0eff8;vertical-align:middle;text-align:center}
+td:first-child{text-align:left;font-weight:600}
+tr:hover td{background:#f5f4fc}
+[contenteditable="true"]{cursor:text;outline:none}
+[contenteditable="true"]:focus{background:#fffbe6;box-shadow:0 0 0 2px #C4A55A55;border-radius:3px}
+.calc{background:#f8f7ff;font-weight:700}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle;margin-right:5px}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}
+tfoot td{background:#1B2B4B;color:#C4A55A;font-weight:700;text-align:center}
+tfoot td:first-child{text-align:left}
+@media print{.btn-print{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>CLI-S2 · R5 &nbsp; Efectividad por Protocolo / Servicio</h1>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="badge">Pérdida de Pacientes</span>
+    <button class="btn-print" onclick="window.print()">Imprimir</button>
+  </div>
+</header>
+<div class="container">
+  <div class="metrics">
+    <div class="metric-card"><div class="label">% completitud media</div><div class="value" id="m-comp">—</div><div class="sub">media global protocolos</div></div>
+    <div class="metric-card"><div class="label">Mejora media global</div><div class="value" id="m-mej">—</div><div class="sub">puntos en escala 0-10</div></div>
+    <div class="metric-card"><div class="label">% mejora significativa</div><div class="value" id="m-sig">—</div><div class="sub">pacientes con mejora &gt;2 puntos</div></div>
+    <div class="metric-card"><div class="label">Protocolos efectivos</div><div class="value" id="m-efec">—</div><div class="sub">&gt;70% completitud y mejora</div></div>
+  </div>
+  <section>
+    <h2>Efectividad por protocolo — semáforo verde: &gt;70% completitud y mejora</h2>
+    <div style="overflow-x:auto"><table>
+      <thead><tr>
+        <th>Protocolo</th><th>En curso</th><th>Completaron</th><th>% completitud</th>
+        <th>Mejora media (0-10)</th><th>% mejora &gt;2 pts</th><th>Sesiones medias</th>
+        <th>Benchmark obj.</th><th>Estado</th>
+      </tr></thead>
+      <tbody id="main-body"></tbody>
+      <tfoot><tr id="foot-row"></tr></tfoot>
+    </table></div>
+  </section>
+</div>
+<script>
+let rows=[
+  {prot:'TCC Ansiedad',curso:12,comp:9,mej:4.2,sig:78,ses:12,bench:'70%'},
+  {prot:'TCC Depresión',curso:8,comp:5,mej:3.8,sig:62,ses:16,bench:'70%'},
+  {prot:'Terapia pareja',curso:6,comp:4,mej:3.5,sig:50,ses:20,bench:'65%'},
+  {prot:'EMDR Trauma',curso:5,comp:4,mej:5.1,sig:80,ses:10,bench:'75%'},
+  {prot:'Orientación vocacional',curso:10,comp:9,mej:4.8,sig:90,ses:6,bench:'80%'},
+  {prot:'Mindfulness grupal',curso:15,comp:10,mej:3.2,sig:55,ses:8,bench:'70%'},
+  {prot:'Intervención duelo',curso:4,comp:2,mej:2.9,sig:40,ses:14,bench:'65%'},
+];
+function pComp(r){return r.curso>0?Math.round(r.comp/r.curso*100):0;}
+function sema(r){
+  const pc=pComp(r);
+  if(pc>=70&&r.sig>=70) return 'verde';
+  if(pc>=50&&r.sig>=50) return 'amarillo';
+  return 'rojo';
+}
+function semaLabel(s){return {verde:'Efectivo',amarillo:'Mejorable',rojo:'Crítico'}[s];}
+function renderMain(){
+  const b=document.getElementById('main-body'); b.innerHTML='';
+  let sumComp=0,sumMej=0,sumSig=0,efec=0;
+  rows.forEach((r,i)=>{
+    const pc=pComp(r);
+    const s=sema(r);
+    sumComp+=pc; sumMej+=parseFloat(r.mej); sumSig+=parseFloat(r.sig);
+    if(s==='verde') efec++;
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td contenteditable="true" onblur="rows['+i+'].prot=this.innerText">'+r.prot+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].curso=parseInt(this.innerText)||0;recalc()">'+r.curso+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].comp=parseInt(this.innerText)||0;recalc()">'+r.comp+'</td>'
+      +'<td class="calc">'+pc+'%</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].mej=parseFloat(this.innerText)||0;recalc()">'+r.mej+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].sig=parseFloat(this.innerText)||0;recalc()">'+r.sig+'%</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].ses=parseInt(this.innerText)||0">'+r.ses+'</td>'
+      +'<td contenteditable="true" onblur="rows['+i+'].bench=this.innerText">'+r.bench+'</td>'
+      +'<td><span class="dot '+s+'"></span>'+semaLabel(s)+'</td>';
+    b.appendChild(tr);
+  });
+  const n=rows.length;
+  document.getElementById('m-comp').textContent=(sumComp/n).toFixed(0)+'%';
+  document.getElementById('m-mej').textContent=(sumMej/n).toFixed(1)+' pts';
+  document.getElementById('m-sig').textContent=(sumSig/n).toFixed(0)+'%';
+  document.getElementById('m-efec').textContent=efec+' / '+n;
+  document.getElementById('foot-row').innerHTML='<td>GLOBAL</td><td colspan="2"></td>'
+    +'<td>'+(sumComp/n).toFixed(0)+'%</td>'
+    +'<td>'+(sumMej/n).toFixed(1)+'</td>'
+    +'<td>'+(sumSig/n).toFixed(0)+'%</td>'
+    +'<td colspan="3"></td>';
+}
+function recalc(){renderMain();}
+renderMain();
+</script>
+</body>
+</html>
