@@ -1,5 +1,7 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from database.database import lifespan
 
 # ============================================================
@@ -96,6 +98,11 @@ app.include_router(panel_router)       # ⭐ Panel TriajePage
 app.include_router(documentos_router)  # ⭐ Documentos expediente
 app.include_router(leads_router)       # ⭐ Diagnóstico Tu Solución
 app.include_router(discharge_router)   # ⭐ Alta Clínica + Certificados
+
+# Herramientas operativas — HTML descargables por síntoma
+_HERR_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "herramientas"))
+if os.path.isdir(_HERR_DIR):
+    app.mount("/herramientas", StaticFiles(directory=_HERR_DIR), name="herramientas")
 
 
 # ============================================================
