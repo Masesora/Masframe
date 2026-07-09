@@ -180,10 +180,13 @@ function recalcTotals(){
   if (window.parent !== window) {
     const fechas = Array.from(document.querySelectorAll('#inv-body tr input[type="date"]'))
       .map(i => i.value).filter(v => v).sort();
-    window.parent.postMessage(
-      { tipo: "herramienta-valor", valor: totalRecup, fecha: fechas[0] || null },
-      "*"
-    );
+    const itemId = new URLSearchParams(location.search).get('itemId');
+    if (window.parent !== window) {
+      window.parent.postMessage(
+        { tipo: "herramienta-valor", valor: totalRecup, fecha: fechas[0] || null, itemId },
+        "*"
+      );
+    }
   }
 }
 
@@ -193,6 +196,19 @@ function removeRow(id){
 }
 
 function recalc(){ recalcTotals(); }
+
+// Escuchar petición de snapshot HTML desde el padre
+window.addEventListener('message', function(e){
+  if (e.data?.tipo === 'get-html') {
+    const itemId = new URLSearchParams(location.search).get('itemId');
+    if (window.parent !== window) {
+      window.parent.postMessage(
+        { tipo: 'html-snapshot', html: document.documentElement.outerHTML, itemId },
+        '*'
+      );
+    }
+  }
+});
 
 // Seed 3 empty rows
 addRow(); addRow(); addRow();
