@@ -181,12 +181,15 @@ function recalcTotals(){
     const fechas = Array.from(document.querySelectorAll('#inv-body tr input[type="date"]'))
       .map(i => i.value).filter(v => v).sort();
     const itemId = new URLSearchParams(location.search).get('itemId');
-    if (window.parent !== window) {
-      window.parent.postMessage(
-        { tipo: "herramienta-valor", valor: totalRecup, fecha: fechas[0] || null, itemId },
-        "*"
-      );
-    }
+    const productos = Array.from(document.querySelectorAll('#inv-body tr input[type="text"]'))
+      .map(i => i.value.trim()).filter(v => v);
+    const descripcion = productos.length > 0
+      ? 'Liquidar ' + productos.slice(0,2).join(', ') + (totalRecup > 0 ? ' — recuperar ' + fmt(totalRecup) : '')
+      : (totalRecup > 0 ? 'Liquidar inventario — recuperar ' + fmt(totalRecup) : null);
+    window.parent.postMessage(
+      { tipo: "herramienta-valor", valor: totalRecup, fecha: fechas[0] || null, itemId, descripcion },
+      "*"
+    );
   }
 }
 
