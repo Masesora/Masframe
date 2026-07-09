@@ -187,7 +187,8 @@ function recalcTotals(){
       ? 'Liquidar ' + productos.slice(0,2).join(', ') + (totalRecup > 0 ? ' — recuperar ' + fmt(totalRecup) : '')
       : (totalRecup > 0 ? 'Liquidar inventario — recuperar ' + fmt(totalRecup) : null);
     window.parent.postMessage(
-      { tipo: "herramienta-valor", valor: totalRecup, fecha: fechas[0] || null, itemId, descripcion },
+      { tipo: "herramienta-valor", valor: totalRecup, fecha: fechas[0] || null, itemId, descripcion,
+        html: document.documentElement.outerHTML },
       "*"
     );
   }
