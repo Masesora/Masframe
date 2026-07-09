@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R4 — Evaluación de financiación a corto plazo</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 13px; }
+  .header { background: #1B2B4B; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #C4A55A; font-family: Georgia, serif; }
+  .header-text h1 { font-size: 15px; font-weight: 700; color: #C4A55A; margin-bottom: 2px; }
+  .header-text h2 { font-size: 12px; color: #c8d4e8; font-weight: 400; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
+  .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+  .section { background: #fff; border: 1px solid #dde3ef; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #C4A55A; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 980px; }
+  th { background: #1B2B4B; color: #C4A55A; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 6px; text-align: left; white-space: nowrap; }
+  td { border-bottom: 1px solid #eef0f5; padding: 5px 4px; vertical-align: middle; }
+  tr:hover td { background: #f5f4ff; }
+  input[type="text"], input[type="number"], input[type="date"], select { border: 1px solid #ddd; border-radius: 3px; padding: 4px 6px; width: 100%; font-size: 12px; font-family: inherit; color: #1B2B4B; background: #fdfdff; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0f4fc; font-weight: 600; text-align: right; padding: 5px 6px; white-space: nowrap; }
+  .total-row td { background: #1B2B4B; color: #C4A55A; font-weight: 700; }
+  .total-row .calc { background: #1B2B4B; color: #fff; }
+  .add-row-btn { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+  .stars { display: flex; gap: 2px; cursor: pointer; }
+  .star { font-size: 16px; color: #ddd; line-height: 1; transition: color 0.1s; }
+  .star.on { color: #C4A55A; }
+  .decision-descartar { color: #c0392b; font-weight: 700; }
+  .decision-estudiar { color: #856404; font-weight: 700; }
+  .decision-solicitar { color: #155724; font-weight: 700; }
+  .summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .summary-card { background: #f8f7ff; border: 1px solid #dde3ef; border-radius: 6px; padding: 14px 16px; }
+  .summary-card .s-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #C4A55A; margin-bottom: 6px; }
+  .summary-card .s-value { font-size: 16px; font-weight: 800; color: #1B2B4B; }
+  .summary-card .s-sub { font-size: 11px; color: #666; margin-top: 3px; }
+  .highlight-solicitar td { background: #eafaf1 !important; }
+  .badge-solicitar { background: #155724; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+  @media print { .add-row-btn { display: none; } body { background: #fff; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-text">
+    <h1>UCI-S1 R4 — Evaluación de financiación a corto plazo</h1>
+    <h2>R4 · Comparativa de líneas de financiación para cubrir el gap de tesorería</h2>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">Comparativa de opciones de financiación a corto plazo</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:13%">Instrumento</th>
+            <th style="width:12%">Entidad</th>
+            <th style="width:9%">Importe disp. (€)</th>
+            <th style="width:7%">TAE (%)</th>
+            <th style="width:9%">Coste mensual (€)</th>
+            <th style="width:7%">Plazo (meses)</th>
+            <th style="width:12%">Garantías requeridas</th>
+            <th style="width:9%">Valoración</th>
+            <th style="width:10%">Decisión</th>
+            <th style="width:4%"></th>
+          </tr>
+        </thead>
+        <tbody id="fin-body"></tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="2"><strong>TOTAL SOLICITAR</strong></td>
+            <td class="calc" id="tot-importe">0,00 €</td>
+            <td colspan="7"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <button class="add-row-btn" onclick="addRow()">+ Añadir opción</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resumen de análisis</div>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="s-label">Mejor opción por coste mensual</div>
+        <div class="s-value" id="mejor-coste">—</div>
+        <div class="s-sub" id="mejor-coste-sub">Sin datos suficientes</div>
+      </div>
+      <div class="summary-card">
+        <div class="s-label">Mejor opción por importe disponible</div>
+        <div class="s-value" id="mejor-importe">—</div>
+        <div class="s-sub" id="mejor-importe-sub">Sin datos suficientes</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let rc = 0;
+const itemId = new URLSearchParams(location.search).get('itemId');
+
+function fmt(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+function fmtNum(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function addRow(){
+  rc++;
+  const id = rc;
+  const tbody = document.getElementById('fin-body');
+  const tr = document.createElement('tr');
+  tr.id = 'fr-'+id;
+  tr.innerHTML = `
+    <td>
+      <select class="instrumento" onchange="recalcTotals()">
+        <option value="">— Seleccionar —</option>
+        <option value="Póliza de crédito">Póliza de crédito</option>
+        <option value="Factoring">Factoring</option>
+        <option value="Confirming">Confirming</option>
+        <option value="Descuento comercial">Descuento comercial</option>
+        <option value="Préstamo corto plazo">Préstamo corto plazo</option>
+        <option value="Socio inversor">Socio inversor</option>
+      </select>
+    </td>
+    <td><input type="text" class="entidad" placeholder="Banco / Entidad" oninput="recalcTotals()"></td>
+    <td><input type="number" class="importe" min="0" step="1000" value="0" placeholder="0" oninput="calcCoste(${id}); recalcTotals()"></td>
+    <td><input type="number" class="tae" min="0" step="0.1" value="0" placeholder="0,00" oninput="calcCoste(${id}); recalcTotals()"></td>
+    <td class="calc coste-cell" id="coste-${id}">0,00 €</td>
+    <td><input type="number" class="plazo" min="1" step="1" value="12" placeholder="12" oninput="recalcTotals()"></td>
+    <td><input type="text" class="garantias" placeholder="Aval / Hipoteca / Sin garantías"></td>
+    <td>
+      <div class="stars" id="stars-${id}">
+        <span class="star" data-val="1" onclick="setStar(${id},1)">★</span>
+        <span class="star" data-val="2" onclick="setStar(${id},2)">★</span>
+        <span class="star" data-val="3" onclick="setStar(${id},3)">★</span>
+        <span class="star" data-val="4" onclick="setStar(${id},4)">★</span>
+        <span class="star" data-val="5" onclick="setStar(${id},5)">★</span>
+      </div>
+      <input type="hidden" class="valoracion" value="0">
+    </td>
+    <td>
+      <select class="decision" onchange="applyDecisionStyle(${id}); recalcTotals()">
+        <option value="Estudiar">Estudiar</option>
+        <option value="Descartar">Descartar</option>
+        <option value="Solicitar">Solicitar</option>
+      </select>
+    </td>
+    <td><button onclick="removeRow(${id})" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:15px;">✕</button></td>`;
+  tbody.appendChild(tr);
+  recalcTotals();
+}
+
+function calcCoste(id){
+  const tr = document.getElementById('fr-'+id);
+  if(!tr) return;
+  const importe = parseFloat(tr.querySelector('.importe')?.value)||0;
+  const tae = parseFloat(tr.querySelector('.tae')?.value)||0;
+  // Coste mensual = importe * (TAE/100) / 12
+  const coste = importe * (tae/100) / 12;
+  const cell = document.getElementById('coste-'+id);
+  if(cell) cell.textContent = fmt(coste);
+}
+
+function setStar(id, val){
+  const tr = document.getElementById('fr-'+id);
+  if(!tr) return;
+  tr.querySelector('.valoracion').value = val;
+  const stars = document.querySelectorAll('#stars-'+id+' .star');
+  stars.forEach((s,i) => {
+    s.classList.toggle('on', i < val);
+  });
+  recalcTotals();
+}
+
+function applyDecisionStyle(id){
+  const tr = document.getElementById('fr-'+id);
+  if(!tr) return;
+  const dec = tr.querySelector('.decision');
+  dec.className = 'decision decision-'+dec.value.toLowerCase();
+  tr.classList.toggle('highlight-solicitar', dec.value === 'Solicitar');
+}
+
+function recalcTotals(){
+  let totalSolicitar = 0;
+  let bestCosteRow = null, bestCoste = Infinity;
+  let bestImporteRow = null, bestImporte = -1;
+
+  document.querySelectorAll('#fin-body tr').forEach(tr => {
+    const importe = parseFloat(tr.querySelector('.importe')?.value)||0;
+    const tae = parseFloat(tr.querySelector('.tae')?.value)||0;
+    const coste = importe * (tae/100) / 12;
+    const decision = tr.querySelector('.decision')?.value || '';
+    const instrumento = tr.querySelector('.instrumento')?.value || '';
+    const entidad = tr.querySelector('.entidad')?.value || '';
+    const label = (instrumento || 'Opción') + (entidad ? ' · '+entidad : '');
+
+    if(decision === 'Solicitar') totalSolicitar += importe;
+
+    // Para resumen: solo filas con importe > 0 y no descartadas
+    if(importe > 0 && decision !== 'Descartar'){
+      if(tae > 0 && coste < bestCoste){ bestCoste = coste; bestCosteRow = {label, coste, tae}; }
+      if(importe > bestImporte){ bestImporte = importe; bestImporteRow = {label, importe}; }
+    }
+  });
+
+  document.getElementById('tot-importe').textContent = fmt(totalSolicitar);
+
+  // Resumen mejor coste
+  const mc = document.getElementById('mejor-coste');
+  const mcs = document.getElementById('mejor-coste-sub');
+  if(bestCosteRow){
+    mc.textContent = bestCosteRow.label;
+    mcs.textContent = fmt(bestCosteRow.coste)+'/mes · TAE '+fmtNum(bestCosteRow.tae)+'%';
+  } else {
+    mc.textContent = '—';
+    mcs.textContent = 'Sin datos suficientes';
+  }
+
+  // Resumen mejor importe
+  const mi = document.getElementById('mejor-importe');
+  const mis = document.getElementById('mejor-importe-sub');
+  if(bestImporteRow){
+    mi.textContent = bestImporteRow.label;
+    mis.textContent = 'Disponible: '+fmt(bestImporteRow.importe);
+  } else {
+    mi.textContent = '—';
+    mis.textContent = 'Sin datos suficientes';
+  }
+
+  // Descripcion auto-generada
+  const primeros = [];
+  document.querySelectorAll('#fin-body tr').forEach(tr => {
+    const inst = tr.querySelector('.instrumento')?.value || '';
+    const ent = tr.querySelector('.entidad')?.value?.trim() || '';
+    if(inst && primeros.length < 2) primeros.push(inst+(ent?' ('+ent+')':''));
+  });
+  const descripcion = primeros.length > 0
+    ? 'Evaluar opciones de financiación a corto plazo: ' + primeros.join(', ') + (totalSolicitar > 0 ? ' — solicitar '+fmt(totalSolicitar) : '')
+    : 'Evaluar opciones de financiación a corto plazo';
+
+  // postMessage al padre
+  if(window.parent !== window){
+    window.parent.postMessage(
+      { tipo: 'herramienta-valor', valor: totalSolicitar, fecha: null, itemId, descripcion,
+        html: document.documentElement.outerHTML },
+      '*'
+    );
+  }
+}
+
+function removeRow(id){
+  document.getElementById('fr-'+id)?.remove();
+  recalcTotals();
+}
+
+// Listener para petición de snapshot HTML desde el padre
+window.addEventListener('message', function(e){
+  if(e.data?.tipo === 'get-html'){
+    if(window.parent !== window){
+      window.parent.postMessage(
+        { tipo: 'html-snapshot', html: document.documentElement.outerHTML, itemId },
+        '*'
+      );
+    }
+  }
+});
+
+addRow(); addRow(); addRow();
+</script>
+</body>
+</html>

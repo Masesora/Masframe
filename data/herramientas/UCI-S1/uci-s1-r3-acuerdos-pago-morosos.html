@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R3 — Acuerdos de pago con clientes morosos</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 13px; }
+  .header { background: #1B2B4B; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #C4A55A; font-family: Georgia, serif; }
+  .header-text h1 { font-size: 15px; font-weight: 700; color: #C4A55A; margin-bottom: 2px; }
+  .header-text h2 { font-size: 12px; color: #c8d4e8; font-weight: 400; }
+  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
+  .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+  .section { background: #fff; border: 1px solid #dde3ef; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #C4A55A; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #1B2B4B; color: #C4A55A; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 6px; text-align: left; }
+  td { border-bottom: 1px solid #eef0f5; padding: 5px 4px; vertical-align: middle; }
+  tr:hover td { background: #f5f4ff; }
+  input[type="text"], input[type="number"], input[type="date"], select { border: 1px solid #ddd; border-radius: 3px; padding: 4px 6px; width: 100%; font-size: 12px; font-family: inherit; color: #1B2B4B; background: #fdfdff; }
+  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  .calc { background: #f0f4fc; font-weight: 600; text-align: right; padding: 5px 6px; }
+  .total-row td { background: #1B2B4B; color: #C4A55A; font-weight: 700; }
+  .total-row .calc { background: #1B2B4B; color: #fff; }
+  .add-row-btn { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+  .resumen-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .resumen-card { border-radius: 6px; padding: 16px 18px; text-align: center; }
+  .resumen-card .label { font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; opacity: 0.85; }
+  .resumen-card .value { font-size: 22px; font-weight: 800; }
+  .card-acuerdos { background: #e8eef8; color: #1B2B4B; }
+  .card-recuperado { background: #d4edda; color: #155724; }
+  .card-riesgo { background: #f8d7da; color: #721c24; }
+  select.estado-activo { color: #155724; font-weight: 600; }
+  select.estado-incumplido { color: #721c24; font-weight: 600; }
+  select.estado-completado { color: #1B2B4B; font-weight: 600; }
+  @media print { .add-row-btn { display: none; } body { background: #fff; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MASFRAME</div>
+  <div class="header-text">
+    <h1>UCI-S1 R3 — Acuerdos de pago con clientes morosos</h1>
+    <h2>R3 · Calendario de acuerdos de pago negociados</h2>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">Registro de acuerdos de pago fraccionado</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:14%">Cliente</th>
+          <th style="width:9%">Deuda total (€)</th>
+          <th style="width:7%">Cuotas acordadas</th>
+          <th style="width:9%">Importe / cuota (€)</th>
+          <th style="width:10%">Fecha 1ª cuota</th>
+          <th style="width:7%">Cuotas pagadas</th>
+          <th style="width:10%">Importe recuperado (€)</th>
+          <th style="width:11%">Estado acuerdo</th>
+          <th style="width:4%"></th>
+        </tr>
+      </thead>
+      <tbody id="acuerdos-body"></tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td><strong>TOTALES</strong></td>
+          <td class="calc" id="tot-deuda">0,00 €</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="calc" id="tot-recuperado">0,00 €</td>
+          <td colspan="2"></td>
+        </tr>
+      </tfoot>
+    </table>
+    <button class="add-row-btn" onclick="addRow()">+ Añadir acuerdo</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resumen de recuperación</div>
+    <div class="resumen-grid">
+      <div class="resumen-card card-acuerdos">
+        <div class="label">Total en acuerdos (€)</div>
+        <div class="value" id="sum-acuerdos">0,00 €</div>
+      </div>
+      <div class="resumen-card card-recuperado">
+        <div class="label">Total recuperado (€)</div>
+        <div class="value" id="sum-recuperado">0,00 €</div>
+      </div>
+      <div class="resumen-card card-riesgo">
+        <div class="label">Riesgo de incumplimiento (€)</div>
+        <div class="value" id="sum-riesgo">0,00 €</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let rc = 0;
+function fmt(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+
+function addRow(){
+  rc++;
+  const tbody = document.getElementById('acuerdos-body');
+  const tr = document.createElement('tr');
+  tr.id = 'row-'+rc;
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Nombre cliente" oninput="recalcTotals()"></td>
+    <td><input type="number" min="0" step="0.01" value="0" class="deuda" oninput="calcCuota(${rc})"></td>
+    <td><input type="number" min="1" step="1" value="1" class="num-cuotas" oninput="calcCuota(${rc})"></td>
+    <td><input type="number" min="0" step="0.01" value="0" class="imp-cuota" oninput="recalcTotals()"></td>
+    <td><input type="date" class="fecha-primera"></td>
+    <td><input type="number" min="0" step="1" value="0" class="cuotas-pagadas" oninput="calcRecuperado(${rc})"></td>
+    <td class="calc recuperado-cell" id="rec-${rc}">0,00 €</td>
+    <td>
+      <select class="estado estado-activo" onchange="updateEstadoClass(this); recalcTotals()">
+        <option value="activo">Activo</option>
+        <option value="incumplido">Incumplido</option>
+        <option value="completado">Completado</option>
+      </select>
+    </td>
+    <td><button onclick="removeRow(${rc})" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:15px;">✕</button></td>`;
+  tbody.appendChild(tr);
+  recalcTotals();
+}
+
+function updateEstadoClass(sel){
+  sel.className = 'estado estado-' + sel.value;
+}
+
+function calcCuota(id){
+  const tr = document.getElementById('row-'+id);
+  if(!tr) return;
+  const deuda = parseFloat(tr.querySelector('.deuda').value)||0;
+  const nCuotas = parseInt(tr.querySelector('.num-cuotas').value)||1;
+  const cuota = nCuotas > 0 ? deuda / nCuotas : 0;
+  tr.querySelector('.imp-cuota').value = cuota.toFixed(2);
+  calcRecuperado(id);
+}
+
+function calcRecuperado(id){
+  const tr = document.getElementById('row-'+id);
+  if(!tr) return;
+  const impCuota = parseFloat(tr.querySelector('.imp-cuota').value)||0;
+  const pagadas = parseInt(tr.querySelector('.cuotas-pagadas').value)||0;
+  const recuperado = impCuota * pagadas;
+  document.getElementById('rec-'+id).textContent = recuperado.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+  recalcTotals();
+}
+
+function recalcTotals(){
+  let totalDeuda = 0, totalRecuperado = 0, riesgoIncumplimiento = 0;
+  document.querySelectorAll('#acuerdos-body tr').forEach(tr => {
+    const deuda = parseFloat(tr.querySelector('.deuda')?.value)||0;
+    const impCuota = parseFloat(tr.querySelector('.imp-cuota')?.value)||0;
+    const pagadas = parseInt(tr.querySelector('.cuotas-pagadas')?.value)||0;
+    const nCuotas = parseInt(tr.querySelector('.num-cuotas')?.value)||1;
+    const recuperado = impCuota * pagadas;
+    const estado = tr.querySelector('.estado')?.value || 'activo';
+    totalDeuda += deuda;
+    totalRecuperado += recuperado;
+    if(estado === 'incumplido'){
+      const pendiente = deuda - recuperado;
+      riesgoIncumplimiento += Math.max(0, pendiente);
+    }
+  });
+  document.getElementById('tot-deuda').textContent = fmt(totalDeuda);
+  document.getElementById('tot-recuperado').textContent = fmt(totalRecuperado);
+  document.getElementById('sum-acuerdos').textContent = fmt(totalDeuda);
+  document.getElementById('sum-recuperado').textContent = fmt(totalRecuperado);
+  document.getElementById('sum-riesgo').textContent = fmt(riesgoIncumplimiento);
+
+  if(window.parent !== window){
+    const itemId = new URLSearchParams(location.search).get('itemId');
+    const clientes = Array.from(document.querySelectorAll('#acuerdos-body tr input[type="text"]'))
+      .map(i => i.value.trim()).filter(v => v);
+    const fechas = Array.from(document.querySelectorAll('#acuerdos-body tr input[type="date"]'))
+      .map(i => i.value).filter(v => v).sort();
+    const descripcion = clientes.length > 0
+      ? 'Acuerdos de pago con ' + clientes.slice(0,2).join(', ') + (totalRecuperado > 0 ? ' — recuperado ' + fmt(totalRecuperado) : '')
+      : (totalRecuperado > 0 ? 'Acuerdos de pago con morosos — recuperado ' + fmt(totalRecuperado) : null);
+    window.parent.postMessage(
+      { tipo: 'herramienta-valor', valor: totalRecuperado, fecha: fechas[0] || null, itemId, descripcion,
+        html: document.documentElement.outerHTML },
+      '*'
+    );
+  }
+}
+
+function removeRow(id){
+  document.getElementById('row-'+id)?.remove();
+  recalcTotals();
+}
+
+window.addEventListener('message', function(e){
+  if(e.data?.tipo === 'get-html'){
+    const itemId = new URLSearchParams(location.search).get('itemId');
+    if(window.parent !== window){
+      window.parent.postMessage(
+        { tipo: 'html-snapshot', html: document.documentElement.outerHTML, itemId },
+        '*'
+      );
+    }
+  }
+});
+
+addRow(); addRow(); addRow();
+</script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R3 — Protocolo de reclamación escalonado</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6fa;
+    color: #1B2B4B;
+    min-height: 100vh;
+  }
+  header {
+    background: #1B2B4B;
+    color: #fff;
+    padding: 18px 28px 14px;
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    border-bottom: 3px solid #C4A55A;
+  }
+  header .badge {
+    background: #C4A55A;
+    color: #1B2B4B;
+    font-weight: 700;
+    font-size: 0.78rem;
+    border-radius: 4px;
+    padding: 3px 9px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    align-self: center;
+  }
+  header h1 {
+    font-size: 1.13rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  header p {
+    font-size: 0.82rem;
+    color: #C4A55A;
+    margin-top: 2px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 28px 18px 40px; }
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1B2B4B;
+    margin-bottom: 18px;
+    border-left: 4px solid #C4A55A;
+    padding-left: 10px;
+  }
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #C4A55A;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+    margin-top: 22px;
+  }
+  .summary-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .summary-card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1.5px solid #e2e8f0;
+    padding: 12px 20px;
+    flex: 1 1 160px;
+    min-width: 140px;
+    text-align: center;
+  }
+  .summary-card .sc-label {
+    font-size: 0.73rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .summary-card .sc-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1B2B4B;
+    margin-top: 2px;
+  }
+  .summary-card.verde .sc-value { color: #16a34a; }
+  .summary-card.amarillo .sc-value { color: #d97706; }
+  .summary-card.rojo .sc-value { color: #dc2626; }
+  .summary-card.total .sc-value { color: #1B2B4B; }
+
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(27,43,75,0.07);
+    font-size: 0.85rem;
+  }
+  thead tr {
+    background: #1B2B4B;
+    color: #fff;
+  }
+  thead th {
+    padding: 10px 8px;
+    font-weight: 600;
+    text-align: left;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(even) { background: #f8fafc; }
+  tbody tr:hover { background: #eef2ff; }
+  tbody td {
+    padding: 7px 7px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+  input[type="text"], input[type="number"], input[type="date"], select {
+    width: 100%;
+    border: 1.5px solid #d1d5db;
+    border-radius: 5px;
+    padding: 5px 7px;
+    font-size: 0.83rem;
+    color: #1B2B4B;
+    background: #fff;
+    outline: none;
+    transition: border 0.15s;
+    font-family: inherit;
+  }
+  input:focus, select:focus { border-color: #C4A55A; }
+  .tramo-badge {
+    display: inline-block;
+    border-radius: 12px;
+    padding: 3px 11px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .tramo-verde  { background: #dcfce7; color: #15803d; }
+  .tramo-amarillo { background: #fef9c3; color: #a16207; }
+  .tramo-rojo   { background: #fee2e2; color: #b91c1c; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s, color 0.15s;
+    font-family: inherit;
+  }
+  .btn-primary { background: #1B2B4B; color: #fff; }
+  .btn-primary:hover { background: #243d6b; }
+  .btn-gold { background: #C4A55A; color: #1B2B4B; }
+  .btn-gold:hover { background: #b8933e; }
+  .btn-sm {
+    padding: 4px 10px;
+    font-size: 0.77rem;
+    border-radius: 4px;
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+  }
+  .btn-sm:hover { background: #fca5a5; }
+  .actions-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .footer-note {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 18px;
+    text-align: right;
+  }
+  @media (max-width: 700px) {
+    header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .summary-card { min-width: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">UCI-S1 · R3</div>
+  <div>
+    <h1>UCI-S1 R3 — Protocolo de reclamación escalonado</h1>
+    <p>Herramienta operativa MASFRAME · Gestión de morosidad por tramos</p>
+  </div>
+</header>
+
+<div class="container">
+  <h2>R3 · Escala de acciones por tramo de morosidad</h2>
+
+  <div class="section-label">Protocolo de reclamación por antigüedad de deuda</div>
+
+  <div class="summary-row">
+    <div class="summary-card verde">
+      <div class="sc-label">Verde (&lt;30 d)</div>
+      <div class="sc-value" id="sum-verde">0,00 €</div>
+    </div>
+    <div class="summary-card amarillo">
+      <div class="sc-label">Amarillo (30–60 d)</div>
+      <div class="sc-value" id="sum-amarillo">0,00 €</div>
+    </div>
+    <div class="summary-card rojo">
+      <div class="sc-label">Rojo (&gt;60 d)</div>
+      <div class="sc-value" id="sum-rojo">0,00 €</div>
+    </div>
+    <div class="summary-card total">
+      <div class="sc-label">Total en riesgo</div>
+      <div class="sc-value" id="sum-total">0,00 €</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tabla">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cliente</th>
+          <th>Importe (€)</th>
+          <th>Días mora</th>
+          <th>Tramo</th>
+          <th>Acción asignada</th>
+          <th>Fecha próx. acción</th>
+          <th>Responsable</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn btn-primary" onclick="addRow()">+ Añadir cliente</button>
+    <button class="btn btn-gold" onclick="recalcTotals()">Recalcular</button>
+  </div>
+
+  <div class="footer-note">Los tramos se calculan automáticamente según los días de mora. El importe en tramo rojo se registra como valor de máximo riesgo.</div>
+</div>
+
+<script>
+(function () {
+  const itemId = new URLSearchParams(location.search).get('itemId') || '';
+  let rowCount = 0;
+
+  function fmt(n) {
+    return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  }
+
+  function tramo(dias) {
+    if (dias === '' || isNaN(Number(dias))) return { label: '—', cls: '' };
+    const d = Number(dias);
+    if (d < 30)  return { label: 'Verde',    cls: 'tramo-verde' };
+    if (d <= 60) return { label: 'Amarillo', cls: 'tramo-amarillo' };
+    return          { label: 'Rojo',     cls: 'tramo-rojo' };
+  }
+
+  function updateTramo(row) {
+    const diasInput = row.querySelector('.dias-input');
+    const tramoCell = row.querySelector('.tramo-cell');
+    const dias = diasInput ? diasInput.value.trim() : '';
+    const t = tramo(dias);
+    tramoCell.innerHTML = t.cls
+      ? `<span class="tramo-badge ${t.cls}">${t.label}</span>`
+      : '<span style="color:#94a3b8">—</span>';
+  }
+
+  window.addRow = function () {
+    rowCount++;
+    const idx = rowCount;
+    const tr = document.createElement('tr');
+    tr.dataset.idx = idx;
+    tr.innerHTML = `
+      <td style="color:#94a3b8;font-size:0.78rem;text-align:center;white-space:nowrap">${idx}</td>
+      <td><input type="text" class="cliente-input" placeholder="Nombre cliente" oninput="recalcTotals()"></td>
+      <td><input type="number" class="importe-input" placeholder="0,00" min="0" step="0.01" oninput="recalcTotals()"></td>
+      <td><input type="number" class="dias-input" placeholder="0" min="0" step="1" oninput="updateTramoRow(this);recalcTotals()"></td>
+      <td class="tramo-cell"><span style="color:#94a3b8">—</span></td>
+      <td>
+        <select class="accion-select" onchange="recalcTotals()">
+          <option value="">Seleccionar…</option>
+          <option value="Recordatorio amistoso">Recordatorio amistoso</option>
+          <option value="Llamada">Llamada</option>
+          <option value="Carta formal">Carta formal</option>
+          <option value="Gestor de cobros">Gestor de cobros</option>
+          <option value="Vía legal">Vía legal</option>
+        </select>
+      </td>
+      <td><input type="date" class="fecha-input" onchange="recalcTotals()"></td>
+      <td><input type="text" class="responsable-input" placeholder="Responsable" oninput="recalcTotals()"></td>
+      <td>
+        <select class="estado-select" onchange="recalcTotals()">
+          <option value="Pendiente">Pendiente</option>
+          <option value="En gestión">En gestión</option>
+          <option value="Resuelto">Resuelto</option>
+          <option value="Incobrable">Incobrable</option>
+        </select>
+      </td>
+      <td><button class="btn-sm" onclick="removeRow(this)">✕</button></td>
+    `;
+    document.getElementById('tbody').appendChild(tr);
+    recalcTotals();
+  };
+
+  window.updateTramoRow = function (input) {
+    const row = input.closest('tr');
+    updateTramo(row);
+  };
+
+  window.removeRow = function (btn) {
+    btn.closest('tr').remove();
+    recalcTotals();
+  };
+
+  window.recalcTotals = function () {
+    const rows = document.querySelectorAll('#tbody tr');
+    let sVerde = 0, sAmarillo = 0, sRojo = 0;
+    let primeraFecha = null;
+    let primerCliente = '';
+    let primerImporte = '';
+
+    rows.forEach((row, i) => {
+      updateTramo(row);
+      const imp = parseFloat(row.querySelector('.importe-input')?.value) || 0;
+      const dias = row.querySelector('.dias-input')?.value.trim();
+      const t = tramo(dias);
+      if (t.label === 'Verde')    sVerde    += imp;
+      if (t.label === 'Amarillo') sAmarillo += imp;
+      if (t.label === 'Rojo')     sRojo     += imp;
+
+      if (i === 0) {
+        primerCliente = row.querySelector('.cliente-input')?.value.trim() || '';
+        primerImporte = row.querySelector('.importe-input')?.value.trim() || '';
+        const f = row.querySelector('.fecha-input')?.value;
+        if (f) primeraFecha = f;
+      }
+    });
+
+    const total = sVerde + sAmarillo + sRojo;
+    document.getElementById('sum-verde').textContent    = fmt(sVerde);
+    document.getElementById('sum-amarillo').textContent = fmt(sAmarillo);
+    document.getElementById('sum-rojo').textContent     = fmt(sRojo);
+    document.getElementById('sum-total').textContent    = fmt(total);
+
+    // Descripción auto-generada
+    let descripcion = 'Protocolo de reclamación a morosos';
+    if (primerCliente) descripcion = `Reclamación: ${primerCliente}`;
+    if (primerCliente && primerImporte) descripcion += ` — ${primerImporte} €`;
+
+    // postMessage
+    const payload = {
+      tipo: 'herramienta-valor',
+      valor: Math.round(sRojo * 100) / 100,
+      fecha: primeraFecha || null,
+      itemId: itemId,
+      descripcion: descripcion,
+      html: document.documentElement.outerHTML
+    };
+    try { window.parent.postMessage(payload, '*'); } catch (e) {}
+  };
+
+  // Listener get-html
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.tipo === 'get-html') {
+      const snapshot = {
+        tipo: 'html-snapshot',
+        itemId: itemId,
+        html: document.documentElement.outerHTML
+      };
+      try { e.source.postMessage(snapshot, '*'); } catch (err) {}
+    }
+  });
+
+  // Seed inicial
+  addRow();
+  addRow();
+  addRow();
+})();
+</script>
+</body>
+</html>

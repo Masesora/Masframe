@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R5 — Plan de hitos para liberar anticipos</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6fa; color: #1B2B4B; min-height: 100vh; }
+
+  /* HEADER */
+  .header { background: #1B2B4B; color: #fff; padding: 18px 28px 14px; display: flex; align-items: flex-start; gap: 18px; }
+  .header-badge { background: #C4A55A; color: #1B2B4B; font-weight: 800; font-size: 1.05rem; border-radius: 6px; padding: 6px 14px; white-space: nowrap; margin-top: 2px; letter-spacing: .03em; }
+  .header-text h1 { font-size: 1.18rem; font-weight: 700; letter-spacing: .01em; line-height: 1.2; }
+  .header-text h2 { font-size: .85rem; font-weight: 400; color: #C4A55A; margin-top: 4px; letter-spacing: .02em; }
+
+  /* MAIN */
+  .main { padding: 22px 24px 40px; max-width: 1400px; margin: 0 auto; }
+  .section-title { font-size: 1rem; font-weight: 700; color: #1B2B4B; border-left: 4px solid #C4A55A; padding-left: 12px; margin-bottom: 16px; margin-top: 24px; }
+
+  /* SUMMARY CARDS */
+  .summary { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+  .card { background: #fff; border: 1.5px solid #e0e6f0; border-radius: 10px; padding: 14px 22px; flex: 1 1 180px; min-width: 160px; }
+  .card-label { font-size: .76rem; color: #6b7a99; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+  .card-value { font-size: 1.55rem; font-weight: 800; color: #1B2B4B; }
+  .card-value.gold { color: #C4A55A; }
+  .card-value.green { color: #2e7d32; }
+  .card-value.red { color: #c62828; }
+
+  /* TABLE WRAPPER */
+  .table-wrap { overflow-x: auto; background: #fff; border-radius: 10px; border: 1.5px solid #e0e6f0; }
+  table { width: 100%; border-collapse: collapse; font-size: .83rem; min-width: 1100px; }
+  thead tr { background: #1B2B4B; color: #fff; }
+  thead th { padding: 10px 8px; font-weight: 600; text-align: left; white-space: nowrap; font-size: .78rem; letter-spacing: .03em; }
+  thead th.center { text-align: center; }
+  tbody tr { border-bottom: 1px solid #e8edf5; transition: background .15s; }
+  tbody tr:hover { background: #f7f9fc; }
+  tbody td { padding: 7px 6px; vertical-align: middle; }
+  tbody td.center { text-align: center; }
+
+  input[type="text"], input[type="number"], input[type="date"] {
+    border: 1px solid #d0d8e8; border-radius: 5px; padding: 5px 8px;
+    font-size: .82rem; color: #1B2B4B; background: #f9fafc; width: 100%;
+    transition: border-color .2s;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus {
+    outline: none; border-color: #C4A55A; background: #fff;
+  }
+  input[type="checkbox"] { width: 17px; height: 17px; accent-color: #C4A55A; cursor: pointer; }
+
+  .computed { background: #f0f4f0; border-radius: 5px; padding: 5px 8px; font-weight: 700; color: #2e7d32; font-size: .84rem; text-align: right; min-width: 80px; display: block; }
+  .pct-cell { text-align: right; font-weight: 600; color: #1B2B4B; }
+
+  /* ROW ACTIONS */
+  .btn-del { background: none; border: none; cursor: pointer; color: #c62828; font-size: 1.05rem; padding: 2px 6px; border-radius: 4px; transition: background .15s; }
+  .btn-del:hover { background: #fdecea; }
+
+  /* BUTTONS */
+  .actions { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
+  .btn { padding: 9px 22px; border-radius: 7px; border: none; font-size: .88rem; font-weight: 700; cursor: pointer; transition: opacity .2s, transform .1s; letter-spacing: .02em; }
+  .btn:active { transform: scale(.97); }
+  .btn-primary { background: #1B2B4B; color: #fff; }
+  .btn-primary:hover { opacity: .88; }
+  .btn-gold { background: #C4A55A; color: #1B2B4B; }
+  .btn-gold:hover { opacity: .88; }
+
+  /* STATUS BADGE */
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: .72rem; font-weight: 700; letter-spacing: .04em; }
+  .badge-ok { background: #e8f5e9; color: #2e7d32; }
+  .badge-pend { background: #fff3e0; color: #e65100; }
+  .badge-none { background: #f3f4f6; color: #6b7a99; }
+
+  @media (max-width: 700px) {
+    .header { flex-direction: column; gap: 8px; padding: 14px 14px 10px; }
+    .main { padding: 14px 8px 32px; }
+    .summary { gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">UCI-S1 · R5</div>
+  <div class="header-text">
+    <h1>Plan de hitos para liberar anticipos</h1>
+    <h2>R5 · Calendario de entregables vinculados a liberación de anticipo</h2>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="section-title">Plan de hitos para activar la devolución o ejecución del anticipo</div>
+
+  <div class="summary">
+    <div class="card">
+      <div class="card-label">Total anticipos gestionados</div>
+      <div class="card-value gold" id="sumTotal">0,00 €</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Total liberado</div>
+      <div class="card-value green" id="sumLiberado">0,00 €</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Pendiente de liberar</div>
+      <div class="card-value red" id="sumPendiente">0,00 €</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Hitos completados</div>
+      <div class="card-value" id="sumHitos">0 / 0</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th style="width:120px">Cliente</th>
+          <th style="width:110px">Anticipo total (€)</th>
+          <th style="width:150px">Hito</th>
+          <th style="width:90px" class="center">% a liberar</th>
+          <th style="width:110px" class="center">Importe a liberar (€)</th>
+          <th style="width:180px">Entregable requerido</th>
+          <th style="width:120px" class="center">Fecha compromiso</th>
+          <th style="width:80px" class="center">Entregado</th>
+          <th style="width:100px" class="center">Anticipo liberado</th>
+          <th style="width:40px" class="center">—</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-gold" onclick="addRow()">+ Añadir hito</button>
+    <button class="btn btn-primary" onclick="recalcTotals()">Recalcular</button>
+  </div>
+
+</div>
+
+<script>
+const itemId = new URLSearchParams(location.search).get('itemId') || '';
+let rowCount = 0;
+
+function fmt(n) {
+  return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+}
+
+function addRow(data) {
+  rowCount++;
+  const d = data || {};
+  const rid = 'r' + rowCount;
+  const tr = document.createElement('tr');
+  tr.id = rid;
+  tr.innerHTML = `
+    <td><input type="text" class="f-cliente" placeholder="Cliente…" value="${d.cliente||''}" oninput="recalcTotals()"></td>
+    <td><input type="number" class="f-anticipo" placeholder="0" min="0" step="0.01" value="${d.anticipo||''}" oninput="recalcRow(this); recalcTotals()"></td>
+    <td><input type="text" class="f-hito" placeholder="Descripción del hito…" value="${d.hito||''}" oninput="recalcTotals()"></td>
+    <td class="center"><input type="number" class="f-pct" placeholder="%" min="0" max="100" step="1" value="${d.pct||''}" oninput="recalcRow(this); recalcTotals()" style="text-align:right"></td>
+    <td class="center"><span class="computed f-importe" id="imp_${rid}">—</span></td>
+    <td><input type="text" class="f-entregable" placeholder="Documento / acta / certificado…" value="${d.entregable||''}" oninput="recalcTotals()"></td>
+    <td class="center"><input type="date" class="f-fecha" value="${d.fecha||''}" oninput="recalcTotals()"></td>
+    <td class="center"><input type="checkbox" class="f-entregado" ${d.entregado?'checked':''} onchange="recalcTotals()"></td>
+    <td class="center"><input type="checkbox" class="f-liberado" ${d.liberado?'checked':''} onchange="recalcTotals()"></td>
+    <td class="center"><button class="btn-del" onclick="delRow('${rid}')" title="Eliminar fila">✕</button></td>
+  `;
+  document.getElementById('tbody').appendChild(tr);
+  recalcRow(tr.querySelector('.f-pct'));
+  recalcTotals();
+}
+
+function recalcRow(input) {
+  const tr = input.closest('tr');
+  if (!tr) return;
+  const anticipo = parseFloat(tr.querySelector('.f-anticipo').value) || 0;
+  const pct = parseFloat(tr.querySelector('.f-pct').value) || 0;
+  const importe = anticipo * pct / 100;
+  const el = tr.querySelector('.f-importe');
+  el.textContent = importe > 0 ? fmt(importe) : '—';
+}
+
+function delRow(rid) {
+  const tr = document.getElementById(rid);
+  if (tr) { tr.remove(); recalcTotals(); }
+}
+
+function recalcTotals() {
+  const rows = document.querySelectorAll('#tbody tr');
+  let totalAnticipo = 0, totalLiberado = 0, hitosOk = 0, hitosTotal = rows.length;
+
+  rows.forEach(tr => {
+    const anticipo = parseFloat(tr.querySelector('.f-anticipo').value) || 0;
+    const pct = parseFloat(tr.querySelector('.f-pct').value) || 0;
+    const importe = anticipo * pct / 100;
+    const liberado = tr.querySelector('.f-liberado').checked;
+    const entregado = tr.querySelector('.f-entregado').checked;
+
+    totalAnticipo += anticipo;
+    if (liberado) { totalLiberado += importe; }
+    if (entregado) hitosOk++;
+  });
+
+  const pendiente = totalAnticipo - totalLiberado;
+
+  document.getElementById('sumTotal').textContent = fmt(totalAnticipo);
+  document.getElementById('sumLiberado').textContent = fmt(totalLiberado);
+  document.getElementById('sumPendiente').textContent = fmt(Math.max(0, pendiente));
+  document.getElementById('sumHitos').textContent = hitosOk + ' / ' + hitosTotal;
+
+  // Descripción auto-generada
+  const clientes = [...new Set([...document.querySelectorAll('.f-cliente')].map(i=>i.value.trim()).filter(Boolean))];
+  const hitos = [...document.querySelectorAll('.f-hito')].map(i=>i.value.trim()).filter(Boolean);
+  let desc = 'Planificar hitos para liberar anticipos retenidos';
+  if (clientes.length) desc = 'Anticipos: ' + clientes.slice(0,3).join(', ');
+  if (hitos.length) desc += ' — ' + hitos.slice(0,2).join('; ');
+
+  // Fecha más próxima con compromiso pendiente
+  const fechas = [...document.querySelectorAll('.f-fecha')]
+    .map(i=>i.value).filter(Boolean).sort();
+  const fecha = fechas[0] || null;
+
+  emitValue(totalLiberado, fecha, desc);
+}
+
+function emitValue(valor, fecha, descripcion) {
+  const html = document.documentElement.outerHTML;
+  const msg = { tipo: 'herramienta-valor', valor: Number(valor.toFixed(2)), fecha, itemId, descripcion, html };
+  window.parent.postMessage(msg, '*');
+}
+
+window.addEventListener('message', e => {
+  if (e.data && e.data.tipo === 'get-html') {
+    const html = document.documentElement.outerHTML;
+    window.parent.postMessage({ tipo: 'html-snapshot', html, itemId }, '*');
+  }
+});
+
+// Seed inicial
+addRow({ cliente: 'Cliente A', anticipo: 30000, pct: 33, hito: 'Entrega de proyecto inicial', entregable: 'Acta de inicio firmada', fecha: '2026-08-01' });
+addRow({ cliente: 'Cliente B', anticipo: 50000, pct: 50, hito: 'Validación de fase intermedia', entregable: 'Informe de avance aprobado', fecha: '2026-09-15' });
+addRow({ cliente: 'Cliente A', anticipo: 30000, pct: 34, hito: 'Entrega final y cierre', entregable: 'Acta de recepción definitiva', fecha: '2026-11-30' });
+</script>
+</body>
+</html>

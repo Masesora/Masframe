@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R6 — Protocolo de facturación urgente</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1B2B4B;
+    --navy-light: #243660;
+    --gold: #C4A55A;
+    --gold-light: #d4b86a;
+    --bg: #f4f6fa;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --text-muted: #5a6a8a;
+    --border: #dce3f0;
+    --success: #2e7d52;
+    --success-bg: #e8f5ee;
+    --danger: #b94a3a;
+    --danger-bg: #fdf0ee;
+    --row-alt: #f9fafd;
+    --radius: 8px;
+    --shadow: 0 2px 12px rgba(27,43,75,0.10);
+  }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 0;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 28px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .header-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: .08em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+  }
+  .header-text p {
+    font-size: 12.5px;
+    color: rgba(255,255,255,.62);
+    margin-top: 4px;
+  }
+  .header-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+  }
+
+  /* ── LAYOUT ── */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 28px 48px;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .section-title h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -.01em;
+  }
+  .section-title .pill {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: .05em;
+  }
+
+  /* ── SUMMARY CARDS ── */
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .summary-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .summary-card .label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--text-muted);
+  }
+  .summary-card .value {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.1;
+  }
+  .summary-card.gold .value  { color: var(--gold); }
+  .summary-card.green .value { color: var(--success); }
+  .summary-card.red   .value { color: var(--danger); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-label { font-size: 12px; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+  .progress-track { flex: 1; height: 10px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-fill  { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 99px; transition: width .4s; }
+  .progress-pct   { font-size: 14px; font-weight: 800; color: var(--navy); min-width: 44px; text-align: right; }
+
+  /* ── TABLE WRAPPER ── */
+  .table-wrap {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: auto;
+    margin-bottom: 18px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: var(--navy);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: 11px 10px;
+    text-align: left;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  thead th.center { text-align: center; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:hover { background: #eef1f8; }
+  tbody tr.done-row { background: var(--success-bg) !important; }
+  tbody tr.done-row td { color: var(--success); }
+  td { padding: 8px 10px; vertical-align: middle; }
+  td.center { text-align: center; }
+
+  /* inputs inside table */
+  td input[type="text"],
+  td input[type="date"],
+  td input[type="number"] {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 5px 8px;
+    font-size: 12.5px;
+    font-family: inherit;
+    color: var(--text);
+    background: transparent;
+    transition: border-color .15s, background .15s;
+    min-width: 80px;
+  }
+  td input[type="text"]:focus,
+  td input[type="date"]:focus,
+  td input[type="number"]:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: #fffdf4;
+  }
+  td input[type="number"] { min-width: 90px; text-align: right; }
+
+  /* checkbox styled */
+  .cb-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+  }
+  .cb-wrap input[type="checkbox"] {
+    width: 16px; height: 16px;
+    accent-color: var(--gold);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .cb-wrap input[type="text"] {
+    min-width: 100px;
+    font-size: 12px;
+  }
+
+  /* Facturado checkbox (big) */
+  .cb-facturado {
+    display: flex; justify-content: center;
+  }
+  .cb-facturado input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: var(--success);
+    cursor: pointer;
+  }
+
+  /* delete btn */
+  .btn-del {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #c0c8d8;
+    font-size: 16px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: color .15s;
+    line-height: 1;
+  }
+  .btn-del:hover { color: var(--danger); }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: filter .15s, transform .1s;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+  }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-outline {
+    background: var(--white);
+    border: 1.5px solid var(--navy);
+    color: var(--navy);
+  }
+  .btn-outline:hover { background: var(--navy); color: var(--white); }
+
+  /* ── FOOTER NOTE ── */
+  .footer-note {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    padding-left: 2px;
+  }
+
+  @media (max-width: 700px) {
+    .summary-row { grid-template-columns: 1fr; }
+    .main { padding: 16px 12px 40px; }
+    .header-inner { padding: 16px 14px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <span class="header-badge">UCI-S1 · R6</span>
+    <div class="header-text">
+      <h1>Protocolo de facturación urgente</h1>
+      <p>R6 · Checklist operativo para activar la facturación paralizada</p>
+    </div>
+  </div>
+  <div class="header-bar"></div>
+</header>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- Section title -->
+  <div class="section-title">
+    <h2>Protocolo de activación urgente de facturación</h2>
+    <span class="pill">URGENTE</span>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="summary-row">
+    <div class="summary-card gold">
+      <span class="label">Total activado (€)</span>
+      <span class="value" id="totalActivado">0,00 €</span>
+    </div>
+    <div class="summary-card red">
+      <span class="label">Total pendiente (€)</span>
+      <span class="value" id="totalPendiente">0,00 €</span>
+    </div>
+    <div class="summary-card green">
+      <span class="label">Expedientes facturados</span>
+      <span class="value" id="totalFacturados">0 / 0</span>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-wrap">
+    <span class="progress-label">% Completado</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <span class="progress-pct" id="progressPct">0 %</span>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button class="btn btn-primary" onclick="addRow()">＋ Añadir expediente</button>
+    <button class="btn btn-outline" onclick="recalcTotals()">↺ Recalcular</button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th style="min-width:140px">Expediente / Cliente</th>
+          <th class="center" style="min-width:110px">Importe (€)</th>
+          <th style="min-width:130px">Responsable</th>
+          <th class="center" style="min-width:110px">Fecha límite</th>
+          <th style="min-width:200px">Acción 1</th>
+          <th style="min-width:200px">Acción 2</th>
+          <th style="min-width:200px">Acción 3</th>
+          <th class="center" style="min-width:80px">Facturado</th>
+          <th class="center" style="min-width:120px">Fecha facturación</th>
+          <th class="center" style="width:36px"></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <p class="footer-note">Los importes marcados como «Facturado» se contabilizan en el total activado. El guardado lo gestiona el panel principal.</p>
+
+</div>
+
+<script>
+  const itemId = new URLSearchParams(location.search).get('itemId') || '';
+  let rowIdx = 0;
+
+  function fmt(n) {
+    return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  }
+
+  function addRow() {
+    const tbody = document.getElementById('tableBody');
+    const i = rowIdx++;
+    const tr = document.createElement('tr');
+    tr.id = 'row-' + i;
+    tr.innerHTML = `
+      <td><input type="text" class="f-exp" placeholder="Expediente / Cliente" oninput="recalcTotals()"></td>
+      <td><input type="number" class="f-imp" min="0" step="0.01" placeholder="0,00" oninput="recalcTotals()"></td>
+      <td><input type="text" class="f-resp" placeholder="Responsable" oninput="recalcTotals()"></td>
+      <td class="center"><input type="date" class="f-limite" onchange="recalcTotals()"></td>
+      <td>
+        <div class="cb-wrap">
+          <input type="checkbox" class="f-a1c" onchange="recalcTotals()">
+          <input type="text" class="f-a1t" placeholder="Acción 1…" oninput="recalcTotals()">
+        </div>
+      </td>
+      <td>
+        <div class="cb-wrap">
+          <input type="checkbox" class="f-a2c" onchange="recalcTotals()">
+          <input type="text" class="f-a2t" placeholder="Acción 2…" oninput="recalcTotals()">
+        </div>
+      </td>
+      <td>
+        <div class="cb-wrap">
+          <input type="checkbox" class="f-a3c" onchange="recalcTotals()">
+          <input type="text" class="f-a3t" placeholder="Acción 3…" oninput="recalcTotals()">
+        </div>
+      </td>
+      <td class="center">
+        <div class="cb-facturado">
+          <input type="checkbox" class="f-fact" onchange="onFacturadoChange(this, ${i})">
+        </div>
+      </td>
+      <td class="center"><input type="date" class="f-fecha-real" onchange="recalcTotals()"></td>
+      <td class="center">
+        <button class="btn-del" onclick="delRow(${i})" title="Eliminar fila">✕</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+    recalcTotals();
+  }
+
+  function onFacturadoChange(cb, i) {
+    const tr = document.getElementById('row-' + i);
+    if (cb.checked) {
+      tr.classList.add('done-row');
+      const fechaReal = tr.querySelector('.f-fecha-real');
+      if (!fechaReal.value) {
+        fechaReal.value = new Date().toISOString().split('T')[0];
+      }
+    } else {
+      tr.classList.remove('done-row');
+    }
+    recalcTotals();
+  }
+
+  function delRow(i) {
+    const tr = document.getElementById('row-' + i);
+    if (tr) tr.remove();
+    recalcTotals();
+  }
+
+  function recalcTotals() {
+    const rows = document.querySelectorAll('#tableBody tr');
+    let totalAll = 0, totalFact = 0, countFact = 0;
+    const total = rows.length;
+
+    rows.forEach(tr => {
+      const imp = parseFloat(tr.querySelector('.f-imp')?.value) || 0;
+      const facturado = tr.querySelector('.f-fact')?.checked;
+      totalAll += imp;
+      if (facturado) {
+        totalFact += imp;
+        countFact++;
+      }
+    });
+
+    const pendiente = totalAll - totalFact;
+    const pct = totalAll > 0 ? Math.round((totalFact / totalAll) * 100) : 0;
+
+    document.getElementById('totalActivado').textContent = fmt(totalFact);
+    document.getElementById('totalPendiente').textContent = fmt(pendiente);
+    document.getElementById('totalFacturados').textContent = countFact + ' / ' + total;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + ' %';
+
+    // auto-descripcion
+    const textos = [];
+    document.querySelectorAll('#tableBody .f-exp').forEach(inp => {
+      if (inp.value.trim()) textos.push(inp.value.trim());
+    });
+    const descripcion = textos.length
+      ? 'Protocolo urgente para facturar lo paralizado: ' + textos.slice(0, 2).join(', ') + (textos.length > 2 ? '…' : '')
+      : 'Protocolo urgente para facturar lo paralizado';
+
+    // fecha del primer facturado
+    let fechaEmit = null;
+    document.querySelectorAll('#tableBody tr').forEach(tr => {
+      if (tr.querySelector('.f-fact')?.checked) {
+        const d = tr.querySelector('.f-fecha-real')?.value;
+        if (d && !fechaEmit) fechaEmit = d;
+      }
+    });
+
+    emitPostMessage(totalFact, fechaEmit, descripcion);
+  }
+
+  function emitPostMessage(valor, fecha, descripcion) {
+    try {
+      window.parent.postMessage({
+        tipo: 'herramienta-valor',
+        valor: Number(valor.toFixed(2)),
+        fecha: fecha || null,
+        itemId: itemId,
+        descripcion: descripcion,
+        html: document.documentElement.outerHTML
+      }, '*');
+    } catch(e) {}
+  }
+
+  // listener para get-html
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.tipo === 'get-html') {
+      try {
+        e.source.postMessage({
+          tipo: 'html-snapshot',
+          itemId: itemId,
+          html: document.documentElement.outerHTML
+        }, e.origin || '*');
+      } catch(err) {}
+    }
+  });
+
+  // seed inicial
+  addRow();
+  addRow();
+  addRow();
+</script>
+</body>
+</html>

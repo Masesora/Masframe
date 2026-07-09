@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R1 — Tracker de ventas por liquidación</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6fa;
+    color: #1B2B4B;
+    min-height: 100vh;
+  }
+  header {
+    background: #1B2B4B;
+    color: #fff;
+    padding: 18px 28px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  header .badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #C4A55A;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  header h2 {
+    font-size: 13px;
+    font-weight: 400;
+    color: #a8b8d0;
+    margin-top: 3px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 28px auto;
+    padding: 0 18px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(27,43,75,0.08);
+    padding: 24px 24px 20px;
+    margin-bottom: 22px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1B2B4B;
+    border-left: 4px solid #C4A55A;
+    padding-left: 10px;
+    margin-bottom: 18px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead tr {
+    background: #1B2B4B;
+    color: #fff;
+  }
+  thead th {
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid #e8ecf3;
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: #f7f9fc; }
+  tbody td {
+    padding: 7px 6px;
+    vertical-align: middle;
+  }
+  input[type="text"], input[type="number"], input[type="week"], select {
+    width: 100%;
+    border: 1px solid #d0d8e8;
+    border-radius: 5px;
+    padding: 5px 7px;
+    font-size: 12.5px;
+    color: #1B2B4B;
+    background: #fff;
+    outline: none;
+    transition: border 0.15s;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, input[type="week"]:focus, select:focus {
+    border-color: #C4A55A;
+    box-shadow: 0 0 0 2px rgba(196,165,90,0.15);
+  }
+  select { cursor: pointer; }
+  .total-calc {
+    background: #f0f4f0;
+    color: #1B2B4B;
+    font-weight: 700;
+    padding: 5px 7px;
+    border-radius: 5px;
+    text-align: right;
+    min-width: 90px;
+    display: block;
+    font-size: 13px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: #1B2B4B;
+    color: #fff;
+  }
+  .btn-primary:hover { background: #243a63; }
+  .btn-gold {
+    background: #C4A55A;
+    color: #fff;
+  }
+  .btn-gold:hover { background: #b3913e; }
+  .btn-danger {
+    background: transparent;
+    color: #c0392b;
+    border: 1px solid #e8b4ae;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  .btn-danger:hover { background: #fdf0ef; }
+  .actions-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .summary-box {
+    background: #f7f9fc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .summary-box.highlight {
+    background: #1B2B4B;
+    border-color: #1B2B4B;
+  }
+  .summary-box.highlight .summary-label { color: #a8b8d0; }
+  .summary-box.highlight .summary-value { color: #C4A55A; }
+  .summary-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #6b7fa0;
+    text-transform: uppercase;
+  }
+  .summary-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1B2B4B;
+    line-height: 1;
+  }
+  .summary-sub {
+    font-size: 11px;
+    color: #8a9ab8;
+    margin-top: 2px;
+  }
+  .status-vendido { color: #27ae60; font-weight: 700; }
+  .status-negociando { color: #e67e22; font-weight: 700; }
+  .status-sin { color: #c0392b; font-weight: 700; }
+  .table-wrap { overflow-x: auto; }
+  .footer-note {
+    font-size: 11px;
+    color: #9aabca;
+    margin-top: 10px;
+    text-align: right;
+  }
+  @media (max-width: 700px) {
+    .container { padding: 0 6px; }
+    .card { padding: 14px 8px; }
+    header { padding: 14px 12px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="badge">MASFRAME · UCI-S1 · R1</span>
+  <h1>UCI-S1 R1 — Tracker de ventas por liquidación</h1>
+  <h2>R1 · Seguimiento semanal de ventas y liquidez recuperada</h2>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-title">Resumen de liquidación</div>
+    <div class="summary-grid">
+      <div class="summary-box highlight">
+        <span class="summary-label">Total recuperado acumulado</span>
+        <span class="summary-value" id="sum-total">0,00 €</span>
+        <span class="summary-sub">Suma de ventas cerradas</span>
+      </div>
+      <div class="summary-box">
+        <span class="summary-label">Unidades vendidas</span>
+        <span class="summary-value" id="sum-uds-vendidas">0</span>
+        <span class="summary-sub">Estado: Vendido</span>
+      </div>
+      <div class="summary-box">
+        <span class="summary-label">Unidades pendientes</span>
+        <span class="summary-value" id="sum-uds-pendientes">0</span>
+        <span class="summary-sub">Negociando + Sin salida</span>
+      </div>
+      <div class="summary-box">
+        <span class="summary-label">Líneas registradas</span>
+        <span class="summary-value" id="sum-filas">0</span>
+        <span class="summary-sub">Total de filas en tracker</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tracker de liquidación semanal</div>
+    <div class="table-wrap">
+      <table id="tabla">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Semana</th>
+            <th>Producto vendido</th>
+            <th>Unidades</th>
+            <th>Precio real (€)</th>
+            <th>Total recuperado (€)</th>
+            <th>Canal usado</th>
+            <th>Estado</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="actions-row">
+      <button class="btn btn-primary" onclick="addRow()">+ Añadir fila</button>
+      <button class="btn btn-gold" onclick="recalcTotals()">Recalcular totales</button>
+    </div>
+    <p class="footer-note">El total recuperado se calcula automáticamente al modificar unidades o precio.</p>
+  </div>
+
+</div>
+
+<script>
+  const itemId = new URLSearchParams(location.search).get('itemId') || '';
+  let rowCount = 0;
+
+  function getCurrentWeek() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const startOfYear = new Date(year, 0, 1);
+    const dayOfYear = Math.ceil((now - startOfYear) / 86400000);
+    const week = Math.ceil((dayOfYear + startOfYear.getDay()) / 7);
+    const w = String(week).padStart(2, '0');
+    return `${year}-W${w}`;
+  }
+
+  function fmtEur(n) {
+    return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  }
+
+  function addRow() {
+    rowCount++;
+    const idx = rowCount;
+    const tbody = document.getElementById('tbody');
+    const tr = document.createElement('tr');
+    tr.id = `row-${idx}`;
+    tr.innerHTML = `
+      <td style="font-weight:700;color:#6b7fa0;text-align:center;font-size:12px;">${idx}</td>
+      <td><input type="week" id="semana-${idx}" value="${getCurrentWeek()}" onchange="recalcTotals()"></td>
+      <td><input type="text" id="producto-${idx}" placeholder="Ej: Lote maquinaria A" oninput="recalcTotals()"></td>
+      <td><input type="number" id="uds-${idx}" value="1" min="0" step="1" oninput="calcRow(${idx});recalcTotals()"></td>
+      <td><input type="number" id="precio-${idx}" value="" min="0" step="0.01" placeholder="0,00" oninput="calcRow(${idx});recalcTotals()"></td>
+      <td><span class="total-calc" id="subtotal-${idx}">0,00 €</span></td>
+      <td><input type="text" id="canal-${idx}" placeholder="Ej: eBay, llamada, local" oninput="recalcTotals()"></td>
+      <td>
+        <select id="estado-${idx}" onchange="recalcTotals()">
+          <option value="Vendido">Vendido</option>
+          <option value="Negociando">Negociando</option>
+          <option value="Sin salida">Sin salida</option>
+        </select>
+      </td>
+      <td><button class="btn btn-danger" onclick="removeRow(${idx})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    calcRow(idx);
+    recalcTotals();
+  }
+
+  function calcRow(idx) {
+    const uds = parseFloat(document.getElementById(`uds-${idx}`)?.value) || 0;
+    const precio = parseFloat(document.getElementById(`precio-${idx}`)?.value) || 0;
+    const sub = uds * precio;
+    const el = document.getElementById(`subtotal-${idx}`);
+    if (el) el.textContent = fmtEur(sub);
+  }
+
+  function removeRow(idx) {
+    const tr = document.getElementById(`row-${idx}`);
+    if (tr) tr.remove();
+    recalcTotals();
+  }
+
+  function recalcTotals() {
+    let totalRecuperado = 0;
+    let udsVendidas = 0;
+    let udsPendientes = 0;
+    let filas = 0;
+
+    for (let i = 1; i <= rowCount; i++) {
+      const row = document.getElementById(`row-${i}`);
+      if (!row) continue;
+      filas++;
+      const uds = parseFloat(document.getElementById(`uds-${i}`)?.value) || 0;
+      const precio = parseFloat(document.getElementById(`precio-${i}`)?.value) || 0;
+      const estado = document.getElementById(`estado-${i}`)?.value || '';
+      const sub = uds * precio;
+
+      if (estado === 'Vendido') {
+        totalRecuperado += sub;
+        udsVendidas += uds;
+      } else {
+        udsPendientes += uds;
+      }
+    }
+
+    document.getElementById('sum-total').textContent = fmtEur(totalRecuperado);
+    document.getElementById('sum-uds-vendidas').textContent = udsVendidas;
+    document.getElementById('sum-uds-pendientes').textContent = udsPendientes;
+    document.getElementById('sum-filas').textContent = filas;
+
+    // Auto-generate descripcion from first non-empty producto field
+    let descripcion = 'Seguimiento semanal de liquidación';
+    for (let i = 1; i <= rowCount; i++) {
+      const prod = document.getElementById(`producto-${i}`)?.value?.trim();
+      if (prod) {
+        descripcion = `Liquidación: ${prod} — recuperado ${fmtEur(totalRecuperado)}`;
+        break;
+      }
+    }
+
+    const fecha = new Date().toISOString().split('T')[0];
+
+    try {
+      window.parent.postMessage({
+        tipo: 'herramienta-valor',
+        valor: Math.round(totalRecuperado * 100) / 100,
+        fecha: fecha,
+        itemId: itemId,
+        descripcion: descripcion,
+        html: document.documentElement.outerHTML
+      }, '*');
+    } catch(e) {}
+  }
+
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.tipo === 'get-html') {
+      try {
+        e.source.postMessage({
+          tipo: 'html-snapshot',
+          html: document.documentElement.outerHTML,
+          itemId: itemId
+        }, '*');
+      } catch(err) {}
+    }
+  });
+
+  // Seed inicial
+  addRow();
+  addRow();
+  addRow();
+</script>
+
+</body>
+</html>

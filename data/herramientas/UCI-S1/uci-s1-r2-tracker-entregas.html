@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R2 — Tracker de entregas y liberación de pagos</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1B2B4B;
+    --navy-dark: #111E35;
+    --navy-mid: #243659;
+    --gold: #C4A55A;
+    --gold-light: #D4BA7A;
+    --gold-pale: #F5EDD8;
+    --white: #FFFFFF;
+    --gray-100: #F7F8FA;
+    --gray-200: #EAECF0;
+    --gray-400: #9AA3B2;
+    --gray-600: #5A6478;
+    --gray-800: #2D3748;
+    --green: #2E7D52;
+    --green-light: #E8F5EE;
+    --red: #B91C1C;
+    --red-light: #FEE2E2;
+    --yellow-light: #FFFBEB;
+    --radius: 8px;
+    --shadow: 0 2px 8px rgba(27,43,75,0.10);
+    --shadow-md: 0 4px 16px rgba(27,43,75,0.14);
+  }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-800);
+    font-size: 14px;
+    min-height: 100vh;
+  }
+  /* HEADER */
+  .tool-header {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+    color: var(--white);
+    padding: 0;
+    box-shadow: var(--shadow-md);
+  }
+  .tool-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 28px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .tool-header-badge {
+    background: var(--gold);
+    color: var(--navy-dark);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .tool-header-text h1 {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    line-height: 1.25;
+  }
+  .tool-header-text h2 {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--gold-light);
+    margin-top: 4px;
+    letter-spacing: 0.01em;
+  }
+  /* MAIN */
+  .tool-main {
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 0 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  /* CARD */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .card-header h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .card-body { padding: 0; }
+  /* TABLA */
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: var(--navy-mid);
+    color: var(--gold-light);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 9px 10px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--gold);
+  }
+  thead th.center { text-align: center; }
+  tbody tr { border-bottom: 1px solid var(--gray-200); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--gray-100); }
+  tbody td { padding: 7px 8px; vertical-align: middle; }
+  tbody td.center { text-align: center; }
+  /* INPUTS EN TABLA */
+  td input[type="text"],
+  td input[type="date"],
+  td input[type="number"] {
+    width: 100%;
+    border: 1px solid var(--gray-200);
+    border-radius: 5px;
+    padding: 5px 8px;
+    font-size: 13px;
+    color: var(--gray-800);
+    background: var(--white);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: inherit;
+  }
+  td input[type="text"]:focus,
+  td input[type="date"]:focus,
+  td input[type="number"]:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(196,165,90,0.18);
+  }
+  td input[type="number"] { text-align: right; }
+  td input[type="date"] { min-width: 130px; }
+  td input[type="text"].proyecto { min-width: 130px; }
+  td input[type="text"].entregable { min-width: 170px; }
+  /* CHECKBOX */
+  .check-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  input[type="checkbox"].cobrado-cb {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--green);
+    cursor: pointer;
+  }
+  /* BADGE DESVIACIÓN */
+  .badge-dev {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 52px;
+    text-align: center;
+  }
+  .badge-dev.ok { background: var(--green-light); color: var(--green); }
+  .badge-dev.warn { background: var(--yellow-light); color: #92620A; }
+  .badge-dev.bad { background: var(--red-light); color: var(--red); }
+  .badge-dev.neutral { background: var(--gray-200); color: var(--gray-600); }
+  /* ROW COBRADO */
+  tr.cobrado-row td { background: #F0FAF4 !important; }
+  tr.cobrado-row td input { background: #F0FAF4 !important; color: var(--gray-600); }
+  /* BOTÓN ELIMINAR */
+  .btn-del {
+    background: none;
+    border: none;
+    color: var(--gray-400);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+    line-height: 1;
+  }
+  .btn-del:hover { color: var(--red); background: var(--red-light); }
+  /* BOTÓN AÑADIR */
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold);
+    color: var(--navy-dark);
+    border: none;
+    border-radius: var(--radius);
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    font-family: inherit;
+  }
+  .btn-add:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .card-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: var(--gray-100);
+  }
+  /* RESUMEN */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    padding: 20px;
+  }
+  .summary-kpi {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-left: 4px solid var(--navy);
+  }
+  .summary-kpi.gold { border-left-color: var(--gold); }
+  .summary-kpi.green { border-left-color: var(--green); }
+  .summary-kpi.red { border-left-color: var(--red); }
+  .kpi-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+  }
+  .kpi-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .kpi-value.gold { color: var(--gold); }
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.red { color: var(--red); }
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+  /* INFO MSG */
+  .info-msg {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<header class="tool-header">
+  <div class="tool-header-inner">
+    <span class="tool-header-badge">UCI-S1 · R2</span>
+    <div class="tool-header-text">
+      <h1>UCI-S1 R2 — Tracker de entregas y liberación de pagos</h1>
+      <h2>R2 · Control semanal de entregas y activación de cobros</h2>
+    </div>
+  </div>
+</header>
+
+<div class="tool-main">
+
+  <!-- KPIs resumen -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Resumen ejecutivo</h3>
+      <span class="info-msg">Se actualiza automáticamente al registrar datos</span>
+    </div>
+    <div class="summary-grid">
+      <div class="summary-kpi">
+        <span class="kpi-label">Entregas totales</span>
+        <span class="kpi-value" id="kpi-total">0</span>
+        <span class="kpi-sub">registradas en el tracker</span>
+      </div>
+      <div class="summary-kpi green">
+        <span class="kpi-label">Entregadas a tiempo</span>
+        <span class="kpi-value green" id="kpi-atime">0</span>
+        <span class="kpi-sub">días desviación ≤ 0</span>
+      </div>
+      <div class="summary-kpi red">
+        <span class="kpi-label">Días medios de retraso</span>
+        <span class="kpi-value red" id="kpi-retraso">—</span>
+        <span class="kpi-sub">solo entregas con retraso</span>
+      </div>
+      <div class="summary-kpi gold">
+        <span class="kpi-label">Total cobrado (€)</span>
+        <span class="kpi-value gold" id="kpi-cobrado">0 €</span>
+        <span class="kpi-sub">importes con cobro confirmado</span>
+      </div>
+      <div class="summary-kpi">
+        <span class="kpi-label">Pendiente de cobro (€)</span>
+        <span class="kpi-value" id="kpi-pendiente">0 €</span>
+        <span class="kpi-sub">entregados, no cobrados aún</span>
+      </div>
+      <div class="summary-kpi">
+        <span class="kpi-label">% Cobrado s/ entregado</span>
+        <span class="kpi-value" id="kpi-pct">—</span>
+        <span class="kpi-sub">tasa de conversión cobro</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA PRINCIPAL -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Control de entregas y pagos por proyecto</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-wrap">
+        <table id="tracker-table">
+          <thead>
+            <tr>
+              <th style="width:130px">Proyecto</th>
+              <th style="width:180px">Entregable</th>
+              <th class="center" style="width:130px">Fecha compromiso</th>
+              <th class="center" style="width:130px">Fecha entrega real</th>
+              <th class="center" style="width:100px">Días desviación</th>
+              <th class="center" style="width:120px">Importe (€)</th>
+              <th class="center" style="width:72px">Cobrado</th>
+              <th class="center" style="width:130px">Fecha cobro</th>
+              <th class="center" style="width:44px"></th>
+            </tr>
+          </thead>
+          <tbody id="tracker-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn-add" onclick="addRow()">+ Añadir entrega</button>
+      <span class="info-msg">Los días de desviación se calculan automáticamente al introducir ambas fechas</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const ITEM_ID = new URLSearchParams(location.search).get('itemId') || '';
+  let rowCount = 0;
+
+  function fmt(n) {
+    return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function daysDiff(d1, d2) {
+    // d2 - d1 in days (positive = late)
+    const a = new Date(d1), b = new Date(d2);
+    if (isNaN(a) || isNaN(b)) return null;
+    return Math.round((b - a) / 86400000);
+  }
+
+  function badgeHtml(days) {
+    if (days === null) return '<span class="badge-dev neutral">—</span>';
+    if (days <= 0) return `<span class="badge-dev ok">${days === 0 ? '0 d' : days + ' d'}</span>`;
+    if (days <= 5) return `<span class="badge-dev warn">+${days} d</span>`;
+    return `<span class="badge-dev bad">+${days} d</span>`;
+  }
+
+  window.addRow = function () {
+    rowCount++;
+    const id = 'row-' + rowCount;
+    const tbody = document.getElementById('tracker-body');
+    const tr = document.createElement('tr');
+    tr.id = id;
+    tr.dataset.rowid = rowCount;
+    tr.innerHTML = `
+      <td><input type="text" class="proyecto" placeholder="Proyecto…" oninput="recalcTotals()"></td>
+      <td><input type="text" class="entregable" placeholder="Entregable…" oninput="recalcTotals()"></td>
+      <td class="center"><input type="date" class="fecha-comp" onchange="updateDeviation('${id}'); recalcTotals();"></td>
+      <td class="center"><input type="date" class="fecha-real" onchange="updateDeviation('${id}'); recalcTotals();"></td>
+      <td class="center dev-cell"><span class="badge-dev neutral">—</span></td>
+      <td><input type="number" class="importe" min="0" step="0.01" placeholder="0,00" oninput="recalcTotals()"></td>
+      <td class="center"><div class="check-wrap"><input type="checkbox" class="cobrado-cb" onchange="toggleCobrado('${id}'); recalcTotals();"></div></td>
+      <td class="center"><input type="date" class="fecha-cobro" onchange="recalcTotals()"></td>
+      <td class="center"><button class="btn-del" onclick="delRow('${id}')" title="Eliminar fila">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    recalcTotals();
+  };
+
+  window.delRow = function (id) {
+    const tr = document.getElementById(id);
+    if (tr) { tr.remove(); recalcTotals(); }
+  };
+
+  window.updateDeviation = function (id) {
+    const tr = document.getElementById(id);
+    if (!tr) return;
+    const fc = tr.querySelector('.fecha-comp').value;
+    const fr = tr.querySelector('.fecha-real').value;
+    const days = daysDiff(fc, fr);
+    tr.querySelector('.dev-cell').innerHTML = badgeHtml(days);
+    tr.dataset.days = days !== null ? days : '';
+  };
+
+  window.toggleCobrado = function (id) {
+    const tr = document.getElementById(id);
+    if (!tr) return;
+    const cb = tr.querySelector('.cobrado-cb');
+    if (cb.checked) {
+      tr.classList.add('cobrado-row');
+    } else {
+      tr.classList.remove('cobrado-row');
+      tr.querySelector('.fecha-cobro').value = '';
+    }
+  };
+
+  window.recalcTotals = function () {
+    const rows = document.querySelectorAll('#tracker-body tr');
+    let total = 0, aTime = 0, cobrado = 0, pendiente = 0;
+    let retrasoSum = 0, retrasoCount = 0;
+
+    rows.forEach(tr => {
+      const fc = tr.querySelector('.fecha-comp').value;
+      const fr = tr.querySelector('.fecha-real').value;
+      const importe = parseFloat(tr.querySelector('.importe').value) || 0;
+      const isCobrado = tr.querySelector('.cobrado-cb').checked;
+      const tieneEntrega = fr && fr.trim() !== '';
+
+      if (tieneEntrega) {
+        total++;
+        const days = daysDiff(fc, fr);
+        if (days !== null) {
+          if (days <= 0) aTime++;
+          else { retrasoSum += days; retrasoCount++; }
+        }
+        if (isCobrado) cobrado += importe;
+        else pendiente += importe;
+      }
+    });
+
+    document.getElementById('kpi-total').textContent = total;
+    document.getElementById('kpi-atime').textContent = aTime;
+    document.getElementById('kpi-retraso').textContent = retrasoCount > 0
+      ? (retrasoSum / retrasoCount).toFixed(1) + ' d'
+      : '—';
+    document.getElementById('kpi-cobrado').textContent = fmt(cobrado) + ' €';
+    document.getElementById('kpi-pendiente').textContent = fmt(pendiente) + ' €';
+    const totalImporte = cobrado + pendiente;
+    document.getElementById('kpi-pct').textContent = totalImporte > 0
+      ? Math.round((cobrado / totalImporte) * 100) + ' %'
+      : '—';
+
+    // postMessage
+    const descripcion = generarDescripcion();
+    const msg = {
+      tipo: 'herramienta-valor',
+      valor: parseFloat(cobrado.toFixed(2)),
+      fecha: new Date().toISOString().slice(0, 10),
+      itemId: ITEM_ID,
+      descripcion: descripcion,
+      html: document.documentElement.outerHTML
+    };
+    try { window.parent.postMessage(msg, '*'); } catch (e) {}
+  };
+
+  function generarDescripcion() {
+    const rows = document.querySelectorAll('#tracker-body tr');
+    const textos = [];
+    rows.forEach(tr => {
+      const proy = tr.querySelector('.proyecto').value.trim();
+      const entr = tr.querySelector('.entregable').value.trim();
+      if (proy || entr) textos.push([proy, entr].filter(Boolean).join(' – '));
+    });
+    if (textos.length === 0) return 'Seguimiento de entregas para activar cobros';
+    return textos.slice(0, 3).join(' | ') + (textos.length > 3 ? ` (+${textos.length - 3} más)` : '');
+  }
+
+  // Listener get-html
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.tipo === 'get-html') {
+      const resp = {
+        tipo: 'html-snapshot',
+        itemId: ITEM_ID,
+        html: document.documentElement.outerHTML
+      };
+      try { e.source.postMessage(resp, e.origin || '*'); } catch (ex) {
+        window.parent.postMessage(resp, '*');
+      }
+    }
+  });
+
+  // Seed inicial
+  addRow();
+  addRow();
+  addRow();
+})();
+</script>
+</body>
+</html>

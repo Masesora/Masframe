@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R4 — Negociación de plazos con proveedores</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6fa;
+    color: #1B2B4B;
+    min-height: 100vh;
+  }
+  header {
+    background: #1B2B4B;
+    color: #fff;
+    padding: 18px 28px 14px;
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    border-bottom: 3px solid #C4A55A;
+  }
+  header .badge {
+    background: #C4A55A;
+    color: #1B2B4B;
+    font-weight: 700;
+    font-size: 0.78rem;
+    border-radius: 4px;
+    padding: 3px 10px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    align-self: center;
+  }
+  header h1 {
+    font-size: 1.13rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+  header p.sub {
+    font-size: 0.82rem;
+    color: #C4A55A;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 18px 40px;
+  }
+  h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1B2B4B;
+    margin-bottom: 6px;
+    border-left: 4px solid #C4A55A;
+    padding-left: 10px;
+  }
+  .section-desc {
+    font-size: 0.85rem;
+    color: #4a5568;
+    margin-bottom: 18px;
+    padding-left: 14px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(27,43,75,0.08);
+    padding: 20px 20px 16px;
+    margin-bottom: 22px;
+  }
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+    min-width: 860px;
+  }
+  thead tr {
+    background: #1B2B4B;
+    color: #fff;
+  }
+  thead th {
+    padding: 9px 8px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  thead th.center { text-align: center; }
+  tbody tr:nth-child(even) { background: #f7f9fc; }
+  tbody tr:hover { background: #eef1f7; }
+  tbody td {
+    padding: 6px 6px;
+    vertical-align: middle;
+    border-bottom: 1px solid #e8ecf2;
+  }
+  tbody td.calc {
+    color: #1B2B4B;
+    font-weight: 600;
+    text-align: right;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  tbody td.center { text-align: center; }
+  input[type="text"], input[type="number"], input[type="date"] {
+    width: 100%;
+    border: 1px solid #d0d7e3;
+    border-radius: 4px;
+    padding: 5px 7px;
+    font-size: 0.83rem;
+    color: #1B2B4B;
+    background: #fff;
+    transition: border 0.15s;
+    outline: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus {
+    border-color: #C4A55A;
+    box-shadow: 0 0 0 2px rgba(196,165,90,0.15);
+  }
+  select {
+    width: 100%;
+    border: 1px solid #d0d7e3;
+    border-radius: 4px;
+    padding: 5px 6px;
+    font-size: 0.82rem;
+    color: #1B2B4B;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+  }
+  select:focus { border-color: #C4A55A; }
+  select.acordado { color: #1a7a4a; font-weight: 600; }
+  select.en-negociacion { color: #b07d00; font-weight: 600; }
+  select.rechazado { color: #b03a2e; font-weight: 600; }
+  select.pendiente { color: #4a5568; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    border-radius: 5px;
+    padding: 7px 16px;
+    font-size: 0.83rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+  }
+  .btn-primary {
+    background: #1B2B4B;
+    color: #fff;
+  }
+  .btn-primary:hover { background: #243d6b; }
+  .btn-danger {
+    background: transparent;
+    color: #b03a2e;
+    border: 1px solid #e0c4c1;
+    padding: 4px 9px;
+    font-size: 0.78rem;
+    border-radius: 4px;
+  }
+  .btn-danger:hover { background: #fdf0ef; }
+  .actions { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .kpi {
+    background: #f7f9fc;
+    border: 1px solid #dde3ee;
+    border-radius: 7px;
+    padding: 14px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .kpi.gold { border-left: 4px solid #C4A55A; }
+  .kpi-label {
+    font-size: 0.74rem;
+    color: #5a6a85;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .kpi-value {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1B2B4B;
+    line-height: 1.1;
+  }
+  .kpi-value.gold { color: #9a7a30; }
+  .kpi-sub {
+    font-size: 0.75rem;
+    color: #8a99b3;
+  }
+  .info-bar {
+    background: #eef3fb;
+    border-left: 3px solid #1B2B4B;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    color: #1B2B4B;
+    margin-bottom: 16px;
+  }
+  .td-del { width: 38px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="badge">UCI-S1 · R4</div>
+  </div>
+  <div>
+    <h1>UCI-S1 R4 — Negociación de plazos con proveedores</h1>
+    <p class="sub">R4 · Plan de negociación para ampliar plazos de pago</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Negociación de condiciones de pago con proveedores</h2>
+    <p class="section-desc">Registra los proveedores clave, los plazos actuales y los objetivos de negociación. El sistema calcula automáticamente la liquidez liberada por cada acuerdo alcanzado.</p>
+
+    <div class="info-bar">
+      La <strong>liquidez liberada</strong> se calcula como: (Volumen/mes ÷ 30) × Días ganados. Solo se computa en el resumen cuando el estado es <strong>Acordado</strong>.
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="addRow()">+ Añadir proveedor</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th style="min-width:140px">Proveedor</th>
+            <th class="center" style="min-width:120px">Volumen compra/mes (€)</th>
+            <th class="center" style="min-width:100px">Plazo actual (días)</th>
+            <th class="center" style="min-width:110px">Plazo solicitado (días)</th>
+            <th class="center" style="min-width:100px">Días ganados</th>
+            <th class="center" style="min-width:130px">Liquidez liberada/mes (€)</th>
+            <th class="center" style="min-width:140px">Estado negociación</th>
+            <th class="center" style="min-width:110px">Fecha acuerdo</th>
+            <th class="td-del"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Resumen de negociación</h2>
+    <div class="summary-grid" style="margin-top:14px">
+      <div class="kpi gold">
+        <span class="kpi-label">Liquidez total liberada/mes</span>
+        <span class="kpi-value gold" id="kpi-liquidez">0 €</span>
+        <span class="kpi-sub">Solo proveedores en estado Acordado</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">Proveedores acordados</span>
+        <span class="kpi-value" id="kpi-acordados">0</span>
+        <span class="kpi-sub">de <span id="kpi-total">0</span> registrados</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">Plazo medio mejorado</span>
+        <span class="kpi-value" id="kpi-dias">0 días</span>
+        <span class="kpi-sub">Media de días ganados (acordados)</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const itemId = new URLSearchParams(location.search).get('itemId') || '';
+  let rowIndex = 0;
+
+  function addRow() {
+    const tbody = document.getElementById('tbody');
+    const idx = rowIndex++;
+    const tr = document.createElement('tr');
+    tr.id = 'row-' + idx;
+    tr.innerHTML = `
+      <td><input type="text" placeholder="Nombre proveedor" oninput="recalcTotals()" /></td>
+      <td><input type="number" min="0" step="100" placeholder="0" style="text-align:right" oninput="recalcRow(${idx});recalcTotals()" /></td>
+      <td><input type="number" min="0" step="1" placeholder="30" style="text-align:right" oninput="recalcRow(${idx});recalcTotals()" /></td>
+      <td><input type="number" min="0" step="1" placeholder="60" style="text-align:right" oninput="recalcRow(${idx});recalcTotals()" /></td>
+      <td class="calc" id="dias-${idx}">—</td>
+      <td class="calc" id="liq-${idx}">—</td>
+      <td class="center">
+        <select onchange="styleSelect(this);recalcTotals()">
+          <option value="Pendiente">Pendiente</option>
+          <option value="En negociación">En negociación</option>
+          <option value="Acordado">Acordado</option>
+          <option value="Rechazado">Rechazado</option>
+        </select>
+      </td>
+      <td><input type="date" oninput="recalcTotals()" /></td>
+      <td class="td-del"><button class="btn btn-danger" onclick="delRow(${idx})" title="Eliminar">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    styleSelect(tr.querySelector('select'));
+  }
+
+  window.addRow = addRow;
+
+  window.delRow = function (idx) {
+    const row = document.getElementById('row-' + idx);
+    if (row) row.remove();
+    recalcTotals();
+  };
+
+  window.styleSelect = function (sel) {
+    sel.className = '';
+    const map = { 'Acordado': 'acordado', 'En negociación': 'en-negociacion', 'Rechazado': 'rechazado', 'Pendiente': 'pendiente' };
+    sel.className = map[sel.value] || '';
+  };
+
+  window.recalcRow = function (idx) {
+    const row = document.getElementById('row-' + idx);
+    if (!row) return { dias: 0, liq: 0 };
+    const inputs = row.querySelectorAll('input[type="number"]');
+    const volumen = parseFloat(inputs[0].value) || 0;
+    const actual  = parseFloat(inputs[1].value) || 0;
+    const solicitado = parseFloat(inputs[2].value) || 0;
+    const diasGanados = Math.max(0, solicitado - actual);
+    const liquidez = volumen > 0 && diasGanados > 0 ? (volumen / 30) * diasGanados : 0;
+    document.getElementById('dias-' + idx).textContent = diasGanados > 0 ? diasGanados + ' d' : '—';
+    document.getElementById('liq-' + idx).textContent = liquidez > 0 ? fmt(liquidez) : '—';
+    return { dias: diasGanados, liq: liquidez, estado: row.querySelector('select').value };
+  };
+
+  window.recalcTotals = function () {
+    const tbody = document.getElementById('tbody');
+    const rows = tbody.querySelectorAll('tr');
+    let totalLiqAcordada = 0;
+    let acordados = 0;
+    let sumDiasAcordados = 0;
+    let fechaAcuerdo = null;
+
+    rows.forEach(function (tr) {
+      const idStr = tr.id.replace('row-', '');
+      const res = window.recalcRow(parseInt(idStr, 10));
+      const sel = tr.querySelector('select');
+      if (sel && sel.value === 'Acordado') {
+        totalLiqAcordada += res.liq;
+        sumDiasAcordados += res.dias;
+        acordados++;
+        const dateInput = tr.querySelector('input[type="date"]');
+        if (dateInput && dateInput.value) fechaAcuerdo = dateInput.value;
+      }
+    });
+
+    const totalRows = rows.length;
+    const plazoMedio = acordados > 0 ? Math.round(sumDiasAcordados / acordados) : 0;
+
+    document.getElementById('kpi-liquidez').textContent = fmt(totalLiqAcordada);
+    document.getElementById('kpi-acordados').textContent = acordados;
+    document.getElementById('kpi-total').textContent = totalRows;
+    document.getElementById('kpi-dias').textContent = plazoMedio + ' días';
+
+    // Descripcion auto
+    const firstProveedor = (tbody.querySelector('input[type="text"]') || {}).value || '';
+    const desc = firstProveedor
+      ? 'Negociar plazos con proveedores clave — primer proveedor: ' + firstProveedor
+      : 'Negociar plazos con proveedores clave';
+
+    emitValue(totalLiqAcordada, fechaAcuerdo, desc);
+  };
+
+  function fmt(n) {
+    return n.toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' €';
+  }
+
+  function emitValue(valor, fecha, descripcion) {
+    const html = document.documentElement.outerHTML;
+    const msg = {
+      tipo: 'herramienta-valor',
+      valor: Math.round(valor),
+      fecha: fecha || null,
+      itemId: itemId,
+      descripcion: descripcion,
+      html: html
+    };
+    window.parent.postMessage(msg, '*');
+  }
+
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.tipo === 'get-html') {
+      const html = document.documentElement.outerHTML;
+      window.parent.postMessage({ tipo: 'html-snapshot', html: html, itemId: itemId }, '*');
+    }
+  });
+
+  // Seed inicial
+  addRow();
+  addRow();
+  addRow();
+  recalcTotals();
+})();
+</script>
+</body>
+</html>

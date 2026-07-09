@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R1 — Calculadora de precio de liquidación</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6fa; color: #1B2B4B; min-height: 100vh; }
+
+  /* HEADER */
+  .header { background: #1B2B4B; color: #fff; padding: 18px 28px 14px; display: flex; align-items: center; gap: 18px; }
+  .header-badge { background: #C4A55A; color: #1B2B4B; font-weight: 800; font-size: 13px; border-radius: 6px; padding: 4px 12px; letter-spacing: .5px; white-space: nowrap; }
+  .header-titles { flex: 1; }
+  .header-titles h1 { font-size: 17px; font-weight: 700; letter-spacing: .2px; line-height: 1.2; }
+  .header-titles h2 { font-size: 12px; font-weight: 400; opacity: .75; margin-top: 3px; }
+
+  /* MAIN */
+  .main { max-width: 1100px; margin: 28px auto; padding: 0 16px 40px; }
+  .card { background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(27,43,75,.10); margin-bottom: 22px; overflow: hidden; }
+  .card-header { background: #1B2B4B; color: #fff; padding: 13px 22px; font-size: 14px; font-weight: 700; letter-spacing: .3px; display: flex; align-items: center; gap: 10px; }
+  .card-header .dot { width: 8px; height: 8px; border-radius: 50%; background: #C4A55A; flex-shrink: 0; }
+  .card-body { padding: 20px 22px; }
+
+  /* TABLE */
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 860px; }
+  thead tr { background: #f0f3f8; }
+  thead th { padding: 9px 10px; text-align: center; font-weight: 700; color: #1B2B4B; font-size: 12px; border-bottom: 2px solid #d0d8e8; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid #e8ecf2; transition: background .15s; }
+  tbody tr:hover { background: #fafbfd; }
+  tbody td { padding: 7px 8px; vertical-align: middle; text-align: center; }
+  tfoot tr { background: #f0f3f8; border-top: 2px solid #C4A55A; }
+  tfoot td { padding: 10px 10px; font-weight: 700; font-size: 13px; color: #1B2B4B; text-align: center; }
+  tfoot td.lbl { text-align: left; color: #C4A55A; font-size: 12px; }
+
+  /* INPUTS */
+  input[type="text"], input[type="number"], select {
+    border: 1px solid #d0d8e8; border-radius: 5px; padding: 5px 8px;
+    font-size: 13px; color: #1B2B4B; background: #fff; width: 100%;
+    transition: border-color .2s;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    outline: none; border-color: #C4A55A; box-shadow: 0 0 0 2px rgba(196,165,90,.15);
+  }
+  input.calc { background: #f0f3f8; color: #1B2B4B; font-weight: 700; cursor: default; border-color: #e0e6ef; }
+  input.calc:focus { border-color: #e0e6ef; box-shadow: none; }
+  .margin-positive { color: #1a7a3c; }
+  .margin-negative { color: #c0392b; }
+  .margin-zero { color: #7a6010; }
+
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 20px; border-radius: 6px; border: none; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .2s, transform .1s; }
+  .btn:active { transform: scale(.97); }
+  .btn-gold { background: #C4A55A; color: #1B2B4B; }
+  .btn-gold:hover { background: #b8964e; }
+  .btn-navy { background: #1B2B4B; color: #fff; }
+  .btn-navy:hover { background: #243860; }
+  .btn-danger { background: #fff; color: #c0392b; border: 1px solid #f0d0cc; font-size: 11px; padding: 4px 10px; border-radius: 4px; font-weight: 600; }
+  .btn-danger:hover { background: #fdf0ef; }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+  /* TOOLBAR */
+  .toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+
+  /* TOTALES */
+  .totales-grid { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
+  .kpi-box { flex: 1; min-width: 180px; background: #f4f6fa; border-radius: 8px; border-left: 4px solid #C4A55A; padding: 14px 18px; }
+  .kpi-box .kpi-label { font-size: 11px; color: #6b7e9e; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 6px; }
+  .kpi-box .kpi-value { font-size: 22px; font-weight: 800; color: #1B2B4B; }
+  .kpi-box .kpi-value span { font-size: 13px; font-weight: 500; color: #6b7e9e; margin-left: 4px; }
+  .kpi-box.accent { border-left-color: #1B2B4B; background: #1B2B4B; }
+  .kpi-box.accent .kpi-label { color: #a0b0c8; }
+  .kpi-box.accent .kpi-value { color: #C4A55A; }
+
+  /* NOTE */
+  .note { background: #fffbe8; border: 1px solid #e8d88a; border-radius: 6px; padding: 10px 16px; font-size: 12px; color: #7a6010; margin-top: 14px; }
+  .note strong { color: #5a4408; }
+
+  /* UNIDADES col */
+  .col-ref { min-width: 160px; text-align: left !important; }
+  .col-num { width: 90px; }
+  .col-sel { min-width: 130px; }
+  .col-del { width: 50px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">UCI-S1 · R1</div>
+  <div class="header-titles">
+    <h1>UCI-S1 R1 — Calculadora de precio de liquidación</h1>
+    <h2>R1 · Precio mínimo de liquidación para recuperar margen positivo</h2>
+  </div>
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header"><span class="dot"></span>Calculadora de precio de liquidación</div>
+    <div class="card-body">
+
+      <div class="toolbar">
+        <button class="btn btn-gold" onclick="addRow()">+ Añadir referencia</button>
+        <button class="btn btn-navy btn-sm" onclick="recalcTotals()">↻ Recalcular</button>
+      </div>
+
+      <div class="tbl-wrap">
+        <table id="tbl">
+          <thead>
+            <tr>
+              <th class="col-ref">Referencia / Producto</th>
+              <th class="col-num">Uds.</th>
+              <th class="col-num">Coste unit. (€)</th>
+              <th class="col-num">Margen mín. aceptable (%)</th>
+              <th class="col-num">Precio liq. mín. (€)</th>
+              <th class="col-num">Precio propuesto (€)</th>
+              <th class="col-num">Margen real (%)</th>
+              <th class="col-sel">Canal de venta</th>
+              <th class="col-del"></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+          <tfoot>
+            <tr>
+              <td class="lbl" colspan="5">TOTALES</td>
+              <td id="ft-recuperacion">—</td>
+              <td id="ft-margen">—</td>
+              <td colspan="2"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="totales-grid" id="kpis">
+        <div class="kpi-box">
+          <div class="kpi-label">Recuperación total estimada</div>
+          <div class="kpi-value" id="kpi-rec">0,00<span>€</span></div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">Coste total inventario</div>
+          <div class="kpi-value" id="kpi-coste">0,00<span>€</span></div>
+        </div>
+        <div class="kpi-box accent">
+          <div class="kpi-label">Margen medio real</div>
+          <div class="kpi-value" id="kpi-margen">—<span>%</span></div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">Referencias en tabla</div>
+          <div class="kpi-value" id="kpi-refs">0</div>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Cómo usar:</strong> Introduce el coste unitario y el margen mínimo aceptable para obtener el precio de liquidación mínimo calculado. Ajusta el precio propuesto según el canal elegido — el margen real se actualiza automáticamente. Los valores negativos en margen real indican venta por debajo de coste.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const CANALES = ['Wallapop', 'Proveedor', 'Competidor', 'Remate', 'Cliente directo'];
+  const itemId = new URLSearchParams(location.search).get('itemId') || '';
+  let rowIndex = 0;
+
+  function fmt(n, dec = 2) {
+    if (isNaN(n) || n === null || n === undefined) return '—';
+    return n.toLocaleString('es-ES', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  }
+
+  function num(val) {
+    const n = parseFloat(String(val).replace(',', '.'));
+    return isNaN(n) ? 0 : n;
+  }
+
+  function addRow() {
+    const tbody = document.getElementById('tbody');
+    const id = rowIndex++;
+    const tr = document.createElement('tr');
+    tr.id = 'row-' + id;
+
+    const canalOpts = CANALES.map(c => `<option value="${c}">${c}</option>`).join('');
+
+    tr.innerHTML = `
+      <td class="col-ref"><input type="text" class="ref" placeholder="Ej. Ref. ABC-001" oninput="recalcTotals()"></td>
+      <td><input type="number" class="uds col-num" value="1" min="0" step="1" oninput="recalcRow(${id});recalcTotals()"></td>
+      <td><input type="number" class="coste col-num" value="" min="0" step="0.01" placeholder="0,00" oninput="recalcRow(${id});recalcTotals()"></td>
+      <td><input type="number" class="margen-min col-num" value="0" min="-100" max="200" step="0.1" oninput="recalcRow(${id});recalcTotals()"></td>
+      <td><input type="number" class="precio-min calc col-num" readonly tabindex="-1"></td>
+      <td><input type="number" class="precio-prop col-num" value="" min="0" step="0.01" placeholder="0,00" oninput="recalcRow(${id});recalcTotals()"></td>
+      <td><input type="text" class="margen-real calc col-num" readonly tabindex="-1"></td>
+      <td class="col-sel">
+        <select class="canal" onchange="recalcTotals()">
+          ${canalOpts}
+        </select>
+      </td>
+      <td class="col-del"><button class="btn btn-danger" onclick="removeRow(${id})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    recalcRow(id);
+  }
+
+  window.addRow = addRow;
+
+  window.removeRow = function (id) {
+    const tr = document.getElementById('row-' + id);
+    if (tr) tr.remove();
+    recalcTotals();
+  };
+
+  window.recalcRow = function (id) {
+    const tr = document.getElementById('row-' + id);
+    if (!tr) return;
+
+    const coste = num(tr.querySelector('.coste').value);
+    const margenMin = num(tr.querySelector('.margen-min').value);
+    const precioPropInput = tr.querySelector('.precio-prop');
+    const precioMinInput = tr.querySelector('.precio-min');
+    const margenRealInput = tr.querySelector('.margen-real');
+
+    // Precio mínimo = coste / (1 - margenMin/100)  [margen sobre precio]
+    // Si margen mín = 0 → precio mín = coste
+    let precioMin = 0;
+    if (margenMin < 100) {
+      precioMin = coste > 0 ? coste / (1 - margenMin / 100) : 0;
+    } else {
+      precioMin = coste * 999; // margen 100% imposible con este modelo
+    }
+    precioMinInput.value = precioMin > 0 ? precioMin.toFixed(2) : '';
+
+    // Margen real
+    const precioProp = num(precioPropInput.value);
+    let margenReal = '';
+    let margenClass = '';
+    if (precioProp > 0 && coste >= 0) {
+      const mr = ((precioProp - coste) / precioProp) * 100;
+      margenReal = fmt(mr, 1) + ' %';
+      margenClass = mr > 0.01 ? 'margin-positive' : mr < -0.01 ? 'margin-negative' : 'margin-zero';
+    }
+    margenRealInput.value = margenReal;
+    margenRealInput.className = 'margen-real calc col-num ' + margenClass;
+  };
+
+  window.recalcTotals = function () {
+    const rows = document.querySelectorAll('#tbody tr');
+    let totalRec = 0;
+    let totalCoste = 0;
+    let pesoMargen = 0;
+    let pesoTotal = 0;
+    let nRefs = 0;
+
+    rows.forEach(tr => {
+      const id = parseInt(tr.id.replace('row-', ''));
+      recalcRow(id);
+
+      const uds = num(tr.querySelector('.uds').value);
+      const coste = num(tr.querySelector('.coste').value);
+      const precioProp = num(tr.querySelector('.precio-prop').value);
+      const ref = tr.querySelector('.ref').value.trim();
+
+      if (precioProp > 0) {
+        totalRec += precioProp * uds;
+        const mr = coste > 0 ? ((precioProp - coste) / precioProp) * 100 : 0;
+        pesoMargen += mr * (precioProp * uds);
+        pesoTotal += precioProp * uds;
+      }
+      if (coste > 0) {
+        totalCoste += coste * uds;
+      }
+      if (ref) nRefs++;
+    });
+
+    const margenMedio = pesoTotal > 0 ? pesoMargen / pesoTotal : null;
+
+    document.getElementById('ft-recuperacion').textContent = fmt(totalRec) + ' €';
+    document.getElementById('ft-margen').textContent = margenMedio !== null ? fmt(margenMedio, 1) + ' %' : '—';
+
+    document.getElementById('kpi-rec').innerHTML = fmt(totalRec) + '<span>€</span>';
+    document.getElementById('kpi-coste').innerHTML = fmt(totalCoste) + '<span>€</span>';
+    document.getElementById('kpi-margen').innerHTML = (margenMedio !== null ? fmt(margenMedio, 1) : '—') + '<span>%</span>';
+    document.getElementById('kpi-refs').textContent = rows.length;
+
+    emitPostMessage(totalRec);
+  };
+
+  function getDescripcion() {
+    const rows = document.querySelectorAll('#tbody tr');
+    const refs = [];
+    rows.forEach(tr => {
+      const ref = tr.querySelector('.ref').value.trim();
+      if (ref) refs.push(ref);
+    });
+    if (refs.length === 0) return 'Fijar precio mínimo de liquidación';
+    if (refs.length === 1) return 'Fijar precio mínimo de liquidación: ' + refs[0];
+    return 'Fijar precio mínimo de liquidación: ' + refs[0] + ' y ' + (refs.length - 1) + ' referencia(s) más';
+  }
+
+  function emitPostMessage(valor) {
+    const payload = {
+      tipo: 'herramienta-valor',
+      valor: Math.round(valor * 100) / 100,
+      fecha: null,
+      itemId: itemId,
+      descripcion: getDescripcion(),
+      html: document.documentElement.outerHTML
+    };
+    window.parent.postMessage(payload, '*');
+  }
+
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.tipo === 'get-html') {
+      const origin = e.origin || '*';
+      (e.source || window.parent).postMessage({
+        tipo: 'html-snapshot',
+        html: document.documentElement.outerHTML,
+        itemId: itemId
+      }, origin);
+    }
+  });
+
+  // Seed inicial
+  addRow();
+  addRow();
+  addRow();
+  recalcTotals();
+})();
+</script>
+</body>
+</html>

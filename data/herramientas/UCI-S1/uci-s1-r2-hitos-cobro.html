@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R2 — Plan de hitos y cobros parciales</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6fa;
+    color: #1B2B4B;
+    min-height: 100vh;
+  }
+  header {
+    background: #1B2B4B;
+    color: #fff;
+    padding: 18px 28px 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 3px solid #C4A55A;
+  }
+  header .badge {
+    background: #C4A55A;
+    color: #1B2B4B;
+    font-weight: 700;
+    font-size: 0.82rem;
+    border-radius: 6px;
+    padding: 3px 10px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  header h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  header p {
+    font-size: 0.82rem;
+    color: #C4A55A;
+    margin-top: 2px;
+  }
+  main {
+    max-width: 1100px;
+    margin: 28px auto;
+    padding: 0 18px 40px;
+  }
+  h2 {
+    font-size: 1.08rem;
+    color: #1B2B4B;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+  .subtitle {
+    font-size: 0.85rem;
+    color: #5a6a8a;
+    margin-bottom: 22px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(27,43,75,0.08);
+    padding: 22px 20px 18px;
+    margin-bottom: 22px;
+  }
+  .card-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1B2B4B;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    background: #C4A55A;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+    min-width: 860px;
+  }
+  thead tr {
+    background: #1B2B4B;
+    color: #fff;
+  }
+  thead th {
+    padding: 9px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.80rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  thead th:last-child { text-align: center; }
+  tbody tr {
+    border-bottom: 1px solid #e8ecf3;
+    transition: background 0.12s;
+  }
+  tbody tr:hover { background: #f8f9fd; }
+  tbody td {
+    padding: 6px 8px;
+    vertical-align: middle;
+  }
+  input[type="text"], input[type="number"], input[type="date"], select {
+    border: 1px solid #d0d8e8;
+    border-radius: 5px;
+    padding: 5px 8px;
+    font-size: 0.83rem;
+    color: #1B2B4B;
+    background: #f8f9fd;
+    width: 100%;
+    outline: none;
+    transition: border 0.15s, background 0.15s;
+    font-family: inherit;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus {
+    border-color: #C4A55A;
+    background: #fff;
+  }
+  input[type="number"] { text-align: right; }
+  .pct-cell { text-align: center; font-weight: 600; color: #1B2B4B; }
+  .importe-cell { text-align: right; font-weight: 600; color: #1B2B4B; }
+  select { cursor: pointer; }
+  select option[value="Pendiente"] { color: #a0522d; }
+  select option[value="Facturado"] { color: #1B2B4B; }
+  select option[value="Cobrado"] { color: #1a6e3c; }
+  .estado-Pendiente { background: #fff8f0; color: #a0522d; border-color: #f4c280; }
+  .estado-Facturado { background: #eef2fa; color: #1B2B4B; border-color: #b0bcd6; }
+  .estado-Cobrado { background: #edfaf4; color: #1a6e3c; border-color: #7dd4a8; }
+  td.del-cell { text-align: center; }
+  .btn-del {
+    background: none;
+    border: none;
+    color: #b0bcd6;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+    line-height: 1;
+  }
+  .btn-del:hover { color: #c0392b; background: #fdecea; }
+  .btn-add {
+    margin-top: 12px;
+    background: #1B2B4B;
+    color: #C4A55A;
+    border: none;
+    border-radius: 7px;
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: background 0.15s;
+    font-family: inherit;
+  }
+  .btn-add:hover { background: #243b65; }
+  .resumen-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .kpi-card {
+    flex: 1;
+    min-width: 160px;
+    border-radius: 9px;
+    padding: 14px 18px 12px;
+    border: 1.5px solid #e8ecf3;
+    background: #f8f9fd;
+  }
+  .kpi-card.gold { border-color: #C4A55A; background: #fdf8ef; }
+  .kpi-card.cobrado { border-color: #7dd4a8; background: #edfaf4; }
+  .kpi-card.pendiente { border-color: #f4c280; background: #fff8f0; }
+  .kpi-label {
+    font-size: 0.75rem;
+    color: #5a6a8a;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 4px;
+  }
+  .kpi-value {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #1B2B4B;
+    letter-spacing: -0.01em;
+  }
+  .kpi-card.cobrado .kpi-value { color: #1a6e3c; }
+  .kpi-card.pendiente .kpi-value { color: #a0522d; }
+  @media (max-width: 680px) {
+    header { padding: 12px 14px 10px; }
+    header h1 { font-size: 0.98rem; }
+    main { margin: 14px auto; padding: 0 8px 30px; }
+    .card { padding: 14px 10px 12px; }
+    .resumen-grid { gap: 10px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="badge">UCI-S1 · R2</div>
+  </div>
+  <div>
+    <h1>Plan de hitos y cobros parciales</h1>
+    <p>R2 · Calendario de hitos de entrega para liberar pagos</p>
+  </div>
+</header>
+
+<main>
+  <h2>R2 · Calendario de hitos de entrega para liberar pagos</h2>
+  <p class="subtitle">Plan de hitos y cobros parciales por proyecto — registra cada entregable, su porcentaje e importe, y controla el estado de cobro.</p>
+
+  <div class="card">
+    <div class="card-title">Hitos por proyecto</div>
+    <div class="table-wrap">
+      <table id="tabla-hitos">
+        <thead>
+          <tr>
+            <th style="min-width:170px">Proyecto / Cliente</th>
+            <th style="min-width:160px">Hito</th>
+            <th style="min-width:110px;text-align:center">% Completado</th>
+            <th style="min-width:130px;text-align:right">Importe hito (€)</th>
+            <th style="min-width:130px">Fecha prevista cobro</th>
+            <th style="min-width:130px">Fecha real cobro</th>
+            <th style="min-width:120px;text-align:center">Estado</th>
+            <th style="min-width:36px"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-hitos"></tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir hito</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Resumen financiero</div>
+    <div class="resumen-grid">
+      <div class="kpi-card gold">
+        <div class="kpi-label">Total facturado (€)</div>
+        <div class="kpi-value" id="kpi-facturado">0,00 €</div>
+      </div>
+      <div class="kpi-card cobrado">
+        <div class="kpi-label">Total cobrado (€)</div>
+        <div class="kpi-value" id="kpi-cobrado">0,00 €</div>
+      </div>
+      <div class="kpi-card pendiente">
+        <div class="kpi-label">Pendiente de cobro (€)</div>
+        <div class="kpi-value" id="kpi-pendiente">0,00 €</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function () {
+  var itemId = new URLSearchParams(location.search).get('itemId') || '';
+  var rowCount = 0;
+
+  function fmt(n) {
+    return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  }
+
+  function addRow(data) {
+    data = data || {};
+    rowCount++;
+    var id = 'row-' + rowCount;
+    var tbody = document.getElementById('tbody-hitos');
+    var tr = document.createElement('tr');
+    tr.id = id;
+
+    var estados = ['Pendiente', 'Facturado', 'Cobrado'];
+    var estadoVal = data.estado || 'Pendiente';
+    var estadoOpts = estados.map(function (e) {
+      return '<option value="' + e + '"' + (e === estadoVal ? ' selected' : '') + '>' + e + '</option>';
+    }).join('');
+
+    tr.innerHTML =
+      '<td><input type="text" class="f-proyecto" placeholder="Cliente / Proyecto" value="' + (data.proyecto || '') + '" onchange="recalcTotals()"></td>' +
+      '<td><input type="text" class="f-hito" placeholder="Descripción del hito" value="' + (data.hito || '') + '" onchange="recalcTotals()"></td>' +
+      '<td><input type="number" class="f-pct" min="0" max="100" step="1" placeholder="0" value="' + (data.pct !== undefined ? data.pct : '') + '" oninput="recalcTotals()" style="text-align:center"></td>' +
+      '<td><input type="number" class="f-importe" min="0" step="0.01" placeholder="0,00" value="' + (data.importe !== undefined ? data.importe : '') + '" oninput="recalcTotals()"></td>' +
+      '<td><input type="date" class="f-fecha-prev" value="' + (data.fechaPrev || '') + '" onchange="recalcTotals()"></td>' +
+      '<td><input type="date" class="f-fecha-real" value="' + (data.fechaReal || '') + '" onchange="recalcTotals()"></td>' +
+      '<td><select class="f-estado estado-' + estadoVal + '" onchange="onEstadoChange(this);recalcTotals()">' + estadoOpts + '</select></td>' +
+      '<td class="del-cell"><button class="btn-del" title="Eliminar fila" onclick="delRow(\'' + id + '\')">✕</button></td>';
+
+    tbody.appendChild(tr);
+    recalcTotals();
+  }
+
+  function onEstadoChange(sel) {
+    sel.className = 'f-estado estado-' + sel.value;
+  }
+
+  function delRow(id) {
+    var el = document.getElementById(id);
+    if (el) { el.parentNode.removeChild(el); recalcTotals(); }
+  }
+
+  function recalcTotals() {
+    var rows = document.querySelectorAll('#tbody-hitos tr');
+    var totalFacturado = 0;
+    var totalCobrado = 0;
+
+    rows.forEach(function (tr) {
+      var importe = parseFloat(tr.querySelector('.f-importe').value) || 0;
+      var estado = tr.querySelector('.f-estado').value;
+      if (estado === 'Facturado' || estado === 'Cobrado') totalFacturado += importe;
+      if (estado === 'Cobrado') totalCobrado += importe;
+    });
+
+    var pendiente = totalFacturado - totalCobrado;
+
+    document.getElementById('kpi-facturado').textContent = fmt(totalFacturado);
+    document.getElementById('kpi-cobrado').textContent = fmt(totalCobrado);
+    document.getElementById('kpi-pendiente').textContent = fmt(pendiente < 0 ? 0 : pendiente);
+
+    emitPostMessage(totalCobrado);
+  }
+
+  function getDescripcion() {
+    var rows = document.querySelectorAll('#tbody-hitos tr');
+    var partes = [];
+    rows.forEach(function (tr) {
+      var proyecto = tr.querySelector('.f-proyecto').value.trim();
+      var hito = tr.querySelector('.f-hito').value.trim();
+      if (proyecto || hito) partes.push((proyecto ? proyecto : '') + (hito ? ' – ' + hito : ''));
+    });
+    if (partes.length === 0) return 'Planificar hitos de cobro en proyectos';
+    return 'Hitos: ' + partes.slice(0, 3).join(' | ') + (partes.length > 3 ? ' …' : '');
+  }
+
+  function getFechaMax() {
+    var rows = document.querySelectorAll('#tbody-hitos tr');
+    var fechas = [];
+    rows.forEach(function (tr) {
+      var fr = tr.querySelector('.f-fecha-real').value;
+      var fp = tr.querySelector('.f-fecha-prev').value;
+      if (fr) fechas.push(fr);
+      else if (fp) fechas.push(fp);
+    });
+    if (fechas.length === 0) return null;
+    fechas.sort();
+    return fechas[fechas.length - 1];
+  }
+
+  function emitPostMessage(totalCobrado) {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        tipo: 'herramienta-valor',
+        valor: Math.round(totalCobrado * 100) / 100,
+        fecha: getFechaMax(),
+        itemId: itemId,
+        descripcion: getDescripcion(),
+        html: document.documentElement.outerHTML
+      }, '*');
+    }
+  }
+
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.tipo === 'get-html') {
+      var target = e.source || (window.parent !== window ? window.parent : null);
+      if (target) {
+        target.postMessage({
+          tipo: 'html-snapshot',
+          itemId: itemId,
+          html: document.documentElement.outerHTML
+        }, '*');
+      }
+    }
+  });
+
+  // Expose globals
+  window.addRow = addRow;
+  window.delRow = delRow;
+  window.onEstadoChange = onEstadoChange;
+  window.recalcTotals = recalcTotals;
+
+  // Seed inicial × 3
+  addRow();
+  addRow();
+  addRow();
+})();
+</script>
+</body>
+</html>

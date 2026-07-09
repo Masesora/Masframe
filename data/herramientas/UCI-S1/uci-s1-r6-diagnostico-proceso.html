@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R6 — Diagnóstico del cuello de botella en facturación</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1B2B4B;
+    --gold: #C4A55A;
+    --gold-light: #e8d5a3;
+    --bg: #f4f6f9;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #d1d5db;
+    --red: #dc2626;
+    --green: #16a34a;
+    --amber: #d97706;
+    --shadow: 0 2px 8px rgba(27,43,75,0.10);
+  }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+  header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 0;
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 18px 24px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .header-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: .08em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .header-texts h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: .01em;
+    line-height: 1.25;
+  }
+  .header-texts p {
+    font-size: 12px;
+    color: var(--gold-light);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 16px 40px;
+  }
+  h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2 .dot { color: var(--gold); font-size: 18px; }
+  .section-card {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    padding: 20px 20px 16px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 14px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 1100px;
+  }
+  thead th {
+    background: var(--navy);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 11.5px;
+    letter-spacing: .04em;
+    padding: 9px 8px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  thead th:first-child { border-radius: 6px 0 0 0; }
+  thead th:last-child { border-radius: 0 6px 0 0; }
+  tbody tr { border-bottom: 1px solid #e5e7eb; transition: background .15s; }
+  tbody tr:hover { background: #f8f9fc; }
+  tbody td { padding: 6px 6px; vertical-align: middle; }
+  input[type="text"], input[type="number"], input[type="date"], select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 5px 7px;
+    font-size: 12.5px;
+    font-family: inherit;
+    color: var(--text);
+    background: #fafafa;
+    transition: border-color .2s;
+    outline: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus,
+  input[type="date"]:focus, select:focus {
+    border-color: var(--gold);
+    background: var(--white);
+    box-shadow: 0 0 0 2px rgba(196,165,90,.15);
+  }
+  select { cursor: pointer; }
+  .td-dias {
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    min-width: 60px;
+    padding: 6px 10px;
+  }
+  .dias-alto { color: var(--red); }
+  .dias-medio { color: var(--amber); }
+  .dias-ok { color: var(--green); }
+  .td-accion { min-width: 160px; }
+  .td-estado { min-width: 130px; }
+  .badge-estado {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    white-space: nowrap;
+  }
+  .badge-bloqueada { background: #fee2e2; color: var(--red); }
+  .badge-gestion { background: #fef3c7; color: var(--amber); }
+  .badge-desbloqueada { background: #dcfce7; color: var(--green); }
+  .btn-del {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9ca3af;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: color .2s, background .2s;
+    line-height: 1;
+  }
+  .btn-del:hover { color: var(--red); background: #fee2e2; }
+  .btn-add {
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+    font-family: inherit;
+  }
+  .btn-add:hover { opacity: .85; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .kpi-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .kpi-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--muted);
+  }
+  .kpi-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.1;
+  }
+  .kpi-value.gold { color: var(--gold); }
+  .kpi-value.red { color: var(--red); }
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .motivo-badge {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .status-bar {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 16px;
+    text-align: right;
+    font-style: italic;
+  }
+  @media (max-width: 700px) {
+    .header-inner { flex-direction: column; gap: 8px; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="header-badge">UCI-S1 · R6</span>
+    <div class="header-texts">
+      <h1>Diagnóstico del cuello de botella en facturación</h1>
+      <p>R6 · Mapa de bloqueos en el proceso de facturación · MASFRAME</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <h2><span class="dot">▎</span>R6 · Mapa de bloqueos en el proceso de facturación</h2>
+
+  <div class="section-card">
+    <div class="section-title">Diagnóstico de bloqueos en el proceso de facturación</div>
+    <div class="table-wrap">
+      <table id="tabla-bloqueos">
+        <thead>
+          <tr>
+            <th style="min-width:120px">Factura / Expediente</th>
+            <th style="min-width:100px">Importe (€)</th>
+            <th style="min-width:130px">Fecha servicio prestado</th>
+            <th style="min-width:185px">Motivo del bloqueo</th>
+            <th style="min-width:130px">Responsable</th>
+            <th style="min-width:75px; text-align:center">Días bloqueada</th>
+            <th style="min-width:160px">Acción desbloqueadora</th>
+            <th style="min-width:130px">Estado</th>
+            <th style="width:36px"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+    <div class="status-bar" id="status-bar">Sin cambios recientes.</div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">Resumen ejecutivo</div>
+    <div class="summary-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total bloqueado (€)</div>
+        <div class="kpi-value red" id="kpi-total-bloqueado">0 €</div>
+        <div class="kpi-sub" id="kpi-sub-bloqueado">Facturas activas bloqueadas o en gestión</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total desbloqueado (€)</div>
+        <div class="kpi-value gold" id="kpi-total-desbloqueado">0 €</div>
+        <div class="kpi-sub" id="kpi-sub-desbloqueado">Facturas recuperadas al cobro</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Promedio días de bloqueo</div>
+        <div class="kpi-value" id="kpi-dias-prom">—</div>
+        <div class="kpi-sub">Sobre facturas con fecha de servicio</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Motivo más frecuente</div>
+        <div class="kpi-value" style="font-size:14px; padding-top:4px" id="kpi-motivo">—</div>
+        <div class="kpi-sub" id="kpi-motivo-n"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function () {
+  const itemId = new URLSearchParams(location.search).get('itemId') || '';
+  let rowCount = 0;
+
+  const MOTIVOS = [
+    'Falta aprobación interna',
+    'Datos del cliente incompletos',
+    'Contrato no firmado',
+    'Disputa de precio',
+    'Error en pedido',
+    'Pendiente de conformidad',
+    'Otro'
+  ];
+
+  const ESTADOS = ['Bloqueada', 'En gestión', 'Desbloqueada'];
+
+  function fmtEur(n) {
+    return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  }
+
+  function diasDesde(fechaStr) {
+    if (!fechaStr) return null;
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    const d = new Date(fechaStr);
+    if (isNaN(d)) return null;
+    const diff = Math.floor((hoy - d) / 86400000);
+    return diff >= 0 ? diff : 0;
+  }
+
+  function diasClass(n) {
+    if (n === null) return '';
+    if (n >= 30) return 'dias-alto';
+    if (n >= 10) return 'dias-medio';
+    return 'dias-ok';
+  }
+
+  function addRow() {
+    rowCount++;
+    const id = 'row-' + rowCount;
+    const tbody = document.getElementById('tbody');
+    const tr = document.createElement('tr');
+    tr.id = id;
+
+    const motivoOpts = MOTIVOS.map(m =>
+      `<option value="${m}">${m}</option>`
+    ).join('');
+    const estadoOpts = ESTADOS.map(e =>
+      `<option value="${e}">${e}</option>`
+    ).join('');
+
+    tr.innerHTML = `
+      <td><input type="text" class="f-factura" placeholder="FAC-2025-001" oninput="recalcTotals()"></td>
+      <td><input type="number" class="f-importe" placeholder="0.00" min="0" step="0.01" oninput="recalcTotals()"></td>
+      <td><input type="date" class="f-fecha" onchange="updateDias(this)" oninput="recalcTotals()"></td>
+      <td>
+        <select class="f-motivo" onchange="recalcTotals()">
+          <option value="">— Seleccionar —</option>
+          ${motivoOpts}
+        </select>
+      </td>
+      <td><input type="text" class="f-responsable" placeholder="Nombre / Dpto." oninput="recalcTotals()"></td>
+      <td class="td-dias f-dias" id="dias-${id}">—</td>
+      <td class="td-accion"><input type="text" class="f-accion" placeholder="Acción requerida..." oninput="recalcTotals()"></td>
+      <td class="td-estado">
+        <select class="f-estado" onchange="recalcTotals()">
+          ${estadoOpts}
+        </select>
+      </td>
+      <td><button class="btn-del" title="Eliminar fila" onclick="delRow('${id}')">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    recalcTotals();
+  }
+
+  window.addRow = addRow;
+
+  window.delRow = function (id) {
+    const el = document.getElementById(id);
+    if (el) { el.remove(); recalcTotals(); }
+  };
+
+  window.updateDias = function (input) {
+    const tr = input.closest('tr');
+    const diasCell = tr.querySelector('.f-dias');
+    const n = diasDesde(input.value);
+    if (n === null) {
+      diasCell.textContent = '—';
+      diasCell.className = 'td-dias f-dias';
+    } else {
+      diasCell.textContent = n;
+      diasCell.className = 'td-dias f-dias ' + diasClass(n);
+    }
+    recalcTotals();
+  };
+
+  function recalcTotals() {
+    const rows = document.querySelectorAll('#tbody tr');
+    let totalBloqueado = 0;
+    let totalDesbloqueado = 0;
+    let diasArr = [];
+    const motivoCount = {};
+    let primeraFactura = '';
+    let primerMotivo = '';
+
+    rows.forEach((tr, idx) => {
+      const factura = tr.querySelector('.f-factura')?.value.trim() || '';
+      const importeRaw = parseFloat(tr.querySelector('.f-importe')?.value) || 0;
+      const fecha = tr.querySelector('.f-fecha')?.value || '';
+      const motivo = tr.querySelector('.f-motivo')?.value || '';
+      const estado = tr.querySelector('.f-estado')?.value || '';
+
+      // actualizar dias cell
+      const diasCell = tr.querySelector('.f-dias');
+      const n = diasDesde(fecha);
+      if (n !== null) {
+        diasCell.textContent = n;
+        diasCell.className = 'td-dias f-dias ' + diasClass(n);
+        diasArr.push(n);
+      } else {
+        diasCell.textContent = '—';
+        diasCell.className = 'td-dias f-dias';
+      }
+
+      if (estado === 'Desbloqueada') {
+        totalDesbloqueado += importeRaw;
+      } else {
+        totalBloqueado += importeRaw;
+      }
+
+      if (motivo) {
+        motivoCount[motivo] = (motivoCount[motivo] || 0) + 1;
+      }
+
+      if (idx === 0 && factura) primeraFactura = factura;
+      if (idx === 0 && motivo) primerMotivo = motivo;
+    });
+
+    document.getElementById('kpi-total-bloqueado').textContent = fmtEur(totalBloqueado);
+    document.getElementById('kpi-total-desbloqueado').textContent = fmtEur(totalDesbloqueado);
+
+    const prom = diasArr.length
+      ? Math.round(diasArr.reduce((a, b) => a + b, 0) / diasArr.length)
+      : null;
+    document.getElementById('kpi-dias-prom').textContent = prom !== null ? prom + ' días' : '—';
+
+    let topMotivo = '—', topN = 0;
+    Object.entries(motivoCount).forEach(([m, c]) => { if (c > topN) { topN = c; topMotivo = m; } });
+    document.getElementById('kpi-motivo').textContent = topMotivo !== '—' ? topMotivo : '—';
+    document.getElementById('kpi-motivo-n').textContent = topN > 0 ? `${topN} ocurrencia${topN > 1 ? 's' : ''}` : '';
+
+    // descripcion
+    const partes = [];
+    if (primeraFactura) partes.push(primeraFactura);
+    if (primerMotivo) partes.push(primerMotivo);
+    const descripcion = partes.length
+      ? 'Diagnóstico bloqueos facturación: ' + partes.join(' · ')
+      : 'Identificar qué paraliza la facturación';
+
+    // postMessage
+    const fechaStr = new Date().toISOString().split('T')[0];
+    try {
+      const htmlSnap = document.documentElement.outerHTML;
+      window.parent.postMessage({
+        tipo: 'herramienta-valor',
+        valor: Number(totalDesbloqueado.toFixed(2)),
+        fecha: fechaStr,
+        itemId: itemId,
+        descripcion: descripcion,
+        html: htmlSnap
+      }, '*');
+    } catch (e) { /* cross-origin guard */ }
+
+    // status
+    document.getElementById('status-bar').textContent =
+      'Última actualización: ' + new Date().toLocaleTimeString('es-ES');
+  }
+
+  window.recalcTotals = recalcTotals;
+
+  // listener get-html
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.tipo === 'get-html') {
+      const htmlSnap = document.documentElement.outerHTML;
+      const target = e.source || window.parent;
+      try {
+        target.postMessage({ tipo: 'html-snapshot', html: htmlSnap, itemId: itemId }, '*');
+      } catch (err) { /* guard */ }
+    }
+  });
+
+  // seed
+  addRow();
+  addRow();
+  addRow();
+})();
+</script>
+</body>
+</html>

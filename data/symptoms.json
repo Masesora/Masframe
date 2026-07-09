@@ -50,7 +50,93 @@
     "justi_capa5": "Confirma las acciones y el valor recuperado.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Esta es la valoración de las acciones ejecutadas.",
-    "capa_1_options": "Mi stock está parado y tengo demasiado dinero atrapado en productos que no rotan.; Tengo proyectos a medio ejecutar que consumen recursos pero aún no generan ingresos.; Mis clientes tardan meses en pagar y eso me deja sin liquidez operativa.; Cobro demasiado tarde respecto a cuando tengo que pagar proveedores y nóminas.; He recibido anticipos que no puedo transformar en ingresos porque la ejecución está retrasada.; Tengo trabajos terminados que aún no he facturado por falta de procesos o validaciones."
+    "capa_1_options": "Mi stock está parado y tengo demasiado dinero atrapado en productos que no rotan.; Tengo proyectos a medio ejecutar que consumen recursos pero aún no generan ingresos.; Mis clientes tardan meses en pagar y eso me deja sin liquidez operativa.; Cobro demasiado tarde respecto a cuando tengo que pagar proveedores y nóminas.; He recibido anticipos que no puedo transformar en ingresos porque la ejecución está retrasada.; Tengo trabajos terminados que aún no he facturado por falta de procesos o validaciones.",
+    "capa_3_plan": {
+      "r1": [
+        {
+          "nombre": "Inventariar y valorar el stock sin rotación",
+          "herramienta": "uci-s1-r1-inventario-fifo.html"
+        },
+        {
+          "nombre": "Fijar precio de liquidación y canal de venta",
+          "herramienta": "uci-s1-r1-precio-liquidacion.html"
+        },
+        {
+          "nombre": "Seguimiento semanal de ventas realizadas",
+          "herramienta": "uci-s1-r1-tracker-liquidacion.html"
+        }
+      ],
+      "r2": [
+        {
+          "nombre": "Analizar estado y avance de proyectos en curso",
+          "herramienta": "uci-s1-r2-proyectos-en-curso.html"
+        },
+        {
+          "nombre": "Planificar hitos de entrega para liberar cobros",
+          "herramienta": "uci-s1-r2-hitos-cobro.html"
+        },
+        {
+          "nombre": "Control semanal de entregas y activación de pagos",
+          "herramienta": "uci-s1-r2-tracker-entregas.html"
+        }
+      ],
+      "r3": [
+        {
+          "nombre": "Clasificar deuda por antigüedad (aging de cobros)",
+          "herramienta": "uci-s1-r3-aging-cobros.html"
+        },
+        {
+          "nombre": "Asignar protocolo de reclamación escalonado",
+          "herramienta": "uci-s1-r3-protocolo-reclamacion.html"
+        },
+        {
+          "nombre": "Negociar acuerdos de pago con clientes morosos",
+          "herramienta": "uci-s1-r3-acuerdos-pago-morosos.html"
+        }
+      ],
+      "r4": [
+        {
+          "nombre": "Proyectar flujo de caja a 90 días",
+          "herramienta": "uci-s1-r4-calendario-tesoreria.html"
+        },
+        {
+          "nombre": "Negociar ampliación de plazos con proveedores clave",
+          "herramienta": "uci-s1-r4-negociacion-proveedores.html"
+        },
+        {
+          "nombre": "Evaluar líneas de financiación a corto plazo",
+          "herramienta": "uci-s1-r4-financiacion-corto-plazo.html"
+        }
+      ],
+      "r5": [
+        {
+          "nombre": "Registrar y valorar anticipos pendientes de ejecución",
+          "herramienta": "uci-s1-r5-anticipos.html"
+        },
+        {
+          "nombre": "Planificar hitos de entrega para liberar anticipo",
+          "herramienta": "uci-s1-r5-hitos-entrega.html"
+        },
+        {
+          "nombre": "Cerrar y liquidar anticipos con cada cliente",
+          "herramienta": "uci-s1-r5-cierre-anticipo.html"
+        }
+      ],
+      "r6": [
+        {
+          "nombre": "Identificar facturas paralizadas y su importe",
+          "herramienta": "uci-s1-r6-facturacion-pendiente.html"
+        },
+        {
+          "nombre": "Diagnosticar el cuello de botella en el proceso",
+          "herramienta": "uci-s1-r6-diagnostico-proceso.html"
+        },
+        {
+          "nombre": "Ejecutar protocolo de facturación urgente",
+          "herramienta": "uci-s1-r6-protocolo-facturacion.html"
+        }
+      ]
+    }
   },
   {
     "specialty_id": "UCI FINANCIERA",

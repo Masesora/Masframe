@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCI-S1 R5 — Protocolo de cierre de anticipo con cliente</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6f9;
+    color: #1B2B4B;
+    font-size: 14px;
+  }
+  header {
+    background: #1B2B4B;
+    color: #fff;
+    padding: 18px 28px 14px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    border-bottom: 4px solid #C4A55A;
+  }
+  header .badge {
+    background: #C4A55A;
+    color: #1B2B4B;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: .5px;
+  }
+  header h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    line-height: 1.3;
+  }
+  header p.sub {
+    font-size: 12px;
+    color: #C4A55A;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .container { padding: 24px 28px; max-width: 1400px; margin: 0 auto; }
+  h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1B2B4B;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #C4A55A;
+    letter-spacing: .1px;
+  }
+  .table-wrap { overflow-x: auto; border-radius: 6px; box-shadow: 0 2px 8px rgba(27,43,75,.10); margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; min-width: 1100px; }
+  thead tr { background: #1B2B4B; color: #fff; }
+  thead th {
+    padding: 11px 9px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    white-space: nowrap;
+    border-right: 1px solid rgba(196,165,90,.25);
+  }
+  thead th:last-child { border-right: none; }
+  thead th.gold { color: #C4A55A; }
+  tbody tr { border-bottom: 1px solid #e8edf4; transition: background .15s; }
+  tbody tr:hover { background: #f7f9fc; }
+  tbody td { padding: 7px 7px; vertical-align: middle; }
+  input[type="text"], input[type="number"], input[type="date"], textarea, select {
+    width: 100%;
+    border: 1px solid #cdd5e0;
+    border-radius: 4px;
+    padding: 5px 7px;
+    font-size: 12.5px;
+    font-family: inherit;
+    color: #1B2B4B;
+    background: #fff;
+    transition: border-color .2s;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #C4A55A;
+    box-shadow: 0 0 0 2px rgba(196,165,90,.18);
+  }
+  input[type="number"] { text-align: right; }
+  textarea { resize: vertical; min-height: 54px; font-size: 12px; line-height: 1.4; }
+  .check-center { text-align: center; }
+  input[type="checkbox"] {
+    width: 17px; height: 17px;
+    accent-color: #C4A55A;
+    cursor: pointer;
+  }
+  select { cursor: pointer; }
+  .estado-ejecucion { color: #1B2B4B; font-weight: 600; }
+  .estado-firma { color: #b07d10; font-weight: 600; }
+  .estado-cerrado { color: #2a7d4f; font-weight: 600; }
+  .saldo { font-weight: 700; color: #1B2B4B; text-align: right; min-width: 80px; }
+  td.saldo-val { font-weight: 700; color: #C4A55A; text-align: right; font-size: 13px; padding-right: 10px; }
+  .btn-del {
+    background: none;
+    border: none;
+    color: #c0392b;
+    font-size: 17px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 3px;
+    line-height: 1;
+    transition: background .15s;
+  }
+  .btn-del:hover { background: #fdecea; }
+  .actions { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; }
+  .btn {
+    background: #1B2B4B;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: .2px;
+    transition: background .18s, color .18s;
+  }
+  .btn:hover { background: #253d6e; }
+  .btn.gold {
+    background: #C4A55A;
+    color: #1B2B4B;
+  }
+  .btn.gold:hover { background: #b0913e; }
+  .resumen {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .kpi-card {
+    background: #fff;
+    border: 1.5px solid #e0e7ef;
+    border-radius: 8px;
+    padding: 14px 22px;
+    min-width: 220px;
+    box-shadow: 0 1px 5px rgba(27,43,75,.07);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .kpi-card.highlight { border-color: #C4A55A; }
+  .kpi-label { font-size: 11.5px; color: #6b7a99; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
+  .kpi-value { font-size: 24px; font-weight: 800; color: #1B2B4B; }
+  .kpi-value.gold { color: #C4A55A; }
+  .kpi-value.green { color: #2a7d4f; }
+  .kpi-value.pending { color: #b07d10; }
+  .note { font-size: 11px; color: #8a96ad; margin-top: 2px; }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1B2B4B;
+    margin: 22px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: #e0e7ef; }
+  @media (max-width: 700px) {
+    .container { padding: 12px 8px; }
+    header { padding: 12px 12px 10px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">UCI-S1 · R5</div>
+  <div>
+    <h1>Protocolo de cierre de anticipo con cliente</h1>
+    <p class="sub">Checklist operativo de liquidación y conformidad de anticipos</p>
+  </div>
+</header>
+
+<div class="container">
+  <h2>R5 · Checklist de cierre y liquidación de anticipos pendientes</h2>
+
+  <div class="actions">
+    <button class="btn gold" onclick="addRow()">+ Añadir cliente</button>
+    <button class="btn" onclick="recalcTotals()">Recalcular</button>
+    <span class="note" style="margin-left:8px;">Los totales se actualizan automáticamente al modificar cualquier campo.</span>
+  </div>
+
+  <div class="section-title">Checklist de cierre de anticipo por cliente</div>
+
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th class="gold">#</th>
+          <th>Cliente</th>
+          <th>Anticipo inicial (€)</th>
+          <th>Fecha recepción anticipo</th>
+          <th>Entregables completados</th>
+          <th class="check-center">Acta conformidad firmada</th>
+          <th class="check-center">Factura final emitida</th>
+          <th>Saldo pendiente a facturar (€)</th>
+          <th>Fecha cierre prevista</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Resumen</div>
+  <div class="resumen">
+    <div class="kpi-card highlight">
+      <span class="kpi-label">Anticipos cerrados</span>
+      <span class="kpi-value green" id="kpi-cerrados">0,00 €</span>
+      <span class="note">Estado = Cerrado</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">Anticipos pendientes de cierre</span>
+      <span class="kpi-value pending" id="kpi-pendientes">0,00 €</span>
+      <span class="note">Estado ≠ Cerrado</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">Total anticipos registrados</span>
+      <span class="kpi-value" id="kpi-total">0,00 €</span>
+      <span class="note">Suma de todos los anticipos iniciales</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">Saldo total pendiente a facturar</span>
+      <span class="kpi-value gold" id="kpi-saldo">0,00 €</span>
+      <span class="note">Suma de saldos pendientes</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const params = new URLSearchParams(location.search);
+  const itemId = params.get('itemId') || '';
+  let rowCount = 0;
+
+  function fmt(n) {
+    return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  }
+
+  window.addRow = function () {
+    rowCount++;
+    const idx = rowCount;
+    const tbody = document.getElementById('tbody');
+    const tr = document.createElement('tr');
+    tr.id = 'row-' + idx;
+    tr.innerHTML = `
+      <td style="text-align:center;font-weight:700;color:#C4A55A;">${idx}</td>
+      <td><input type="text" class="f-cliente" placeholder="Nombre del cliente" oninput="recalcTotals()"></td>
+      <td><input type="number" class="f-anticipo" min="0" step="0.01" placeholder="0,00" oninput="recalcTotals()"></td>
+      <td><input type="date" class="f-fecha-rec" onchange="recalcTotals()"></td>
+      <td><textarea class="f-entregables" placeholder="Ej: Informe inicial ✓&#10;Reunión de cierre ✓&#10;Dossier final pendiente" oninput="recalcTotals()"></textarea></td>
+      <td class="check-center"><input type="checkbox" class="f-acta" onchange="recalcTotals()"></td>
+      <td class="check-center"><input type="checkbox" class="f-factura" onchange="recalcTotals()"></td>
+      <td><input type="number" class="f-saldo" min="0" step="0.01" placeholder="0,00" oninput="recalcTotals()"></td>
+      <td><input type="date" class="f-fecha-cierre" onchange="recalcTotals()"></td>
+      <td>
+        <select class="f-estado" onchange="recalcTotals()">
+          <option value="ejecucion">En ejecución</option>
+          <option value="firma">Pendiente firma</option>
+          <option value="cerrado">Cerrado</option>
+        </select>
+      </td>
+      <td><button class="btn-del" onclick="delRow('row-${idx}')" title="Eliminar fila">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    recalcTotals();
+  };
+
+  window.delRow = function (id) {
+    const el = document.getElementById(id);
+    if (el) { el.remove(); recalcTotals(); }
+  };
+
+  window.recalcTotals = function () {
+    const rows = document.querySelectorAll('#tbody tr');
+    let totalAnticipo = 0, cerrados = 0, pendientes = 0, saldoTotal = 0;
+
+    rows.forEach(function (tr) {
+      const anticipo = parseFloat(tr.querySelector('.f-anticipo')?.value) || 0;
+      const saldo = parseFloat(tr.querySelector('.f-saldo')?.value) || 0;
+      const estado = tr.querySelector('.f-estado')?.value || '';
+      totalAnticipo += anticipo;
+      saldoTotal += saldo;
+      if (estado === 'cerrado') { cerrados += anticipo; }
+      else { pendientes += anticipo; }
+    });
+
+    document.getElementById('kpi-cerrados').textContent = fmt(cerrados);
+    document.getElementById('kpi-pendientes').textContent = fmt(pendientes);
+    document.getElementById('kpi-total').textContent = fmt(totalAnticipo);
+    document.getElementById('kpi-saldo').textContent = fmt(saldoTotal);
+
+    emitValue(cerrados);
+  };
+
+  function buildDescripcion() {
+    const clientes = [];
+    document.querySelectorAll('#tbody tr').forEach(function (tr) {
+      const c = tr.querySelector('.f-cliente')?.value?.trim();
+      if (c) clientes.push(c);
+    });
+    if (clientes.length === 0) return 'Cerrar anticipos retenidos con clientes';
+    return 'Cierre de anticipos: ' + clientes.slice(0, 3).join(', ') + (clientes.length > 3 ? ' y otros' : '');
+  }
+
+  function emitValue(valor) {
+    const fecha = (function () {
+      const dates = [];
+      document.querySelectorAll('#tbody .f-fecha-cierre').forEach(function (el) {
+        if (el.value) dates.push(el.value);
+      });
+      dates.sort();
+      return dates.length ? dates[dates.length - 1] : null;
+    })();
+
+    const payload = {
+      tipo: 'herramienta-valor',
+      valor: Number(valor.toFixed(2)),
+      fecha: fecha,
+      itemId: itemId,
+      descripcion: buildDescripcion(),
+      html: document.documentElement.outerHTML
+    };
+    window.parent.postMessage(payload, '*');
+  }
+
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.tipo === 'get-html') {
+      const resp = {
+        tipo: 'html-snapshot',
+        itemId: itemId,
+        html: document.documentElement.outerHTML
+      };
+      (e.source || window.parent).postMessage(resp, '*');
+    }
+  });
+
+  // Seed
+  addRow();
+  addRow();
+  addRow();
+})();
+</script>
+</body>
+</html>
