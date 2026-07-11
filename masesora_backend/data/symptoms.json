@@ -51,14 +51,92 @@
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Esta es la valoración de las acciones ejecutadas.",
     "capa_1_options": "Mi stock está parado y tengo demasiado dinero atrapado en productos que no rotan.; Tengo proyectos a medio ejecutar que consumen recursos pero aún no generan ingresos.; Mis clientes tardan meses en pagar y eso me deja sin liquidez operativa.; Cobro demasiado tarde respecto a cuando tengo que pagar proveedores y nóminas.; He recibido anticipos que no puedo transformar en ingresos porque la ejecución está retrasada.; Tengo trabajos terminados que aún no he facturado por falta de procesos o validaciones.",
-    "capa_2_herramientas": [
-      "uci-s1-r1-inventario-fifo.html",
-      "uci-s1-r2-proyectos-en-curso.html",
-      "uci-s1-r3-aging-cobros.html",
-      "uci-s1-r4-calendario-tesoreria.html",
-      "uci-s1-r5-anticipos.html",
-      "uci-s1-r6-facturacion-pendiente.html"
-    ]
+    "capa_3_plan": {
+      "r1": [
+        {
+          "nombre": "Inventariar y valorar el stock sin rotación",
+          "herramienta": "uci-s1-r1-inventario-fifo.html"
+        },
+        {
+          "nombre": "Fijar precio de liquidación y canal de venta",
+          "herramienta": "uci-s1-r1-precio-liquidacion.html"
+        },
+        {
+          "nombre": "Seguimiento semanal de ventas realizadas",
+          "herramienta": "uci-s1-r1-tracker-liquidacion.html"
+        }
+      ],
+      "r2": [
+        {
+          "nombre": "Analizar estado y avance de proyectos en curso",
+          "herramienta": "uci-s1-r2-proyectos-en-curso.html"
+        },
+        {
+          "nombre": "Planificar hitos de entrega para liberar cobros",
+          "herramienta": "uci-s1-r2-hitos-cobro.html"
+        },
+        {
+          "nombre": "Control semanal de entregas y activación de pagos",
+          "herramienta": "uci-s1-r2-tracker-entregas.html"
+        }
+      ],
+      "r3": [
+        {
+          "nombre": "Clasificar deuda por antigüedad (aging de cobros)",
+          "herramienta": "uci-s1-r3-aging-cobros.html"
+        },
+        {
+          "nombre": "Asignar protocolo de reclamación escalonado",
+          "herramienta": "uci-s1-r3-protocolo-reclamacion.html"
+        },
+        {
+          "nombre": "Negociar acuerdos de pago con clientes morosos",
+          "herramienta": "uci-s1-r3-acuerdos-pago-morosos.html"
+        }
+      ],
+      "r4": [
+        {
+          "nombre": "Proyectar flujo de caja a 90 días",
+          "herramienta": "uci-s1-r4-calendario-tesoreria.html"
+        },
+        {
+          "nombre": "Negociar ampliación de plazos con proveedores clave",
+          "herramienta": "uci-s1-r4-negociacion-proveedores.html"
+        },
+        {
+          "nombre": "Evaluar líneas de financiación a corto plazo",
+          "herramienta": "uci-s1-r4-financiacion-corto-plazo.html"
+        }
+      ],
+      "r5": [
+        {
+          "nombre": "Registrar y valorar anticipos pendientes de ejecución",
+          "herramienta": "uci-s1-r5-anticipos.html"
+        },
+        {
+          "nombre": "Planificar hitos de entrega para liberar anticipo",
+          "herramienta": "uci-s1-r5-hitos-entrega.html"
+        },
+        {
+          "nombre": "Cerrar y liquidar anticipos con cada cliente",
+          "herramienta": "uci-s1-r5-cierre-anticipo.html"
+        }
+      ],
+      "r6": [
+        {
+          "nombre": "Identificar facturas paralizadas y su importe",
+          "herramienta": "uci-s1-r6-facturacion-pendiente.html"
+        },
+        {
+          "nombre": "Diagnosticar el cuello de botella en el proceso",
+          "herramienta": "uci-s1-r6-diagnostico-proceso.html"
+        },
+        {
+          "nombre": "Ejecutar protocolo de facturación urgente",
+          "herramienta": "uci-s1-r6-protocolo-facturacion.html"
+        }
+      ]
+    }
   },
   {
     "specialty_id": "UCI FINANCIERA",
@@ -112,15 +190,7 @@
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la mejora del margen por cliente o servicio tras aplicar el rediseño.",
     "capa_1_options": "Mis tarifas no cubren realmente lo que me cuesta entregar cada servicio.; Tengo clientes o proyectos que consumen mucho tiempo pero generan poco ingreso real.; Dedico horas propias a tareas que podría externalizar por menos de lo que me cuestan.; Tengo proveedores o gastos fijos que nunca he revisado ni renegociado.; Invierto tiempo en gestiones, reuniones o formaciones que no generan ningún ingreso directo.; Vendo mucho de algunos servicios pero no sé cuáles son los que realmente me dejan margen.",
-    "c2_herramienta": "retencion",
-    "capa_2_herramientas": [
-      "uci-s2-r1-margen-por-servicio.html",
-      "uci-s2-r2-rentabilidad-cliente.html",
-      "uci-s2-r3-coste-hora-propia.html",
-      "uci-s2-r4-auditoria-gastos.html",
-      "uci-s2-r5-tiempo-sin-ingreso.html",
-      "uci-s2-r6-margen-por-linea.html"
-    ]
+    "c2_herramienta": "retencion"
   },
   {
     "specialty_id": "UCI FINANCIERA",
@@ -174,15 +244,7 @@
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la mejora real del margen bruto tras ajustar precios y costes.",
     "capa_1_options": "Fijo precios sin calcular si realmente cubren todos mis costes, incluidos los que no aparecen en la factura.; Hago descuentos para fidelizar o cerrar ventas sin saber si con eso me quedo en negativo.; Los costes han subido pero no he podido repercutirlos al cliente todavía.; Hay trabajo que realizo y no cobro: soporte, revisiones o cambios que doy por incluidos.; Tengo servicios o líneas pero no sé cuál de ellas me deja margen de verdad.; Hay clientes concretos que facturan razonablemente bien pero cuyo margen real es muy bajo.",
-    "c2_herramienta": "margen",
-    "capa_2_herramientas": [
-      "uci-s3-r1-precio-minimo-viable.html",
-      "uci-s3-r2-impacto-descuentos.html",
-      "uci-s3-r3-impacto-costes.html",
-      "uci-s3-r4-hora-real-facturada.html",
-      "uci-s3-r5-comparativa-lineas.html",
-      "uci-s3-r6-rentabilidad-cliente-completa.html"
-    ]
+    "c2_herramienta": "margen"
   },
   {
     "specialty_id": "UNIDAD DE PROCESOS",
@@ -401,15 +463,7 @@
     "justi_capa5": "Porque necesitas constancia semanal",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir oportunidades generadas",
-    "capa_1_options": "La mayoría de mis clientes llegan por recomendación o de casualidad, sin que yo haya generado nada para conseguirlos.; No tengo ninguna presencia digital que genere contactos de forma predecible y constante.; Cuando alguien se interesa por lo que hago, no tengo un protocolo para convertirlo en cliente.; He probado varios canales sin que ninguno haya funcionado de forma constante ni lo haya medido en serio.; Tengo clientes satisfechos pero ningún sistema para convertirlos en fuente activa de nuevos clientes.; No tengo una cifra mensual de clientes nuevos que buscar ni un sistema para alcanzarla.",
-    "capa_2_herramientas": [
-      "cardio-s1-r1-auditoria-canales.html",
-      "cardio-s1-r2-presencia-digital.html",
-      "cardio-s1-r3-tracker-leads.html",
-      "cardio-s1-r4-rendimiento-canales.html",
-      "cardio-s1-r5-sistema-referidos.html",
-      "cardio-s1-r6-objetivo-captacion.html"
-    ]
+    "capa_1_options": "La mayoría de mis clientes llegan por recomendación o de casualidad, sin que yo haya generado nada para conseguirlos.; No tengo ninguna presencia digital que genere contactos de forma predecible y constante.; Cuando alguien se interesa por lo que hago, no tengo un protocolo para convertirlo en cliente.; He probado varios canales sin que ninguno haya funcionado de forma constante ni lo haya medido en serio.; Tengo clientes satisfechos pero ningún sistema para convertirlos en fuente activa de nuevos clientes.; No tengo una cifra mensual de clientes nuevos que buscar ni un sistema para alcanzarla."
   },
   {
     "specialty_id": "CARDIOLOGIA COMERCIAL",
@@ -582,15 +636,7 @@
     "justi_capa5": "Porque necesitas sostener foco",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir alineación real",
-    "capa_1_options": "Mi empresa funciona hoy pero no tengo ningún plan escrito de dónde quiero estar en 3 años.; No he definido cuánto quiero que valga el negocio ni qué tendría que pasar para llegar a eso.; El equipo no comparte una dirección común y cada uno interpreta lo que hay que hacer de forma distinta.; Tengo objetivos en la cabeza pero no están escritos ni tienen métricas claras para medirlos.; No reservo tiempo para trabajar la estrategia: siempre lo desplaza el día a día.; No reviso si lo que hago cada semana avanza hacia el negocio que tengo en mente.",
-    "capa_2_herramientas": [
-      "neuro-s1-r1-vision-3-anos.html",
-      "neuro-s1-r2-valoracion-negocio.html",
-      "neuro-s1-r3-comunicacion-vision.html",
-      "neuro-s1-r4-objetivos-anuales.html",
-      "neuro-s1-r5-tiempo-estrategico.html",
-      "neuro-s1-r6-revision-trimestral.html"
-    ]
+    "capa_1_options": "Mi empresa funciona hoy pero no tengo ningún plan escrito de dónde quiero estar en 3 años.; No he definido cuánto quiero que valga el negocio ni qué tendría que pasar para llegar a eso.; El equipo no comparte una dirección común y cada uno interpreta lo que hay que hacer de forma distinta.; Tengo objetivos en la cabeza pero no están escritos ni tienen métricas claras para medirlos.; No reservo tiempo para trabajar la estrategia: siempre lo desplaza el día a día.; No reviso si lo que hago cada semana avanza hacia el negocio que tengo en mente."
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
@@ -643,15 +689,7 @@
     "justi_capa5": "Porque necesitas mantener dirección",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir tiempo estratégico real",
-    "capa_1_options": "Tengo demasiados proyectos a medias y ninguno llega a terminarse de verdad.; Cada semana aparece algo urgente que descoloca lo que estaba planificado.; Trabajo todo el día con intensidad pero no avanzo en lo que realmente importa.; No tengo tiempo protegido para pensar el negocio sin interrupciones.; Todo parece prioritario así que al final nada lo es y las decisiones llegan tarde.; Me cuesta decidir qué hacer primero y qué puede esperar sin que el negocio pierda nada importante.",
-    "capa_2_herramientas": [
-      "neuro-s2-r1-tiempo-estrategico-bloqueado.html",
-      "neuro-s2-r2-proyectos-abiertos.html",
-      "neuro-s2-r3-delegacion-urgentes.html",
-      "neuro-s2-r4-tres-prioridades.html",
-      "neuro-s2-r5-auditoria-reuniones.html",
-      "neuro-s2-r6-filtro-decisiones.html"
-    ]
+    "capa_1_options": "Tengo demasiados proyectos a medias y ninguno llega a terminarse de verdad.; Cada semana aparece algo urgente que descoloca lo que estaba planificado.; Trabajo todo el día con intensidad pero no avanzo en lo que realmente importa.; No tengo tiempo protegido para pensar el negocio sin interrupciones.; Todo parece prioritario así que al final nada lo es y las decisiones llegan tarde.; Me cuesta decidir qué hacer primero y qué puede esperar sin que el negocio pierda nada importante."
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
@@ -711,15 +749,7 @@
     "justi_capa5": "Porque necesitas ejecutar sin dudar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la mejora del margen neto anual tras rediseñar el modelo.",
-    "capa_1_options": "Facturo más cada año pero no noto que gane más en proporción al esfuerzo.; Trabajo más horas para mantener el mismo nivel de ingresos reales.; Tengo servicios o líneas de negocio cuya rentabilidad nunca he calculado en detalle.; Mi portafolio es tan amplio que dispersa recursos sin que ninguna línea destaque de verdad.; No analizo el margen real de cada servicio o producto: me baso en que si vende, está bien.; Sigo ofreciendo cosas por inercia o por no querer perder ingresos, aunque no sé si son rentables.",
-    "capa_2_herramientas": [
-      "neuro-s3-r1-servicios-bajo-margen.html",
-      "neuro-s3-r2-volumen-vs-rentabilidad.html",
-      "neuro-s3-r3-simulador-precios.html",
-      "neuro-s3-r4-especializacion.html",
-      "neuro-s3-r5-automatizacion-vs-captacion.html",
-      "neuro-s3-r6-rediseno-modelo.html"
-    ]
+    "capa_1_options": "Facturo más cada año pero no noto que gane más en proporción al esfuerzo.; Trabajo más horas para mantener el mismo nivel de ingresos reales.; Tengo servicios o líneas de negocio cuya rentabilidad nunca he calculado en detalle.; Mi portafolio es tan amplio que dispersa recursos sin que ninguna línea destaque de verdad.; No analizo el margen real de cada servicio o producto: me baso en que si vende, está bien.; Sigo ofreciendo cosas por inercia o por no querer perder ingresos, aunque no sé si son rentables."
   },
   {
     "specialty_id": "GESTION CLINICA",
@@ -772,15 +802,7 @@
     "justi_capa5": "Porque necesitas estandarizar",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir velocidad de cierre",
-    "capa_1_options": "Tomo decisiones con números que ya no son de fiar o que recibo con demasiado retraso.; No sé exactamente cuánto me queda cada mes después de pagarlo todo, incluyendo impuestos y mi sueldo real.; Mi cierre contable es lento: los datos del mes llegan cuando el mes siguiente ya está avanzado.; Repito errores porque no tengo visibilidad de los números hasta que el daño ya está hecho.; Dependo de tareas manuales para saber cómo va el negocio y eso me roba tiempo y fiabilidad.; No tengo un cuadro de mando propio: toda la información financiera pasa por mi asesor y nunca la veo directamente.",
-    "capa_2_herramientas": [
-      "cli-s1-r1-inventario-carga-consultor.html",
-      "cli-s1-r2-tiempos-espera.html",
-      "cli-s1-r3-prioridad-pacientes.html",
-      "cli-s1-r4-capacidad-instalaciones.html",
-      "cli-s1-r5-modelo-turnos.html",
-      "cli-s1-r6-derivaciones-externas.html"
-    ]
+    "capa_1_options": "Tomo decisiones con números que ya no son de fiar o que recibo con demasiado retraso.; No sé exactamente cuánto me queda cada mes después de pagarlo todo, incluyendo impuestos y mi sueldo real.; Mi cierre contable es lento: los datos del mes llegan cuando el mes siguiente ya está avanzado.; Repito errores porque no tengo visibilidad de los números hasta que el daño ya está hecho.; Dependo de tareas manuales para saber cómo va el negocio y eso me roba tiempo y fiabilidad.; No tengo un cuadro de mando propio: toda la información financiera pasa por mi asesor y nunca la veo directamente."
   },
   {
     "specialty_id": "GESTION CLINICA",
@@ -833,15 +855,7 @@
     "justi_capa5": "Porque necesitas confirmar que cada medida acordada con tu asesor se ha ejecutado.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción real del tipo impositivo efectivo año a año.",
-    "capa_1_options": "Pago impuestos cada trimestre sin saber exactamente cuánto voy a pagar hasta que llega la liquidación.; Nunca he calculado si me convendría más tributar como SL que seguir como autónomo.; No tengo claro qué gastos del negocio puedo deducir realmente y cuáles no.; Mi asesor gestiona mis impuestos pero yo no entiendo qué pago ni por qué lo pago.; Tengo la sensación de que pago demasiado en proporción a lo que gano pero no tengo datos que lo confirmen.; Nunca he revisado si el régimen fiscal en el que estoy es el más ventajoso para mi nivel de ingresos.",
-    "capa_2_herramientas": [
-      "cli-s2-r1-tracking-abandonos.html",
-      "cli-s2-r2-satisfaccion-sesion.html",
-      "cli-s2-r3-seguimiento-alta.html",
-      "cli-s2-r4-analisis-cancelaciones.html",
-      "cli-s2-r5-efectividad-tratamiento.html",
-      "cli-s2-r6-retencion-por-consultor.html"
-    ]
+    "capa_1_options": "Pago impuestos cada trimestre sin saber exactamente cuánto voy a pagar hasta que llega la liquidación.; Nunca he calculado si me convendría más tributar como SL que seguir como autónomo.; No tengo claro qué gastos del negocio puedo deducir realmente y cuáles no.; Mi asesor gestiona mis impuestos pero yo no entiendo qué pago ni por qué lo pago.; Tengo la sensación de que pago demasiado en proporción a lo que gano pero no tengo datos que lo confirmen.; Nunca he revisado si el régimen fiscal en el que estoy es el más ventajoso para mi nivel de ingresos."
   },
   {
     "specialty_id": "GESTION CLINICA",
@@ -901,15 +915,7 @@
     "justi_capa5": "Porque necesitas sostener estructura",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir dependencia real",
-    "capa_1_options": "Casi todas las decisiones acaban en mi mesa aunque muchas no tendrían por qué llegar hasta mí.; No están claros los límites de cada puesto y eso genera confusión sobre quién decide qué.; Hay tareas que nadie tiene claro de quién son y que acaban sin hacerse o duplicándose.; Se duplican esfuerzos y otras cosas quedan sin responsable visible y sin que nadie las reclame.; Hay roces entre personas del equipo por no tener claro quién tiene autoridad sobre qué.; Sin mi intervención directa las cosas se atascan aunque no tendrían que necesitarme.",
-    "capa_2_herramientas": [
-      "cli-s3-r1-auditoria-historia-clinica.html",
-      "cli-s3-r2-protocolos-vigentes.html",
-      "cli-s3-r3-coordinacion-equipo.html",
-      "cli-s3-r4-agenda-y-gaps.html",
-      "cli-s3-r5-indicadores-calidad.html",
-      "cli-s3-r6-formacion-equipo.html"
-    ]
+    "capa_1_options": "Casi todas las decisiones acaban en mi mesa aunque muchas no tendrían por qué llegar hasta mí.; No están claros los límites de cada puesto y eso genera confusión sobre quién decide qué.; Hay tareas que nadie tiene claro de quién son y que acaban sin hacerse o duplicándose.; Se duplican esfuerzos y otras cosas quedan sin responsable visible y sin que nadie las reclame.; Hay roces entre personas del equipo por no tener claro quién tiene autoridad sobre qué.; Sin mi intervención directa las cosas se atascan aunque no tendrían que necesitarme."
   },
   {
     "specialty_id": "CIRUGIA DE MARCA",
@@ -969,15 +975,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir identidad real",
-    "capa_1_options": "Mi marca no transmite el nivel real de mi trabajo y los clientes me perciben por debajo de lo que soy.; Pierdo clientes potenciales antes de la primera conversación porque la imagen no genera confianza inicial.; Mi estilo visual es genérico e intercambiable: no hay nada que me diferencie a primera vista.; La primera impresión que doy en mis materiales no me hace justicia frente a la calidad que entrego.; No tengo una identidad visual coherente entre mis canales: cada punto de contacto luce diferente.; Mi negocio vale más de lo que aparenta y ese gap me está costando clientes y precio.",
-    "capa_2_herramientas": [
-      "cir-s1-r1-presencia-digital.html",
-      "cir-s1-r2-contenido-calendar.html",
-      "cir-s1-r3-seo-visibilidad.html",
-      "cir-s1-r4-share-of-voice.html",
-      "cir-s1-r5-estrategia-contenido.html",
-      "cir-s1-r6-pr-y-medios.html"
-    ]
+    "capa_1_options": "Mi marca no transmite el nivel real de mi trabajo y los clientes me perciben por debajo de lo que soy.; Pierdo clientes potenciales antes de la primera conversación porque la imagen no genera confianza inicial.; Mi estilo visual es genérico e intercambiable: no hay nada que me diferencie a primera vista.; La primera impresión que doy en mis materiales no me hace justicia frente a la calidad que entrego.; No tengo una identidad visual coherente entre mis canales: cada punto de contacto luce diferente.; Mi negocio vale más de lo que aparenta y ese gap me está costando clientes y precio."
   },
   {
     "specialty_id": "CIRUGIA DE MARCA",
@@ -1037,15 +1035,7 @@
     "justi_capa5": "Porque necesitas asegurar claridad",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir diferenciacion real",
-    "capa_1_options": "Cuando me preguntan por qué deberían elegirme no tengo una respuesta clara y convincente.; Doy una respuesta distinta cada vez sobre qué me diferencia según con quién hablo o el contexto.; Mi propuesta de valor suena prácticamente igual que la de la competencia directa.; El cliente potencial no tiene claro por qué contratarme a mí en lugar de a otro.; Mi equipo comercial tampoco sabe explicar con seguridad qué nos hace distintos y por qué importa.; No tengo un mensaje único y claro que el equipo use de forma consistente en todas las conversaciones.",
-    "capa_2_herramientas": [
-      "cir-s2-r1-clarity-score.html",
-      "cir-s2-r2-arquitectura-mensajes.html",
-      "cir-s2-r3-test-propuesta.html",
-      "cir-s2-r4-customer-avatar.html",
-      "cir-s2-r5-web-conversion.html",
-      "cir-s2-r6-objeciones-comunes.html"
-    ]
+    "capa_1_options": "Cuando me preguntan por qué deberían elegirme no tengo una respuesta clara y convincente.; Doy una respuesta distinta cada vez sobre qué me diferencia según con quién hablo o el contexto.; Mi propuesta de valor suena prácticamente igual que la de la competencia directa.; El cliente potencial no tiene claro por qué contratarme a mí en lugar de a otro.; Mi equipo comercial tampoco sabe explicar con seguridad qué nos hace distintos y por qué importa.; No tengo un mensaje único y claro que el equipo use de forma consistente en todas las conversaciones."
   },
   {
     "specialty_id": "CIRUGIA DE MARCA",
@@ -1105,15 +1095,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir coherencia comunicativa",
-    "capa_1_options": "Comunico cuando me acuerdo o tengo tiempo, sin ningún plan ni calendario detrás.; Mi marca habla con un tono diferente según el canal o la persona que lo gestione ese día.; No mido si lo que comunico genera algún resultado real en captación o percepción de marca.; Cada persona del equipo transmite un mensaje distinto cuando habla de la empresa.; Es difícil que me reconozcan porque la comunicación es irregular y sin identidad constante.; No tengo una guía de cómo, cuándo y qué comunicar que el equipo pueda seguir de forma autónoma.",
-    "capa_2_herramientas": [
-      "cir-s3-r1-auditoria-reputacion.html",
-      "cir-s3-r2-crisis-comunicacion.html",
-      "cir-s3-r3-testimonios-sociales.html",
-      "cir-s3-r4-reputacion-buscadores.html",
-      "cir-s3-r5-plan-reconstruccion.html",
-      "cir-s3-r6-monitoreo-marca.html"
-    ]
+    "capa_1_options": "Comunico cuando me acuerdo o tengo tiempo, sin ningún plan ni calendario detrás.; Mi marca habla con un tono diferente según el canal o la persona que lo gestione ese día.; No mido si lo que comunico genera algún resultado real en captación o percepción de marca.; Cada persona del equipo transmite un mensaje distinto cuando habla de la empresa.; Es difícil que me reconozcan porque la comunicación es irregular y sin identidad constante.; No tengo una guía de cómo, cuándo y qué comunicar que el equipo pueda seguir de forma autónoma."
   },
   {
     "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
@@ -1173,15 +1155,7 @@
     "justi_capa5": "Porque necesitas asegurar estabilidad",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de tension",
-    "capa_1_options": "Mi equipo vive en modo emergencia casi todos los días y eso afecta a la calidad de las decisiones.; Tomamos decisiones impulsivas por la presión del momento que después hay que corregir.; Hay más errores y absentismo de lo normal y el ritmo de trabajo tiene algo que ver.; El clima está crispado y esa tensión afecta al rendimiento aunque nadie lo diga explícitamente.; Tratamos como urgente todo lo que llega, aunque la mayoría podría esperar sin consecuencias reales.; La saturación del equipo nos está costando margen y calidad aunque no aparezca en ninguna cuenta.",
-    "capa_2_herramientas": [
-      "psi-s1-r1-diagnostico-cultura.html",
-      "psi-s1-r2-incidentes-toxicidad.html",
-      "psi-s1-r3-rotacion-y-retencion.html",
-      "psi-s1-r4-absentismo.html",
-      "psi-s1-r5-valores-en-accion.html",
-      "psi-s1-r6-plan-cultura.html"
-    ]
+    "capa_1_options": "Mi equipo vive en modo emergencia casi todos los días y eso afecta a la calidad de las decisiones.; Tomamos decisiones impulsivas por la presión del momento que después hay que corregir.; Hay más errores y absentismo de lo normal y el ritmo de trabajo tiene algo que ver.; El clima está crispado y esa tensión afecta al rendimiento aunque nadie lo diga explícitamente.; Tratamos como urgente todo lo que llega, aunque la mayoría podría esperar sin consecuencias reales.; La saturación del equipo nos está costando margen y calidad aunque no aparezca en ninguna cuenta."
   },
   {
     "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
@@ -1241,15 +1215,7 @@
     "justi_capa5": "Porque necesitas confirmar que cada persona opera desde el rol que le corresponde por perfil y capacidad.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de escalamiento",
-    "capa_1_options": "Tengo personas válidas pero que están en puestos que no se corresponden con su perfil real.; Siempre resuelve todo la misma persona y el resto no tiene la autoridad ni el criterio para actuar.; Hay duplicidad de funciones entre personas o áreas que genera roce y confusión constante.; Alguien del equipo podría aportar mucho más si estuviera en un rol más alineado con sus capacidades.; Todo el mundo trabaja duro pero el sistema falla igual porque los roles están mal asignados.; El equipo no tiene autonomía real para decidir sin pasar por mí en casi cualquier situación.",
-    "capa_2_herramientas": [
-      "psi-s2-r1-inventario-miedos.html",
-      "psi-s2-r2-decisiones-no-tomadas.html",
-      "psi-s2-r3-seguridad-psicologica.html",
-      "psi-s2-r4-experimentos-controlados.html",
-      "psi-s2-r5-comunicacion-errores.html",
-      "psi-s2-r6-liderazgo-modelador.html"
-    ]
+    "capa_1_options": "Tengo personas válidas pero que están en puestos que no se corresponden con su perfil real.; Siempre resuelve todo la misma persona y el resto no tiene la autoridad ni el criterio para actuar.; Hay duplicidad de funciones entre personas o áreas que genera roce y confusión constante.; Alguien del equipo podría aportar mucho más si estuviera en un rol más alineado con sus capacidades.; Todo el mundo trabaja duro pero el sistema falla igual porque los roles están mal asignados.; El equipo no tiene autonomía real para decidir sin pasar por mí en casi cualquier situación."
   },
   {
     "specialty_id": "PSIQUIATRIA ORGANIZACIONAL",
@@ -1309,15 +1275,7 @@
     "justi_capa5": "Porque necesitas asegurar participacion",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir implicacion real",
-    "capa_1_options": "El equipo cumple lo que se le pide pero no propone mejoras ni se implica más allá de lo mínimo.; Hay apatía y poca energía en el día a día que se nota aunque nadie lo mencione.; El sentido de pertenencia se ha ido enfriando sin que haya habido ningún incidente concreto.; Hacen lo mínimo y nada más: no hay nadie que tome iniciativa de forma espontánea.; El silencio del equipo me preocupa pero no sé exactamente por qué está ahí.; Tengo miedo de que alguien clave se vaya sin avisar y sin que yo lo haya visto venir.",
-    "capa_2_herramientas": [
-      "psi-s3-r1-mapa-valores.html",
-      "psi-s3-r2-onboarding-valores.html",
-      "psi-s3-r3-seleccion-valores.html",
-      "psi-s3-r4-reconocimiento-valores.html",
-      "psi-s3-r5-decisiones-valores.html",
-      "psi-s3-r6-rituales-cultura.html"
-    ]
+    "capa_1_options": "El equipo cumple lo que se le pide pero no propone mejoras ni se implica más allá de lo mínimo.; Hay apatía y poca energía en el día a día que se nota aunque nadie lo mencione.; El sentido de pertenencia se ha ido enfriando sin que haya habido ningún incidente concreto.; Hacen lo mínimo y nada más: no hay nadie que tome iniciativa de forma espontánea.; El silencio del equipo me preocupa pero no sé exactamente por qué está ahí.; Tengo miedo de que alguien clave se vaya sin avisar y sin que yo lo haya visto venir."
   },
   {
     "specialty_id": "RESCATE DE PERSONAS",
@@ -1370,15 +1328,7 @@
     "justi_capa5": "Porque necesitas asegurar acciones consistentes",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir estabilidad del talento",
-    "capa_1_options": "Tengo miedo de que se vaya alguien clave y no tengo ninguna estrategia para evitarlo.; Mis mejores personas están sobrecargadas y quemadas y no sé cómo equilibrar la carga.; No sé qué es lo que retiene de verdad a las personas que más importan para el negocio.; Si una persona concreta se fuera se llevaría consigo conocimiento que no está documentado en ningún sitio.; El trabajo está mal repartido y siempre cargan los mismos aunque no sea lo más justo ni eficiente.; Me entero tarde cuando alguien está descontento, cuando el problema ya es difícil de revertir.",
-    "capa_2_herramientas": [
-      "res-s1-r1-carga-real.html",
-      "res-s1-r2-señales-burnout.html",
-      "res-s1-r3-mapa-energia.html",
-      "res-s1-r4-recuperacion-programada.html",
-      "res-s1-r5-redistribucion-responsabilidades.html",
-      "res-s1-r6-protocolo-sostenibilidad.html"
-    ]
+    "capa_1_options": "Tengo miedo de que se vaya alguien clave y no tengo ninguna estrategia para evitarlo.; Mis mejores personas están sobrecargadas y quemadas y no sé cómo equilibrar la carga.; No sé qué es lo que retiene de verdad a las personas que más importan para el negocio.; Si una persona concreta se fuera se llevaría consigo conocimiento que no está documentado en ningún sitio.; El trabajo está mal repartido y siempre cargan los mismos aunque no sea lo más justo ni eficiente.; Me entero tarde cuando alguien está descontento, cuando el problema ya es difícil de revertir."
   },
   {
     "specialty_id": "RESCATE DE PERSONAS",
@@ -1431,15 +1381,7 @@
     "justi_capa5": "Porque necesitas confirmar que las reasignaciones se ejecutaron y el tiempo liberado se usa bien.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion del tiempo de productividad",
-    "capa_1_options": "Estoy pagando talento que el negocio no está aprovechando al nivel que debería.; Mi equipo pasa la mayor parte del día en tareas de bajo impacto o que no necesitan su nivel.; Las personas saben más y pueden más de lo que el negocio les está pidiendo en este momento.; Tengo personas buenas haciendo cosas que alguien con la mitad de su coste podría hacer igual.; Desaprovecho capacidades que ya tengo en casa porque el sistema no las activa ni las libera.; Las nuevas incorporaciones tardan demasiado en rendir de verdad porque no hay proceso que las guíe.",
-    "capa_2_herramientas": [
-      "res-s2-r1-mapa-conflictos.html",
-      "res-s2-r2-roles-responsabilidades.html",
-      "res-s2-r3-comunicacion-equipo.html",
-      "res-s2-r4-acuerdos-equipo.html",
-      "res-s2-r5-feedback-360.html",
-      "res-s2-r6-seguimiento-resolucion.html"
-    ]
+    "capa_1_options": "Estoy pagando talento que el negocio no está aprovechando al nivel que debería.; Mi equipo pasa la mayor parte del día en tareas de bajo impacto o que no necesitan su nivel.; Las personas saben más y pueden más de lo que el negocio les está pidiendo en este momento.; Tengo personas buenas haciendo cosas que alguien con la mitad de su coste podría hacer igual.; Desaprovecho capacidades que ya tengo en casa porque el sistema no las activa ni las libera.; Las nuevas incorporaciones tardan demasiado en rendir de verdad porque no hay proceso que las guíe."
   },
   {
     "specialty_id": "RESCATE DE PERSONAS",
@@ -1499,15 +1441,7 @@
     "justi_capa5": "Porque necesitas confirmar que las tensiones bajan y el equipo recupera rendimiento.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir la reducción de conflictos no resueltos y la mejora del clima organizacional.",
-    "capa_1_options": "Hay tensiones en el equipo que todos notan pero que nadie menciona ni se aborda directamente.; El mal ambiente contamina el día a día y se nota en el rendimiento aunque nadie lo diga explícitamente.; Demasiadas cosas dependen de una sola persona y eso genera fragilidad operativa y emocional.; Si esa persona faltara el negocio se pararía porque no hay backup ni nadie que pueda cubrirla.; No tenemos el conocimiento crítico documentado en ningún sitio y eso crea dependencia invisible.; Las tensiones se acumulan durante semanas o meses hasta que explotan de forma inesperada y difícil de gestionar.",
-    "capa_2_herramientas": [
-      "res-s3-r1-diagnostico-liderazgo.html",
-      "res-s3-r2-decisiones-pendientes.html",
-      "res-s3-r3-vision-comunicacion.html",
-      "res-s3-r4-gestion-cambio.html",
-      "res-s3-r5-confianza-equipo.html",
-      "res-s3-r6-plan-desarrollo-directivo.html"
-    ]
+    "capa_1_options": "Hay tensiones en el equipo que todos notan pero que nadie menciona ni se aborda directamente.; El mal ambiente contamina el día a día y se nota en el rendimiento aunque nadie lo diga explícitamente.; Demasiadas cosas dependen de una sola persona y eso genera fragilidad operativa y emocional.; Si esa persona faltara el negocio se pararía porque no hay backup ni nadie que pueda cubrirla.; No tenemos el conocimiento crítico documentado en ningún sitio y eso crea dependencia invisible.; Las tensiones se acumulan durante semanas o meses hasta que explotan de forma inesperada y difícil de gestionar."
   },
   {
     "specialty_id": "TERAPIA DE EXPERIENCIA",
@@ -1567,15 +1501,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir coherencia real",
-    "capa_1_options": "La experiencia que recibe el cliente varía según el día o la persona que atiende, sin que exista un estándar.; No tenemos un protocolo de servicio definido: cada persona improvisa a su manera.; Un mal día borra el esfuerzo de diez atenciones que salieron bien, y eso afecta a la reputación.; El cliente no sabe qué esperar cada vez que viene porque la experiencia es impredecible.; Cuidamos bien algunos momentos del proceso pero descuidamos otros de igual o mayor impacto.; La irregularidad se está resintiendo en la reputación y en los comentarios que recibimos.",
-    "capa_2_herramientas": [
-      "ter-s1-r1-mapa-quejas.html",
-      "ter-s1-r2-nps-tracker.html",
-      "ter-s1-r3-satisfaccion-por-servicio.html",
-      "ter-s1-r4-expectativas-vs-entrega.html",
-      "ter-s1-r5-reseñas-online.html",
-      "ter-s1-r6-clientes-en-riesgo.html"
-    ]
+    "capa_1_options": "La experiencia que recibe el cliente varía según el día o la persona que atiende, sin que exista un estándar.; No tenemos un protocolo de servicio definido: cada persona improvisa a su manera.; Un mal día borra el esfuerzo de diez atenciones que salieron bien, y eso afecta a la reputación.; El cliente no sabe qué esperar cada vez que viene porque la experiencia es impredecible.; Cuidamos bien algunos momentos del proceso pero descuidamos otros de igual o mayor impacto.; La irregularidad se está resintiendo en la reputación y en los comentarios que recibimos."
   },
   {
     "specialty_id": "TERAPIA DE EXPERIENCIA",
@@ -1635,15 +1561,7 @@
     "justi_capa5": "Porque necesitas asegurar pasos criticos",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir recuperacion real",
-    "capa_1_options": "Tengo clientes que se van sin decir nada y me entero cuando ya han desaparecido del todo.; No tenemos forma de detectar cuándo un cliente está molesto antes de que tome la decisión de irse.; No hay ningún protocolo para recuperar a un cliente que ha tenido una mala experiencia con nosotros.; El cliente insatisfecho no nos lo dice a nosotros: se lo cuenta a otros y daña la reputación en silencio.; La experiencia se rompe en algún punto del proceso sin que yo tenga visibilidad de cuándo ni dónde ocurre.; Estoy perdiendo reputación mes a mes de forma silenciosa sin ninguna señal de alerta clara.",
-    "capa_2_herramientas": [
-      "ter-s2-r1-tracking-referidos.html",
-      "ter-s2-r2-programa-referidos.html",
-      "ter-s2-r3-momentos-wom.html",
-      "ter-s2-r4-casos-exito.html",
-      "ter-s2-r5-satisfaccion-postservicio.html",
-      "ter-s2-r6-comunidad-clientes.html"
-    ]
+    "capa_1_options": "Tengo clientes que se van sin decir nada y me entero cuando ya han desaparecido del todo.; No tenemos forma de detectar cuándo un cliente está molesto antes de que tome la decisión de irse.; No hay ningún protocolo para recuperar a un cliente que ha tenido una mala experiencia con nosotros.; El cliente insatisfecho no nos lo dice a nosotros: se lo cuenta a otros y daña la reputación en silencio.; La experiencia se rompe en algún punto del proceso sin que yo tenga visibilidad de cuándo ni dónde ocurre.; Estoy perdiendo reputación mes a mes de forma silenciosa sin ninguna señal de alerta clara."
   },
   {
     "specialty_id": "TERAPIA DE EXPERIENCIA",
@@ -1703,15 +1621,7 @@
     "justi_capa5": "Porque necesitas asegurar ejecucion",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir aumento de valor percibido",
-    "capa_1_options": "Mis clientes pagan sin protestar pero tampoco me recomiendan de forma activa ni espontánea.; El cliente no percibe el valor real de lo que entrego aunque yo sepa que el trabajo es de calidad.; Pierdo renovaciones aunque hago bien el trabajo: el cliente no siente que haya valido lo que pagó.; Mi servicio funciona correctamente pero no genera ningún momento memorable ni impacto emocional.; Cuando justifico el precio con esfuerzo y dedicación, los clientes aún así lo ponen en duda.; No consigo que el cliente sienta que tomar la decisión de contratarme fue claramente la correcta.",
-    "capa_2_herramientas": [
-      "ter-s3-r1-diferenciacion.html",
-      "ter-s3-r2-percepcion-valor.html",
-      "ter-s3-r3-propuesta-valor.html",
-      "ter-s3-r4-pricing-estrategico.html",
-      "ter-s3-r5-innovacion-servicios.html",
-      "ter-s3-r6-experiencia-premium.html"
-    ]
+    "capa_1_options": "Mis clientes pagan sin protestar pero tampoco me recomiendan de forma activa ni espontánea.; El cliente no percibe el valor real de lo que entrego aunque yo sepa que el trabajo es de calidad.; Pierdo renovaciones aunque hago bien el trabajo: el cliente no siente que haya valido lo que pagó.; Mi servicio funciona correctamente pero no genera ningún momento memorable ni impacto emocional.; Cuando justifico el precio con esfuerzo y dedicación, los clientes aún así lo ponen en duda.; No consigo que el cliente sienta que tomar la decisión de contratarme fue claramente la correcta."
   },
   {
     "specialty_id": "EXCELENCIA OPERATIVA",
@@ -1764,15 +1674,7 @@
     "justi_capa5": "Porque necesitas asegurar consistencia",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de errores iniciales",
-    "capa_1_options": "Cada persona nueva tarda meses en rendir al nivel esperado y ese tiempo lo pago yo en coste y en calidad.; Los nuevos cometen siempre los mismos errores al principio porque nadie los guía con un proceso claro.; No tengo un sistema documentado de integración: cada entrada es diferente y depende de quién acompaña.; El tiempo de adaptación de cada nueva persona lo absorbe el equipo existente y resta productividad.; Los procesos de entrada son confusos y generan dudas que interrumpen al equipo más de lo que debería.; La curva de aprendizaje es demasiado larga comparada con la complejidad real del puesto.",
-    "capa_2_herramientas": [
-      "ope-s1-r1-mapa-procesos.html",
-      "ope-s1-r2-analisis-cuellos.html",
-      "ope-s1-r3-errores-por-proceso.html",
-      "ope-s1-r4-estandarizacion.html",
-      "ope-s1-r5-mejora-lean.html",
-      "ope-s1-r6-kpis-operativos.html"
-    ]
+    "capa_1_options": "Cada persona nueva tarda meses en rendir al nivel esperado y ese tiempo lo pago yo en coste y en calidad.; Los nuevos cometen siempre los mismos errores al principio porque nadie los guía con un proceso claro.; No tengo un sistema documentado de integración: cada entrada es diferente y depende de quién acompaña.; El tiempo de adaptación de cada nueva persona lo absorbe el equipo existente y resta productividad.; Los procesos de entrada son confusos y generan dudas que interrumpen al equipo más de lo que debería.; La curva de aprendizaje es demasiado larga comparada con la complejidad real del puesto."
   },
   {
     "specialty_id": "EXCELENCIA OPERATIVA",
@@ -1832,15 +1734,7 @@
     "justi_capa5": "Porque necesitas asegurar ejecucion",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Porque necesitas medir reduccion de dependencia",
-    "capa_1_options": "Si yo no estoy disponible la empresa se para o toma decisiones malas que luego hay que corregir.; Demasiadas decisiones del día a día dependen exclusivamente de mí aunque no tendría que ser así.; No tengo claro qué puedo delegar sin que la calidad o el control se vean comprometidos.; No puedo ausentarme unos días sin que el equipo me llame para resolver situaciones que podría resolver solo.; El equipo depende de mí para casi cualquier decisión aunque tengan experiencia y criterio para tomarlas.; He construido un puesto de trabajo que me necesita a mí, no una empresa que funcione sin mí.",
-    "capa_2_herramientas": [
-      "ope-s2-r1-auditoria-dependencia.html",
-      "ope-s2-r2-manual-fundador.html",
-      "ope-s2-r3-plan-delegacion.html",
-      "ope-s2-r4-decision-log.html",
-      "ope-s2-r5-protocolo-ausencia.html",
-      "ope-s2-r6-desarrollo-liderazgo.html"
-    ]
+    "capa_1_options": "Si yo no estoy disponible la empresa se para o toma decisiones malas que luego hay que corregir.; Demasiadas decisiones del día a día dependen exclusivamente de mí aunque no tendría que ser así.; No tengo claro qué puedo delegar sin que la calidad o el control se vean comprometidos.; No puedo ausentarme unos días sin que el equipo me llame para resolver situaciones que podría resolver solo.; El equipo depende de mí para casi cualquier decisión aunque tengan experiencia y criterio para tomarlas.; He construido un puesto de trabajo que me necesita a mí, no una empresa que funcione sin mí."
   },
   {
     "specialty_id": "EXCELENCIA OPERATIVA",
@@ -1893,14 +1787,6 @@
     "justi_capa5": "Para estandarizar el ritmo operativo y medir cumplimiento.",
     "capa_6_seguimiento": "OKR tracking",
     "justi_capa6": "Para medir el porcentaje de entregas a tiempo semana a semana.",
-    "capa_1_options": "Tengo semanas de colapso y semanas muertas sin punto medio: la carga nunca está bien distribuida.; Las urgencias de última hora rompen cualquier planificación que haya intentado hacer.; Los retrasos en entregas son habituales y los clientes ya los descuentan aunque no lo digan.; Dedico más tiempo a apagar fuegos que a ejecutar el trabajo planificado con normalidad.; El equipo trabaja al máximo en los picos y queda infrautilizado en los valles de actividad.; No puedo prever cuándo llegará el próximo colapso de trabajo ni cómo prepararlo.",
-    "capa_2_herramientas": [
-      "ope-s3-r1-capacidad-vs-demanda.html",
-      "ope-s3-r2-roi-automatizacion.html",
-      "ope-s3-r3-estructura-equipo.html",
-      "ope-s3-r4-tecnologia-stack.html",
-      "ope-s3-r5-indicadores-crecimiento.html",
-      "ope-s3-r6-plan-expansion.html"
-    ]
+    "capa_1_options": "Tengo semanas de colapso y semanas muertas sin punto medio: la carga nunca está bien distribuida.; Las urgencias de última hora rompen cualquier planificación que haya intentado hacer.; Los retrasos en entregas son habituales y los clientes ya los descuentan aunque no lo digan.; Dedico más tiempo a apagar fuegos que a ejecutar el trabajo planificado con normalidad.; El equipo trabaja al máximo en los picos y queda infrautilizado en los valles de actividad.; No puedo prever cuándo llegará el próximo colapso de trabajo ni cómo prepararlo."
   }
 ]
