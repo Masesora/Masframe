@@ -596,5 +596,6 @@ Fase futura: herramientas embebidas en plataforma. Ruta base: `data/herramientas
 
 ---
 
-*MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
-*Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
+## XVII. SESIÓN DE AUDITORÍA — 13 JUL 2026 (skill masframe-ux-validator)
+
+Sesión de auditoría en vivo de los 30 síntom
