@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI-S2 — R1 · Revisar si tu régimen fiscal es el óptimo para tu nivel de ingresos</title><style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:13px}
+.header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;align-items:center;gap:20px}
+.logo{font-size:22px;font-weight:800;letter-spacing:2px;color:#C4A55A;font-family:Georgia,serif}
+.header-text h1{font-size:15px;font-weight:700;color:#C4A55A;margin-bottom:2px}
+.header-text h2{font-size:12px;color:#c8d4e8;font-weight:400}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;margin-left:auto;white-space:nowrap}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.intro{font-size:12px;color:#5a6a85;background:#eef2fb;border-left:3px solid #C4A55A;padding:10px 14px;border-radius:4px;margin-bottom:16px}
+.section{background:#fff;border:1px solid #dde3ef;border-radius:6px;padding:18px;margin-bottom:16px}
+.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:12px;border-bottom:1px solid #eee;padding-bottom:6px}
+table{width:100%;border-collapse:collapse}
+th{background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 6px;text-align:left}
+td{border-bottom:1px solid #eef0f5;padding:5px 4px;vertical-align:middle}
+tr:hover td{background:#f5f4ff}
+.field-row{display:flex;gap:14px;flex-wrap:wrap}
+.field{flex:1;min-width:180px;margin-bottom:6px}
+.field label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#5a6a85;margin-bottom:4px}
+input[type=text],input[type=number]{border:1px solid #ddd;border-radius:3px;padding:6px 8px;width:100%;font-size:13px;font-family:inherit;color:#1B2B4B;background:#fdfdff}
+select{border:1px solid #ddd;border-radius:3px;padding:5px;font-family:inherit;font-size:12px;color:#1B2B4B;background:#fdfdff}
+input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+.calc{background:#f0f4fc;font-weight:700;text-align:right;color:#1B2B4B;padding:5px 6px}
+.best td{background:#eafaf0!important}
+.add-row-btn{background:#C4A55A;color:#1B2B4B;border:none;border-radius:4px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin-top:10px}
+.add-row-btn:hover{background:#b8923e}
+.del{color:#b91c1c;cursor:pointer;font-weight:700;text-align:center}
+.result-summary{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.result-card{background:#1B2B4B;color:#fff;border-radius:6px;padding:12px 18px;flex:1;min-width:150px;text-align:center}
+.result-card .label{font-size:10px;color:#C4A55A;text-transform:uppercase;font-weight:700}
+.result-card .value{font-size:24px;font-weight:800;color:#fff;margin-top:4px}
+.sem{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:800}
+.sem-ok{background:#d4edda;color:#155724}.sem-warn{background:#fff3cd;color:#856404}.sem-alert{background:#f8d7da;color:#721c24}
+.hint{font-size:11px;color:#8a94a8;margin-top:8px;font-style:italic}
+.print-btn{background:#1B2B4B;color:#C4A55A;border:none;border-radius:4px;padding:8px 18px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
+@media print{.add-row-btn,.print-btn,.del{display:none}body{background:#fff}}</style></head><body>
+<div class="header"><div class="logo">MASFRAME</div>
+<div class="header-text"><h1>CLI-S2 — Sangría Fiscal</h1><h2>R1 · Revisar si tu régimen fiscal es el óptimo para tu nivel de ingresos</h2></div>
+<div class="badge">HERRAMIENTA OPERATIVA</div></div>
+<div class="container"><div class="intro">Objetivo: tipo efectivo <b>por debajo del 32%</b>. Mides el que pagas hoy y comparas, a tus ingresos reales, qué régimen te dejaría pagar menos legalmente. Los tipos son orientativos; el número fino, con tu asesor (R6).</div>
+<div class="section"><div class="section-title">1 · Tu carga fiscal actual</div>
+<div class="field-row">
+<div class="field"><label>Beneficio bruto anual (€)</label><input type="number" id="ben" oninput="r()"></div>
+<div class="field"><label>IRPF / Imp. Sociedades pagado (€)</label><input type="number" id="irpf" oninput="r()"></div>
+<div class="field"><label>Cuota autónomos / SS anual (€)</label><input type="number" id="ss" oninput="r()"></div></div>
+<div class="result-summary" style="margin-top:10px">
+<div class="result-card"><div class="label">Impuestos totales</div><div class="value" id="tot">—</div></div>
+<div class="result-card"><div class="label">Tipo efectivo actual</div><div class="value" id="tip">—</div></div>
+<div class="result-card"><div class="label">Objetivo</div><div class="value">&lt;32%</div></div></div>
+<div style="text-align:center;margin-top:8px"><span id="sem" class="sem sem-warn">Introduce tus datos</span></div></div>
+<div class="section"><div class="section-title">2 · Comparativa de regímenes a tus ingresos</div>
+<table><thead><tr><th>Régimen</th><th>Base (€)</th><th>Tipo (%)</th><th style="text-align:right">Cuota (€)</th><th></th></tr></thead>
+<tbody id="tb">
+<tr><td><input type="text" value="Estimación directa (IRPF)"></td><td><input type="number" class="b" value="45000" oninput="rt()"></td><td><input type="number" class="t" value="30" oninput="rt()"></td><td class="calc c">—</td><td class="del" onclick="dr(this)">✕</td></tr>
+<tr><td><input type="text" value="Sociedad Limitada (IS)"></td><td><input type="number" class="b" value="45000" oninput="rt()"></td><td><input type="number" class="t" value="23" oninput="rt()"></td><td class="calc c">—</td><td class="del" onclick="dr(this)">✕</td></tr>
+<tr><td><input type="text" value="Estimación por módulos"></td><td><input type="number" class="b" value="45000" oninput="rt()"></td><td><input type="number" class="t" value="26" oninput="rt()"></td><td class="calc c">—</td><td class="del" onclick="dr(this)">✕</td></tr>
+</tbody></table><button class="add-row-btn" onclick="ar()">+ Añadir régimen</button>
+<div class="hint">La fila verde es la de menor cuota. Si no es tu régimen actual, ahí tienes la señal para R3 (comparar) y R4 (calcular el ahorro).</div></div>
+<div style="text-align:right"><button class="print-btn" onclick="window.print()">🖨 Imprimir / Guardar PDF</button></div>
+</div><script>function fmt(n){return isFinite(n)?n.toLocaleString('es-ES',{maximumFractionDigits:0}):'—'}
+function r(){var b=+document.getElementById('ben').value||0,i=+document.getElementById('irpf').value||0,s=+document.getElementById('ss').value||0,t=i+s;
+document.getElementById('tot').textContent=t?fmt(t)+' €':'—';var tp=b>0?t/b*100:0,e=document.getElementById('tip'),m=document.getElementById('sem');
+if(b<=0){e.textContent='—';m.className='sem sem-warn';m.textContent='Introduce tus datos';return}e.textContent=tp.toFixed(1)+'%';
+if(tp<32){m.className='sem sem-ok';m.textContent='✔ Dentro del objetivo (<32%)'}else if(tp<40){m.className='sem sem-warn';m.textContent='⚠ Por encima — hay margen'}else{m.className='sem sem-alert';m.textContent='✖ Sangría fiscal'}}
+function rt(){var rows=document.querySelectorAll('#tb tr'),mn=Infinity,mr=null;rows.forEach(function(x){var b=+x.querySelector('.b').value||0,t=+x.querySelector('.t').value||0,c=b*t/100;x.querySelector('.c').textContent=fmt(c)+' €';x.classList.remove('best');if(c>0&&c<mn){mn=c;mr=x}});if(mr)mr.classList.add('best')}
+function ar(){var tr=document.createElement('tr');tr.innerHTML='<td><input type="text" placeholder="Régimen"></td><td><input type="number" class="b" value="0" oninput="rt()"></td><td><input type="number" class="t" value="0" oninput="rt()"></td><td class="calc c">—</td><td class="del" onclick="dr(this)">✕</td>';document.getElementById('tb').appendChild(tr);rt()}
+function dr(e){e.closest('tr').remove();rt()}r();rt();</script></body></html>

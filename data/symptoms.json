@@ -1411,38 +1411,38 @@
         "capa_3_plan": {
             "r1": [
                 {
-                    "nombre": "Tracking abandonos",
-                    "herramienta": "cli-s2-r1-tracking-abandonos.html"
+                    "nombre": "Revisar el régimen fiscal óptimo",
+                    "herramienta": "cli-s2-r1-revision-regimen-fiscal.html"
                 }
             ],
             "r2": [
                 {
-                    "nombre": "Satisfacción sesión",
-                    "herramienta": "cli-s2-r2-satisfaccion-sesion.html"
+                    "nombre": "Deducciones que no estás aplicando",
+                    "herramienta": "cli-s2-r2-deducciones-no-aplicadas.html"
                 }
             ],
             "r3": [
                 {
-                    "nombre": "Seguimiento alta",
-                    "herramienta": "cli-s2-r3-seguimiento-alta.html"
+                    "nombre": "Autónomo vs Sociedad Limitada",
+                    "herramienta": "cli-s2-r3-autonomo-vs-sl.html"
                 }
             ],
             "r4": [
                 {
-                    "nombre": "Análisis cancelaciones",
-                    "herramienta": "cli-s2-r4-analisis-cancelaciones.html"
+                    "nombre": "Ahorro del cambio de estructura",
+                    "herramienta": "cli-s2-r4-ahorro-cambio-estructura.html"
                 }
             ],
             "r5": [
                 {
-                    "nombre": "Efectividad tratamiento",
-                    "herramienta": "cli-s2-r5-efectividad-tratamiento.html"
+                    "nombre": "Libro de gastos deducibles",
+                    "herramienta": "cli-s2-r5-libro-gastos-deducibles.html"
                 }
             ],
             "r6": [
                 {
-                    "nombre": "Retención por consultor",
-                    "herramienta": "cli-s2-r6-retencion-por-consultor.html"
+                    "nombre": "Plan fiscal con tu asesor",
+                    "herramienta": "cli-s2-r6-plan-fiscal-asesor.html"
                 }
             ]
         }

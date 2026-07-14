@@ -99,6 +99,15 @@ def lint(s):
     cptxt=json.dumps(cp,ensure_ascii=False) if cp else ""
     herr_dir=os.path.join(os.path.dirname(os.path.abspath(RUTA)),"herramientas",sid)
     hay_files=os.path.isdir(herr_dir) and any(f.endswith(".html") for f in os.listdir(herr_dir))
+    # --- basura en la carpeta de herramientas (solo debe haber .html) ---
+    if os.path.isdir(herr_dir):
+        basura=[f for f in os.listdir(herr_dir) if not f.endswith(".html")]
+        if basura: E.append(f"archivos que no son .html en herramientas/{sid}: {basura}")
+        # --- terminos de clinica MEDICA (bug 'Gestion Clinica' tomado literal) ---
+        MED=["paciente","historia-clinica","turno","derivacion","instalaciones",
+             "seguimiento-alta","cancelaciones","tratamiento","sesion"]
+        med=[f for f in os.listdir(herr_dir) if any(t in f.lower() for t in MED)]
+        if med: W.append(f"herramientas con vocabulario de clinica medica (revisar contenido, MASFRAME es consultoria de negocio): {med[:4]}{'…' if len(med)>4 else ''}")
     if (not cp) or (".html" not in cptxt):
         extra=" (pero SÍ existen los .html en disco)" if hay_files else " (y tampoco hay .html en disco)"
         W.append(f"capa_3_plan sin herramientas enlazadas -> las herramientas no aparecen en C4{extra}")

@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI-S2 — R3 · Comparar autónomo vs Sociedad Limitada a tus ingresos reales</title><style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:13px}
+.header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;align-items:center;gap:20px}
+.logo{font-size:22px;font-weight:800;letter-spacing:2px;color:#C4A55A;font-family:Georgia,serif}
+.header-text h1{font-size:15px;font-weight:700;color:#C4A55A;margin-bottom:2px}
+.header-text h2{font-size:12px;color:#c8d4e8;font-weight:400}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;margin-left:auto;white-space:nowrap}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.intro{font-size:12px;color:#5a6a85;background:#eef2fb;border-left:3px solid #C4A55A;padding:10px 14px;border-radius:4px;margin-bottom:16px}
+.section{background:#fff;border:1px solid #dde3ef;border-radius:6px;padding:18px;margin-bottom:16px}
+.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:12px;border-bottom:1px solid #eee;padding-bottom:6px}
+table{width:100%;border-collapse:collapse}
+th{background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 6px;text-align:left}
+td{border-bottom:1px solid #eef0f5;padding:5px 4px;vertical-align:middle}
+tr:hover td{background:#f5f4ff}
+.field-row{display:flex;gap:14px;flex-wrap:wrap}
+.field{flex:1;min-width:180px;margin-bottom:6px}
+.field label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#5a6a85;margin-bottom:4px}
+input[type=text],input[type=number]{border:1px solid #ddd;border-radius:3px;padding:6px 8px;width:100%;font-size:13px;font-family:inherit;color:#1B2B4B;background:#fdfdff}
+select{border:1px solid #ddd;border-radius:3px;padding:5px;font-family:inherit;font-size:12px;color:#1B2B4B;background:#fdfdff}
+input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
+.calc{background:#f0f4fc;font-weight:700;text-align:right;color:#1B2B4B;padding:5px 6px}
+.best td{background:#eafaf0!important}
+.add-row-btn{background:#C4A55A;color:#1B2B4B;border:none;border-radius:4px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin-top:10px}
+.add-row-btn:hover{background:#b8923e}
+.del{color:#b91c1c;cursor:pointer;font-weight:700;text-align:center}
+.result-summary{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.result-card{background:#1B2B4B;color:#fff;border-radius:6px;padding:12px 18px;flex:1;min-width:150px;text-align:center}
+.result-card .label{font-size:10px;color:#C4A55A;text-transform:uppercase;font-weight:700}
+.result-card .value{font-size:24px;font-weight:800;color:#fff;margin-top:4px}
+.sem{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:800}
+.sem-ok{background:#d4edda;color:#155724}.sem-warn{background:#fff3cd;color:#856404}.sem-alert{background:#f8d7da;color:#721c24}
+.hint{font-size:11px;color:#8a94a8;margin-top:8px;font-style:italic}
+.print-btn{background:#1B2B4B;color:#C4A55A;border:none;border-radius:4px;padding:8px 18px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
+@media print{.add-row-btn,.print-btn,.del{display:none}body{background:#fff}}</style></head><body>
+<div class="header"><div class="logo">MASFRAME</div>
+<div class="header-text"><h1>CLI-S2 — Sangría Fiscal</h1><h2>R3 · Comparar autónomo vs Sociedad Limitada a tus ingresos reales</h2></div>
+<div class="badge">HERRAMIENTA OPERATIVA</div></div>
+<div class="container"><div class="intro">A partir de cierto beneficio, la SL puede pagar menos que el autónomo. Introduce tu beneficio y ajusta los tipos: la herramienta te dice qué estructura te sale más barata HOY. Es una estimación para decidir si merece la pena mirarlo con el asesor.</div>
+<div class="section"><div class="section-title">Tu beneficio</div>
+<div class="field" style="max-width:260px"><label>Beneficio anual antes de impuestos (€)</label><input type="number" id="ben" value="60000" oninput="r()"></div></div>
+<div class="section"><div class="section-title">Comparativa</div>
+<table><thead><tr><th></th><th style="text-align:right">Autónomo (IRPF)</th><th style="text-align:right">Sociedad Limitada</th></tr></thead>
+<tbody>
+<tr><td>Tipo aplicado (%)</td><td style="text-align:right"><input type="number" id="ta" value="35" oninput="r()" style="max-width:90px"></td><td style="text-align:right"><input type="number" id="ts" value="23" oninput="r()" style="max-width:90px"></td></tr>
+<tr><td>Impuesto sobre beneficio (€)</td><td class="calc" id="ia">—</td><td class="calc" id="is">—</td></tr>
+<tr><td>Cuota SS / coste estructura (€)</td><td style="text-align:right"><input type="number" id="ca" value="4000" oninput="r()" style="max-width:90px"></td><td style="text-align:right"><input type="number" id="cs" value="6000" oninput="r()" style="max-width:90px"></td></tr>
+<tr class="best"><td><b>Coste fiscal total (€)</b></td><td class="calc" id="tota" style="font-weight:800">—</td><td class="calc" id="tots" style="font-weight:800">—</td></tr>
+</tbody></table>
+<div style="text-align:center;margin-top:12px"><span id="sem" class="sem sem-warn">—</span></div>
+<div class="hint">SS/coste estructura de la SL incluye la orientación de gestoría y cuota del administrador. Ajusta a tu caso. Si la SL gana, ve a R4 para calcular el ahorro exacto.</div></div>
+<div style="text-align:right"><button class="print-btn" onclick="window.print()">🖨 Imprimir / Guardar PDF</button></div>
+</div><script>function fmt(n){return isFinite(n)?n.toLocaleString('es-ES',{maximumFractionDigits:0}):'—'}
+function r(){var b=+document.getElementById('ben').value||0;
+var ia=b*(+document.getElementById('ta').value||0)/100, is=b*(+document.getElementById('ts').value||0)/100;
+document.getElementById('ia').textContent=fmt(ia)+' €';document.getElementById('is').textContent=fmt(is)+' €';
+var ta=ia+(+document.getElementById('ca').value||0), ts=is+(+document.getElementById('cs').value||0);
+document.getElementById('tota').textContent=fmt(ta)+' €';document.getElementById('tots').textContent=fmt(ts)+' €';
+var m=document.getElementById('sem');if(ta===ts){m.className='sem sem-warn';m.textContent='Empate'}else if(ts<ta){m.className='sem sem-ok';m.textContent='➜ La SL te ahorra '+fmt(ta-ts)+' € al año'}else{m.className='sem sem-ok';m.textContent='➜ Seguir como autónomo te ahorra '+fmt(ts-ta)+' € al año'}}r();</script></body></html>
