@@ -1316,38 +1316,38 @@
         "capa_3_plan": {
             "r1": [
                 {
-                    "nombre": "Inventario carga consultor",
-                    "herramienta": "cli-s1-r1-inventario-carga-consultor.html"
+                    "nombre": "Definir tus 3 indicadores clave",
+                    "herramienta": "cli-s1-r1-tres-indicadores-clave.html"
                 }
             ],
             "r2": [
                 {
-                    "nombre": "Tiempos espera",
-                    "herramienta": "cli-s1-r2-tiempos-espera.html"
+                    "nombre": "Calcular el margen neto real",
+                    "herramienta": "cli-s1-r2-margen-neto-real.html"
                 }
             ],
             "r3": [
                 {
-                    "nombre": "Prioridad pacientes",
-                    "herramienta": "cli-s1-r3-prioridad-pacientes.html"
+                    "nombre": "Cierre contable en 5 días",
+                    "herramienta": "cli-s1-r3-cierre-en-5-dias.html"
                 }
             ],
             "r4": [
                 {
-                    "nombre": "Capacidad instalaciones",
-                    "herramienta": "cli-s1-r4-capacidad-instalaciones.html"
+                    "nombre": "Dashboard financiero semanal",
+                    "herramienta": "cli-s1-r4-dashboard-semanal.html"
                 }
             ],
             "r5": [
                 {
-                    "nombre": "Modelo turnos",
-                    "herramienta": "cli-s1-r5-modelo-turnos.html"
+                    "nombre": "Automatizar la extracción de datos",
+                    "herramienta": "cli-s1-r5-automatizar-datos.html"
                 }
             ],
             "r6": [
                 {
-                    "nombre": "Derivaciones externas",
-                    "herramienta": "cli-s1-r6-derivaciones-externas.html"
+                    "nombre": "Delegar administración de bajo valor",
+                    "herramienta": "cli-s1-r6-delegar-admin.html"
                 }
             ]
         }
@@ -1506,38 +1506,38 @@
         "capa_3_plan": {
             "r1": [
                 {
-                    "nombre": "Auditoría historia clinica",
-                    "herramienta": "cli-s3-r1-auditoria-historia-clinica.html"
+                    "nombre": "Matriz de responsabilidades (RACI)",
+                    "herramienta": "cli-s3-r1-matriz-responsabilidades.html"
                 }
             ],
             "r2": [
                 {
-                    "nombre": "Protocolos vigentes",
-                    "herramienta": "cli-s3-r2-protocolos-vigentes.html"
+                    "nombre": "Autonomía de decisiones",
+                    "herramienta": "cli-s3-r2-autonomia-decisiones.html"
                 }
             ],
             "r3": [
                 {
-                    "nombre": "Coordinación equipo",
-                    "herramienta": "cli-s3-r3-coordinacion-equipo.html"
+                    "nombre": "Reasignar tareas huérfanas",
+                    "herramienta": "cli-s3-r3-tareas-huerfanas.html"
                 }
             ],
             "r4": [
                 {
-                    "nombre": "Agenda y gaps",
-                    "herramienta": "cli-s3-r4-agenda-y-gaps.html"
+                    "nombre": "Protocolo de escalado",
+                    "herramienta": "cli-s3-r4-protocolo-escalado.html"
                 }
             ],
             "r5": [
                 {
-                    "nombre": "Indicadores calidad",
-                    "herramienta": "cli-s3-r5-indicadores-calidad.html"
+                    "nombre": "Descripción de funciones por rol",
+                    "herramienta": "cli-s3-r5-descripcion-roles.html"
                 }
             ],
             "r6": [
                 {
-                    "nombre": "Formación equipo",
-                    "herramienta": "cli-s3-r6-formacion-equipo.html"
+                    "nombre": "Sesión de aclaramiento de roles",
+                    "herramienta": "cli-s3-r6-sesion-aclaramiento-roles.html"
                 }
             ]
         }
