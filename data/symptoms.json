@@ -1981,38 +1981,38 @@
         "capa_3_plan": {
             "r1": [
                 {
-                    "nombre": "Inventario miedos",
-                    "herramienta": "psi-s2-r1-inventario-miedos.html"
+                    "nombre": "Diagnóstico perfil-rol",
+                    "herramienta": "psi-s2-r1-encaje-perfil-rol.html"
                 }
             ],
             "r2": [
                 {
-                    "nombre": "Decisiones no tomadas",
-                    "herramienta": "psi-s2-r2-decisiones-no-tomadas.html"
+                    "nombre": "Redistribuir por perfil real",
+                    "herramienta": "psi-s2-r2-redistribuir-responsabilidades.html"
                 }
             ],
             "r3": [
                 {
-                    "nombre": "Seguridad psicologica",
-                    "herramienta": "psi-s2-r3-seguridad-psicologica.html"
+                    "nombre": "Revelar los perfiles al equipo",
+                    "herramienta": "psi-s2-r3-revelar-perfiles.html"
                 }
             ],
             "r4": [
                 {
-                    "nombre": "Experimentos controlados",
-                    "herramienta": "psi-s2-r4-experimentos-controlados.html"
+                    "nombre": "Reasignar a un rol alineado",
+                    "herramienta": "psi-s2-r4-reasignar-rol.html"
                 }
             ],
             "r5": [
                 {
-                    "nombre": "Comunicación errores",
-                    "herramienta": "psi-s2-r5-comunicacion-errores.html"
+                    "nombre": "Adaptar rol vs contratar",
+                    "herramienta": "psi-s2-r5-adaptar-vs-contratar.html"
                 }
             ],
             "r6": [
                 {
-                    "nombre": "Liderazgo modelador",
-                    "herramienta": "psi-s2-r6-liderazgo-modelador.html"
+                    "nombre": "Externalizar funciones",
+                    "herramienta": "psi-s2-r6-externalizar-funcion.html"
                 }
             ]
         }
@@ -2646,38 +2646,38 @@
         "capa_3_plan": {
             "r1": [
                 {
-                    "nombre": "Diferenciación",
-                    "herramienta": "ter-s3-r1-diferenciacion.html"
+                    "nombre": "Línea base del cliente",
+                    "herramienta": "ter-s3-r1-linea-base-valor.html"
                 }
             ],
             "r2": [
                 {
-                    "nombre": "Percepción valor",
-                    "herramienta": "ter-s3-r2-percepcion-valor.html"
+                    "nombre": "Hacer visible el expertise",
+                    "herramienta": "ter-s3-r2-hacer-visible-expertise.html"
                 }
             ],
             "r3": [
                 {
-                    "nombre": "Propuesta valor",
-                    "herramienta": "ter-s3-r3-propuesta-valor.html"
+                    "nombre": "Recolocar expectativas",
+                    "herramienta": "ter-s3-r3-gestion-expectativas.html"
                 }
             ],
             "r4": [
                 {
-                    "nombre": "Pricing estratégico",
-                    "herramienta": "ter-s3-r4-pricing-estrategico.html"
+                    "nombre": "Comunicar valor a todos los niveles",
+                    "herramienta": "ter-s3-r4-mapa-decisores.html"
                 }
             ],
             "r5": [
                 {
-                    "nombre": "Innovación servicios",
-                    "herramienta": "ter-s3-r5-innovacion-servicios.html"
+                    "nombre": "Ganar la comparación de valor",
+                    "herramienta": "ter-s3-r5-comparativa-presentacion.html"
                 }
             ],
             "r6": [
                 {
-                    "nombre": "Experiencia premium",
-                    "herramienta": "ter-s3-r6-experiencia-premium.html"
+                    "nombre": "Corregir el ciclo pago-percepción",
+                    "herramienta": "ter-s3-r6-ciclo-valor.html"
                 }
             ]
         }
