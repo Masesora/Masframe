@@ -202,38 +202,38 @@
         "capa_3_plan": {
             "r1": [
                 {
-                    "nombre": "Margen por servicio",
-                    "herramienta": "uci-s2-r1-margen-por-servicio.html"
+                    "nombre": "Facturar al entregar",
+                    "herramienta": "uci-s2-r1-factura-al-entregar.html"
                 }
             ],
             "r2": [
                 {
-                    "nombre": "Rentabilidad cliente",
-                    "herramienta": "uci-s2-r2-rentabilidad-cliente.html"
+                    "nombre": "Lista de cobros por antigüedad",
+                    "herramienta": "uci-s2-r2-lista-cobros-antiguedad.html"
                 }
             ],
             "r3": [
                 {
-                    "nombre": "Coste hora propia",
-                    "herramienta": "uci-s2-r3-coste-hora-propia.html"
+                    "nombre": "Reclamar facturas vencidas",
+                    "herramienta": "uci-s2-r3-reclamar-vencidas.html"
                 }
             ],
             "r4": [
                 {
-                    "nombre": "Auditoría gastos",
-                    "herramienta": "uci-s2-r4-auditoria-gastos.html"
+                    "nombre": "Condiciones de pago por escrito",
+                    "herramienta": "uci-s2-r4-condiciones-pago.html"
                 }
             ],
             "r5": [
                 {
-                    "nombre": "Tiempo sin ingreso",
-                    "herramienta": "uci-s2-r5-tiempo-sin-ingreso.html"
+                    "nombre": "Anticipos y señales",
+                    "herramienta": "uci-s2-r5-anticipos.html"
                 }
             ],
             "r6": [
                 {
-                    "nombre": "Margen por línea",
-                    "herramienta": "uci-s2-r6-margen-por-linea.html"
+                    "nombre": "Recordatorios de cobro",
+                    "herramienta": "uci-s2-r6-recordatorios-cobro.html"
                 }
             ]
         }
@@ -2266,38 +2266,38 @@
         "capa_3_plan": {
             "r1": [
                 {
-                    "nombre": "Mapa conflictos",
-                    "herramienta": "res-s2-r1-mapa-conflictos.html"
+                    "nombre": "Tiempo en tareas de bajo nivel",
+                    "herramienta": "res-s2-r1-tiempo-bajo-nivel.html"
                 }
             ],
             "r2": [
                 {
-                    "nombre": "Roles responsabilidades",
-                    "herramienta": "res-s2-r2-roles-responsabilidades.html"
+                    "nombre": "Coste del perfil caro desaprovechado",
+                    "herramienta": "res-s2-r2-coste-perfil-caro.html"
                 }
             ],
             "r3": [
                 {
-                    "nombre": "Comunicación equipo",
-                    "herramienta": "res-s2-r3-comunicacion-equipo.html"
+                    "nombre": "Capacidades que cambian resultados",
+                    "herramienta": "res-s2-r3-capacidades-clave.html"
                 }
             ],
             "r4": [
                 {
-                    "nombre": "Acuerdos equipo",
-                    "herramienta": "res-s2-r4-acuerdos-equipo.html"
+                    "nombre": "Reasignar tareas de bajo valor",
+                    "herramienta": "res-s2-r4-reasignar-bajo-valor.html"
                 }
             ],
             "r5": [
                 {
-                    "nombre": "Feedback 360",
-                    "herramienta": "res-s2-r5-feedback-360.html"
+                    "nombre": "Liberar el tiempo de los mejores",
+                    "herramienta": "res-s2-r5-liberar-mejores.html"
                 }
             ],
             "r6": [
                 {
-                    "nombre": "Seguimiento resolución",
-                    "herramienta": "res-s2-r6-seguimiento-resolucion.html"
+                    "nombre": "Reto de desarrollo por persona",
+                    "herramienta": "res-s2-r6-reto-desarrollo.html"
                 }
             ]
         }
@@ -2361,38 +2361,38 @@
         "capa_3_plan": {
             "r1": [
                 {
-                    "nombre": "Diagnóstico liderazgo",
-                    "herramienta": "res-s3-r1-diagnostico-liderazgo.html"
+                    "nombre": "Coste mensual del conflicto",
+                    "herramienta": "res-s3-r1-coste-conflicto.html"
                 }
             ],
             "r2": [
                 {
-                    "nombre": "Decisiones pendientes",
-                    "herramienta": "res-s3-r2-decisiones-pendientes.html"
+                    "nombre": "Decidir si separar",
+                    "herramienta": "res-s3-r2-decision-separar.html"
                 }
             ],
             "r3": [
                 {
-                    "nombre": "Visión comunicación",
-                    "herramienta": "res-s3-r3-vision-comunicacion.html"
+                    "nombre": "Valorar prescindir del tóxico",
+                    "herramienta": "res-s3-r3-decision-prescindir.html"
                 }
             ],
             "r4": [
                 {
-                    "nombre": "Gestion cambio",
-                    "herramienta": "res-s3-r4-gestion-cambio.html"
+                    "nombre": "Abordar el foco de fricción",
+                    "herramienta": "res-s3-r4-abordar-friccion.html"
                 }
             ],
             "r5": [
                 {
-                    "nombre": "Confianza equipo",
-                    "herramienta": "res-s3-r5-confianza-equipo.html"
+                    "nombre": "Interna vs ayuda externa",
+                    "herramienta": "res-s3-r5-interna-vs-externa.html"
                 }
             ],
             "r6": [
                 {
-                    "nombre": "Plan desarrollo directivo",
-                    "herramienta": "res-s3-r6-plan-desarrollo-directivo.html"
+                    "nombre": "Reunión abierta vs individual",
+                    "herramienta": "res-s3-r6-reunion-vs-individual.html"
                 }
             ]
         }
