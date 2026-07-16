@@ -1,217 +1,63 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OPE-S3 R6 — Hoja de Ruta de Expansión por Fases</title>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ritmo Operativo Irregular · r6</title>
 <style>
-  :root { --navy: #1B2B4B; --gold: #C4A55A; --bg: #f8f7ff; --white: #ffffff; --red: #c0392b; --yellow: #f39c12; --green: #27ae60; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--navy); padding: 24px; }
-  header { background: var(--navy); color: var(--white); padding: 20px 28px; border-radius: 10px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
-  header h1 { font-size: 1.3rem; font-weight: 700; }
-  header p { font-size: 0.85rem; opacity: 0.75; margin-top: 4px; }
-  .badge { background: var(--gold); color: var(--navy); font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
-  .metrics { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
-  .metric { background: var(--white); border: 1px solid #ddd; border-radius: 8px; padding: 16px 22px; flex: 1; min-width: 150px; }
-  .metric .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
-  .metric .value { font-size: 1.7rem; font-weight: 700; color: var(--navy); margin-top: 4px; }
-  .metric.gold .value { color: var(--gold); }
-  .metric.green .value { color: var(--green); }
-
-  /* Burndown card */
-  .burndown { background: var(--white); border: 1px solid #ddd; border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; }
-  .burndown h3 { font-size: 1rem; font-weight: 700; margin-bottom: 14px; color: var(--navy); }
-  .bd-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; font-size: 0.9rem; }
-  .bd-label { width: 200px; flex-shrink: 0; }
-  .bd-bar-wrap { flex: 1; height: 22px; background: #eee; border-radius: 6px; overflow: hidden; position: relative; }
-  .bd-bar { height: 100%; border-radius: 6px; transition: width 0.4s; }
-  .bd-val { width: 100px; text-align: right; font-weight: 700; flex-shrink: 0; }
-  .bd-committed { background: var(--navy); }
-  .bd-available { background: var(--green); }
-  .bd-pct { font-size: 0.78rem; color: #888; width: 50px; flex-shrink: 0; }
-
-  .toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-  button { background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; cursor: pointer; font-family: system-ui; }
-  button:hover { background: var(--gold); color: var(--navy); }
-  button.secondary { background: var(--white); color: var(--navy); border: 1px solid #ccc; }
-  button.secondary:hover { background: var(--bg); }
-  button.print-btn { background: var(--gold); color: var(--navy); font-weight: 700; }
-  .table-wrap { overflow-x: auto; background: var(--white); border-radius: 10px; border: 1px solid #ddd; margin-bottom: 16px; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
-  thead th { background: var(--navy); color: var(--white); padding: 10px 9px; text-align: left; white-space: nowrap; }
-  thead th:first-child { border-radius: 10px 0 0 0; }
-  thead th:last-child { border-radius: 0 10px 0 0; }
-  tbody tr { border-bottom: 1px solid #eee; }
-  tbody tr:hover { background: #f0f4ff; }
-  td { padding: 8px 9px; vertical-align: middle; }
-  td input, td select, td textarea { border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: system-ui; font-size: 0.83rem; background: var(--bg); width: 100%; resize: vertical; }
-  td input[type="number"] { width: 80px; }
-  td input[type="range"] { width: 80px; accent-color: var(--gold); }
-  td input:focus, td select:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
-  .calc-cell { font-weight: 700; text-align: center; }
-  .pct-bar { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin-top: 3px; }
-  .pct-fill { height: 100%; background: var(--gold); border-radius: 4px; }
-  .note { font-size: 0.78rem; color: #555; font-style: italic; }
-  .inv-field { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .inv-field label { font-size: 0.85rem; width: 220px; flex-shrink: 0; }
-  .inv-field input { border: 1px solid #ddd; border-radius: 4px; padding: 6px 10px; font-family: system-ui; font-size: 0.9rem; width: 160px; background: var(--bg); }
-  @media print { button, .toolbar { display: none; } body { padding: 10px; } }
-</style>
-</head>
-<body>
-
-<header>
-  <div>
-    <h1>OPE-S3 R6 — Hoja de Ruta de Expansión por Fases</h1>
-    <p>Escalabilidad Bloqueada · Planifica la expansión con control de inversión y riesgo</p>
-  </div>
-  <span class="badge">OPE-S3</span>
-</header>
-
-<div class="metrics">
-  <div class="metric gold"><div class="label">Inversión acumulada total (€)</div><div class="value" id="m-inversion">—</div></div>
-  <div class="metric green"><div class="label">% Fases completadas</div><div class="value" id="m-pct">—</div></div>
-  <div class="metric"><div class="label">CAPEX total (€)</div><div class="value" id="m-capex">—</div></div>
-  <div class="metric"><div class="label">OPEX/mes total (€)</div><div class="value" id="m-opex">—</div></div>
-  <div class="metric"><div class="label">Fases planificadas</div><div class="value" id="m-total">—</div></div>
+:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--ink:#26304a;--line:#e4e2f2;}
+*{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.5;padding:28px;}
+.wrap{max-width:960px;margin:0 auto;} header{border-bottom:3px solid var(--gold);padding-bottom:14px;margin-bottom:20px;}
+.eyebrow{color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+h1{color:var(--navy);margin:.2em 0 .1em;font-size:24px;}
+.task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:15px;} .task b{color:var(--navy);}
+.cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+.card{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+.card .n{font-size:30px;font-weight:800;color:var(--navy);} .card .l{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;}
+.sem{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+th{background:var(--navy);color:#fff;font-size:13px;text-align:left;padding:10px 12px;} td{border-top:1px solid var(--line);padding:8px 12px;font-size:14px;}
+td[contenteditable]:focus{background:#fbf8ee;} input{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;}
+.avance{width:70px;} .estado{font-weight:700;} .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;}
+button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+button.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+footer{margin-top:22px;color:#9aa0b4;font-size:12px;text-align:center;}
+@media print{.controls,button{display:none!important;} body{padding:0;background:#fff;}}
+</style></head><body><div class="wrap">
+<header><div class="eyebrow">MASFRAME · OPE-S3 · Herramienta r6</div><h1>Encontrar el cuello de botella</h1></header>
+<div class="task">Acción a ejecutar (C2): <b>¿Qué paso del proceso es el que más me retrasa las entregas?</b></div>
+<div class="cards">
+<div class="card"><div class="n" id="mTot">1</div><div class="l">Elementos</div></div>
+<div class="card"><div class="n" id="mAvg">0%</div><div class="l">Avance medio</div></div>
+<div class="card"><div class="n"><span class="sem" id="semDot"></span><span id="mEstado">En rojo</span></div><div class="l">Estado</div></div>
 </div>
-
-<div class="burndown" id="burndown-card">
-  <h3>Burndown — Inversión comprometida vs disponible</h3>
-  <div class="inv-field">
-    <label>Capital disponible total (€):</label>
-    <input type="number" id="capital-disponible" value="150000" oninput="renderBurndown()" />
-  </div>
-  <div id="burndown-bars"></div>
-</div>
-
-<div class="toolbar">
-  <button onclick="addRow()">+ Añadir fase</button>
-  <button class="secondary" onclick="recalcAll()">↻ Recalcular</button>
-  <button class="print-btn" onclick="window.print()">🖨 Imprimir</button>
-</div>
-
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Fase</th>
-      <th>Objetivo</th>
-      <th>Plazo (meses)</th>
-      <th>CAPEX (€)</th>
-      <th>OPEX/mes (€)</th>
-      <th>Inversión necesaria (€)</th>
-      <th>Hitos clave</th>
-      <th>Riesgos principales</th>
-      <th>Indicadores de éxito</th>
-      <th>% completado</th>
-      <th>Acción</th>
-    </tr>
-  </thead>
-  <tbody id="tbody"></tbody>
-</table>
-</div>
-<p class="note">Inversión necesaria = CAPEX + (OPEX/mes × plazo). Inversión acumulada = suma de todas las fases.</p>
-
-<script>
-const DEFAULTS = [
-  {fase:"Fase 1 — Validación",objetivo:"20 clientes / €40k MRR",plazo:"3",capex:"5000",opex:"2000",hitos:"Piloto 5 clientes, CRM operativo",riesgos:"Adopción lenta del mercado",indicadores:"NPS >50, churn <5%",pct:"80"},
-  {fase:"Fase 2 — Crecimiento",objetivo:"60 clientes / €120k MRR",plazo:"6",capex:"25000",opex:"8000",hitos:"Equipo x2, canal digital activo",riesgos:"Sobrecarga equipo actual",indicadores:"CAC < LTV/3, ciclo venta <30d",pct:"40"},
-  {fase:"Fase 3 — Escalado",objetivo:"150 clientes / €300k MRR",plazo:"12",capex:"80000",opex:"20000",hitos:"Plataforma tech propia, alianzas",riesgos:"Competencia copia modelo",indicadores:"Ratio automatización >60%",pct:"0"},
-  {fase:"Fase 4 — Expansión geográfica",objetivo:"300 clientes / €600k MRR",plazo:"18",capex:"150000",opex:"40000",hitos:"2 mercados nuevos, equipo local",riesgos:"Fricción regulatoria, adaptación",indicadores:"Market share >5% en nuevo mercado",pct:"0"},
-];
-
-let rows = [];
-function init() { rows = DEFAULTS.map(r=>Object.assign({},r)); renderTable(); renderBurndown(); }
-
-function calcInversion(r) {
-  const cap = parseFloat(r.capex)||0, op = parseFloat(r.opex)||0, pl = parseFloat(r.plazo)||0;
-  return cap + op * pl;
-}
-
-function renderTable() {
-  const tbody = document.getElementById("tbody");
-  tbody.innerHTML = "";
-  rows.forEach((r,i) => {
-    const inv = calcInversion(r);
-    const pct = parseInt(r.pct)||0;
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${i+1}</td>
-      <td><input value="${r.fase}" oninput="rows[${i}].fase=this.value" /></td>
-      <td><input value="${r.objetivo}" oninput="rows[${i}].objetivo=this.value" /></td>
-      <td><input type="number" min="1" value="${r.plazo}" oninput="rows[${i}].plazo=this.value;refresh()" /></td>
-      <td><input type="number" min="0" value="${r.capex}" oninput="rows[${i}].capex=this.value;refresh()" /></td>
-      <td><input type="number" min="0" value="${r.opex}" oninput="rows[${i}].opex=this.value;refresh()" /></td>
-      <td class="calc-cell">€${inv.toLocaleString("es-ES")}</td>
-      <td><textarea rows="2" oninput="rows[${i}].hitos=this.value">${r.hitos}</textarea></td>
-      <td><textarea rows="2" oninput="rows[${i}].riesgos=this.value">${r.riesgos}</textarea></td>
-      <td><textarea rows="2" oninput="rows[${i}].indicadores=this.value">${r.indicadores}</textarea></td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <input type="number" min="0" max="100" value="${r.pct}" style="width:55px" oninput="rows[${i}].pct=this.value;refresh()" />
-          <span style="font-size:0.78rem">%</span>
-        </div>
-        <div class="pct-bar"><div class="pct-fill" style="width:${pct}%"></div></div>
-      </td>
-      <td><button class="secondary" style="padding:4px 10px;font-size:0.78rem" onclick="removeRow(${i})">✕</button></td>
-    `;
-    tbody.appendChild(tr);
-  });
-  updateMetrics();
-  renderBurndown();
-}
-
-function refresh() { renderTable(); }
-function recalcAll() { renderTable(); }
-
-function updateMetrics() {
-  const invs = rows.map(calcInversion);
-  const total = invs.reduce((a,b)=>a+b,0);
-  const capex = rows.map(r=>parseFloat(r.capex)||0).reduce((a,b)=>a+b,0);
-  const opex = rows.map(r=>parseFloat(r.opex)||0).reduce((a,b)=>a+b,0);
-  const pcts = rows.map(r=>parseInt(r.pct)||0);
-  const avgPct = rows.length ? pcts.reduce((a,b)=>a+b,0)/rows.length : 0;
-  document.getElementById("m-inversion").textContent = "€"+total.toLocaleString("es-ES");
-  document.getElementById("m-capex").textContent = "€"+capex.toLocaleString("es-ES");
-  document.getElementById("m-opex").textContent = "€"+opex.toLocaleString("es-ES");
-  document.getElementById("m-pct").textContent = avgPct.toFixed(0)+"%";
-  document.getElementById("m-total").textContent = rows.length;
-}
-
-function renderBurndown() {
-  const disponible = parseFloat(document.getElementById("capital-disponible").value)||0;
-  const comprometida = rows.map(calcInversion).reduce((a,b)=>a+b,0);
-  const maxVal = Math.max(disponible, comprometida, 1);
-  const pctComp = Math.min((comprometida/maxVal)*100,100);
-  const pctDisp = Math.min((disponible/maxVal)*100,100);
-  const libre = Math.max(disponible - comprometida, 0);
-  const deficit = comprometida > disponible ? comprometida - disponible : 0;
-  document.getElementById("burndown-bars").innerHTML = `
-    <div class="bd-row">
-      <span class="bd-label">Inversión comprometida</span>
-      <div class="bd-bar-wrap"><div class="bd-bar bd-committed" style="width:${pctComp}%"></div></div>
-      <span class="bd-val">€${comprometida.toLocaleString("es-ES")}</span>
-      <span class="bd-pct">${pctComp.toFixed(0)}%</span>
-    </div>
-    <div class="bd-row">
-      <span class="bd-label">Capital disponible</span>
-      <div class="bd-bar-wrap"><div class="bd-bar bd-available" style="width:${pctDisp}%"></div></div>
-      <span class="bd-val">€${disponible.toLocaleString("es-ES")}</span>
-      <span class="bd-pct">${pctDisp.toFixed(0)}%</span>
-    </div>
-    <div style="margin-top:12px;font-size:0.88rem;font-weight:600;color:${deficit>0?'var(--red)':'var(--green)'}">
-      ${deficit>0 ? `⚠ Déficit de €${deficit.toLocaleString("es-ES")} — financiación adicional requerida` : `Capital libre tras compromisos: €${libre.toLocaleString("es-ES")}`}
-    </div>
-  `;
-}
-
-function addRow() { rows.push({fase:"",objetivo:"",plazo:"",capex:"",opex:"",hitos:"",riesgos:"",indicadores:"",pct:"0"}); renderTable(); }
-function removeRow(i) { rows.splice(i,1); renderTable(); }
-
-init();
+<table id="tabla"><thead><tr><th style="width:34%">Elemento / paso a trabajar</th><th>Responsable</th><th>Fecha objetivo</th><th style="width:110px">Avance (0-100)</th><th style="width:110px">Estado</th></tr></thead>
+<tbody><tr><td contenteditable="true">¿Qué paso del proceso es el que más me retrasa las entregas?</td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td></tr></tbody></table>
+<div class="controls"><button onclick="addRow()">+ Añadir fila</button><button class="ghost" onclick="window.print()">Imprimir / Guardar PDF</button></div>
+<footer>MASFRAME — herramienta operativa. Editable. La decisión clínica vive en las capas C0-C6, no en esta hoja.</footer>
+</div><script>
+function estadoDe(v){if(v>=80)return['#1f9d55','En verde'];if(v>=40)return['#d9822b','En ámbar'];return['#d64545','En rojo'];}
+function recalc(){const rows=[...document.querySelectorAll('#tabla tbody tr')];let sum=0,n=0;rows.forEach(r=>{const inp=r.querySelector('.avance');const v=Math.max(0,Math.min(100,parseFloat(inp.value)||0));const[c,txt]=estadoDe(v);const cell=r.querySelector('.estado');cell.textContent=txt;cell.style.color=c;sum+=v;n++;});const avg=n?Math.round(sum/n):0;document.getElementById('mTot').textContent=n;document.getElementById('mAvg').textContent=avg+'%';const[c,txt]=estadoDe(avg);document.getElementById('mEstado').textContent=txt;document.getElementById('semDot').style.background=c;}
+function addRow(){const tb=document.querySelector('#tabla tbody');const tr=document.createElement('tr');tr.innerHTML='<td contenteditable="true"></td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td>';tb.appendChild(tr);recalc();}
+recalc();
+</script><script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
 </script>
-</body>
-</html>
+
+</body></html>

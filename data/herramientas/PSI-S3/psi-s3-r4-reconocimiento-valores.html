@@ -1,192 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSI-S3 R4 — Sistema de Reconocimiento Vinculado a Valores</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anestesia de Equipo · r4</title>
 <style>
-  :root { --navy: #1B2B4B; --gold: #C4A55A; --bg: #f8f7ff; --white: #ffffff; --red: #c0392b; --yellow: #f39c12; --green: #27ae60; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--navy); padding: 24px; }
-  header { background: var(--navy); color: var(--white); padding: 20px 28px; border-radius: 10px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
-  header h1 { font-size: 1.3rem; font-weight: 700; }
-  header p { font-size: 0.85rem; opacity: 0.75; margin-top: 4px; }
-  .badge { background: var(--gold); color: var(--navy); font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
-  .metrics { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
-  .metric { background: var(--white); border: 1px solid #ddd; border-radius: 8px; padding: 16px 22px; flex: 1; min-width: 150px; }
-  .metric .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
-  .metric .value { font-size: 1.8rem; font-weight: 700; color: var(--navy); margin-top: 4px; }
-  .metric.gold .value { color: var(--gold); }
-  .metric.green .value { color: var(--green); }
-  .alerta { background: #fff3cd; border: 1px solid var(--yellow); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 0.9rem; display: none; }
-  .alerta.visible { display: block; }
-  .alerta strong { color: var(--red); }
-  .config-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; align-items: flex-end; }
-  .config-field { display: flex; flex-direction: column; gap: 4px; }
-  .config-field label { font-size: 0.78rem; color: #555; font-weight: 600; }
-  .config-field input { border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px; font-family: system-ui; font-size: 0.95rem; width: 160px; background: var(--white); }
-  .config-field input:focus { outline: 2px solid var(--gold); }
-  .toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-  button { background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; cursor: pointer; font-family: system-ui; }
-  button:hover { background: var(--gold); color: var(--navy); }
-  button.secondary { background: var(--white); color: var(--navy); border: 1px solid #ccc; }
-  button.secondary:hover { background: var(--bg); }
-  button.print-btn { background: var(--gold); color: var(--navy); font-weight: 700; }
-  .table-wrap { overflow-x: auto; background: var(--white); border-radius: 10px; border: 1px solid #ddd; margin-bottom: 16px; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
-  thead th { background: var(--navy); color: var(--white); padding: 11px 10px; text-align: left; white-space: nowrap; }
-  thead th:first-child { border-radius: 10px 0 0 0; }
-  thead th:last-child { border-radius: 0 10px 0 0; }
-  tbody tr { border-bottom: 1px solid #eee; }
-  tbody tr:hover { background: #f0f4ff; }
-  td { padding: 9px 10px; vertical-align: middle; }
-  td input, td select { border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: system-ui; font-size: 0.85rem; background: var(--bg); width: 100%; }
-  td input[type="number"] { width: 75px; }
-  td input:focus, td select:focus { outline: 2px solid var(--gold); border-color: var(--gold); }
-  .calc-cell { font-weight: 700; text-align: center; }
-  .tag-si { background: #e8f8ee; color: var(--green); font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; }
-  .tag-no { background: #ffe5e5; color: var(--red); font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; }
-  .tag-parcial { background: #fff3cd; color: #7d5a00; font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; }
-  .note { font-size: 0.78rem; color: #555; font-style: italic; }
-  @media print { button, .toolbar { display: none; } body { padding: 10px; } }
+  :root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--ink:#26304a;--line:#e4e2f2;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.5;padding:28px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{border-bottom:3px solid var(--gold);padding-bottom:14px;margin-bottom:20px;}
+  .eyebrow{color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+  h1{color:var(--navy);margin:.2em 0 .1em;font-size:24px;}
+  .task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:15px;}
+  .task b{color:var(--navy);}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+  .card{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+  .card .n{font-size:30px;font-weight:800;color:var(--navy);}
+  .card .l{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;}
+  .sem{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th{background:var(--navy);color:#fff;font-size:13px;text-align:left;padding:10px 12px;}
+  td{border-top:1px solid var(--line);padding:8px 12px;font-size:14px;}
+  td[contenteditable]{outline:none;} td[contenteditable]:focus{background:#fbf8ee;}
+  input,select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;background:#fff;}
+  .avance{width:70px;}
+  .estado{font-weight:700;}
+  .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;}
+  button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+  button.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  footer{margin-top:22px;color:#9aa0b4;font-size:12px;text-align:center;}
+  @media print{.controls,button{display:none!important;} body{padding:0;background:#fff;}}
 </style>
 </head>
 <body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">MASFRAME · PSI-S3 · Herramienta r4</div>
+    <h1>Anestesia de Equipo</h1>
+  </header>
 
-<header>
-  <div>
-    <h1>PSI-S3 R4 — Sistema de Reconocimiento Vinculado a Valores</h1>
-    <p>Desalineación de Valores · Audita si el reconocimiento refuerza la cultura que quieres construir</p>
+  <div class="task">Acción a ejecutar (C2): <b>Sensación de que el esfuerzo extra no cambia nada ni es reconocido de ninguna forma</b></div>
+
+  <div class="cards">
+    <div class="card"><div class="n" id="mTot">1</div><div class="l">Elementos</div></div>
+    <div class="card"><div class="n" id="mAvg">0%</div><div class="l">Avance medio</div></div>
+    <div class="card"><div class="n"><span class="sem" id="semDot"></span><span id="mEstado">En rojo</span></div><div class="l">Estado</div></div>
   </div>
-  <span class="badge">PSI-S3</span>
-</header>
 
-<div id="alerta-recon" class="alerta">
-  <strong>⚠ Alerta:</strong> El ratio de reconocimientos por persona este mes está por debajo del mínimo recomendado (2/mes). Aumenta la frecuencia de reconocimiento para mantener el compromiso del equipo.
-</div>
+  <table id="tabla">
+    <thead>
+      <tr><th style="width:34%">Elemento / paso a trabajar</th><th>Responsable</th><th>Fecha objetivo</th><th style="width:110px">Avance (0-100)</th><th style="width:110px">Estado</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td contenteditable="true">Sensación de que el esfuerzo extra no cambia nada ni es reconocido de ninguna forma</td>
+        <td contenteditable="true"></td>
+        <td><input type="date"></td>
+        <td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td>
+        <td class="estado">—</td>
+      </tr>
+    </tbody>
+  </table>
 
-<div class="config-row">
-  <div class="config-field">
-    <label>Nº personas en el equipo</label>
-    <input type="number" id="n-personas" value="8" min="1" oninput="refresh()" />
+  <div class="controls">
+    <button onclick="addRow()">+ Añadir fila</button>
+    <button class="ghost" onclick="window.print()">Imprimir / Guardar PDF</button>
   </div>
-  <div class="config-field">
-    <label>Reconocimientos emitidos este mes</label>
-    <input type="number" id="n-reconocimientos" value="12" min="0" oninput="refresh()" />
-  </div>
-</div>
 
-<div class="metrics">
-  <div class="metric gold"><div class="label">% vinculados a valores</div><div class="value" id="m-pct">—</div></div>
-  <div class="metric green"><div class="label">Ratio reconoc./persona/mes</div><div class="value" id="m-ratio">—</div></div>
-  <div class="metric"><div class="label">Coste total programa (€/mes)</div><div class="value" id="m-coste">—</div></div>
-  <div class="metric"><div class="label">Impacto medio percibido</div><div class="value" id="m-impacto">—</div></div>
+  <footer>MASFRAME — herramienta operativa. Editable. La decisión clínica vive en las capas C0-C6, no en esta hoja.</footer>
 </div>
-
-<div class="toolbar">
-  <button onclick="addRow()">+ Añadir tipo de reconocimiento</button>
-  <button class="secondary" onclick="recalcAll()">↻ Recalcular</button>
-  <button class="print-btn" onclick="window.print()">🖨 Imprimir</button>
-</div>
-
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Tipo de reconocimiento</th>
-      <th>Frecuencia actual</th>
-      <th>¿Vinculado a valores?</th>
-      <th>Criterio objetivo</th>
-      <th>¿Es visible para el equipo?</th>
-      <th>Coste (€/mes)</th>
-      <th>Impacto percibido (1-10)</th>
-      <th>Acción</th>
-    </tr>
-  </thead>
-  <tbody id="tbody"></tbody>
-</table>
-</div>
-<p class="note">Alerta si reconocimientos/persona/mes &lt; 2. % vinculados = tipos vinculados a valores / total tipos.</p>
 
 <script>
-const DEFAULTS = [
-  {tipo:"Reconocimiento público en reunión",frecuencia:"Mensual",vinculado:"Sí",criterio:"Comportamiento alineado con valor específico",visible:"Sí",coste:"0",impacto:"9"},
-  {tipo:"Bonus económico trimestral",frecuencia:"Trimestral",vinculado:"Parcial",criterio:"Resultados de negocio",visible:"No",coste:"500",impacto:"8"},
-  {tipo:"Email de felicitación del CEO",frecuencia:"Puntual",vinculado:"No",criterio:"Ninguno definido",visible:"No",coste:"0",impacto:"6"},
-  {tipo:"Día libre extra",frecuencia:"Puntual",vinculado:"Sí",criterio:"Iniciativa extraordinaria alineada con valores",visible:"Sí",coste:"150",impacto:"10"},
-  {tipo:"Mención en newsletter interna",frecuencia:"Mensual",vinculado:"Sí",criterio:"Proyecto que ejemplifica los valores",visible:"Sí",coste:"0",impacto:"7"},
-];
-
-let rows = [];
-function init() { rows = DEFAULTS.map(r=>Object.assign({},r)); renderTable(); }
-
-function vinculadoTag(v) {
-  if (v==="Sí") return `<span class="tag-si">Sí</span>`;
-  if (v==="No") return `<span class="tag-no">No</span>`;
-  return `<span class="tag-parcial">Parcial</span>`;
-}
-
-function renderTable() {
-  const tbody = document.getElementById("tbody");
-  tbody.innerHTML = "";
-  rows.forEach((r,i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${i+1}</td>
-      <td><input value="${r.tipo}" oninput="rows[${i}].tipo=this.value" /></td>
-      <td><select onchange="rows[${i}].frecuencia=this.value">
-        <option value="Diario" ${r.frecuencia==="Diario"?"selected":""}>Diario</option>
-        <option value="Semanal" ${r.frecuencia==="Semanal"?"selected":""}>Semanal</option>
-        <option value="Mensual" ${r.frecuencia==="Mensual"?"selected":""}>Mensual</option>
-        <option value="Trimestral" ${r.frecuencia==="Trimestral"?"selected":""}>Trimestral</option>
-        <option value="Puntual" ${r.frecuencia==="Puntual"?"selected":""}>Puntual</option>
-      </select></td>
-      <td>
-        <select onchange="rows[${i}].vinculado=this.value;refresh()">
-          <option value="Sí" ${r.vinculado==="Sí"?"selected":""}>Sí</option>
-          <option value="No" ${r.vinculado==="No"?"selected":""}>No</option>
-          <option value="Parcial" ${r.vinculado==="Parcial"?"selected":""}>Parcial</option>
-        </select>
-      </td>
-      <td><input value="${r.criterio}" oninput="rows[${i}].criterio=this.value" /></td>
-      <td><select onchange="rows[${i}].visible=this.value">
-        <option value="Sí" ${r.visible==="Sí"?"selected":""}>Sí</option>
-        <option value="No" ${r.visible==="No"?"selected":""}>No</option>
-      </select></td>
-      <td><input type="number" min="0" value="${r.coste}" oninput="rows[${i}].coste=this.value;refresh()" /></td>
-      <td><input type="number" min="1" max="10" value="${r.impacto}" oninput="rows[${i}].impacto=this.value;refresh()" /></td>
-      <td><button class="secondary" style="padding:4px 10px;font-size:0.78rem" onclick="removeRow(${i})">✕</button></td>
-    `;
-    tbody.appendChild(tr);
+function estadoDe(v){ if(v>=80) return ['#1f9d55','En verde']; if(v>=40) return ['#d9822b','En ámbar']; return ['#d64545','En rojo']; }
+function recalc(){
+  const rows=[...document.querySelectorAll('#tabla tbody tr')];
+  let sum=0,n=0;
+  rows.forEach(r=>{
+    const inp=r.querySelector('.avance'); const v=Math.max(0,Math.min(100,parseFloat(inp.value)||0));
+    const [c,txt]=estadoDe(v); const cell=r.querySelector('.estado'); cell.textContent=txt; cell.style.color=c;
+    sum+=v; n++;
   });
-  refresh();
+  const avg=n?Math.round(sum/n):0;
+  document.getElementById('mTot').textContent=n;
+  document.getElementById('mAvg').textContent=avg+'%';
+  const [c,txt]=estadoDe(avg);
+  document.getElementById('mEstado').textContent=txt;
+  document.getElementById('semDot').style.background=c;
 }
-
-function refresh() {
-  const personas = parseInt(document.getElementById("n-personas").value)||1;
-  const reconocimientos = parseInt(document.getElementById("n-reconocimientos").value)||0;
-  const ratio = reconocimientos / personas;
-  const vinculados = rows.filter(r=>r.vinculado==="Sí").length;
-  const pct = rows.length ? Math.round((vinculados/rows.length)*100) : 0;
-  const costeTotal = rows.map(r=>parseFloat(r.coste)||0).reduce((a,b)=>a+b,0);
-  const impactos = rows.map(r=>parseFloat(r.impacto)).filter(v=>!isNaN(v));
-  const impactoMed = impactos.length ? (impactos.reduce((a,b)=>a+b,0)/impactos.length).toFixed(1) : "—";
-
-  document.getElementById("m-pct").textContent = pct+"%";
-  document.getElementById("m-ratio").textContent = ratio.toFixed(1);
-  document.getElementById("m-coste").textContent = "€"+costeTotal.toLocaleString("es-ES");
-  document.getElementById("m-impacto").textContent = impactoMed+"/10";
-
-  const alerta = document.getElementById("alerta-recon");
-  alerta.classList.toggle("visible", ratio < 2);
+function addRow(){
+  const tb=document.querySelector('#tabla tbody');
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td contenteditable="true"></td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td>';
+  tb.appendChild(tr); recalc();
 }
-
-function recalcAll() { renderTable(); }
-function addRow() { rows.push({tipo:"",frecuencia:"Mensual",vinculado:"No",criterio:"",visible:"No",coste:"",impacto:""}); renderTable(); }
-function removeRow(i) { rows.splice(i,1); renderTable(); }
-
-init();
+recalc();
 </script>
+<script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
 </body>
 </html>

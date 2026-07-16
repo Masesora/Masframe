@@ -36,4 +36,27 @@ input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
 <div class="header"><div class="logo">MASFRAME</div><div class="header-text"><h1>PSI-S2 — Dislocación de Perfiles</h1><h2>R1 · Diagnóstico: ¿la incompatibilidad perfil-rol es estructural?</h2></div><div class="badge">HERRAMIENTA OPERATIVA</div></div>
 <div class="container"><div class="intro">No es que la persona 'no valga': es que está en el sitio equivocado para su perfil. Mide, persona a persona, si su perfil natural encaja con su rol y cuánto está saturada. El % saturado es tu KPI (objetivo &lt;20%).</div><div class="section"><div class="section-title">Encaje perfil ↔ rol y nivel de saturación</div><table><thead><tr><th>Persona</th><th>Perfil natural (DISC)</th><th>Rol actual</th><th>¿Encaja?</th><th>Saturación (1-5)</th><th></th></tr></thead><tbody id="tb"><tr><td><input type="text"></td><td><input type="text" placeholder="D / I / S / C"></td><td><input type="text"></td><td><select><option>—</option><option>Encaja</option><option>A medias</option><option>No encaja</option></select></td><td><input type="number" class="sat" min="1" max="5" value="3" oninput="r()"></td><td class="del" onclick="dr(this)">✕</td></tr><tr><td><input type="text"></td><td><input type="text" placeholder="D / I / S / C"></td><td><input type="text"></td><td><select><option>—</option><option>Encaja</option><option>A medias</option><option>No encaja</option></select></td><td><input type="number" class="sat" min="1" max="5" value="3" oninput="r()"></td><td class="del" onclick="dr(this)">✕</td></tr><tr><td><input type="text"></td><td><input type="text" placeholder="D / I / S / C"></td><td><input type="text"></td><td><select><option>—</option><option>Encaja</option><option>A medias</option><option>No encaja</option></select></td><td><input type="number" class="sat" min="1" max="5" value="3" oninput="r()"></td><td class="del" onclick="dr(this)">✕</td></tr></tbody></table><button class="add-row-btn" onclick="ar()">+ Añadir fila</button><div class="result-summary" style="margin-top:14px"><div class="result-card"><div class="label">% de equipo saturado (4-5)</div><div class="value" id="pct">—</div></div><div class="result-card"><div class="label">Objetivo</div><div class="value" id="obj">—</div></div></div></div>
 <div style="text-align:right"><button class="print-btn" onclick="window.print()">🖨 Imprimir / Guardar PDF</button></div></div>
-<script>function fmt(n){return isFinite(n)?n.toLocaleString('es-ES',{maximumFractionDigits:0}):'—'}function ar(){var t=document.createElement('tr');t.innerHTML=`<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><select><option>—</option><option>Encaja</option><option>A medias</option><option>No encaja</option></select></td><td><input type="number" class="sat" min="1" max="5" value="3" oninput="r()"></td><td class="del" onclick="dr(this)">✕</td>`;document.getElementById('tb').appendChild(t);r()}function dr(e){e.closest('tr').remove();r()}document.getElementById('obj').textContent='<20%';function r(){var rs=document.querySelectorAll('#tb tr'),s=0;rs.forEach(function(x){var v=+x.querySelector('.sat').value||0;x.classList.toggle('flag',v>=4);if(v>=4)s++});document.getElementById('pct').textContent=rs.length?Math.round(s/rs.length*100)+'%':'—'}r()</script></body></html>
+<script>function fmt(n){return isFinite(n)?n.toLocaleString('es-ES',{maximumFractionDigits:0}):'—'}function ar(){var t=document.createElement('tr');t.innerHTML=`<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><select><option>—</option><option>Encaja</option><option>A medias</option><option>No encaja</option></select></td><td><input type="number" class="sat" min="1" max="5" value="3" oninput="r()"></td><td class="del" onclick="dr(this)">✕</td>`;document.getElementById('tb').appendChild(t);r()}function dr(e){e.closest('tr').remove();r()}document.getElementById('obj').textContent='<20%';function r(){var rs=document.querySelectorAll('#tb tr'),s=0;rs.forEach(function(x){var v=+x.querySelector('.sat').value||0;x.classList.toggle('flag',v>=4);if(v>=4)s++});document.getElementById('pct').textContent=rs.length?Math.round(s/rs.length*100)+'%':'—'}r()</script><script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
+</body></html>

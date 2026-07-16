@@ -216,5 +216,28 @@ function calcAll(){
 }
 addRow();addRow();addRow();
 </script>
+<script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
 </body>
 </html>

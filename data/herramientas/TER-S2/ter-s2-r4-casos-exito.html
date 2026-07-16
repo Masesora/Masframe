@@ -1,134 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TER-S2 R4 — Casos de Éxito | MASFRAME</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Necrosis de Cliente · r4</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
-  header{background:#1B2B4B;color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
-  header h1{font-size:18px;font-weight:700}
-  header span{font-size:12px;color:#C4A55A;font-weight:600;letter-spacing:.5px}
-  .toolbar{padding:12px 24px;background:#fff;border-bottom:2px solid #C4A55A;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .toolbar button{background:#1B2B4B;color:#fff;border:none;padding:7px 14px;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600}
-  .toolbar button:hover{background:#C4A55A}
-  .toolbar button.print{background:#C4A55A;color:#1B2B4B}
-  .metrics{display:flex;gap:12px;padding:16px 24px;flex-wrap:wrap}
-  .metric{background:#fff;border:1px solid #ddd;border-radius:6px;padding:12px 18px;min-width:160px;text-align:center;border-top:3px solid #C4A55A}
-  .metric .val{font-size:22px;font-weight:700;color:#1B2B4B}
-  .metric .lbl{font-size:11px;color:#666;margin-top:2px}
-  .alerta{background:#fff3cd;border:1px solid #ffc107;border-radius:6px;margin:0 24px 12px;padding:10px 14px;font-size:13px;color:#856404}
-  .wrap{padding:0 24px 24px;overflow-x:auto}
-  table{width:100%;border-collapse:collapse;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-  thead tr{background:#1B2B4B;color:#fff}
-  th{padding:9px 8px;text-align:left;font-size:12px;font-weight:600;white-space:nowrap}
-  td{padding:7px 8px;border-bottom:1px solid #eee;font-size:12px;vertical-align:top}
-  td[contenteditable]{outline:none;cursor:text}
-  td[contenteditable]:focus{background:#fffde7;border-bottom:2px solid #C4A55A}
-  tr:hover td{background:#fafafa}
-  .calc{background:#f0f4ff;color:#1B2B4B;font-weight:600;pointer-events:none}
-  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
-  .verde{background:#d4edda;color:#155724}
-  .amarillo{background:#fff3cd;color:#856404}
-  .rojo{background:#f8d7da;color:#721c24}
-  .alerta-cell{background:#f8d7da;color:#721c24;font-weight:700}
-  tfoot td{background:#1B2B4B;color:#fff;font-weight:700;font-size:12px;padding:8px}
+  :root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--ink:#26304a;--line:#e4e2f2;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.5;padding:28px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{border-bottom:3px solid var(--gold);padding-bottom:14px;margin-bottom:20px;}
+  .eyebrow{color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+  h1{color:var(--navy);margin:.2em 0 .1em;font-size:24px;}
+  .task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:15px;}
+  .task b{color:var(--navy);}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+  .card{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+  .card .n{font-size:30px;font-weight:800;color:var(--navy);}
+  .card .l{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;}
+  .sem{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th{background:var(--navy);color:#fff;font-size:13px;text-align:left;padding:10px 12px;}
+  td{border-top:1px solid var(--line);padding:8px 12px;font-size:14px;}
+  td[contenteditable]{outline:none;} td[contenteditable]:focus{background:#fbf8ee;}
+  input,select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;background:#fff;}
+  .avance{width:70px;}
+  .estado{font-weight:700;}
+  .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;}
+  button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+  button.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  footer{margin-top:22px;color:#9aa0b4;font-size:12px;text-align:center;}
+  @media print{.controls,button{display:none!important;} body{padding:0;background:#fff;}}
 </style>
 </head>
 <body>
-<header>
-  <h1>TER-S2 R4 — Casos de Éxito</h1>
-  <span>MASFRAME · Pérdida de Referidos</span>
-</header>
-<div class="toolbar">
-  <button onclick="addRow()">+ Añadir fila</button>
-  <button class="print" onclick="window.print()">🖨 Imprimir</button>
-</div>
-<div class="metrics">
-  <div class="metric"><div class="val" id="m-total">0</div><div class="lbl">Total casos</div></div>
-  <div class="metric"><div class="val" id="m-con-test">0</div><div class="lbl">Con testimonio</div></div>
-  <div class="metric"><div class="val" id="m-sin-test">0</div><div class="lbl">Sin testimonio (alerta)</div></div>
-  <div class="metric"><div class="val" id="m-leads">0</div><div class="lbl">Leads generados total</div></div>
-</div>
-<div id="alerta-box" class="alerta" style="display:none">⚠ Hay casos de éxito sin testimonio recogido. Contactar con el cliente para solicitarlo.</div>
 <div class="wrap">
-<table id="tbl">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Cliente</th>
-      <th>Sector</th>
-      <th>Reto</th>
-      <th>Resultado</th>
-      <th>KPI medido + valor</th>
-      <th>Tiempo (meses)</th>
-      <th>¿Testimonio?</th>
-      <th>¿Caso estudio?</th>
-      <th>Plataformas</th>
-      <th>Leads generados</th>
-      <th>ROI publicar</th>
-    </tr>
-  </thead>
-  <tbody id="tbody">
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="10">TOTAL</td>
-      <td id="f-leads">0</td>
-      <td></td>
-    </tr>
-  </tfoot>
-</table>
+  <header>
+    <div class="eyebrow">MASFRAME · TER-S2 · Herramienta r4</div>
+    <h1>Necrosis de Cliente</h1>
+  </header>
+
+  <div class="task">Acción a ejecutar (C2): <b>Establecer un contacto proactivo tras cada compra para invitar a volver</b></div>
+
+  <div class="cards">
+    <div class="card"><div class="n" id="mTot">1</div><div class="l">Elementos</div></div>
+    <div class="card"><div class="n" id="mAvg">0%</div><div class="l">Avance medio</div></div>
+    <div class="card"><div class="n"><span class="sem" id="semDot"></span><span id="mEstado">En rojo</span></div><div class="l">Estado</div></div>
+  </div>
+
+  <table id="tabla">
+    <thead>
+      <tr><th style="width:34%">Elemento / paso a trabajar</th><th>Responsable</th><th>Fecha objetivo</th><th style="width:110px">Avance (0-100)</th><th style="width:110px">Estado</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td contenteditable="true">Establecer un contacto proactivo tras cada compra para invitar a volver</td>
+        <td contenteditable="true"></td>
+        <td><input type="date"></td>
+        <td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td>
+        <td class="estado">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="controls">
+    <button onclick="addRow()">+ Añadir fila</button>
+    <button class="ghost" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+
+  <footer>MASFRAME — herramienta operativa. Editable. La decisión clínica vive en las capas C0-C6, no en esta hoja.</footer>
 </div>
+
 <script>
-const COLS=['Cliente','Sector','Reto','Resultado','KPI medido + valor','Tiempo (meses)','¿Testimonio?','¿Caso estudio?','Plataformas','Leads generados'];
-let rowCount=0;
-function addRow(data={}){
-  rowCount++;
-  const tbody=document.getElementById('tbody');
+function estadoDe(v){ if(v>=80) return ['#1f9d55','En verde']; if(v>=40) return ['#d9822b','En ámbar']; return ['#d64545','En rojo']; }
+function recalc(){
+  const rows=[...document.querySelectorAll('#tabla tbody tr')];
+  let sum=0,n=0;
+  rows.forEach(r=>{
+    const inp=r.querySelector('.avance'); const v=Math.max(0,Math.min(100,parseFloat(inp.value)||0));
+    const [c,txt]=estadoDe(v); const cell=r.querySelector('.estado'); cell.textContent=txt; cell.style.color=c;
+    sum+=v; n++;
+  });
+  const avg=n?Math.round(sum/n):0;
+  document.getElementById('mTot').textContent=n;
+  document.getElementById('mAvg').textContent=avg+'%';
+  const [c,txt]=estadoDe(avg);
+  document.getElementById('mEstado').textContent=txt;
+  document.getElementById('semDot').style.background=c;
+}
+function addRow(){
+  const tb=document.querySelector('#tabla tbody');
   const tr=document.createElement('tr');
-  tr.dataset.id=rowCount;
-  let html=`<td style="color:#999;font-size:11px">${rowCount}</td>`;
-  COLS.forEach(c=>{
-    const val=data[c]||'';
-    html+=`<td contenteditable="true" data-col="${c}" oninput="calc()">${val}</td>`;
-  });
-  // ROI calc
-  html+=`<td class="calc" data-roi>—</td>`;
-  tr.innerHTML=html;
-  tbody.appendChild(tr);
-  calc();
+  tr.innerHTML='<td contenteditable="true"></td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td>';
+  tb.appendChild(tr); recalc();
 }
-function calc(){
-  const rows=document.querySelectorAll('#tbody tr');
-  let totalLeads=0,total=rows.length,conTest=0,sinTest=0;
-  rows.forEach(tr=>{
-    const cells=tr.querySelectorAll('td[contenteditable]');
-    const testimonio=(cells[6]?.textContent||'').toLowerCase();
-    const leads=parseFloat(cells[9]?.textContent)||0;
-    const tieneTest=testimonio==='sí'||testimonio==='si'||testimonio==='yes';
-    if(tieneTest) conTest++; else sinTest++;
-    totalLeads+=leads;
-    // ROI simple: leads * 500 (valor estimado lead)
-    const roi=leads>0?(leads*500).toFixed(0)+'€':'-';
-    const roiCell=tr.querySelector('[data-roi]');
-    if(roiCell) roiCell.textContent=leads>0?'~'+roi:'-';
-    // resaltar sin testimonio
-    cells[6].style.background=tieneTest?'':'#f8d7da';
-  });
-  document.getElementById('m-total').textContent=total;
-  document.getElementById('m-con-test').textContent=conTest;
-  document.getElementById('m-sin-test').textContent=sinTest;
-  document.getElementById('m-leads').textContent=totalLeads;
-  document.getElementById('f-leads').textContent=totalLeads;
-  document.getElementById('alerta-box').style.display=sinTest>0?'block':'none';
-  const tfoot=document.querySelector('tfoot tr td:first-child');
-  if(tfoot) tfoot.textContent=`TOTAL (${total} casos)`;
-}
-// filas iniciales demo
-addRow({'Cliente':'Empresa A','Sector':'Retail','Reto':'Reducir costes','Resultado':'Costes -30%','KPI medido + valor':'Margen +8pp','Tiempo (meses)':'4','¿Testimonio?':'Sí','¿Caso estudio?':'Sí','Plataformas':'Web, LinkedIn','Leads generados':'12'});
-addRow({'Cliente':'Empresa B','Sector':'Hostelería','Reto':'Incrementar facturación','Resultado':'+45% ventas','KPI medido + valor':'Facturación +62K€','Tiempo (meses)':'6','¿Testimonio?':'No','¿Caso estudio?':'No','Plataformas':'—','Leads generados':'0'});
+recalc();
 </script>
+<script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
 </body>
 </html>

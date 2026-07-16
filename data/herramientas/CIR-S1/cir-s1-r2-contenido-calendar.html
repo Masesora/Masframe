@@ -1,440 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Planificador de Contenidos · CIR-S1</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Déficit de Imagen Competitiva · r2</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --navy: #1B2B4B;
-    --gold: #C4A55A;
-    --gold-light: #e8d5a0;
-    --bg: #f8f7ff;
-    --white: #ffffff;
-    --row-alt: #f0f4f8;
-    --border: #d0d8e8;
-    --text: #1a1a2e;
-    --muted: #5a6480;
-    --radius: 6px;
-  }
-
-  body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .tool-header {
-    background: var(--navy);
-    padding: 24px 32px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  .m-circle {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    background: var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; font-weight: 800;
-    color: var(--navy);
-    flex-shrink: 0;
-    letter-spacing: -1px;
-  }
-  .header-text { flex: 1; }
-  .header-symptom {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    margin-bottom: 4px;
-  }
-  .header-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1.2;
-  }
-  .header-badge {
-    background: transparent;
-    border: 1.5px solid var(--gold);
-    color: var(--gold);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 20px;
-    flex-shrink: 0;
-  }
-
-  .content { padding: 28px 32px; }
-
-  .metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 14px;
-    margin-bottom: 28px;
-  }
-  .metric-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    border-top: 3px solid var(--navy);
-    padding: 14px 16px;
-    box-shadow: 0 1px 4px rgba(27,43,75,0.08);
-  }
-  .metric-card.accent { border-top-color: var(--gold); }
-  .metric-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 5px;
-  }
-  .metric-value {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--gold);
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-  }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
-  .table-wrap {
-    overflow-x: auto;
-    border-radius: var(--radius);
-    box-shadow: 0 1px 4px rgba(27,43,75,0.08);
-    margin-bottom: 20px;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 1000px;
-    background: var(--white);
-  }
-  thead th {
-    background: var(--navy);
-    color: var(--white);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 11px 10px;
-    text-align: left;
-    white-space: nowrap;
-  }
-  tbody tr:nth-child(even) { background: var(--row-alt); }
-  tbody tr:nth-child(odd) { background: var(--white); }
-  tbody tr:hover { background: #e8ecf5; }
-
-  td {
-    padding: 8px 10px;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-    vertical-align: middle;
-  }
-  td[contenteditable="true"] {
-    outline: none;
-    min-width: 70px;
-  }
-  td[contenteditable="true"]:focus {
-    background: #fffbe6;
-    box-shadow: inset 0 0 0 2px var(--gold);
-    border-radius: 3px;
-  }
-
-  select {
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 4px 6px;
-    font-size: 12px;
-    font-family: inherit;
-    background: var(--white);
-    color: var(--text);
-    cursor: pointer;
-  }
-  select:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
-
-  .estado-cell {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .estado-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .dot-pendiente { background: #9e9e9e; }
-  .dot-produccion { background: #f57c00; }
-  .dot-publicado { background: #43a047; }
-
-  .actions {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    border-radius: var(--radius);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    font-family: inherit;
-    transition: opacity 0.15s;
-  }
-  .btn:hover { opacity: 0.85; }
-  .btn-add { background: var(--navy); color: var(--white); }
-  .btn-print { background: var(--gold); color: var(--navy); }
-
-  @media print {
-    .no-print { display: none !important; }
-    body { background: white; }
-    .tool-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    thead th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .metric-card { box-shadow: none; border: 1px solid var(--border); border-top: 3px solid var(--navy); }
-    .table-wrap { box-shadow: none; }
-  }
+  :root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--ink:#26304a;--line:#e4e2f2;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.5;padding:28px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{border-bottom:3px solid var(--gold);padding-bottom:14px;margin-bottom:20px;}
+  .eyebrow{color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+  h1{color:var(--navy);margin:.2em 0 .1em;font-size:24px;}
+  .task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:15px;}
+  .task b{color:var(--navy);}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+  .card{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+  .card .n{font-size:30px;font-weight:800;color:var(--navy);}
+  .card .l{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;}
+  .sem{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th{background:var(--navy);color:#fff;font-size:13px;text-align:left;padding:10px 12px;}
+  td{border-top:1px solid var(--line);padding:8px 12px;font-size:14px;}
+  td[contenteditable]{outline:none;} td[contenteditable]:focus{background:#fbf8ee;}
+  input,select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;background:#fff;}
+  .avance{width:70px;}
+  .estado{font-weight:700;}
+  .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;}
+  button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+  button.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  footer{margin-top:22px;color:#9aa0b4;font-size:12px;text-align:center;}
+  @media print{.controls,button{display:none!important;} body{padding:0;background:#fff;}}
 </style>
 </head>
 <body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">MASFRAME · CIR-S1 · Herramienta r2</div>
+    <h1>Déficit de Imagen Competitiva</h1>
+  </header>
 
-<header class="tool-header">
-  <div class="m-circle">M</div>
-  <div class="header-text">
-    <div class="header-symptom">CIR-S1 · Invisibilidad de Marca</div>
-    <div class="header-title">Planificador de Contenidos</div>
-  </div>
-  <div class="header-badge">Herramienta Operativa</div>
-</header>
+  <div class="task">Acción a ejecutar (C2): <b>Reescribir el texto de presentación en web y redes con una propuesta de valor clara y diferenciadora</b></div>
 
-<div class="content">
-
-  <div class="metrics-grid">
-    <div class="metric-card accent">
-      <div class="metric-label">% Publicados según plan</div>
-      <div class="metric-value" id="m-publicados">—</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Awareness</div>
-      <div class="metric-value" id="m-awareness">—</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Autoridad</div>
-      <div class="metric-value" id="m-autoridad">—</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Conversión</div>
-      <div class="metric-value" id="m-conversion">—</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Fidelización</div>
-      <div class="metric-value" id="m-fidelizacion">—</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Contenidos esta semana</div>
-      <div class="metric-value" id="m-total">—</div>
-    </div>
+  <div class="cards">
+    <div class="card"><div class="n" id="mTot">1</div><div class="l">Elementos</div></div>
+    <div class="card"><div class="n" id="mAvg">0%</div><div class="l">Avance medio</div></div>
+    <div class="card"><div class="n"><span class="sem" id="semDot"></span><span id="mEstado">En rojo</span></div><div class="l">Estado</div></div>
   </div>
 
-  <p class="section-label">Calendario de Contenidos</p>
+  <table id="tabla">
+    <thead>
+      <tr><th style="width:34%">Elemento / paso a trabajar</th><th>Responsable</th><th>Fecha objetivo</th><th style="width:110px">Avance (0-100)</th><th style="width:110px">Estado</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td contenteditable="true">Reescribir el texto de presentación en web y redes con una propuesta de valor clara y diferenciadora</td>
+        <td contenteditable="true"></td>
+        <td><input type="date"></td>
+        <td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td>
+        <td class="estado">—</td>
+      </tr>
+    </tbody>
+  </table>
 
-  <div class="actions no-print">
-    <button class="btn btn-add" onclick="addRow()">+ Añadir fila</button>
-    <button class="btn btn-print" onclick="window.print()">Imprimir / Exportar PDF</button>
+  <div class="controls">
+    <button onclick="addRow()">+ Añadir fila</button>
+    <button class="ghost" onclick="window.print()">Imprimir / Guardar PDF</button>
   </div>
 
-  <div class="table-wrap">
-    <table id="main-table">
-      <thead>
-        <tr>
-          <th>Semana</th>
-          <th>Día</th>
-          <th>Canal</th>
-          <th>Formato</th>
-          <th>Tema / Título</th>
-          <th>Objetivo</th>
-          <th>Responsable</th>
-          <th>Estado</th>
-          <th>Alcance Obtenido</th>
-        </tr>
-      </thead>
-      <tbody id="tbody">
-        <tr>
-          <td contenteditable="true">S1</td>
-          <td contenteditable="true">Lunes</td>
-          <td contenteditable="true">Instagram</td>
-          <td><select class="sel-formato"><option>Post</option><option selected>Vídeo</option><option>Story</option><option>Newsletter</option><option>Podcast</option><option>Otro</option></select></td>
-          <td contenteditable="true">5 errores que arruinan tu marca</td>
-          <td><select class="sel-objetivo"><option selected>Awareness</option><option>Autoridad</option><option>Conversión</option><option>Fidelización</option></select></td>
-          <td contenteditable="true">Maite</td>
-          <td class="estado-td"><div class="estado-cell"><span class="estado-dot dot-publicado"></span><select class="sel-estado"><option>Pendiente</option><option>En producción</option><option selected>Publicado</option></select></div></td>
-          <td contenteditable="true" data-col="alcance">1240</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">S1</td>
-          <td contenteditable="true">Miércoles</td>
-          <td contenteditable="true">LinkedIn</td>
-          <td><select class="sel-formato"><option selected>Post</option><option>Vídeo</option><option>Story</option><option>Newsletter</option><option>Podcast</option><option>Otro</option></select></td>
-          <td contenteditable="true">Caso de éxito cliente X</td>
-          <td><select class="sel-objetivo"><option>Awareness</option><option selected>Autoridad</option><option>Conversión</option><option>Fidelización</option></select></td>
-          <td contenteditable="true">Maite</td>
-          <td class="estado-td"><div class="estado-cell"><span class="estado-dot dot-publicado"></span><select class="sel-estado"><option>Pendiente</option><option>En producción</option><option selected>Publicado</option></select></div></td>
-          <td contenteditable="true" data-col="alcance">430</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">S1</td>
-          <td contenteditable="true">Viernes</td>
-          <td contenteditable="true">Newsletter</td>
-          <td><select class="sel-formato"><option>Post</option><option>Vídeo</option><option>Story</option><option selected>Newsletter</option><option>Podcast</option><option>Otro</option></select></td>
-          <td contenteditable="true">Tendencias de marca julio 2026</td>
-          <td><select class="sel-objetivo"><option>Awareness</option><option>Autoridad</option><option>Conversión</option><option selected>Fidelización</option></select></td>
-          <td contenteditable="true">Equipo</td>
-          <td class="estado-td"><div class="estado-cell"><span class="estado-dot dot-publicado"></span><select class="sel-estado"><option>Pendiente</option><option>En producción</option><option selected>Publicado</option></select></div></td>
-          <td contenteditable="true" data-col="alcance">580</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">S2</td>
-          <td contenteditable="true">Lunes</td>
-          <td contenteditable="true">Instagram</td>
-          <td><select class="sel-formato"><option>Post</option><option>Vídeo</option><option selected>Story</option><option>Newsletter</option><option>Podcast</option><option>Otro</option></select></td>
-          <td contenteditable="true">Encuesta: ¿qué contenido prefieres?</td>
-          <td><select class="sel-objetivo"><option selected>Awareness</option><option>Autoridad</option><option>Conversión</option><option>Fidelización</option></select></td>
-          <td contenteditable="true">Maite</td>
-          <td class="estado-td"><div class="estado-cell"><span class="estado-dot dot-produccion"></span><select class="sel-estado"><option>Pendiente</option><option selected>En producción</option><option>Publicado</option></select></div></td>
-          <td contenteditable="true" data-col="alcance">0</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">S2</td>
-          <td contenteditable="true">Martes</td>
-          <td contenteditable="true">YouTube</td>
-          <td><select class="sel-formato"><option>Post</option><option selected>Vídeo</option><option>Story</option><option>Newsletter</option><option>Podcast</option><option>Otro</option></select></td>
-          <td contenteditable="true">Tutorial: identidad visual paso a paso</td>
-          <td><select class="sel-objetivo"><option>Awareness</option><option selected>Autoridad</option><option>Conversión</option><option>Fidelización</option></select></td>
-          <td contenteditable="true">Equipo</td>
-          <td class="estado-td"><div class="estado-cell"><span class="estado-dot dot-produccion"></span><select class="sel-estado"><option>Pendiente</option><option selected>En producción</option><option>Publicado</option></select></div></td>
-          <td contenteditable="true" data-col="alcance">0</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">S2</td>
-          <td contenteditable="true">Jueves</td>
-          <td contenteditable="true">LinkedIn</td>
-          <td><select class="sel-formato"><option selected>Post</option><option>Vídeo</option><option>Story</option><option>Newsletter</option><option>Podcast</option><option>Otro</option></select></td>
-          <td contenteditable="true">Oferta servicio auditoría de marca</td>
-          <td><select class="sel-objetivo"><option>Awareness</option><option>Autoridad</option><option selected>Conversión</option><option>Fidelización</option></select></td>
-          <td contenteditable="true">Maite</td>
-          <td class="estado-td"><div class="estado-cell"><span class="estado-dot dot-pendiente"></span><select class="sel-estado"><option selected>Pendiente</option><option>En producción</option><option>Publicado</option></select></div></td>
-          <td contenteditable="true" data-col="alcance">0</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">S3</td>
-          <td contenteditable="true">Lunes</td>
-          <td contenteditable="true">Instagram</td>
-          <td><select class="sel-formato"><option selected>Post</option><option>Vídeo</option><option>Story</option><option>Newsletter</option><option>Podcast</option><option>Otro</option></select></td>
-          <td contenteditable="true">Herramientas de diseño gratuitas</td>
-          <td><select class="sel-objetivo"><option selected>Awareness</option><option>Autoridad</option><option>Conversión</option><option>Fidelización</option></select></td>
-          <td contenteditable="true">Maite</td>
-          <td class="estado-td"><div class="estado-cell"><span class="estado-dot dot-pendiente"></span><select class="sel-estado"><option selected>Pendiente</option><option>En producción</option><option>Publicado</option></select></div></td>
-          <td contenteditable="true" data-col="alcance">0</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">S3</td>
-          <td contenteditable="true">Miércoles</td>
-          <td contenteditable="true">Web/Blog</td>
-          <td><select class="sel-formato"><option selected>Post</option><option>Vídeo</option><option>Story</option><option>Newsletter</option><option>Podcast</option><option>Otro</option></select></td>
-          <td contenteditable="true">Guía SEO local para pymes</td>
-          <td><select class="sel-objetivo"><option>Awareness</option><option selected>Autoridad</option><option>Conversión</option><option>Fidelización</option></select></td>
-          <td contenteditable="true">Equipo</td>
-          <td class="estado-td"><div class="estado-cell"><span class="estado-dot dot-pendiente"></span><select class="sel-estado"><option selected>Pendiente</option><option>En producción</option><option>Publicado</option></select></div></td>
-          <td contenteditable="true" data-col="alcance">0</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
+  <footer>MASFRAME — herramienta operativa. Editable. La decisión clínica vive en las capas C0-C6, no en esta hoja.</footer>
 </div>
 
 <script>
-  function updateEstadoDot(row) {
-    const sel = row.querySelector('.sel-estado');
-    const dot = row.querySelector('.estado-dot');
-    if (!sel || !dot) return;
-    dot.className = 'estado-dot';
-    const val = sel.value;
-    if (val === 'Publicado') dot.classList.add('dot-publicado');
-    else if (val === 'En producción') dot.classList.add('dot-produccion');
-    else dot.classList.add('dot-pendiente');
-  }
-
-  function recalc() {
-    const rows = document.querySelectorAll('#tbody tr');
-    let publicados = 0, awareness = 0, autoridad = 0, conversion = 0, fidelizacion = 0;
-    const total = rows.length;
-
-    rows.forEach(row => {
-      const estadoSel = row.querySelector('.sel-estado');
-      const objetivoSel = row.querySelector('.sel-objetivo');
-      updateEstadoDot(row);
-
-      const estado = estadoSel ? estadoSel.value : '';
-      const objetivo = objetivoSel ? objetivoSel.value : '';
-
-      if (estado === 'Publicado') publicados++;
-      if (objetivo === 'Awareness') awareness++;
-      if (objetivo === 'Autoridad') autoridad++;
-      if (objetivo === 'Conversión') conversion++;
-      if (objetivo === 'Fidelización') fidelizacion++;
-    });
-
-    const pct = total > 0 ? Math.round((publicados / total) * 100) : 0;
-    document.getElementById('m-publicados').textContent = pct + '%';
-    document.getElementById('m-awareness').textContent = awareness;
-    document.getElementById('m-autoridad').textContent = autoridad;
-    document.getElementById('m-conversion').textContent = conversion;
-    document.getElementById('m-fidelizacion').textContent = fidelizacion;
-    document.getElementById('m-total').textContent = total;
-  }
-
-  function addRow() {
-    const tbody = document.getElementById('tbody');
-    const lastRow = tbody.querySelector('tr:last-child');
-    const newRow = lastRow.cloneNode(true);
-
-    newRow.querySelectorAll('[contenteditable="true"]').forEach(cell => {
-      cell.textContent = '';
-    });
-    newRow.querySelectorAll('select').forEach(sel => { sel.selectedIndex = 0; });
-    updateEstadoDot(newRow);
-
-    tbody.appendChild(newRow);
-    recalc();
-  }
-
-  const table = document.getElementById('main-table');
-  table.addEventListener('input', recalc);
-  table.addEventListener('change', recalc);
-
-  document.addEventListener('DOMContentLoaded', recalc);
-  recalc();
+function estadoDe(v){ if(v>=80) return ['#1f9d55','En verde']; if(v>=40) return ['#d9822b','En ámbar']; return ['#d64545','En rojo']; }
+function recalc(){
+  const rows=[...document.querySelectorAll('#tabla tbody tr')];
+  let sum=0,n=0;
+  rows.forEach(r=>{
+    const inp=r.querySelector('.avance'); const v=Math.max(0,Math.min(100,parseFloat(inp.value)||0));
+    const [c,txt]=estadoDe(v); const cell=r.querySelector('.estado'); cell.textContent=txt; cell.style.color=c;
+    sum+=v; n++;
+  });
+  const avg=n?Math.round(sum/n):0;
+  document.getElementById('mTot').textContent=n;
+  document.getElementById('mAvg').textContent=avg+'%';
+  const [c,txt]=estadoDe(avg);
+  document.getElementById('mEstado').textContent=txt;
+  document.getElementById('semDot').style.background=c;
+}
+function addRow(){
+  const tb=document.querySelector('#tabla tbody');
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td contenteditable="true"></td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td>';
+  tb.appendChild(tr); recalc();
+}
+recalc();
 </script>
+<script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
 </body>
 </html>

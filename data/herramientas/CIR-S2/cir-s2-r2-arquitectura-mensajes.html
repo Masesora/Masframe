@@ -1,445 +1,63 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CIR-S2 R2 · Arquitectura de Mensajes por Segmento</title>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Miopía Diferencial · r2</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --navy: #1B2B4B;
-    --gold: #C4A55A;
-    --bg: #f8f7ff;
-    --alt-row: #f0f4f8;
-    --white: #ffffff;
-    --border: #d6dae6;
-    --text: #1a1a2e;
-    --muted: #5a6178;
-    --red: #c0392b;
-    --amber: #b7791f;
-    --amber-bg: #fffbeb;
-    --amber-border: #f6d860;
-    --green: #1e8449;
-    --partial: #1a5276;
+:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--ink:#26304a;--line:#e4e2f2;}
+*{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.5;padding:28px;}
+.wrap{max-width:960px;margin:0 auto;} header{border-bottom:3px solid var(--gold);padding-bottom:14px;margin-bottom:20px;}
+.eyebrow{color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+h1{color:var(--navy);margin:.2em 0 .1em;font-size:24px;}
+.task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:15px;} .task b{color:var(--navy);}
+.cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+.card{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+.card .n{font-size:30px;font-weight:800;color:var(--navy);} .card .l{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;}
+.sem{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+th{background:var(--navy);color:#fff;font-size:13px;text-align:left;padding:10px 12px;} td{border-top:1px solid var(--line);padding:8px 12px;font-size:14px;}
+td[contenteditable]:focus{background:#fbf8ee;} input{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;}
+.avance{width:70px;} .estado{font-weight:700;} .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;}
+button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+button.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+footer{margin-top:22px;color:#9aa0b4;font-size:12px;text-align:center;}
+@media print{.controls,button{display:none!important;} body{padding:0;background:#fff;}}
+</style></head><body><div class="wrap">
+<header><div class="eyebrow">MASFRAME · CIR-S2 · Herramienta r2</div><h1>Rentabilidad por servicio</h1></header>
+<div class="task">Acción a ejecutar (C2): <b>Analizar la rentabilidad real de cada servicio para separar los que ganan dinero de los que solo dan trabajo</b></div>
+<div class="cards">
+<div class="card"><div class="n" id="mTot">1</div><div class="l">Elementos</div></div>
+<div class="card"><div class="n" id="mAvg">0%</div><div class="l">Avance medio</div></div>
+<div class="card"><div class="n"><span class="sem" id="semDot"></span><span id="mEstado">En rojo</span></div><div class="l">Estado</div></div>
+</div>
+<table id="tabla"><thead><tr><th style="width:34%">Elemento / paso a trabajar</th><th>Responsable</th><th>Fecha objetivo</th><th style="width:110px">Avance (0-100)</th><th style="width:110px">Estado</th></tr></thead>
+<tbody><tr><td contenteditable="true">Analizar la rentabilidad real de cada servicio para separar los que ganan dinero de los que solo dan trabajo</td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td></tr></tbody></table>
+<div class="controls"><button onclick="addRow()">+ Añadir fila</button><button class="ghost" onclick="window.print()">Imprimir / Guardar PDF</button></div>
+<footer>MASFRAME — herramienta operativa. Editable. La decisión clínica vive en las capas C0-C6, no en esta hoja.</footer>
+</div><script>
+function estadoDe(v){if(v>=80)return['#1f9d55','En verde'];if(v>=40)return['#d9822b','En ámbar'];return['#d64545','En rojo'];}
+function recalc(){const rows=[...document.querySelectorAll('#tabla tbody tr')];let sum=0,n=0;rows.forEach(r=>{const inp=r.querySelector('.avance');const v=Math.max(0,Math.min(100,parseFloat(inp.value)||0));const[c,txt]=estadoDe(v);const cell=r.querySelector('.estado');cell.textContent=txt;cell.style.color=c;sum+=v;n++;});const avg=n?Math.round(sum/n):0;document.getElementById('mTot').textContent=n;document.getElementById('mAvg').textContent=avg+'%';const[c,txt]=estadoDe(avg);document.getElementById('mEstado').textContent=txt;document.getElementById('semDot').style.background=c;}
+function addRow(){const tb=document.querySelector('#tabla tbody');const tr=document.createElement('tr');tr.innerHTML='<td contenteditable="true"></td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td>';tb.appendChild(tr);recalc();}
+recalc();
+</script><script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
   }
-
-  body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.5;
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
   }
-
-  /* ── HEADER ─────────────────────────────────────────── */
-  .mas-header {
-    background: var(--navy);
-    padding: 20px 32px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
-  }
-  .mas-logo {
-    width: 44px; height: 44px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; font-weight: 800;
-    color: var(--navy);
-    flex-shrink: 0;
-    letter-spacing: -1px;
-  }
-  .mas-header-text { flex: 1; min-width: 200px; }
-  .mas-symptom {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 600;
-    margin-bottom: 3px;
-  }
-  .mas-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--white);
-    text-wrap: balance;
-  }
-  .mas-badge {
-    background: transparent;
-    border: 1.5px solid var(--gold);
-    color: var(--gold);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 5px 12px;
-    border-radius: 3px;
-    white-space: nowrap;
-  }
-
-  /* ── MAIN ───────────────────────────────────────────── */
-  .mas-main { padding: 28px 32px; }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-
-  /* ── TABLE ──────────────────────────────────────────── */
-  .table-wrap {
-    overflow-x: auto;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    margin-bottom: 24px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    min-width: 1100px;
-  }
-  thead tr { background: var(--navy); }
-  thead th {
-    color: var(--white);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 11px 12px;
-    text-align: left;
-    white-space: nowrap;
-  }
-  tbody tr:nth-child(odd) { background: var(--white); }
-  tbody tr:nth-child(even) { background: var(--alt-row); }
-  tbody tr:hover { background: #e8edf5; }
-
-  td {
-    padding: 9px 12px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-  }
-  td[contenteditable="true"] {
-    cursor: text;
-    outline: none;
-    min-width: 80px;
-  }
-  td[contenteditable="true"]:focus {
-    background: #eef1fb;
-    box-shadow: inset 0 0 0 2px var(--gold);
-    border-radius: 3px;
-  }
-
-  /* ── SELECT CELL ────────────────────────────────────── */
-  .select-impl {
-    appearance: none;
-    -webkit-appearance: none;
-    border: 1.5px solid var(--border);
-    border-radius: 4px;
-    padding: 5px 26px 5px 10px;
-    font-size: 12px;
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-    background-color: var(--white);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%231B2B4B' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 8px;
-    color: var(--navy);
-    min-width: 100px;
-  }
-  .select-impl:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
-  .select-impl[data-val="Sí"] { background-color: #eafaf1; color: var(--green); border-color: #abebc6; }
-  .select-impl[data-val="Parcial"] { background-color: #ebf5fb; color: var(--partial); border-color: #aed6f1; }
-  .select-impl[data-val="No"] { background-color: #fdf0ef; color: var(--red); border-color: #f5b7b1; }
-
-  /* ── ADD ROW ────────────────────────────────────────── */
-  .btn-add {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: transparent;
-    border: 1.5px solid var(--navy);
-    color: var(--navy);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    padding: 7px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 32px;
-    transition: background 0.15s, color 0.15s;
-  }
-  .btn-add:hover { background: var(--navy); color: var(--white); }
-
-  /* ── METRICS ────────────────────────────────────────── */
-  .metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-  .metric-card {
-    background: var(--white);
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    border-top: 4px solid var(--navy);
-    padding: 16px 18px 14px;
-  }
-  .metric-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-  .metric-value {
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--gold);
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-  }
-  .metric-sub {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 5px;
-  }
-  .metric-value.danger { color: var(--red); }
-
-  /* ── ALERT BOX ──────────────────────────────────────── */
-  .alert-box {
-    background: var(--amber-bg);
-    border: 1.5px solid var(--amber-border);
-    border-left: 4px solid var(--amber);
-    border-radius: 5px;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: var(--amber);
-    font-weight: 500;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-
-  /* ── PRINT ──────────────────────────────────────────── */
-  .actions { display: flex; gap: 12px; align-items: center; }
-  .btn-print {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--navy);
-    color: var(--white);
-    border: none;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 10px 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    letter-spacing: 0.04em;
-    transition: opacity 0.15s;
-  }
-  .btn-print:hover { opacity: 0.88; }
-
-  @media print {
-    body { background: white; font-size: 11px; }
-    .mas-header { padding: 14px 20px; }
-    .mas-main { padding: 16px 20px; }
-    .actions, .btn-add { display: none !important; }
-    .table-wrap { overflow: visible; border: none; }
-    table { min-width: unset; }
-    thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .select-impl { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  }
-</style>
-</head>
-<body>
-
-<header class="mas-header">
-  <div class="mas-logo">M</div>
-  <div class="mas-header-text">
-    <div class="mas-symptom">CIR-S2 · Propuesta Confusa</div>
-    <div class="mas-title">Arquitectura de Mensajes por Segmento</div>
-  </div>
-  <span class="mas-badge">Herramienta Operativa</span>
-</header>
-
-<main class="mas-main">
-
-  <p class="section-label">Mapa de mensajes por audiencia · Un mensaje núcleo por segmento</p>
-
-  <div class="table-wrap">
-    <table id="arch-table">
-      <thead>
-        <tr>
-          <th style="min-width:140px">Segmento</th>
-          <th style="min-width:160px">Pain principal</th>
-          <th style="min-width:160px">Resultado que busca</th>
-          <th style="min-width:200px">Mensaje núcleo</th>
-          <th style="min-width:180px">Prueba social relevante</th>
-          <th style="min-width:150px">CTA principal</th>
-          <th style="min-width:120px">Canal principal</th>
-          <th style="min-width:150px">Formato que mejor funciona</th>
-          <th style="min-width:120px">¿Implementado?</th>
-        </tr>
-      </thead>
-      <tbody id="arch-body">
-        <tr>
-          <td contenteditable="true">Autónomos freelance</td>
-          <td contenteditable="true">No sé si tengo que declarar IVA</td>
-          <td contenteditable="true">Pagar solo lo justo</td>
-          <td contenteditable="true">"El IVA que no controlas, te roba margen"</td>
-          <td contenteditable="true">"María pagó 600€ menos en Q1"</td>
-          <td contenteditable="true">Agenda tu revisión fiscal</td>
-          <td contenteditable="true">Instagram</td>
-          <td contenteditable="true">Vídeo corto</td>
-          <td><select class="select-impl" data-type="implementado" data-val="Sí"><option value="Sí">Sí</option><option value="Parcial">Parcial</option><option value="No">No</option></select></td>
-        </tr>
-        <tr>
-          <td contenteditable="true">PYMEs hostelería</td>
-          <td contenteditable="true">Márgenes muy ajustados</td>
-          <td contenteditable="true">Bajar costes fijos</td>
-          <td contenteditable="true">"Hostelería sin sorpresas fiscales cada trimestre"</td>
-          <td contenteditable="true">"Bar La Plaza ahorró 1.200€/año"</td>
-          <td contenteditable="true">Calcula tu ahorro</td>
-          <td contenteditable="true">LinkedIn</td>
-          <td contenteditable="true">Artículo + CTA</td>
-          <td><select class="select-impl" data-type="implementado" data-val="Parcial"><option value="Sí">Sí</option><option value="Parcial" selected>Parcial</option><option value="No">No</option></select></td>
-        </tr>
-        <tr>
-          <td contenteditable="true">E-commerce D2C</td>
-          <td contenteditable="true">Complejidad fiscal del online</td>
-          <td contenteditable="true">Automatizar obligaciones</td>
-          <td contenteditable="true">"Vende en 5 países, tributa sin quebraderos"</td>
-          <td contenteditable="true">"TiendaX pasó de 3 días a 2h/mes"</td>
-          <td contenteditable="true">Demo gratuita</td>
-          <td contenteditable="true">Email</td>
-          <td contenteditable="true">Caso de éxito</td>
-          <td><select class="select-impl" data-type="implementado" data-val="No"><option value="Sí">Sí</option><option value="Parcial">Parcial</option><option value="No" selected>No</option></select></td>
-        </tr>
-        <tr>
-          <td contenteditable="true">Inversores inmobiliarios</td>
-          <td contenteditable="true">IRPF por alquileres</td>
-          <td contenteditable="true">Optimizar rendimientos</td>
-          <td contenteditable="true">"Tu cartera inmobiliaria, fiscalmente blindada"</td>
-          <td contenteditable="true">"Cliente con 4 pisos ahorró 2.800€"</td>
-          <td contenteditable="true">Primera consulta gratis</td>
-          <td contenteditable="true">Google Ads</td>
-          <td contenteditable="true">Landing page</td>
-          <td><select class="select-impl" data-type="implementado" data-val="No"><option value="Sí">Sí</option><option value="Parcial">Parcial</option><option value="No" selected>No</option></select></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <button class="btn-add" id="btn-add-row">+ Añadir fila</button>
-
-  <p class="section-label">Resumen de implementación</p>
-
-  <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="metric-label">Segmentos sin implementar</div>
-      <div class="metric-value danger" id="m-no">—</div>
-      <div class="metric-sub">Estado: No</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">% implementados</div>
-      <div class="metric-value" id="m-pct">—</div>
-      <div class="metric-sub">Solo estado Sí</div>
-    </div>
-  </div>
-
-  <div class="alert-box">
-    <span class="alert-icon">⚠️</span>
-    <span>Verifica que el mensaje núcleo sea consistente en todos los canales de cada segmento antes de activar campañas. Un mensaje fragmentado entre canales destruye la percepción de marca.</span>
-  </div>
-
-  <div class="actions">
-    <button class="btn-print" onclick="window.print()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-      Imprimir / Guardar PDF
-    </button>
-  </div>
-
-</main>
-
-<script>
-(function () {
-
-  function updateSelectStyle(sel) {
-    sel.setAttribute('data-val', sel.value);
-  }
-
-  function recalc() {
-    const tbody = document.getElementById('arch-body');
-    const selects = Array.from(tbody.querySelectorAll('select[data-type="implementado"]'));
-
-    selects.forEach(function (sel) { updateSelectStyle(sel); });
-
-    const total = selects.length;
-    const noCount = selects.filter(function(s){ return s.value === 'No'; }).length;
-    const siCount = selects.filter(function(s){ return s.value === 'Sí'; }).length;
-    const pct = total > 0 ? (siCount / total * 100) : 0;
-
-    const mNo = document.getElementById('m-no');
-    mNo.textContent = noCount;
-    mNo.className = 'metric-value' + (noCount > 0 ? ' danger' : '');
-
-    document.getElementById('m-pct').textContent = pct.toFixed(1) + '%';
-  }
-
-  function attachEvents(tr) {
-    tr.querySelectorAll('td[contenteditable="true"]').forEach(function (cell) {
-      cell.addEventListener('input', recalc);
-    });
-    tr.querySelectorAll('select').forEach(function (sel) {
-      sel.addEventListener('change', recalc);
-    });
-  }
-
-  document.getElementById('btn-add-row').addEventListener('click', function () {
-    const tbody = document.getElementById('arch-body');
-    const rows = tbody.querySelectorAll('tr');
-    const last = rows[rows.length - 1];
-    const clone = last.cloneNode(true);
-
-    clone.querySelectorAll('td[contenteditable="true"]').forEach(function (cell) {
-      cell.textContent = '';
-    });
-    clone.querySelectorAll('select').forEach(function (sel) {
-      sel.selectedIndex = 0;
-      updateSelectStyle(sel);
-    });
-
-    tbody.appendChild(clone);
-    attachEvents(clone);
-    recalc();
-    clone.querySelector('td[contenteditable="true"]').focus();
-  });
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const tbody = document.getElementById('arch-body');
-    tbody.querySelectorAll('tr').forEach(function (tr) { attachEvents(tr); });
-    recalc();
-  });
-
-  if (document.readyState !== 'loading') {
-    const tbody = document.getElementById('arch-body');
-    tbody.querySelectorAll('tr').forEach(function (tr) { attachEvents(tr); });
-    recalc();
-  }
-
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
 })();
 </script>
-</body>
-</html>
+
+</body></html>

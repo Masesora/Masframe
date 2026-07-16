@@ -1,192 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSI-S3-R3 · Selección por Valores</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anestesia de Equipo · r3</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, sans-serif; background: #f8f7ff; color: #1e293b; }
-  header { background: #1B2B4B; color: #fff; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
-  .logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
-  .badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
-  main { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
-  h2 { font-size: 17px; font-weight: 700; color: #1B2B4B; margin-bottom: 14px; }
-  .desc { background: #fff; border-left: 4px solid #C4A55A; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #475569; }
-  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
-  th { background: #1B2B4B; color: #fff; padding: 11px 12px; text-align: left; font-size: 12px; font-weight: 600; }
-  td { padding: 9px 10px; border-bottom: 1px solid #e2e8f0; font-size: 12px; vertical-align: middle; }
-  tr:hover td { background: #f0f4ff; }
-  tr.sin-evaluacion td { background: #fef2f2; }
-  tr.bien-evaluado td { background: #f0fdf4; }
-  input[type="text"], input[type="number"], textarea { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 6px; width: 95%; font-size: 12px; font-family: system-ui; }
-  textarea { resize: vertical; min-height: 32px; }
-  select { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 6px; width: 95%; font-size: 12px; font-family: system-ui; }
-  .btn-add { background: #1B2B4B; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin: 12px 0; font-size: 13px; }
-  .ratio-box { background: #fff; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 1px 6px rgba(0,0,0,.07); display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
-  .ratio-box label { font-size: 13px; color: #475569; display: flex; align-items: center; gap: 8px; }
-  .ratio-box input { border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 8px; font-size: 13px; width: 80px; }
-  .metrics { display: flex; flex-wrap: wrap; gap: 16px; margin: 28px 0 20px; }
-  .metric-card { background: #fff; border: 2px solid #C4A55A; border-radius: 12px; padding: 20px; text-align: center; min-width: 150px; flex: 1; }
-  .metric-value { font-size: 26px; font-weight: 800; color: #1B2B4B; }
-  .metric-label { font-size: 12px; color: #64748b; margin-top: 4px; }
-  .alert-box { background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 13px; color: #991b1b; display: none; }
-  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; margin: 24px 0; }
-  @media print { .no-print { display: none !important; } body { background: white; } }
+  :root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--ink:#26304a;--line:#e4e2f2;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.5;padding:28px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{border-bottom:3px solid var(--gold);padding-bottom:14px;margin-bottom:20px;}
+  .eyebrow{color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+  h1{color:var(--navy);margin:.2em 0 .1em;font-size:24px;}
+  .task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:15px;}
+  .task b{color:var(--navy);}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+  .card{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+  .card .n{font-size:30px;font-weight:800;color:var(--navy);}
+  .card .l{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;}
+  .sem{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th{background:var(--navy);color:#fff;font-size:13px;text-align:left;padding:10px 12px;}
+  td{border-top:1px solid var(--line);padding:8px 12px;font-size:14px;}
+  td[contenteditable]{outline:none;} td[contenteditable]:focus{background:#fbf8ee;}
+  input,select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;background:#fff;}
+  .avance{width:70px;}
+  .estado{font-weight:700;}
+  .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;}
+  button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+  button.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  footer{margin-top:22px;color:#9aa0b4;font-size:12px;text-align:center;}
+  @media print{.controls,button{display:none!important;} body{padding:0;background:#fff;}}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">M</div>
-  <div>
-    <div style="font-size:11px;letter-spacing:2px;opacity:.7;text-transform:uppercase;">MASFRAME · PSI-S3</div>
-    <div style="font-size:20px;font-weight:700;">Selección por Valores — Proceso de Contratación</div>
-  </div>
-  <span class="badge">HERRAMIENTA OPERATIVA</span>
-</header>
-<main>
-  <div class="desc">Auditoría del proceso de selección desde la perspectiva de la evaluación cultural. Cada fase del proceso se puntúa por su atención a los valores organizacionales. Un proceso sin evaluación cultural produce desajuste cultural con coste muy alto.</div>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">MASFRAME · PSI-S3 · Herramienta r3</div>
+    <h1>Anestesia de Equipo</h1>
+  </header>
 
-  <h2>Fases del Proceso de Selección</h2>
-  <table id="tablaSeleccion">
+  <div class="task">Acción a ejecutar (C2): <b>Dinámicas repetitivas sin reto ni novedad que generan automatismo y desconexión progresiva</b></div>
+
+  <div class="cards">
+    <div class="card"><div class="n" id="mTot">1</div><div class="l">Elementos</div></div>
+    <div class="card"><div class="n" id="mAvg">0%</div><div class="l">Avance medio</div></div>
+    <div class="card"><div class="n"><span class="sem" id="semDot"></span><span id="mEstado">En rojo</span></div><div class="l">Estado</div></div>
+  </div>
+
+  <table id="tabla">
     <thead>
-      <tr>
-        <th>Fase del proceso</th>
-        <th style="width:100px;">¿Evalúa valores?</th>
-        <th>Método de evaluación</th>
-        <th style="width:100px;">¿Documentado?</th>
-        <th style="width:100px;">Tiempo dedicado (min)</th>
-        <th style="width:120px;">Peso en decisión final %</th>
-        <th>Casos de error cultural</th>
-      </tr>
+      <tr><th style="width:34%">Elemento / paso a trabajar</th><th>Responsable</th><th>Fecha objetivo</th><th style="width:110px">Avance (0-100)</th><th style="width:110px">Estado</th></tr>
     </thead>
-    <tbody id="tablaBody">
+    <tbody>
       <tr>
-        <td style="font-weight:600;">Revisión de CV y candidatura</td>
-        <td><select onchange="recalcular()"><option value="">-</option><option>Sí</option><option>No</option><option>Parcial</option></select></td>
-        <td><textarea placeholder="¿Cómo se evalúan valores en esta fase?"></textarea></td>
-        <td><select onchange="recalcular()"><option value="">-</option><option>Sí</option><option>No</option></select></td>
-        <td><input type="number" min="0" value="10" oninput="recalcular()"></td>
-        <td><input type="number" min="0" max="100" value="5" oninput="recalcular()"></td>
-        <td><textarea placeholder="Errores de ajuste cultural observados en esta fase..."></textarea></td>
-      </tr>
-      <tr>
-        <td style="font-weight:600;">Entrevista inicial (RRHH)</td>
-        <td><select onchange="recalcular()"><option>Parcial</option><option>Sí</option><option>No</option></select></td>
-        <td><textarea placeholder="Preguntas de valores, STAR, casos..."></textarea></td>
-        <td><select onchange="recalcular()"><option value="">-</option><option>No</option><option>Sí</option></select></td>
-        <td><input type="number" min="0" value="45" oninput="recalcular()"></td>
-        <td><input type="number" min="0" max="100" value="20" oninput="recalcular()"></td>
-        <td><textarea placeholder="Errores de ajuste cultural..."></textarea></td>
-      </tr>
-      <tr>
-        <td style="font-weight:600;">Entrevista técnica / responsable área</td>
-        <td><select onchange="recalcular()"><option>No</option><option>Sí</option><option>Parcial</option></select></td>
-        <td><textarea placeholder="¿Se evalúan valores en la entrevista técnica?"></textarea></td>
-        <td><select onchange="recalcular()"><option value="">-</option><option>No</option><option>Sí</option></select></td>
-        <td><input type="number" min="0" value="60" oninput="recalcular()"></td>
-        <td><input type="number" min="0" max="100" value="10" oninput="recalcular()"></td>
-        <td><textarea placeholder="Errores de ajuste cultural..."></textarea></td>
-      </tr>
-      <tr>
-        <td style="font-weight:600;">Entrevista cultural / fit</td>
-        <td><select onchange="recalcular()"><option>Sí</option><option>No</option><option>Parcial</option></select></td>
-        <td><textarea placeholder="Método específico: caso cultural, role-play, preguntas abiertas..."></textarea></td>
-        <td><select onchange="recalcular()"><option>Sí</option><option>No</option></select></td>
-        <td><input type="number" min="0" value="60" oninput="recalcular()"></td>
-        <td><input type="number" min="0" max="100" value="40" oninput="recalcular()"></td>
-        <td><textarea placeholder="Errores de ajuste cultural..."></textarea></td>
-      </tr>
-      <tr>
-        <td style="font-weight:600;">Decisión final</td>
-        <td><select onchange="recalcular()"><option>Parcial</option><option>Sí</option><option>No</option></select></td>
-        <td><textarea placeholder="¿Cómo entra el ajuste cultural en la decisión final?"></textarea></td>
-        <td><select onchange="recalcular()"><option>No</option><option>Sí</option></select></td>
-        <td><input type="number" min="0" value="30" oninput="recalcular()"></td>
-        <td><input type="number" min="0" max="100" value="25" oninput="recalcular()"></td>
-        <td><textarea placeholder="Errores de ajuste cultural..."></textarea></td>
+        <td contenteditable="true">Dinámicas repetitivas sin reto ni novedad que generan automatismo y desconexión progresiva</td>
+        <td contenteditable="true"></td>
+        <td><input type="date"></td>
+        <td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td>
+        <td class="estado">—</td>
       </tr>
     </tbody>
   </table>
-  <button class="btn-add no-print" onclick="addRow()">+ Añadir fase</button>
 
-  <div class="ratio-box no-print">
-    <label>Contrataciones último año: <input type="number" id="totalContratados" value="10" min="0" oninput="recalcular()"></label>
-    <label>Con buen ajuste cultural: <input type="number" id="buenAjuste" value="7" min="0" oninput="recalcular()"></label>
-    <span style="font-size:13px;color:#1B2B4B;font-weight:600;">Ratio buen ajuste cultural: <strong id="ratioAjuste">—</strong></span>
+  <div class="controls">
+    <button onclick="addRow()">+ Añadir fila</button>
+    <button class="ghost" onclick="window.print()">Imprimir / Guardar PDF</button>
   </div>
 
-  <div class="alert-box" id="alertaPeso">
-    ⚠️ La suma de pesos en la decisión supera el 100%. Revisa la distribución.
-  </div>
-
-  <div class="metrics">
-    <div class="metric-card">
-      <div class="metric-value" id="pctEvalua">—</div>
-      <div class="metric-label">% Fases que evalúan valores</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-value" id="tiempoTotal">—</div>
-      <div class="metric-label">Tiempo total dedicado (min)</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-value" id="pesoTotal">—</div>
-      <div class="metric-label">Peso total valores en decisión (%)</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-value" id="ratioAjusteMet">—</div>
-      <div class="metric-label">Ratio contrataciones buen ajuste</div>
-    </div>
-  </div>
-
-  <button class="btn-print no-print" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
-</main>
+  <footer>MASFRAME — herramienta operativa. Editable. La decisión clínica vive en las capas C0-C6, no en esta hoja.</footer>
+</div>
 
 <script>
-function addRow() {
-  const tbody = document.getElementById('tablaBody');
-  const tr = document.createElement('tr');
-  const s = 'border:1px solid #cbd5e1;border-radius:4px;padding:4px 6px;width:95%;font-size:12px;font-family:system-ui;';
-  tr.innerHTML = `
-    <td><input type="text" placeholder="Nombre de la fase" style="${s}"></td>
-    <td><select onchange="recalcular()" style="${s}"><option value="">-</option><option>Sí</option><option>No</option><option>Parcial</option></select></td>
-    <td><textarea placeholder="Método..." style="${s}resize:vertical;min-height:32px;"></textarea></td>
-    <td><select onchange="recalcular()" style="${s}"><option value="">-</option><option>Sí</option><option>No</option></select></td>
-    <td><input type="number" min="0" value="0" oninput="recalcular()" style="${s}"></td>
-    <td><input type="number" min="0" max="100" value="0" oninput="recalcular()" style="${s}"></td>
-    <td><textarea placeholder="Errores de ajuste cultural..." style="${s}resize:vertical;min-height:32px;"></textarea></td>`;
-  tbody.appendChild(tr);
-}
-
-function recalcular() {
-  const filas = document.querySelectorAll('#tablaBody tr');
-  let total = 0, evaluan = 0, tiempoTotal = 0, pesoTotal = 0;
-
-  filas.forEach(tr => {
-    const evalua = tr.querySelector('select')?.value;
-    const tiempo = parseFloat(tr.querySelectorAll('input[type="number"]')[0]?.value) || 0;
-    const peso = parseFloat(tr.querySelectorAll('input[type="number"]')[1]?.value) || 0;
-    total++;
-    if (evalua === 'Sí' || evalua === 'Parcial') { evaluan++; tr.classList.remove('sin-evaluacion'); }
-    else if (evalua === 'No') { tr.classList.add('sin-evaluacion'); }
-    else tr.classList.remove('sin-evaluacion');
-    tiempoTotal += tiempo;
-    pesoTotal += peso;
+function estadoDe(v){ if(v>=80) return ['#1f9d55','En verde']; if(v>=40) return ['#d9822b','En ámbar']; return ['#d64545','En rojo']; }
+function recalc(){
+  const rows=[...document.querySelectorAll('#tabla tbody tr')];
+  let sum=0,n=0;
+  rows.forEach(r=>{
+    const inp=r.querySelector('.avance'); const v=Math.max(0,Math.min(100,parseFloat(inp.value)||0));
+    const [c,txt]=estadoDe(v); const cell=r.querySelector('.estado'); cell.textContent=txt; cell.style.color=c;
+    sum+=v; n++;
   });
-
-  document.getElementById('pctEvalua').textContent = total ? Math.round(evaluan/total*100)+'%' : '—';
-  document.getElementById('tiempoTotal').textContent = tiempoTotal + ' min';
-  document.getElementById('pesoTotal').textContent = pesoTotal.toFixed(0) + '%';
-  document.getElementById('alertaPeso').style.display = pesoTotal > 100 ? 'block' : 'none';
-
-  const contratados = parseInt(document.getElementById('totalContratados').value) || 0;
-  const buenAjuste = parseInt(document.getElementById('buenAjuste').value) || 0;
-  const ratio = contratados > 0 ? Math.round(buenAjuste/contratados*100)+'%' : '—';
-  document.getElementById('ratioAjuste').textContent = ratio;
-  document.getElementById('ratioAjusteMet').textContent = ratio;
+  const avg=n?Math.round(sum/n):0;
+  document.getElementById('mTot').textContent=n;
+  document.getElementById('mAvg').textContent=avg+'%';
+  const [c,txt]=estadoDe(avg);
+  document.getElementById('mEstado').textContent=txt;
+  document.getElementById('semDot').style.background=c;
 }
-
-recalcular();
+function addRow(){
+  const tb=document.querySelector('#tabla tbody');
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td contenteditable="true"></td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td>';
+  tb.appendChild(tr); recalc();
+}
+recalc();
 </script>
+<script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
 </body>
 </html>

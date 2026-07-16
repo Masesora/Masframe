@@ -1,232 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mapa de Quejas y Reclamaciones — MASFRAME</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Efecto NO-WOW · r1</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
-.header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
-.logo { width: 44px; height: 44px; background: #C4A55A; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
-.header-text h1 { font-size: 18px; font-weight: 700; }
-.header-text p { font-size: 13px; opacity: 0.75; margin-top: 2px; }
-.badge { margin-left: auto; background: #C4A55A; color: #1B2B4B; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
-.container { max-width: 1300px; margin: 0 auto; padding: 24px 16px; }
-.section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(27,43,75,0.08); }
-.section h2 { font-size: 15px; color: #1B2B4B; margin-bottom: 14px; border-left: 3px solid #C4A55A; padding-left: 10px; }
-.table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-th { background: #1B2B4B; color: white; padding: 8px 10px; text-align: left; font-size: 12px; font-weight: 600; white-space: nowrap; }
-td { padding: 7px 10px; border-bottom: 1px solid #e8e8f0; vertical-align: middle; }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: #f0f0fa; }
-input[type=text], input[type=number], input[type=date], select { border: 1px solid #d0d0e0; border-radius: 5px; padding: 4px 7px; font-size: 12px; font-family: inherit; background: white; }
-input[type=text] { width: 140px; }
-input[type=number] { width: 60px; }
-input[type=date] { width: 130px; }
-select { width: 110px; }
-.calc-cell { background: #f8f7ff; font-weight: 600; color: #1B2B4B; text-align: center; white-space: nowrap; }
-.btn-add { background: #1B2B4B; color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 13px; cursor: pointer; margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; }
-.btn-add:hover { background: #2a3d63; }
-.btn-print { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 6px; padding: 10px 24px; font-size: 14px; font-weight: 700; cursor: pointer; display: block; margin: 0 auto; }
-.btn-print:hover { background: #b8963e; }
-.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
-.metric-card { background: #1B2B4B; color: white; border-radius: 10px; padding: 16px; text-align: center; }
-.metric-card .value { font-size: 26px; font-weight: 800; color: #C4A55A; }
-.metric-card .label { font-size: 12px; opacity: 0.8; margin-top: 4px; }
-.semaforo-verde { color: #16a34a; font-weight: 700; }
-.semaforo-amarillo { color: #ca8a04; font-weight: 700; }
-.semaforo-rojo { color: #dc2626; font-weight: 700; }
-.row-alert td { background: #fff1f1 !important; }
-.row-warning td { background: #fffbeb !important; }
-.row-good td { background: #f0fdf4 !important; }
-@media print { .btn-add, .btn-print, .no-print { display: none !important; } body { background: white; } .section { box-shadow: none; border: 1px solid #ccc; } }
+  :root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--ink:#26304a;--line:#e4e2f2;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.5;padding:28px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{border-bottom:3px solid var(--gold);padding-bottom:14px;margin-bottom:20px;}
+  .eyebrow{color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+  h1{color:var(--navy);margin:.2em 0 .1em;font-size:24px;}
+  .task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:15px;}
+  .task b{color:var(--navy);}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+  .card{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+  .card .n{font-size:30px;font-weight:800;color:var(--navy);}
+  .card .l{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;}
+  .sem{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th{background:var(--navy);color:#fff;font-size:13px;text-align:left;padding:10px 12px;}
+  td{border-top:1px solid var(--line);padding:8px 12px;font-size:14px;}
+  td[contenteditable]{outline:none;} td[contenteditable]:focus{background:#fbf8ee;}
+  input,select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;background:#fff;}
+  .avance{width:70px;}
+  .estado{font-weight:700;}
+  .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;}
+  button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+  button.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  footer{margin-top:22px;color:#9aa0b4;font-size:12px;text-align:center;}
+  @media print{.controls,button{display:none!important;} body{padding:0;background:#fff;}}
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="logo">M</div>
-  <div class="header-text">
-    <h1>Quejas y Reclamaciones — Mapa de Registro</h1>
-    <p>TER · S1-R1 · Terapia de Experiencia de Cliente</p>
-  </div>
-  <div class="badge">HERRAMIENTA OPERATIVA</div>
-</div>
-<div class="container">
-  <div class="section">
-    <h2>Registro de Quejas y Reclamaciones</h2>
-    <div class="table-wrap">
-    <table id="quejas-table">
-      <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Cliente</th>
-          <th>Canal</th>
-          <th>Categoría</th>
-          <th>Gravedad (1-5)</th>
-          <th>¿Resuelta?</th>
-          <th>Fecha Resolución</th>
-          <th>Días Resolución</th>
-          <th>Satisfacción (1-5)</th>
-          <th>¿Fidelizado?</th>
-        </tr>
-      </thead>
-      <tbody id="quejas-body">
-        <tr>
-          <td><input type="date" value="2026-06-10" onchange="recalc()"></td>
-          <td><input type="text" value="María García"></td>
-          <td><select onchange="recalc()"><option>Presencial</option><option selected>Email</option><option>Teléfono</option><option>RRSS</option><option>Reseña</option></select></td>
-          <td><select><option>Producto</option><option>Servicio</option><option selected>Atención</option><option>Precio</option><option>Plazo</option><option>Otro</option></select></td>
-          <td><input type="number" value="3" min="1" max="5" onchange="recalc()"></td>
-          <td><select onchange="recalc()"><option selected>Sí</option><option>No</option></select></td>
-          <td><input type="date" value="2026-06-12" onchange="recalc()"></td>
-          <td class="calc-cell">—</td>
-          <td><input type="number" value="4" min="1" max="5"></td>
-          <td><select><option selected>Sí</option><option>No</option><option>Pendiente</option></select></td>
-        </tr>
-        <tr>
-          <td><input type="date" value="2026-06-18" onchange="recalc()"></td>
-          <td><input type="text" value="Carlos López"></td>
-          <td><select onchange="recalc()"><option>Presencial</option><option>Email</option><option>Teléfono</option><option selected>RRSS</option><option>Reseña</option></select></td>
-          <td><select><option>Producto</option><option selected>Servicio</option><option>Atención</option><option>Precio</option><option>Plazo</option><option>Otro</option></select></td>
-          <td><input type="number" value="4" min="1" max="5" onchange="recalc()"></td>
-          <td><select onchange="recalc()"><option>Sí</option><option selected>No</option></select></td>
-          <td><input type="date" value="" onchange="recalc()"></td>
-          <td class="calc-cell">—</td>
-          <td><input type="number" value="" min="1" max="5"></td>
-          <td><select><option>Sí</option><option>No</option><option selected>Pendiente</option></select></td>
-        </tr>
-        <tr>
-          <td><input type="date" value="2026-06-25" onchange="recalc()"></td>
-          <td><input type="text" value="Ana Martínez"></td>
-          <td><select onchange="recalc()"><option>Presencial</option><option>Email</option><option selected>Teléfono</option><option>RRSS</option><option>Reseña</option></select></td>
-          <td><select><option>Producto</option><option>Servicio</option><option>Atención</option><option selected>Precio</option><option>Plazo</option><option>Otro</option></select></td>
-          <td><input type="number" value="2" min="1" max="5" onchange="recalc()"></td>
-          <td><select onchange="recalc()"><option selected>Sí</option><option>No</option></select></td>
-          <td><input type="date" value="2026-06-26" onchange="recalc()"></td>
-          <td class="calc-cell">—</td>
-          <td><input type="number" value="3" min="1" max="5"></td>
-          <td><select><option>Sí</option><option selected>No</option><option>Pendiente</option></select></td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-    <button class="btn-add no-print" onclick="addRow()">+ Añadir fila</button>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">MASFRAME · TER-S1 · Herramienta r1</div>
+    <h1>Efecto NO-WOW</h1>
+  </header>
+
+  <div class="task">Acción a ejecutar (C2): <b>Ausencia de momentos diseñados intencionalmente para generar sorpresa positiva — el servicio es correcto pero no memorable</b></div>
+
+  <div class="cards">
+    <div class="card"><div class="n" id="mTot">1</div><div class="l">Elementos</div></div>
+    <div class="card"><div class="n" id="mAvg">0%</div><div class="l">Avance medio</div></div>
+    <div class="card"><div class="n"><span class="sem" id="semDot"></span><span id="mEstado">En rojo</span></div><div class="l">Estado</div></div>
   </div>
 
-  <div class="section">
-    <h2>Métricas del Período</h2>
-    <div class="metrics-grid" id="metricsGrid"></div>
+  <table id="tabla">
+    <thead>
+      <tr><th style="width:34%">Elemento / paso a trabajar</th><th>Responsable</th><th>Fecha objetivo</th><th style="width:110px">Avance (0-100)</th><th style="width:110px">Estado</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td contenteditable="true">Ausencia de momentos diseñados intencionalmente para generar sorpresa positiva — el servicio es correcto pero no memorable</td>
+        <td contenteditable="true"></td>
+        <td><input type="date"></td>
+        <td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td>
+        <td class="estado">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="controls">
+    <button onclick="addRow()">+ Añadir fila</button>
+    <button class="ghost" onclick="window.print()">Imprimir / Guardar PDF</button>
   </div>
 
-  <button class="btn-print no-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
+  <footer>MASFRAME — herramienta operativa. Editable. La decisión clínica vive en las capas C0-C6, no en esta hoja.</footer>
 </div>
 
 <script>
-const TODAY = new Date('2026-07-08');
-
-function daysBetween(d1, d2) {
-  return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
-}
-
-function parseDate(str) {
-  if (!str) return null;
-  const d = new Date(str);
-  return isNaN(d) ? null : d;
-}
-
-function recalc() {
-  const rows = document.querySelectorAll('#quejas-body tr');
-  rows.forEach(row => {
-    const cells = row.cells;
-    const fechaVal = cells[0].querySelector('input').value;
-    const resuelta = cells[5].querySelector('select').value;
-    const fechaRes = cells[6].querySelector('input').value;
-    const calcCell = cells[7];
-    const gravedad = parseInt(cells[4].querySelector('input').value) || 0;
-
-    let dias = '—';
-    const d1 = parseDate(fechaVal);
-    if (d1) {
-      if (resuelta === 'Sí' && fechaRes) {
-        const d2 = parseDate(fechaRes);
-        if (d2) dias = daysBetween(d1, d2);
-      } else if (resuelta === 'No') {
-        dias = daysBetween(d1, TODAY);
-      }
-    }
-    calcCell.textContent = dias;
-
-    // Semaforo gravedad
-    row.classList.remove('row-alert', 'row-warning', 'row-good');
-    if (gravedad >= 4) row.classList.add('row-alert');
-    else if (gravedad === 3) row.classList.add('row-warning');
+function estadoDe(v){ if(v>=80) return ['#1f9d55','En verde']; if(v>=40) return ['#d9822b','En ámbar']; return ['#d64545','En rojo']; }
+function recalc(){
+  const rows=[...document.querySelectorAll('#tabla tbody tr')];
+  let sum=0,n=0;
+  rows.forEach(r=>{
+    const inp=r.querySelector('.avance'); const v=Math.max(0,Math.min(100,parseFloat(inp.value)||0));
+    const [c,txt]=estadoDe(v); const cell=r.querySelector('.estado'); cell.textContent=txt; cell.style.color=c;
+    sum+=v; n++;
   });
-  updateMetrics();
+  const avg=n?Math.round(sum/n):0;
+  document.getElementById('mTot').textContent=n;
+  document.getElementById('mAvg').textContent=avg+'%';
+  const [c,txt]=estadoDe(avg);
+  document.getElementById('mEstado').textContent=txt;
+  document.getElementById('semDot').style.background=c;
 }
-
-function updateMetrics() {
-  const rows = document.querySelectorAll('#quejas-body tr');
-  let total = rows.length;
-  let resueltas = 0;
-  let diasArr = [];
-  let resueltas48 = 0;
-  const catCount = {};
-
-  rows.forEach(row => {
-    const cells = row.cells;
-    const resuelta = cells[5].querySelector('select').value;
-    const cat = cells[3].querySelector('select').value;
-    const diasTxt = cells[7].textContent;
-    const dias = parseInt(diasTxt);
-
-    catCount[cat] = (catCount[cat] || 0) + 1;
-    if (resuelta === 'Sí') {
-      resueltas++;
-      if (!isNaN(dias)) {
-        diasArr.push(dias);
-        if (dias <= 2) resueltas48++;
-      }
-    }
-  });
-
-  const pctResueltas = total ? Math.round(resueltas / total * 100) : 0;
-  const mediaDias = diasArr.length ? (diasArr.reduce((a,b)=>a+b,0)/diasArr.length).toFixed(1) : '—';
-  const pct48h = resueltas ? Math.round(resueltas48 / resueltas * 100) : 0;
-  const topCat = Object.entries(catCount).sort((a,b)=>b[1]-a[1])[0];
-  const topCatStr = topCat ? `${topCat[0]} (${topCat[1]})` : '—';
-
-  const grid = document.getElementById('metricsGrid');
-  grid.innerHTML = `
-    <div class="metric-card"><div class="value">${total}</div><div class="label">Total Quejas</div></div>
-    <div class="metric-card"><div class="value">${pctResueltas}%</div><div class="label">% Resueltas</div></div>
-    <div class="metric-card"><div class="value" style="font-size:16px">${topCatStr}</div><div class="label">Categoría con más quejas</div></div>
-    <div class="metric-card"><div class="value">${mediaDias}d</div><div class="label">Tiempo medio resolución</div></div>
-    <div class="metric-card"><div class="value">${pct48h}%</div><div class="label">Resueltas en &lt;48h</div></div>
-  `;
+function addRow(){
+  const tb=document.querySelector('#tabla tbody');
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td contenteditable="true"></td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td>';
+  tb.appendChild(tr); recalc();
 }
-
-function addRow() {
-  const tbody = document.getElementById('quejas-body');
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td><input type="date" onchange="recalc()"></td>
-    <td><input type="text" placeholder="Cliente"></td>
-    <td><select onchange="recalc()"><option>Presencial</option><option>Email</option><option>Teléfono</option><option>RRSS</option><option>Reseña</option></select></td>
-    <td><select><option>Producto</option><option>Servicio</option><option>Atención</option><option>Precio</option><option>Plazo</option><option>Otro</option></select></td>
-    <td><input type="number" value="1" min="1" max="5" onchange="recalc()"></td>
-    <td><select onchange="recalc()"><option>Sí</option><option>No</option></select></td>
-    <td><input type="date" onchange="recalc()"></td>
-    <td class="calc-cell">—</td>
-    <td><input type="number" min="1" max="5"></td>
-    <td><select><option>Sí</option><option>No</option><option>Pendiente</option></select></td>
-  `;
-  tbody.appendChild(tr);
-  recalc();
-}
-
 recalc();
 </script>
+<script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
 </body>
 </html>

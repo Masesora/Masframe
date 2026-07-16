@@ -1,524 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CIR-S3 | Plan de Reconstrucción de Reputación</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comunicación Inconsistente · r5</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 14px; }
-
-  /* HEADER */
-  .mas-header { background: #1B2B4B; padding: 18px 28px; display: flex; align-items: center; gap: 16px; }
-  .mas-logo { width: 44px; height: 44px; border-radius: 50%; background: #C4A55A; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px; color: #1B2B4B; flex-shrink: 0; }
-  .mas-header-text { flex: 1; }
-  .mas-header-symptom { color: #C4A55A; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2px; }
-  .mas-header-title { color: #ffffff; font-size: 18px; font-weight: 700; line-height: 1.2; }
-  .mas-badge { background: transparent; border: 1.5px solid #C4A55A; color: #C4A55A; font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
-
-  /* MAIN */
-  .container { max-width: 1300px; margin: 0 auto; padding: 24px 20px; }
-  .section-title { font-size: 13px; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #C4A55A; display: inline-block; }
-
-  /* TABLE */
-  .table-wrapper { overflow-x: auto; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 1px 6px rgba(27,43,75,0.10); }
-  table { width: 100%; border-collapse: collapse; background: #fff; min-width: 1150px; }
-  thead tr { background: #1B2B4B; }
-  thead th { color: #fff; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 10px; text-align: left; white-space: nowrap; }
-  tbody tr:nth-child(even) { background: #f0f4f8; }
-  tbody tr:nth-child(odd) { background: #ffffff; }
-  tbody tr:hover { background: #eaf0fa; }
-  td { padding: 8px 10px; font-size: 13px; color: #1B2B4B; vertical-align: middle; border-bottom: 1px solid #e8ecf2; }
-  td[contenteditable="true"] { outline: none; cursor: text; }
-  td[contenteditable="true"]:focus { background: #fffbe6; box-shadow: inset 0 0 0 2px #C4A55A; border-radius: 3px; }
-  select { border: 1px solid #c8d0dc; border-radius: 4px; padding: 4px 6px; font-size: 12px; color: #1B2B4B; background: #fff; width: 100%; }
-  select:focus { outline: none; border-color: #C4A55A; }
-
-  /* SEMAPHORE DOT */
-  .dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; margin-right: 5px; vertical-align: middle; }
-  .dot-green { background: #22c55e; }
-  .dot-yellow { background: #f59e0b; }
-  .dot-red { background: #ef4444; }
-  .dot-grey { background: #94a3b8; }
-
-  /* PROGRESS BAR */
-  .progress-cell { min-width: 140px; }
-  .progress-wrap { display: flex; align-items: center; gap: 8px; }
-  .progress-val { font-size: 12px; font-weight: 700; color: #1B2B4B; min-width: 32px; text-align: right; }
-  .progress-bar-outer { flex: 1; height: 10px; background: #e2e8f0; border-radius: 99px; overflow: hidden; min-width: 60px; }
-  .progress-bar-inner { height: 100%; border-radius: 99px; transition: width 0.3s; }
-  .bar-red { background: #ef4444; }
-  .bar-yellow { background: #f59e0b; }
-  .bar-green { background: #22c55e; }
-
-  /* ESTADO BADGE */
-  .estado-cell { display: flex; align-items: center; gap: 4px; }
-
-  /* METRICS */
-  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 24px 0; }
-  .metric-card { background: #fff; border-radius: 8px; border-top: 4px solid #1B2B4B; padding: 18px 20px; box-shadow: 0 1px 6px rgba(27,43,75,0.08); }
-  .metric-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 8px; }
-  .metric-value { font-size: 28px; font-weight: 800; color: #C4A55A; line-height: 1; }
-  .metric-value.red { color: #ef4444; }
-  .metric-value.green { color: #22c55e; }
-  .metric-sub { font-size: 11px; color: #94a3b8; margin-top: 4px; }
-
-  /* SCORE COMPARISON SECTION */
-  .score-section { background: #fff; border-radius: 8px; border-top: 4px solid #C4A55A; padding: 20px 24px; box-shadow: 0 1px 6px rgba(27,43,75,0.08); margin-bottom: 20px; }
-  .score-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 16px; }
-  .score-inputs { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 20px; align-items: flex-end; }
-  .score-field { display: flex; flex-direction: column; gap: 6px; }
-  .score-field label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: #64748b; }
-  .score-field input[type="number"] { width: 90px; border: 1.5px solid #c8d0dc; border-radius: 6px; padding: 8px 10px; font-size: 20px; font-weight: 800; color: #1B2B4B; text-align: center; outline: none; }
-  .score-field input[type="number"]:focus { border-color: #C4A55A; }
-  .score-bars { display: flex; flex-direction: column; gap: 10px; }
-  .score-bar-row { display: flex; align-items: center; gap: 12px; }
-  .score-bar-label { font-size: 12px; font-weight: 600; color: #1B2B4B; min-width: 100px; }
-  .score-bar-outer { flex: 1; height: 18px; background: #e2e8f0; border-radius: 99px; overflow: hidden; max-width: 400px; }
-  .score-bar-fill { height: 100%; border-radius: 99px; transition: width 0.4s; }
-  .bar-antes { background: #ef4444; }
-  .bar-proyectado { background: #22c55e; }
-  .score-bar-num { font-size: 13px; font-weight: 700; color: #1B2B4B; min-width: 30px; }
-
-  /* ADD ROW BUTTON */
-  .btn-add { display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 1.5px solid #1B2B4B; color: #1B2B4B; font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 6px; cursor: pointer; margin-bottom: 20px; transition: all 0.15s; }
-  .btn-add:hover { background: #1B2B4B; color: #fff; }
-
-  /* PRINT BUTTON */
-  .btn-print { display: inline-flex; align-items: center; gap: 8px; background: #C4A55A; border: none; color: #1B2B4B; font-size: 13px; font-weight: 700; padding: 10px 24px; border-radius: 6px; cursor: pointer; margin-top: 8px; }
-  .btn-print:hover { background: #b8944a; }
-  .actions-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
-
-  @media print {
-    body { background: #fff; }
-    .btn-add, .btn-print, .actions-bar { display: none !important; }
-    .mas-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .metric-card, .score-section { box-shadow: none; border: 1px solid #ddd; }
-    .table-wrapper { box-shadow: none; }
-    .progress-bar-outer, .score-bar-outer, .progress-bar-inner, .score-bar-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  }
+  :root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--ink:#26304a;--line:#e4e2f2;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.5;padding:28px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{border-bottom:3px solid var(--gold);padding-bottom:14px;margin-bottom:20px;}
+  .eyebrow{color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+  h1{color:var(--navy);margin:.2em 0 .1em;font-size:24px;}
+  .task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:15px;}
+  .task b{color:var(--navy);}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+  .card{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+  .card .n{font-size:30px;font-weight:800;color:var(--navy);}
+  .card .l{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;}
+  .sem{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th{background:var(--navy);color:#fff;font-size:13px;text-align:left;padding:10px 12px;}
+  td{border-top:1px solid var(--line);padding:8px 12px;font-size:14px;}
+  td[contenteditable]{outline:none;} td[contenteditable]:focus{background:#fbf8ee;}
+  input,select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;background:#fff;}
+  .avance{width:70px;}
+  .estado{font-weight:700;}
+  .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;}
+  button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+  button.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  footer{margin-top:22px;color:#9aa0b4;font-size:12px;text-align:center;}
+  @media print{.controls,button{display:none!important;} body{padding:0;background:#fff;}}
 </style>
 </head>
 <body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">MASFRAME · CIR-S3 · Herramienta r5</div>
+    <h1>Comunicación Inconsistente</h1>
+  </header>
 
-<header class="mas-header">
-  <div class="mas-logo">M</div>
-  <div class="mas-header-text">
-    <div class="mas-header-symptom">CIR-S3 · Reputación Dañada</div>
-    <div class="mas-header-title">Plan de Reconstrucción de Reputación</div>
-  </div>
-  <div class="mas-badge">Herramienta Operativa</div>
-</header>
+  <div class="task">Acción a ejecutar (C2): <b>Revisar y unificar todos los perfiles digitales con el mismo mensaje y tono de marca</b></div>
 
-<div class="container">
-
-  <p class="section-title">Acciones del Plan de Reconstrucción</p>
-
-  <div class="table-wrapper">
-    <table id="mainTable">
-      <thead>
-        <tr>
-          <th>Estado</th>
-          <th>Acción</th>
-          <th>Objetivo</th>
-          <th>Canal</th>
-          <th>Responsable</th>
-          <th>Inversión (€)</th>
-          <th>Plazo</th>
-          <th>KPI de éxito</th>
-          <th>Estado</th>
-          <th style="min-width:160px;">% Avance</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody">
-
-        <tr>
-          <td><span class="dot dot-grey"></span></td>
-          <td contenteditable="true">Campaña captación reseñas Google positivas</td>
-          <td>
-            <select class="sel-objetivo" onchange="recalc()">
-              <option value="Generar positivo" selected>Generar positivo</option>
-              <option value="Suprimir negativo">Suprimir negativo</option>
-              <option value="Responder">Responder</option>
-              <option value="Anticipar">Anticipar</option>
-            </select>
-          </td>
-          <td contenteditable="true">Email / WhatsApp clientes</td>
-          <td contenteditable="true">Marketing</td>
-          <td class="col-inversion" contenteditable="true" oninput="recalc()">800</td>
-          <td contenteditable="true">Julio 2026</td>
-          <td contenteditable="true">+20 reseñas 4★ en 30 días</td>
-          <td>
-            <select class="sel-estado" onchange="recalc()">
-              <option value="Pendiente">Pendiente</option>
-              <option value="En curso" selected>En curso</option>
-              <option value="Completado">Completado</option>
-              <option value="Pausado">Pausado</option>
-            </select>
-          </td>
-          <td class="col-avance progress-cell">
-            <div class="progress-wrap">
-              <span class="progress-val">45%</span>
-              <div class="progress-bar-outer"><div class="progress-bar-inner bar-yellow" style="width:45%"></div></div>
-            </div>
-            <input type="number" class="avance-input" min="0" max="100" value="45" style="width:1px;height:1px;opacity:0;position:absolute;" oninput="recalc()">
-          </td>
-        </tr>
-
-        <tr>
-          <td><span class="dot dot-grey"></span></td>
-          <td contenteditable="true">Respuesta pública a reseñas negativas existentes</td>
-          <td>
-            <select class="sel-objetivo" onchange="recalc()">
-              <option value="Generar positivo">Generar positivo</option>
-              <option value="Suprimir negativo">Suprimir negativo</option>
-              <option value="Responder" selected>Responder</option>
-              <option value="Anticipar">Anticipar</option>
-            </select>
-          </td>
-          <td contenteditable="true">Google / TrustPilot</td>
-          <td contenteditable="true">Atención cliente</td>
-          <td class="col-inversion" contenteditable="true" oninput="recalc()">0</td>
-          <td contenteditable="true">Junio 2026</td>
-          <td contenteditable="true">100% reseñas respondidas en 48h</td>
-          <td>
-            <select class="sel-estado" onchange="recalc()">
-              <option value="Pendiente">Pendiente</option>
-              <option value="En curso">En curso</option>
-              <option value="Completado" selected>Completado</option>
-              <option value="Pausado">Pausado</option>
-            </select>
-          </td>
-          <td class="col-avance progress-cell">
-            <div class="progress-wrap">
-              <span class="progress-val">100%</span>
-              <div class="progress-bar-outer"><div class="progress-bar-inner bar-green" style="width:100%"></div></div>
-            </div>
-            <input type="number" class="avance-input" min="0" max="100" value="100" style="width:1px;height:1px;opacity:0;position:absolute;" oninput="recalc()">
-          </td>
-        </tr>
-
-        <tr>
-          <td><span class="dot dot-grey"></span></td>
-          <td contenteditable="true">Creación contenido SEO reputacional positivo</td>
-          <td>
-            <select class="sel-objetivo" onchange="recalc()">
-              <option value="Generar positivo" selected>Generar positivo</option>
-              <option value="Suprimir negativo">Suprimir negativo</option>
-              <option value="Responder">Responder</option>
-              <option value="Anticipar">Anticipar</option>
-            </select>
-          </td>
-          <td contenteditable="true">Blog corporativo / LinkedIn</td>
-          <td contenteditable="true">SEO / Comunicación</td>
-          <td class="col-inversion" contenteditable="true" oninput="recalc()">1200</td>
-          <td contenteditable="true">Agosto 2026</td>
-          <td contenteditable="true">3 artículos en top-5 Google en 90 días</td>
-          <td>
-            <select class="sel-estado" onchange="recalc()">
-              <option value="Pendiente">Pendiente</option>
-              <option value="En curso" selected>En curso</option>
-              <option value="Completado">Completado</option>
-              <option value="Pausado">Pausado</option>
-            </select>
-          </td>
-          <td class="col-avance progress-cell">
-            <div class="progress-wrap">
-              <span class="progress-val">30%</span>
-              <div class="progress-bar-outer"><div class="progress-bar-inner bar-red" style="width:30%"></div></div>
-            </div>
-            <input type="number" class="avance-input" min="0" max="100" value="30" style="width:1px;height:1px;opacity:0;position:absolute;" oninput="recalc()">
-          </td>
-        </tr>
-
-        <tr>
-          <td><span class="dot dot-grey"></span></td>
-          <td contenteditable="true">Notas de prensa en medios del sector</td>
-          <td>
-            <select class="sel-objetivo" onchange="recalc()">
-              <option value="Generar positivo" selected>Generar positivo</option>
-              <option value="Suprimir negativo">Suprimir negativo</option>
-              <option value="Responder">Responder</option>
-              <option value="Anticipar">Anticipar</option>
-            </select>
-          </td>
-          <td contenteditable="true">Medios sectoriales / PR</td>
-          <td contenteditable="true">Comunicación</td>
-          <td class="col-inversion" contenteditable="true" oninput="recalc()">2500</td>
-          <td contenteditable="true">Septiembre 2026</td>
-          <td contenteditable="true">2 apariciones en medios relevantes</td>
-          <td>
-            <select class="sel-estado" onchange="recalc()">
-              <option value="Pendiente" selected>Pendiente</option>
-              <option value="En curso">En curso</option>
-              <option value="Completado">Completado</option>
-              <option value="Pausado">Pausado</option>
-            </select>
-          </td>
-          <td class="col-avance progress-cell">
-            <div class="progress-wrap">
-              <span class="progress-val">0%</span>
-              <div class="progress-bar-outer"><div class="progress-bar-inner bar-red" style="width:0%"></div></div>
-            </div>
-            <input type="number" class="avance-input" min="0" max="100" value="0" style="width:1px;height:1px;opacity:0;position:absolute;" oninput="recalc()">
-          </td>
-        </tr>
-
-        <tr>
-          <td><span class="dot dot-grey"></span></td>
-          <td contenteditable="true">Solicitud eliminación contenido dañino a plataformas</td>
-          <td>
-            <select class="sel-objetivo" onchange="recalc()">
-              <option value="Generar positivo">Generar positivo</option>
-              <option value="Suprimir negativo" selected>Suprimir negativo</option>
-              <option value="Responder">Responder</option>
-              <option value="Anticipar">Anticipar</option>
-            </select>
-          </td>
-          <td contenteditable="true">Legal / Google / Redes</td>
-          <td contenteditable="true">Dirección / Legal</td>
-          <td class="col-inversion" contenteditable="true" oninput="recalc()">1800</td>
-          <td contenteditable="true">Julio 2026</td>
-          <td contenteditable="true">Eliminación o desindexación de 2 URLs</td>
-          <td>
-            <select class="sel-estado" onchange="recalc()">
-              <option value="Pendiente">Pendiente</option>
-              <option value="En curso">En curso</option>
-              <option value="Completado">Completado</option>
-              <option value="Pausado" selected>Pausado</option>
-            </select>
-          </td>
-          <td class="col-avance progress-cell">
-            <div class="progress-wrap">
-              <span class="progress-val">20%</span>
-              <div class="progress-bar-outer"><div class="progress-bar-inner bar-red" style="width:20%"></div></div>
-            </div>
-            <input type="number" class="avance-input" min="0" max="100" value="20" style="width:1px;height:1px;opacity:0;position:absolute;" oninput="recalc()">
-          </td>
-        </tr>
-
-        <tr>
-          <td><span class="dot dot-grey"></span></td>
-          <td contenteditable="true">Protocolo de gestión de crisis reputacional futura</td>
-          <td>
-            <select class="sel-objetivo" onchange="recalc()">
-              <option value="Generar positivo">Generar positivo</option>
-              <option value="Suprimir negativo">Suprimir negativo</option>
-              <option value="Responder">Responder</option>
-              <option value="Anticipar" selected>Anticipar</option>
-            </select>
-          </td>
-          <td contenteditable="true">Interno / Procedimientos</td>
-          <td contenteditable="true">Dirección</td>
-          <td class="col-inversion" contenteditable="true" oninput="recalc()">500</td>
-          <td contenteditable="true">Agosto 2026</td>
-          <td contenteditable="true">Protocolo aprobado y equipo formado</td>
-          <td>
-            <select class="sel-estado" onchange="recalc()">
-              <option value="Pendiente">Pendiente</option>
-              <option value="En curso" selected>En curso</option>
-              <option value="Completado">Completado</option>
-              <option value="Pausado">Pausado</option>
-            </select>
-          </td>
-          <td class="col-avance progress-cell">
-            <div class="progress-wrap">
-              <span class="progress-val">60%</span>
-              <div class="progress-bar-outer"><div class="progress-bar-inner bar-yellow" style="width:60%"></div></div>
-            </div>
-            <input type="number" class="avance-input" min="0" max="100" value="60" style="width:1px;height:1px;opacity:0;position:absolute;" oninput="recalc()">
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
+  <div class="cards">
+    <div class="card"><div class="n" id="mTot">1</div><div class="l">Elementos</div></div>
+    <div class="card"><div class="n" id="mAvg">0%</div><div class="l">Avance medio</div></div>
+    <div class="card"><div class="n"><span class="sem" id="semDot"></span><span id="mEstado">En rojo</span></div><div class="l">Estado</div></div>
   </div>
 
-  <div class="actions-bar">
-    <button class="btn-add" onclick="addRow()">+ Añadir fila</button>
+  <table id="tabla">
+    <thead>
+      <tr><th style="width:34%">Elemento / paso a trabajar</th><th>Responsable</th><th>Fecha objetivo</th><th style="width:110px">Avance (0-100)</th><th style="width:110px">Estado</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td contenteditable="true">Revisar y unificar todos los perfiles digitales con el mismo mensaje y tono de marca</td>
+        <td contenteditable="true"></td>
+        <td><input type="date"></td>
+        <td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td>
+        <td class="estado">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="controls">
+    <button onclick="addRow()">+ Añadir fila</button>
+    <button class="ghost" onclick="window.print()">Imprimir / Guardar PDF</button>
   </div>
 
-  <!-- SCORE COMPARISON -->
-  <p class="section-title" style="margin-top:28px;">Score de Reputación — Comparativa</p>
-  <div class="score-section">
-    <div class="score-section-title">Introduce el score actual y el proyectado (escala 0-100)</div>
-    <div class="score-inputs">
-      <div class="score-field">
-        <label>Score antes</label>
-        <input type="number" id="scoreAntes" min="0" max="100" value="28" oninput="recalc()">
-      </div>
-      <div class="score-field">
-        <label>Score proyectado</label>
-        <input type="number" id="scoreProyectado" min="0" max="100" value="72" oninput="recalc()">
-      </div>
-    </div>
-    <div class="score-bars">
-      <div class="score-bar-row">
-        <span class="score-bar-label">Antes</span>
-        <div class="score-bar-outer">
-          <div class="score-bar-fill bar-antes" id="barAntes" style="width:28%"></div>
-        </div>
-        <span class="score-bar-num" id="numAntes">28</span>
-      </div>
-      <div class="score-bar-row">
-        <span class="score-bar-label">Proyectado</span>
-        <div class="score-bar-outer">
-          <div class="score-bar-fill bar-proyectado" id="barProyectado" style="width:72%"></div>
-        </div>
-        <span class="score-bar-num" id="numProyectado">72</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- METRICS -->
-  <p class="section-title" style="margin-top:28px;">Métricas del Plan</p>
-  <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="metric-label">Inversión total</div>
-      <div class="metric-value" id="m-inversion">0 €</div>
-      <div class="metric-sub">Suma de todas las acciones</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">% Acciones completadas</div>
-      <div class="metric-value green" id="m-completadas">0%</div>
-      <div class="metric-sub">Estado = Completado / total</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Acciones en curso</div>
-      <div class="metric-value" id="m-en-curso">0</div>
-      <div class="metric-sub">Estado = En curso</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Acciones pausadas</div>
-      <div class="metric-value red" id="m-pausadas">0</div>
-      <div class="metric-sub">Estado = Pausado</div>
-    </div>
-  </div>
-
-  <div class="actions-bar">
-    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Exportar PDF</button>
-  </div>
-
+  <footer>MASFRAME — herramienta operativa. Editable. La decisión clínica vive en las capas C0-C6, no en esta hoja.</footer>
 </div>
 
 <script>
-  function getEstadoDotClass(estado) {
-    if (estado === 'Completado') return 'dot-green';
-    if (estado === 'En curso') return 'dot-yellow';
-    if (estado === 'Pausado') return 'dot-red';
-    return 'dot-grey';
-  }
-
-  function getBarClass(pct) {
-    if (pct >= 70) return 'bar-green';
-    if (pct >= 30) return 'bar-yellow';
-    return 'bar-red';
-  }
-
-  function recalc() {
-    const rows = document.querySelectorAll('#tableBody tr');
-    let totalInversion = 0, completadas = 0, enCurso = 0, pausadas = 0, total = 0;
-
-    rows.forEach(tr => {
-      total++;
-      const dot = tr.querySelector('.dot');
-      const selEstado = tr.querySelector('.sel-estado');
-      const invCell = tr.querySelector('.col-inversion');
-      const avanceWrap = tr.querySelector('.progress-wrap');
-      const avanceInput = tr.querySelector('.avance-input');
-
-      const estado = selEstado ? selEstado.value : 'Pendiente';
-      const inv = parseFloat(invCell ? invCell.textContent : 0) || 0;
-      const avance = Math.min(100, Math.max(0, parseFloat(avanceInput ? avanceInput.value : 0) || 0));
-
-      // dot
-      if (dot) dot.className = 'dot ' + getEstadoDotClass(estado);
-
-      // Update progress bar from hidden input (manual editing)
-      // The progress bar value is read from the visible text + bar
-      // We'll sync bar from the visible text in .progress-val
-      if (avanceWrap) {
-        const valSpan = avanceWrap.querySelector('.progress-val');
-        const barInner = avanceWrap.querySelector('.progress-bar-inner');
-        // Read from the hidden input
-        if (valSpan) valSpan.textContent = Math.round(avance) + '%';
-        if (barInner) {
-          barInner.style.width = avance + '%';
-          barInner.className = 'progress-bar-inner ' + getBarClass(avance);
-        }
-      }
-
-      totalInversion += inv;
-      if (estado === 'Completado') completadas++;
-      if (estado === 'En curso') enCurso++;
-      if (estado === 'Pausado') pausadas++;
-    });
-
-    document.getElementById('m-inversion').textContent = totalInversion.toLocaleString('es-ES') + ' €';
-    const pctComp = total > 0 ? Math.round(completadas / total * 100) : 0;
-    document.getElementById('m-completadas').textContent = pctComp + '%';
-    document.getElementById('m-en-curso').textContent = enCurso;
-    document.getElementById('m-pausadas').textContent = pausadas;
-
-    // Score bars
-    const antes = Math.min(100, Math.max(0, parseFloat(document.getElementById('scoreAntes').value) || 0));
-    const proyectado = Math.min(100, Math.max(0, parseFloat(document.getElementById('scoreProyectado').value) || 0));
-    document.getElementById('barAntes').style.width = antes + '%';
-    document.getElementById('barProyectado').style.width = proyectado + '%';
-    document.getElementById('numAntes').textContent = Math.round(antes);
-    document.getElementById('numProyectado').textContent = Math.round(proyectado);
-  }
-
-  // Make progress bars editable by clicking on the % value
-  function bindProgressEdit(tr) {
-    const valSpan = tr.querySelector('.progress-val');
-    const avanceInput = tr.querySelector('.avance-input');
-    if (!valSpan || !avanceInput) return;
-    valSpan.style.cursor = 'pointer';
-    valSpan.title = 'Haz clic para editar el % de avance';
-    valSpan.addEventListener('click', function() {
-      const current = parseInt(this.textContent) || 0;
-      const val = prompt('Introduce el % de avance (0-100):', current);
-      if (val !== null) {
-        const num = Math.min(100, Math.max(0, parseFloat(val) || 0));
-        avanceInput.value = num;
-        recalc();
-      }
-    });
-  }
-
-  function addRow() {
-    const tbody = document.getElementById('tableBody');
-    const lastRow = tbody.querySelector('tr:last-child');
-    const newRow = lastRow.cloneNode(true);
-
-    newRow.querySelectorAll('[contenteditable="true"]').forEach(cell => {
-      if (cell.classList.contains('col-inversion')) cell.textContent = '0';
-      else cell.textContent = '';
-      cell.addEventListener('input', recalc);
-    });
-    newRow.querySelectorAll('select').forEach(sel => {
-      sel.selectedIndex = 0;
-      sel.addEventListener('change', recalc);
-    });
-    const avanceInput = newRow.querySelector('.avance-input');
-    if (avanceInput) { avanceInput.value = 0; avanceInput.addEventListener('input', recalc); }
-    const dot = newRow.querySelector('.dot');
-    if (dot) dot.className = 'dot dot-grey';
-
-    tbody.appendChild(newRow);
-    bindProgressEdit(newRow);
-    recalc();
-  }
-
-  // Bind events to existing
-  document.querySelectorAll('#tableBody [contenteditable="true"]').forEach(cell => cell.addEventListener('input', recalc));
-  document.querySelectorAll('#tableBody select').forEach(sel => sel.addEventListener('change', recalc));
-  document.querySelectorAll('#tableBody .avance-input').forEach(inp => inp.addEventListener('input', recalc));
-  document.querySelectorAll('#tableBody tr').forEach(tr => bindProgressEdit(tr));
-
-  recalc();
+function estadoDe(v){ if(v>=80) return ['#1f9d55','En verde']; if(v>=40) return ['#d9822b','En ámbar']; return ['#d64545','En rojo']; }
+function recalc(){
+  const rows=[...document.querySelectorAll('#tabla tbody tr')];
+  let sum=0,n=0;
+  rows.forEach(r=>{
+    const inp=r.querySelector('.avance'); const v=Math.max(0,Math.min(100,parseFloat(inp.value)||0));
+    const [c,txt]=estadoDe(v); const cell=r.querySelector('.estado'); cell.textContent=txt; cell.style.color=c;
+    sum+=v; n++;
+  });
+  const avg=n?Math.round(sum/n):0;
+  document.getElementById('mTot').textContent=n;
+  document.getElementById('mAvg').textContent=avg+'%';
+  const [c,txt]=estadoDe(avg);
+  document.getElementById('mEstado').textContent=txt;
+  document.getElementById('semDot').style.background=c;
+}
+function addRow(){
+  const tb=document.querySelector('#tabla tbody');
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td contenteditable="true"></td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td>';
+  tb.appendChild(tr); recalc();
+}
+recalc();
 </script>
+<script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
 </body>
 </html>

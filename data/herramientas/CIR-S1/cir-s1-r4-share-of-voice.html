@@ -1,504 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Share of Voice — Comparativa Sectorial · CIR-S1</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Déficit de Imagen Competitiva · r4</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --navy:   #1B2B4B;
-    --gold:   #C4A55A;
-    --bg:     #f8f7ff;
-    --row-alt:#f0f4f8;
-    --border: #d0d8e8;
-    --text:   #1a1a2e;
-    --muted:  #5a6478;
-    --green:  #2d7a4f;
-    --yellow: #b8860b;
-    --red:    #c0392b;
-    --green-bg:  #eaf5ef;
-    --yellow-bg: #fdf6e3;
-    --red-bg:    #fdecea;
-  }
-
-  body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.5;
-    min-height: 100vh;
-  }
-
-  /* ── HEADER ── */
-  header {
-    background: var(--navy);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    height: 68px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-
-  .logo-circle {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem; font-weight: 800;
-    color: var(--navy);
-    flex-shrink: 0;
-    letter-spacing: -0.02em;
-  }
-
-  .header-text { flex: 1; }
-  .header-title {
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    line-height: 1.2;
-  }
-  .header-sub {
-    color: rgba(255,255,255,0.55);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
-
-  .badge {
-    background: var(--gold);
-    color: var(--navy);
-    font-size: 0.62rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 2px;
-    white-space: nowrap;
-  }
-
-  .header-actions {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  /* ── MAIN LAYOUT ── */
-  main {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
-  }
-
-  /* ── METRIC CARDS ── */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  .card {
-    background: #fff;
-    border-top: 4px solid var(--navy);
-    border-radius: 4px;
-    padding: 1.1rem 1.25rem 1rem;
-    box-shadow: 0 1px 4px rgba(27,43,75,0.07);
-  }
-
-  .card-label {
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.45rem;
-  }
-
-  .card-value {
-    font-size: 1.75rem;
-    font-weight: 800;
-    font-variant-numeric: tabular-nums;
-    color: var(--navy);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
-
-  .card-value.green  { color: var(--green); }
-  .card-value.yellow { color: var(--yellow); }
-  .card-value.red    { color: var(--red); }
-
-  .card-hint {
-    font-size: 0.7rem;
-    color: var(--muted);
-    margin-top: 0.3rem;
-  }
-
-  .semaphore-dot {
-    display: inline-block;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    margin-right: 4px;
-    vertical-align: middle;
-  }
-  .dot-green  { background: var(--green); }
-  .dot-yellow { background: var(--yellow); }
-  .dot-red    { background: var(--red); }
-
-  .trend-input {
-    width: 100%;
-    border: 1.5px solid var(--border);
-    border-radius: 3px;
-    padding: 6px 10px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--navy);
-    font-family: system-ui, sans-serif;
-    background: transparent;
-    margin-top: 2px;
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .trend-input:focus { border-color: var(--gold); }
-
-  /* ── TABLE SECTION ── */
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .section-title {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 7px 14px;
-    border-radius: 3px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    font-family: system-ui, sans-serif;
-    letter-spacing: 0.04em;
-    transition: opacity 0.15s;
-  }
-  .btn:hover { opacity: 0.85; }
-  .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-
-  .btn-primary  { background: var(--navy); color: #fff; }
-  .btn-secondary { background: #fff; color: var(--navy); border: 1.5px solid var(--border); }
-  .btn-add      { background: var(--gold); color: var(--navy); }
-
-  .table-wrap { overflow-x: auto; border-radius: 4px; box-shadow: 0 1px 4px rgba(27,43,75,0.07); }
-
-  table {
-    width: 100%;
-    min-width: 820px;
-    border-collapse: collapse;
-    background: #fff;
-  }
-
-  thead th {
-    background: var(--navy);
-    color: #fff;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    padding: 10px 12px;
-    text-align: left;
-    white-space: nowrap;
-  }
-
-  tbody tr:nth-child(even) td { background: var(--row-alt); }
-  tbody tr:nth-child(odd)  td { background: #fff; }
-
-  tbody tr.own-row td { border-left: none; }
-  tbody tr.own-row td:first-child {
-    border-left: 4px solid var(--gold);
-  }
-
-  tbody td {
-    padding: 9px 12px;
-    font-size: 0.85rem;
-    color: var(--text);
-    border-bottom: 1px solid var(--border);
-    font-variant-numeric: tabular-nums;
-    vertical-align: middle;
-    min-width: 80px;
-  }
-
-  [contenteditable="true"] {
-    outline: none;
-    border-radius: 2px;
-    transition: box-shadow 0.12s, background 0.12s;
-    min-width: 60px;
-    display: inline-block;
-  }
-  [contenteditable="true"]:focus {
-    box-shadow: 0 0 0 2px var(--gold);
-    background: #fffdf5;
-  }
-
-  select {
-    border: 1.5px solid var(--border);
-    border-radius: 3px;
-    padding: 3px 6px;
-    font-family: system-ui, sans-serif;
-    font-size: 0.82rem;
-    color: var(--text);
-    background: #fff;
-    cursor: pointer;
-    outline: none;
-  }
-  select:focus { border-color: var(--gold); }
-
-  .col-num { text-align: right; }
-
-  /* ── FOOTER ── */
-  footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.68rem;
-    letter-spacing: 0.05em;
-    padding-bottom: 2rem;
-  }
-
-  /* ── PRINT ── */
-  @media print {
-    header { position: static; }
-    .btn, .header-actions { display: none !important; }
-    body { background: #fff; }
-    .card { box-shadow: none; border: 1px solid #ccc; border-top: 4px solid var(--navy); }
-    .table-wrap { box-shadow: none; overflow: visible; }
-    table { page-break-inside: auto; }
-    thead { display: table-header-group; }
-    tbody tr { page-break-inside: avoid; }
-  }
-
-  @media (max-width: 900px) {
-    .cards-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 520px) {
-    .cards-grid { grid-template-columns: 1fr; }
-    header { padding: 0 1rem; }
-    .badge { display: none; }
-  }
+  :root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--ink:#26304a;--line:#e4e2f2;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.5;padding:28px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{border-bottom:3px solid var(--gold);padding-bottom:14px;margin-bottom:20px;}
+  .eyebrow{color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+  h1{color:var(--navy);margin:.2em 0 .1em;font-size:24px;}
+  .task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:15px;}
+  .task b{color:var(--navy);}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+  .card{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+  .card .n{font-size:30px;font-weight:800;color:var(--navy);}
+  .card .l{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;}
+  .sem{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th{background:var(--navy);color:#fff;font-size:13px;text-align:left;padding:10px 12px;}
+  td{border-top:1px solid var(--line);padding:8px 12px;font-size:14px;}
+  td[contenteditable]{outline:none;} td[contenteditable]:focus{background:#fbf8ee;}
+  input,select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;background:#fff;}
+  .avance{width:70px;}
+  .estado{font-weight:700;}
+  .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;}
+  button{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+  button.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  footer{margin-top:22px;color:#9aa0b4;font-size:12px;text-align:center;}
+  @media print{.controls,button{display:none!important;} body{padding:0;background:#fff;}}
 </style>
 </head>
 <body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">MASFRAME · CIR-S1 · Herramienta r4</div>
+    <h1>Déficit de Imagen Competitiva</h1>
+  </header>
 
-<header>
-  <div class="logo-circle">M</div>
-  <div class="header-text">
-    <div class="header-title">Share of Voice — Comparativa Sectorial</div>
-    <div class="header-sub">CIR-S1 · Invisibilidad de Marca</div>
-  </div>
-  <span class="badge">Herramienta Operativa</span>
-  <div class="header-actions">
-    <button class="btn btn-secondary" onclick="window.print()">⎙ Imprimir</button>
-  </div>
-</header>
+  <div class="task">Acción a ejecutar (C2): <b>Crear una plantilla de comunicación visual para redes que garantice coherencia en cada publicación</b></div>
 
-<main>
-
-  <!-- METRIC CARDS -->
-  <div class="cards-grid">
-    <div class="card">
-      <div class="card-label">Share of Voice Propio</div>
-      <div class="card-value" id="card-sov">—</div>
-      <div class="card-hint"><span class="semaphore-dot" id="dot-sov"></span>Verde &gt;25% · Amarillo 10-25% · Rojo &lt;10%</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Total Menciones Sector</div>
-      <div class="card-value" id="card-total" style="color:var(--navy)">—</div>
-      <div class="card-hint">Suma de todas las menciones online/mes</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Posición en Ranking</div>
-      <div class="card-value" id="card-rank">—</div>
-      <div class="card-hint"><span class="semaphore-dot" id="dot-rank"></span>Por menciones · Verde=1º · Rojo=4-5º</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Tendencia 6 Meses</div>
-      <input class="trend-input" id="trend-input" type="text" placeholder="ej. +15%" aria-label="Tendencia 6 meses">
-      <div class="card-hint">Dato manual — comparar periodo anterior</div>
-    </div>
+  <div class="cards">
+    <div class="card"><div class="n" id="mTot">1</div><div class="l">Elementos</div></div>
+    <div class="card"><div class="n" id="mAvg">0%</div><div class="l">Avance medio</div></div>
+    <div class="card"><div class="n"><span class="sem" id="semDot"></span><span id="mEstado">En rojo</span></div><div class="l">Estado</div></div>
   </div>
 
-  <!-- TABLE -->
-  <div>
-    <div class="section-header" style="margin-bottom:0.75rem">
-      <span class="section-title">Empresas comparadas</span>
-      <button class="btn btn-add" onclick="addRow()">+ Añadir empresa</button>
-    </div>
-    <div class="table-wrap">
-      <table id="sov-table">
-        <thead>
-          <tr>
-            <th>Empresa</th>
-            <th class="col-num">Seguidores RRSS totales</th>
-            <th class="col-num">Menciones online/mes</th>
-            <th class="col-num">Artículos/entrevistas mes</th>
-            <th class="col-num">Apariciones en medios</th>
-            <th class="col-num">Backlinks estimados</th>
-            <th class="col-num">Puntuación autoridad</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="own-row">
-            <td contenteditable="true">Nuestra empresa</td>
-            <td class="col-num" contenteditable="true" data-col="seguidores">12500</td>
-            <td class="col-num" contenteditable="true" data-col="menciones">85</td>
-            <td class="col-num" contenteditable="true" data-col="articulos">4</td>
-            <td class="col-num" contenteditable="true" data-col="apariciones">2</td>
-            <td class="col-num" contenteditable="true" data-col="backlinks">320</td>
-            <td class="col-num" contenteditable="true" data-col="autoridad">42</td>
-          </tr>
-          <tr>
-            <td contenteditable="true">Competidor A</td>
-            <td class="col-num" contenteditable="true" data-col="seguidores">45000</td>
-            <td class="col-num" contenteditable="true" data-col="menciones">210</td>
-            <td class="col-num" contenteditable="true" data-col="articulos">12</td>
-            <td class="col-num" contenteditable="true" data-col="apariciones">8</td>
-            <td class="col-num" contenteditable="true" data-col="backlinks">890</td>
-            <td class="col-num" contenteditable="true" data-col="autoridad">67</td>
-          </tr>
-          <tr>
-            <td contenteditable="true">Competidor B</td>
-            <td class="col-num" contenteditable="true" data-col="seguidores">8200</td>
-            <td class="col-num" contenteditable="true" data-col="menciones">60</td>
-            <td class="col-num" contenteditable="true" data-col="articulos">2</td>
-            <td class="col-num" contenteditable="true" data-col="apariciones">1</td>
-            <td class="col-num" contenteditable="true" data-col="backlinks">180</td>
-            <td class="col-num" contenteditable="true" data-col="autoridad">31</td>
-          </tr>
-          <tr>
-            <td contenteditable="true">Competidor C</td>
-            <td class="col-num" contenteditable="true" data-col="seguidores">32000</td>
-            <td class="col-num" contenteditable="true" data-col="menciones">145</td>
-            <td class="col-num" contenteditable="true" data-col="articulos">7</td>
-            <td class="col-num" contenteditable="true" data-col="apariciones">5</td>
-            <td class="col-num" contenteditable="true" data-col="backlinks">540</td>
-            <td class="col-num" contenteditable="true" data-col="autoridad">55</td>
-          </tr>
-          <tr>
-            <td contenteditable="true">Competidor D</td>
-            <td class="col-num" contenteditable="true" data-col="seguidores">19000</td>
-            <td class="col-num" contenteditable="true" data-col="menciones">98</td>
-            <td class="col-num" contenteditable="true" data-col="articulos">5</td>
-            <td class="col-num" contenteditable="true" data-col="apariciones">3</td>
-            <td class="col-num" contenteditable="true" data-col="backlinks">410</td>
-            <td class="col-num" contenteditable="true" data-col="autoridad">48</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <table id="tabla">
+    <thead>
+      <tr><th style="width:34%">Elemento / paso a trabajar</th><th>Responsable</th><th>Fecha objetivo</th><th style="width:110px">Avance (0-100)</th><th style="width:110px">Estado</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td contenteditable="true">Crear una plantilla de comunicación visual para redes que garantice coherencia en cada publicación</td>
+        <td contenteditable="true"></td>
+        <td><input type="date"></td>
+        <td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td>
+        <td class="estado">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="controls">
+    <button onclick="addRow()">+ Añadir fila</button>
+    <button class="ghost" onclick="window.print()">Imprimir / Guardar PDF</button>
   </div>
 
-</main>
-
-<footer>MASESORA · CIR-S1 Invisibilidad de Marca · Herramienta Operativa R4 — Share of Voice</footer>
+  <footer>MASFRAME — herramienta operativa. Editable. La decisión clínica vive en las capas C0-C6, no en esta hoja.</footer>
+</div>
 
 <script>
-  function num(el) {
-    return parseFloat((el.textContent || '').replace(/[^\d.\-]/g, '')) || 0;
-  }
-
-  function semaphore(value, green, yellow) {
-    // green: condition fn, yellow: condition fn
-    if (green(value)) return 'green';
-    if (yellow(value)) return 'yellow';
-    return 'red';
-  }
-
-  function applyColor(el, cls) {
-    el.classList.remove('green','yellow','red');
-    if (cls) el.classList.add(cls);
-  }
-
-  function applyDot(dot, cls) {
-    dot.className = 'semaphore-dot dot-' + cls;
-  }
-
-  function recalc() {
-    const tbody = document.querySelector('#sov-table tbody');
-    const rows = Array.from(tbody.rows);
-
-    const menciones = rows.map(r => {
-      const cell = r.querySelector('[data-col="menciones"]');
-      return cell ? num(cell) : 0;
-    });
-
-    const total = menciones.reduce((a, b) => a + b, 0);
-    const ownMenciones = menciones[0] || 0;
-
-    // Card: SOV
-    const sov = total > 0 ? (ownMenciones / total * 100) : 0;
-    const sovEl = document.getElementById('card-sov');
-    const dotSov = document.getElementById('dot-sov');
-    sovEl.textContent = sov.toFixed(1) + '%';
-    const sovCls = sov > 25 ? 'green' : sov >= 10 ? 'yellow' : 'red';
-    applyColor(sovEl, sovCls);
-    applyDot(dotSov, sovCls);
-
-    // Card: Total
-    document.getElementById('card-total').textContent = total.toLocaleString('es-ES');
-
-    // Card: Ranking
-    const sortedDesc = [...menciones].sort((a,b) => b - a);
-    const rank = sortedDesc.indexOf(ownMenciones) + 1;
-    const rankEl = document.getElementById('card-rank');
-    const dotRank = document.getElementById('dot-rank');
-    rankEl.textContent = 'Nº ' + rank + ' de ' + rows.length;
-    const rankCls = rank === 1 ? 'green' : rank <= 3 ? 'yellow' : 'red';
-    applyColor(rankEl, rankCls);
-    applyDot(dotRank, rankCls);
-  }
-
-  function addRow() {
-    const tbody = document.querySelector('#sov-table tbody');
-    const lastRow = tbody.rows[tbody.rows.length - 1];
-    const newRow = lastRow.cloneNode(true);
-    // Reset contenteditable cells
-    Array.from(newRow.querySelectorAll('[contenteditable="true"]')).forEach((cell, i) => {
-      if (i === 0) cell.textContent = 'Nuevo competidor';
-      else cell.textContent = '0';
-    });
-    newRow.classList.remove('own-row');
-    tbody.appendChild(newRow);
-    bindEvents(newRow);
-    recalc();
-  }
-
-  function bindEvents(row) {
-    row.querySelectorAll('[contenteditable="true"]').forEach(cell => {
-      cell.addEventListener('input', recalc);
-    });
-  }
-
-  // Bind all existing rows
-  document.querySelectorAll('#sov-table tbody tr').forEach(bindEvents);
-
-  recalc();
+function estadoDe(v){ if(v>=80) return ['#1f9d55','En verde']; if(v>=40) return ['#d9822b','En ámbar']; return ['#d64545','En rojo']; }
+function recalc(){
+  const rows=[...document.querySelectorAll('#tabla tbody tr')];
+  let sum=0,n=0;
+  rows.forEach(r=>{
+    const inp=r.querySelector('.avance'); const v=Math.max(0,Math.min(100,parseFloat(inp.value)||0));
+    const [c,txt]=estadoDe(v); const cell=r.querySelector('.estado'); cell.textContent=txt; cell.style.color=c;
+    sum+=v; n++;
+  });
+  const avg=n?Math.round(sum/n):0;
+  document.getElementById('mTot').textContent=n;
+  document.getElementById('mAvg').textContent=avg+'%';
+  const [c,txt]=estadoDe(avg);
+  document.getElementById('mEstado').textContent=txt;
+  document.getElementById('semDot').style.background=c;
+}
+function addRow(){
+  const tb=document.querySelector('#tabla tbody');
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td contenteditable="true"></td><td contenteditable="true"></td><td><input type="date"></td><td><input class="avance" type="number" min="0" max="100" value="0" oninput="recalc()"></td><td class="estado">—</td>';
+  tb.appendChild(tr); recalc();
+}
+recalc();
 </script>
+<script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function snapshot(){
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
 </body>
 </html>
