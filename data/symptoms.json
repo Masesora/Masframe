@@ -46,7 +46,7 @@
     "justi_capa3": "El mapa del recorrido de tu dinero hace visible el camino completo que sigue, desde que el trabajo se termina hasta que el euro entra en cuenta, y se├▒ala en qu├® punto se atasca. Marca los que m├ís bloquean y estima cu├ínto recuperar├¡as al desatascar cada uno.",
     "capa_4_cambio": "Mejoras de caja paso a paso",
     "justi_capa4": "Ahora empieza el trabajo en s├¡: las mejoras de caja paso a paso, peque├▒as y seguidas, que aplicas con precisi├│n para que los resultados sean inmediatos. Masesora est├í pendiente de que los confirmes en la siguiente capa.",
-    "capa_5_ejecucion": "Lista de comprobaci├│n de cobros",
+    "capa_5_ejecucion": "Lista de comprobación de liberación de caja",
     "justi_capa5": "Esta lista de comprobaci├│n de cobros te sirve para confirmar, una a una, que las acciones para liberar caja se han hecho de verdad y para dejar anotado cu├ínto dinero has recuperado con cada una.",
     "capa_6_seguimiento": "Seguimiento: D├¡as de caja",
     "justi_capa6": "Aqu├¡ valoras el efecto real de las acciones hechas: compara los d├¡as de caja actuales con los que ten├¡as al empezar (C0). Cada tarea completada en C5 debe traducirse en m├ís dinero disponible, no en una casilla marcada.",
@@ -153,7 +153,7 @@
     "logica": "Facturas y entregas, pero el dinero se queda en la calle: lo has ganado y no lo has cobrado.",
     "plan": "PIE",
     "description_symptom": "Si facturas con normalidad pero tu cuenta no lo refleja, el problema no es cu├ínto ganas ÔÇö es cu├ínto cobras. El dinero que te deben tus clientes es beneficio que ya es tuyo pero que est├ís financiando gratis, y cuanto m├ís tarda, m├ís se parece a una p├®rdida.",
-    "kpi_question": "Introduce cu├ínto de lo que has facturado en los ├║ltimos 3 meses sigue SIN cobrar (facturas emitidas pendientes de pago) y el total facturado en esos 3 meses. Si m├ís del 20% sigue en la calle, tu beneficio existe en papel pero no en tu cuenta.",
+    "kpi_question": "Introduce todo lo que tienes pendiente de cobro AHORA (todas las facturas emitidas y no cobradas, da igual de cuándo) y tu facturación de los últimos 3 meses. Si lo pendiente supera el 20% de lo que facturas, tu dinero se queda en la calle.",
     "kpi_impact": "Cuando menos del 20% de lo facturado queda sin cobrar, el dinero que ganas llega de verdad a tu caja y dejas de financiar a tus clientes gratis.",
     "kpi_formula": "(InputA/InputB)*100",
     "kpi_objective": "<20%",
@@ -164,14 +164,14 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Facturaci├│n de los ├║ltimos 3 meses a├║n sin cobrar (Ôé¼)"
+        "label": "Total pendiente de cobro ahora mismo (todas las facturas emitidas sin cobrar, sin importar antigüedad)"
       },
       {
         "id": "inputB",
         "label": "Facturaci├│n total de los ├║ltimos 3 meses (Ôé¼)"
       }
     ],
-    "input_a": "Facturaci├│n de los ├║ltimos 3 meses a├║n sin cobrar (Ôé¼)",
+    "input_a": "Total pendiente de cobro ahora mismo (todas las facturas emitidas sin cobrar, sin importar antigüedad)",
     "input_b": "Facturaci├│n total de los ├║ltimos 3 meses (Ôé¼)",
     "input_revised_1": "Facturaci├│n sin cobrar (post)",
     "input_revised_2": "Facturaci├│n total 3 meses (post)",
@@ -189,7 +189,7 @@
     "justi_capa3": "El Mapa de cobros te muestra qui├®n te debe, cu├ínto y desde cu├índo ÔÇö la antig├╝edad de cada deuda. Ver├ís d├│nde est├í atascado el dinero que ya ganaste y qu├® reclamar primero.",
     "capa_4_cambio": "Redise├▒o del sistema de cobro",
     "justi_capa4": "Aqu├¡ montas tu sistema de cobro: facturaci├│n inmediata al entregar, condiciones de pago por escrito y recordatorios autom├íticos. El objetivo es que el dinero entre solo, sin perseguirlo.",
-    "capa_5_ejecucion": "Lista de comprobaci├│n de rentabilidad",
+    "capa_5_ejecucion": "Lista de comprobación de cobros",
     "justi_capa5": "Esta lista de comprobaci├│n te sirve para confirmar, una a una, que las acciones del nuevo sistema de cobro se han puesto en marcha y que las facturas pendientes est├ín entrando de verdad en tu cuenta.",
     "capa_6_seguimiento": "Seguimiento: Facturaci├│n sin cobrar",
     "justi_capa6": "Este indicador mide cu├ínto de lo que facturas sigue sin cobrar. Comp├íralo con C0; si baja, el dinero que ya hab├¡as ganado est├í entrando por fin en tu cuenta.",
@@ -252,7 +252,7 @@
     "kpi_question": "Introduce tu facturaci├│n mensual total y el total de costes directos mensuales ÔÇö materiales, subcontratas y gastos directos. Si tu margen mensual es inferior al 30%, est├ís trabajando para pagar gastos, no para generar beneficio real.",
     "kpi_impact": "Un margen bruto mensual por encima del 30% es el primer filtro de salud de tu negocio; el margen real —descontando tu sueldo e impuestos— lo afinamos dentro del tratamiento.",
     "kpi_formula": "((InputA-InputB)/InputA)*100",
-    "kpi_objective": ">30%",
+    "kpi_objective": ">40%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -278,7 +278,7 @@
     "example": "Dise├▒adora aut├│noma: facturaba 3.200Ôé¼/mes con costes reales de 2.900Ôé¼. Margen: 9%. Tras recalcular su precio m├¡nimo viable y eliminar los servicios que le daban p├®rdidas, el margen sube al 34%.",
     "capa_1_priorizacion": "Precios fijados sin calcular todos los costes, incluidos los que no aparecen en la factura; descuentos sin saber si te dejan en negativo; costes que han subido sin poder trasladarlos al precio del cliente; trabajo que haces y no cobras: soporte, revisiones o cambios que das por incluidos; servicios sin saber cu├íl te deja margen de verdad; clientes que facturan bien pero de los que te queda muy poco margen real.",
     "justi_capa1": "El margen real se destruye por causas distintas. Se├▒ala cu├íles reconoces para saber d├│nde est├í la mayor brecha entre lo que cobras y lo que realmente te queda.",
-    "capa_2_decision": "Sem├íforo de Viabilidad",
+    "capa_2_decision": "Impacto vs Esfuerzo",
     "capa_2_options": "Calcular el precio m├¡nimo por debajo del cual cada venta pierde dinero; Medir el margen real que queda despu├®s de aplicar los descuentos habituales; Calcular cu├ínto te ha afectado la subida de costes y a qu├® precio deber├¡as estar hoy; Calcular cu├ínto cobras por hora de verdad, incluyendo todo el tiempo que trabajas sin cobrar; Comparar el margen real de cada servicio y ver cu├íles te dan dinero y cu├íles te lo quitan; Analizar cu├ínto te deja de verdad cada cliente, contando el tiempo y los recursos que consume",
     "justi_capa2": "Para cada problema que has marcado, calcula el margen real de tus servicios ÔÇö incluyendo los costes que normalmente no aparecen en la factura.",
     "capa_3_comprension": "An├ílisis de tus costes",
@@ -345,8 +345,8 @@
     "logica": "Tu operaci├│n avanza por inercia, sin dise├▒o ÔÇö y cada d├¡a que pasa ese desorden te cuesta m├ís de lo que crees.",
     "plan": "PIE",
     "description_symptom": "Si tu operaci├│n funciona porque siempre ha funcionado as├¡ ÔÇö sin que nadie haya dise├▒ado c├│mo deber├¡a funcionar ÔÇö cada paso acumula un coste oculto. Las esperas, los cuellos de botella y los pasos sin valor llevan a├▒os comi├®ndote tiempo sin que nadie los haya atacado.",
-    "kpi_question": "De todo lo que entregaste esta semana ÔÇö citas, pedidos, trabajos ÔÇö ┬┐cu├íntos salieron sin ning├║n problema: sin retraso, sin reproceso, sin imprevisto?",
-    "kpi_impact": "Si menos del 85% de tu trabajo sale limpio a la primera, hay atascos en tu d├¡a a d├¡a que te cuestan tiempo y reputaci├│n sin que los hayas medido todav├¡a.",
+    "kpi_question": "De los trabajos de esta semana, ¿cuántos avanzaron de principio a fin sin quedarse parados esperando a alguien, un permiso o un paso previo? Si menos del 85% fluyen, tu operación va lenta por atascos internos.",
+    "kpi_impact": "Cuando más del 85% de tus trabajos avanzan sin paradas internas, tu operación deja de ir a tirones y ganas tiempo sin contratar.",
     "kpi_formula": "(InputA/InputB)*100",
     "kpi_objective": ">85%",
     "threshold_critical": 70,
@@ -356,17 +356,17 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Servicios o pedidos entregados sin ning├║n problema esta semana"
+        "label": "Trabajos de la semana que avanzaron sin quedarse parados esperando algo o a alguien"
       },
       {
         "id": "inputB",
-        "label": "Total de servicios o pedidos de la semana"
+        "label": "Total de trabajos de la semana"
       }
     ],
-    "input_a": "Servicios o pedidos entregados sin ning├║n problema esta semana",
-    "input_b": "Total de servicios o pedidos de la semana",
-    "input_revised_1": "Servicios sin problema (post)",
-    "input_revised_2": "Total servicios (post)",
+    "input_a": "Trabajos de la semana que avanzaron sin quedarse parados esperando algo o a alguien",
+    "input_b": "Total de trabajos de la semana",
+    "input_revised_1": "Trabajos que fluyeron (post)",
+    "input_revised_2": "Total trabajos (post)",
     "result_revised": "╬ö % roturas de flujo",
     "impact_treatment": "Redise├▒amos tu flujo operativo eliminando el tiempo invisible que consumen los procesos sin protocolo. La misma energ├¡a produce resultados medibles, sin rozamiento.",
     "optimizer_impact": "Aceleraci├│n inmediata del ciclo operativo sin aumentar recursos ni contratar.",
@@ -383,12 +383,12 @@
     "justi_capa4": "Con las mejoras paso a paso, cada mejora que sali├│ del mapa tiene un responsable, una acci├│n concreta y un plazo. El cambio empieza aqu├¡ y en la siguiente capa se controla que se cumpla.",
     "capa_5_ejecucion": "Tablero visual de trabajo",
     "justi_capa5": "Porque con un tablero visual de trabajo necesitas ver y controlar de un vistazo en qu├® punto est├í cada trabajo.",
-    "capa_6_seguimiento": "Seguimiento: Entregas limpias",
+    "capa_6_seguimiento": "Seguimiento: Trabajos que fluyen",
     "justi_capa6": "Este n├║mero mide qu├® parte de tus entregas salen limpias a la primera, sin errores ni retrasos. Comp├íralo con el dato de partida (C0); si sube, tu operativa ha dejado de atascarse.",
     "capa_1_options": "Hay tareas que deber├¡an resolverse en horas y se alargan d├¡as por esperas internas que nadie ha eliminado.; El mismo punto del proceso se atasca una y otra vez y nadie lo ha redise├▒ado todav├¡a.; El equipo pierde tiempo esperando aprobaciones o informaci├│n antes de poder avanzar.; Cada persona hace las tareas repetidas a su manera porque no hay una forma com├║n y escrita de hacerlas.; El proceso incluye pasos que no aportan nada al resultado pero que nadie se ha atrevido a eliminar.; El avance depende de que est├® disponible una persona concreta, que se convierte en el atasco.",
     "kpi_recovery_mode": "conteo",
-    "recovery_unit_label": "entregas limpias ganadas",
-    "kpi_name": "Entregas limpias",
+    "recovery_unit_label": "trabajos que ya fluyen",
+    "kpi_name": "Trabajos que fluyen sin parón",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": [
@@ -638,10 +638,10 @@
     "logica": "Tu negocio no genera clientes por s├¡ solo ÔÇö dependes del boca a boca y de que llegue el momento oportuno.",
     "plan": "PIE",
     "description_symptom": "Si la mayor├¡a de tus clientes llegan por recomendaci├│n o por casualidad, tu crecimiento no est├í en tus manos. No tienes una forma propia de atraer clientes ÔÇö tienes esperanza. Y la esperanza no es una estrategia comercial.",
-    "kpi_question": "┬┐Cu├íntos clientes nuevos atendiste este mes y cu├íntos clientes en total? Si menos del 20% son nuevos, tu negocio no tiene motor comercial ÔÇö depende de los que ya tiene.",
-    "kpi_impact": "Si menos del 20% de tus clientes son nuevos cada mes, el negocio no genera demanda propia ÔÇö crece solo si el boca a boca llega solo. Eso no es un sistema, es suerte.",
+    "kpi_question": "De tus clientes nuevos de este mes, ¿cuántos llegaron por un canal que tú trabajas activamente (web, redes, publicidad, contacto directo…) y no por recomendación o casualidad? Si menos de la mitad, no tienes motor comercial: dependes de la suerte.",
+    "kpi_impact": "Cuando más de la mitad de tus clientes nuevos llegan por canales que tú controlas, tu crecimiento deja de depender de la suerte y pasa a estar en tus manos.",
     "kpi_formula": "(InputA/InputB)*100",
-    "kpi_objective": ">20%",
+    "kpi_objective": ">50%",
     "threshold_critical": 10,
     "threshold_recommended": 15,
     "threshold_optimizer": 20,
@@ -649,26 +649,26 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Clientes nuevos este mes"
+        "label": "Clientes nuevos que llegaron por un canal que tú trabajas (web, redes, publicidad, contacto directo…)"
       },
       {
         "id": "inputB",
-        "label": "Total de clientes atendidos este mes"
+        "label": "Total de clientes nuevos este mes"
       }
     ],
-    "input_a": "Clientes nuevos este mes",
-    "input_b": "Total de clientes atendidos este mes",
-    "input_revised_1": "Clientes nuevos (post)",
-    "input_revised_2": "Total clientes atendidos (post)",
-    "result_revised": "╬ö % clientes nuevos sobre total",
+    "input_a": "Clientes nuevos que llegaron por un canal que tú trabajas (web, redes, publicidad, contacto directo…)",
+    "input_b": "Total de clientes nuevos este mes",
+    "input_revised_1": "Clientes nuevos por canal propio (post)",
+    "input_revised_2": "Total de clientes nuevos (post)",
+    "result_revised": "Δ clientes de canal propio",
     "impact_treatment": "Identificamos qu├® clientes y productos te dejan m├ís margen y construimos un sistema para atraer m├ís de esos. Dejas de vender lo que llega y empiezas a crecer por dise├▒o.",
     "optimizer_impact": "Activaci├│n inmediata del motor de demanda con el canal de mayor retorno.",
     "optimizer_decision": "Diagn├│stico de Motor Comercial",
-    "example": "Estudio de nutrici├│n: 3 clientes nuevos de 30 atendidos, un 10%. Tras activar el canal que mejor le funciona, sube al 22%.",
+    "example": "Estudio de nutrición: de sus clientes nuevos, solo 1 de cada 4 venía de un canal propio (25%); el resto, de recomendación. Tras activar el canal que mejor le funciona, sube a 3 de 4 (75%) y deja de depender de la suerte.",
     "capa_1_priorizacion": "Dependes del boca a boca; sin presencia en internet que atraiga clientes; sin un m├®todo para convertir a los interesados en clientes; sin haber trabajado a fondo el canal que mejor te funciona; sin un sistema de recomendaciones; sin un objetivo mensual de clientes nuevos.",
     "justi_capa1": "Tu forma de captar clientes falla por distintas razones. Se├▒ala cu├íles reconoces para identificar el riesgo de fondo que bloquea tu crecimiento.",
     "capa_2_decision": "An├ílisis de Riesgos",
-    "capa_2_options": "Dependencia total del boca a boca: el negocio no tiene ning├║n canal propio, activo y constante, para atraer clientes; Sin presencia en internet que genere demanda: no hay nada online que atraiga contactos de forma previsible; Sin seguimiento de los contactos: los que llegan se enfr├¡an solos porque nadie los atiende con un m├®todo; Sin un canal principal identificado: se ha probado de todo pero ninguno se ha trabajado de forma constante y medida; Sin un sistema de recomendaciones activo: hay clientes satisfechos pero nada que los convierta en fuente de nuevos clientes; Sin un objetivo de clientes nuevos: no hay una cifra mensual que medir ni un sistema para alcanzarla de forma constante",
+    "capa_2_options": "Que el boca a boca se enfríe y te quedes sin clientes, al no tener ningún canal propio; Que quien te busca por internet no te encuentre y acabe con la competencia; Que los interesados se enfríen y se pierdan por no hacerles seguimiento; Que sigas quemando tiempo y dinero en canales que no funcionan por no medir cuál sí; Que desaproveches a tus clientes satisfechos como fuente de nuevos clientes; Que crezcas a ciegas, sin una meta de clientes nuevos que perseguir",
     "justi_capa2": "Con el An├ílisis de Riesgos (revisas qu├® puede fallar en tu captaci├│n de clientes y qu├® te cuesta si no lo corriges) identificas qu├® riesgo de fondo bloquea tu forma de atraer clientes y qu├® est├í en juego. Priorizas d├│nde actuar antes de seguir dependiendo del boca a boca.",
     "capa_3_comprension": "Revisi├│n Comercial",
     "justi_capa3": "La Revisi├│n Comercial te muestra qu├® canal te trae clientes de verdad y cu├íl solo te ocupa tiempo. Ver├ís por d├│nde entra el cliente y por d├│nde se pierde.",
@@ -676,12 +676,12 @@
     "justi_capa4": "Con el Plan de captaci├│n de clientes montas tu sistema para atraer clientes: defines los canales que s├¡ vas a trabajar, qui├®n los lleva y con qu├® constancia. El objetivo es dejar de depender del boca a boca y atraer clientes de forma previsible.",
     "capa_5_ejecucion": "Lista de comprobaci├│n comercial",
     "justi_capa5": "Porque necesitas constancia semanal: sin un ritmo fijo de captaci├│n, el motor comercial vuelve a apagarse a las pocas semanas.",
-    "capa_6_seguimiento": "Seguimiento: Clientes nuevos",
-    "justi_capa6": "Este indicador mide los clientes que genera tu sistema comercial: clientes nuevos sobre el total. Comp├íralo con el punto de partida (C0); si sube, tu forma de captar clientes empieza a funcionar sola.",
+    "capa_6_seguimiento": "Seguimiento: Clientes por canal propio",
+    "justi_capa6": "Este indicador mide cuántos de tus clientes nuevos llegan por canales que tú controlas. Compáralo con tu punto de partida; si sube, tu crecimiento deja de depender de la suerte.",
     "capa_1_options": "La mayor├¡a de mis clientes llegan por recomendaci├│n o de casualidad, sin que yo haya hecho nada para conseguirlos.; No tengo ninguna presencia en internet que me traiga contactos de forma previsible y constante.; Cuando alguien se interesa por lo que hago, no tengo un m├®todo para convertirlo en cliente.; He probado varios canales sin que ninguno haya funcionado de forma constante ni haberlo medido en serio.; Tengo clientes satisfechos pero ning├║n sistema para convertirlos en fuente activa de nuevos clientes.; No tengo una cifra mensual de clientes nuevos que buscar ni un sistema para alcanzarla.",
     "kpi_recovery_mode": "conteo",
-    "recovery_unit_label": "nuevos clientes captados",
-    "kpi_name": "Clientes nuevos",
+    "recovery_unit_label": "clientes de canal propio",
+    "kpi_name": "Clientes por canal propio",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": [
@@ -744,11 +744,11 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Ventas del mes m├ís bajo de los ├║ltimos 6 meses (Ôé¼)"
+        "label": "Ventas del mes m├ís bajo (├║ltimos 6 meses)"
       },
       {
         "id": "inputB",
-        "label": "Ventas del mes m├ís alto de los ├║ltimos 6 meses (Ôé¼)"
+        "label": "Ventas del mes m├ís alto (├║ltimos 6 meses)"
       }
     ],
     "input_a": "Ventas del mes m├ís bajo (├║ltimos 6 meses)",
@@ -763,9 +763,9 @@
     "capa_1_priorizacion": "Facturaci├│n a tirones sin explicaci├│n; sin previsi├│n fiable del mes siguiente; embudo de ventas estancado que no avanza ni cierra; seguimiento sin un ritmo definido; ventas que dependen de la racha; sin saber en qu├® punto est├í cada oportunidad.",
     "justi_capa1": "La irregularidad comercial tiene causas concretas. Se├▒ala cu├íles reconoces para saber qu├® parte de tu ritmo comercial est├í roto.",
     "capa_2_decision": "Regla de prioridades",
-    "capa_2_options": "Sin reuni├│n comercial semanal: sin revisar el embudo de ventas no hay ritmo ni forma de corregir el rumbo; Sin objetivo semanal de contactos: la actividad comercial depende del estado de ├ínimo, no de un ritmo definido y medible; Embudo de ventas con fases sin criterio: cada oportunidad avanza o se estanca sin que nadie sepa exactamente por qu├® ni cu├índo actuar; Sin tiempo reservado para buscar clientes nuevos: se busca cuando hay un rato libre en lugar de como una tarea planificada y protegida; Sin un m├®todo de seguimiento: los contactos se persiguen de forma irregular y se pierden por falta de constancia; Sin previsi├│n mensual de ventas: no puedes decir qu├® vas a cerrar este mes porque nadie lo est├í midiendo ni calculando por adelantado",
+    "capa_2_options": "Instaurar una reunión comercial semanal para revisar el embudo; Fijar un objetivo semanal de contactos nuevos; Definir criterios claros de cada fase del pipeline; Reservar tiempo fijo para prospección; Crear un método de seguimiento de oportunidades; Hacer una previsión mensual de ventas",
     "justi_capa2": "Con la Regla de prioridades (de una lista de posibles arreglos te quedas solo con los pocos que m├ís mueven la aguja y descartas el resto) identificas qu├® pocos elementos de tu ritmo comercial est├ín rotos y provocan la irregularidad. Priorizas lo que estabiliza tus ventas sin dispersarte.",
-    "capa_3_comprension": "Mapa de Canales",
+    "capa_3_comprension": "Mapa del embudo comercial",
     "justi_capa3": "El Mapa de Canales te muestra en qu├® punto se estanca cada venta y por qu├® canal entra el ingreso. Ver├ís d├│nde se enfr├¡a el proceso para actuar justo ah├¡, en vez de a ciegas.",
     "capa_4_cambio": "Plan de Activaci├│n",
     "justi_capa4": "Con el Plan de Activaci├│n ordenas las acciones que reactivan la venta: qu├® canal empujar, con qu├® mensaje y en qu├® orden. El objetivo es estabilizar los meses flojos y sostener el ritmo comercial.",
@@ -951,13 +951,13 @@
     ],
     "input_a": "Bloques del plan escritos y comunicados (0-6)",
     "input_b": "Total de bloques del plan (pon 6)",
-    "input_revised_1": "Facturaci├│n media mensual (post)",
-    "input_revised_2": "Objetivo mensual (post)",
-    "result_revised": "╬ö avance hacia objetivo",
+    "input_revised_1": "Bloques del plan escritos y comunicados (post) (0-6)",
+    "input_revised_2": "Total de bloques (pon 6)",
+    "result_revised": "Δ bloques del plan definidos",
     "impact_treatment": "Construimos el plan que convierte tu visi├│n en un destino concreto con fechas y m├®tricas. El equipo deja de improvisar y empieza a ejecutar con prop├│sito.",
     "optimizer_impact": "Incremento inmediato de cohesi├│n y velocidad de decisi├│n al compartir una direcci├│n com├║n.",
     "optimizer_decision": "Diagn├│stico de Claridad Estrat├®gica",
-    "example": "Una empresa de reformas facturaba 22.000 Ôé¼ al mes frente a un objetivo de 40.000 Ôé¼ a 12 meses: un 55 % de avance al objetivo. Tras el protocolo lleg├│ a 34.000 Ôé¼, es decir, un 85 % de avance.",
+    "example": "Una empresa de reformas funcionaba sin plan escrito: 1 de los 6 bloques definidos (17%). Tras el tratamiento pasó a 5 de 6 (83%): dirección clara y objetivos con número.",
     "capa_1_priorizacion": "Sin plan escrito a 3 a├▒os; Sin objetivo de cu├ínto quiero que valga el negocio; Equipo sin una direcci├│n com├║n; Objetivos en la cabeza, sin n├║meros claros; Sin tiempo reservado para la estrategia; Sin revisi├│n de si el d├¡a a d├¡a avanza hacia la meta",
     "justi_capa1": "La falta de direcci├│n tiene distintas causas. Se├▒ala cu├íles reconoces para saber d├│nde est├í la brecha entre el negocio que tienes y el que quieres.",
     "capa_2_decision": "Urgente vs Importante (estrat├®gico)",
@@ -969,8 +969,8 @@
     "justi_capa4": "Aqu├¡ conviertes la direcci├│n en objetivos concretos: pocos, medibles y con responsable. El objetivo es que todo el equipo sepa qu├® mueve el negocio este trimestre y qu├® no.",
     "capa_5_ejecucion": "Reuniones de alineaci├│n",
     "justi_capa5": "Las reuniones de alineaci├│n son encuentros breves y peri├│dicos del equipo para revisar hacia d├│nde vamos y confirmar que cada ├írea rema en la misma direcci├│n. Las necesitas para sostener el foco en el objetivo y evitar que el d├¡a a d├¡a te desv├¡e del plan.",
-    "capa_6_seguimiento": "Seguimiento: Avance al objetivo",
-    "justi_capa6": "Este indicador mide la alineaci├│n real: cu├ínto has cerrado la brecha entre tu facturaci├│n actual y la que quieres en 12 meses. Comp├íralo con tu punto de partida; si avanza, la estrategia se est├í ejecutando, no solo pensando.",
+    "capa_6_seguimiento": "Seguimiento: Plan estratégico definido",
+    "justi_capa6": "Este indicador mide cuántos bloques de tu plan tienes ya escritos y comunicados. Compáralo con tu punto de partida; si sube, tu empresa deja de improvisar.",
     "capa_1_options": "Mi empresa funciona hoy pero no tengo ning├║n plan escrito de d├│nde quiero estar en 3 a├▒os.; No he definido cu├ínto quiero que valga el negocio ni qu├® tendr├¡a que pasar para llegar a eso.; El equipo no comparte una direcci├│n com├║n y cada uno interpreta lo que hay que hacer de forma distinta.; Tengo objetivos en la cabeza pero no est├ín escritos ni tienen n├║meros claros para medirlos.; No reservo tiempo para trabajar la estrategia: siempre lo desplaza el d├¡a a d├¡a.; No reviso si lo que hago cada semana avanza hacia el negocio que tengo en mente.",
     "kpi_recovery_mode": "estructural",
     "recovery_unit_label": "bloques del plan definidos",
@@ -1026,8 +1026,8 @@
     "logica": "Tienes demasiados frentes abiertos y ninguno termina ÔÇö porque cuando todo es prioridad, nada lo es.",
     "plan": "PIE",
     "description_symptom": "Si tienes una lista interminable de proyectos a medias y cada semana aparece algo nuevo que 'no puede esperar', no tienes un problema de agenda ÔÇö tienes un problema de criterio. Sin un sistema para decidir qu├® sigue y qu├® para, el esfuerzo se dispersa y nada avanza de verdad.",
-    "kpi_question": "Introduce las mejoras o iniciativas del negocio que te hab├¡as propuesto este mes y las que realmente completaste. Si cierras menos del 70%, tienes m├ís frentes abiertos de los que puedes cerrar ÔÇö y eso consume energ├¡a sin producir avance.",
-    "kpi_impact": "Cuando completas el 70% o m├ís de lo que te propones cada mes, los frentes se cierran en orden y el negocio avanza sin desgaste.",
+    "kpi_question": "Cuenta los proyectos o mejoras que tienes a medias ahora mismo y súmales los que has terminado del todo en los últimos 3 meses. ¿Qué parte has cerrado de verdad? Si cierras menos del 70%, estás disperso.",
+    "kpi_impact": "Cuando cierras más del 70% de lo que emprendes, dejas de acumular frentes a medias y tu energía directiva rinde.",
     "kpi_formula": "(InputA/InputB)*100",
     "kpi_objective": ">70%",
     "threshold_critical": 70,
@@ -1037,22 +1037,22 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Mejoras o iniciativas del negocio que completaste este mes"
+        "label": "Proyectos o mejoras del negocio que has terminado del todo en los últimos 3 meses"
       },
       {
         "id": "inputB",
-        "label": "Mejoras o iniciativas que te hab├¡as propuesto este mes"
+        "label": "Total que emprendiste (los terminados + los que siguen a medias ahora)"
       }
     ],
-    "input_a": "Mejoras completadas este mes",
-    "input_b": "Mejoras propuestas este mes",
-    "input_revised_1": "Mejoras completadas (post)",
-    "input_revised_2": "Mejoras propuestas (post)",
-    "result_revised": "╬ö tasa de cierre de iniciativas",
+    "input_a": "Proyectos o mejoras del negocio que has terminado del todo en los últimos 3 meses",
+    "input_b": "Total que emprendiste (los terminados + los que siguen a medias ahora)",
+    "input_revised_1": "Terminados del todo (post)",
+    "input_revised_2": "Total emprendidos (post)",
+    "result_revised": "Δ tasa de cierre",
     "impact_treatment": "Priorizamos y cerramos los frentes abiertos en orden de impacto real. El tiempo del l├¡der vuelve a estar donde puede cambiar algo ÔÇö no donde urge apagar fuegos.",
     "optimizer_impact": "Reducci├│n inmediata de urgencias al establecer criterios de prioridad claros.",
     "optimizer_decision": "Diagn├│stico de Uso del Tiempo Directivo",
-    "example": "Una cl├¡nica privada cerraba solo 3 de las 8 iniciativas que se propon├¡a cada mes: un 38 %. Tras el protocolo pas├│ a completar 7 de 8, es decir, un 88 %.",
+    "example": "Una clínica tenía 5 proyectos a medias y solo había cerrado 3 en el trimestre (3 de 8, 38%). Tras proteger el foco, cierra 6 de 7 (86%).",
     "capa_1_priorizacion": "Proyectos a medias que no se cierran; Urgencias que descolocan lo planificado; Mucha intensidad, poco avance en lo que importa; Sin tiempo protegido para pensar el negocio; Todo parece prioritario, nada lo es de verdad; Sin criterio para decidir qu├® va primero",
     "justi_capa1": "La dispersi├│n tiene distintas causas. Se├▒ala cu├íles reconoces para saber qu├® frentes cerrar primero y c├│mo recuperar el foco.",
     "capa_2_decision": "Urgente vs Importante",
@@ -1064,12 +1064,12 @@
     "justi_capa4": "Aqu├¡ conviertes la prioridad en una agenda de foco: pocas iniciativas, un responsable por cada una y una fecha. El objetivo es que dejes de dispersarte y sostengas el rumbo semana a semana.",
     "capa_5_ejecucion": "Reuniones de revisi├│n",
     "justi_capa5": "Las reuniones de revisi├│n son un repaso peri├│dico y fijo de tus iniciativas en marcha para ver qu├® avanza, qu├® se ha estancado y qu├® toca cerrar. Las necesitas para mantener la direcci├│n y evitar que una prioridad se quede a medias sin que nadie lo note.",
-    "capa_6_seguimiento": "Seguimiento: Iniciativas completadas",
+    "capa_6_seguimiento": "Seguimiento: Tasa de cierre de iniciativas",
     "justi_capa6": "Este indicador mide cu├íntas de las iniciativas que te propones acabas completando. Comp├íralo con tu punto de partida; si sube, tu tiempo directivo se convierte en resultados y no en dispersi├│n.",
     "capa_1_options": "Tengo demasiados proyectos a medias y ninguno llega a terminarse de verdad.; Cada semana aparece algo urgente que descoloca lo que estaba planificado.; Trabajo todo el d├¡a con intensidad pero no avanzo en lo que realmente importa.; No tengo tiempo protegido para pensar el negocio sin interrupciones.; Todo parece prioritario as├¡ que al final nada lo es y las decisiones llegan tarde.; Me cuesta decidir qu├® hacer primero y qu├® puede esperar sin que el negocio pierda nada importante.",
     "kpi_recovery_mode": "conteo",
     "recovery_unit_label": "iniciativas cerradas",
-    "kpi_name": "Iniciativas completadas",
+    "kpi_name": "Tasa de cierre de iniciativas",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": [
@@ -1122,7 +1122,7 @@
     "plan": "PIE",
     "description_symptom": "Si tu facturaci├│n sube pero tu bolsillo no lo nota, el modelo tiene una fuga estructural. Crecer en volumen sin crecer en margen es trabajar m├ís para ganar lo mismo ÔÇö o menos. El problema no est├í en lo que vendes sino en c├│mo est├í dise├▒ado lo que haces.",
     "kpi_question": "Introduce el beneficio neto del ├║ltimo a├▒o ÔÇö lo que qued├│ despu├®s de pagar todo ÔÇö y tu facturaci├│n total del a├▒o. Si el margen es inferior al 15%, tu modelo trabaja m├ís de lo que rentabiliza.",
-    "kpi_impact": "Cuando el margen neto anual supera el 15 %, el modelo est├í dise├▒ado para crear riqueza real, no solo volumen. Ojo: es tu margen ANUAL del ejercicio completo, no el mensual (no lo confundas con un cierre de un solo mes).",
+    "kpi_impact": "Vigila la tendencia: si tu facturación sube pero este margen ANUAL baja respecto a años anteriores, estás creciendo en vacío. Es tu margen del ejercicio completo, no el mensual (eso es CLI-S1).",
     "kpi_formula": "(InputA/InputB)*100",
     "kpi_objective": ">15%",
     "threshold_critical": 70,
@@ -1132,7 +1132,7 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Beneficio neto del ├║ltimo a├▒o ÔÇö lo que qued├│ despu├®s de pagar todo (Ôé¼)"
+        "label": "Beneficio neto del ├║ltimo a├▒o (Ôé¼)"
       },
       {
         "id": "inputB",
@@ -1216,10 +1216,10 @@
     "logica": "Tomas decisiones con n├║meros que ya no son de fiar ÔÇö y dirigir por intuici├│n en una empresa real no es estrategia.",
     "plan": "PIE",
     "description_symptom": "Si gestionas tu empresa sin saber exactamente cu├ínto te queda despu├®s de pagar todo ÔÇö incluyendo impuestos y tu propio sueldo real ÔÇö est├ís dirigiendo a ciegas. La intuici├│n puede llevarte lejos, pero no puede sustituir a los n├║meros cuando el negocio crece o cuando llega la primera crisis.",
-    "kpi_question": "Introduce tus ingresos brutos de este mes y todos tus gastos reales del mes ÔÇö incluyendo lo que deber├¡as pagarte como sueldo y la estimaci├│n proporcional de impuestos. El resultado es tu margen neto mensual real: lo que el negocio te deja cada mes despu├®s de todo. Muchos aut├│nomos nunca lo han calculado.",
-    "kpi_impact": "Un margen neto real superior al 15% confirma que el negocio es viable. Por debajo, est├ís trabajando para cubrir costes.",
+    "kpi_question": "De las 5 cifras clave de tu negocio (resultado del mes, caja disponible, cobros pendientes, gasto fijo mensual, punto de equilibrio), ¿cuántas puedes decir ahora mismo sin mirar papeles ni preguntar? Si menos de 4, gestionas a ciegas.",
+    "kpi_impact": "Cuando tienes 4 o 5 de tus cifras clave siempre a mano, dejas de decidir por sensación y diriges con datos.",
     "kpi_formula": "((InputA-InputB)/InputA)*100",
-    "kpi_objective": ">15%",
+    "kpi_objective": ">80%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1227,22 +1227,22 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Ingresos brutos del ├║ltimo mes (Ôé¼)"
+        "label": "Cifras clave que puedes decir ahora sin mirar papeles (de las 5)"
       },
       {
         "id": "inputB",
-        "label": "Gastos totales reales del ├║ltimo mes ÔÇö incluyendo impuestos estimados y sueldo del due├▒o (Ôé¼)"
+        "label": "Total (pon 5)"
       }
     ],
-    "input_a": "Ingresos brutos del mes",
-    "input_b": "Gastos totales reales del mes",
-    "input_revised_1": "Ingresos brutos del mes (post)",
-    "input_revised_2": "Gastos totales reales (post)",
-    "result_revised": "╬ö visibilidad financiera",
+    "input_a": "Cifras clave que puedes decir ahora sin mirar papeles (de las 5)",
+    "input_b": "Total (pon 5)",
+    "input_revised_1": "Cifras clave que controlas (post)",
+    "input_revised_2": "Total (pon 5)",
+    "result_revised": "Δ cifras bajo control",
     "impact_treatment": "Instalamos el cuadro de mando que convierte tus n├║meros en se├▒ales claras. A partir de ahora tomas decisiones con datos reales, no con sensaciones que te pueden enga├▒ar.",
     "optimizer_impact": "Aceleraci├│n inmediata de decisiones al disponer de datos fiables en tiempo real.",
     "optimizer_decision": "Diagn├│stico de Visibilidad Financiera",
-    "example": "Aut├│noma de servicios: nunca hab├¡a calculado su margen neto mensual real. Tras montar un cuadro de mando con 5 m├®tricas clave, descubre que trabaja al 8% y, ajustando precios y costes, lo sube al 19%.",
+    "example": "Autónoma de servicios: solo podía decir 1 de sus 5 cifras clave sin mirar papeles (20%). Tras montar un cuadro de mando, controla las 5 y decide con datos.",
     "capa_1_priorizacion": "Decisiones con n├║meros poco fiables o que llegan tarde; margen neto real desconocido tras pagarlo todo; cierre contable lento que llega a destiempo; errores que se repiten por falta de visibilidad a tiempo; dependencia de tareas manuales para saber c├│mo va el negocio; sin cuadro de mando propio, todo pasa por el asesor.",
     "justi_capa1": "La falta de control tiene distintas causas. Se├▒ala cu├íles reconoces para saber qu├® indicadores instalar primero.",
     "capa_2_decision": "Regla de prioridades",
@@ -1254,12 +1254,12 @@
     "justi_capa4": "Con mejoras paso a paso en la administraci├│n aplicas cambios concretos para reducir los tiempos muertos del cierre: qu├® paso simplificar, qu├® automatizar y qui├®n lo hace. Cada mejora acelera tu cierre.",
     "capa_5_ejecucion": "Lista de control del cierre",
     "justi_capa5": "Porque necesitas que el cierre se haga siempre igual: confirmar que cada paso se ejecuta del mismo modo todos los meses, no solo cuando te acuerdas.",
-    "capa_6_seguimiento": "Seguimiento: Margen neto mensual",
+    "capa_6_seguimiento": "Seguimiento: Cifras clave bajo control",
     "justi_capa6": "Este indicador mide tu margen neto real: lo que queda de tus ingresos tras todos los gastos. Comp├íralo con tu punto de partida; si sube, recuperar el control administrativo se traduce en beneficio.",
     "capa_1_options": "Tomo decisiones con n├║meros que ya no son de fiar o que recibo con demasiado retraso.; No s├® exactamente cu├ínto me queda cada mes despu├®s de pagarlo todo, incluyendo impuestos y mi sueldo real.; Mi cierre contable es lento: los datos del mes llegan cuando el mes siguiente ya est├í avanzado.; Repito errores porque no tengo visibilidad de los n├║meros hasta que el da├▒o ya est├í hecho.; Dependo de tareas manuales para saber c├│mo va el negocio y eso me roba tiempo y fiabilidad.; No tengo un cuadro de mando propio: toda la informaci├│n financiera pasa por mi asesor y nunca la veo directamente.",
-    "kpi_recovery_mode": "financiero",
-    "recovery_unit_label": "Ôé¼ de coste cortado",
-    "kpi_name": "Margen neto mensual",
+    "kpi_recovery_mode": "estructural",
+    "recovery_unit_label": "cifras clave bajo control",
+    "kpi_name": "Cifras clave bajo control",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": [
@@ -1426,13 +1426,13 @@
     ],
     "input_a": "Personas del equipo que resuelven las decisiones de su área sin consultarte",
     "input_b": "Total de personas del equipo",
-    "input_revised_1": "Decisiones en tu mesa (post)",
-    "input_revised_2": "Total decisiones (post)",
-    "result_revised": "╬ö decisiones que dependen de ti",
+    "input_revised_1": "Personas que deciden en su área sin consultarte (post)",
+    "input_revised_2": "Total del equipo (post)",
+    "result_revised": "Δ autonomía del equipo",
     "impact_treatment": "Definimos y asignamos las responsabilidades con precisi├│n. El equipo resuelve sin necesitarte a ti, y t├║ recuperas el tiempo que el negocio te hab├¡a secuestrado.",
     "optimizer_impact": "Aumento inmediato de estabilidad operativa al clarificar qui├®n decide qu├®.",
     "optimizer_decision": "Diagn├│stico de Autonom├¡a de Roles",
-    "example": "Empresa de servicios: el 47% de las decisiones acababan en la mesa del due├▒o. Tras repartir roles con claridad, baja al 14%.",
+    "example": "Empresa de servicios: solo 2 de 7 personas decidían sin consultar al dueño (29%). Tras repartir roles con claridad, suben a 5 de 7 (71%) y el negocio deja de depender de él.",
     "capa_1_priorizacion": "Casi todas las decisiones acaban en tu mesa; l├¡mites de cada puesto sin definir; tareas hu├®rfanas que se quedan sin hacer o se duplican; esfuerzos duplicados y funciones sin responsable visible; roces por no tener claro qui├®n tiene autoridad; sin tu intervenci├│n las cosas se atascan.",
     "justi_capa1": "Los roles difusos generan dependencias distintas. Se├▒ala cu├íles reconoces para saber qu├® decisi├│n de estructura tomar primero.",
     "capa_2_decision": "├ürbol de Decisiones",
@@ -1444,8 +1444,8 @@
     "justi_capa4": "Aqu├¡ defines los roles con claridad: qu├® decide cada persona, de qu├® responde y d├│nde empieza y acaba su funci├│n. El objetivo es reducir la dependencia de una sola persona.",
     "capa_5_ejecucion": "Lista de control de roles",
     "justi_capa5": "Porque necesitas sostener la nueva estructura de roles en el tiempo: confirmar que cada persona asume lo que le corresponde y deja de rebot├írtelo a ti.",
-    "capa_6_seguimiento": "Seguimiento: Decisiones en tu mesa",
-    "justi_capa6": "Este indicador mide cu├íntas decisiones siguen acabando en tu mesa. Comp├íralo con tu punto de partida; si baja, el reparto de roles est├í funcionando y el negocio deja de descansar solo en ti.",
+    "capa_6_seguimiento": "Seguimiento: Autonomía del equipo",
+    "justi_capa6": "Este indicador mide cuántas personas deciden en su área sin consultarte. Compáralo con tu punto de partida; si sube, dejas de ser el cuello de botella.",
     "capa_1_options": "Casi todas las decisiones acaban en mi mesa aunque muchas no tendr├¡an por qu├® llegar hasta m├¡.; No est├ín claros los l├¡mites de cada puesto y eso genera confusi├│n sobre qui├®n decide qu├®.; Hay tareas que nadie tiene claro de qui├®n son y que acaban sin hacerse o duplic├índose.; Se duplican esfuerzos y otras cosas quedan sin responsable visible y sin que nadie las reclame.; Hay roces entre personas del equipo por no tener claro qui├®n tiene autoridad sobre qu├®.; Sin mi intervenci├│n directa las cosas se atascan aunque no tendr├¡an que necesitarme.",
     "kpi_recovery_mode": "conteo",
     "recovery_unit_label": "personas que ya deciden solas",
@@ -1454,7 +1454,7 @@
     "capa_3_plan": {
       "r1": [
         {
-          "nombre": "Matriz de responsabilidades (RACI)",
+          "nombre": "Matriz de responsabilidades (quién hace, decide, consulta y se entera)",
           "herramienta": "cli-s3-r1-matriz-responsabilidades.html"
         }
       ],
@@ -1512,11 +1512,11 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Materiales de imagen actualizados y con aspecto profesional (carta, cat├ílogo, tarjetas, web, redes)"
+        "label": "Materiales de imagen actualizados y profesionales"
       },
       {
         "id": "inputB",
-        "label": "Total materiales de imagen que tienes en uso"
+        "label": "Total materiales de imagen en uso"
       }
     ],
     "input_a": "Materiales de imagen actualizados y profesionales",
@@ -1596,8 +1596,8 @@
     "logica": "Dispersas esfuerzo en muchos servicios y no tienes claro cu├íl te diferencia y m├ís te renta ÔÇö y lo que no est├í claro para ti, tampoco lo est├í para tu cliente.",
     "plan": "PIE",
     "description_symptom": "Si cuando alguien te pregunta por qu├® deber├¡an elegirte tardas en responder o das una respuesta diferente cada vez, no tienes una raz├│n clara por la que te eligen ÔÇö tienes un mont├│n de argumentos sueltos. Y lo que no se puede explicar en una frase no se puede vender.",
-    "kpi_question": "Introduce los ingresos del servicio o producto que m├ís margen real te deja y tus ingresos totales del mes. Cuando tienes claro qu├® te hace ├║nico, concentras ventas en tu servicio de m├ís margen ÔÇö y eso es lo que mide este n├║mero. Si tu producto estrella representa menos del 30% de tu facturaci├│n, est├ís dispersando esfuerzo en lo que menos te renta.",
-    "kpi_impact": "Cuando tu producto estrella genera m├ís del 30% de los ingresos, el negocio est├í enfocado en lo que m├ís valor crea ÔÇö y el margen total mejora sin trabajar m├ís.",
+    "kpi_question": "¿Qué parte de tus ingresos del mes viene de tu servicio que más factura? Si está todo muy repartido entre servicios sin uno que destaque, no tienes foco.",
+    "kpi_impact": "Cuando un servicio concentra buena parte de tus ingresos, tienes un foco claro sobre el que construir; si todo está repartido, dispersas el esfuerzo.",
     "kpi_formula": "(InputA/InputB)*100",
     "kpi_objective": ">30%",
     "threshold_critical": 70,
@@ -1607,14 +1607,14 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Ingresos del servicio o producto que m├ís margen real te deja este mes (Ôé¼)"
+        "label": "Ingresos de tu servicio que más factura"
       },
       {
         "id": "inputB",
-        "label": "Ingresos totales del mes (Ôé¼)"
+        "label": "Ingresos totales del mes"
       }
     ],
-    "input_a": "Ingresos del producto estrella",
+    "input_a": "Ingresos de tu servicio que más factura",
     "input_b": "Ingresos totales del mes",
     "input_revised_1": "Ingresos producto estrella (post)",
     "input_revised_2": "Ingresos totales (post)",
@@ -1623,11 +1623,11 @@
     "optimizer_impact": "Incremento inmediato de valor percibido al tener un argumento diferencial claro y defendible.",
     "optimizer_decision": "Diagn├│stico de Diferenciaci├│n Real",
     "example": "Consultora: peso del producto estrella, del 22% al 67% tras el protocolo.",
-    "capa_1_priorizacion": "No tengo respuesta clara a por qu├® elegirme; Cambio de argumento seg├║n con qui├®n hablo; Sueno igual que mi competencia directa; El cliente no ve por qu├® contratarme a m├¡; Mi equipo no sabe explicar qu├® nos hace distintos; No hay un mensaje ├║nico que el equipo repita",
+    "capa_1_priorizacion": "No sé cuál es mi producto estrella; reparto el esfuerzo entre todo sin priorizar lo que más renta; mantengo servicios de bajo margen por costumbre; el equipo vende de todo sin foco; sé que concentrándome ganaría lo mismo con menos",
     "justi_capa1": "La falta de diferenciaci├│n tiene distintas causas. Se├▒ala cu├íles reconoces para saber qu├® atributo construir y comunicar primero.",
     "capa_2_decision": "Impacto vs Esfuerzo",
     "capa_2_options": "Calcular el margen real de cada servicio para saber cuál es tu producto estrella; Ordenar tus servicios por rentabilidad y quedarte con los que más dejan; Podar los servicios de bajo margen que te quitan tiempo; Concentrar el esfuerzo comercial en el producto estrella; Ajustar el precio del producto estrella a su valor; Fijar un objetivo mensual de peso del producto estrella sobre el total",
-    "justi_capa2": "El DAFO es un cuadro de cuatro casillas: tus fuerzas y tus debilidades (lo que depende de ti, dentro de tu negocio) frente a las oportunidades y las amenazas (lo que viene de fuera, del mercado). Con ├®l priorizas qu├® cosas te hacen realmente distinto y cu├íles no aportan, para centrar tus esfuerzos en lo que el cliente valora.",
+    "justi_capa2": "Con Impacto vs Esfuerzo priorizas: colocas cada acción según cuánto te acerca a concentrarte en tu producto estrella y el esfuerzo que exige. Empiezas por lo que da más foco con menos trabajo.",
     "capa_3_comprension": "Mapa del mercado",
     "justi_capa3": "El Mapa del mercado te muestra d├│nde est├ís t├║ y d├│nde est├ín tus competidores. Ver├ís el hueco que puedes ocupar sin competir por precio.",
     "capa_4_cambio": "Concentración en el producto estrella",
@@ -1687,7 +1687,7 @@
     "orden": 53,
     "symptom_id": "CIR-S3",
     "department": "Marca",
-    "symptom_name": "Comunicaci├│n Inconsistente",
+    "symptom_name": "Comunicación Intermitente",
     "logica": "No hay un plan de comunicaci├│n ÔÇö tu marca habla cuando puede, como puede, y nadie ha medido si funciona.",
     "plan": "PIE",
     "description_symptom": "Si tu marca comunica cuando te acuerdas, en el formato que tienes a mano y sin medir si funciona, no tienes un plan de comunicaci├│n ÔÇö tienes ruido a ratos. Y el ruido no te hace un hueco en la mente del cliente.",
@@ -1702,7 +1702,7 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Semanas (de las ├║ltimas 4) en que comunicaste algo en tus canales"
+        "label": "Semanas (de las ├║ltimas 4) en que comunicaste en tus canales"
       },
       {
         "id": "inputB",
@@ -1786,10 +1786,10 @@
     "logica": "Tu equipo vive en modo emergencia permanente ÔÇö y esa tensi├│n tiene un coste en productividad que no aparece en ninguna cuenta.",
     "plan": "PIE",
     "description_symptom": "Si m├ís de un tercio de los d├¡as laborables se viven con alta tensi├│n ÔÇö urgencias, conflictos, saturaci├│n ÔÇö el coste no aparece en ninguna hoja de c├ílculo pero est├í ah├¡: errores, absentismo, rotaci├│n y decisiones impulsivas. La emergencia permanente no es un pico de trabajo, es un sistema roto.",
-    "kpi_question": "Suma los d├¡as que este mes falt├│ alguien de tu equipo sin avisar o por una baja corta ÔÇö si dos personas faltan un d├¡a cada una, son 2 d├¡as. Y calcula los d├¡as trabajables del equipo: los d├¡as laborables del mes multiplicados por el n├║mero de personas. Si el absentismo pasa del 8%, el desgaste ya est├í pasando factura aunque nadie lo diga.",
-    "kpi_impact": "Un absentismo por debajo del 8% indica un entorno sostenible; por encima, la sobrecarga y el clima est├ín drenando a tu equipo, y ese coste no aparece en ninguna cuenta.",
+    "kpi_question": "¿Cuántos días de este mes se vivieron con alta tensión —urgencias, conflictos, el equipo apagando fuegos— sobre el total de días trabajados? Si más de un tercio, tu equipo vive en modo emergencia.",
+    "kpi_impact": "Cuando menos de un tercio de los días se viven en tensión, el equipo trabaja sostenible; por encima, la sobrecarga drena el rendimiento y la salud del equipo.",
     "kpi_formula": "(InputA/InputB)*100",
-    "kpi_objective": "<8%",
+    "kpi_objective": "<33%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1797,17 +1797,17 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "D├¡as de ausencia no planificada del equipo este mes (suma por persona: 2 personas por 1 d├¡a = 2 d├¡as)"
+        "label": "Días de este mes que se vivieron con alta tensión (urgencias, conflictos, todos apagando fuegos)"
       },
       {
         "id": "inputB",
-        "label": "D├¡as trabajables del equipo este mes (d├¡as laborables ├ù n┬║ de personas)"
+        "label": "Días trabajados del mes"
       }
     ],
-    "input_a": "D├¡as de ausencia no planificada del equipo este mes (suma por persona: 2 personas por 1 d├¡a = 2 d├¡as)",
-    "input_b": "D├¡as trabajables del equipo este mes (d├¡as laborables ├ù n┬║ de personas)",
-    "input_revised_1": "D├¡as de ausencia (post)",
-    "input_revised_2": "Total d├¡as laborables (post)",
+    "input_a": "Días de este mes que se vivieron con alta tensión (urgencias, conflictos, todos apagando fuegos)",
+    "input_b": "Días trabajados del mes",
+    "input_revised_1": "Días de tensión (post)",
+    "input_revised_2": "Días trabajados (post)",
     "result_revised": "╬ö absentismo",
     "impact_treatment": "Reducimos la carga emocional del equipo identificando y eliminando los focos de estr├®s operativo. El equipo vuelve a rendir con energ├¡a real, no con el ├║ltimo combustible que le queda.",
     "optimizer_impact": "Incremento inmediato de estabilidad emocional al identificar y eliminar los detonantes de tensi├│n m├ís frecuentes.",
@@ -1815,7 +1815,7 @@
     "example": "Despacho profesional: el absentismo del equipo estaba en el 15%. Tras aplicar el protocolo baja al 6%.",
     "capa_1_priorizacion": "Modo emergencia casi cada d├¡a que afecta a las decisiones; decisiones impulsivas por la presi├│n del momento; m├ís errores y absentismo por el ritmo; clima crispado que resta rendimiento sin que nadie lo diga; todo se trata como urgente aunque pueda esperar; saturaci├│n que cuesta margen y calidad sin aparecer en ninguna cuenta.",
     "justi_capa1": "La sobrecarga emocional tiene distintos patrones. Se├▒ala cu├íles reconoces para saber qu├® detonante atacar primero.",
-    "capa_2_decision": "Urgente vs Importante",
+    "capa_2_decision": "Regla de prioridades",
     "capa_2_options": "Todo acaba subiendo a ti porque nadie abajo tiene autoridad para resolverlo.; El 'para ya' es la norma y hace imposible planificar con antelaci├│n.; Siempre hay quien acaba cargando con el trabajo de otros por ser el que m├ís resuelve.; El equipo que dirige vive interrumpido, saltando de una petici├│n inesperada a otra sin parar.; El due├▒o se pasa el d├¡a apagando fuegos en vez de organizar con antelaci├│n.; No hay momentos de respiro: la empresa funciona siempre con la tensi├│n acumulada.",
     "justi_capa2": "Con Urgente vs Importante ordenas estos focos de tensi├│n y separas los que de verdad desgastan al equipo del ruido del d├¡a a d├¡a. Priorizas cu├íl apagar primero para bajar la sobrecarga.",
     "capa_3_comprension": "Mapa de tensi├│n",
@@ -1824,12 +1824,12 @@
     "justi_capa4": "Mejorar el clima paso a paso significa avanzar con peque├▒os ajustes, uno detr├ís de otro, en lugar de un cambio de golpe. Aqu├¡ decides qu├® carga repartes, qu├® parte del d├¡a a d├¡a alivias y qui├®n acompa├▒a a qui├®n, hasta que el equipo vuelve a respirar con calma.",
     "capa_5_ejecucion": "Lista de comprobaci├│n del clima",
     "justi_capa5": "Porque necesitas asegurarte de que los cambios se sostienen en el tiempo y el equipo recupera de verdad la estabilidad, no solo durante una buena semana.",
-    "capa_6_seguimiento": "Seguimiento: Absentismo del equipo",
+    "capa_6_seguimiento": "Seguimiento: Días de alta tensión",
     "justi_capa6": "Este indicador mide el absentismo del equipo: cu├íntos d├¡as de ausencia no planificada acumula el mes. Comp├íralo con C0; si baja, el entorno emocional est├í sanando de verdad.",
     "capa_1_options": "Mi equipo vive en modo emergencia casi todos los d├¡as y eso afecta a la calidad de las decisiones.; Tomamos decisiones impulsivas por la presi├│n del momento que despu├®s hay que corregir.; Hay m├ís errores y absentismo de lo normal y el ritmo de trabajo tiene algo que ver.; El clima est├í crispado y esa tensi├│n afecta al rendimiento aunque nadie lo diga expl├¡citamente.; Tratamos como urgente todo lo que llega, aunque la mayor├¡a podr├¡a esperar sin consecuencias reales.; La saturaci├│n del equipo nos est├í costando margen y calidad aunque no aparezca en ninguna cuenta.",
     "kpi_recovery_mode": "conteo",
-    "recovery_unit_label": "d├¡as de ausencia reducidos",
-    "kpi_name": "Absentismo del equipo",
+    "recovery_unit_label": "días de tensión reducidos",
+    "kpi_name": "Días de alta tensión",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": [
@@ -1892,7 +1892,7 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Personas del equipo habitualmente saturadas (trabajan m├ís horas de lo pactado)"
+        "label": "Personas habitualmente saturadas"
       },
       {
         "id": "inputB",
@@ -1987,7 +1987,7 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Personas del equipo que se implican por encima del m├¡nimo (aportan, proponen, van m├ís all├í de lo justo)"
+        "label": "Personas que se implican por encima del m├¡nimo"
       },
       {
         "id": "inputB",
@@ -2082,11 +2082,11 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Personas que han dejado la empresa en los ├║ltimos 12 meses"
+        "label": "Personas que se fueron en 12 meses"
       },
       {
         "id": "inputB",
-        "label": "Total personas que ten├¡as hace 12 meses"
+        "label": "Total personas hace 12 meses"
       }
     ],
     "input_a": "Personas que se fueron en 12 meses",
@@ -2186,13 +2186,13 @@
     ],
     "input_a": "Personas clave que están bien aprovechadas (en trabajo de alto valor)",
     "input_b": "Total de personas clave o de alto potencial",
-    "input_revised_1": "Horas de nivel (post)",
-    "input_revised_2": "Horas totales (post)",
-    "result_revised": "╬ö tiempo aprovechado",
+    "input_revised_1": "Personas clave bien aprovechadas (post)",
+    "input_revised_2": "Total de personas clave (post)",
+    "result_revised": "Δ potencial aprovechado",
     "impact_treatment": "Activamos el talento que tu equipo tiene pero que el negocio no est├í aprovechando. Crecer con las personas que ya tienes es siempre m├ís r├ípido y m├ís barato que contratar de nuevo.",
     "optimizer_impact": "Liberaci├│n inmediata de capacidad de alto valor al identificar y redistribuir las tareas que bloquean el potencial.",
     "optimizer_decision": "Diagn├│stico de Distribuci├│n de Tiempo del Equipo",
-    "example": "Consultora con solo el 30% del equipo en desarrollo activo tiene a sus mejores perfiles atrapados en tareas de bajo nivel; tras redistribuir tareas y abrir retos de crecimiento, el 70% del equipo desarrolla capacidades nuevas y cierra 2 proyectos sin contratar.",
+    "example": "Consultora con solo 1 de sus 3 perfiles clave bien aprovechado (33%): los mejores atrapados en tareas de bajo valor. Tras reorientar su trabajo, los 3 quedan bien aprovechados.",
     "capa_1_priorizacion": "Talento infrautilizado que ya pagas; Personas en tareas de bajo impacto; Potencial por encima de lo que el negocio pide; Perfil caro en trabajo de bajo coste; Capacidades sin activar en el equipo; Incorporaciones sin proceso que las active",
     "justi_capa1": "El potencial bloqueado tiene distintas causas. Se├▒ala cu├íles reconoces para saber d├│nde est├í el talento que ya tienes y no est├ís aprovechando.",
     "capa_2_decision": "Impacto vs Esfuerzo",
@@ -2204,8 +2204,8 @@
     "justi_capa4": "Aqu├¡ mueves a cada persona al trabajo donde su nivel genera m├ís valor: qu├® tarea reasignas y por qu├®. El objetivo es que el talento que ya pagas rinda de verdad.",
     "capa_5_ejecucion": "Checklist de revisi├│n de roles y tareas",
     "justi_capa5": "Porque necesitas confirmar que las reasignaciones se ejecutaron y el tiempo liberado se usa bien.",
-    "capa_6_seguimiento": "Seguimiento: Tiempo aprovechado del equipo",
-    "justi_capa6": "Este indicador mide qu├® parte del tiempo de tu equipo se dedica a trabajo de su nivel, y no a tareas por debajo de su capacidad. Al cierre lo re-mides; si sube, has activado el potencial que ten├¡as dormido.",
+    "capa_6_seguimiento": "Seguimiento: Potencial aprovechado",
+    "justi_capa6": "Este indicador mide cuántas de tus personas clave están de verdad bien aprovechadas. Compáralo con tu punto de partida; si sube, creces con el talento que ya tienes.",
     "capa_1_options": "Estoy pagando talento que el negocio no est├í aprovechando al nivel que deber├¡a.; Mi equipo pasa la mayor parte del d├¡a en tareas de bajo impacto o que no necesitan su nivel.; Las personas saben m├ís y pueden m├ís de lo que el negocio les est├í pidiendo en este momento.; Tengo personas buenas haciendo cosas que alguien con la mitad de su coste podr├¡a hacer igual.; Desaprovecho capacidades que ya tengo en casa porque el sistema no las activa ni las libera.; Las nuevas incorporaciones tardan demasiado en rendir de verdad porque no hay proceso que las gu├¡e.",
     "kpi_recovery_mode": "estructural",
     "recovery_unit_label": "personas bien aprovechadas",
@@ -2261,7 +2261,7 @@
     "logica": "Hay tensiones silenciosas que contaminan el ambiente cada d├¡a ÔÇö y lo que no se nombra no se puede resolver.",
     "plan": "PIE",
     "description_symptom": "Si en tu equipo hay fricciones que todo el mundo nota pero nadie menciona, el problema no es la fricci├│n ÔÇö es el silencio. Las tensiones no resueltas no desaparecen: se acumulan, se agrandan y eventualmente explotan cuando menos lo esperas o cuando m├ís te cuesta.",
-    "kpi_question": "Introduce cu├íntas tensiones o conflictos internos identificas en tu equipo este mes y cu├íntos de ellos llegaron a una resoluci├│n o acuerdo claro. Si menos del 60% se resuelven de forma expl├¡cita, el resto se convierte en tensi├│n silenciosa acumulada.",
+    "kpi_question": "Pregunta a tu equipo cuántas fricciones o roces perciben, y cuántas de esas se han resuelto con un acuerdo claro. Si se resuelve menos del 60%, las tensiones se enquistan.",
     "kpi_impact": "Cuando m├ís del 60% de las tensiones se resuelven de forma expl├¡cita, el ambiente mejora y la contaminaci├│n silenciosa desaparece.",
     "kpi_formula": "(InputB/InputA)*100",
     "kpi_objective": ">60%",
@@ -2272,17 +2272,17 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Conflictos o tensiones dentro del equipo identificados este mes"
+        "label": "Fricciones o roces que percibe el equipo (pregúntales, no lo estimes tú solo)"
       },
       {
         "id": "inputB",
-        "label": "De esos, conflictos que llegaron a una resoluci├│n o acuerdo expl├¡cito"
+        "label": "De esas, las resueltas con un acuerdo explícito"
       }
     ],
-    "input_a": "Tensiones identificadas este mes",
-    "input_b": "Conflictos resueltos expl├¡citamente",
-    "input_revised_1": "Tensiones resueltas expl├¡citamente (post)",
-    "input_revised_2": "Total tensiones identificadas (post)",
+    "input_a": "Fricciones o roces que percibe el equipo (pregúntales, no lo estimes tú solo)",
+    "input_b": "De esas, las resueltas con un acuerdo explícito",
+    "input_revised_1": "Fricciones percibidas (post)",
+    "input_revised_2": "Fricciones resueltas (post)",
     "result_revised": "╬ö resoluci├│n de conflictos",
     "impact_treatment": "Nombramos y resolvemos las tensiones que envenenan el ambiente sin que nadie lo diga en alto. El conflicto deja de contaminar en silencio y el equipo vuelve a colaborar sin fricciones.",
     "optimizer_impact": "Reducci├│n inmediata de contaminaci├│n silenciosa al establecer un sistema de resoluci├│n expl├¡cita de conflictos.",
@@ -2367,7 +2367,7 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Rese├▒as de 5 estrellas o valoraciones m├íximas recibidas este mes"
+        "label": "Rese├▒as de 5Ôÿà este mes"
       },
       {
         "id": "inputB",
@@ -2386,7 +2386,7 @@
     "capa_1_priorizacion": "Experiencia variable seg├║n el d├¡a o la persona; Sin protocolo de servicio definido; Un mal d├¡a borra diez atenciones buenas; El cliente no sabe qu├® esperar; Momentos clave del proceso descuidados; La irregularidad da├▒a reputaci├│n y rese├▒as",
     "justi_capa1": "Un servicio correcto pero olvidable tiene distintos focos. Se├▒ala cu├íles reconoces para saber qu├® momentos clave dise├▒ar primero y empezar a ganar rese├▒as de 5 estrellas.",
     "capa_2_decision": "Regla de prioridades",
-    "capa_2_options": "No hay momentos pensados a prop├│sito para sorprender al cliente: el servicio es correcto pero no memorable; El servicio se ve competente pero intercambiable: nada lo hace dif├¡cil de olvidar ni de recomendar; Los momentos de contacto de mayor peso emocional ÔÇöel inicio y el cierreÔÇö no tienen un trato especial definido; El equipo atiende de forma funcional, sin un trato ni unas palabras que marquen la diferencia; No hay ning├║n detalle de valor a├▒adido que el cliente no haya pagado y no esperaba recibir; Los clientes satisfechos no recomiendan porque no tienen ninguna historia memorable que contar de ti",
+    "capa_2_options": "Diseñar un momento pensado para sorprender al cliente; Añadir un detalle que te haga difícil de olvidar; Cuidar el inicio y el cierre, los momentos que más pesan; Dar un trato con palabras que marquen la diferencia; Regalar un detalle de valor que el cliente no haya pagado; Crear una historia que el cliente quiera contar",
     "justi_capa2": "Con la regla de prioridades ÔÇöde tus muchas mejoras posibles, qu├®date solo con las pocas que de verdad marcan la experiencia y aparca el restoÔÇö eliges los pocos detalles que disparan las rese├▒as de 5 estrellas sin dispersarte en todo el servicio.",
     "capa_3_comprension": "Mapa del recorrido del cliente",
     "justi_capa3": "El mapa del recorrido del cliente te muestra su experiencia completa, paso a paso, y d├│nde se enfr├¡a. Ver├ís los momentos con m├ís impacto emocional para actuar ah├¡ y convertirlos en rese├▒as de 5 estrellas.",
@@ -2557,11 +2557,11 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Clientes nuevos que llegaron por recomendaci├│n de un cliente existente"
+        "label": "Clientes nuevos por recomendaci├│n"
       },
       {
         "id": "inputB",
-        "label": "Total clientes nuevos este mes"
+        "label": "Total clientes nuevos del mes"
       }
     ],
     "input_a": "Clientes nuevos por recomendaci├│n",
@@ -2575,8 +2575,8 @@
     "example": "Cl├¡nica dental: 24% de clientes nuevos llegan por recomendaci├│n. Tras el protocolo sube al 61%.",
     "capa_1_priorizacion": "Pagan sin protestar pero no recomiendan; No perciben el valor real del trabajo; Pierdo renovaciones pese al buen trabajo; Servicio correcto pero sin momento memorable; Cuestionan el precio pese a justificarlo; No sienten que acertaron al elegirme",
     "justi_capa1": "El valor real no se percibe por distintas razones. Se├▒ala cu├íles reconoces para saber d├│nde est├í la distancia entre lo que entregas y lo que el cliente siente que recibe.",
-    "capa_2_decision": "Fuerzas y debilidades de tu valor (DAFO)",
-    "capa_2_options": "El cliente no tiene con qu├® comparar: al empezar nadie dej├│ claro de qu├® punto part├¡a; Como lo haces con soltura, el cliente no ve lo que sabes hacer y cree que era f├ícil; Al vender prometiste de m├ís y ahora un resultado correcto le sabe a poco; Tu trabajo ayuda a varias personas del cliente, pero solo le rindes cuentas a una; Un competidor con peor resultado pero mejor presentaci├│n est├í ganando la batalla del valor percibido; El orden est├í del rev├®s: el cliente paga antes de notar el valor, nunca despu├®s",
+    "capa_2_decision": "Impacto vs Esfuerzo",
+    "capa_2_options": "Dejar clara una línea base de valor al empezar; Hacer visible lo que sabes hacer en vez de darlo por obvio; Ajustar lo que prometes para no decepcionar; Rendir cuentas a todos los que deciden en el cliente; Presentar tu resultado mejor que el competidor; Ordenar el cobro para que el cliente note el valor antes de pagar",
     "justi_capa2": "Con el DAFO de valor ÔÇösus cuatro casillas: Debilidades, Amenazas, Fortalezas y OportunidadesÔÇö ves qu├® te resta y qu├® te suma a ojos del cliente, y qu├® del entorno te amenaza o te abre una oportunidad. Priorizas d├│nde reforzar tu propuesta para que m├ís clientes te recomienden.",
     "capa_3_comprension": "An├ílisis de causas",
     "justi_capa3": "Con el an├ílisis de causas ÔÇöque ordena por grupos todo lo que puede estar detr├ís del problemaÔÇö averiguas de d├│nde viene de verdad tu bajo valor percibido. Ver├ís la ra├¡z en lugar de atacar solo el s├¡ntoma.",
@@ -2661,13 +2661,13 @@
     ],
     "input_a": "Incorporaciones del último año que ya rinden a pleno nivel",
     "input_b": "Total de incorporaciones en el último año",
-    "input_revised_1": "Errores de nuevas incorporaciones (post)",
-    "input_revised_2": "Total errores (post)",
-    "result_revised": "╬ö errores de integraci├│n",
+    "input_revised_1": "Incorporaciones a pleno rendimiento (post)",
+    "input_revised_2": "Total de incorporaciones (post)",
+    "result_revised": "Δ incorporaciones integradas",
     "impact_treatment": "Reducimos el tiempo de integraci├│n de nuevas incorporaciones de meses a semanas con protocolos concretos. El coste invisible de cada nueva persona deja de sangrar el negocio mientras aprende.",
     "optimizer_impact": "Aumento inmediato de madurez operativa al reducir los errores iniciales de las nuevas incorporaciones.",
     "optimizer_decision": "Diagn├│stico de Sistema de Integraci├│n",
-    "example": "F├íbrica industrial: el 27% de los errores los comet├¡an las nuevas incorporaciones; tras el protocolo baja al 8%.",
+    "example": "Taller de 12 personas: de las 4 incorporaciones del último año, solo 1 rendía a pleno nivel (25%). Tras montar la incorporación, 3 de 4 (75%) llegan a pleno rendimiento.",
     "capa_1_priorizacion": "La nueva persona tarda meses y su coste lo pagas en dinero y calidad; errores repetidos al principio por falta de acompa├▒amiento; sin sistema de integraci├│n documentado; el equipo existente absorbe la adaptaci├│n y pierde productividad; procesos de entrada confusos que generan dudas; curva de aprendizaje demasiado larga para la complejidad real del puesto.",
     "justi_capa1": "La integraci├│n lenta tiene distintas causas. Se├▒ala cu├íles reconoces para saber qu├® riesgo est├í costando m├ís y por d├│nde redise├▒ar el sistema.",
     "capa_2_decision": "An├ílisis de Riesgos",
@@ -2679,8 +2679,8 @@
     "justi_capa4": "Con mejoras paso a paso eliminas poco a poco los errores de arranque: qu├® paso simplificas, qu├® formaci├│n a├▒ades y qui├®n la da. El objetivo es que cada incorporaci├│n falle menos.",
     "capa_5_ejecucion": "Lista de comprobaci├│n de la integraci├│n",
     "justi_capa5": "Porque necesitas asegurar que cada incorporaci├│n se integra con la misma consistencia, sin que la calidad dependa de qui├®n la acompa├▒e.",
-    "capa_6_seguimiento": "Seguimiento: Errores de incorporaci├│n",
-    "justi_capa6": "Este indicador mide la reducci├│n de los errores iniciales de las nuevas incorporaciones. Comp├íralo con C0; si baja, tu proceso de integraci├│n funciona.",
+    "capa_6_seguimiento": "Seguimiento: Incorporaciones a pleno rendimiento",
+    "justi_capa6": "Este indicador mide cuántas de tus incorporaciones ya rinden a pleno nivel. Compáralo con tu punto de partida; si sube, tu sistema de integración funciona.",
     "capa_1_options": "Cada persona nueva tarda meses en rendir al nivel esperado y ese tiempo lo pago yo en coste y en calidad.; Los nuevos cometen siempre los mismos errores al principio porque nadie los gu├¡a con un proceso claro.; No tengo un sistema documentado de integraci├│n: cada entrada es diferente y depende de qui├®n acompa├▒a.; El tiempo de adaptaci├│n de cada nueva persona lo absorbe el equipo existente y resta productividad.; Los procesos de entrada son confusos y generan dudas que interrumpen al equipo m├ís de lo que deber├¡a.; La curva de aprendizaje es demasiado larga comparada con la complejidad real del puesto.",
     "kpi_recovery_mode": "conteo",
     "recovery_unit_label": "incorporaciones integradas",
@@ -2747,11 +2747,11 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "D├¡as del mes que el negocio funcion├│ con normalidad sin que tuvieras que intervenir"
+        "label": "D├¡as sin intervenci├│n del l├¡der"
       },
       {
         "id": "inputB",
-        "label": "Total d├¡as laborables del mes"
+        "label": "Total d├¡as laborables"
       }
     ],
     "input_a": "D├¡as sin intervenci├│n del l├¡der",
@@ -2873,7 +2873,7 @@
     "justi_capa6": "Este indicador mide la regularidad de tu ritmo de entrega: cu├ínto se parece tu peor semana a la mejor. Al cierre lo re-mides; si sube, has nivelado la carga.",
     "capa_1_options": "Tengo semanas de colapso y semanas muertas sin punto medio: la carga nunca est├í bien distribuida.; Las urgencias de ├║ltima hora rompen cualquier planificaci├│n que haya intentado hacer.; Los retrasos en entregas son habituales y los clientes ya los descuentan aunque no lo digan.; Dedico m├ís tiempo a apagar fuegos que a ejecutar el trabajo planificado con normalidad.; El equipo trabaja al m├íximo en los picos y queda infrautilizado en los valles de actividad.; No puedo prever cu├índo llegar├í el pr├│ximo colapso de trabajo ni c├│mo prepararlo.",
     "kpi_recovery_mode": "estructural",
-    "recovery_unit_label": "re-medir entregas",
+    "recovery_unit_label": "puntos de regularidad ganados",
     "kpi_name": "Regularidad de entrega",
     "kpi_unit": "%",
     "capa_3_plan": {
