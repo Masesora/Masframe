@@ -1406,10 +1406,10 @@
     "logica": "Todo acaba en el mismo despacho porque nadie sabe exactamente qu├® le corresponde a qui├®n.",
     "plan": "PIE",
     "description_symptom": "Si la mayor├¡a de las decisiones y tareas acaban en tu mesa aunque no tendr├¡an por qu├®, no es que seas imprescindible ÔÇö es que no est├ín claros los l├¡mites de cada rol. Y mientras no est├®n claros, todo seguir├í llegando al mismo sitio.",
-    "kpi_question": "Introduce cu├íntas de las decisiones o tareas de la ├║ltima semana tuviste que resolver t├║ ÔÇö acabaron en tu mesa aunque no tendr├¡an por qu├® ÔÇö y el total de la semana. Si m├ís del 25% pasa por ti, el problema no es tu gente: son los l├¡mites de cada rol, que no est├ín claros.",
-    "kpi_impact": "Cuando menos del 25% de las decisiones acaban en tu mesa, cada persona sabe qu├® le corresponde y el negocio deja de depender de que t├║ est├®s en todo.",
+    "kpi_question": "De las personas de tu equipo, ¿cuántas resuelven las decisiones de su área sin tener que consultarte? Ponlo sobre el total del equipo. Si menos del 70% deciden solas, todo sigue dependiendo de ti.",
+    "kpi_impact": "Cuando más del 70% de tu equipo decide en su área sin consultarte, dejas de ser el cuello de botella y el negocio funciona aunque tú no estés.",
     "kpi_formula": "(InputA/InputB)*100",
-    "kpi_objective": "<25%",
+    "kpi_objective": ">70%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -1417,15 +1417,15 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Decisiones o tareas de la ├║ltima semana que tuviste que resolver t├║ (que acabaron en tu mesa)"
+        "label": "Personas del equipo que resuelven las decisiones de su área sin consultarte"
       },
       {
         "id": "inputB",
-        "label": "Total de decisiones o tareas de la semana"
+        "label": "Total de personas del equipo"
       }
     ],
-    "input_a": "Decisiones que acabaron en tu mesa",
-    "input_b": "Total de decisiones o tareas de la semana",
+    "input_a": "Personas del equipo que resuelven las decisiones de su área sin consultarte",
+    "input_b": "Total de personas del equipo",
     "input_revised_1": "Decisiones en tu mesa (post)",
     "input_revised_2": "Total decisiones (post)",
     "result_revised": "╬ö decisiones que dependen de ti",
@@ -1448,8 +1448,8 @@
     "justi_capa6": "Este indicador mide cu├íntas decisiones siguen acabando en tu mesa. Comp├íralo con tu punto de partida; si baja, el reparto de roles est├í funcionando y el negocio deja de descansar solo en ti.",
     "capa_1_options": "Casi todas las decisiones acaban en mi mesa aunque muchas no tendr├¡an por qu├® llegar hasta m├¡.; No est├ín claros los l├¡mites de cada puesto y eso genera confusi├│n sobre qui├®n decide qu├®.; Hay tareas que nadie tiene claro de qui├®n son y que acaban sin hacerse o duplic├índose.; Se duplican esfuerzos y otras cosas quedan sin responsable visible y sin que nadie las reclame.; Hay roces entre personas del equipo por no tener claro qui├®n tiene autoridad sobre qu├®.; Sin mi intervenci├│n directa las cosas se atascan aunque no tendr├¡an que necesitarme.",
     "kpi_recovery_mode": "conteo",
-    "recovery_unit_label": "decisiones sacadas de tu mesa",
-    "kpi_name": "Decisiones en tu mesa",
+    "recovery_unit_label": "personas que ya deciden solas",
+    "kpi_name": "Autonomía del equipo",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": [
@@ -2166,10 +2166,10 @@
     "logica": "Tu equipo sabe m├ís, puede m├ís y tiene m├ís que ofrecer de lo que el negocio le est├í pidiendo ÔÇö y ese talento lo est├ís pagando sin aprovecharlo.",
     "plan": "PIE",
     "description_symptom": "Si tu equipo pasa la mayor parte del tiempo en tareas administrativas, operativas o de bajo impacto, no es que no tengan capacidad ÔÇö es que el sistema no les deja usarla. El potencial bloqueado es el activo m├ís infrautilizado de cualquier empresa.",
-    "kpi_question": "Piensa en una semana normal de tu equipo: de todas las horas que trabajan, ┬┐cu├íntas dedican a tareas que aprovechan de verdad su nivel, y no a cosas por debajo de lo que saben hacer? Introduce esas horas y el total de horas que trabaja el equipo a la semana. Si se aprovecha menos de la mitad del tiempo, est├ís desperdiciando el potencial de tu gente.",
-    "kpi_impact": "Cuando m├ís del 50% del tiempo del equipo es trabajo que aprovecha su nivel, dejas de pagar talento parado y creces con la gente que ya tienes ÔÇö m├ís r├ípido y m├ís barato que contratar de nuevo.",
+    "kpi_question": "De tus personas con más potencial, ¿cuántas están de verdad bien aprovechadas —en trabajo que exige su nivel— en lugar de atascadas en tareas de bajo valor? Ponlo sobre el total de personas clave. Si menos del 70% están bien aprovechadas, desperdicias talento que ya pagas.",
+    "kpi_impact": "Cuando más del 70% de tu mejor gente trabaja en lo que de verdad la hace valiosa, creces con el talento que ya tienes en vez de pagar potencial parado.",
     "kpi_formula": "(InputA/InputB)*100",
-    "kpi_objective": ">50%",
+    "kpi_objective": ">70%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -2177,15 +2177,15 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Horas semanales del equipo en trabajo de su nivel"
+        "label": "Personas clave que están bien aprovechadas (en trabajo de alto valor)"
       },
       {
         "id": "inputB",
-        "label": "Horas semanales totales del equipo"
+        "label": "Total de personas clave o de alto potencial"
       }
     ],
-    "input_a": "Horas semanales del equipo en trabajo de su nivel",
-    "input_b": "Horas semanales totales del equipo",
+    "input_a": "Personas clave que están bien aprovechadas (en trabajo de alto valor)",
+    "input_b": "Total de personas clave o de alto potencial",
     "input_revised_1": "Horas de nivel (post)",
     "input_revised_2": "Horas totales (post)",
     "result_revised": "╬ö tiempo aprovechado",
@@ -2208,8 +2208,8 @@
     "justi_capa6": "Este indicador mide qu├® parte del tiempo de tu equipo se dedica a trabajo de su nivel, y no a tareas por debajo de su capacidad. Al cierre lo re-mides; si sube, has activado el potencial que ten├¡as dormido.",
     "capa_1_options": "Estoy pagando talento que el negocio no est├í aprovechando al nivel que deber├¡a.; Mi equipo pasa la mayor parte del d├¡a en tareas de bajo impacto o que no necesitan su nivel.; Las personas saben m├ís y pueden m├ís de lo que el negocio les est├í pidiendo en este momento.; Tengo personas buenas haciendo cosas que alguien con la mitad de su coste podr├¡a hacer igual.; Desaprovecho capacidades que ya tengo en casa porque el sistema no las activa ni las libera.; Las nuevas incorporaciones tardan demasiado en rendir de verdad porque no hay proceso que las gu├¡e.",
     "kpi_recovery_mode": "estructural",
-    "recovery_unit_label": "re-medir % de tiempo aprovechado",
-    "kpi_name": "Tiempo aprovechado del equipo",
+    "recovery_unit_label": "personas bien aprovechadas",
+    "kpi_name": "Potencial aprovechado",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": [
@@ -2641,10 +2641,10 @@
     "logica": "Cada persona nueva tarda meses en rendir de verdad ÔÇö y ese tiempo de adaptaci├│n lo pagas t├║, en dinero y en calidad.",
     "plan": "PIE",
     "description_symptom": "Si cada persona que entra tarda demasiado en aportar sin que eso se deba a la complejidad del puesto, tienes un problema de sistema de integraci├│n. El tiempo de adaptaci├│n no es inevitable ÔÇö es dise├▒able. Y cada mes que se puede recortar es un mes de coste real que dejas de asumir.",
-    "kpi_question": "Introduce el n├║mero de errores cometidos por nuevas incorporaciones y el total de errores del periodo. Si m├ís del 10% de los errores los generan los nuevos, tu sistema de integraci├│n no est├í transfiriendo el conocimiento necesario.",
-    "kpi_impact": "Mantener los errores de nuevas incorporaciones por debajo del 10% del total indica que el sistema de integraci├│n funciona y que la curva de aprendizaje est├í controlada.",
+    "kpi_question": "De las personas que se han incorporado en el último año, ¿cuántas ya trabajan solas y a pleno rendimiento? Ponlo sobre el total de incorporaciones del año. Si menos del 80% están a pleno nivel, tu sistema de integración es demasiado lento.",
+    "kpi_impact": "Cuando más del 80% de tus incorporaciones llegan a pleno rendimiento, tu empresa absorbe gente nueva sin frenar la operación ni depender de ti.",
     "kpi_formula": "(InputA/InputB)*100",
-    "kpi_objective": "<10%",
+    "kpi_objective": ">80%",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -2652,15 +2652,15 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Errores o incidencias generadas por personas incorporadas hace menos de 3 meses"
+        "label": "Incorporaciones del último año que ya rinden a pleno nivel"
       },
       {
         "id": "inputB",
-        "label": "Total errores o incidencias del mes"
+        "label": "Total de incorporaciones en el último año"
       }
     ],
-    "input_a": "Errores de nuevas incorporaciones",
-    "input_b": "Total errores del mes",
+    "input_a": "Incorporaciones del último año que ya rinden a pleno nivel",
+    "input_b": "Total de incorporaciones en el último año",
     "input_revised_1": "Errores de nuevas incorporaciones (post)",
     "input_revised_2": "Total errores (post)",
     "result_revised": "╬ö errores de integraci├│n",
@@ -2683,8 +2683,8 @@
     "justi_capa6": "Este indicador mide la reducci├│n de los errores iniciales de las nuevas incorporaciones. Comp├íralo con C0; si baja, tu proceso de integraci├│n funciona.",
     "capa_1_options": "Cada persona nueva tarda meses en rendir al nivel esperado y ese tiempo lo pago yo en coste y en calidad.; Los nuevos cometen siempre los mismos errores al principio porque nadie los gu├¡a con un proceso claro.; No tengo un sistema documentado de integraci├│n: cada entrada es diferente y depende de qui├®n acompa├▒a.; El tiempo de adaptaci├│n de cada nueva persona lo absorbe el equipo existente y resta productividad.; Los procesos de entrada son confusos y generan dudas que interrumpen al equipo m├ís de lo que deber├¡a.; La curva de aprendizaje es demasiado larga comparada con la complejidad real del puesto.",
     "kpi_recovery_mode": "conteo",
-    "recovery_unit_label": "errores de arranque evitados",
-    "kpi_name": "Errores de incorporaci├│n",
+    "recovery_unit_label": "incorporaciones integradas",
+    "kpi_name": "Incorporaciones a pleno rendimiento",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": [
