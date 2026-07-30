@@ -104,6 +104,25 @@
 </div>
 
 <script>
+window.__mfSyncFormAttrs = function(){
+  try {
+    document.querySelectorAll('input').forEach(function(el){
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        if (el.checked) el.setAttribute('checked',''); else el.removeAttribute('checked');
+      } else {
+        el.setAttribute('value', el.value);
+      }
+    });
+    document.querySelectorAll('textarea').forEach(function(el){ el.textContent = el.value; });
+    document.querySelectorAll('select').forEach(function(el){
+      Array.prototype.forEach.call(el.options, function(opt){
+        if (opt.selected) opt.setAttribute('selected',''); else opt.removeAttribute('selected');
+      });
+    });
+  } catch(e){}
+};
+</script>
+<script>
 let rc = 0;
 const itemId = new URLSearchParams(location.search).get('itemId');
 
@@ -248,7 +267,7 @@ function recalcTotals(){
   if(window.parent !== window){
     window.parent.postMessage(
       { tipo: 'herramienta-valor', valor: totalSolicitar, fecha: null, itemId, descripcion,
-        html: document.documentElement.outerHTML },
+        html: (window.__mfSyncFormAttrs && window.__mfSyncFormAttrs(), document.documentElement.outerHTML) },
       '*'
     );
   }
@@ -264,7 +283,7 @@ window.addEventListener('message', function(e){
   if(e.data?.tipo === 'get-html'){
     if(window.parent !== window){
       window.parent.postMessage(
-        { tipo: 'html-snapshot', html: document.documentElement.outerHTML, itemId },
+        { tipo: 'html-snapshot', html: (window.__mfSyncFormAttrs && window.__mfSyncFormAttrs(), document.documentElement.outerHTML), itemId },
         '*'
       );
     }

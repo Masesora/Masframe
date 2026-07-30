@@ -172,7 +172,25 @@ for (var i = 0; i < 3; i++) addRow();
 (function(){
   if (window.parent === window) return;
   var itemId = new URLSearchParams(location.search).get('itemId');
+  function syncFormAttrs(){
+    try {
+      document.querySelectorAll('input').forEach(function(el){
+        if (el.type === 'checkbox' || el.type === 'radio') {
+          if (el.checked) el.setAttribute('checked',''); else el.removeAttribute('checked');
+        } else {
+          el.setAttribute('value', el.value);
+        }
+      });
+      document.querySelectorAll('textarea').forEach(function(el){ el.textContent = el.value; });
+      document.querySelectorAll('select').forEach(function(el){
+        Array.prototype.forEach.call(el.options, function(opt){
+          if (opt.selected) opt.setAttribute('selected',''); else opt.removeAttribute('selected');
+        });
+      });
+    } catch(e){}
+  }
   function snapshot(){
+    syncFormAttrs();
     try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
   }
   var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }

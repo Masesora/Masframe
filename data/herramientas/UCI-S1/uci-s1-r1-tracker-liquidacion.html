@@ -272,6 +272,25 @@
 </div>
 
 <script>
+window.__mfSyncFormAttrs = function(){
+  try {
+    document.querySelectorAll('input').forEach(function(el){
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        if (el.checked) el.setAttribute('checked',''); else el.removeAttribute('checked');
+      } else {
+        el.setAttribute('value', el.value);
+      }
+    });
+    document.querySelectorAll('textarea').forEach(function(el){ el.textContent = el.value; });
+    document.querySelectorAll('select').forEach(function(el){
+      Array.prototype.forEach.call(el.options, function(opt){
+        if (opt.selected) opt.setAttribute('selected',''); else opt.removeAttribute('selected');
+      });
+    });
+  } catch(e){}
+};
+</script>
+<script>
   const itemId = new URLSearchParams(location.search).get('itemId') || '';
   let rowCount = 0;
 
@@ -378,7 +397,7 @@
         fecha: fecha,
         itemId: itemId,
         descripcion: descripcion,
-        html: document.documentElement.outerHTML
+        html: (window.__mfSyncFormAttrs && window.__mfSyncFormAttrs(), document.documentElement.outerHTML)
       }, '*');
     } catch(e) {}
   }
@@ -388,7 +407,7 @@
       try {
         e.source.postMessage({
           tipo: 'html-snapshot',
-          html: document.documentElement.outerHTML,
+          html: (window.__mfSyncFormAttrs && window.__mfSyncFormAttrs(), document.documentElement.outerHTML),
           itemId: itemId
         }, '*');
       } catch(err) {}

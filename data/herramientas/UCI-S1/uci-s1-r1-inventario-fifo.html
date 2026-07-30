@@ -115,6 +115,25 @@
 </div>
 
 <script>
+window.__mfSyncFormAttrs = function(){
+  try {
+    document.querySelectorAll('input').forEach(function(el){
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        if (el.checked) el.setAttribute('checked',''); else el.removeAttribute('checked');
+      } else {
+        el.setAttribute('value', el.value);
+      }
+    });
+    document.querySelectorAll('textarea').forEach(function(el){ el.textContent = el.value; });
+    document.querySelectorAll('select').forEach(function(el){
+      Array.prototype.forEach.call(el.options, function(opt){
+        if (opt.selected) opt.setAttribute('selected',''); else opt.removeAttribute('selected');
+      });
+    });
+  } catch(e){}
+};
+</script>
+<script>
 let rowCount = 0;
 
 function fmt(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
@@ -190,7 +209,7 @@ function recalcTotals(){
       : (totalRecup > 0 ? 'Liquidar inventario — recuperar ' + fmt(totalRecup) : null);
     window.parent.postMessage(
       { tipo: "herramienta-valor", valor: totalRecup, fecha: fechas[0] || null, itemId, descripcion,
-        html: document.documentElement.outerHTML },
+        html: (window.__mfSyncFormAttrs && window.__mfSyncFormAttrs(), document.documentElement.outerHTML) },
       "*"
     );
   }
@@ -209,7 +228,7 @@ window.addEventListener('message', function(e){
     const itemId = new URLSearchParams(location.search).get('itemId');
     if (window.parent !== window) {
       window.parent.postMessage(
-        { tipo: 'html-snapshot', html: document.documentElement.outerHTML, itemId },
+        { tipo: 'html-snapshot', html: (window.__mfSyncFormAttrs && window.__mfSyncFormAttrs(), document.documentElement.outerHTML), itemId },
         '*'
       );
     }

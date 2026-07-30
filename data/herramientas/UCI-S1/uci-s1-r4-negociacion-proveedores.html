@@ -279,6 +279,25 @@
 </div>
 
 <script>
+window.__mfSyncFormAttrs = function(){
+  try {
+    document.querySelectorAll('input').forEach(function(el){
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        if (el.checked) el.setAttribute('checked',''); else el.removeAttribute('checked');
+      } else {
+        el.setAttribute('value', el.value);
+      }
+    });
+    document.querySelectorAll('textarea').forEach(function(el){ el.textContent = el.value; });
+    document.querySelectorAll('select').forEach(function(el){
+      Array.prototype.forEach.call(el.options, function(opt){
+        if (opt.selected) opt.setAttribute('selected',''); else opt.removeAttribute('selected');
+      });
+    });
+  } catch(e){}
+};
+</script>
+<script>
 (function () {
   const itemId = new URLSearchParams(location.search).get('itemId') || '';
   let rowIndex = 0;
@@ -381,7 +400,7 @@
   }
 
   function emitValue(valor, fecha, descripcion) {
-    const html = document.documentElement.outerHTML;
+    const html = (window.__mfSyncFormAttrs && window.__mfSyncFormAttrs(), document.documentElement.outerHTML);
     const msg = {
       tipo: 'herramienta-valor',
       valor: Math.round(valor),
@@ -395,7 +414,7 @@
 
   window.addEventListener('message', function (e) {
     if (e.data && e.data.tipo === 'get-html') {
-      const html = document.documentElement.outerHTML;
+      const html = (window.__mfSyncFormAttrs && window.__mfSyncFormAttrs(), document.documentElement.outerHTML);
       window.parent.postMessage({ tipo: 'html-snapshot', html: html, itemId: itemId }, '*');
     }
   });
