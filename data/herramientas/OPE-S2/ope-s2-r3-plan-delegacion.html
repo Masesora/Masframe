@@ -186,5 +186,70 @@ for (let i = 0; i < 5; i++) addRow();
 })();
 </script>
 
+<script>
+(function(){
+  function mfBestEffortRecalc(){
+    ['recalcTotals','recalc','calcSum','calcTotals','actualizarTotales','updateTotals',
+     'recalcularTotales','calcularTotales','update','recalcAll','calc','renderAll','render']
+      .forEach(function(name){
+        try { if (typeof window[name] === 'function') window[name](); } catch(e){}
+      });
+  }
+  function mfEnsureHeaderCell(tbody){
+    try {
+      var table = tbody.closest('table');
+      if (!table) return;
+      var headRow = table.querySelector('thead tr');
+      if (headRow && !headRow.querySelector('.mf-del-th')) {
+        var th = document.createElement('th');
+        th.className = 'mf-del-th';
+        th.textContent = '';
+        headRow.appendChild(th);
+      }
+    } catch(e){}
+  }
+  function mfAddDeleteButtons(scope){
+    try {
+      var rows = (scope.tagName === 'TR') ? [scope] : scope.querySelectorAll('tbody tr');
+      rows.forEach(function(tr){
+        if (!tr.closest) return;
+        if (tr.querySelector('.mf-del-btn')) return;
+        if (!tr.children || tr.children.length === 0) return;
+        var tbody = tr.closest('tbody');
+        if (tbody) mfEnsureHeaderCell(tbody);
+        var td = document.createElement('td');
+        td.className = 'mf-del-td';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mf-del-btn';
+        btn.textContent = '✕';
+        btn.title = 'Eliminar fila';
+        btn.style.cssText = 'background:#fee2e2;color:#dc2626;border:1px solid #fecaca;border-radius:4px;cursor:pointer;padding:2px 8px;font-size:12px;line-height:1.2;';
+        btn.onclick = function(){ tr.remove(); mfBestEffortRecalc(); };
+        td.appendChild(btn);
+        tr.appendChild(td);
+      });
+    } catch(e){}
+  }
+  function mfStart(){
+    try {
+      var tbodies = document.querySelectorAll('tbody');
+      tbodies.forEach(function(tb){
+        mfAddDeleteButtons(tb);
+        var mo = new MutationObserver(function(muts){
+          muts.forEach(function(m){
+            m.addedNodes && m.addedNodes.forEach(function(n){
+              if (n.nodeType === 1 && n.tagName === 'TR') mfAddDeleteButtons(n);
+            });
+          });
+        });
+        mo.observe(tb, { childList: true });
+      });
+    } catch(e){}
+  }
+  if (document.readyState !== 'loading') mfStart();
+  else document.addEventListener('DOMContentLoaded', mfStart);
+})();
+</script>
 </body>
 </html>
