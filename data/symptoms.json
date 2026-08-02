@@ -52,20 +52,110 @@
     "justi_capa6": "Aquí valoras el efecto real de las acciones hechas: compara los días de caja actuales con los que tenías al empezar (C0). Cada tarea completada en C5 debe traducirse en más dinero disponible, no en una casilla marcada.",
     "capa_1_options": "Tengo mercancía parada y demasiado dinero atrapado en productos que no se venden.; Tengo proyectos a medio hacer que consumen recursos pero aún no generan ingresos.; Mis clientes tardan meses en pagar y eso me deja sin dinero para el día a día.; Cobro demasiado tarde respecto a cuando tengo que pagar proveedores y nóminas.; He recibido anticipos que aún no he convertido en trabajo cobrado porque voy retrasado.; Tengo trabajos terminados que aún no he facturado porque me faltan trámites o vistos buenos.",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Inventariar y valorar el stock sin rotación",
-          "herramienta": "uci-s1-r1-inventario-fifo.html"
-        },
-        {
-          "nombre": "Fijar precio de liquidación y canal de venta",
-          "herramienta": "uci-s1-r1-precio-liquidacion.html"
-        },
-        {
-          "nombre": "Seguimiento semanal de ventas realizadas",
-          "herramienta": "uci-s1-r1-tracker-liquidacion.html"
-        }
-      ],
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Liquidar capital inmovilizado en inventario sin rotación",
+        "secciones": [
+          {
+            "titulo": "1. Inventariar y valorar el stock (FIFO)",
+            "columnas": [
+              {
+                "etiqueta": "Referencia / Producto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Unidades",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste unitario (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Días sin movimiento",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha límite de acción",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "2. Fijar precio de liquidación y canal de venta",
+            "columnas": [
+              {
+                "etiqueta": "Referencia / Producto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Unidades",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste unitario (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Margen mínimo aceptable (%)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Precio propuesto (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Canal de venta",
+                "tipo": "opciones",
+                "opciones": [
+                  "Wallapop",
+                  "Proveedor",
+                  "Competidor",
+                  "Remate",
+                  "Cliente directo"
+                ]
+              }
+            ],
+            "filas_iniciales": 2
+          },
+          {
+            "titulo": "3. Seguimiento semanal de ventas",
+            "columnas": [
+              {
+                "etiqueta": "Semana",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Producto vendido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Unidades",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Precio real (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Canal usado",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Vendido",
+                  "Negociando",
+                  "Sin salida"
+                ]
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
       "r2": [
         {
           "nombre": "Analizar estado y avance de proyectos en curso",
@@ -2224,12 +2314,43 @@
           "herramienta": "res-s2-r2-coste-perfil-caro.html"
         }
       ],
-      "r3": [
-        {
-          "nombre": "Capacidades que cambian resultados",
-          "herramienta": "res-s2-r3-capacidades-clave.html"
-        }
-      ],
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Capacidades que cambiarían resultados si las aprovecharas",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Capacidad clave",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿La tienes en el equipo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí, sin usar",
+                  "Sí, a medias",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Impacto si se aprovecha",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alto",
+                  "Medio",
+                  "Bajo"
+                ]
+              },
+              {
+                "etiqueta": "Acción en 6 meses",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
       "r4": [
         {
           "nombre": "Reasignar tareas de bajo valor",
