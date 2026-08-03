@@ -2345,7 +2345,8 @@
             "clave": "beneficio",
             "etiqueta": "Beneficio neto real (€)",
             "formula": "ingresos - gastos - sueldo - impuestos",
-            "unidad": "eur"
+            "unidad": "eur",
+            "alimenta_valor": true
           },
           {
             "clave": "margen",
