@@ -4327,12 +4327,33 @@
     "kpi_name": "Margen neto mensual",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Definir tus 3 indicadores clave",
-          "herramienta": "cli-s1-r1-tres-indicadores-clave.html"
-        }
-      ],
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Definir los 3 indicadores que muestran la salud real del negocio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Indicador",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cómo se mide",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Valor actual",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Objetivo",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
       "r2": {
         "tipo": "calculadora",
         "titulo": "Cálculo del margen neto real",
@@ -4389,30 +4410,140 @@
           ]
         }
       },
-      "r3": [
-        {
-          "nombre": "Cierre contable en 5 días",
-          "herramienta": "cli-s1-r3-cierre-en-5-dias.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Dashboard financiero semanal",
-          "herramienta": "cli-s1-r4-dashboard-semanal.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Automatizar la extracción de datos",
-          "herramienta": "cli-s1-r5-automatizar-datos.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Delegar administración de bajo valor",
-          "herramienta": "cli-s1-r6-delegar-admin.html"
-        }
-      ]
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Cerrar tus números en los primeros 5 días del mes",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Paso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Día objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Hecho?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Dashboard financiero semanal con 5 métricas clave",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Métrica",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Sem 1",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Sem 2",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Sem 3",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Sem 4",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Automatizar la extracción de datos y quitar dependencia manual",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tarea manual",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Horas/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Automatizable?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Con qué (herramienta)",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Delegar o subcontratar la administración de bajo valor",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tarea",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Horas/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Valor",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bajo",
+                  "Alto"
+                ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Delegar",
+                  "Subcontratar",
+                  "Mantener",
+                  "Eliminar"
+                ]
+              },
+              {
+                "etiqueta": "Coste externo (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      }
     }
   },
   {
@@ -4472,42 +4603,278 @@
     "kpi_name": "Tipo impositivo",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Revisar el régimen fiscal óptimo",
-          "herramienta": "cli-s2-r1-revision-regimen-fiscal.html"
+      "r1": {
+        "tipo": "calculadora",
+        "titulo": "Revisar si tu régimen fiscal es el óptimo para tu nivel de ingresos",
+        "campos": [
+          {
+            "clave": "beneficio_bruto_anual",
+            "etiqueta": "Beneficio bruto anual (€)"
+          },
+          {
+            "clave": "irpf_is_pagado",
+            "etiqueta": "IRPF / Imp. Sociedades pagado (€)"
+          },
+          {
+            "clave": "cuota_autonomos_ss",
+            "etiqueta": "Cuota autónomos / SS anual (€)"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "impuestos_totales",
+            "etiqueta": "Impuestos totales",
+            "formula": "irpf_is_pagado + cuota_autonomos_ss",
+            "unidad": "eur",
+            "alimenta_valor": true
+          },
+          {
+            "clave": "tipo_efectivo",
+            "etiqueta": "Tipo efectivo actual",
+            "formula": "impuestos_totales / beneficio_bruto_anual * 100",
+            "unidad": "pct"
+          }
+        ],
+        "semaforo": {
+          "sobre": "tipo_efectivo",
+          "reglas": [
+            {
+              "min": 40,
+              "color": "rojo",
+              "texto": "Sangría fiscal: revisa régimen y deducciones"
+            },
+            {
+              "min": 32,
+              "color": "naranja",
+              "texto": "Por encima del objetivo — hay margen de mejora"
+            },
+            {
+              "color": "verde",
+              "texto": "Dentro del objetivo (<32%)"
+            }
+          ]
         }
-      ],
-      "r2": [
-        {
-          "nombre": "Deducciones que no estás aplicando",
-          "herramienta": "cli-s2-r2-deducciones-no-aplicadas.html"
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Identificar gastos deducibles que no estás declarando",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Gasto deducible",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Lo aplicas?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No lo aplico",
+                  "Sí lo aplico"
+                ]
+              },
+              {
+                "etiqueta": "Gasto anual (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 10
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "calculadora",
+        "titulo": "Comparar autónomo vs Sociedad Limitada a tus ingresos reales",
+        "campos": [
+          {
+            "clave": "beneficio_anual",
+            "etiqueta": "Beneficio anual antes de impuestos (€)"
+          },
+          {
+            "clave": "tipo_autonomo",
+            "etiqueta": "Tipo aplicado (%) — Autónomo (IRPF)"
+          },
+          {
+            "clave": "tipo_sl",
+            "etiqueta": "Tipo aplicado (%) — Sociedad Limitada"
+          },
+          {
+            "clave": "coste_estructura_autonomo",
+            "etiqueta": "Cuota SS / coste estructura (€) — Autónomo (IRPF)"
+          },
+          {
+            "clave": "coste_estructura_sl",
+            "etiqueta": "Cuota SS / coste estructura (€) — Sociedad Limitada"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "impuesto_autonomo",
+            "etiqueta": "Impuesto sobre beneficio (€) — Autónomo (IRPF)",
+            "formula": "beneficio_anual * tipo_autonomo / 100",
+            "unidad": "eur"
+          },
+          {
+            "clave": "impuesto_sl",
+            "etiqueta": "Impuesto sobre beneficio (€) — Sociedad Limitada",
+            "formula": "beneficio_anual * tipo_sl / 100",
+            "unidad": "eur"
+          },
+          {
+            "clave": "coste_total_autonomo",
+            "etiqueta": "Coste fiscal total (€) — Autónomo (IRPF)",
+            "formula": "impuesto_autonomo + coste_estructura_autonomo",
+            "unidad": "eur"
+          },
+          {
+            "clave": "coste_total_sl",
+            "etiqueta": "Coste fiscal total (€) — Sociedad Limitada",
+            "formula": "impuesto_sl + coste_estructura_sl",
+            "unidad": "eur"
+          },
+          {
+            "clave": "diferencia_coste",
+            "etiqueta": "Diferencia de coste (Autónomo − SL)",
+            "formula": "coste_total_autonomo - coste_total_sl",
+            "unidad": "eur",
+            "alimenta_valor": true
+          }
+        ],
+        "semaforo": {
+          "sobre": "diferencia_coste",
+          "reglas": [
+            {
+              "min": 1,
+              "color": "verde",
+              "texto": "La SL te sale más barata: pasa a R4 para calcular el ahorro exacto"
+            },
+            {
+              "min": 0,
+              "color": "naranja",
+              "texto": "Empate: te da igual una u otra estructura a estos números"
+            },
+            {
+              "color": "verde",
+              "texto": "Seguir como autónomo te sale más barato: no cambies de estructura"
+            }
+          ]
         }
-      ],
-      "r3": [
-        {
-          "nombre": "Autónomo vs Sociedad Limitada",
-          "herramienta": "cli-s2-r3-autonomo-vs-sl.html"
+      },
+      "r4": {
+        "tipo": "calculadora",
+        "titulo": "Calcular el ahorro fiscal concreto del cambio este ejercicio",
+        "campos": [
+          {
+            "clave": "coste_actual_ano",
+            "etiqueta": "Coste fiscal actual / año (€)"
+          },
+          {
+            "clave": "coste_optimizado_ano",
+            "etiqueta": "Coste fiscal optimizado / año (€)"
+          },
+          {
+            "clave": "coste_cambio",
+            "etiqueta": "Coste de hacer el cambio (una vez) (€)"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "ahorro_anual",
+            "etiqueta": "Ahorro anual",
+            "formula": "coste_actual_ano - coste_optimizado_ano",
+            "unidad": "eur",
+            "alimenta_valor": true
+          },
+          {
+            "clave": "ahorro_neto_1er_ano",
+            "etiqueta": "Ahorro neto 1er año",
+            "formula": "ahorro_anual - coste_cambio",
+            "unidad": "eur"
+          },
+          {
+            "clave": "meses_payback",
+            "etiqueta": "Se paga en (meses)",
+            "formula": "coste_cambio / ahorro_anual * 12",
+            "unidad": "numero"
+          }
+        ],
+        "semaforo": {
+          "sobre": "ahorro_anual",
+          "reglas": [
+            {
+              "min": 1,
+              "color": "verde",
+              "texto": "Hay ahorro con el cambio de estructura"
+            },
+            {
+              "color": "rojo",
+              "texto": "No hay ahorro con estos números"
+            }
+          ]
         }
-      ],
-      "r4": [
-        {
-          "nombre": "Ahorro del cambio de estructura",
-          "herramienta": "cli-s2-r4-ahorro-cambio-estructura.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Libro de gastos deducibles",
-          "herramienta": "cli-s2-r5-libro-gastos-deducibles.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Plan fiscal con tu asesor",
-          "herramienta": "cli-s2-r6-plan-fiscal-asesor.html"
-        }
-      ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Documentar y justificar los gastos deducibles del ejercicio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Fecha",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Concepto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Categoría",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Justificante?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Plan de optimización fiscal con tu asesor (objetivo próximo ejercicio)",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Acción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Ahorro estimado (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      }
     }
   },
   {
@@ -4567,42 +4934,181 @@
     "kpi_name": "Decisiones en tu mesa",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Matriz de responsabilidades (RACI)",
-          "herramienta": "cli-s3-r1-matriz-responsabilidades.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Autonomía de decisiones",
-          "herramienta": "cli-s3-r2-autonomia-decisiones.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Reasignar tareas huérfanas",
-          "herramienta": "cli-s3-r3-tareas-huerfanas.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Protocolo de escalado",
-          "herramienta": "cli-s3-r4-protocolo-escalado.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Descripción de funciones por rol",
-          "herramienta": "cli-s3-r5-descripcion-roles.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Sesión de aclaramiento de roles",
-          "herramienta": "cli-s3-r6-sesion-aclaramiento-roles.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Matriz de responsabilidades (RACI)",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tarea / Decisión",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable (R)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Aprueba (A)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Consultado (C)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Informado (I)",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Definir qué decide cada persona sin consultarte",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Decisión habitual",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Quién puede decidir?",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Límite (hasta X€ / tipo)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Necesita pasar por ti?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Documentar y reasignar las tareas huérfanas",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tarea huérfana",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿A qué rol pertenece?",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Reasignada a",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sin asignar",
+                  "Asignada",
+                  "En marcha"
+                ]
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Establecer un protocolo de escalado",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Nivel",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo de tema",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Quién lo resuelve",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cuándo escala al siguiente nivel",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Reescribir la descripción de funciones de cada rol",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Rol / Persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Qué decide",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "De qué responde",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Límites (dónde acaba)",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Sesión de aclaramiento de roles con el equipo",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Punto del orden del día",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Minutos",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      }
     }
   },
   {
