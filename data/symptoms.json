@@ -5738,42 +5738,168 @@
     "kpi_name": "Rotación de talento",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Conversación de retención con tus personas clave",
-          "herramienta": "res-s1-r1-carga-real.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Calcular el coste de una salida",
-          "herramienta": "res-s1-r2-señales-burnout.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Detectar la desconexión silenciosa",
-          "herramienta": "res-s1-r3-mapa-energia.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Comparar tus sueldos con el mercado",
-          "herramienta": "res-s1-r4-recuperacion-programada.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Documentar relaciones con clientes clave",
-          "herramienta": "res-s1-r5-redistribucion-responsabilidades.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Mapa de qué áreas paraliza cada salida",
-          "herramienta": "res-s1-r6-protocolo-sostenibilidad.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Carga real",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Señales de burnout",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Mapa de energía",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Recuperación programada",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Redistribución de responsabilidades",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Protocolo de sostenibilidad",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -5833,18 +5959,56 @@
     "kpi_name": "Tiempo aprovechado del equipo",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Tiempo en tareas de bajo nivel",
-          "herramienta": "res-s2-r1-tiempo-bajo-nivel.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Coste del perfil caro desaprovechado",
-          "herramienta": "res-s2-r2-coste-perfil-caro.html"
-        }
-      ],
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Medir el tiempo que tus mejores dedican a tareas por debajo de su nivel",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona clave",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Su nivel (coste/hora €)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Horas/sem en tareas por debajo",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Total horas/sem",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Calcular el coste de tu perfil más caro en tareas de bajo valor",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste/hora (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Horas/mes en bajo valor",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
       "r3": {
         "tipo": "nativa",
         "titulo": "Capacidades que cambiarían resultados si las aprovecharas",
@@ -5882,24 +6046,95 @@
           }
         ]
       },
-      "r4": [
-        {
-          "nombre": "Reasignar tareas de bajo valor",
-          "herramienta": "res-s2-r4-reasignar-bajo-valor.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Liberar el tiempo de los mejores",
-          "herramienta": "res-s2-r5-liberar-mejores.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Reto de desarrollo por persona",
-          "herramienta": "res-s2-r6-reto-desarrollo.html"
-        }
-      ]
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Reasignar lo de bajo valor a quien tenga menor coste/hora",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tarea de bajo valor",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Quién la hace hoy",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste/hora actual (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Reasignar a",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste/hora nuevo (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Liberar el tiempo de los mejores eliminando o delegando lo que sobra",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona clave",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tarea a soltar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Horas liberadas/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Para dedicar a",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Un reto que estire a cada persona de alto potencial",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Reto que estira sus capacidades",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Capacidad que desarrolla",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Impacto medible",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      }
     }
   },
   {
@@ -5959,42 +6194,188 @@
     "kpi_name": "Conflictos resueltos",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Coste mensual del conflicto",
-          "herramienta": "res-s3-r1-coste-conflicto.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Decidir si separar",
-          "herramienta": "res-s3-r2-decision-separar.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Valorar prescindir del tóxico",
-          "herramienta": "res-s3-r3-decision-prescindir.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Abordar el foco de fricción",
-          "herramienta": "res-s3-r4-abordar-friccion.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Interna vs ayuda externa",
-          "herramienta": "res-s3-r5-interna-vs-externa.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Reunión abierta vs individual",
-          "herramienta": "res-s3-r6-reunion-vs-individual.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Cuantificar el coste mensual del conflicto",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Concepto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cómo lo estimas",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste (€/mes)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Decidir si separar a quienes generan fricción",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Situación de fricción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste de mantenerlo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste/lío de separarlos",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Por decidir",
+                  "Separar",
+                  "Mantener",
+                  "Mediar antes"
+                ]
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Valorar si prescindir de quien es bueno pero tóxico",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Valor técnico (1-5)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste al clima (1-5)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Riesgo de su salida",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Por decidir",
+                  "Dar oportunidad clara",
+                  "Salida ordenada"
+                ]
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Abordar directamente el foco de fricción",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Foco de fricción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Personas implicadas",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Conversación (cuándo/cómo)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Resultado buscado",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Decidir: gestionar el clima internamente o con ayuda externa",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Criterio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Lo puedes gestionar internamente?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "¿Requiere ayuda externa?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No",
+                  "Sí"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Reunión abierta o hablar con cada persona",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Formato",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cuándo conviene",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Riesgo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Lo eliges?",
+                "tipo": "opciones",
+                "opciones": [
+                  "—",
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      }
     }
   },
   {
