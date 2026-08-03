@@ -6339,42 +6339,168 @@
     "kpi_name": "Errores de incorporación",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Calcular el coste de reemplazar a alguien",
-          "herramienta": "ope-s1-r1-mapa-procesos.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Detectar conocimiento en una sola cabeza",
-          "herramienta": "ope-s1-r2-analisis-cuellos.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Medir horas perdidas resolviendo dudas",
-          "herramienta": "ope-s1-r3-errores-por-proceso.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Documentar el proceso de incorporación",
-          "herramienta": "ope-s1-r4-estandarizacion.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Estándar para igualar la calidad",
-          "herramienta": "ope-s1-r5-mejora-lean.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Delegar la integración de nuevos",
-          "herramienta": "ope-s1-r6-kpis-operativos.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Mapa de procesos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Análisis de cuellos de botella",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Errores por proceso",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Estandarización",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Mejora Lean",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "KPIs operativos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -6434,42 +6560,357 @@
     "kpi_name": "Días sin depender de ti",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Auditar tu nivel de dependencia",
-          "herramienta": "ope-s2-r1-auditoria-dependencia.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Redactar el manual del fundador",
-          "herramienta": "ope-s2-r2-manual-fundador.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Diseñar el plan de delegación",
-          "herramienta": "ope-s2-r3-plan-delegacion.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Montar el registro de decisiones",
-          "herramienta": "ope-s2-r4-decision-log.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Definir el protocolo de ausencia",
-          "herramienta": "ope-s2-r5-protocolo-ausencia.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Plan de desarrollo de liderazgo",
-          "herramienta": "ope-s2-r6-desarrollo-liderazgo.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Auditoría de dependencia del fundador",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Proceso / Área",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Solo el fundador?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Razón de dependencia",
+                "tipo": "opciones",
+                "opciones": [
+                  "Conocimiento",
+                  "Confianza",
+                  "Costumbre",
+                  "Control"
+                ]
+              },
+              {
+                "etiqueta": "Riesgo si ausente (1-5)",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              {
+                "etiqueta": "Horas fundador/semana (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Potencial delegación (1-5)",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              {
+                "etiqueta": "¿Candidato para delegar?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Nombre candidato",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Manual del fundador — conocimiento crítico",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Área",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tarea / Conocimiento",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Documentado (%)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Dónde está documentado",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Probado por otro?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No",
+                  "En proceso",
+                  "Sí"
+                ]
+              },
+              {
+                "etiqueta": "Última actualización",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable documentar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha límite",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Plan de delegación",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tarea",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Delegado a",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Nivel actual (1-5)",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              {
+                "etiqueta": "Etapa actual",
+                "tipo": "opciones",
+                "opciones": [
+                  "Observa",
+                  "Hace con apoyo",
+                  "Hace solo",
+                  "Enseña"
+                ]
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha revisión",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Completado?",
+                "tipo": "opciones",
+                "opciones": [
+                  "En curso",
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Registro de decisiones del fundador",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Fecha",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Área",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Urgencia",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              },
+              {
+                "etiqueta": "¿Podría decidirlo otro?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No",
+                  "Sí",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "¿Quién podría?",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tiempo invertido (h)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Protocolo de ausencia",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Escenario",
+                "tipo": "opciones",
+                "opciones": [
+                  "1 día",
+                  "1 semana",
+                  "1 mes"
+                ]
+              },
+              {
+                "etiqueta": "Proceso crítico",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Quién cubre",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Formado?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No",
+                  "Parcial",
+                  "Sí"
+                ]
+              },
+              {
+                "etiqueta": "¿Tiene acceso a recursos?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No",
+                  "Sí"
+                ]
+              },
+              {
+                "etiqueta": "¿Protocolo escrito?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No",
+                  "Sí"
+                ]
+              },
+              {
+                "etiqueta": "Gap identificado",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 6
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Desarrollo de liderazgo interno",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Competencia técnica (1-5)",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              {
+                "etiqueta": "Liderazgo (1-5)",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              {
+                "etiqueta": "Autonomía actual (1-5)",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              {
+                "etiqueta": "Áreas fuertes",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Áreas de desarrollo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Formación asignada",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Plazo para asumir responsabilidad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Siguiente hito",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      }
     }
   },
   {
@@ -6529,42 +6970,168 @@
     "kpi_name": "Regularidad de entrega",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Repartir tu tiempo: operativo vs estratégico",
-          "herramienta": "ope-s3-r1-capacidad-vs-demanda.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Medir la cola: de solicitud a inicio",
-          "herramienta": "ope-s3-r2-roi-automatizacion.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Medir el peso de las urgencias",
-          "herramienta": "ope-s3-r3-estructura-equipo.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Nivelar los picos de fin de mes",
-          "herramienta": "ope-s3-r4-tecnologia-stack.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Comparar tu semana más y menos intensa",
-          "herramienta": "ope-s3-r5-indicadores-crecimiento.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Encontrar el cuello de botella",
-          "herramienta": "ope-s3-r6-plan-expansion.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Repartir tu tiempo: operativo vs estratégico",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Medir la cola: de solicitud a inicio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Medir el peso de las urgencias",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Nivelar los picos de fin de mes",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Comparar tu semana más y menos intensa",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Encontrar el cuello de botella",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   }
 ]
