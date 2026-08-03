@@ -5453,42 +5453,168 @@
     "kpi_name": "Absentismo del equipo",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Todo acaba en tu mesa",
-          "herramienta": "psi-s1-r1-diagnostico-cultura.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "El 'para ya' como norma",
-          "herramienta": "psi-s1-r2-incidentes-toxicidad.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Siempre cargan los mismos",
-          "herramienta": "psi-s1-r3-rotacion-y-retencion.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Equipo a interrupciones constantes",
-          "herramienta": "psi-s1-r4-absentismo.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "El dueño apaga fuegos",
-          "herramienta": "psi-s1-r5-valores-en-accion.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Sin momentos para bajar la tensión",
-          "herramienta": "psi-s1-r6-plan-cultura.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Todo acaba en tu mesa",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "El 'para ya' como norma",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Siempre cargan los mismos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Equipo a interrupciones constantes",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "El dueño apaga fuegos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Sin momentos para bajar la tensión",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -5548,42 +5674,196 @@
     "kpi_name": "Equipo saturado",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Diagnóstico perfil-rol",
-          "herramienta": "psi-s2-r1-encaje-perfil-rol.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Redistribuir por perfil real",
-          "herramienta": "psi-s2-r2-redistribuir-responsabilidades.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Revelar los perfiles al equipo",
-          "herramienta": "psi-s2-r3-revelar-perfiles.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Reasignar a un rol alineado",
-          "herramienta": "psi-s2-r4-reasignar-rol.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Adaptar rol vs contratar",
-          "herramienta": "psi-s2-r5-adaptar-vs-contratar.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Externalizar funciones",
-          "herramienta": "psi-s2-r6-externalizar-funcion.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Diagnóstico: ¿la incompatibilidad perfil-rol es estructural?",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Perfil natural (DISC)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Rol actual",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Encaja?",
+                "tipo": "opciones",
+                "opciones": [
+                  "—",
+                  "Encaja",
+                  "A medias",
+                  "No encaja"
+                ]
+              },
+              {
+                "etiqueta": "Saturación (1-5)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Redistribuir responsabilidades partiendo del perfil real",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Responsabilidad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Quién la lleva hoy",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Encaja su perfil?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Reasignar a",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Revelar los perfiles al equipo para mejorar la comunicación",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Paso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cómo bajar la incomodidad",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Reasignar a un rol más alineado con el perfil natural",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Rol actual",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Rol más alineado con su perfil",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Impacto en el equipo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Por decidir",
+                  "Reasignar",
+                  "Mantener"
+                ]
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "¿Adaptar el rol a la persona o contratar el perfil que hace falta?",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Criterio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Adaptar el rol a la persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Contratar el perfil que el rol necesita",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Externalizar funciones que requieren un perfil que no tienes",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Función",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Perfil que requiere",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Existe en el equipo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No",
+                  "Sí"
+                ]
+              },
+              {
+                "etiqueta": "¿Externalizar?",
+                "tipo": "opciones",
+                "opciones": [
+                  "—",
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Coste estimado (€/mes)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      }
     }
   },
   {
@@ -5643,42 +5923,168 @@
     "kpi_name": "Equipo implicado",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Hacer visible el impacto de cada persona",
-          "herramienta": "psi-s3-r1-mapa-valores.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Tomar decisiones a partir de sus propuestas",
-          "herramienta": "psi-s3-r2-onboarding-valores.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Romper la rutina con retos nuevos",
-          "herramienta": "psi-s3-r3-seleccion-valores.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Reconocer el esfuerzo extra",
-          "herramienta": "psi-s3-r4-reconocimiento-valores.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Contar hacia dónde va el negocio",
-          "herramienta": "psi-s3-r5-decisiones-valores.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Dar autonomía y quitar microgestión",
-          "herramienta": "psi-s3-r6-rituales-cultura.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Mapa de valores",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Onboarding en valores",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Selección por valores",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Reconocimiento de valores",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Decisiones basadas en valores",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Rituales de cultura",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   },
   {
