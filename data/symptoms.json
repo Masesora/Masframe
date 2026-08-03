@@ -885,42 +885,182 @@
     "kpi_name": "Facturación sin cobrar",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Facturar al entregar",
-          "herramienta": "uci-s2-r1-factura-al-entregar.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Lista de cobros por antigüedad",
-          "herramienta": "uci-s2-r2-lista-cobros-antiguedad.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Reclamar facturas vencidas",
-          "herramienta": "uci-s2-r3-reclamar-vencidas.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Condiciones de pago por escrito",
-          "herramienta": "uci-s2-r4-condiciones-pago.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Anticipos y señales",
-          "herramienta": "uci-s2-r5-anticipos.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Recordatorios de cobro",
-          "herramienta": "uci-s2-r6-recordatorios-cobro.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Facturar en el acto, al entregar",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Trabajo entregado",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha entrega",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Facturado el mismo día?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No",
+                  "Sí"
+                ]
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "La lista de lo que te deben, por antigüedad",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Nº factura",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Días vencido",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Reclamar en firme las vencidas, de mayor a menor",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Factura",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Días vencido",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Acción de reclamación",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "Reclamada",
+                  "Prometido",
+                  "Cobrada"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Pactar por escrito las condiciones de pago",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tipo de cliente / venta",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Plazo de pago",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Forma de pago",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "% anticipo",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Pedir anticipo o señal donde tenga sentido",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Trabajo / proyecto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Requiere anticipo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "% anticipo",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Recordatorios de cobro automáticos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Momento",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Canal",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Mensaje tipo",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      }
     }
   },
   {
@@ -981,42 +1121,261 @@
     "kpi_name": "Margen mensual",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Precio minimo viable",
-          "herramienta": "uci-s3-r1-precio-minimo-viable.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Impacto descuentos",
-          "herramienta": "uci-s3-r2-impacto-descuentos.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Impacto costes",
-          "herramienta": "uci-s3-r3-impacto-costes.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Hora real facturada",
-          "herramienta": "uci-s3-r4-hora-real-facturada.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Comparativa líneas",
-          "herramienta": "uci-s3-r5-comparativa-lineas.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Rentabilidad cliente completa",
-          "herramienta": "uci-s3-r6-rentabilidad-cliente-completa.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Calculadora de precio mínimo viable por servicio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Servicio / Producto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste Directo (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Costes Indirectos Asig. (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Margen Obj. %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Precio Actual (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Impacto real de descuentos sobre el margen",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Segmento / Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Precio Tarifa (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Descuento Hab. %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste de Entrega (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Uds/mes",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Impacto de la subida de costes y repricing",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Servicio / Producto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste Hace 12m (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste Actual (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Precio Hace 12m (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Precio Actual (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Uds/mes",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "calculadora",
+        "titulo": "Calculadora de la hora real facturada",
+        "campos": [
+          {
+            "clave": "facturacion",
+            "etiqueta": "Facturación mensual (€)"
+          },
+          {
+            "clave": "tarifa",
+            "etiqueta": "Tarifa declarada (€/hora)"
+          },
+          {
+            "clave": "h_facturadas",
+            "etiqueta": "Horas directamente facturadas / mes"
+          },
+          {
+            "clave": "h_soporte",
+            "etiqueta": "Horas de soporte no cobrado / mes"
+          },
+          {
+            "clave": "h_revisiones",
+            "etiqueta": "Horas de revisiones gratuitas / mes"
+          },
+          {
+            "clave": "h_reuniones",
+            "etiqueta": "Horas de reuniones no cobradas / mes"
+          },
+          {
+            "clave": "h_desplaz",
+            "etiqueta": "Horas de desplazamiento no cobrado / mes"
+          },
+          {
+            "clave": "h_otras",
+            "etiqueta": "Otras horas no cobradas / mes"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "horas_no_cobradas",
+            "etiqueta": "Total tiempo no cobrado",
+            "formula": "h_soporte + h_revisiones + h_reuniones + h_desplaz + h_otras",
+            "unidad": "numero"
+          },
+          {
+            "clave": "total_horas",
+            "etiqueta": "Total horas realmente consumidas / mes",
+            "formula": "h_facturadas + horas_no_cobradas",
+            "unidad": "numero"
+          },
+          {
+            "clave": "tarifa_real",
+            "etiqueta": "Tarifa efectiva real (€/hora)",
+            "formula": "facturacion / total_horas",
+            "unidad": "eur"
+          },
+          {
+            "clave": "gap_tarifa",
+            "etiqueta": "Gap de tarifa (€/hora)",
+            "formula": "tarifa_real - tarifa",
+            "unidad": "eur"
+          },
+          {
+            "clave": "eficiencia_facturacion",
+            "etiqueta": "Eficiencia de facturación",
+            "formula": "(h_facturadas / total_horas) * 100",
+            "unidad": "pct"
+          },
+          {
+            "clave": "valor_no_cobrado_mes",
+            "etiqueta": "Valor del tiempo no cobrado / mes",
+            "formula": "tarifa * horas_no_cobradas",
+            "unidad": "eur",
+            "alimenta_valor": true
+          },
+          {
+            "clave": "valor_no_cobrado_anual",
+            "etiqueta": "Valor no cobrado / año",
+            "formula": "valor_no_cobrado_mes * 12",
+            "unidad": "eur"
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Comparativa de margen real por línea de negocio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Línea de Negocio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Ventas/mes (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Margen Bruto %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Horas Equipo/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste Hora Eq. (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Rentabilidad real por cliente (coste total de servicio)",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Facturación/mes (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Horas Directas (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "H. Soporte/Reuniones/Extras (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste Hora Propio (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "NPS (1-5)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Potencial",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alto",
+                  "Medio",
+                  "Bajo"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      }
     }
   },
   {
