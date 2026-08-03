@@ -156,76 +156,671 @@
           }
         ]
       },
-      "r2": [
-        {
-          "nombre": "Analizar estado y avance de proyectos en curso",
-          "herramienta": "uci-s1-r2-proyectos-en-curso.html"
-        },
-        {
-          "nombre": "Planificar hitos de entrega para liberar cobros",
-          "herramienta": "uci-s1-r2-hitos-cobro.html"
-        },
-        {
-          "nombre": "Control semanal de entregas y activación de pagos",
-          "herramienta": "uci-s1-r2-tracker-entregas.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Clasificar deuda por antigüedad (aging de cobros)",
-          "herramienta": "uci-s1-r3-aging-cobros.html"
-        },
-        {
-          "nombre": "Asignar protocolo de reclamación escalonado",
-          "herramienta": "uci-s1-r3-protocolo-reclamacion.html"
-        },
-        {
-          "nombre": "Negociar acuerdos de pago con clientes morosos",
-          "herramienta": "uci-s1-r3-acuerdos-pago-morosos.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Proyectar flujo de caja a 90 días",
-          "herramienta": "uci-s1-r4-calendario-tesoreria.html"
-        },
-        {
-          "nombre": "Negociar ampliación de plazos con proveedores clave",
-          "herramienta": "uci-s1-r4-negociacion-proveedores.html"
-        },
-        {
-          "nombre": "Evaluar líneas de financiación a corto plazo",
-          "herramienta": "uci-s1-r4-financiacion-corto-plazo.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Registrar y valorar anticipos pendientes de ejecución",
-          "herramienta": "uci-s1-r5-anticipos.html"
-        },
-        {
-          "nombre": "Planificar hitos de entrega para liberar anticipo",
-          "herramienta": "uci-s1-r5-hitos-entrega.html"
-        },
-        {
-          "nombre": "Cerrar y liquidar anticipos con cada cliente",
-          "herramienta": "uci-s1-r5-cierre-anticipo.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Identificar facturas paralizadas y su importe",
-          "herramienta": "uci-s1-r6-facturacion-pendiente.html"
-        },
-        {
-          "nombre": "Diagnosticar el cuello de botella en el proceso",
-          "herramienta": "uci-s1-r6-diagnostico-proceso.html"
-        },
-        {
-          "nombre": "Ejecutar protocolo de facturación urgente",
-          "herramienta": "uci-s1-r6-protocolo-facturacion.html"
-        }
-      ]
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Liberar liquidez bloqueada en trabajos y proyectos en curso",
+        "secciones": [
+          {
+            "titulo": "1. Analizar estado y avance de proyectos en curso",
+            "columnas": [
+              {
+                "etiqueta": "Proyecto / Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fase actual",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "% completado",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Importe total (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Cobrado (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Acción para desbloquear",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "2. Planificar hitos de entrega para liberar cobros",
+            "columnas": [
+              {
+                "etiqueta": "Proyecto / Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Hito",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "% Completado",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Importe hito (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha prevista cobro",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha real cobro",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "Facturado",
+                  "Cobrado"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "3. Control semanal de entregas y activación de pagos",
+            "columnas": [
+              {
+                "etiqueta": "Proyecto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Entregable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha compromiso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha entrega real",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Cobrado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Fecha cobro",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Reducir la morosidad y acelerar los cobros activos",
+        "secciones": [
+          {
+            "titulo": "1. Aging de cobros — facturas vencidas",
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Factura nº",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha emisión",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "Prometido",
+                  "En disputa",
+                  "Incobrable"
+                ]
+              },
+              {
+                "etiqueta": "Acción asignada",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha compromiso",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "2. Protocolo de reclamación escalonado",
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Días mora",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Acción asignada",
+                "tipo": "opciones",
+                "opciones": [
+                  "Recordatorio amistoso",
+                  "Llamada",
+                  "Carta formal",
+                  "Gestor de cobros",
+                  "Vía legal"
+                ]
+              },
+              {
+                "etiqueta": "Fecha próx. acción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "En gestión",
+                  "Resuelto",
+                  "Incobrable"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "3. Acuerdos de pago con clientes morosos",
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Deuda total (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Cuotas acordadas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Importe / cuota (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha 1ª cuota",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cuotas pagadas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Estado acuerdo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activo",
+                  "Incumplido",
+                  "Completado"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Corregir el desfase entre el ciclo de cobros y el de pagos",
+        "secciones": [
+          {
+            "titulo": "1. Calendario semanal de tesorería",
+            "columnas": [
+              {
+                "etiqueta": "Semana",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cobros previstos (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Pagos comprometidos (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Notas",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 13
+          },
+          {
+            "titulo": "2. Negociación de plazos con proveedores",
+            "columnas": [
+              {
+                "etiqueta": "Proveedor",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Volumen compra/mes (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Plazo actual (días)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Plazo solicitado (días)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Estado negociación",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "En negociación",
+                  "Acordado",
+                  "Rechazado"
+                ]
+              },
+              {
+                "etiqueta": "Fecha acuerdo",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "3. Comparativa de financiación a corto plazo",
+            "columnas": [
+              {
+                "etiqueta": "Instrumento",
+                "tipo": "opciones",
+                "opciones": [
+                  "Póliza de crédito",
+                  "Factoring",
+                  "Confirming",
+                  "Descuento comercial",
+                  "Préstamo corto plazo",
+                  "Socio inversor"
+                ]
+              },
+              {
+                "etiqueta": "Entidad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe disp. (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "TAE (%)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Plazo (meses)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Garantías requeridas",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Estudiar",
+                  "Descartar",
+                  "Solicitar"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Convertir los anticipos retenidos en ingresos ejecutados",
+        "secciones": [
+          {
+            "titulo": "1. Anticipos pendientes de ejecutar",
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Concepto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe anticipado (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha recibido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "% ejecución actual",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha compromiso entrega",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción de desbloqueo",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "2. Hitos de entrega para liberar anticipo",
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Anticipo total (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Hito",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "% a liberar",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Entregable requerido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha compromiso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Entregado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Anticipo liberado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "3. Cierre y liquidación de anticipos",
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Anticipo inicial (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha recepción anticipo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Entregables completados",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acta conformidad firmada",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Factura final emitida",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Saldo pendiente a facturar (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha cierre prevista",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "En ejecución",
+                  "Pendiente firma",
+                  "Cerrado"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Activar la facturación paralizada por procesos internos",
+        "secciones": [
+          {
+            "titulo": "1. Facturación pendiente por desbloquear",
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Trabajo / Proyecto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe a facturar (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Motivo del bloqueo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Falta validación cliente",
+                  "Falta información interna",
+                  "Pendiente aprobación",
+                  "Otro"
+                ]
+              },
+              {
+                "etiqueta": "Responsable de desbloquear",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha límite",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción concreta",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "2. Diagnóstico del proceso de facturación",
+            "columnas": [
+              {
+                "etiqueta": "Factura / Expediente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha servicio prestado",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Motivo del bloqueo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Falta aprobación interna",
+                  "Datos del cliente incompletos",
+                  "Contrato no firmado",
+                  "Disputa de precio",
+                  "Error en pedido",
+                  "Pendiente de conformidad",
+                  "Otro"
+                ]
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción desbloqueadora",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bloqueada",
+                  "En gestión",
+                  "Desbloqueada"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "3. Checklist operativo de facturación",
+            "columnas": [
+              {
+                "etiqueta": "Expediente / Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha límite",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción 1 - hecho",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Acción 1 - detalle",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción 2 - hecho",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Acción 2 - detalle",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción 3 - hecho",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Acción 3 - detalle",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Facturado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Fecha facturación",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      }
     },
     "kpi_recovery_mode": "financiero",
     "recovery_unit_label": "€ liberados",
@@ -505,26 +1100,193 @@
           "herramienta": "uni-s1-r4-estandar-tareas.html"
         }
       ],
-      "r5": [
-        {
-          "nombre": "Indicadores del proceso",
-          "herramienta": "uni-s1-r5-indicadores-proceso.html"
-        },
-        {
-          "nombre": "Eliminación de pasos sin valor",
-          "herramienta": "uni-s1-r5-pasos-sin-valor.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Mapa de dependencias de personas",
-          "herramienta": "uni-s1-r6-dependencias-humanas.html"
-        },
-        {
-          "nombre": "Plan de documentación del proceso",
-          "herramienta": "uni-s1-r6-plan-documentacion.html"
-        }
-      ]
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Medir indicadores del proceso y eliminar pasos sin valor",
+        "secciones": [
+          {
+            "titulo": "1. Indicadores de rendimiento por proceso",
+            "columnas": [
+              {
+                "etiqueta": "Proceso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "KPI medido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Unidad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Meta",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Valor actual",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Frecuencia medición",
+                "tipo": "opciones",
+                "opciones": [
+                  "Diaria",
+                  "Semanal",
+                  "Quincenal",
+                  "Mensual",
+                  "Trimestral",
+                  "Semestral",
+                  "Anual"
+                ]
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 5
+          },
+          {
+            "titulo": "2. Pasos sin valor a eliminar",
+            "columnas": [
+              {
+                "etiqueta": "Actividad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Valor añadido",
+                  "Control redundante",
+                  "Espera",
+                  "Retrabajo",
+                  "Aprobación innecesaria"
+                ]
+              },
+              {
+                "etiqueta": "Tiempo/mes (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste hora (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Puede eliminarse?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "Parcial",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Responsable decisión",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Reducir dependencias humanas críticas y documentar procesos",
+        "secciones": [
+          {
+            "titulo": "1. Dependencias humanas críticas",
+            "columnas": [
+              {
+                "etiqueta": "Tarea crítica",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Persona indispensable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Hay backup?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Impacto si falta",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alto",
+                  "Medio",
+                  "Bajo"
+                ]
+              },
+              {
+                "etiqueta": "Coste dep./mes (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "T. formar backup (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste resolver (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 4
+          },
+          {
+            "titulo": "2. Plan de documentación de procesos críticos",
+            "columnas": [
+              {
+                "etiqueta": "Proceso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Prioridad (1-5)",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              {
+                "etiqueta": "Responsable documentar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sin documentar",
+                  "En proceso",
+                  "Documentado",
+                  "Validado"
+                ]
+              },
+              {
+                "etiqueta": "% Completado",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Horas estimadas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha límite",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      }
     }
   },
   {
@@ -893,26 +1655,225 @@
           "herramienta": "cardio-s2-r4-tiempo-prospeccion.html"
         }
       ],
-      "r5": [
-        {
-          "nombre": "Propuesta comercial",
-          "herramienta": "cardio-s2-r5-propuesta-comercial.html"
-        },
-        {
-          "nombre": "Protocolo de seguimiento",
-          "herramienta": "cardio-s2-r5-protocolo-seguimiento.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Forecast mensual de ventas",
-          "herramienta": "cardio-s2-r6-forecast-mensual.html"
-        },
-        {
-          "nombre": "Previsión de ingresos",
-          "herramienta": "cardio-s2-r6-revenue-forecast.html"
-        }
-      ]
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Sistematizar el seguimiento de propuestas comerciales",
+        "secciones": [
+          {
+            "titulo": "1. Tracker de propuestas enviadas",
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha propuesta",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Importe (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Servicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Enviada",
+                  "Vista",
+                  "Seguimiento",
+                  "Ganada",
+                  "Perdida"
+                ]
+              },
+              {
+                "etiqueta": "Motivo pérdida",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Próximo paso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha follow-up",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 1
+          },
+          {
+            "titulo": "2. Cadencia de seguimiento por etapa",
+            "columnas": [
+              {
+                "etiqueta": "Etapa",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Día 1",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Día 3",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Día 7",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Día 14",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Día 30",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
+          },
+          {
+            "titulo": "3. Pendientes de contactar hoy",
+            "columnas": [
+              {
+                "etiqueta": "Lead",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Etapa",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha último contacto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Hecho",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Proyectar el cierre de ventas del trimestre",
+        "secciones": [
+          {
+            "titulo": "1. Forecast mensual de cierre",
+            "columnas": [
+              {
+                "etiqueta": "Objetivo mensual (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Mes actual",
+                "tipo": "opciones",
+                "opciones": [
+                  "Enero",
+                  "Febrero",
+                  "Marzo",
+                  "Abril",
+                  "Mayo",
+                  "Junio",
+                  "Julio",
+                  "Agosto",
+                  "Septiembre",
+                  "Octubre",
+                  "Noviembre",
+                  "Diciembre"
+                ]
+              },
+              {
+                "etiqueta": "Oportunidad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Valor (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Probabilidad %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Mes cierre",
+                "tipo": "opciones",
+                "opciones": [
+                  "Enero",
+                  "Febrero",
+                  "Marzo",
+                  "Abril",
+                  "Mayo",
+                  "Junio",
+                  "Julio",
+                  "Agosto",
+                  "Septiembre",
+                  "Octubre",
+                  "Noviembre",
+                  "Diciembre"
+                ]
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 5
+          },
+          {
+            "titulo": "2. Proyección de ingresos a 90 días",
+            "columnas": [
+              {
+                "etiqueta": "Objetivo trimestral (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Ingresos confirmados mes actual (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Probabilidad %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Valor (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Mes previsto cierre",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mes actual",
+                  "Mes+1",
+                  "Mes+2",
+                  "Mes+3"
+                ]
+              },
+              {
+                "etiqueta": "Servicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      }
     }
   },
   {
