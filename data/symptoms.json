@@ -6841,42 +6841,168 @@
     "kpi_name": "Reseñas de 5 estrellas",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Diseñar un momento de sorpresa positiva",
-          "herramienta": "ter-s1-r1-mapa-quejas.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Detectar qué te hace intercambiable",
-          "herramienta": "ter-s1-r2-nps-tracker.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Protocolo de inicio y cierre memorable",
-          "herramienta": "ter-s1-r3-satisfaccion-por-servicio.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Lenguaje de experiencia para el equipo",
-          "herramienta": "ter-s1-r4-expectativas-vs-entrega.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Añadir un gesto de valor inesperado",
-          "herramienta": "ter-s1-r5-reseñas-online.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Crear una historia que merezca contarse",
-          "herramienta": "ter-s1-r6-clientes-en-riesgo.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Mapa de quejas",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "NPS tracker",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Satisfacción por servicio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Expectativas vs entrega",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Reseñas online",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Clientes en riesgo",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -6936,42 +7062,168 @@
     "kpi_name": "Clientes que repiten",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Programa de fidelización por recompra",
-          "herramienta": "ter-s2-r1-tracking-referidos.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Campaña de reactivación de clientes dormidos",
-          "herramienta": "ter-s2-r2-programa-referidos.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Ofertas para la segunda compra",
-          "herramienta": "ter-s2-r3-momentos-wom.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Contacto proactivo tras cada compra",
-          "herramienta": "ter-s2-r4-casos-exito.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Vender algo más a quien ya te compra",
-          "herramienta": "ter-s2-r5-satisfaccion-postservicio.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Comunicar novedades para dar motivos de volver",
-          "herramienta": "ter-s2-r6-comunidad-clientes.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Tracking de referidos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Programa de referidos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Momentos WOM",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Casos de éxito",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Satisfacción postservicio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Comunidad de clientes",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -7031,42 +7283,174 @@
     "kpi_name": "Clientes por recomendación",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Línea base del cliente",
-          "herramienta": "ter-s3-r1-linea-base-valor.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Hacer visible el expertise",
-          "herramienta": "ter-s3-r2-hacer-visible-expertise.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Recolocar expectativas",
-          "herramienta": "ter-s3-r3-gestion-expectativas.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Comunicar valor a todos los niveles",
-          "herramienta": "ter-s3-r4-mapa-decisores.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Ganar la comparación de valor",
-          "herramienta": "ter-s3-r5-comparativa-presentacion.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Corregir el ciclo pago-percepción",
-          "herramienta": "ter-s3-r6-ciclo-valor.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Establecer una línea base al inicio del servicio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Cliente / servicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Punto de partida (antes)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado actual",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Mejora demostrable",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Hacer visible el expertise que la fluidez vuelve invisible",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Entregable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Lo que el cliente VE",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Lo que hay DETRÁS (expertise/horas)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cómo mostrarlo",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Recolocar las expectativas infladas al vender",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Servicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Promesa al vender",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Resultado real entregado",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cómo recolocar la percepción",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Comunicar el valor a todos los niveles, no solo a uno",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Nivel / persona del cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Valor que recibe",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Lo percibe?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "A medias",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Cómo comunicárselo",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Ganar la comparación de valor percibido",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Aspecto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tu resultado REAL",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cómo lo PRESENTA la competencia",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Mejora en TU presentación",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Corregir el ciclo pago-percepción invertido",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Momento del servicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿El cliente SIENTE el valor aquí?",
+                "tipo": "opciones",
+                "opciones": [
+                  "No",
+                  "A medias",
+                  "Sí"
+                ]
+              },
+              {
+                "etiqueta": "Acción para que lo sienta antes/durante",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      }
     }
   },
   {
