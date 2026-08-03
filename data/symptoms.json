@@ -5168,42 +5168,168 @@
     "kpi_name": "Materiales profesionales",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Kit de marca: logo, colores y tipografía",
-          "herramienta": "cir-s1-r1-presencia-digital.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Reescribir tu presentación con propuesta de valor",
-          "herramienta": "cir-s1-r2-contenido-calendar.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Plantilla de presupuestos y propuestas",
-          "herramienta": "cir-s1-r3-seo-visibilidad.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Plantilla visual para redes",
-          "herramienta": "cir-s1-r4-share-of-voice.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Mejorar los puntos de primera impresión",
-          "herramienta": "cir-s1-r5-estrategia-contenido.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Manual de identidad para el equipo",
-          "herramienta": "cir-s1-r6-pr-y-medios.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Kit de marca: logo, colores y tipografía",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Reescribir tu presentación con propuesta de valor",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Plantilla de presupuestos y propuestas",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Plantilla visual para redes",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Mejorar los puntos de primera impresión",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Manual de identidad para el equipo",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -5263,42 +5389,168 @@
     "kpi_name": "Peso del producto estrella",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Cálculo del producto estrella",
-          "herramienta": "cir-s2-r1-clarity-score.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Rentabilidad por servicio",
-          "herramienta": "cir-s2-r2-arquitectura-mensajes.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Poda de servicios de bajo margen",
-          "herramienta": "cir-s2-r3-test-propuesta.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Foco comercial en el estrella",
-          "herramienta": "cir-s2-r4-customer-avatar.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Precio del producto estrella",
-          "herramienta": "cir-s2-r5-web-conversion.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Objetivo de mezcla mensual",
-          "herramienta": "cir-s2-r6-objeciones-comunes.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Cálculo del producto estrella",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Rentabilidad por servicio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Poda de servicios de bajo margen",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Foco comercial en el estrella",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Precio del producto estrella",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Objetivo de mezcla mensual",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -5358,42 +5610,168 @@
     "kpi_name": "Constancia de comunicación",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Calendario editorial mensual con responsable",
-          "herramienta": "cir-s3-r1-auditoria-reputacion.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Guía de tono y voz (1 página)",
-          "herramienta": "cir-s3-r2-crisis-comunicacion.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Métricas mínimas de comunicación",
-          "herramienta": "cir-s3-r3-testimonios-sociales.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Mensajes clave para ventas y atención",
-          "herramienta": "cir-s3-r4-reputacion-buscadores.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Unificar perfiles con el mismo tono",
-          "herramienta": "cir-s3-r5-plan-reconstruccion.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Asignar responsable de la constancia",
-          "herramienta": "cir-s3-r6-monitoreo-marca.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Calendario editorial mensual con responsable",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Guía de tono y voz (1 página)",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Métricas mínimas de comunicación",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Mensajes clave para ventas y atención",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Unificar perfiles con el mismo tono",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Asignar responsable de la constancia",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Elemento / paso a trabajar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha objetivo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Avance (0-100)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      }
     }
   },
   {
