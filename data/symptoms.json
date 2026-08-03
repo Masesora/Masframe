@@ -2319,12 +2319,61 @@
           "herramienta": "cli-s1-r1-tres-indicadores-clave.html"
         }
       ],
-      "r2": [
-        {
-          "nombre": "Calcular el margen neto real",
-          "herramienta": "cli-s1-r2-margen-neto-real.html"
+      "r2": {
+        "tipo": "calculadora",
+        "titulo": "Cálculo del margen neto real",
+        "campos": [
+          {
+            "clave": "ingresos",
+            "etiqueta": "Ingresos del mes (€)"
+          },
+          {
+            "clave": "gastos",
+            "etiqueta": "Gastos operativos del mes (€)"
+          },
+          {
+            "clave": "sueldo",
+            "etiqueta": "Tu sueldo real (€)"
+          },
+          {
+            "clave": "impuestos",
+            "etiqueta": "Impuestos estimados del mes (€)"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "beneficio",
+            "etiqueta": "Beneficio neto real (€)",
+            "formula": "ingresos - gastos - sueldo - impuestos",
+            "unidad": "eur"
+          },
+          {
+            "clave": "margen",
+            "etiqueta": "Margen neto real",
+            "formula": "(ingresos - gastos - sueldo - impuestos) / ingresos * 100",
+            "unidad": "pct"
+          }
+        ],
+        "semaforo": {
+          "sobre": "margen",
+          "reglas": [
+            {
+              "min": 15,
+              "color": "verde",
+              "texto": "Negocio viable (>15%)"
+            },
+            {
+              "min": 0,
+              "color": "naranja",
+              "texto": "Trabajas para cubrir costes"
+            },
+            {
+              "color": "rojo",
+              "texto": "Pierdes dinero cada mes"
+            }
+          ]
         }
-      ],
+      },
       "r3": [
         {
           "nombre": "Cierre contable en 5 días",
