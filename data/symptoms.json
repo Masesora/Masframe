@@ -2584,42 +2584,301 @@
     "kpi_name": "Clientes nuevos",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Auditoría canales",
-          "herramienta": "cardio-s1-r1-auditoria-canales.html"
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Auditoría canales",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Canal",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Activo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Leads/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Clientes cerrados/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste/lead (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "ROI %",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Presencia digital",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Canal digital",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Existe?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Actualizado últimos 30 días",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Seguidores/visitas/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Leads/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Genera contactos?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Parcial"
+                ]
+              }
+            ],
+            "filas_iniciales": 6
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Tracker leads",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Lead / Empresa",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Origen",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha primer contacto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Etapa",
+                "tipo": "opciones",
+                "opciones": [
+                  "Nuevo",
+                  "Contactado",
+                  "Reunión",
+                  "Propuesta",
+                  "Negociación",
+                  "Cerrado",
+                  "Perdido"
+                ]
+              },
+              {
+                "etiqueta": "Próxima acción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha próximo contacto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Rendimiento canales",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Canal",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Meses trabajado",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Inversión (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Leads",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Clientes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Ticket medio (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Constante y medido?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Sistema referidos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Cliente fuente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "NPS (1-10)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Referidos generados",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Convertidos",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Último contacto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Incentivo activo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "calculadora",
+        "titulo": "Objetivo captación",
+        "campos": [
+          {
+            "clave": "ingresos_objetivo",
+            "etiqueta": "Ingresos objetivo (€/mes)"
+          },
+          {
+            "clave": "ticket_medio",
+            "etiqueta": "Ticket medio (€)"
+          },
+          {
+            "clave": "retencion_pct",
+            "etiqueta": "Retención % (clientes recurrentes)"
+          },
+          {
+            "clave": "clientes_actuales",
+            "etiqueta": "Clientes actuales"
+          },
+          {
+            "clave": "tasa_conversion",
+            "etiqueta": "Tasa de conversión (%)"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "clientes_necesarios",
+            "etiqueta": "Clientes necesarios para el objetivo",
+            "formula": "ingresos_objetivo/ticket_medio",
+            "unidad": "numero"
+          },
+          {
+            "clave": "ingresos_recurrentes",
+            "etiqueta": "Ingresos ya cubiertos por clientes actuales",
+            "formula": "clientes_actuales*ticket_medio*(retencion_pct/100)",
+            "unidad": "eur"
+          },
+          {
+            "clave": "ingresos_faltantes",
+            "etiqueta": "Ingresos que faltan por generar",
+            "formula": "ingresos_objetivo-ingresos_recurrentes",
+            "unidad": "eur"
+          },
+          {
+            "clave": "nuevos_clientes_mes",
+            "etiqueta": "Nuevos clientes/mes necesarios",
+            "formula": "ingresos_faltantes/ticket_medio",
+            "unidad": "numero"
+          },
+          {
+            "clave": "leads_mes_necesarios",
+            "etiqueta": "Leads/mes necesarios",
+            "formula": "nuevos_clientes_mes/(tasa_conversion/100)",
+            "unidad": "numero"
+          }
+        ],
+        "semaforo": {
+          "sobre": "leads_mes_necesarios",
+          "reglas": [
+            {
+              "min": 150.0001,
+              "color": "rojo",
+              "texto": "CRÍTICO"
+            },
+            {
+              "min": 50,
+              "color": "ambar",
+              "texto": "ATENCIÓN"
+            },
+            {
+              "min": -999999999,
+              "color": "verde",
+              "texto": "VIABLE"
+            }
+          ]
         }
-      ],
-      "r2": [
-        {
-          "nombre": "Presencia digital",
-          "herramienta": "cardio-s1-r2-presencia-digital.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Tracker leads",
-          "herramienta": "cardio-s1-r3-tracker-leads.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Rendimiento canales",
-          "herramienta": "cardio-s1-r4-rendimiento-canales.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Sistema referidos",
-          "herramienta": "cardio-s1-r5-sistema-referidos.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Objetivo captación",
-          "herramienta": "cardio-s1-r6-objetivo-captacion.html"
-        }
-      ]
+      }
     }
   },
   {
@@ -2679,30 +2938,203 @@
     "kpi_name": "Regularidad de ventas",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Reunión comercial semanal",
-          "herramienta": "cardio-s2-r1-reunion-comercial.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Objetivo de contactos",
-          "herramienta": "cardio-s2-r2-objetivo-contactos.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Criterios del pipeline",
-          "herramienta": "cardio-s2-r3-pipeline-criterios.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Tiempo de prospección",
-          "herramienta": "cardio-s2-r4-tiempo-prospeccion.html"
-        }
-      ],
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Reunión comercial semanal",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Semana",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Nuevos leads",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Avances pipeline",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Propuestas enviadas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Cierres",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Ingresos cerrados (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Objetivo semana (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Acción correctora",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 8
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Objetivo de contactos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Semana",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Llamadas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Emails",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "LinkedIn",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Reuniones",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Propuestas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Seguimientos",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Objetivo",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 4
+          },
+          {
+            "titulo": "Nota de correlación (actividad vs resultados)",
+            "columnas": [
+              {
+                "etiqueta": "Nota",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 1
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Criterios del pipeline",
+        "secciones": [
+          {
+            "titulo": "1. Definición de etapas",
+            "columnas": [
+              {
+                "etiqueta": "Etapa",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Criterio entrada",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Criterio salida",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tiempo máx (días)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Acción si supera",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Probabilidad %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 6
+          },
+          {
+            "titulo": "2. Oportunidades actuales",
+            "columnas": [
+              {
+                "etiqueta": "Oportunidad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Etapa",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha entrada",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Valor (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Próxima acción",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Tiempo de prospección",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Actividad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Categoría",
+                "tipo": "opciones",
+                "opciones": [
+                  "Prospección",
+                  "Administración",
+                  "Operaciones",
+                  "Reuniones cliente",
+                  "Formación",
+                  "Otro"
+                ]
+              },
+              {
+                "etiqueta": "Horas reales/semana",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Horas objetivo/semana",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 6
+          }
+        ]
+      },
       "r5": {
         "tipo": "nativa",
         "titulo": "Sistematizar el seguimiento de propuestas comerciales",
@@ -2981,42 +3413,310 @@
     "kpi_name": "Conversión a oportunidad",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Perfil de cliente ideal",
-          "herramienta": "cardio-s3-r1-perfil-cliente-ideal.html"
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Perfil de cliente ideal",
+        "secciones": [
+          {
+            "titulo": "Canvas ICP (define tu cliente ideal)",
+            "columnas": [
+              {
+                "etiqueta": "Campo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Valor",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 9
+          },
+          {
+            "titulo": "Validación: últimos clientes vs ICP",
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Sector",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Coincide sector ICP?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Cargo decisor real",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Coincide cargo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Ticket real (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "calculadora",
+        "titulo": "Llamada de calificación",
+        "campos": [
+          {
+            "clave": "p1",
+            "etiqueta": "¿Cuál es tu mayor reto comercial ahora mismo? (1-3)"
+          },
+          {
+            "clave": "p2",
+            "etiqueta": "¿Cuánto está costando este problema a tu empresa mensualmente? (1-3)"
+          },
+          {
+            "clave": "p3",
+            "etiqueta": "¿Has intentado resolverlo antes? ¿Qué pasó? (1-3)"
+          },
+          {
+            "clave": "p4",
+            "etiqueta": "¿Tienes presupuesto asignado para resolverlo? (1-3)"
+          },
+          {
+            "clave": "p5",
+            "etiqueta": "¿Quién más interviene en la decisión de compra? (1-3)"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "total_score",
+            "etiqueta": "Puntuación total (máx 15)",
+            "formula": "p1+p2+p3+p4+p5",
+            "unidad": "numero"
+          }
+        ],
+        "semaforo": {
+          "sobre": "total_score",
+          "reglas": [
+            {
+              "min": 10,
+              "color": "verde",
+              "texto": "Avanzar"
+            },
+            {
+              "min": 6,
+              "color": "ambar",
+              "texto": "Explorar más"
+            },
+            {
+              "min": -999999999,
+              "color": "rojo",
+              "texto": "Descartar"
+            }
+          ]
         }
-      ],
-      "r2": [
-        {
-          "nombre": "Llamada de calificación",
-          "herramienta": "cardio-s3-r2-llamada-calificacion.html"
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Formulario de calificación",
+        "secciones": [
+          {
+            "titulo": "1. Constructor de preguntas",
+            "columnas": [
+              {
+                "etiqueta": "Pregunta",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Texto",
+                  "Número",
+                  "Selección"
+                ]
+              },
+              {
+                "etiqueta": "Opciones (si Selección)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Peso (1-5)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Respuesta mínima",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "2. Registro de candidatos",
+            "columnas": [
+              {
+                "etiqueta": "Candidato / Lead",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Score obtenido",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "calculadora",
+        "titulo": "Precio de entrada",
+        "campos": [
+          {
+            "clave": "coste_hora",
+            "etiqueta": "Coste hora propio (€)"
+          },
+          {
+            "clave": "horas_min",
+            "etiqueta": "Horas mínimas que justifican un proyecto"
+          },
+          {
+            "clave": "precio_ofertado",
+            "etiqueta": "Precio actual mínimo ofertado (€)"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "precio_minimo",
+            "etiqueta": "Precio mínimo de entrada",
+            "formula": "coste_hora*horas_min",
+            "unidad": "eur"
+          },
+          {
+            "clave": "gap",
+            "etiqueta": "Gap sobre el mínimo",
+            "formula": "precio_ofertado-precio_minimo",
+            "unidad": "eur",
+            "alimenta_valor": true
+          }
+        ],
+        "semaforo": {
+          "sobre": "gap",
+          "reglas": [
+            {
+              "min": 0,
+              "color": "verde",
+              "texto": "Precio de entrada saludable"
+            },
+            {
+              "min": -999999999,
+              "color": "rojo",
+              "texto": "Estás trabajando por debajo del mínimo viable"
+            }
+          ]
         }
-      ],
-      "r3": [
-        {
-          "nombre": "Formulario de calificación",
-          "herramienta": "cardio-s3-r3-formulario-calificacion.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Precio de entrada",
-          "herramienta": "cardio-s3-r4-precio-entrada.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Para quién NO es tu servicio",
-          "herramienta": "cardio-s3-r5-para-quien-no.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Canales que traen leads calificados",
-          "herramienta": "cardio-s3-r6-canales-calificados.html"
-        }
-      ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Para quién NO es tu servicio",
+        "secciones": [
+          {
+            "titulo": "Matriz de exclusión de perfiles",
+            "columnas": [
+              {
+                "etiqueta": "Perfil excluido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Razón de exclusión",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Señal de identificación temprana",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Mensaje de redirección",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "Leads descartados últimos meses",
+            "columnas": [
+              {
+                "etiqueta": "Lead",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Motivo descarte",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tiempo invertido (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Canales que traen leads calificados",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Canal",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Leads totales/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Leads calificados/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Clientes cerrados",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Ticket medio (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste canal (€/mes)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      }
     }
   },
   {
