@@ -3076,42 +3076,352 @@
     "kpi_name": "Avance al objetivo",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Visión 3 años",
-          "herramienta": "neuro-s1-r1-vision-3-anos.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Valoración negocio",
-          "herramienta": "neuro-s1-r2-valoracion-negocio.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Comunicación visión",
-          "herramienta": "neuro-s1-r3-comunicacion-vision.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Objetivos anuales",
-          "herramienta": "neuro-s1-r4-objetivos-anuales.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Tiempo estratégico",
-          "herramienta": "neuro-s1-r5-tiempo-estrategico.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Revisión trimestral",
-          "herramienta": "neuro-s1-r6-revision-trimestral.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Canvas de visión a 3 años",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Métrica",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Hoy",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Objetivo 3 años",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 7
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Palancas de valor del negocio",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Palanca",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Impacto en valoración (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Dificultad",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              },
+              {
+                "etiqueta": "Plazo (meses)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 0
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Tracker de alineación de visión",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Asistió",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Comprende visión (1-5)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Comparte visión (1-5)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Duda planteada",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción seguimiento",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "OKRs anuales",
+        "secciones": [
+          {
+            "titulo": "Objetivo 1",
+            "columnas": [
+              {
+                "etiqueta": "Key Result",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Meta",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Valor actual",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "Objetivo 2",
+            "columnas": [
+              {
+                "etiqueta": "Key Result",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Meta",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Valor actual",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "Objetivo 3",
+            "columnas": [
+              {
+                "etiqueta": "Key Result",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Meta",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Valor actual",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "Histórico trimestral",
+            "columnas": [
+              {
+                "etiqueta": "Trimestre",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Obj 1 %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Obj 2 %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Obj 3 %",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Auditoría de tiempo estratégico",
+        "secciones": [
+          {
+            "titulo": "1. Registro semanal de tiempo",
+            "columnas": [
+              {
+                "etiqueta": "Semana",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "H. Operativo",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "H. Estratégico",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "H. Comercial",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "H. Admin",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 4
+          },
+          {
+            "titulo": "2. Registro de sesiones estratégicas",
+            "columnas": [
+              {
+                "etiqueta": "Fecha",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Duración (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Temas tratados",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Se respetó el bloque?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              }
+            ],
+            "filas_iniciales": 0
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Revisión trimestral de alineamiento",
+        "secciones": [
+          {
+            "titulo": "Objetivo 1",
+            "columnas": [
+              {
+                "etiqueta": "Acción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Contribuye?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Horas invertidas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Resultado obtenido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Repetir próximo Q?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 2
+          },
+          {
+            "titulo": "Objetivo 2",
+            "columnas": [
+              {
+                "etiqueta": "Acción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Contribuye?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Horas invertidas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Resultado obtenido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Repetir próximo Q?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 2
+          },
+          {
+            "titulo": "Objetivo 3",
+            "columnas": [
+              {
+                "etiqueta": "Acción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Contribuye?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Horas invertidas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Resultado obtenido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Repetir próximo Q?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 2
+          }
+        ]
+      }
     }
   },
   {
@@ -3171,42 +3481,369 @@
     "kpi_name": "Iniciativas completadas",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Tiempo estratégico bloqueado",
-          "herramienta": "neuro-s2-r1-tiempo-estrategico-bloqueado.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Proyectos abiertos",
-          "herramienta": "neuro-s2-r2-proyectos-abiertos.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Delegación urgentes",
-          "herramienta": "neuro-s2-r3-delegacion-urgentes.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Tres prioridades",
-          "herramienta": "neuro-s2-r4-tres-prioridades.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Auditoría reuniones",
-          "herramienta": "neuro-s2-r5-auditoria-reuniones.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Filtro decisiones",
-          "herramienta": "neuro-s2-r6-filtro-decisiones.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Planificador de agenda estratégica semanal",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Día",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Bloque Mañana",
+                "tipo": "opciones",
+                "opciones": [
+                  "Estrategico",
+                  "Operativo",
+                  "Comercial",
+                  "Admin",
+                  "Mixto"
+                ]
+              },
+              {
+                "etiqueta": "Bloque Tarde",
+                "tipo": "opciones",
+                "opciones": [
+                  "Estrategico",
+                  "Operativo",
+                  "Comercial",
+                  "Admin",
+                  "Mixto"
+                ]
+              },
+              {
+                "etiqueta": "H. Estratégicas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "H. Operativas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "H. Comerciales",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Interrupciones",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Bloques respetados?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              }
+            ],
+            "filas_iniciales": 20
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Inventario de proyectos abiertos",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Proyecto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha inicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "% Completado",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "H. invertidas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "H. para terminar",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Valor al terminar €",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Terminar",
+                  "Pausar",
+                  "Cancelar"
+                ]
+              },
+              {
+                "etiqueta": "Fecha compromiso",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Log de interrupciones semanales",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tarea / Solicitud",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Requería al líder?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Tiempo (min)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿A quién delegar?",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Existe protocolo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Tres prioridades semanales",
+        "secciones": [
+          {
+            "titulo": "1. Registro semanal de prioridades",
+            "columnas": [
+              {
+                "etiqueta": "Semana",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Prioridad 1",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿P1 completada?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Prioridad 2",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿P2 completada?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Prioridad 3",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿P3 completada?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Nº interrupciones",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 4
+          },
+          {
+            "titulo": "2. Análisis tipos de interrupción",
+            "columnas": [
+              {
+                "etiqueta": "Tipo interrupción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Frecuencia",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Impacto",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alto",
+                  "Medio",
+                  "Bajo"
+                ]
+              },
+              {
+                "etiqueta": "¿Evitable?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Auditoría de reuniones",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Reunión",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Frecuencia veces/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Duración h",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Participantes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Genera decisión?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "¿Puede eliminarse?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Reducir"
+                ]
+              },
+              {
+                "etiqueta": "Decisión final",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Filtro de decisiones",
+        "secciones": [
+          {
+            "titulo": "1. Matriz de delegación",
+            "columnas": [
+              {
+                "etiqueta": "Tipo decisión",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Impacto",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alto",
+                  "Medio",
+                  "Bajo"
+                ]
+              },
+              {
+                "etiqueta": "Reversibilidad",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Baja"
+                ]
+              },
+              {
+                "etiqueta": "¿Requiere líder?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Quién decide",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Límite autonomía € o descripción",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
+          },
+          {
+            "titulo": "2. Registro de decisiones de la semana",
+            "columnas": [
+              {
+                "etiqueta": "Decisión",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Llegó al líder?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "¿Debería haber llegado?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Coste escalada (min)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      }
     }
   },
   {
@@ -3266,42 +3903,371 @@
     "kpi_name": "Margen neto anual",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Servicios bajo margen",
-          "herramienta": "neuro-s3-r1-servicios-bajo-margen.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Volumen vs rentabilidad",
-          "herramienta": "neuro-s3-r2-volumen-vs-rentabilidad.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Simulador precios",
-          "herramienta": "neuro-s3-r3-simulador-precios.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Especialización",
-          "herramienta": "neuro-s3-r4-especializacion.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Automatización vs captación",
-          "herramienta": "neuro-s3-r5-automatizacion-vs-captacion.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Rediseno modelo",
-          "herramienta": "neuro-s3-r6-rediseno-modelo.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Análisis de servicios por margen",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Servicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Facturación /mes €",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste directo €",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Horas equipo/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Clientes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Puerta entrada?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "calculadora",
+        "titulo": "Simulador volumen vs rentabilidad",
+        "campos": [
+          {
+            "clave": "actual_clientes",
+            "etiqueta": "Escenario Actual — Clientes"
+          },
+          {
+            "clave": "actual_precio",
+            "etiqueta": "Escenario Actual — Precio medio €"
+          },
+          {
+            "clave": "actual_margen",
+            "etiqueta": "Escenario Actual — Margen %"
+          },
+          {
+            "clave": "actual_horas",
+            "etiqueta": "Escenario Actual — Horas necesarias"
+          },
+          {
+            "clave": "volumen_clientes",
+            "etiqueta": "Más Volumen — Clientes"
+          },
+          {
+            "clave": "volumen_precio",
+            "etiqueta": "Más Volumen — Precio medio €"
+          },
+          {
+            "clave": "volumen_margen",
+            "etiqueta": "Más Volumen — Margen %"
+          },
+          {
+            "clave": "volumen_horas",
+            "etiqueta": "Más Volumen — Horas necesarias"
+          },
+          {
+            "clave": "margen_clientes",
+            "etiqueta": "Más Margen — Clientes"
+          },
+          {
+            "clave": "margen_precio",
+            "etiqueta": "Más Margen — Precio medio €"
+          },
+          {
+            "clave": "margen_margen",
+            "etiqueta": "Más Margen — Margen %"
+          },
+          {
+            "clave": "margen_horas",
+            "etiqueta": "Más Margen — Horas necesarias"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "actual_ingresos",
+            "etiqueta": "Escenario Actual — Ingresos €",
+            "formula": "actual_clientes*actual_precio",
+            "unidad": "eur"
+          },
+          {
+            "clave": "actual_margen_total",
+            "etiqueta": "Escenario Actual — Margen total €",
+            "formula": "actual_ingresos*actual_margen/100",
+            "unidad": "eur"
+          },
+          {
+            "clave": "actual_margen_hora",
+            "etiqueta": "Escenario Actual — Margen/hora €",
+            "formula": "actual_margen_total/actual_horas",
+            "unidad": "eur"
+          },
+          {
+            "clave": "volumen_ingresos",
+            "etiqueta": "Más Volumen — Ingresos €",
+            "formula": "volumen_clientes*volumen_precio",
+            "unidad": "eur"
+          },
+          {
+            "clave": "volumen_margen_total",
+            "etiqueta": "Más Volumen — Margen total €",
+            "formula": "volumen_ingresos*volumen_margen/100",
+            "unidad": "eur"
+          },
+          {
+            "clave": "volumen_margen_hora",
+            "etiqueta": "Más Volumen — Margen/hora €",
+            "formula": "volumen_margen_total/volumen_horas",
+            "unidad": "eur"
+          },
+          {
+            "clave": "margen_ingresos",
+            "etiqueta": "Más Margen — Ingresos €",
+            "formula": "margen_clientes*margen_precio",
+            "unidad": "eur"
+          },
+          {
+            "clave": "margen_margen_total",
+            "etiqueta": "Más Margen — Margen total €",
+            "formula": "margen_ingresos*margen_margen/100",
+            "unidad": "eur"
+          },
+          {
+            "clave": "margen_margen_hora",
+            "etiqueta": "Más Margen — Margen/hora €",
+            "formula": "margen_margen_total/margen_horas",
+            "unidad": "eur"
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Simulador de subida de precios",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Servicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Precio actual €",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Clientes actuales",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Precio propuesto €",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Clientes perdidos est.",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Índice de especialización",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Servicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Facturación /mes €",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Margen %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Nº clientes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Crecimiento 6 meses %",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Diferencial?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "¿Escalable?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "calculadora",
+        "titulo": "ROI automatización vs captación",
+        "campos": [
+          {
+            "clave": "automatizacion_inversion",
+            "etiqueta": "Automatización — Inversión €"
+          },
+          {
+            "clave": "automatizacion_horas_ahorradas",
+            "etiqueta": "Automatización — Horas ahorradas/mes"
+          },
+          {
+            "clave": "automatizacion_valor_hora",
+            "etiqueta": "Automatización — Valor hora €"
+          },
+          {
+            "clave": "captacion_inversion",
+            "etiqueta": "Captación — Inversión €"
+          },
+          {
+            "clave": "captacion_clientes_nuevos",
+            "etiqueta": "Captación — Nuevos clientes/mes"
+          },
+          {
+            "clave": "captacion_ticket_medio",
+            "etiqueta": "Captación — Ticket medio €"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "automatizacion_ahorro_mensual",
+            "etiqueta": "Automatización — Valor ahorrado/mes €",
+            "formula": "automatizacion_horas_ahorradas*automatizacion_valor_hora",
+            "unidad": "eur",
+            "alimenta_valor": true
+          },
+          {
+            "clave": "automatizacion_retorno_anual",
+            "etiqueta": "Automatización — Retorno anual €",
+            "formula": "automatizacion_ahorro_mensual*12",
+            "unidad": "eur"
+          },
+          {
+            "clave": "automatizacion_roi_12m",
+            "etiqueta": "Automatización — ROI 12 meses %",
+            "formula": "(automatizacion_retorno_anual-automatizacion_inversion)/automatizacion_inversion*100",
+            "unidad": "pct"
+          },
+          {
+            "clave": "automatizacion_payback_meses",
+            "etiqueta": "Automatización — Payback (meses)",
+            "formula": "automatizacion_inversion/automatizacion_ahorro_mensual",
+            "unidad": "numero"
+          },
+          {
+            "clave": "captacion_ingresos_mensuales",
+            "etiqueta": "Captación — Ingresos adicionales/mes €",
+            "formula": "captacion_clientes_nuevos*captacion_ticket_medio",
+            "unidad": "eur"
+          },
+          {
+            "clave": "captacion_retorno_anual",
+            "etiqueta": "Captación — Retorno anual €",
+            "formula": "captacion_ingresos_mensuales*12",
+            "unidad": "eur"
+          },
+          {
+            "clave": "captacion_roi_12m",
+            "etiqueta": "Captación — ROI 12 meses %",
+            "formula": "(captacion_retorno_anual-captacion_inversion)/captacion_inversion*100",
+            "unidad": "pct"
+          },
+          {
+            "clave": "captacion_payback_meses",
+            "etiqueta": "Captación — Payback (meses)",
+            "formula": "captacion_inversion/captacion_ingresos_mensuales",
+            "unidad": "numero"
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "calculadora",
+        "titulo": "Diagnóstico de urgencia de rediseño",
+        "campos": [
+          {
+            "clave": "margen_neto_pct",
+            "etiqueta": "1. Margen neto %"
+          },
+          {
+            "clave": "tendencia_margen",
+            "etiqueta": "2. Tendencia de margen"
+          },
+          {
+            "clave": "pct_ingresos_recurrentes",
+            "etiqueta": "3. % ingresos recurrentes"
+          },
+          {
+            "clave": "concentracion_top3_pct",
+            "etiqueta": "4. Concentración top 3 clientes %"
+          },
+          {
+            "clave": "horas_vs_ano_anterior",
+            "etiqueta": "5. Horas vs hace 1 año"
+          },
+          {
+            "clave": "satisfaccion_dueno",
+            "etiqueta": "6. Satisfacción del dueño (1-10)"
+          },
+          {
+            "clave": "cronograma_ingresos_mensuales",
+            "etiqueta": "Ingresos mensuales actuales €"
+          },
+          {
+            "clave": "cronograma_margen_actual_pct",
+            "etiqueta": "Margen actual %"
+          },
+          {
+            "clave": "cronograma_mejora_esperada_pct",
+            "etiqueta": "Mejora esperada si rediseña %"
+          }
+        ],
+        "resultados": [
+          {
+            "clave": "margen_actual_12m",
+            "etiqueta": "Margen actual a 12 meses €",
+            "formula": "cronograma_ingresos_mensuales*(cronograma_margen_actual_pct/100)*12",
+            "unidad": "eur"
+          },
+          {
+            "clave": "coste_total_espera_12m",
+            "etiqueta": "Coste de esperar 12 meses €",
+            "formula": "cronograma_ingresos_mensuales*((cronograma_margen_actual_pct+cronograma_mejora_esperada_pct)/100)*12-margen_actual_12m",
+            "unidad": "eur",
+            "alimenta_valor": true
+          }
+        ]
+      }
     }
   },
   {
