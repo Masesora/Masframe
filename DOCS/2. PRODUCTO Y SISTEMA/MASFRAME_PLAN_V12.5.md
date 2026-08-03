@@ -1,6 +1,6 @@
 # MASFRAME — PLAN DE PRODUCTO v12.5
 *Documento maestro · Versión 12.5 · Julio 2026*
-*Última actualización: sesión 8 jul 2026 — 197 herramientas operativas HTML generadas, memoria del proyecto incorporada*
+*Última actualización: sesión 2-3 ago 2026 — consolidación de las 197 herramientas en componentes nativos (§XX), 180/180 migradas*
 
 ---
 
@@ -443,11 +443,9 @@ Donde `r{n}` es la referencia al ítem de C2 (1-6 por síntoma).
 | CIR | Auditoría de marca, análisis diferencial, planes de comunicación |
 | UNI | VSM (Value Stream Maps), matrices de calidad, stacks de proceso |
 
-### Uso previsto — Integración Plataforma (Fase Futura)
+### Uso previsto — Integración Plataforma (Fase Futura) — ✅ COMPLETADA, ver §XX
 
-La fase actual es descarga manual: el ACI descarga el HTML correspondiente al C2 seleccionado y lo usa con el cliente.
-
-La fase futura integrará las herramientas dentro de la plataforma MASFRAME: el sistema detecta el C2 activo y presenta la herramienta embebida en TreatmentPage. Los datos se guardan en MongoDB como evidencia clínica del expediente.
+Esta sección describe el diseño original (descarga manual del HTML, fase futura de integración vía iframe). **Superseded**: en sesión 2-3 ago 2026 se consolidaron las 180 opciones (10 especialidades × 18) en componentes nativos dentro de `TreatmentPage.tsx` — sin iframe, con autoguardado campo a campo. Los 197 archivos HTML de esta sección quedan como referencia histórica de contenido, no como mecanismo de entrega. Ver §XX para la arquitectura final y el detalle por especialidad.
 
 **Ruta para integración:** `data/herramientas/{ESPECIALIDAD}-S{N}/{esp}-s{n}-r{n}-{slug}.html`
 
@@ -598,4 +596,180 @@ Fase futura: herramientas embebidas en plataforma. Ruta base: `data/herramientas
 
 ## XVII. SESIÓN DE AUDITORÍA — 13 JUL 2026 (skill masframe-ux-validator)
 
-Sesión de auditoría en vivo de los 30 síntom
+Sesión de auditoría en vivo de los 30 síntomas con la skill `masframe-ux-validator`, actuando a la vez como consultor de primer nivel y como desarrollador senior. Se recorrió el TreatmentPage C0-C6 con perfiles de empresa reales ("la Paqui": persona, empresa y números reales). **Resultado: los 30 síntomas en verde (listos para beta).** Todos los cambios están en `symptoms.json` y `TreatmentPage.tsx`, sin commitear, con backups `.bak_*.json`.
+
+### XVII.A — El bug bloqueante de C2 (resuelto)
+
+`capa_2_options` estaba guardado como **array** en 16 síntomas y como **string** (separado por `;`) en 14. El frontend lo trataba siempre como string (`parseChecklistItems`, `.split(";")`), lo que rompía la capa C2 en los 16 array (`.split is not a function`) → C2 en blanco. Doble arreglo: (1) normalización a string al cargar el síntoma en `TreatmentPage.tsx`, y blindaje de `parseChecklistItems` para aceptar arrays; (2) unificación de los 16 en `symptoms.json` a formato string.
+
+### XVII.B — El motor de C6 y la clasificación de "lo recuperado"
+
+El código de C6 asumía que *"el recovery siempre representa ahorro de costes"* e inyectaba el € del Cobrómetro en la fórmula del KPI de los 30 síntomas. Pero "recuperado" no significa lo mismo en todos. **Tres cubos:**
+
+| Cubo | Qué es | Nº | C6 |
+|------|--------|----|-----|
+| **(i) € directo** | El € recuperado mueve el KPI (caja, margen, coste, fiscal) | 6 | Recálculo financiero. **Candidatos a success fee.** |
+| **(i\*) estructural** | Inputs en € pero KPI de ratio estructural (regularidad, mezcla, progreso) | 3 | Se cierra **re-midiendo** (no inyectar). |
+| **(ii) conteo** | KPI de ratio de personas/clientes/entregas | 21 | Suma la **unidad nativa** (no €). |
+
+Se añadió a los 30 síntomas: `kpi_recovery_mode` (financiero/estructural/conteo) y `recovery_unit_label`. El recálculo de C6 en `TreatmentPage.tsx` ramifica por modo. El Cobrómetro se relabela por unidad nativa en los de conteo. Los 6 financieros (UCI-S1/S2/S3, CLI-S1, CLI-S2, NEURO-S3) son los únicos candidatos al success fee del modelo v2.
+
+**Re-medición para estructurales (CARDIO-S2, CIR-S2, NEURO-S1):** el modo estructural no inyecta nada (evita KPIs absurdos), pero eso bloqueaba el Alta (KPI no mejoraba). Se añadió una UI en C6 para que el cliente **re-mida** sus inputs al cierre del ciclo (excepción acotada a la ley I-3: re-medir el dato objetivo, no teclear el KPI), y el KPI se recalcula con ese dato. Con eso el Alta se desbloquea.
+
+### XVII.C — Carátula de C6 por síntoma (§XVI resuelto)
+
+Se añadió `kpi_name` y `kpi_unit` a los 30 síntomas y la cabecera de C6 los muestra (p.ej. *"Rotación de talento — medido en %"*) en vez del genérico "OKR tracking". **Esto resuelve el pendiente de alta prioridad "C6 específico por síntoma" de §XVI.**
+
+### XVII.D — Calidad de contenido (justificaciones y datos)
+
+- **~110 justificaciones reescritas** a nivel consultor (eran plantillas cortas tipo "Porque necesitas X"), más un **re-barrido con subagente independiente** que cazó desajustes que el ojo humano dejó pasar (justi que describían una métrica distinta a la de su KPI).
+- **Los 4 typos de §II ya estaban corregidos** en los datos (verificado). **Pendiente de §XVI resuelto.**
+- **RES-S3 descontaminado**: 3 de sus 6 opciones de C1 hablaban de dependencia/backup (territorio OPE-S2). Reescritas hacia conflicto/clima. **Cierra el error #8 del auditor (§VIII).**
+- **OPE-S2**: su `kpi_question` preguntaba por "tareas dependientes" mientras los inputs medían "días sin intervención" (inversas). Alineada la pregunta a los datos (>85% de días sin intervención).
+- **Grafía "Análisis de Riesgos"** unificada (aparecía sin tilde en RES-S1 y OPE-S1).
+
+### XVII.E — Rediseños de KPI a positivo
+
+- **TER-S1 (Efecto NO-WOW)**: el KPI medía *incidencias/quejas* (`<5%`), que es lo contrario de lo que trata el síntoma (crear WOW). Rediseñado a **"Experiencias memorables"** (% de atenciones con un momento memorable diseñado, `>30%`).
+- **TER-S2 (Necrosis de Cliente)**: medía *% de clientes molestos recuperados* — poco natural para un negocio. Rediseñado a **"Clientes que repiten"** (`>40%`), con C1/C2 girados hacia fidelización, reactivación de dormidos y upsell.
+
+### XVII.F — Invariantes verificados
+
+I-1 (C2 = 6 ítems), I-2 (C1→C2), I-3 (`rawDone.c6 = false`), ley KPI (C6 sin input manual) y consonancia C1-C2 verificados en los 30. Riesgos del auditor #7 (duplicación OPE-S2↔PSI-S2) y #8 (contaminación RES-S3) resueltos. Hallazgo colateral: los campos `threshold_*` solo los usa un motor huérfano (`wrapper_universal.compute_semaforo`, sin callers); el semáforo vivo es el del frontend (por avance al objetivo). No se borraron.
+
+---
+
+## XVIII. SESIÓN 14-15 JUL 2026 — Reanclaje de C0, fix del gate, linter clínico y regeneración de herramientas
+
+Sesión de trabajo profundo sobre coherencia real del catálogo (no solo flujo). Todo el frontend/backend tocado está en `TreatmentPage.tsx`, `symptoms.json` y `data/validar_sintomas.py`, con backups `.bak_*` por paso.
+
+### XVIII.A — Reanclaje de C0 (principio "C0 vs Solución" + Test de la Paqui)
+Regla nueva y no negociable: **el C0 es un número que el cliente YA tiene** (2 datos, de memoria/mirando su cuenta, sin registrar nada nuevo). La **solución** (el sistema: DISC, planificación, control de reseñas…) va en las capas C1-C6, **nunca en el C0**. Reanclados **9 síntomas** con coherencia total (C0 + `justi_capa6` + `kpi_impact` + campos de métrica), C1-C5 intactas salvo UCI-S2:
+- **PSI-S1** → *Absentismo del equipo* (<8%) · **PSI-S3** → *Equipo implicado* (>50%) · **TER-S1** → *Reseñas de 5★* (>10%) · **CLI-S3** → *Decisiones en tu mesa* (<25%) · **CLI-S1** → *Margen neto mensual* (diferenciado de NEURO-S3 anual) · **CIR-S1** → materiales (lista concreta) · **CIR-S3** → *Constancia de comunicación* (>75%, deja las reseñas a TER) · **OPE-S3** → *Regularidad de entrega* (variabilidad peor/mejor semana, modo **estructural**).
+- **UCI-S2** → re-arquitectura completa de *retención/margen* a **Cobros** (*Facturación sin cobrar 3 meses <20%*); `c2_herramienta` a camino genérico (huérfano el componente de retención).
+- **UNI-S1** se deja como está (decisión de negocio: el objetivo en días absolutos no es universal).
+
+### XVIII.B — Bug bloqueante del gate C2→C3 (11 síntomas muertos)
+El gate de avance solo entendía la familia **matriz** (`eje_x/eje_y===3`). Árbol (categoría "si") y Regla (categoría "out") nunca tocan esos ejes → el aviso *"ajusta un elemento de la matriz"* no se iba y **C3 quedaba bloqueado en los 6 Árbol + 5 Regla**. Arreglado en `TreatmentPage.tsx` (~línea 6902): el gate reconoce Árbol (≥1 "sí") y Regla (≥1 conservado), y el mensaje deja de decir "matriz". Frontend desplegado (commit `02bdfff`).
+
+### XVIII.C — Bug del "+" en etiquetas de input
+`DesglosadorInput` parte el label por "+". CLI-S2 tenía "IRPF o IS + Seguridad Social" → se troceaba en dos campos rotos. Corregido el dato (etiqueta sin "+").
+
+### XVIII.D — Las 197 herramientas: enlace + contenido
+- **Enlace roto:** `capa_3_plan` estaba **vacío en 29 de 30** síntomas — es el puente a los `.html`. Sin él, ninguna herramienta aparecía en C4 pese a existir en disco. Poblado en los 29 (nombres derivados + curados en los multi-herramienta).
+- **Contenido equivocado:** 8 especialidades tenían herramientas de dominio ajeno — **Gestión Clínica (CLI-S1/S2/S3) eran de clínica MÉDICA** (pacientes, turnos, historia clínica); RES-S2/RES-S3 cruzadas (desarrollo↔conflictos); PSI-S2 de seguridad psicológica; TER-S3 de valor/diferenciación; UCI-S2 de margen (por el reanclaje). **48 herramientas regeneradas** al dominio correcto con el estándar MASFRAME (HTML autocontenido, paleta, tablas editables, cálculo en vivo, semáforos). Quedan los **⚠️ parciales** (UNI-S2, CARDIO-S3, CIR-S1/S3, PSI-S3, RES-S1, TER-S1/S2, OPE-S1/S3): adyacentes, no urgentes.
+
+### XVIII.E — Linter clínico determinista (`data/validar_sintomas.py`)
+Codifica ~16 **contratos** que el frontend/backend imponen al dato (labels sin `+`, C1/C2 = 6, `capa_2_options` string, fórmula solo InputA/InputB, objetivo parseable, `recovery_mode` válido, familia de C2 con gate soportado, herramientas enlazadas, sin archivos basura, sin vocabulario de clínica médica, footgun `día`×30). Es determinista, cero falsos "verde". **Cada bug nuevo dato↔código se añade como contrato** — cierra la CLASE, no el caso. Es el **paso 1** del validador.
+
+### XVIII.F — Skill `masframe-ux-validator` reescrita
+Tres capas en orden: **(1) linter determinista → (2) recorrido code-grounded** por familia (matriz/árbol/regla/carga/semáforo/ABC/DAFO) y modo (financiero/conteo/estructural) → **(3) juicio de negocio y cartera** (Test de la Paqui, C0-vs-solución, duplicidad). Con cobertura obligatoria, taxonomía de errores en 7 clases, registro de regresiones y plantilla de informe por síntoma. Regla cero: **no narres, ejercita** y cita el código. Archivo listo para instalar en Ajustes › Habilidades.
+
+### XVIII.G — Pendiente al cerrar
+Commitear/pushear las tandas de herramientas (backend), desplegar en Render (hash nuevo) y **reiniciar** el servicio (el catálogo se cachea al arranque). Instalar la skill v2. Opcional: pulir los ⚠️ parciales y regenerar herramientas 1:1 con las C2 options afinadas.
+
+---
+
+## XIX. SESIÓN 16 JUL 2026 — Copy a nivel dueño, de-jergado total y verificación code-grounded
+
+Sesión centrada en que **la Paqui/Chelo lo entienda todo de C0 a C6**: coherencia línea a línea, cero jerga, y verificación fina sobre lo desplegado. Solo se tocó `masesora_backend/data/symptoms.json` (la copia que sirve Render). **Desplegado en commit `16f8e3a`.** Linter en **0 errores** tras cada tanda.
+
+### XIX.A — Aclarado el footgun de los dos `symptoms.json` (crítico)
+`render.yml` arranca con `cd masesora_backend && uvicorn main:app` → **Render sirve `masesora_backend/data/symptoms.json`** (el trackeado en git). La copia de la raíz `data/symptoms.json` **NO está en git y NO se sirve** (solo la usa el `main.py` de la raíz). Regla operativa: **editar y commitear siempre `masesora_backend/data/`**; la raíz es local/huérfana. `git ls-files` lo confirma (solo el de `masesora_backend/data` está trackeado).
+
+### XIX.B — Pasada de copy "nivel dueño" (5 fallos sistémicos + 11 críticos)
+Sobre los 30, reescritura para que fluya en lenguaje de dueño:
+- **`example`** reescrito en la MISMA unidad y dirección que el KPI (muchos medían otra métrica o iban en €/días equivocados), con puntuación.
+- **`capa_1_priorizacion`** alineada a 6 ítems 1:1 con las casillas de C1 (venían con 8/run-ons).
+- **`justi_capa5`** completadas (eran "Porque necesitas…" truncadas en 28/30).
+- **`explanation`** de cabecera con puntuación/tildes corregidas.
+- **11 críticos** resueltos: UCI-S2 (escaparate copiado de margen → cobros), CARDIO-S2 (lema roto + re-medir estructural), CARDIO-S3 (`logica` duplicada de S2 + "Input A/B" a la vista), CLI-S2 (C0 pedía datos del gestor → vía "a mano"), PSI-S2 (ejemplo/justi de "decisiones escaladas" → equipo saturado), RES-S2 (puente dolor→KPI de formación), RES-S3 (ejemplo descontaminado de OPE-S2), TER-S2 (migración a medias: etiquetas de inputs a repetición), CIR-S2 (puente mensaje→concentración), CIR-S3/otros.
+
+### XIX.C — De-jergado total (campo a campo)
+Eliminada **toda palabra técnica que un dueño no entiende**, con las frases reescritas para que fluyan (sustitución, no glosa): Kaizen→"mejoras paso a paso", VSM→"mapa del recorrido de tu dinero", SIPOC→"mapa de quién entrega qué a quién", Ishikawa→"análisis de causas", "5 Porqués"→"preguntarte el porqué hasta la causa real", Pareto→"los pocos fallos que causan casi todo", Kanban→"tablero visual de trabajo", Heijunka→"nivelación de carga", "Regla 5/25"→"Regla de prioridades", OKR→"seguimiento", DISC→"test breve de estilos de trabajo", "A players"→"tus mejores personas", Eisenhower/pipeline/intake/touchpoints/leads→llano. **Cero jerga residual** verificado en los 30.
+- **Seguridad mecánica:** el único campo con llave de motor es **`capa_2_decision`** (lo lee el gate/uiType/axis de C2). Los títulos de **C3/C4/C5 son cosméticos**: `family3` no se usa en ninguna parte y C3/C4/C5 renderizan **siempre** `Capa3Flujo`/`Capa4`/`Capa5` (`TreatmentPage.tsx:6957/6986/7018`). Se de-jergaron libremente sin cambiar familias (arbol6·regla5·carga2·dafo2·semáforo1·matriz14 intactas).
+- **Residuo:** la palabra **"DAFO"** sobrevive en 2 `capa_2_decision` (CIR-S2, TER-S3) porque es la llave de esa familia; se lidera con lenguaje llano ("Fuerzas y debilidades frente al mercado (DAFO)"). Borrarla del todo pide **1 línea en `getFamily`** (sinónimo llano→dafo) + redeploy del front.
+
+### XIX.D — Hallazgos code-grounded que superan las auditorías previas
+- **`capa_6_seguimiento` es campo MUERTO en pantalla.** El C6 se rotula con `"Seguimiento de: {kpi_name}"` (`TreatmentPage.tsx:7041`) y la carátula con `kpi_name`/`kpi_unit` (`:5255-5258`); `capa_6_seguimiento` solo se usaría si `kpi_name` estuviera vacío (nunca). → El famoso **"OKR tracking" nunca llegó al cliente** en C6. Se puede eliminar el campo.
+- **`threshold_*` huérfanos** (confirmado §XVII.F): el frontend los declara pero el semáforo vivo va por avance al objetivo; el único caller es `wrapper_universal.compute_semaforo`, sin uso real. Los umbrales "raros" de NEURO-S3/CIR-S2 no pintan rojo al cliente.
+- **RES-S3 `input_revised` no se consume:** es modo `conteo`; el recálculo solo usa `remeasure_a/b` y solo en modo **estructural**. No hay bug de cálculo.
+- **Aviso del linter en CLI-S3 = falso positivo:** salta por la subcadena "sesion" en el nombre de archivo (`cli-s3-r6-sesion-aclaramiento-roles.html`); el contenido es 100% de negocio (aclaramiento de roles). 0 errores reales.
+
+### XIX.E — Auditoría de cartera (los 30)
+Coherente con solapes acotados: **24 Mantener · 6 Reposicionar** (reanclar KPI, sin liberar slot): **CLI-S1↔NEURO-S3** (margen neto mensual vs anual), **OPE-S2↔CLI-S3** (dependencia del dueño), **TER-S1↔TER-S3** (reseñas vs recomendación), **UNI-S1↔UNI-S3** (entregas limpias = reverso de retrabajo). Colisión de nombre: CARDIO-S2 "Regularidad de ventas" vs OPE-S3 "Regularidad de entrega". **Invariante 10×3 intacto** — nada se recorta ni fusiona.
+
+### XIX.F — Pendiente al cerrar
+- **Recorrido profundo síntoma a síntoma** (perfil simulado + valores calculados + test narrativa Paqui + invariantes + hallazgos + resumen CEO): en curso, UCI-S1 → los 30.
+- **Herramientas `.html` de dominio ajeno en C3/C4** a regenerar 1:1: CIR-S1 (SEO/PR), CIR-S3 (reputación/reseñas), TER-S1 ("Mapa de quejas" del enfoque viejo), TER-S2 (referidos→fidelización), CARDIO-S3 (churn→calificación), OPE-S3 (crecimiento→flujo). Más los ⚠️ parciales de §XVIII.D.
+- **Frontend:** 1 línea en `getFamily` para borrar "DAFO" del título; opcional eliminar el campo muerto `capa_6_seguimiento`.
+- **Higiene de repo:** limpiar/renombrar la copia raíz `data/` o marcarla NO-EDITAR (footgun).
+
+---
+
+## XX. SESIÓN 2-3 AGO 2026 — Consolidación de las 197 herramientas en componentes nativos (Fase 5 completa)
+
+**Por qué:** §XVIII.D dejó documentados dos bugs de fondo en la integración vía iframe (`Capa3Flujo` en `TreatmentPage.tsx`): (1) persistencia rota — el listener `herramienta-valor` solo guardaba 3 campos sueltos, el HTML completo vivía en una ref de memoria que se perdía al recargar; (2) ruptura de cardinalidad C2→C3 — `Capa3Flujo` calculaba un único `winnerIdx`/`planKey` y descartaba en silencio el resto de decisiones C2 activas cuando el cliente marcaba varios síntomas en C1. Decisión: dejar de depender del iframe y consolidar las 197 herramientas a **1 configuración nativa por opción de `capa_2_options`** (hasta 6 por síntoma), con doble vía de captura (nativa o adjuntar evidencia) alimentando el mismo campo estructurado.
+
+### XX.A — Arquitectura del motor nativo
+
+Dos componentes React dentro de `TreatmentPage.tsx`, dirigidos por `capa_3_plan[r].tipo`:
+
+```
+capa_3_plan[r] = {
+  tipo: "nativa",                          // TablaDinámica
+  titulo, secciones: [{ titulo?, columnas: [{etiqueta, tipo: texto|numero|opciones, opciones?}], filas_iniciales }]
+}
+capa_3_plan[r] = {
+  tipo: "calculadora",                     // CalculadoraMultiCampo
+  titulo, campos: [{clave, etiqueta}],
+  resultados: [{clave, etiqueta, formula, unidad?, alimenta_valor?}],
+  semaforo?: { sobre: clave, reglas: [{min, color, texto}] }   // orden DESCENDENTE de min, primera regla con valor>=min gana
+}
+```
+
+- **`evaluarFormula`** — parser aritmético propio, seguro (sin `eval`/`Function`), soporta solo `+ - * / ( )` y referencias por nombre a campos o resultados previos. **No soporta `ceil`/`round`/`max`** — fórmulas originales que dependían de ellas se traducen sin ellas (pueden dar decimales o negativos donde el HTML original truncaba en 0); es una limitación de esquema, no un bug.
+- **`unidad`** en un resultado solo formatea con símbolo si es exactamente `"eur"` o `"pct"` (`formatearResultadoCalculadora`); cualquier otro valor no rompe pero tampoco añade símbolo.
+- **`alimenta_valor: true`** en un resultado de calculadora conecta ese número a `FlowItem.valor`, que C4/C5 leen como el "estimado" precargado — reservado a figuras € genuinamente recuperables, no a conteos.
+- Autoguardado incremental campo a campo + botón "📎 Adjuntar evidencia" en paralelo (doble vía, mismo campo estructurado).
+- El esquema **no soporta columnas calculadas por fila** (tasas, ROI, semáforos por fila, badges) ni una tabla que dependa del resultado de una calculadora — en esos casos se modela solo la pieza primaria/accionable y se documenta la pérdida (precedente: UCI-S3 r2, NEURO-S1 r2/r6, y todo el cluster CARDIO).
+
+### XX.B — Plan ejecutado en 4 pasos, con condición no negociable en el Paso 1
+
+> "El Paso 1 tiene que quedar probado con 2 casos reales antes de tocar las 180 opciones del Paso 2 — si el motor tiene un fallo de diseño y lo descubro después de migrar las 180, deshacer eso es mucho más lento que comprobarlo 2 veces primero."
+
+- **Paso 1 — Motor + piloto** (`d4e2327`, 2 ago 23:46): TablaDinámica probada sobre 2 casos reales — **RES-S2 r3** (caso simple, 1 sección) y **UCI-S1 r1** (caso comprimido: 3 herramientas encadenadas → 1 configuración con 3 secciones). Las demás 178 opciones quedaron sin tocar hasta verificar estos 2. Piloto adicional de **Calculadora** (arquitectónicamente distinta) sobre CLI-S1 r2 (`75748aa`, `4ef1f1d`, 3 ago), incluyendo la conexión `alimenta_valor` → `FlowItem.valor`, antes de escalar ese tipo también.
+- **Paso 2 — Migración de las 180**: 10 compresiones reales completadas (`d15e12d`) + rollout especialidad por especialidad, con commit y push confirmados uno a uno por Maite:
+
+| Orden | Especialidad | Commit | Notas de modelado |
+|---|---|---|---|
+| 1 | UCI Financiera | `a2d32de` | Incluye el piloto RES-S2/UCI-S1 |
+| 2 | Unidad de Procesos | `cdd8bf4` | — |
+| 3 | Neurología Estratégica | `4fdba43` | Híbridos tabla+calculadora resueltos como tabla pura (NEURO-S1 r2/r6) |
+| 4 | Gestión Clínica | `90468cc` | — |
+| 5 | Excelencia Operativa | `65ae2bc` | — |
+| 6 | Rescate de Personas | `8705343` | — |
+| 7 | Psiquiatría Organizacional | `f6003f1` | PSI-S2 r5: filas con estructura no uniforme → columnas a texto libre |
+| 8 | Terapia de Experiencia | `ce6736f` | — |
+| 9 | Cirugía de Marca | `196d066` | Títulos tomados del `nombre` preexistente en `capa_3_plan`, más fiable que `<h1>`/nombre de archivo |
+| 10 | Cardiología Comercial | `35f297b` | Cluster más rico: 3 calculadoras nuevas con fórmula encadenada + semáforo, verificadas caso a caso contra los límites del HTML original antes de commitear |
+
+- **Paso 3 — Verificación**: JSON válido + diff acotado a las entradas objetivo tras cada edición (nunca `git add -A`), 0 líneas con salto de línea LF suelto en un archivo CRLF (footgun de corrupción detectado y evitado con `encoding='utf-8', newline=''` en lectura y escritura), y verificación funcional de toda calculadora nueva (fórmula + semáforo) contra los casos límite del HTML original antes de cada commit.
+- **Paso 4 — Commit + documento**: commits por especialidad ya pusheados a `main`. Este §XX es la parte de documento.
+
+### XX.C — Resultado final
+
+**180/180 opciones** (10 especialidades × 3 síntomas × 6 opciones) migradas de iframe `.html` a configuración nativa en `capa_3_plan`. Los 197 archivos HTML de §XIV quedan como referencia histórica de contenido (de ahí se extrajeron columnas/fórmulas), ya no son el mecanismo de entrega — la fase futura descrita en §XIV ("Uso previsto — Integración Plataforma") queda cerrada por esta vía.
+
+### XX.D — Pendiente
+
+**Fase 6**: validar síntoma a síntoma (o en modo cartera) con la skill `masframe-ux-validator` (§XVII/§XVIII.F) sobre el nuevo motor nativo — no iniciada.
+
+---
+
+*MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
+*Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
+*§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
+*§XVIII añadida en sesión 14-15 jul 2026 — reanclaje C0, fix gate, linter clínico y regeneración de herramientas*
+*§XIX añadida en sesión 16 jul 2026 — copy nivel dueño, de-jergado total, verificación code-grounded (deploy `16f8e3a`)*
+*§XX añadida en sesión 2-3 ago 2026 — consolidación de las 197 herramientas en componentes nativos, 180/180 migradas*
