@@ -1435,30 +1435,211 @@
     "kpi_name": "Entregas limpias",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Mapa del flujo de trabajo",
-          "herramienta": "uni-s1-r1-mapa-flujo.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Detección de cuellos de botella",
-          "herramienta": "uni-s1-r2-cuellos-botella.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Medición de tiempos de respuesta",
-          "herramienta": "uni-s1-r3-tiempos-respuesta.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Estándar de tareas repetitivas",
-          "herramienta": "uni-s1-r4-estandar-tareas.html"
-        }
-      ],
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Mapa de flujo operativo",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Paso / Actividad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "T. Estimado (min)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "T. Real Prom. (min)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Valor Cliente?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Tipo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Espera",
+                  "Control",
+                  "Valor",
+                  "Transporte",
+                  "Otro"
+                ]
+              },
+              {
+                "etiqueta": "Observaciones",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Identificación de cuellos de botella",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Cuello de Botella",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Frec./semana",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Duración media (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Impacto",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alto",
+                  "Medio",
+                  "Bajo"
+                ]
+              },
+              {
+                "etiqueta": "Causa raíz",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Persona/Sistema",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste hora (€)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "SLAs internos y tiempos de respuesta",
+        "secciones": [
+          {
+            "titulo": "1. Definición de SLAs",
+            "columnas": [
+              {
+                "etiqueta": "Tipo de solicitud",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Receptor",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "T. Máx comprometido (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "T. Real Prom. (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Protocolo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Consecuencia si incumple",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          },
+          {
+            "titulo": "2. Tracker semanal de cumplimiento",
+            "columnas": [
+              {
+                "etiqueta": "Tipo de solicitud",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Solicitudes recibidas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Dentro de SLA",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Estándar para tareas repetidas",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tarea",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Frecuencia",
+                "tipo": "opciones",
+                "opciones": [
+                  "diaria",
+                  "semanal",
+                  "mensual"
+                ]
+              },
+              {
+                "etiqueta": "T. sin estándar (min)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Personas (nº)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Documentada?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Variabilidad",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              },
+              {
+                "etiqueta": "T. con estándar (min)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
       "r5": {
         "tipo": "nativa",
         "titulo": "Medir indicadores del proceso y eliminar pasos sin valor",
@@ -1705,42 +1886,304 @@
     "kpi_name": "Entregas a plazo",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Rediseño del intake de trabajos",
-          "herramienta": "uni-s2-r1-intake-tareas.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Coordinación entre áreas",
-          "herramienta": "uni-s2-r2-coordinacion-areas.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Gestión de colas de trabajo",
-          "herramienta": "uni-s2-r3-gestion-colas.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Onboarding de nuevas personas",
-          "herramienta": "uni-s2-r4-onboarding.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Control de calidad",
-          "herramienta": "uni-s2-r5-control-calidad.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Comunicación con el cliente",
-          "herramienta": "uni-s2-r6-comunicacion-cliente.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Auditoría de entrada de tareas (intake)",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Solicitante",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Descripción breve",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Canal",
+                "tipo": "opciones",
+                "opciones": [
+                  "email",
+                  "verbal",
+                  "mensaje",
+                  "reunión"
+                ]
+              },
+              {
+                "etiqueta": "Info completa",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "T. aclarar (min)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Prior. equipo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              },
+              {
+                "etiqueta": "Prior. solicitante",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Coordinación entre áreas",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Área origen",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Área destino",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo de entrega",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Frec./semana",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "T. espera (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Protocolo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Fricción",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Gestión de colas y prioridades",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tarea",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Solicitante",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha entrada",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Prior. real (1-5)",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              {
+                "etiqueta": "Prior. solic. (1-5)",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              {
+                "etiqueta": "Quién ejecuta",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Bloqueada?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Motivo bloqueo",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Formación y onboarding",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Rol",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tarea de onboarding",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Día objetivo",
+                "tipo": "opciones",
+                "opciones": [
+                  "1",
+                  "3",
+                  "7",
+                  "14",
+                  "30",
+                  "60",
+                  "90"
+                ]
+              },
+              {
+                "etiqueta": "Responsable formación",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Duración (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Documentada?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "¿Completada?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Fecha real",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Control de calidad de entregas",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Entregable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Revisor",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "T. revisión (min)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Errores (nº)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Tipo de error principal",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Requería revisión?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "Podría evitarse"
+                ]
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Comunicación con cliente o demandante",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Canal",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Nº contactos/sem",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "T. medio/contacto (min)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "% iniciados cliente",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Motivo principal",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      }
     }
   },
   {
@@ -1800,42 +2243,288 @@
     "kpi_name": "Retrabajo",
     "kpi_unit": "%",
     "capa_3_plan": {
-      "r1": [
-        {
-          "nombre": "Frecuencia de errores",
-          "herramienta": "uni-s3-r1-frecuencia-errores.html"
-        }
-      ],
-      "r2": [
-        {
-          "nombre": "Coste del retrabajo",
-          "herramienta": "uni-s3-r2-coste-retrabajo.html"
-        }
-      ],
-      "r3": [
-        {
-          "nombre": "Análisis del origen del fallo",
-          "herramienta": "uni-s3-r3-origen-fallo.html"
-        }
-      ],
-      "r4": [
-        {
-          "nombre": "Impacto externo (quejas)",
-          "herramienta": "uni-s3-r4-impacto-externo.html"
-        }
-      ],
-      "r5": [
-        {
-          "nombre": "Consistencia de las entregas",
-          "herramienta": "uni-s3-r5-consistencia-entregas.html"
-        }
-      ],
-      "r6": [
-        {
-          "nombre": "Protocolo de verificación",
-          "herramienta": "uni-s3-r6-protocolo-verificacion.html"
-        }
-      ]
+      "r1": {
+        "tipo": "nativa",
+        "titulo": "Análisis de frecuencia de errores",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Tipo de error",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fase del proceso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Nº ocurrencias",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Detectado por",
+                "tipo": "opciones",
+                "opciones": [
+                  "cliente",
+                  "equipo",
+                  "revisión"
+                ]
+              },
+              {
+                "etiqueta": "T. retrabajo (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste hora (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Protocolo prev.?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Coste de retrabajo",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Proyecto / Entrega",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo de error",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Horas retrabajo",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste hora (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Se cobró al cliente?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Causa raíz",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Origen del fallo por fase",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Fase del proceso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Nº fallos/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Tipo de fallo más común",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Checklist salida?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "T. invertido/sem (h)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 5
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Impacto externo: quejas de cliente",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo de incidencia",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fase donde ocurrió",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "T. resolución (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Coste hora (€)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Se repitió?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Impacto relación",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alto",
+                  "Medio",
+                  "Bajo"
+                ]
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r5": {
+        "tipo": "nativa",
+        "titulo": "Consistencia de entregas por persona",
+        "secciones": [
+          {
+            "columnas": [
+              {
+                "etiqueta": "Persona",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Entregas/mes",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Errores detectados",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Revisiones necesarias",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "T. retrabajo (h)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "¿Sigue protocolo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Parcial"
+                ]
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Protocolo de verificación previa a entrega",
+        "secciones": [
+          {
+            "titulo": "1. Constructor de checklist de verificación",
+            "columnas": [
+              {
+                "etiqueta": "Paso del proceso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Ítem a verificar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Crítico?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Evidencia requerida",
+                "tipo": "opciones",
+                "opciones": [
+                  "ninguna",
+                  "screenshot",
+                  "firma",
+                  "documento"
+                ]
+              }
+            ],
+            "filas_iniciales": 5
+          },
+          {
+            "titulo": "2. Tracker de uso del checklist",
+            "columnas": [
+              {
+                "etiqueta": "Entrega",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Se aplicó checklist?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Errores ANTES de entregar",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Errores DESPUÉS (cliente)",
+                "tipo": "numero"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      }
     }
   },
   {
