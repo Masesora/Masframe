@@ -1,18 +1,28 @@
 # -*- coding: utf-8 -*-
 """
-Linter clinico de MASFRAME — valida symptoms.json contra los CONTRATOS que el
+Linter clinico de MASFRAME v2 — valida symptoms.json contra los CONTRATOS que el
 frontend (TreatmentPage.tsx) y el backend imponen al dato.
 Cada bug historico = un contrato aqui. Crece cada vez que aparece un tipo nuevo.
-Uso:  python validar_sintomas.py   (exit 0 = sin ERRORES; 1 = hay ERRORES)
-"""
-import json, os, re, sys
 
-RUTA = sys.argv[1] if len(sys.argv)>1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "symptoms.json")
+Uso:  python validar_sintomas.py            (valida data/symptoms.json)
+      python validar_sintomas.py <ruta>     (valida archivo alternativo)
+      python validar_sintomas.py --sim      (añade simulacion Paqui por sintoma)
+
+Exit 0 = sin ERRORES; 1 = hay ERRORES
+"""
+import json, os, re, sys, operator
+
+RUTA = next((a for a in sys.argv[1:] if not a.startswith("--")),
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "symptoms.json"))
+SIM  = "--sim" in sys.argv
+
 REQUIRED = ["symptom_id","specialty_id","kpi_name","kpi_unit","kpi_question","kpi_formula",
             "kpi_objective","kpi_recovery_mode","capa_1_options","capa_2_decision",
             "capa_2_options","justi_capa6","input_a","input_b","inputs"]
 RECOVERY = {"financiero","conteo","estructural"}
 C2_HERR  = {"", "retencion", "margen"}
+GENERIC_COLS = {"Elemento / paso a trabajar", "Elemento / paso a trabajar "}
+ACTION_PLAN_OK = {"CIR-S1"}  # unico sintoma donde la plantilla generica es correcta por diseno
 
 def c2_family(dec):
     n=(dec or "").lower()
@@ -23,7 +33,7 @@ def c2_family(dec):
     if "semáforo" in n or "semaforo" in n: return "semaforo"
     if "carga" in n or "capacidad" in n: return "carga"
     return "matriz"
-# familias cuyo gate C2->C3 esta soportado en el frontend (tras el fix)
+
 GATE_OK = {"dafo","abc","arbol","regla","semaforo","carga","matriz"}
 
 def labels(s):
@@ -32,6 +42,267 @@ def labels(s):
         if isinstance(it,dict): out.append((f"inputs[{i}].label", it.get("label","")))
     return out
 
+# ── Motor de evaluacion de formulas (replica de evaluarFormula del frontend) ──────
+def evaluar_formula(formula, contexto):
+    """Evalua formula con + - * / ( ) y referencias a claves del contexto.
+    Devuelve (resultado_float, None) o (None, mensaje_error).
+    """
+    expr = formula
+    # sustituir claves (mas largas primero para evitar sustitucion parcial)
+    for clave in sorted(contexto.keys(), key=len, reverse=True):
+        val = contexto[clave]
+        if val is None: return None, f"clave '{clave}' es None en contexto"
+        expr = expr.replace(clave, str(float(val)))
+    # verificar que solo quedan tokens aritmeticos seguros
+    if not re.fullmatch(r"[\d.+\-*/()\s]+", expr):
+        return None, f"formula con tokens no permitidos tras sustitucion: {expr!r}"
+    try:
+        result = eval(expr, {"__builtins__": {}})  # noqa: S307 — solo +,-,*,/,()
+        return float(result), None
+    except ZeroDivisionError:
+        return None, "division por cero"
+    except Exception as e:
+        return None, str(e)
+
+def lint_capa3(s, E, W):
+    """Contratos del motor nativo (Fase 6): capa_3_plan."""
+    sid = s.get("symptom_id","")
+    cp  = s.get("capa_3_plan")
+    if not cp or not isinstance(cp, dict):
+        W.append("capa_3_plan ausente o no es dict")
+        return
+
+    # todos los recursos r1-r6 deben existir
+    for rk in ["r1","r2","r3","r4","r5","r6"]:
+        if rk not in cp:
+            E.append(f"capa_3_plan.{rk} ausente")
+
+    for rk, recurso in cp.items():
+        if not isinstance(recurso, dict): continue
+        tipo = recurso.get("tipo","")
+        prefix = f"capa_3_plan.{rk}"
+
+        if tipo == "nativa":
+            _lint_nativa(sid, prefix, recurso, E, W)
+
+        elif tipo == "calculadora":
+            _lint_calculadora(sid, prefix, recurso, E, W)
+
+        elif tipo not in ("nativa","calculadora"):
+            E.append(f"{prefix}.tipo desconocido: {tipo!r} (solo 'nativa' o 'calculadora')")
+
+def _lint_nativa(sid, prefix, recurso, E, W):
+    secciones = recurso.get("secciones", [])
+    if not secciones:
+        E.append(f"{prefix}: tipo nativa sin secciones")
+        return
+
+    ec_seen = {}  # entidad_compartida -> primera seccion que la define
+
+    for i, sec in enumerate(secciones):
+        sp = f"{prefix}.sec[{i}]"
+        cols = sec.get("columnas", [])
+        fi   = sec.get("filas_iniciales", 0)
+
+        if not cols:
+            E.append(f"{sp}: sin columnas")
+            continue
+        if len(cols) < 2:
+            W.append(f"{sp}: solo {len(cols)} columna (minimo recomendado: 2)")
+        if fi <= 0:
+            W.append(f"{sp}: filas_iniciales={fi} (el usuario no verá filas al abrir)")
+
+        # plantilla generica en sintoma que no es plan de accion
+        if sid not in ACTION_PLAN_OK:
+            first_label = cols[0].get("etiqueta","")
+            if first_label in GENERIC_COLS:
+                W.append(f"{sp}: usa plantilla generica ('Elemento / paso a trabajar') — revisar si el contenido es especifico al proposito del sintoma")
+
+        # recoger claves de columnas inputables (para validar formulas)
+        claves_input = {}
+        claves_calc  = {}
+        tipos_validos = {"texto","numero","opciones","calculada"}
+        for c in cols:
+            clave    = c.get("clave","")
+            etiqueta = c.get("etiqueta","")
+            ctipo    = c.get("tipo","texto")
+
+            if ctipo not in tipos_validos:
+                E.append(f"{sp} col '{etiqueta}': tipo desconocido {ctipo!r}")
+
+            if ctipo == "opciones":
+                opts = c.get("opciones")
+                if not opts or not isinstance(opts, list) or len(opts) == 0:
+                    E.append(f"{sp} col '{etiqueta}': tipo opciones sin opciones[]")
+
+            if clave and ctipo != "calculada":
+                claves_input[clave] = 10.0   # valor simulado
+
+            if ctipo == "calculada":
+                if not clave:
+                    E.append(f"{sp} col '{etiqueta}': calculada sin clave")
+                if not c.get("formula"):
+                    E.append(f"{sp} col '{etiqueta}': calculada sin formula")
+
+        # validar formulas de columnas calculadas
+        for c in cols:
+            if c.get("tipo") != "calculada": continue
+            clave   = c.get("clave","")
+            formula = c.get("formula","")
+            etiqueta= c.get("etiqueta","")
+            if not formula: continue
+
+            # contexto disponible: claves_input + calculadas anteriores
+            contexto = {**claves_input, **claves_calc}
+            resultado, err = evaluar_formula(formula, contexto)
+            if err:
+                if "division por cero" in err:
+                    W.append(f"{sp} col '{etiqueta}': formula puede dividir por cero con valores reales: {formula!r}")
+                else:
+                    E.append(f"{sp} col '{etiqueta}': formula invalida — {err} — formula={formula!r}")
+            else:
+                claves_calc[clave] = resultado  # disponible para calculadas siguientes
+
+            # tokens no soportados por evaluarFormula del frontend
+            for tok in ["ceil","round","max","min","Math","if","abs"]:
+                if re.search(r'\b' + tok + r'\b', formula):
+                    E.append(f"{sp} col '{etiqueta}': formula usa '{tok}' — evaluarFormula del frontend solo soporta + - * / ( ): {formula!r}")
+
+            # claves referenciadas existen?
+            tokens_formula = re.findall(r"[a-zA-Z_][a-zA-Z0-9_]*", formula)
+            for tok in tokens_formula:
+                if tok not in claves_input and tok not in claves_calc:
+                    E.append(f"{sp} col '{etiqueta}': formula referencia clave '{tok}' que no existe en esta seccion: {formula!r}")
+
+        # entidad_compartida: la primera columna de cada seccion que la declara debe
+        # tener la misma etiqueta (o clave) que las otras secciones que comparten entidad
+        ec = sec.get("entidad_compartida")
+        if ec:
+            if ec not in ec_seen:
+                ec_seen[ec] = (i, cols[0].get("etiqueta",""))
+            else:
+                prev_i, prev_label = ec_seen[ec]
+                cur_label = cols[0].get("etiqueta","")
+                if cur_label.strip() != prev_label.strip():
+                    W.append(f"{prefix}.sec[{i}]: entidad_compartida='{ec}' pero primera columna '{cur_label}' difiere de sec[{prev_i}] '{prev_label}' — el frontend las vincula por posicion, asegurate de que son la misma entidad")
+
+def _lint_calculadora(sid, prefix, recurso, E, W):
+    campos    = recurso.get("campos", [])
+    resultados= recurso.get("resultados", [])
+
+    if not campos:
+        E.append(f"{prefix}: calculadora sin campos")
+    if not resultados:
+        E.append(f"{prefix}: calculadora sin resultados")
+
+    # claves de campos (inputs)
+    ctx = {}
+    for c in campos:
+        clave = c.get("clave","")
+        if not clave:
+            E.append(f"{prefix} campo '{c.get('etiqueta','')}': sin clave")
+        else:
+            ctx[clave] = 10.0   # valor simulado
+
+    # validar resultados
+    for r in resultados:
+        clave   = r.get("clave","")
+        formula = r.get("formula","")
+        etiqueta= r.get("etiqueta","")
+        rtipo   = r.get("tipo","calculada")
+
+        if rtipo == "calculada":
+            if not clave:
+                E.append(f"{prefix} resultado '{etiqueta}': calculada sin clave")
+            if not formula:
+                E.append(f"{prefix} resultado '{etiqueta}': calculada sin formula")
+            else:
+                resultado, err = evaluar_formula(formula, ctx)
+                if err:
+                    if "division por cero" in err:
+                        W.append(f"{prefix} resultado '{etiqueta}': formula puede dividir por cero: {formula!r}")
+                    else:
+                        E.append(f"{prefix} resultado '{etiqueta}': formula invalida — {err} — {formula!r}")
+                else:
+                    if clave: ctx[clave] = resultado
+
+                for tok in ["ceil","round","max","min","Math","if","abs"]:
+                    if re.search(r'\b' + tok + r'\b', formula):
+                        E.append(f"{prefix} resultado '{etiqueta}': usa '{tok}' no soportado por evaluarFormula: {formula!r}")
+
+                tokens_formula = re.findall(r"[a-zA-Z_][a-zA-Z0-9_]*", formula)
+                for tok in tokens_formula:
+                    if tok not in ctx:
+                        E.append(f"{prefix} resultado '{etiqueta}': formula referencia clave '{tok}' no definida en campos ni resultados previos: {formula!r}")
+
+        # alimenta_valor: solo en resultados € genuinos
+        if r.get("alimenta_valor") and r.get("unidad") not in ("eur", None):
+            W.append(f"{prefix} resultado '{etiqueta}': alimenta_valor=true pero unidad='{r.get('unidad')}' (se espera 'eur' para conectar a C4/C5)")
+
+    # semaforo: reglas en orden descendente de min
+    sem = recurso.get("semaforo",{})
+    if sem:
+        reglas = sem.get("reglas",[])
+        mins   = [r.get("min",0) for r in reglas if isinstance(r,dict)]
+        if mins != sorted(mins, reverse=True):
+            E.append(f"{prefix} semaforo.reglas no estan en orden DESCENDENTE de 'min' — la primera regla cuyo min<=valor gana (el frontend itera de arriba abajo): {mins}")
+        sobre = sem.get("sobre","")
+        if sobre and sobre not in ctx:
+            E.append(f"{prefix} semaforo.sobre='{sobre}' no es clave de ningun resultado")
+
+# ── Simulacion Paqui ──────────────────────────────────────────────────────────────
+def simular_paqui(s):
+    """Simula un recorrido C0-C3 con valores tipicos y reporta anomalias."""
+    lines = []
+    sid = s.get("symptom_id","")
+    ia_label = s.get("input_a","")
+    ib_label = s.get("input_b","—")
+
+    ia, ib = 50000.0, 35000.0   # valores genericos representativos
+
+    formula = s.get("kpi_formula","")
+    try:
+        contexto = {"InputA": ia, "InputB": ib}
+        expr = formula
+        for k,v in sorted(contexto.items(), key=lambda x: -len(x[0])):
+            expr = expr.replace(k, str(float(v)))
+        kpi_val = eval(expr, {"__builtins__": {}})  # noqa: S307
+        lines.append(f"  C0: {ia_label}={ia:,.0f}  {ib_label}={ib:,.0f}  >> KPI={kpi_val:.2f} {s.get('kpi_unit','')}")
+        obj = (s.get("kpi_objective") or "").strip()
+        m = re.fullmatch(r"([<>≤≥])\s*(\d+[.,]?\d*)\s*%?", obj)
+        if m:
+            op_map = {"<": operator.lt, ">": operator.gt, "≤": operator.le, "≥": operator.ge}
+            op_sym, threshold = m.group(1), float(m.group(2).replace(",","."))
+            cumple = op_map[op_sym](kpi_val, threshold)
+            lines.append(f"  Objetivo: {obj}  >> {'CUMPLE (OK para inicio)' if cumple else 'NO cumple (estado patologico, correcto)'}")
+    except Exception as e:
+        lines.append(f"  ⚠️  Error simulando KPI: {e}")
+
+    # simular calculadoras en capa_3_plan
+    cp = s.get("capa_3_plan",{})
+    if isinstance(cp, dict):
+        for rk, recurso in cp.items():
+            if not isinstance(recurso,dict): continue
+            if recurso.get("tipo") == "calculadora":
+                campos = recurso.get("campos",[])
+                resultados = recurso.get("resultados",[])
+                ctx = {c.get("clave","x"+str(i)): 10.0 for i,c in enumerate(campos) if c.get("clave")}
+                out_parts = []
+                for r in resultados:
+                    formula = r.get("formula","")
+                    clave   = r.get("clave","")
+                    if not formula: continue
+                    resultado, err = evaluar_formula(formula, ctx)
+                    if err:
+                        out_parts.append(f"{clave}=ERROR({err})")
+                    else:
+                        ctx[clave] = resultado
+                        out_parts.append(f"{clave}={resultado:.2f}")
+                if out_parts:
+                    lines.append(f"  {rk} calculadora: {' | '.join(out_parts)}")
+    return lines
+
+# ── Lint principal ────────────────────────────────────────────────────────────────
 def lint(s):
     E=[]; W=[]
     sid=s.get("symptom_id","??")
@@ -93,45 +364,45 @@ def lint(s):
     j6=s.get("justi_capa6","") or ""
     if len(j6)<40 or "OKR tracking" in j6:
         W.append("justi_capa6 demasiado corta o generica")
-    # --- herramientas: capa_3_plan debe enlazar a los .html (si no, las 197 herramientas no salen) ---
-    sid=s.get("symptom_id","")
-    cp=s.get("capa_3_plan")
-    cptxt=json.dumps(cp,ensure_ascii=False) if cp else ""
+    # --- herramientas: capa_3_plan ---
     herr_dir=os.path.join(os.path.dirname(os.path.abspath(RUTA)),"herramientas",sid)
-    hay_files=os.path.isdir(herr_dir) and any(f.endswith(".html") for f in os.listdir(herr_dir))
-    # --- basura en la carpeta de herramientas (solo debe haber .html) ---
     if os.path.isdir(herr_dir):
-        basura=[f for f in os.listdir(herr_dir) if not f.endswith(".html")]
+        basura=[fn for fn in os.listdir(herr_dir) if not fn.endswith(".html")]
         if basura: E.append(f"archivos que no son .html en herramientas/{sid}: {basura}")
-        # --- terminos de clinica MEDICA (bug 'Gestion Clinica' tomado literal) ---
         MED=["paciente","historia-clinica","turno","derivacion","instalaciones",
-             "seguimiento-alta","cancelaciones","tratamiento","sesion"]
-        med=[f for f in os.listdir(herr_dir) if any(t in f.lower() for t in MED)]
-        if med: W.append(f"herramientas con vocabulario de clinica medica (revisar contenido, MASFRAME es consultoria de negocio): {med[:4]}{'…' if len(med)>4 else ''}")
-    if (not cp) or (".html" not in cptxt):
-        extra=" (pero SÍ existen los .html en disco)" if hay_files else " (y tampoco hay .html en disco)"
-        W.append(f"capa_3_plan sin herramientas enlazadas -> las herramientas no aparecen en C4{extra}")
-    # --- footgun x30: 'dia' en el objetivo dispara conversion en el semaforo ---
+             "seguimiento-alta","cancelaciones","tratamiento"]
+        med=[fn for fn in os.listdir(herr_dir) if any(t in fn.lower() for t in MED)]
+        if med: W.append(f"herramientas con vocabulario de clinica medica: {med[:4]}{'…' if len(med)>4 else ''}")
+    # --- footgun x30: 'dia' en el objetivo ---
     if re.search(r"d[ií]a", obj, re.I):
-        W.append(f"kpi_objective contiene 'dia' -> el frontend multiplica el score x30 (conversion mes->dia); casi siempre NO deseado: {obj!r}")
-    # --- formato mixto en options (salto de linea rompe el conteo por ';') ---
+        W.append(f"kpi_objective contiene 'dia' -> conversion mes->dia activa: {obj!r}")
+    # --- formato mixto en options ---
     for campo in ("capa_1_options","capa_2_options"):
         v=s.get(campo)
         if isinstance(v,str) and "\n" in v:
-            W.append(f"{campo} contiene salto de linea (formato mixto; el conteo por ';' puede fallar)")
-    return E,W,fam
+            W.append(f"{campo} contiene salto de linea (formato mixto)")
+    # --- CONTRATOS FASE 6: motor nativo ──────────────────────────────────────────
+    lint_capa3(s, E, W)
+    return E, W, fam
 
 def main():
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
     d=json.load(open(RUTA,encoding="utf-8"))
-    print(f"Linter clinico MASFRAME — {len(d)} sintomas\n"+"="*60)
+    print(f"Linter clinico MASFRAME v2 — {len(d)} sintomas\n"+"="*60)
     nE=nW=0; fam_count={}
     for s in d:
         E,W,fam=lint(s)
         fam_count[fam]=fam_count.get(fam,0)+1
         if E or W:
             print(f"\n[{s.get('symptom_id','??')}] {s.get('kpi_name','')}  (C2: {fam})")
-            for e in E: print(f"   ❌ {e}"); 
-            for w in W: print(f"   ⚠️  {w}")
+            for e in E: print(f"   ERROR: {e}")
+            for w in W: print(f"   AVISO: {w}")
+        if SIM:
+            sim_lines = simular_paqui(s)
+            if sim_lines:
+                if not (E or W):
+                    print(f"\n[{s.get('symptom_id','??')}] {s.get('kpi_name','')}")
+                for l in sim_lines: print(l)
         nE+=len(E); nW+=len(W)
     print("\n"+"="*60)
     print("COBERTURA de familias C2:", ", ".join(f"{k}:{v}" for k,v in sorted(fam_count.items())))
