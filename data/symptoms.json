@@ -65,18 +65,27 @@
               },
               {
                 "etiqueta": "Unidades",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "uds"
               },
               {
                 "etiqueta": "Coste unitario (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "coste"
+              },
+              {
+                "etiqueta": "Valor Total (€)",
+                "tipo": "calculada",
+                "clave": "valor_total",
+                "formula": "uds*coste",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Días sin movimiento",
                 "tipo": "numero"
               },
               {
-                "etiqueta": "Fecha límite de acción",
+                "etiqueta": "Fecha límite",
                 "tipo": "texto"
               }
             ],
@@ -95,15 +104,32 @@
               },
               {
                 "etiqueta": "Coste unitario (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "coste"
               },
               {
                 "etiqueta": "Margen mínimo aceptable (%)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "margen_obj"
+              },
+              {
+                "etiqueta": "Precio Mín. (€)",
+                "tipo": "calculada",
+                "clave": "precio_min",
+                "formula": "coste/(1-margen_obj/100)",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Precio propuesto (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "precio_prop"
+              },
+              {
+                "etiqueta": "Margen Real (%)",
+                "tipo": "calculada",
+                "clave": "margen_real",
+                "formula": "(precio_prop-coste)/precio_prop*100",
+                "unidad": "pct"
               },
               {
                 "etiqueta": "Canal de venta",
@@ -132,11 +158,20 @@
               },
               {
                 "etiqueta": "Unidades",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "uds"
               },
               {
                 "etiqueta": "Precio real (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "precio"
+              },
+              {
+                "etiqueta": "Total recuperado (€)",
+                "tipo": "calculada",
+                "clave": "total_recuperado",
+                "formula": "uds*precio",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Canal usado",
@@ -384,7 +419,8 @@
               },
               {
                 "etiqueta": "Importe / cuota (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "importe_cuota"
               },
               {
                 "etiqueta": "Fecha 1ª cuota",
@@ -392,7 +428,15 @@
               },
               {
                 "etiqueta": "Cuotas pagadas",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "cuotas_pagadas"
+              },
+              {
+                "etiqueta": "Importe Recuperado (€)",
+                "tipo": "calculada",
+                "clave": "importe_recuperado",
+                "formula": "importe_cuota*cuotas_pagadas",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Estado acuerdo",
@@ -421,11 +465,20 @@
               },
               {
                 "etiqueta": "Cobros previstos (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "cobros"
               },
               {
                 "etiqueta": "Pagos comprometidos (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "pagos"
+              },
+              {
+                "etiqueta": "Saldo Neto (€)",
+                "tipo": "calculada",
+                "clave": "saldo_neto",
+                "formula": "cobros-pagos",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Notas",
@@ -443,15 +496,32 @@
               },
               {
                 "etiqueta": "Volumen compra/mes (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "volumen"
               },
               {
                 "etiqueta": "Plazo actual (días)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "plazo_actual"
               },
               {
                 "etiqueta": "Plazo solicitado (días)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "plazo_solicitado"
+              },
+              {
+                "etiqueta": "Días ganados",
+                "tipo": "calculada",
+                "clave": "dias_ganados",
+                "formula": "plazo_solicitado-plazo_actual",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "Liquidez liberada/mes (€)",
+                "tipo": "calculada",
+                "clave": "liquidez",
+                "formula": "(volumen/30)*dias_ganados",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Estado negociación",
@@ -491,11 +561,20 @@
               },
               {
                 "etiqueta": "Importe disp. (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "importe"
               },
               {
                 "etiqueta": "TAE (%)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "tae"
+              },
+              {
+                "etiqueta": "Coste mensual (€)",
+                "tipo": "calculada",
+                "clave": "coste_mensual",
+                "formula": "importe*(tae/100)/12",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Plazo (meses)",
@@ -536,7 +615,8 @@
               },
               {
                 "etiqueta": "Importe anticipado (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "importe_ant"
               },
               {
                 "etiqueta": "Fecha recibido",
@@ -544,7 +624,22 @@
               },
               {
                 "etiqueta": "% ejecución actual",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "pct_ejec"
+              },
+              {
+                "etiqueta": "Importe ejecutado (€)",
+                "tipo": "calculada",
+                "clave": "importe_ejec",
+                "formula": "importe_ant*pct_ejec/100",
+                "unidad": "eur"
+              },
+              {
+                "etiqueta": "Pendiente ejecutar (€)",
+                "tipo": "calculada",
+                "clave": "pendiente_ejec",
+                "formula": "importe_ant-importe_ejec",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Fecha compromiso entrega",
@@ -566,7 +661,8 @@
               },
               {
                 "etiqueta": "Anticipo total (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "anticipo_total"
               },
               {
                 "etiqueta": "Hito",
@@ -574,7 +670,15 @@
               },
               {
                 "etiqueta": "% a liberar",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "pct_liberar"
+              },
+              {
+                "etiqueta": "Importe a liberar (€)",
+                "tipo": "calculada",
+                "clave": "importe_liberar",
+                "formula": "anticipo_total*pct_liberar/100",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Entregable requerido",
@@ -1557,7 +1661,56 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "titulo": "1. Inventario y análisis del flujo operativo",
+            "entidad_compartida": "Paso"
+          },
+          {
+            "titulo": "2. Plan de mejora por paso",
+            "entidad_compartida": "Paso",
+            "columnas": [
+              {
+                "etiqueta": "Paso / Actividad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción de mejora",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Eliminar",
+                  "Automatizar",
+                  "Simplificar",
+                  "Reasignar",
+                  "Estandarizar"
+                ]
+              },
+              {
+                "etiqueta": "Ahorro estimado (min)",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Fecha límite",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "En curso",
+                  "Hecho"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
           }
         ]
       },
@@ -1720,7 +1873,49 @@
                 "unidad": "numero"
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "titulo": "1. Identificación y priorización de tareas a estandarizar",
+            "entidad_compartida": "Tarea"
+          },
+          {
+            "titulo": "2. Ficha de estándar por tarea",
+            "entidad_compartida": "Tarea",
+            "columnas": [
+              {
+                "etiqueta": "Tarea",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Qué hacer (pasos clave)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Quién lo ejecuta",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Cuándo / frecuencia",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Herramienta / método",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Dónde está documentado",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "En redacción",
+                  "Publicado"
+                ]
+              }
+            ],
+            "filas_iniciales": 3
           }
         ]
       },
@@ -8053,25 +8248,53 @@
         "titulo": "Mapa de quejas",
         "secciones": [
           {
+            "titulo": "Registro de quejas y reclamaciones",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Fecha",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Servicio afectado",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Tipo de queja",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Gravedad",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              },
+              {
+                "etiqueta": "Acción tomada",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Resuelto",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "En curso"
+                ]
+              },
+              {
+                "etiqueta": "Días resolución",
+                "tipo": "numero",
+                "clave": "dias_res"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
           }
         ]
       },
@@ -8080,25 +8303,48 @@
         "titulo": "NPS tracker",
         "secciones": [
           {
+            "titulo": "Registro NPS por cliente",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Fecha",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Puntuación (0-10)",
+                "tipo": "numero",
+                "clave": "puntuacion"
+              },
+              {
+                "etiqueta": "Categoría",
+                "tipo": "opciones",
+                "opciones": [
+                  "Promotor (9-10)",
+                  "Pasivo (7-8)",
+                  "Detractor (0-6)"
+                ]
+              },
+              {
+                "etiqueta": "Comentario",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Acción de seguimiento",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Resuelto",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
           }
         ]
       },
@@ -8107,25 +8353,46 @@
         "titulo": "Satisfacción por servicio",
         "secciones": [
           {
+            "titulo": "Índice de satisfacción por línea de servicio",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Servicio",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "N° respuestas",
+                "tipo": "numero",
+                "clave": "n_resp"
+              },
+              {
+                "etiqueta": "Puntuación media (1-5)",
+                "tipo": "numero",
+                "clave": "punt_media"
+              },
+              {
+                "etiqueta": "% Satisfechos (>=4)",
+                "tipo": "numero",
+                "clave": "pct_satisf"
+              },
+              {
+                "etiqueta": "Punto crítico principal",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Acción de mejora",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "En curso",
+                  "Resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 4
           }
         ]
       },
@@ -8134,25 +8401,43 @@
         "titulo": "Expectativas vs entrega",
         "secciones": [
           {
+            "titulo": "Análisis de gap expectativa–entrega",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Servicio",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Expectativa declarada",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Entrega real",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Gap percibido",
+                "tipo": "opciones",
+                "opciones": [
+                  "Superado",
+                  "Cumplido",
+                  "No cumplido"
+                ]
+              },
+              {
+                "etiqueta": "Causa del gap",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Ajuste comprometido",
+                "tipo": "texto"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 4
           }
         ]
       },
@@ -8161,25 +8446,39 @@
         "titulo": "Reseñas online",
         "secciones": [
           {
+            "titulo": "Seguimiento de reseñas y reputación digital",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Plataforma",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Puntuación (1-5)",
+                "tipo": "numero",
+                "clave": "puntuacion"
+              },
+              {
+                "etiqueta": "Fecha",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Resumen de la reseña",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Respondida",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Acción interna",
+                "tipo": "texto"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
           }
         ]
       },
@@ -8188,25 +8487,44 @@
         "titulo": "Clientes en riesgo",
         "secciones": [
           {
+            "titulo": "Radar de clientes en riesgo de pérdida",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Señal de alerta",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Fecha detección",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Prob. churn (%)",
+                "tipo": "numero",
+                "clave": "prob_churn"
+              },
+              {
+                "etiqueta": "Acción preventiva",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha seguimiento",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "En riesgo",
+                  "Recuperado",
+                  "Perdido"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 4
           }
         ]
       }
@@ -8274,25 +8592,49 @@
         "titulo": "Tracking de referidos",
         "secciones": [
           {
+            "titulo": "Registro de referidos y conversión",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Referidor",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Cliente referido",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Fecha referido",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Servicio de interés",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Lead",
+                  "En negociación",
+                  "Convertido",
+                  "Perdido"
+                ]
+              },
+              {
+                "etiqueta": "Valor contrato (€)",
+                "tipo": "numero",
+                "clave": "valor"
+              },
+              {
+                "etiqueta": "Agradecimiento enviado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
           }
         ]
       },
@@ -8301,25 +8643,39 @@
         "titulo": "Programa de referidos",
         "secciones": [
           {
+            "titulo": "Elementos del programa de referidos",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Elemento del programa",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Descripción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Incentivo ofrecido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Activado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Pendiente"
+                ]
               },
               {
                 "etiqueta": "Responsable",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Fecha revisión",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 4
           }
         ]
       },
@@ -8328,9 +8684,31 @@
         "titulo": "Momentos WOM",
         "secciones": [
           {
+            "titulo": "Mapa de momentos que generan boca a boca",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Momento clave",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Descripción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Canal principal",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Impacto potencial",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alto",
+                  "Medio",
+                  "Bajo"
+                ]
+              },
+              {
+                "etiqueta": "Acción para potenciarlo",
                 "tipo": "texto"
               },
               {
@@ -8338,15 +8716,16 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activo",
+                  "Pendiente",
+                  "Descartado"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 4
           }
         ]
       },
@@ -8355,25 +8734,48 @@
         "titulo": "Casos de éxito",
         "secciones": [
           {
+            "titulo": "Biblioteca de casos de éxito",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Cliente (con permiso)",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Servicio",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Resultado logrado",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Cita textual del cliente",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Formato",
+                "tipo": "opciones",
+                "opciones": [
+                  "Texto",
+                  "Vídeo",
+                  "Imagen",
+                  "PDF"
+                ]
+              },
+              {
+                "etiqueta": "Publicado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Canal de distribución",
+                "tipo": "texto"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 4
           }
         ]
       },
@@ -8382,25 +8784,48 @@
         "titulo": "Satisfacción postservicio",
         "secciones": [
           {
+            "titulo": "Encuesta de satisfacción tras la entrega",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Servicio entregado",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Fecha",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Puntuación (1-5)",
+                "tipo": "numero",
+                "clave": "puntuacion"
+              },
+              {
+                "etiqueta": "Comentario clave",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Dispuesto a referir",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Quizás"
+                ]
+              },
+              {
+                "etiqueta": "Seguimiento programado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 4
           }
         ]
       },
@@ -8409,25 +8834,40 @@
         "titulo": "Comunidad de clientes",
         "secciones": [
           {
+            "titulo": "Iniciativas de comunidad y fidelización",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Iniciativa",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Canal / formato",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Frecuencia",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "N° participantes activos",
+                "tipo": "numero",
+                "clave": "n_participantes"
               },
               {
                 "etiqueta": "Responsable",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activa",
+                  "Planificada",
+                  "Pausada"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 4
           }
         ]
       }
@@ -9353,25 +9793,46 @@
         "titulo": "Repartir tu tiempo: operativo vs estratégico",
         "secciones": [
           {
+            "titulo": "Distribución real del tiempo semanal",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Bloque de tiempo / actividad",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
+                "etiqueta": "Tipo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Operativo",
+                  "Estratégico",
+                  "Administrativo",
+                  "Formación",
+                  "Otro"
+                ]
               },
               {
-                "etiqueta": "Fecha objetivo",
-                "tipo": "texto"
+                "etiqueta": "Horas/semana estimadas",
+                "tipo": "numero",
+                "clave": "h_est"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Horas/semana reales",
+                "tipo": "numero",
+                "clave": "h_real"
+              },
+              {
+                "etiqueta": "Gap (h)",
+                "tipo": "calculada",
+                "clave": "gap_h",
+                "formula": "h_real-h_est",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "Acción de ajuste",
+                "tipo": "texto"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 6
           }
         ]
       },
@@ -9380,25 +9841,44 @@
         "titulo": "Medir la cola: de solicitud a inicio",
         "secciones": [
           {
+            "titulo": "Tiempo de espera por tipo de solicitud",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Tipo de solicitud / trabajo",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "N° solicitudes/mes",
+                "tipo": "numero",
+                "clave": "n_sol"
+              },
+              {
+                "etiqueta": "T. medio espera (días)",
+                "tipo": "numero",
+                "clave": "t_espera"
+              },
+              {
+                "etiqueta": "T. objetivo (días)",
+                "tipo": "numero",
+                "clave": "t_obj"
+              },
+              {
+                "etiqueta": "Gap (días)",
+                "tipo": "calculada",
+                "clave": "gap_dias",
+                "formula": "t_espera-t_obj",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "Cuello de botella identificado",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Acción",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 4
           }
         ]
       },
@@ -9407,25 +9887,44 @@
         "titulo": "Medir el peso de las urgencias",
         "secciones": [
           {
+            "titulo": "Registro semanal de urgencias",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Semana",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "N° urgencias",
+                "tipo": "numero",
+                "clave": "n_urg"
+              },
+              {
+                "etiqueta": "Horas consumidas en urgencias",
+                "tipo": "numero",
+                "clave": "h_urg"
+              },
+              {
+                "etiqueta": "Horas totales semana",
+                "tipo": "numero",
+                "clave": "h_total"
+              },
+              {
+                "etiqueta": "% tiempo en urgencias",
+                "tipo": "calculada",
+                "clave": "pct_urg",
+                "formula": "h_urg/h_total*100",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "Origen principal",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Acción preventiva",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
           }
         ]
       },
@@ -9434,25 +9933,48 @@
         "titulo": "Nivelar los picos de fin de mes",
         "secciones": [
           {
+            "titulo": "Análisis de carga por período",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Período / día",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Tipo de carga principal",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Horas reales",
+                "tipo": "numero",
+                "clave": "h_reales"
+              },
+              {
+                "etiqueta": "Capacidad disponible (h)",
+                "tipo": "numero",
+                "clave": "h_cap"
+              },
+              {
+                "etiqueta": "Gap (h)",
+                "tipo": "calculada",
+                "clave": "gap_cap",
+                "formula": "h_reales-h_cap",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "Acción de nivelación",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "En curso",
+                  "Nivelado"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
           }
         ]
       },
@@ -9461,25 +9983,39 @@
         "titulo": "Comparar tu semana más y menos intensa",
         "secciones": [
           {
+            "titulo": "Análisis de variabilidad semanal",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Actividad / tipo de trabajo",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Horas semana intensa",
+                "tipo": "numero",
+                "clave": "h_intensa"
+              },
+              {
+                "etiqueta": "Horas semana normal",
+                "tipo": "numero",
+                "clave": "h_normal"
+              },
+              {
+                "etiqueta": "Diferencia (h)",
+                "tipo": "calculada",
+                "clave": "diferencia",
+                "formula": "h_intensa-h_normal",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "Causa del pico",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Acción niveladora",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
           }
         ]
       },
@@ -9488,25 +10024,48 @@
         "titulo": "Encontrar el cuello de botella",
         "secciones": [
           {
+            "titulo": "Análisis de capacidad por etapa del proceso",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Proceso / etapa",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Capacidad real (uds/h)",
+                "tipo": "numero",
+                "clave": "cap_real"
+              },
+              {
+                "etiqueta": "Demanda real (uds/h)",
+                "tipo": "numero",
+                "clave": "dem_real"
+              },
+              {
+                "etiqueta": "Carga sobre capacidad",
+                "tipo": "calculada",
+                "clave": "carga",
+                "formula": "dem_real-cap_real",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "Impacto en el sistema",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Acción de mejora",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activo",
+                  "Mitigado",
+                  "Resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
           }
         ]
       }
