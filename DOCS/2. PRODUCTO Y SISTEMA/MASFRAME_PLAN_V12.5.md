@@ -767,9 +767,65 @@ capa_3_plan[r] = {
 
 ---
 
+---
+
+## XXI. SESIÓN 4 AGO 2026 — Fase 6: Auditoría completa del catálogo nativo (items A-G)
+
+**Contexto:** Primera auditoría de calidad sobre el motor nativo post-migración (§XX). El objetivo era verificar que cada herramienta cumple su propósito real, no que tenga columnas genéricas de plan de acción donde debería tener columnas específicas.
+
+### XXI.A — Metodología y hallazgos del escaneo
+
+**Scan A/B — Calculadoras sin cálculo:** Búsqueda sistemática de herramientas con "calculad" en el título y `tipo: "nativa"` sin columnas calculadas. **Resultado: cero bugs.** El único caso candidato (UCI-S3 r1 "Calculadora de precio mínimo viable") ya tenía las 3 columnas calculadas (coste_total, precio_minimo, gap) desde el commit `cad282d` de la sesión anterior.
+
+**Scan C — entidad_compartida:** Verificado que UCI-S1 r2 y UNI-S1 r3 ya tenían `entidad_compartida` correctamente aplicado. Sin acción necesaria.
+
+**Scan D — criterios de normalización:**
+- `"Responsable"`: 74 ocurrencias en el catálogo. Criterio aplicado: solo eliminar cuando el responsable es la misma entidad que el ítem. **Resultado: 74 KEEP** — en todos los casos el responsable es genuinamente diferente al ítem de la tabla.
+- `"Fecha límite de acción"` → `"Fecha límite"`: 1 ocurrencia corregida (commit `fdc20f9`).
+
+**Scan E — UNI-S1 r1 y r4 (estructura relacional):**
+- r1 "Mapa de flujo operativo": añadida segunda sección "Plan de mejora por paso" con `entidad_compartida: "Paso"` — cierra el ciclo diagnóstico → acción.
+- r4 "Estándar para tareas repetidas": añadida segunda sección "Ficha de estándar por tarea" con `entidad_compartida: "Tarea"` — la sección 1 prioriza qué estandarizar, la sección 2 documenta el estándar real (qué/quién/cuándo/cómo/dónde).
+
+**Scan F — Cola de alto riesgo (TER-S1, TER-S2, OPE-S3):** Las 18 herramientas de estos 3 síntomas tenían la plantilla genérica `['Elemento / paso a trabajar', 'Responsable', 'Fecha objetivo', 'Avance (0-100)']`. Rediseñadas con columnas específicas al propósito de cada una. OPE-S3 suma 6 columnas calculadas (gaps, %, diferencias). Commit `fdc20f9`.
+
+**Scan G — Catálogo completo:**
+
+| Síntoma | Decisión | Razón |
+|---------|----------|-------|
+| CIR-S1 | KEEP genérico | Action plan para construir branding — la plantilla es correcta |
+| CIR-S2 | Rediseñado | Análisis producto estrella: margen/rentabilidad/mezcla mensual con 12 cols calculadas + r5 como `tipo: "calculadora"` |
+| CIR-S3 | Rediseñado | Calendario editorial, métricas KPI con % calculado, banco de mensajes, auditoría perfiles |
+| PSI-S1 | Rediseñado | Mapa delegación, tracker urgencias con tiempo calculado, carga por persona con sobrecarga calculada, log interrupciones con tiempo total calculado |
+| PSI-S3 | Rediseñado | Mapa valores, guía entrevista, log reconocimientos, marco decisiones |
+| RES-S1 | Rediseñado | Mapa energía con balance calculado (e_da - e_consume), radar burnout, redistribución responsabilidades |
+| OPE-S1 | Rediseñado | Inventario procesos, análisis cuello botella, lean TIMWOOD, KPIs con % calculado |
+
+Commit `2b1be10`. Push: `54d64e0`.
+
+### XXI.B — Estado final del catálogo
+
+| Métrica | Valor |
+|---------|-------|
+| Síntomas con columnas específicas | 29/30 (CIR-S1 intencional) |
+| Total columnas calculadas | **50** en todo el catálogo |
+| Herramientas con tipo "calculadora" | Varias (CARDIO, CIR-S2 r5, etc.) |
+| Herramientas con entidad_compartida | UCI-S1 r2, UNI-S1 r3, r1, r4 |
+
+### XXI.C — Arquitectura footgun: dos symptoms.json (estado actual)
+
+Aclarado definitivamente:
+- `masesora_backend/data/symptoms.json` → **archivo desplegado**, servido por Render, trackeado en git. **EDITAR AQUÍ para producción.**
+- `data/symptoms.json` (raíz) → **archivo huérfano**, NO desplegado, NO trackeado en git. Contiene el trabajo de Fase 6.
+
+**Pendiente de resolución**: sincronizar la raíz con el deployed, o eliminar la copia raíz. Los commits de Fase 6 (`fdc20f9`, `2b1be10`) van al archivo raíz — aún no están en producción.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
 *§XVIII añadida en sesión 14-15 jul 2026 — reanclaje C0, fix gate, linter clínico y regeneración de herramientas*
 *§XIX añadida en sesión 16 jul 2026 — copy nivel dueño, de-jergado total, verificación code-grounded (deploy `16f8e3a`)*
 *§XX añadida en sesión 2-3 ago 2026 — consolidación de las 197 herramientas en componentes nativos, 180/180 migradas*
+*§XXI añadida en sesión 4 ago 2026 — Fase 6 auditoría completa del catálogo nativo (items A-G), 50 columnas calculadas*
