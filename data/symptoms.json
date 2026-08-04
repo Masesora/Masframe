@@ -1133,19 +1133,44 @@
               },
               {
                 "etiqueta": "Coste Directo (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "coste_directo"
               },
               {
                 "etiqueta": "Costes Indirectos Asig. (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "costes_indirectos"
+              },
+              {
+                "etiqueta": "Coste Total (€)",
+                "tipo": "calculada",
+                "clave": "coste_total",
+                "formula": "coste_directo+costes_indirectos",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Margen Obj. %",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "margen_obj"
+              },
+              {
+                "etiqueta": "Precio Mín. Viable (€)",
+                "tipo": "calculada",
+                "clave": "precio_minimo",
+                "formula": "coste_total/(1-margen_obj/100)",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Precio Actual (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "precio_actual"
+              },
+              {
+                "etiqueta": "Gap (€)",
+                "tipo": "calculada",
+                "clave": "gap",
+                "formula": "precio_actual-precio_minimo",
+                "unidad": "eur"
               }
             ],
             "filas_iniciales": 3
