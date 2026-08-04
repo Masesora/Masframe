@@ -192,7 +192,8 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Proyecto"
           },
           {
             "titulo": "2. Planificar hitos de entrega para liberar cobros",
@@ -231,7 +232,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Proyecto"
           },
           {
             "titulo": "3. Control semanal de entregas y activación de pagos",
@@ -269,7 +271,8 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Proyecto"
           }
         ]
       },
@@ -1476,11 +1479,20 @@
               },
               {
                 "etiqueta": "T. Estimado (min)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "t_estimado"
               },
               {
                 "etiqueta": "T. Real Prom. (min)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "t_real"
+              },
+              {
+                "etiqueta": "Gap (min)",
+                "tipo": "calculada",
+                "clave": "gap_tiempo",
+                "formula": "t_real-t_estimado",
+                "unidad": "numero"
               },
               {
                 "etiqueta": "¿Valor Cliente?",
@@ -1590,7 +1602,8 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "TipoSolicitud"
           },
           {
             "titulo": "2. Tracker semanal de cumplimiento",
@@ -1608,7 +1621,8 @@
                 "tipo": "numero"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "TipoSolicitud"
           }
         ]
       },
@@ -1623,21 +1637,19 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Frecuencia",
-                "tipo": "opciones",
-                "opciones": [
-                  "diaria",
-                  "semanal",
-                  "mensual"
-                ]
+                "etiqueta": "Ocurrencias/mes",
+                "tipo": "numero",
+                "clave": "ocurrencias"
               },
               {
                 "etiqueta": "T. sin estándar (min)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "t_sin"
               },
               {
                 "etiqueta": "Personas (nº)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "personas"
               },
               {
                 "etiqueta": "¿Documentada?",
@@ -1658,7 +1670,15 @@
               },
               {
                 "etiqueta": "T. con estándar (min)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "t_con"
+              },
+              {
+                "etiqueta": "Ahorro/mes (min)",
+                "tipo": "calculada",
+                "clave": "ahorro_mes",
+                "formula": "(t_sin-t_con)*personas*ocurrencias",
+                "unidad": "numero"
               }
             ],
             "filas_iniciales": 4
@@ -1686,11 +1706,20 @@
               },
               {
                 "etiqueta": "Meta",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "meta"
               },
               {
                 "etiqueta": "Valor actual",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "valor_actual"
+              },
+              {
+                "etiqueta": "% Cumplimiento",
+                "tipo": "calculada",
+                "clave": "pct_cumplimiento",
+                "formula": "(valor_actual/meta)*100",
+                "unidad": "pct"
               },
               {
                 "etiqueta": "Frecuencia medición",
@@ -3149,11 +3178,20 @@
               },
               {
                 "etiqueta": "Horas reales/semana",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "horas_reales"
               },
               {
                 "etiqueta": "Horas objetivo/semana",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "horas_objetivo"
+              },
+              {
+                "etiqueta": "Gap (h)",
+                "tipo": "calculada",
+                "clave": "gap_horas",
+                "formula": "horas_reales-horas_objetivo",
+                "unidad": "numero"
               }
             ],
             "filas_iniciales": 6
@@ -3908,11 +3946,20 @@
               },
               {
                 "etiqueta": "Meta",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "meta"
               },
               {
                 "etiqueta": "Valor actual",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "valor_actual"
+              },
+              {
+                "etiqueta": "% Progreso",
+                "tipo": "calculada",
+                "clave": "pct_progreso",
+                "formula": "(valor_actual/meta)*100",
+                "unidad": "pct"
               }
             ],
             "filas_iniciales": 3
@@ -3926,11 +3973,20 @@
               },
               {
                 "etiqueta": "Meta",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "meta"
               },
               {
                 "etiqueta": "Valor actual",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "valor_actual"
+              },
+              {
+                "etiqueta": "% Progreso",
+                "tipo": "calculada",
+                "clave": "pct_progreso",
+                "formula": "(valor_actual/meta)*100",
+                "unidad": "pct"
               }
             ],
             "filas_iniciales": 3
@@ -3944,11 +4000,20 @@
               },
               {
                 "etiqueta": "Meta",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "meta"
               },
               {
                 "etiqueta": "Valor actual",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "valor_actual"
+              },
+              {
+                "etiqueta": "% Progreso",
+                "tipo": "calculada",
+                "clave": "pct_progreso",
+                "formula": "(valor_actual/meta)*100",
+                "unidad": "pct"
               }
             ],
             "filas_iniciales": 3
