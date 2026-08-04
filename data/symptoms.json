@@ -1192,19 +1192,58 @@
               },
               {
                 "etiqueta": "Precio Tarifa (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "pt"
               },
               {
                 "etiqueta": "Descuento Hab. %",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "dp"
+              },
+              {
+                "etiqueta": "Precio Real Cobrado (€)",
+                "tipo": "calculada",
+                "clave": "prc",
+                "formula": "pt*(1-dp/100)",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Coste de Entrega (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "ce"
               },
               {
                 "etiqueta": "Uds/mes",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "ud"
+              },
+              {
+                "etiqueta": "Margen c/ Tarifa %",
+                "tipo": "calculada",
+                "clave": "mt",
+                "formula": "(pt-ce)/pt*100",
+                "unidad": "pct"
+              },
+              {
+                "etiqueta": "Margen c/ Desc. %",
+                "tipo": "calculada",
+                "clave": "md",
+                "formula": "(prc-ce)/prc*100",
+                "unidad": "pct"
+              },
+              {
+                "etiqueta": "Diferencia Margen (pp)",
+                "tipo": "calculada",
+                "clave": "dif",
+                "formula": "md-mt",
+                "unidad": "pct"
+              },
+              {
+                "etiqueta": "Margen Perdido/mes (€)",
+                "tipo": "calculada",
+                "clave": "mp",
+                "formula": "(pt-prc)*ud",
+                "unidad": "eur"
               }
             ],
             "filas_iniciales": 3
