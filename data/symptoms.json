@@ -3827,7 +3827,7 @@
                 "tipo": "numero"
               }
             ],
-            "filas_iniciales": 0
+            "filas_iniciales": 1
           }
         ]
       },
@@ -4007,7 +4007,7 @@
                 ]
               }
             ],
-            "filas_iniciales": 0
+            "filas_iniciales": 1
           }
         ]
       },
