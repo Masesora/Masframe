@@ -349,6 +349,18 @@ def lint(s):
     elif rm=="estructural":
         if not (s.get("input_revised_1") and s.get("input_revised_2")):
             W.append("estructural sin input_revised_1/2 (para la re-medicion de C6)")
+    else:  # financiero / conteo
+        if not s.get("input_revised_1") or not s.get("input_revised_2"):
+            W.append(f"recovery_mode '{rm}' sin input_revised_1/2 (recomendado para re-medicion manual en C6)")
+    # --- input_revised no deben ser identicos al original (indicar medicion post) ---
+    r1=s.get("input_revised_1",""); r2=s.get("input_revised_2","")
+    if r1 and r1==s.get("input_a",""):
+        W.append("input_revised_1 identico a input_a — debe reflejar la medicion post-tratamiento")
+    if r2 and r2==s.get("input_b",""):
+        W.append("input_revised_2 identico a input_b — debe reflejar la medicion post-tratamiento")
+    # --- NEURO-S1: KPI gameable (InputB lo fija el cliente) ---
+    if sid=="NEURO-S1":
+        W.append("NEURO-S1: InputB es auto-fijado por el cliente (objetivo de facturacion) — KPI gameable; el frontend ya avisa si InputB < InputA*1.15")
     # --- c2_herramienta ---
     ch=s.get("c2_herramienta","")
     if ch not in C2_HERR: W.append(f"c2_herramienta no reconocido por el frontend: {ch!r}")
