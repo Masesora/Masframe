@@ -1492,7 +1492,8 @@
         "campos": [
           {
             "clave": "facturacion",
-            "etiqueta": "Facturación mensual (€)"
+            "etiqueta": "Facturación mensual (€)",
+            "precarga_desde_c0": "input_a"
           },
           {
             "clave": "tarifa",
@@ -6226,7 +6227,8 @@
         "campos": [
           {
             "clave": "beneficio_bruto_anual",
-            "etiqueta": "Beneficio bruto anual (€)"
+            "etiqueta": "Beneficio bruto anual (€)",
+            "precarga_desde_c0": "input_b"
           },
           {
             "clave": "irpf_is_pagado",
