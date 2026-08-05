@@ -10,7 +10,7 @@ Uso:  python validar_sintomas.py            (valida data/symptoms.json)
 
 Exit 0 = sin ERRORES; 1 = hay ERRORES
 """
-import json, os, re, sys, operator
+import json, os, re, sys, operator, unicodedata
 
 RUTA = next((a for a in sys.argv[1:] if not a.startswith("--")),
             os.path.join(os.path.dirname(os.path.abspath(__file__)), "symptoms.json"))
@@ -250,6 +250,70 @@ def _lint_calculadora(sid, prefix, recurso, E, W):
         if sobre and sobre not in ctx:
             E.append(f"{prefix} semaforo.sobre='{sobre}' no es clave de ningun resultado")
 
+# ── Contrato: contaminacion de catalogo (capa_2_options <-> capa_3_plan) ───────────
+# Bug historico (sesion 5 ago 2026, ver §XXIII del plan y AUDITORIA_UX_30_SINTOMAS):
+# capa_3_plan escrito para un sintoma distinto y pegado en el sitio equivocado —
+# PSI-S3 traia herramientas de "cultura y valores", RES-S1 de "burnout individual",
+# OPE-S1 de "procesos/Lean generico" (y antes, jul 2026, RES-S3 traia dependencia/
+# backup en vez de conflicto/clima — §XVII.D). El motor no puede detectarlo solo
+# (monta fielmente cualquier capa_3_plan que reciba), asi que el chequeo va aqui:
+# solapamiento de vocabulario entre las 6 capa_2_options y los titulos/columnas de
+# capa_3_plan. Es un AVISO heuristico, no un ERROR — puede haber falsos positivos
+# legitimos (sintomas con mapeo mas indirecto, ej. DAFO), pero un ratio muy bajo
+# siempre merece una revision humana.
+CONTAMINACION_STOPWORDS = set("""
+de la el en que un una y o no sin con para por tu su los las del al se si lo mas menos
+este esta estos estas cada todo toda todos todas hay tiene tienes has he son sea ser
+esta estas aunque como cual cuanto donde cuando quien mi mis tus sus nos les le da
+das dan van voy vas ya muy poco pocos poca pocas mucho muchos mucha muchas otro otra
+otros otras alguna algunas algun algunos ese esa esos esas eso algo nada nadie entre
+sobre hasta desde porque pero bien mal ahi aqui alli asi solo solamente tener hacer
+hace haces hacen puede pueden podria podrian debe deben deberia deberian sino tras
+cabe segun mediante durante excepto salvo vez veces sido siendo estar estan sabe
+""".split())
+
+def _texto_significativo(txt):
+    """Normaliza (sin acentos, minusculas) y devuelve el set de palabras de
+    contenido (>=4 letras, fuera de la stopword list)."""
+    plano = unicodedata.normalize("NFKD", txt or "").encode("ascii", "ignore").decode()
+    palabras = re.findall(r"[a-zA-Z]{4,}", plano.lower())
+    return {p for p in palabras if p not in CONTAMINACION_STOPWORDS}
+
+def lint_contaminacion(s, W):
+    c2 = s.get("capa_2_options", "")
+    cp = s.get("capa_3_plan")
+    if not isinstance(cp, dict) or not cp:
+        return
+
+    vocab_c2 = _texto_significativo(c2)
+    if not vocab_c2:
+        return
+
+    partes_c3 = []
+    for recurso in cp.values():
+        if not isinstance(recurso, dict):
+            continue
+        partes_c3.append(recurso.get("titulo", ""))
+        for sec in recurso.get("secciones", []) or []:
+            partes_c3.append(sec.get("titulo", ""))
+            for col in sec.get("columnas", []) or []:
+                partes_c3.append(col.get("etiqueta", ""))
+        for campo in recurso.get("campos", []) or []:
+            partes_c3.append(campo.get("etiqueta", ""))
+        for res in recurso.get("resultados", []) or []:
+            partes_c3.append(res.get("etiqueta", ""))
+    vocab_c3 = _texto_significativo(" ".join(partes_c3))
+
+    overlap = vocab_c2 & vocab_c3
+    ratio = len(overlap) / len(vocab_c2)
+    if ratio < 0.15 or len(overlap) < 3:
+        W.append(
+            "posible CONTAMINACION de catalogo: capa_3_plan comparte muy poco vocabulario "
+            f"con capa_2_options (solapan {len(overlap)}/{len(vocab_c2)} palabras clave, "
+            f"{ratio:.0%}) — revisar si las 6 ramas de C3 responden de verdad a este sintoma "
+            f"o se pegaron de otro. Palabras en comun: {sorted(overlap) or '(ninguna)'}"
+        )
+
 # ── Simulacion Paqui ──────────────────────────────────────────────────────────────
 def simular_paqui(s):
     """Simula un recorrido C0-C3 con valores tipicos y reporta anomalias."""
@@ -395,6 +459,8 @@ def lint(s):
             W.append(f"{campo} contiene salto de linea (formato mixto)")
     # --- CONTRATOS FASE 6: motor nativo ──────────────────────────────────────────
     lint_capa3(s, E, W)
+    # --- contaminacion de catalogo (capa_2_options <-> capa_3_plan) ──────────────
+    lint_contaminacion(s, W)
     return E, W, fam
 
 def main():
