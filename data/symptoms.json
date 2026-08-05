@@ -2511,7 +2511,7 @@
     "impact_treatment": "Cerramos las brechas operativas que generan retrabajo, quejas y coste invisible. Cada proceso pasa a funcionar a la primera — sin retroceder.",
     "optimizer_impact": "Aumento inmediato de capacidad operativa al eliminar el coste del retrabajo crónico.",
     "optimizer_decision": "Diagnóstico de Causa Raíz de Calidad",
-    "example": "Estudio de arquitectura: el 27% de las entregas necesitaban corrección. Tras el protocolo de calidad, lo que hay que rehacer baja al 6%.",
+    "example": "Estudio de arquitectura: el 27% de las entregas necesitaban correccion. Tras el protocolo de calidad, lo que hay que rehacer baja al 4%.",
     "capa_1_priorizacion": "Siempre se repiten los mismos errores y nunca he cerrado su origen; el trabajo que hay que rehacer me come horas que deberían ir a trabajo nuevo; los fallos se concentran en la misma fase y no la he rediseñado; recibo quejas recurrentes que apuntan siempre al mismo problema; la calidad me cambia según quién entrega, no según lo que se entrega; no tengo un control previo a la entrega que frene los fallos en origen.",
     "justi_capa1": "El trabajo que hay que rehacer tiene orígenes distintos. Señala cuáles reconoces para localizar los fallos que más te cuestan y atacarlos desde la raíz.",
     "capa_2_decision": "Impacto vs Esfuerzo",
@@ -2829,7 +2829,7 @@
     "kpi_question": "¿Cuántos clientes nuevos atendiste este mes y cuántos clientes en total? Si menos del 20% son nuevos, tu negocio no tiene motor comercial — depende de los que ya tiene.",
     "kpi_impact": "Si menos del 20% de tus clientes son nuevos cada mes, el negocio no genera demanda propia — crece solo si el boca a boca llega solo. Eso no es un sistema, es suerte.",
     "kpi_formula": "(InputA/InputB)*100",
-    "kpi_objective": ">20%",
+    "kpi_objective": ">80%",
     "threshold_critical": 10,
     "threshold_recommended": 15,
     "threshold_optimizer": 20,
@@ -2841,18 +2841,18 @@
       },
       {
         "id": "inputB",
-        "label": "Total de clientes atendidos este mes"
+        "label": "Clientes nuevos que te habias propuesto captar este mes"
       }
     ],
     "input_a": "Clientes nuevos este mes",
-    "input_b": "Total de clientes atendidos este mes",
-    "input_revised_1": "Clientes nuevos (post)",
-    "input_revised_2": "Total clientes atendidos (post)",
+    "input_b": "Clientes nuevos que te habias propuesto captar este mes",
+    "input_revised_1": "Clientes nuevos captados el mes pasado",
+    "input_revised_2": "Objetivo de captacion mensual (mismo que al inicio)",
     "result_revised": "Δ % clientes nuevos sobre total",
     "impact_treatment": "Identificamos qué clientes y productos te dejan más margen y construimos un sistema para atraer más de esos. Dejas de vender lo que llega y empiezas a crecer por diseño.",
     "optimizer_impact": "Activación inmediata del motor de demanda con el canal de mayor retorno.",
     "optimizer_decision": "Diagnóstico de Motor Comercial",
-    "example": "Estudio de nutrición: 3 clientes nuevos de 30 atendidos, un 10%. Tras activar el canal que mejor le funciona, sube al 22%.",
+    "example": "Estudio de nutricion: se proponia captar 5 clientes nuevos al mes pero solo llegaba a 2 (40%). Tras activar su canal principal y sistematizar el seguimiento, pasa a captar 5 de 5 (100%).",
     "capa_1_priorizacion": "Dependes del boca a boca; sin presencia en internet que atraiga clientes; sin un método para convertir a los interesados en clientes; sin haber trabajado a fondo el canal que mejor te funciona; sin un sistema de recomendaciones; sin un objetivo mensual de clientes nuevos.",
     "justi_capa1": "Tu forma de captar clientes falla por distintas razones. Señala cuáles reconoces para identificar el riesgo de fondo que bloquea tu crecimiento.",
     "capa_2_decision": "Análisis de Riesgos",
@@ -3667,7 +3667,7 @@
     "kpi_question": "Introduce cuántos contactos te llegaron y cuántos eran una oportunidad real. Así sabrás si tu sistema comercial filtra bien o solo acumula ruido.",
     "kpi_impact": "Un sistema comercial sano convierte al menos el 30 por ciento de contactos en oportunidades reales",
     "kpi_formula": "(InputB/InputA)*100",
-    "kpi_objective": ">30",
+    "kpi_objective": ">20",
     "threshold_critical": 70,
     "threshold_recommended": 85,
     "threshold_optimizer": 95,
@@ -6172,7 +6172,7 @@
     "impact_treatment": "Reconstruimos la imagen de tu negocio para que transmita el nivel que merece. La primera impresión empieza a abrir puertas en lugar de generar dudas.",
     "optimizer_impact": "Incremento inmediato de confianza y valor percibido en el primer contacto con el cliente.",
     "optimizer_decision": "Diagnóstico de Identidad Competitiva",
-    "example": "Estudio creativo: materiales profesionales, del 28% al 79% tras el protocolo.",
+    "example": "Estudio creativo: materiales profesionales, del 28% al 85% tras el protocolo.",
     "capa_1_priorizacion": "Mi marca no transmite mi nivel real; Pierdo clientes antes del primer contacto; Mi estilo visual es genérico e intercambiable; Mis materiales no hacen justicia a mi calidad; Cada canal luce diferente, sin coherencia; Mi negocio aparenta menos de lo que vale",
     "justi_capa1": "La imagen débil tiene distintos focos. Señala cuáles reconoces para priorizar qué intervenir primero con mayor impacto.",
     "capa_2_decision": "Impacto vs Esfuerzo",
@@ -6770,7 +6770,7 @@
     "impact_treatment": "Diseñamos el plan de comunicación con cadencia, canales y métricas para que tu marca hable cuando tiene que hablar — y lo que dice convierta.",
     "optimizer_impact": "Incremento inmediato de reconocimiento al establecer un tono y mensaje consistente en todos los canales.",
     "optimizer_decision": "Diagnóstico de Coherencia Comunicativa",
-    "example": "Consultora: constancia de comunicación, del 25% (1 de cada 4 semanas comunicando) al 75% (3 de cada 4) tras el protocolo.",
+    "example": "Consultora: constancia de comunicacion, del 25% (1 de cada 4 semanas comunicando) al 100% (4 de cada 4) tras el protocolo.",
     "capa_1_priorizacion": "Comunico cuando me acuerdo, sin plan; El tono cambia según el canal o la persona; No mido si lo que comunico da resultado; Cada persona transmite un mensaje distinto; Cuesta que me reconozcan por ser irregular; No hay guía de qué, cómo y cuándo comunicar",
     "justi_capa1": "La comunicación inconsistente tiene distintas causas. Señala cuáles reconoces para saber qué estandarizar primero.",
     "capa_2_decision": "Regla de prioridades",
@@ -8648,8 +8648,8 @@
     ],
     "input_a": "Tensiones identificadas este mes",
     "input_b": "Conflictos resueltos explícitamente",
-    "input_revised_1": "Tensiones resueltas explícitamente (post)",
-    "input_revised_2": "Total tensiones identificadas (post)",
+    "input_revised_1": "Total conflictos o tensiones identificados el mes pasado",
+    "input_revised_2": "De esos, conflictos que llegaron a resolucion explicita",
     "result_revised": "Δ resolución de conflictos",
     "impact_treatment": "Nombramos y resolvemos las tensiones que envenenan el ambiente sin que nadie lo diga en alto. El conflicto deja de contaminar en silencio y el equipo vuelve a colaborar sin fricciones.",
     "optimizer_impact": "Reducción inmediata de contaminación silenciosa al establecer un sistema de resolución explícita de conflictos.",
@@ -9233,8 +9233,8 @@
     ],
     "input_a": "Clientes que repitieron compra este mes",
     "input_b": "Total de clientes del mes",
-    "input_revised_1": "Clientes molestos post",
-    "input_revised_2": "Clientes recuperados post",
+    "input_revised_1": "Clientes que repitieron compra el mes pasado",
+    "input_revised_2": "Total de clientes atendidos el mes pasado",
     "result_revised": "Δ recuperacion",
     "impact_treatment": "Activamos el sistema de fidelización que hace que cada cliente vuelva a comprar: motivos claros para repetir, contacto proactivo tras la compra y ofertas que incentivan la segunda visita. Hacer que un cliente repita siempre es más barato que captar a uno nuevo.",
     "optimizer_impact": "Aumento inmediato de la repetición al poner en marcha un sistema que da a cada cliente motivos concretos para volver a comprar.",
@@ -9261,52 +9261,58 @@
     "capa_3_plan": {
       "r1": {
         "tipo": "nativa",
-        "titulo": "Tracking de referidos",
+        "titulo": "Radar de clientes que repiten",
         "secciones": [
           {
-            "titulo": "Registro de referidos y conversión",
+            "titulo": "Seguimiento de clientes y frecuencia de vuelta",
             "columnas": [
               {
-                "etiqueta": "Referidor",
+                "etiqueta": "Cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Cliente referido",
+                "etiqueta": "N compras ultimos 3 meses",
+                "tipo": "numero",
+                "clave": "n_compras"
+              },
+              {
+                "etiqueta": "Fecha ultima compra",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha referido",
-                "tipo": "texto"
+                "etiqueta": "Frecuencia habitual",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mensual",
+                  "Trimestral",
+                  "Esporadica",
+                  "Primera vez"
+                ]
               },
               {
-                "etiqueta": "Servicio de interés",
+                "etiqueta": "Senial de vuelta detectada",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Por confirmar"
+                ]
+              },
+              {
+                "etiqueta": "Accion de fidelizacion aplicada",
                 "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Lead",
-                  "En negociación",
-                  "Convertido",
+                  "Activo",
+                  "En riesgo",
                   "Perdido"
-                ]
-              },
-              {
-                "etiqueta": "Valor contrato (€)",
-                "tipo": "numero",
-                "clave": "valor"
-              },
-              {
-                "etiqueta": "Agradecimiento enviado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
                 ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 6
           }
         ]
       },
