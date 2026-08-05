@@ -1223,7 +1223,7 @@
     "justi_capa6": "Este indicador mide la mejora real de tu margen tras ajustar precios y costes. Compáralo con C0; si sube, el rediseño está funcionando.",
     "capa_1_options": "Fijo precios sin calcular si realmente cubren todos mis costes, incluidos los que no aparecen en la factura.; Hago descuentos para fidelizar o cerrar ventas sin saber si con eso me quedo en negativo.; Los costes han subido pero todavía no he podido trasladarlos al precio del cliente.; Hay trabajo que hago y no cobro: soporte, revisiones o cambios que doy por incluidos.; Tengo varios servicios pero no sé cuál de ellos me deja margen de verdad.; Hay clientes concretos que facturan razonablemente bien pero de los que me queda muy poco margen real.",
     "c2_herramienta": "margen",
-    "kpi_recovery_mode": "financiero",
+    "kpi_recovery_mode": "estructural",
     "recovery_unit_label": "€ de coste cortado",
     "kpi_name": "Margen mensual",
     "kpi_unit": "%",
@@ -6194,55 +6194,130 @@
     "capa_3_plan": {
       "r1": {
         "tipo": "nativa",
-        "titulo": "Kit de marca: logo, colores y tipografía",
+        "titulo": "Kit de marca: logo, colores y tipografia",
         "secciones": [
           {
+            "titulo": "Inventario de elementos de identidad visual",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Elemento de marca",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Tiene version digital",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "En proceso"
+                ]
+              },
+              {
+                "etiqueta": "Aspecto profesional",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "Mejorable",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Ultimo rediseno",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Disenador / fuente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Coste estimado de mejora (EUR)",
+                "tipo": "numero",
+                "clave": "coste_mejora"
+              },
+              {
+                "etiqueta": "Prioridad",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aprobado",
+                  "En revision",
+                  "Pendiente"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 6
           }
         ]
       },
       "r2": {
         "tipo": "nativa",
-        "titulo": "Reescribir tu presentación con propuesta de valor",
+        "titulo": "Reescribir tu presentacion con propuesta de valor",
         "secciones": [
           {
+            "titulo": "Canvas de propuesta de valor",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Elemento del mensaje",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Texto actual",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Texto mejorado",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Canal donde se usa",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Aprobado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "En revision"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
+          },
+          {
+            "titulo": "Validacion con clientes",
+            "columnas": [
+              {
+                "etiqueta": "Cliente / perfil",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Reaccion al mensaje mejorado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Positiva",
+                  "Neutra",
+                  "Negativa"
+                ]
+              },
+              {
+                "etiqueta": "Comentario clave",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Ajuste aplicado",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 3
           }
         ]
       },
@@ -6251,9 +6326,40 @@
         "titulo": "Plantilla de presupuestos y propuestas",
         "secciones": [
           {
+            "titulo": "Auditoria de la plantilla de presupuesto",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Elemento del presupuesto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Incluido",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Aspecto visual",
+                "tipo": "opciones",
+                "opciones": [
+                  "Profesional",
+                  "Mejorable",
+                  "Sin estilo"
+                ]
+              },
+              {
+                "etiqueta": "Logo y marca presentes",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Accion de mejora",
                 "tipo": "texto"
               },
               {
@@ -6263,13 +6369,9 @@
               {
                 "etiqueta": "Fecha objetivo",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 6
           }
         ]
       },
@@ -6278,52 +6380,150 @@
         "titulo": "Plantilla visual para redes",
         "secciones": [
           {
+            "titulo": "Formatos por red social",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Red social",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Formato principal",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Paleta de colores aplicada",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Tipografia de marca",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Plantilla creada",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "En proceso"
+                ]
+              },
+              {
+                "etiqueta": "Herramienta usada",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Responsable de contenido",
+                "tipo": "texto"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 5
+          },
+          {
+            "titulo": "Calendario de publicacion (semana tipo)",
+            "columnas": [
+              {
+                "etiqueta": "Dia de la semana",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Red social",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo de contenido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Hora de publicacion",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Planificado",
+                  "Publicado",
+                  "Pendiente"
+                ]
+              }
+            ],
+            "filas_iniciales": 5
           }
         ]
       },
       "r5": {
         "tipo": "nativa",
-        "titulo": "Mejorar los puntos de primera impresión",
+        "titulo": "Mejorar los puntos de primera impresion",
         "secciones": [
           {
+            "titulo": "Mapa de touchpoints de primera impresion",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Punto de contacto",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Canal",
+                "tipo": "opciones",
+                "opciones": [
+                  "Digital",
+                  "Fisico",
+                  "Ambos"
+                ]
+              },
+              {
+                "etiqueta": "Impresion actual",
+                "tipo": "opciones",
+                "opciones": [
+                  "Excelente",
+                  "Buena",
+                  "Mejorable",
+                  "Mala"
+                ]
+              },
+              {
+                "etiqueta": "Que ve el cliente en primer lugar",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Alineado con la marca",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Mejora prioritaria",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Coste estimado (EUR)",
+                "tipo": "numero",
+                "clave": "coste_tp"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "En curso",
+                  "Resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 6
           }
         ]
       },
@@ -6332,25 +6532,74 @@
         "titulo": "Manual de identidad para el equipo",
         "secciones": [
           {
+            "titulo": "Contenido del manual de identidad",
             "columnas": [
               {
-                "etiqueta": "Elemento / paso a trabajar",
+                "etiqueta": "Seccion del manual",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable",
+                "etiqueta": "Nivel de detalle",
+                "tipo": "opciones",
+                "opciones": [
+                  "Completo",
+                  "Basico",
+                  "Pendiente"
+                ]
+              },
+              {
+                "etiqueta": "Ejemplos incluidos",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Formato de entrega",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha objetivo",
+                "etiqueta": "Responsable de mantenerlo",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Avance (0-100)",
-                "tipo": "numero"
+                "etiqueta": "Ultima actualizacion",
+                "tipo": "texto"
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 7
+          },
+          {
+            "titulo": "Distribucion y adopcion por el equipo",
+            "columnas": [
+              {
+                "etiqueta": "Persona del equipo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Ha recibido el manual",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Lo aplica en su trabajo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Siempre",
+                  "A veces",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Dudas o inconsistencias reportadas",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 4
           }
         ]
       }
