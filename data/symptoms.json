@@ -1917,11 +1917,13 @@
               },
               {
                 "etiqueta": "T. Máx comprometido (h)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "tmax"
               },
               {
                 "etiqueta": "T. Real Prom. (h)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "treal"
               },
               {
                 "etiqueta": "¿Protocolo?",
@@ -1934,6 +1936,13 @@
               {
                 "etiqueta": "Consecuencia si incumple",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Desviación sobre el compromiso (h)",
+                "tipo": "calculada",
+                "clave": "desviacion",
+                "formula": "treal-tmax",
+                "unidad": "numero"
               }
             ],
             "filas_iniciales": 3,
@@ -2213,7 +2222,8 @@
               },
               {
                 "etiqueta": "Coste dep./mes (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "costedep"
               },
               {
                 "etiqueta": "T. formar backup (h)",
@@ -2221,7 +2231,15 @@
               },
               {
                 "etiqueta": "Coste resolver (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "costeresolver"
+              },
+              {
+                "etiqueta": "Meses para recuperar la inversión en resolverlo",
+                "tipo": "calculada",
+                "clave": "meses_payback",
+                "formula": "costeresolver/costedep",
+                "unidad": "numero"
               }
             ],
             "filas_iniciales": 4
