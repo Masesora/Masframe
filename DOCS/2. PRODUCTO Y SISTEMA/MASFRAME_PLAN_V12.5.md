@@ -932,6 +932,58 @@ Añadidas 4 validaciones nuevas a `validar_sintomas.py`:
 
 ---
 
+## XXIII. SESIÓN 5 AGO 2026 (tarde) — Auditoría masframe-ux-validator en vivo (2ª pasada) + fixes
+
+### XXIII.A — Contexto y origen
+
+Segunda pasada de la skill `masframe-ux-validator` sobre los 30 síntomas (la primera fue §XVII, 13 jul), esta vez sobre el motor nativo post-Fase 5/6 (§XX-§XXII): 30 personas inventadas con conflicto real, recorrido C0→C6 completo, doble lente experiencia + código con cita archivo:línea. Informe completo: `DOCS/2. PRODUCTO Y SISTEMA/AUDITORIA_UX_30_SINTOMAS_2026-08-05.md`.
+
+**Resultado: 23/30 síntomas 🟢🟢 sin problema. 5 hallazgos que no debían venderse activamente sin fix — los 5 corregidos el mismo día con OK explícito de Maite.**
+
+### XXIII.B — El bug de código (único, UCI-S3)
+
+`Capa2Margen` (`c2_herramienta:"margen"`, único síntoma con esta variante) no rellena `c2data.items` — usa `margen_secciones_abc`, indexado por `c1Id`. `Capa3Flujo` decidía qué rama de `capa_3_plan` montar comparando `decisionC2` (texto libre con nombres de servicios) contra `capa_2_options`, un match que nunca podía darse. Resultado: **C3 montaba siempre la rama `r1`**, sin importar lo que el cliente clasificara en el semáforo de C2. Fix: `committedIdxs` gana una rama específica para modo margen que lee `margen_secciones_abc` directamente (`TreatmentPage.tsx`).
+
+### XXIII.C — Contaminación de catálogo (3 casos nuevos, van 4 en total con §XVII.D)
+
+Mismo patrón que ya cerró RES-S3 en §XVII.D (`capa_3_plan` escrito para un síntoma y pegado en otro), encontrado de nuevo en **3 síntomas independientes** — sobre solo 21 revisados a fondo (~1 de cada 7):
+
+| Síntoma | `capa_3_plan` traía | Debía traer | Fix |
+|---|---|---|---|
+| PSI-S3 (Anestesia de Equipo) | Kit de "cultura y valores" (selección por valores, onboarding en valores...) | Reactivar equipo desconectado | 6 ramas reescritas: impacto visible del trabajo, registro de propuestas, rediseño de rutina/reto, reconocimiento por resultado, sesión de propósito y rol, autonomía por tarea |
+| RES-S1 (Hemorragia de Talento) | Kit de "burnout/carga individual" (señales de burnout, mapa de energía...) | Retención de talento crítico | 6 ramas reescritas: conversación de retención, coste real de una salida (calculadora), radar de desconexión silenciosa, banda salarial vs mercado, mapa de conocimiento/relaciones críticas, plan de cobertura |
+| OPE-S1 (Parálisis de Integración) | Kit genérico de procesos/Lean (solapaba con UNI-S1) | Onboarding de nuevas incorporaciones | 6 ramas reescritas: checklist de incorporación por semana, mapa de conocimiento crítico, registro de dudas, curva de aprendizaje objetivo vs real, plan de mentor, protocolo de autonomía por hito |
+
+Con 4 casos confirmados en dos pasadas (§XVII.D + esta), la contaminación de catálogo deja de ser un incidente aislado. **Recomendación pendiente:** chequeo automatizado `capa_2_options` ↔ títulos/columnas de `capa_3_plan` en `validar_sintomas.py`.
+
+### XXIII.D — CARDIO-S1: C0 con métrica distinta a la fórmula real
+
+`kpi_question`/`kpi_impact` describían "% de clientes nuevos sobre tu cartera total" (umbral 20%), pero `kpi_formula`/`kpi_objective` miden "% de tu objetivo mensual de captación logrado" (`>80%`) — dos métricas distintas, con `threshold_critical/recommended/optimizer/elite` = 10/15/20/30 (de la métrica vieja) en vez de 70/85/95/100 del resto del catálogo. Riesgo real: el cliente podía teclear su cartera total en vez de su objetivo mensual desde el primer minuto. Contenido corregido. (Nota: §XVII.F ya había documentado que `threshold_*` no lo lee ningún motor vivo — el fix es de higiene de catálogo, no desbloquea nada roto en producción.)
+
+### XXIII.E — T1 transversal: banner de C2 y aviso al CC no reflejaban selección múltiple
+
+En 28/30 síntomas, `decision_comprometida` es un string único que cada familia de C2 (matriz/árbol/regla/carga) rellena con **una sola** descripción ganadora — pero C3 (`committedIdxs`) ya construye correctamente una rama por cada frente que el cliente comprometió. El banner de C2 y el mensaje automático al CC (`guardar()`, `notifyCC()`) solo mostraban 1, aunque C3 ejecutara N. No perdía datos, pero el resumen que leían cliente y CC no coincidía con lo que el motor hacía. Fix: nueva función `committedDescriptions()` (mismo criterio que `committedIdxs`) usada en `DecisionBanner` (acepta ahora `string | string[]`) y en los dos puntos de notificación al CC.
+
+### XXIII.F — Verificación
+
+`tsc --noEmit` limpio en ambos repos tras cada cambio; `npm run dev` arranca sin errores de consola; script de integridad confirma 30/30 síntomas con 6 `capa_1_options`, 6 `capa_2_options` y 6 ramas `capa_3_plan` nativas tras los cambios de contenido — solo se tocaron los campos exactos documentados arriba.
+
+### XXIII.G — Commits de sesión
+
+| Repo | Rama | Contenido |
+|------|------|-----------|
+| Masesora_frontend | `fix/ux-validator-t1-uci-s3` (`444f0dd`) | T1 (`committedDescriptions` + `DecisionBanner` + `guardar`/`notifyCC`) + fix UCI-S3 (`Capa3Flujo` modo margen) |
+| masesora_backend | `fix/ux-validator-catalogo-5ago` (`13922c6`) | `capa_3_plan` PSI-S3/RES-S1/OPE-S1 + C0 CARDIO-S1 + informe de auditoría |
+
+Ninguna rama mergeada a `main` todavía — pendiente de revisión de Maite. PRs no abiertos (a petición).
+
+### XXIII.H — Pendiente
+
+- Extender el chequeo de contaminación de catálogo a un linter automatizado (no hay más síntomas fuera de estos 30 que auditar — 30 es el catálogo completo, verificado contra `symptoms_remoto.json` y la copia huérfana del frontend).
+- BI Dashboard — sigue sin iniciar, decisión explícita de la sesión.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -940,3 +992,4 @@ Añadidas 4 validaciones nuevas a `validar_sintomas.py`:
 *§XX añadida en sesión 2-3 ago 2026 — consolidación de las 197 herramientas en componentes nativos, 180/180 migradas*
 *§XXI añadida en sesión 4 ago 2026 — Fase 6 auditoría completa del catálogo nativo (items A-G), 50 columnas calculadas*
 *§XXII añadida en sesión 5 ago 2026 — auditoría clínica KPI (30 síntomas), WOW C3→C4, fixes estructurales, backlog = 0*
+*§XXIII añadida en sesión 5 ago 2026 (tarde) — 2ª pasada masframe-ux-validator, bug UCI-S3, 3 contaminaciones de catálogo, T1 transversal, CARDIO-S1*
