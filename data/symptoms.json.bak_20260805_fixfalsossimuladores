@@ -1484,37 +1484,19 @@
               },
               {
                 "etiqueta": "Ventas/mes (€)",
-                "tipo": "numero",
-                "clave": "ventas"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Margen Bruto %",
-                "tipo": "numero",
-                "clave": "margen_bruto"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Horas Equipo/mes",
-                "tipo": "numero",
-                "clave": "horas"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Coste Hora Eq. (€)",
-                "tipo": "numero",
-                "clave": "coste_hora"
-              },
-              {
-                "etiqueta": "Coste equipo (€)",
-                "tipo": "calculada",
-                "clave": "coste_equipo",
-                "formula": "horas*coste_hora",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Margen neto real (€)",
-                "tipo": "calculada",
-                "clave": "margen_neto",
-                "formula": "ventas*margen_bruto/100-coste_equipo",
-                "unidad": "eur"
+                "tipo": "numero"
               }
             ],
             "filas_iniciales": 3
@@ -1533,44 +1515,19 @@
               },
               {
                 "etiqueta": "Facturación/mes (€)",
-                "tipo": "numero",
-                "clave": "facturacion"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Horas Directas (h)",
-                "tipo": "numero",
-                "clave": "horas_directas"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "H. Soporte/Reuniones/Extras (h)",
-                "tipo": "numero",
-                "clave": "horas_soporte"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Coste Hora Propio (€)",
-                "tipo": "numero",
-                "clave": "coste_hora"
-              },
-              {
-                "etiqueta": "Horas totales (h)",
-                "tipo": "calculada",
-                "clave": "horas_totales",
-                "formula": "horas_directas+horas_soporte",
-                "unidad": "numero"
-              },
-              {
-                "etiqueta": "Coste total servicio (€)",
-                "tipo": "calculada",
-                "clave": "coste_total",
-                "formula": "horas_totales*coste_hora",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Margen real (€)",
-                "tipo": "calculada",
-                "clave": "margen_real",
-                "formula": "facturacion-coste_total",
-                "unidad": "eur"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "NPS (1-5)",
@@ -5131,51 +5088,19 @@
               },
               {
                 "etiqueta": "Precio actual €",
-                "tipo": "numero",
-                "clave": "precio_actual"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Clientes actuales",
-                "tipo": "numero",
-                "clave": "clientes_actuales"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Precio propuesto €",
-                "tipo": "numero",
-                "clave": "precio_propuesto"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Clientes perdidos est.",
-                "tipo": "numero",
-                "clave": "clientes_perdidos"
-              },
-              {
-                "etiqueta": "Ingresos actuales (€)",
-                "tipo": "calculada",
-                "clave": "ingresos_actuales",
-                "formula": "precio_actual*clientes_actuales",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Clientes tras subida",
-                "tipo": "calculada",
-                "clave": "clientes_tras",
-                "formula": "clientes_actuales-clientes_perdidos",
-                "unidad": "numero"
-              },
-              {
-                "etiqueta": "Ingresos con subida (€)",
-                "tipo": "calculada",
-                "clave": "ingresos_nuevos",
-                "formula": "precio_propuesto*clientes_tras",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Impacto neto (€)",
-                "tipo": "calculada",
-                "clave": "impacto_neto",
-                "formula": "ingresos_nuevos-ingresos_actuales",
-                "unidad": "eur"
+                "tipo": "numero"
               }
             ],
             "filas_iniciales": 4
