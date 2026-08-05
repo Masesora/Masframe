@@ -2826,14 +2826,14 @@
     "logica": "Tu negocio no genera clientes por sí solo — dependes del boca a boca y de que llegue el momento oportuno.",
     "plan": "PIE",
     "description_symptom": "Si la mayoría de tus clientes llegan por recomendación o por casualidad, tu crecimiento no está en tus manos. No tienes una forma propia de atraer clientes — tienes esperanza. Y la esperanza no es una estrategia comercial.",
-    "kpi_question": "Introduce cuántos clientes nuevos captaste este mes y cuántos clientes nuevos te habías propuesto captar ese mismo mes. El resultado es el porcentaje de tu objetivo de captación que lograste — si te quedas muy por debajo, tu negocio no tiene motor comercial: depende de que el boca a boca llegue solo, no de un sistema que puedas repetir.",
-    "kpi_impact": "Cuando logras el 80% o más de tu objetivo mensual de captación, tienes un motor comercial que funciona con regularidad — dejas de depender de que el boca a boca llegue solo.",
+    "kpi_question": "¿Cuántos clientes nuevos atendiste este mes y cuántos clientes en total? Si menos del 20% son nuevos, tu negocio no tiene motor comercial — depende de los que ya tiene.",
+    "kpi_impact": "Si menos del 20% de tus clientes son nuevos cada mes, el negocio no genera demanda propia — crece solo si el boca a boca llega solo. Eso no es un sistema, es suerte.",
     "kpi_formula": "(InputA/InputB)*100",
     "kpi_objective": ">80%",
-    "threshold_critical": 70,
-    "threshold_recommended": 85,
-    "threshold_optimizer": 95,
-    "threshold_elite": 100,
+    "threshold_critical": 10,
+    "threshold_recommended": 15,
+    "threshold_optimizer": 20,
+    "threshold_elite": 30,
     "inputs": [
       {
         "id": "inputA",
@@ -8009,89 +8009,80 @@
     "capa_3_plan": {
       "r1": {
         "tipo": "nativa",
-        "titulo": "Impacto visible del trabajo de cada persona",
+        "titulo": "Mapa de valores",
         "secciones": [
           {
-            "titulo": "Tracker de impacto: qué hace cada persona y en qué resultado influye",
+            "titulo": "Definición operativa de los valores de la empresa",
             "columnas": [
               {
-                "etiqueta": "Persona",
+                "etiqueta": "Valor",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Tarea o responsabilidad",
+                "etiqueta": "Descripción en conductas concretas",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Resultado del negocio al que impacta",
+                "etiqueta": "Ejemplo positivo real",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Se lo has dicho explícitamente?",
+                "etiqueta": "Señal de alarma (contra-ejemplo)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Vivo en el equipo hoy?",
                 "tipo": "opciones",
                 "opciones": [
                   "Sí",
-                  "No",
-                  "Hace tiempo"
+                  "Parcialmente",
+                  "No"
                 ]
               },
               {
-                "etiqueta": "Acción para hacerlo visible",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
+                "etiqueta": "Acción para reforzarlo",
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 5
           }
         ]
       },
       "r2": {
         "tipo": "nativa",
-        "titulo": "Registro de propuestas del equipo",
+        "titulo": "Onboarding en valores",
         "secciones": [
           {
-            "titulo": "Qué proponen, qué pasa después",
+            "titulo": "Plan de incorporación cultural para nuevas personas",
             "columnas": [
               {
-                "etiqueta": "Propuesta",
+                "etiqueta": "Momento del onboarding",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Quién la hizo",
+                "etiqueta": "Contenido / actividad",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha",
+                "etiqueta": "Valores que transmite",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Aceptada",
-                  "Rechazada",
-                  "Pendiente"
-                ]
+                "etiqueta": "Responsable",
+                "tipo": "texto"
               },
               {
-                "etiqueta": "¿Se comunicó el motivo a quien la hizo?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                "etiqueta": "Duración (min)",
+                "tipo": "numero",
+                "clave": "duracion"
               },
               {
-                "etiqueta": "Si se aceptó, ¿se implementó?",
+                "etiqueta": "¿Implementado?",
                 "tipo": "opciones",
                 "opciones": [
                   "Sí",
                   "No",
-                  "En curso",
-                  "N/A"
+                  "Parcialmente"
                 ]
               }
             ],
@@ -8101,38 +8092,35 @@
       },
       "r3": {
         "tipo": "nativa",
-        "titulo": "Rediseño de rutina y reto",
+        "titulo": "Selección por valores",
         "secciones": [
           {
-            "titulo": "Qué tareas adormecen y cómo introducir reto",
+            "titulo": "Guía de entrevista basada en valores",
             "columnas": [
               {
-                "etiqueta": "Tarea repetitiva / rutinaria",
+                "etiqueta": "Valor a evaluar",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Aporta algún reto o novedad?",
+                "etiqueta": "Pregunta de entrevista",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Respuesta que indica alineación",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Señal de alarma",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Peso en la decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Alternativa o rotación propuesta",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Persona que la asumiría",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pendiente",
-                  "En prueba",
-                  "Implementada"
+                  "Eliminatorio",
+                  "Alto",
+                  "Medio",
+                  "Bajo"
                 ]
               }
             ],
@@ -8142,26 +8130,22 @@
       },
       "r4": {
         "tipo": "nativa",
-        "titulo": "Reconocimiento por resultado",
+        "titulo": "Reconocimiento de valores",
         "secciones": [
           {
-            "titulo": "Registro de esfuerzo/resultado reconocido",
+            "titulo": "Registro de reconocimientos por valores",
             "columnas": [
               {
-                "etiqueta": "Persona",
+                "etiqueta": "Persona reconocida",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Esfuerzo o logro concreto",
+                "etiqueta": "Valor demostrado",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Se reconoció?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                "etiqueta": "Situación concreta",
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Tipo de reconocimiento",
@@ -8170,7 +8154,7 @@
                   "Público",
                   "Privado",
                   "Económico",
-                  "Ninguno"
+                  "Simbólico"
                 ]
               },
               {
@@ -8178,13 +8162,12 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Impacto percibido en la persona",
+                "etiqueta": "Impacto percibido",
                 "tipo": "opciones",
                 "opciones": [
                   "Alto",
                   "Medio",
-                  "Bajo",
-                  "Sin medir"
+                  "Bajo"
                 ]
               }
             ],
@@ -8194,89 +8177,101 @@
       },
       "r5": {
         "tipo": "nativa",
-        "titulo": "Sesión de propósito y rol",
+        "titulo": "Decisiones basadas en valores",
         "secciones": [
           {
-            "titulo": "Hacia dónde va el negocio y qué papel juega cada rol",
+            "titulo": "Marco de decisión alineado con valores",
             "columnas": [
               {
-                "etiqueta": "Objetivo del negocio este trimestre",
+                "etiqueta": "Decisión a tomar",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Rol / persona",
+                "etiqueta": "Valores en juego",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Cómo contribuye ese rol al objetivo",
+                "etiqueta": "Opción A",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Comunicado directamente a la persona?",
+                "etiqueta": "Opción B",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Cuál es más coherente con los valores?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
+                  "Opción A",
+                  "Opción B",
+                  "Ninguna clara"
                 ]
               },
               {
-                "etiqueta": "Fecha de la sesión",
+                "etiqueta": "Decisión tomada",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Próxima revisión",
+                "etiqueta": "Aprendizaje",
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 4
           }
         ]
       },
       "r6": {
         "tipo": "nativa",
-        "titulo": "Rediseño de autonomía por tarea",
+        "titulo": "Rituales de cultura",
         "secciones": [
           {
-            "titulo": "Qué decisiones puede tomar el equipo sin pasar por ti",
+            "titulo": "Inventario de rituales culturales activos y propuestos",
             "columnas": [
               {
-                "etiqueta": "Tarea o decisión",
+                "etiqueta": "Ritual",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Nivel de control actual",
+                "etiqueta": "Tipo",
                 "tipo": "opciones",
                 "opciones": [
-                  "Total (todo pasa por mí)",
-                  "Parcial",
-                  "Ninguno (ya delegado)"
+                  "Celebración",
+                  "Aprendizaje",
+                  "Conexión",
+                  "Reconocimiento",
+                  "Reflexión"
                 ]
               },
               {
-                "etiqueta": "Nivel de autonomía propuesto",
+                "etiqueta": "Frecuencia",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Participantes",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Decide solo",
-                  "Decide y avisa",
-                  "Propone, tú decides"
+                  "Activo",
+                  "Planificado",
+                  "Pausado",
+                  "Propuesto"
                 ]
               },
               {
-                "etiqueta": "Riesgo si se delega",
+                "etiqueta": "Impacto percibido",
                 "tipo": "opciones",
                 "opciones": [
                   "Alto",
                   "Medio",
-                  "Bajo"
-                ]
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Delegar ya",
-                  "Delegar con seguimiento",
-                  "Mantener por ahora"
+                  "Bajo",
+                  "Sin medir"
                 ]
               }
             ],
@@ -8345,134 +8340,188 @@
     "capa_3_plan": {
       "r1": {
         "tipo": "nativa",
-        "titulo": "Conversación de retención",
+        "titulo": "Carga real",
         "secciones": [
           {
-            "titulo": "Qué retiene a cada persona clave y qué la empujaría a irse",
+            "titulo": "Inventario de carga de trabajo real por área",
             "columnas": [
               {
-                "etiqueta": "Persona clave",
+                "etiqueta": "Área / tipo de actividad",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Qué la retiene hoy",
-                "tipo": "texto"
+                "etiqueta": "Horas/semana reales",
+                "tipo": "numero",
+                "clave": "horas"
               },
               {
-                "etiqueta": "Qué la empujaría a irse",
-                "tipo": "texto"
+                "etiqueta": "Nivel de energía que consume (1-5)",
+                "tipo": "numero",
+                "clave": "energia"
               },
               {
-                "etiqueta": "Riesgo de fuga percibido",
+                "etiqueta": "¿Delegable?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Alto",
-                  "Medio",
-                  "Bajo"
+                  "Sí",
+                  "Parcialmente",
+                  "No"
                 ]
               },
               {
-                "etiqueta": "Acción de retención",
-                "tipo": "texto"
+                "etiqueta": "¿Aporta valor directo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
               },
               {
-                "etiqueta": "Fecha próxima conversación",
-                "tipo": "texto"
+                "etiqueta": "Acción (delegar/eliminar/mantener)",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener",
+                  "Delegar",
+                  "Eliminar",
+                  "Automatizar"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 6
           }
         ]
       },
       "r2": {
         "tipo": "nativa",
-        "titulo": "Coste real de una salida inesperada",
+        "titulo": "Señales de burnout",
         "secciones": [
           {
-            "titulo": "Calculadora de coste de sustitución por persona clave",
+            "titulo": "Radar de señales de agotamiento",
             "columnas": [
               {
-                "etiqueta": "Persona / rol",
+                "etiqueta": "Señal de burnout",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Salario anual bruto (€)",
-                "tipo": "numero",
-                "clave": "salario"
+                "etiqueta": "Área",
+                "tipo": "opciones",
+                "opciones": [
+                  "Física",
+                  "Emocional",
+                  "Cognitiva",
+                  "Conductual"
+                ]
               },
               {
-                "etiqueta": "Coste de reclutamiento y selección (€)",
-                "tipo": "numero",
-                "clave": "reclutamiento"
-              },
-              {
-                "etiqueta": "Meses hasta rendir al 100%",
-                "tipo": "numero",
-                "clave": "meses_rampa"
-              },
-              {
-                "etiqueta": "% productividad perdida durante ese tiempo",
-                "tipo": "numero",
-                "clave": "pct_perdida"
-              },
-              {
-                "etiqueta": "Coste de baja productividad (€)",
-                "tipo": "calculada",
-                "clave": "coste_rampa",
-                "formula": "(salario/12)*meses_rampa*(pct_perdida/100)",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Coste total estimado de la salida (€)",
-                "tipo": "calculada",
-                "clave": "coste_total",
-                "formula": "reclutamiento+coste_rampa",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "¿Cubierto por plan de sucesión?",
+                "etiqueta": "¿Presente?",
                 "tipo": "opciones",
                 "opciones": [
                   "Sí",
-                  "No",
-                  "Parcialmente"
-                ]
-              }
-            ],
-            "filas_iniciales": 4
-          }
-        ]
-      },
-      "r3": {
-        "tipo": "nativa",
-        "titulo": "Radar de desconexión silenciosa",
-        "secciones": [
-          {
-            "titulo": "Señales de bajo rendimiento sin detectar",
-            "columnas": [
-              {
-                "etiqueta": "Persona",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Señal observada",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Rinde por debajo de lo habitual?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí, claramente",
-                  "Algo",
+                  "A veces",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Intensidad (1-5)",
+                "tipo": "numero",
+                "clave": "intensidad"
               },
               {
                 "etiqueta": "Desde cuándo",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Se ha hablado ya con ella?",
+                "etiqueta": "Acción de atención",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 6
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Mapa de energía",
+        "secciones": [
+          {
+            "titulo": "Análisis de actividades por impacto energético",
+            "columnas": [
+              {
+                "etiqueta": "Actividad / responsabilidad",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Energía que da (1-5)",
+                "tipo": "numero",
+                "clave": "e_da"
+              },
+              {
+                "etiqueta": "Energía que consume (1-5)",
+                "tipo": "numero",
+                "clave": "e_consume"
+              },
+              {
+                "etiqueta": "Balance energético",
+                "tipo": "calculada",
+                "clave": "balance",
+                "formula": "e_da-e_consume",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "Horas/semana dedicadas",
+                "tipo": "numero",
+                "clave": "horas"
+              },
+              {
+                "etiqueta": "¿Es eliminable o reducible?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "Parcialmente",
+                  "No"
+                ]
+              },
+              {
+                "etiqueta": "Ajuste propuesto",
+                "tipo": "texto"
+              }
+            ],
+            "filas_iniciales": 6
+          }
+        ]
+      },
+      "r4": {
+        "tipo": "nativa",
+        "titulo": "Recuperación programada",
+        "secciones": [
+          {
+            "titulo": "Plan de rituales de recuperación y desconexión",
+            "columnas": [
+              {
+                "etiqueta": "Ritual de recuperación",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo",
+                "tipo": "opciones",
+                "opciones": [
+                  "Física",
+                  "Mental",
+                  "Social",
+                  "Creativa"
+                ]
+              },
+              {
+                "etiqueta": "Frecuencia",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Duración (min)",
+                "tipo": "numero",
+                "clave": "duracion"
+              },
+              {
+                "etiqueta": "¿Bloqueado en agenda?",
                 "tipo": "opciones",
                 "opciones": [
                   "Sí",
@@ -8480,63 +8529,13 @@
                 ]
               },
               {
-                "etiqueta": "Acción",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 5
-          }
-        ]
-      },
-      "r4": {
-        "tipo": "nativa",
-        "titulo": "Banda salarial vs mercado",
-        "secciones": [
-          {
-            "titulo": "Comparativa de salario actual contra banda de mercado",
-            "columnas": [
-              {
-                "etiqueta": "Rol",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Persona",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Salario actual (€/año)",
-                "tipo": "numero",
-                "clave": "actual"
-              },
-              {
-                "etiqueta": "Banda de mercado — mínimo (€/año)",
-                "tipo": "numero",
-                "clave": "mercado_min"
-              },
-              {
-                "etiqueta": "Banda de mercado — máximo (€/año)",
-                "tipo": "numero",
-                "clave": "mercado_max"
-              },
-              {
-                "etiqueta": "Gap vs mínimo de mercado (€)",
-                "tipo": "calculada",
-                "clave": "gap",
-                "formula": "mercado_min-actual",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Riesgo de fuga por salario",
+                "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Alto",
-                  "Medio",
-                  "Bajo"
+                  "Activo",
+                  "Pendiente programar",
+                  "Abandonado"
                 ]
-              },
-              {
-                "etiqueta": "Acción propuesta",
-                "tipo": "texto"
               }
             ],
             "filas_iniciales": 5
@@ -8545,94 +8544,88 @@
       },
       "r5": {
         "tipo": "nativa",
-        "titulo": "Mapa de conocimiento y relaciones críticas",
+        "titulo": "Redistribución de responsabilidades",
         "secciones": [
           {
-            "titulo": "Qué se pierde si esta persona se va mañana",
+            "titulo": "Plan de transferencia de responsabilidades",
             "columnas": [
               {
-                "etiqueta": "Persona",
+                "etiqueta": "Responsabilidad actual",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Conocimiento o relación crítica",
+                "etiqueta": "Dueño actual",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Tipo",
+                "etiqueta": "Dueño propuesto",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Capacitación necesaria",
                 "tipo": "opciones",
                 "opciones": [
-                  "Conocimiento técnico",
-                  "Relación con cliente",
-                  "Proceso interno",
-                  "Contacto/proveedor"
+                  "Ninguna",
+                  "Mínima",
+                  "Media",
+                  "Alta"
                 ]
               },
               {
-                "etiqueta": "¿Está documentado o transferido?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No",
-                  "Parcialmente"
-                ]
-              },
-              {
-                "etiqueta": "A quién transferir",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 6
-          }
-        ]
-      },
-      "r6": {
-        "tipo": "nativa",
-        "titulo": "Plan de cobertura ante salida de perfiles clave",
-        "secciones": [
-          {
-            "titulo": "Quién cubre si esta persona se va",
-            "columnas": [
-              {
-                "etiqueta": "Persona clave",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Área que se paraliza si se va",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Backup identificado",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Backup ya preparado para asumirlo?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No",
-                  "En formación"
-                ]
-              },
-              {
-                "etiqueta": "Plazo para estar cubierto",
+                "etiqueta": "Fecha de transferencia",
                 "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sin cobertura",
-                  "En preparación",
-                  "Cubierto"
+                  "Pendiente",
+                  "En proceso",
+                  "Transferido"
                 ]
               }
             ],
             "filas_iniciales": 5
+          }
+        ]
+      },
+      "r6": {
+        "tipo": "nativa",
+        "titulo": "Protocolo de sostenibilidad",
+        "secciones": [
+          {
+            "titulo": "Líneas de defensa para la sostenibilidad personal",
+            "columnas": [
+              {
+                "etiqueta": "Línea de defensa",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Descripción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Señal de activación (trigger)",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción concreta",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable de aplicarlo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Activada alguna vez?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 4
           }
         ]
       }
@@ -10093,63 +10086,44 @@
     "capa_3_plan": {
       "r1": {
         "tipo": "nativa",
-        "titulo": "Checklist de incorporación por semana",
+        "titulo": "Mapa de procesos",
         "secciones": [
           {
-            "titulo": "Qué debe pasar cada semana de las primeras 4",
+            "titulo": "Inventario de procesos operativos clave",
             "columnas": [
               {
-                "etiqueta": "Semana",
+                "etiqueta": "Proceso",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Área / departamento",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tipo",
                 "tipo": "opciones",
                 "opciones": [
-                  "Semana 1",
-                  "Semana 2",
-                  "Semana 3",
-                  "Semana 4"
+                  "Core",
+                  "Soporte",
+                  "Gestión"
                 ]
               },
               {
-                "etiqueta": "Tarea de incorporación",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Completada?",
+                "etiqueta": "Frecuencia",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
+                  "Diaria",
+                  "Semanal",
+                  "Mensual",
+                  "Puntual"
                 ]
               },
               {
-                "etiqueta": "Fecha",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 8
-          }
-        ]
-      },
-      "r2": {
-        "tipo": "nativa",
-        "titulo": "Mapa de conocimiento crítico a documentar",
-        "secciones": [
-          {
-            "titulo": "Qué solo sabe hacer una persona hoy",
-            "columnas": [
-              {
-                "etiqueta": "Tarea o proceso crítico",
+                "etiqueta": "Responsable del proceso",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Responsable actual (único que lo sabe hacer)",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Está documentado?",
+                "etiqueta": "Documentado",
                 "tipo": "opciones",
                 "opciones": [
                   "Sí",
@@ -10158,103 +10132,163 @@
                 ]
               },
               {
-                "etiqueta": "Formato de documentación",
+                "etiqueta": "Criticidad",
                 "tipo": "opciones",
                 "opciones": [
-                  "SOP escrito",
-                  "Vídeo",
-                  "Checklist",
-                  "Sin documentar"
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              }
+            ],
+            "filas_iniciales": 8
+          }
+        ]
+      },
+      "r2": {
+        "tipo": "nativa",
+        "titulo": "Análisis de cuellos de botella",
+        "secciones": [
+          {
+            "titulo": "Identificación y análisis de cuellos de botella",
+            "columnas": [
+              {
+                "etiqueta": "Proceso / etapa",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Síntoma observable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Causa raíz probable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Impacto en el negocio",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alto",
+                  "Medio",
+                  "Bajo"
                 ]
               },
               {
-                "etiqueta": "Responsable de documentarlo",
+                "etiqueta": "Tiempo perdido estimado (h/mes)",
+                "tipo": "numero",
+                "clave": "tiempo"
+              },
+              {
+                "etiqueta": "Acción correctora",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activo",
+                  "Mitigado",
+                  "Resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 5
           }
         ]
       },
       "r3": {
         "tipo": "nativa",
-        "titulo": "Registro de dudas de nuevas incorporaciones",
+        "titulo": "Errores por proceso",
         "secciones": [
           {
-            "titulo": "Qué preguntan los nuevos y cuánto tiempo cuesta resolverlo",
+            "titulo": "Registro de errores recurrentes por proceso",
             "columnas": [
               {
-                "etiqueta": "Persona nueva",
+                "etiqueta": "Proceso",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Semana",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Duda o pregunta",
+                "etiqueta": "Tipo de error / fallo",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Quién la resolvió",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Tiempo dedicado (min)",
+                "etiqueta": "Frecuencia/mes",
                 "tipo": "numero",
-                "clave": "tiempo"
+                "clave": "freq"
               },
               {
-                "etiqueta": "¿Se habría evitado con mejor documentación?",
+                "etiqueta": "Coste en tiempo (h/mes)",
+                "tipo": "numero",
+                "clave": "coste_t"
+              },
+              {
+                "etiqueta": "Causa raíz",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Solución implementada",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Reincide?",
                 "tipo": "opciones",
                 "opciones": [
                   "Sí",
-                  "No"
+                  "No",
+                  "A veces"
                 ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 5
           }
         ]
       },
       "r4": {
         "tipo": "nativa",
-        "titulo": "Curva de aprendizaje objetivo vs real",
+        "titulo": "Estandarización",
         "secciones": [
           {
-            "titulo": "Nivel esperado frente a nivel real, semana a semana",
+            "titulo": "Estado de documentación y estándares por proceso",
             "columnas": [
               {
-                "etiqueta": "Persona nueva",
+                "etiqueta": "Proceso",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Semana",
-                "tipo": "numero"
+                "etiqueta": "Tipo de documento",
+                "tipo": "opciones",
+                "opciones": [
+                  "SOP",
+                  "Checklist",
+                  "Vídeo",
+                  "Plantilla",
+                  "Sin documentar"
+                ]
               },
               {
-                "etiqueta": "Nivel esperado (%)",
-                "tipo": "numero",
-                "clave": "esperado"
+                "etiqueta": "Fecha última revisión",
+                "tipo": "texto"
               },
               {
-                "etiqueta": "Nivel real (%)",
-                "tipo": "numero",
-                "clave": "real"
+                "etiqueta": "¿Se aplica siempre?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "A veces",
+                  "Raramente",
+                  "No"
+                ]
               },
               {
-                "etiqueta": "Gap (puntos)",
-                "tipo": "calculada",
-                "clave": "gap",
-                "formula": "esperado-real",
-                "unidad": "numero"
+                "etiqueta": "Responsable de mantenerlo",
+                "tipo": "texto"
               },
               {
-                "etiqueta": "Acción correctora",
+                "etiqueta": "Próxima revisión",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción prioritaria",
                 "tipo": "texto"
               }
             ],
@@ -10264,35 +10298,57 @@
       },
       "r5": {
         "tipo": "nativa",
-        "titulo": "Plan de mentor / acompañante",
+        "titulo": "Mejora Lean",
         "secciones": [
           {
-            "titulo": "Quién acompaña a cada nueva incorporación",
+            "titulo": "Identificación y eliminación de desperdicios operativos",
             "columnas": [
               {
-                "etiqueta": "Persona nueva",
+                "etiqueta": "Proceso afectado",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Mentor asignado",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Horas/semana dedicadas",
-                "tipo": "numero",
-                "clave": "horas"
-              },
-              {
-                "etiqueta": "Duración del acompañamiento (semanas)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "¿Activo?",
+                "etiqueta": "Tipo de desperdicio",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No",
-                  "Finalizado"
+                  "Sobreproducción",
+                  "Espera",
+                  "Transporte",
+                  "Sobreprocesamiento",
+                  "Inventario",
+                  "Movimiento",
+                  "Defectos"
+                ]
+              },
+              {
+                "etiqueta": "Descripción del desperdicio",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tiempo perdido/mes (h)",
+                "tipo": "numero",
+                "clave": "tiempo"
+              },
+              {
+                "etiqueta": "Prioridad",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              },
+              {
+                "etiqueta": "Acción de mejora",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "En curso",
+                  "Resuelto"
                 ]
               }
             ],
@@ -10302,39 +10358,52 @@
       },
       "r6": {
         "tipo": "nativa",
-        "titulo": "Protocolo de autonomía por hito",
+        "titulo": "KPIs operativos",
         "secciones": [
           {
-            "titulo": "Quién más puede integrar además del dueño",
+            "titulo": "Panel de indicadores operativos clave",
             "columnas": [
               {
-                "etiqueta": "Hito del proceso de integración",
+                "etiqueta": "KPI",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Requiere al dueño hoy?",
+                "etiqueta": "Proceso asociado",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Unidad de medida",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Meta",
+                "tipo": "numero",
+                "clave": "meta"
+              },
+              {
+                "etiqueta": "Valor actual",
+                "tipo": "numero",
+                "clave": "valor"
+              },
+              {
+                "etiqueta": "% cumplimiento",
+                "tipo": "calculada",
+                "clave": "pct",
+                "formula": "valor/meta*100",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "Tendencia",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
+                  "Subiendo",
+                  "Estable",
+                  "Bajando"
                 ]
               },
               {
-                "etiqueta": "Quién más podría asumirlo",
+                "etiqueta": "Frecuencia de medición",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Requisito para poder delegarlo",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Solo el dueño",
-                  "En transición",
-                  "Delegado"
-                ]
               }
             ],
             "filas_iniciales": 6
