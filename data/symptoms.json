@@ -639,25 +639,30 @@
             "columnas": [
               {
                 "etiqueta": "Cliente",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "Nombre del cliente"
               },
               {
                 "etiqueta": "Concepto",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Diseño web fase 1"
               },
               {
                 "etiqueta": "Importe anticipado (€)",
                 "tipo": "numero",
-                "clave": "importe_ant"
+                "clave": "importe_ant",
+                "placeholder": "8000"
               },
               {
                 "etiqueta": "Fecha recibido",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. 15/03/2026"
               },
               {
                 "etiqueta": "% ejecución actual",
                 "tipo": "numero",
-                "clave": "pct_ejec"
+                "clave": "pct_ejec",
+                "placeholder": "ej. 40"
               },
               {
                 "etiqueta": "Importe ejecutado (€)",
@@ -675,11 +680,13 @@
               },
               {
                 "etiqueta": "Fecha compromiso entrega",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. 30/09/2026"
               },
               {
                 "etiqueta": "Acción de desbloqueo",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Enviar maqueta final al cliente para poder facturar el resto"
               }
             ],
             "filas_iniciales": 3,
@@ -690,21 +697,25 @@
             "columnas": [
               {
                 "etiqueta": "Cliente",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "Nombre del cliente"
               },
               {
                 "etiqueta": "Anticipo total (€)",
                 "tipo": "numero",
-                "clave": "anticipo_total"
+                "clave": "anticipo_total",
+                "placeholder": "8000"
               },
               {
                 "etiqueta": "Hito",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Entrega de maqueta aprobada"
               },
               {
                 "etiqueta": "% a liberar",
                 "tipo": "numero",
-                "clave": "pct_liberar"
+                "clave": "pct_liberar",
+                "placeholder": "ej. 50"
               },
               {
                 "etiqueta": "Importe a liberar (€)",
@@ -715,11 +726,13 @@
               },
               {
                 "etiqueta": "Entregable requerido",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Documento de diseño aprobado por el cliente"
               },
               {
                 "etiqueta": "Fecha compromiso",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. 30/09/2026"
               },
               {
                 "etiqueta": "Entregado",
@@ -746,20 +759,24 @@
             "columnas": [
               {
                 "etiqueta": "Cliente",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "Nombre del cliente"
               },
               {
                 "etiqueta": "Anticipo inicial (€)",
                 "tipo": "numero",
-                "clave": "anticipo"
+                "clave": "anticipo",
+                "placeholder": "8000"
               },
               {
                 "etiqueta": "Fecha recepción anticipo",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. 01/03/2026"
               },
               {
                 "etiqueta": "Entregables completados",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Fase 1 y 2 entregadas"
               },
               {
                 "etiqueta": "Acta conformidad firmada",
@@ -780,11 +797,13 @@
               {
                 "etiqueta": "Saldo pendiente a facturar (€)",
                 "tipo": "numero",
-                "clave": "saldo"
+                "clave": "saldo",
+                "placeholder": "2000"
               },
               {
                 "etiqueta": "Fecha cierre prevista",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. 15/10/2026"
               },
               {
                 "etiqueta": "Estado",
