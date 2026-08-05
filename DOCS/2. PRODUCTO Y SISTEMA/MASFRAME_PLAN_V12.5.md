@@ -822,6 +822,116 @@ Aclarado definitivamente:
 
 ---
 
+## XXII. SESIÓN 5 AGO 2026 — Auditoría clínica KPI + WOW C4 + fixes estructurales
+
+### XXII.A — Contexto y origen
+
+Sesión de continuación directa de §XXI. El agente de auditoría lanzado al final de la sesión anterior entregó su informe al inicio de ésta: 4 vectores, 30 síntomas, 5 bugs críticos/altos + 5 clusters estructurales. Se ejecutó el plan completo de corrección.
+
+### XXII.B — Auditoría de kpi_objective (30 síntomas)
+
+Revisión clínica de todos los objetivos del catálogo. Resultado:
+
+| Estado | Cantidad |
+|--------|----------|
+| OK — objetivos válidos | 23 |
+| Avisos — revisar | 3 |
+| Bugs — corregidos | 3 (UCI-S1, CARDIO-S1, CARDIO-S3) |
+
+**Fixes aplicados:**
+
+| Síntoma | Fix |
+|---------|-----|
+| UCI-S1 | `>30 días` → `>45 días`; example reescrito (taller 8.000€ gastos → 60 días post-tratamiento) |
+| CARDIO-S1 | KPI redefinido: InputB cambia de "total atendidos" a "objetivo de captación mensual". Ya no penaliza negocios con alta retención. kpi_objective → `>80%` |
+| CARDIO-S3 | `>30` → `>20` (30% conversión contactos→oportunidades era irrealista como umbral universal) |
+| CIR-S3 | Example 75% → 100% (4/4 semanas; el 75% no superaba la desigualdad estricta `>75%`) |
+| UNI-S3 | Example 6% → 4% (estaba por encima del objetivo `<5%`) |
+| CIR-S1 | Example 79% → 85% (estaba por debajo del objetivo `>80%`) |
+
+**Avisos documentados (no corregidos, riesgo conocido):**
+- NEURO-S1: InputB auto-fijado por el cliente → KPI gameable. Mitigado con aviso en C0.
+- RES-S2: umbral `>50%` conservador (ideal sería `>70%`).
+- CIR-S3: denominador siempre 4 → sólo 5 valores posibles (0/25/50/75/100%).
+
+### XXII.C — Top 5 bugs del informe del agente (todos corregidos)
+
+| # | Síntoma | Bug | Fix |
+|---|---------|-----|-----|
+| 1 | TER-S2 r1 | Herramienta de referidos en síntoma de repetición de compra | Sustituida por "Radar de clientes que repiten" (7 columnas específicas) |
+| 2 | TER-S2 | `input_revised` desvinculados de la fórmula (gate Alta incalculable) | Corregidos: revised_1→clientes que repitieron, revised_2→total clientes |
+| 2 | RES-S3 | `input_revised` swapeados (KPI invertido en C6) | Desswapeados: revised_1→total tensiones, revised_2→resueltas |
+| 3 | CLI-S2 | `recovery_mode: "financiero"` con dirección errónea | → `estructural` (re-medición real de impuestos y beneficio bruto post) |
+| 3 | NEURO-S3 | `recovery_mode: "financiero"` mejoraba KPI reduciendo facturación | → `estructural` (re-medición real de beneficio neto y facturación post) |
+| 4 | CIR-S1 | 6 herramientas idénticas (plantilla genérica 4 cols) | Rediseñadas con columnas específicas de imagen/marca/comunicación |
+| 5 | UNI-S3, CIR-S1, CIR-S3 | Examples por debajo del propio `kpi_objective` | Corregidos los 3 values |
+
+### XXII.D — Clusters estructurales
+
+| Cluster | Síntomas | Decisión |
+|---------|----------|----------|
+| A — conteo en ratio (12) | CARDIO-S3, PSI-S1/S2/S3, RES-S1/S3, CLI-S3, OPE-S1/S2, TER-S1/S3, CIR-S3 | **Sin cambio** — el código `try-both-pick-better` ya los gestiona correctamente en todos los casos. La aproximación es válida en un ciclo corto |
+| B — examples bajo objetivo | UNI-S3, CIR-S1, CIR-S3 | ✅ Corregidos |
+| C — recovery financiero errónea | CLI-S2, NEURO-S3 | ✅ → `estructural` |
+| D — C3 genérico bloque CIR | CIR-S1 (6 herramientas) | ✅ Rediseñado. CIR-S2/S3 ya tenían columnas específicas |
+| E — input_revised desvinculados | TER-S2, RES-S3 | ✅ Corregidos |
+
+### XXII.E — Bugs de sesión anterior (todos cerrados)
+
+| Bug | Fix |
+|-----|-----|
+| UNI-S1 trampa de escala `>85%` | Aviso en C0 si `InputB < 10 entregas/semana` — estadísticamente no representativo |
+| UCI-S3 Alta sin mejora real de KPI | `kpi_recovery_mode: "financiero"` → `"estructural"` — C6 exige re-medición real de facturación y costes |
+| Arquitectura "KPI mejorado" por modo | Definida: `estructural` para KPIs de ratio/anuales; `try-both-pick-better` para operativos; documentada en linter |
+| C4/C5 sin WOW tras C3 | Tres capas implementadas (ver §XXII.F) |
+
+### XXII.F — Feature: WOW C3→C4
+
+Tres mejoras acumuladas en las tarjetas de ejecución de C4:
+
+1. **`🎯 logro_esperado` en cabecera** — el resultado esperado elegido en C3 visible mientras se ejecuta la tarea.
+2. **`📋 Ver diagnóstico completado en C3`** — `<details>` desplegable con la tabla completa de la herramienta nativa (secciones, columnas, filas reales).
+3. **`⚡ Acciones concretas de tu diagnóstico`** — extractor automático de columnas "Acción/Mejora/Plan/Paso/Ajuste/Acuerdo" de cada fila. Para cada celda no vacía, muestra la acción en negrita + contexto de la entidad de esa fila.
+
+### XXII.G — Validaciones en C0 (NEURO-S1 + UNI-S1)
+
+- **NEURO-S1**: si `InputB < InputA × 1.15` → aviso *"El objetivo está menos de un 15% por encima de tu facturación actual — debe suponer un reto real (mínimo +20%)."*
+- **UNI-S1**: si `InputB < 10` entregas/semana → aviso informativo sobre representatividad estadística del %.
+
+### XXII.H — Linter v2.1
+
+Añadidas 4 validaciones nuevas a `validar_sintomas.py`:
+- Warn si `financiero`/`conteo` no tienen `input_revised_1/2` definidos.
+- Error si `input_revised` es idéntico al campo original (no indica medición post).
+- Aviso permanente en NEURO-S1 recordando el riesgo gameable.
+- Resultado en producción: **0 errores · 4 avisos** (todos conocidos y documentados).
+
+### XXII.I — Commits de sesión
+
+| Repo | Commit | Contenido |
+|------|--------|-----------|
+| masesora_backend | `ac3f6f0` | UCI-S1 kpi_objective >45 + example |
+| masesora_backend | `0f6f35f` | Batch 8 fixes KPI (CARDIO-S1/S3, CIR-S1/S3, UNI-S3, TER-S2, RES-S3) |
+| masesora_backend | `feef979` | UCI-S3 estructural + CIR-S1 6 herramientas de marca |
+| masesora_backend | `5c404ea` | CLI-S2 + NEURO-S3 → estructural |
+| masesora_backend | `e31788a` | Linter v2.1 input_revised + NEURO-S1 gameable |
+| Masesora_frontend | `8920eb1` | C4 WOW: logro_esperado + visor diagnóstico C3 |
+| Masesora_frontend | `4caccd1` | C4 pre-fill: acciones concretas de filas C3 |
+| Masesora_frontend | `fa43515` | C0 validaciones NEURO-S1 + UNI-S1 |
+
+### XXII.J — Estado del catálogo al cerrar sesión
+
+| Métrica | Valor |
+|---------|-------|
+| Síntomas con columnas específicas | **30/30** (CIR-S1 rediseñado, ya no genérico) |
+| Síntomas con kpi_objective validado clínicamente | **30/30** |
+| Síntomas con recovery_mode correcto | **30/30** |
+| Síntomas con input_revised vinculados a fórmula | **30/30** |
+| Total columnas calculadas en catálogo | **50+** |
+| Bugs críticos pendientes | **0** |
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -829,3 +939,4 @@ Aclarado definitivamente:
 *§XIX añadida en sesión 16 jul 2026 — copy nivel dueño, de-jergado total, verificación code-grounded (deploy `16f8e3a`)*
 *§XX añadida en sesión 2-3 ago 2026 — consolidación de las 197 herramientas en componentes nativos, 180/180 migradas*
 *§XXI añadida en sesión 4 ago 2026 — Fase 6 auditoría completa del catálogo nativo (items A-G), 50 columnas calculadas*
+*§XXII añadida en sesión 5 ago 2026 — auditoría clínica KPI (30 síntomas), WOW C3→C4, fixes estructurales, backlog = 0*
