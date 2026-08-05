@@ -314,6 +314,118 @@ def lint_contaminacion(s, W):
             f"o se pegaron de otro. Palabras en comun: {sorted(overlap) or '(ninguna)'}"
         )
 
+# ── Contrato: clave duplicada entre secciones sin entidad_compartida ───────────────
+# Bug historico (5 ago 2026, reportado por cliente real con captura de pantalla): en
+# UCI-S1.r1 el producto ya estaba enlazado por entidad_compartida, pero "Coste unitario"
+# se repetia entre secciones porque el mecanismo solo cubria la columna 0 (identidad),
+# no el resto de la fila. El frontend ya hereda por 'clave' cuando SI hay
+# entidad_compartida (TreatmentPage.tsx, SeccionTablaNativa) -- este chequeo encuentra
+# los casos donde deberia haberla y no la hay. AVISO, no ERROR: 'clave' tambien se
+# reutiliza legitimamente como nombre de variable de formula en secciones sin relacion
+# real (ej. NEURO-S1.r4 reutiliza 'meta'/'valor_actual' en 3 Objetivos independientes) --
+# siempre revisar el contenido antes de enlazar, nunca aplicar en automatico.
+def lint_clave_sin_enlazar(s, W):
+    cp = s.get("capa_3_plan")
+    if not isinstance(cp, dict):
+        return
+    for rk, recurso in cp.items():
+        if not isinstance(recurso, dict) or recurso.get("tipo") != "nativa":
+            continue
+        secciones = recurso.get("secciones", []) or []
+        if len(secciones) < 2:
+            continue
+        claves_por_seccion = []
+        for sec in secciones:
+            claves_por_seccion.append({c.get("clave"): c.get("etiqueta")
+                                        for c in sec.get("columnas", []) or [] if c.get("clave")})
+        for i in range(len(secciones)):
+            for j in range(i + 1, len(secciones)):
+                comunes = set(claves_por_seccion[i]) & set(claves_por_seccion[j])
+                if not comunes:
+                    continue
+                ec_i, ec_j = secciones[i].get("entidad_compartida"), secciones[j].get("entidad_compartida")
+                if ec_i and ec_i == ec_j:
+                    continue  # ya enlazadas: el frontend hereda automaticamente por clave
+                pares = [(cl, claves_por_seccion[i][cl]) for cl in sorted(comunes)]
+                W.append(
+                    f"capa_3_plan.{rk}: sec[{i}] y sec[{j}] comparten clave(s) {pares} sin "
+                    "entidad_compartida -- revisar si es el mismo dato (retecleo real) o "
+                    "coincidencia de nombre de variable en formulas independientes"
+                )
+
+# ── Contrato: entidad candidata a enlazar, sin declarar ────────────────────────────
+# Detecta el patron que ya se corrigio a mano en UCI-S1 r1/r3/r5 (5 ago 2026): secciones
+# tituladas secuencialmente ("1. ... / 2. ... / 3. ...") con columna 0 en texto libre en
+# todas, sin entidad_compartida -- suele ser el mismo flujo sobre la misma entidad
+# (cliente/producto/proyecto) y el cliente reteclea el nombre en cada tabla. AVISO
+# heuristico: en la revision manual de la sesion 5 ago, 7 de 10 candidatos con este mismo
+# patron se DESCARTARON por representar conceptos distintos pese al titulo secuencial
+# (ej. CARDIO-S2.r3 seccion 1 define etapas del pipeline, seccion 2 rastrea oportunidades
+# -- no son la misma entidad). Nunca aplicar el enlace sin leer las columnas primero.
+def lint_entidad_candidata(s, W):
+    cp = s.get("capa_3_plan")
+    if not isinstance(cp, dict):
+        return
+    for rk, recurso in cp.items():
+        if not isinstance(recurso, dict) or recurso.get("tipo") != "nativa":
+            continue
+        secciones = recurso.get("secciones", []) or []
+        if len(secciones) < 2:
+            continue
+        secuencial = all(re.match(r"^\s*\d+\.", sec.get("titulo", "") or "") for sec in secciones)
+        if not secuencial:
+            continue
+        if any(sec.get("entidad_compartida") for sec in secciones):
+            continue
+        col0_tipos = [sec["columnas"][0].get("tipo") if sec.get("columnas") else None for sec in secciones]
+        if not all(t == "texto" for t in col0_tipos):
+            continue
+        col0_labels = [sec["columnas"][0].get("etiqueta", "") for sec in secciones]
+        W.append(
+            f"capa_3_plan.{rk}: secciones con titulo secuencial y columna 0 en texto libre "
+            f"sin entidad_compartida {col0_labels} -- candidato a enlazar SOLO si representan "
+            "la misma entidad real (leer las columnas antes de aplicar, no a ciegas)"
+        )
+
+# ── Contrato: dato de capas anteriores repreguntado en C3 ──────────────────────────
+# Estandar del propio proyecto (§XV.B del plan, escrito meses antes de este bug real):
+# "Si hay datos en C2, C3 no puede llegar vacio -- pre-rellenar todo lo disponible."
+# Nunca se habia verificado. Compara el vocabulario de cada columna/campo de
+# capa_3_plan contra los labels de C0 (input_a/input_b/inputs[].label) -- si una columna
+# comparte la MAYORIA de sus palabras de contenido con un input de C0, es candidata a
+# precargarse en vez de repreguntarse. AVISO: coincidencia parcial de vocabulario no
+# siempre implica que sea literalmente el mismo dato.
+def lint_capas_previas_repetidas(s, W):
+    vocab_c0 = set()
+    for _, lab in labels(s):
+        vocab_c0 |= _texto_significativo(lab)
+    if not vocab_c0:
+        return
+    cp = s.get("capa_3_plan")
+    if not isinstance(cp, dict):
+        return
+    for rk, recurso in cp.items():
+        if not isinstance(recurso, dict):
+            continue
+        columnas = []
+        for sec in recurso.get("secciones", []) or []:
+            for c in sec.get("columnas", []) or []:
+                if c.get("tipo") == "calculada":
+                    continue
+                columnas.append(c.get("etiqueta", ""))
+        for c in recurso.get("campos", []) or []:
+            columnas.append(c.get("etiqueta", ""))
+        for etiqueta in columnas:
+            vocab_col = _texto_significativo(etiqueta)
+            if len(vocab_col) < 2:
+                continue
+            comunes = vocab_col & vocab_c0
+            if len(comunes) >= 2 and len(comunes) / len(vocab_col) >= 0.66:
+                W.append(
+                    f"capa_3_plan.{rk} col '{etiqueta}': solapa fuerte con un input de C0 "
+                    f"{sorted(comunes)} -- candidato a precargar en vez de repreguntar (estandar SS.XV.B)"
+                )
+
 # ── Simulacion Paqui ──────────────────────────────────────────────────────────────
 def simular_paqui(s):
     """Simula un recorrido C0-C3 con valores tipicos y reporta anomalias."""
@@ -461,6 +573,10 @@ def lint(s):
     lint_capa3(s, E, W)
     # --- contaminacion de catalogo (capa_2_options <-> capa_3_plan) ──────────────
     lint_contaminacion(s, W)
+    # --- criterios sesion 5 ago 2026 (bug real "coste unitario" + estandar SS.XV.B) --
+    lint_clave_sin_enlazar(s, W)
+    lint_entidad_candidata(s, W)
+    lint_capas_previas_repetidas(s, W)
     return E, W, fam
 
 def main():
