@@ -635,7 +635,7 @@
         "titulo": "Convertir los anticipos retenidos en ingresos ejecutados",
         "secciones": [
           {
-            "titulo": "1. Anticipos pendientes de ejecutar",
+            "titulo": "Tus anticipos más urgentes — no hace falta meterlos todos, con 2 o 3 basta",
             "columnas": [
               {
                 "etiqueta": "Cliente",
@@ -643,20 +643,10 @@
                 "placeholder": "Nombre del cliente"
               },
               {
-                "etiqueta": "Concepto",
-                "tipo": "texto",
-                "placeholder": "ej. Diseño web fase 1"
-              },
-              {
                 "etiqueta": "Importe anticipado (€)",
                 "tipo": "numero",
                 "clave": "importe_ant",
                 "placeholder": "8000"
-              },
-              {
-                "etiqueta": "Fecha recibido",
-                "tipo": "texto",
-                "placeholder": "ej. 15/03/2026"
               },
               {
                 "etiqueta": "% ejecución actual",
@@ -679,151 +669,26 @@
                 "unidad": "eur"
               },
               {
-                "etiqueta": "Fecha compromiso entrega",
-                "tipo": "texto",
-                "placeholder": "ej. 30/09/2026"
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pendiente",
+                  "Hito cumplido",
+                  "Cerrado"
+                ]
               },
               {
                 "etiqueta": "Acción de desbloqueo",
                 "tipo": "texto",
                 "placeholder": "ej. Enviar maqueta final al cliente para poder facturar el resto"
-              }
-            ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Cliente"
-          },
-          {
-            "titulo": "2. Hitos de entrega para liberar anticipo",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto",
-                "placeholder": "Nombre del cliente"
-              },
-              {
-                "etiqueta": "Anticipo total (€)",
-                "tipo": "numero",
-                "clave": "anticipo_total",
-                "placeholder": "8000"
-              },
-              {
-                "etiqueta": "Hito",
-                "tipo": "texto",
-                "placeholder": "ej. Entrega de maqueta aprobada"
-              },
-              {
-                "etiqueta": "% a liberar",
-                "tipo": "numero",
-                "clave": "pct_liberar",
-                "placeholder": "ej. 50"
-              },
-              {
-                "etiqueta": "Importe a liberar (€)",
-                "tipo": "calculada",
-                "clave": "importe_liberar",
-                "formula": "anticipo_total*pct_liberar/100",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Entregable requerido",
-                "tipo": "texto",
-                "placeholder": "ej. Documento de diseño aprobado por el cliente"
               },
               {
                 "etiqueta": "Fecha compromiso",
                 "tipo": "texto",
                 "placeholder": "ej. 30/09/2026"
-              },
-              {
-                "etiqueta": "Entregado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Anticipo liberado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
               }
             ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Cliente"
-          },
-          {
-            "titulo": "3. Cierre y liquidación de anticipos",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto",
-                "placeholder": "Nombre del cliente"
-              },
-              {
-                "etiqueta": "Anticipo inicial (€)",
-                "tipo": "numero",
-                "clave": "anticipo",
-                "placeholder": "8000"
-              },
-              {
-                "etiqueta": "Fecha recepción anticipo",
-                "tipo": "texto",
-                "placeholder": "ej. 01/03/2026"
-              },
-              {
-                "etiqueta": "Entregables completados",
-                "tipo": "texto",
-                "placeholder": "ej. Fase 1 y 2 entregadas"
-              },
-              {
-                "etiqueta": "Acta conformidad firmada",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Factura final emitida",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Saldo pendiente a facturar (€)",
-                "tipo": "numero",
-                "clave": "saldo",
-                "placeholder": "2000"
-              },
-              {
-                "etiqueta": "Fecha cierre prevista",
-                "tipo": "texto",
-                "placeholder": "ej. 15/10/2026"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "En ejecución",
-                  "Pendiente firma",
-                  "Cerrado"
-                ]
-              },
-              {
-                "etiqueta": "Ejecutado (€)",
-                "tipo": "calculada",
-                "clave": "ejecutado",
-                "formula": "anticipo-saldo",
-                "unidad": "eur"
-              }
-            ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Cliente"
+            "filas_iniciales": 2
           }
         ]
       },
