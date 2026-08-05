@@ -203,6 +203,12 @@ def _lint_calculadora(sid, prefix, recurso, E, W):
             E.append(f"{prefix} campo '{c.get('etiqueta','')}': sin clave")
         else:
             ctx[clave] = 10.0   # valor simulado
+        # precarga_desde_c0 (SS.XV.B, sesion 5 ago 2026): solo estos 2 literales existen en
+        # session.c0.inputs — el frontend no valida esto en runtime, un valor distinto no
+        # precarga nada y falla en silencio, asi que se corta aqui.
+        pc0 = c.get("precarga_desde_c0")
+        if pc0 is not None and pc0 not in ("input_a", "input_b"):
+            E.append(f"{prefix} campo '{c.get('etiqueta','')}': precarga_desde_c0={pc0!r} invalido (solo 'input_a' o 'input_b')")
 
     # validar resultados
     for r in resultados:
@@ -407,15 +413,17 @@ def lint_capas_previas_repetidas(s, W):
     for rk, recurso in cp.items():
         if not isinstance(recurso, dict):
             continue
-        columnas = []
+        columnas = []  # (etiqueta, ya_resuelto)
         for sec in recurso.get("secciones", []) or []:
             for c in sec.get("columnas", []) or []:
                 if c.get("tipo") == "calculada":
                     continue
-                columnas.append(c.get("etiqueta", ""))
+                columnas.append((c.get("etiqueta", ""), False))  # tablas nativas: sin mecanismo de precarga aun
         for c in recurso.get("campos", []) or []:
-            columnas.append(c.get("etiqueta", ""))
-        for etiqueta in columnas:
+            columnas.append((c.get("etiqueta", ""), bool(c.get("precarga_desde_c0"))))
+        for etiqueta, ya_resuelto in columnas:
+            if ya_resuelto:
+                continue  # ya tiene precarga_desde_c0 -- el hallazgo ya se resolvio, no repetir el aviso
             vocab_col = _texto_significativo(etiqueta)
             if len(vocab_col) < 2:
                 continue
