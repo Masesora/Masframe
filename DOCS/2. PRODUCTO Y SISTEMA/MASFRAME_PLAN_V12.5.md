@@ -975,12 +975,76 @@ En 28/30 síntomas, `decision_comprometida` es un string único que cada familia
 | Masesora_frontend | `fix/ux-validator-t1-uci-s3` (`444f0dd`) | T1 (`committedDescriptions` + `DecisionBanner` + `guardar`/`notifyCC`) + fix UCI-S3 (`Capa3Flujo` modo margen) |
 | masesora_backend | `fix/ux-validator-catalogo-5ago` (`13922c6`) | `capa_3_plan` PSI-S3/RES-S1/OPE-S1 + C0 CARDIO-S1 + informe de auditoría |
 
-Ninguna rama mergeada a `main` todavía — pendiente de revisión de Maite. PRs no abiertos (a petición).
+Ambas ramas revisadas y mergeadas a `main` el mismo día (frontend `444f0dd`, backend `74c457d`) — ver §XXIV para el resto de la sesión.
 
-### XXIII.H — Pendiente
+### XXIII.H — Pendiente al cierre de §XXIII
 
-- Extender el chequeo de contaminación de catálogo a un linter automatizado (no hay más síntomas fuera de estos 30 que auditar — 30 es el catálogo completo, verificado contra `symptoms_remoto.json` y la copia huérfana del frontend).
+- Extender el chequeo de contaminación de catálogo a un linter automatizado (no hay más síntomas fuera de estos 30 que auditar — 30 es el catálogo completo, verificado contra `symptoms_remoto.json` y la copia huérfana del frontend). **Hecho en §XXIV.A.**
 - BI Dashboard — sigue sin iniciar, decisión explícita de la sesión.
+
+---
+
+## XXIV. SESIÓN 5 AGO 2026 (noche) — Linter de contaminación, QA manual y columnas calculadas del catálogo completo
+
+Continuación directa de §XXIII. Maite comprobó los fixes como humana en producción (`masfront.onrender.com`, cuenta de test) y de ahí salieron dos hallazgos nuevos, más el cierre de una deuda de contenido que llevaba desde §XX-§XXI: la mayoría de herramientas nativas no calculaban nada.
+
+### XXIV.A — Linter de contaminación de catálogo (automatizado)
+
+Nueva función `lint_contaminacion()` en `data/validar_sintomas.py`: compara el vocabulario significativo (sin stopwords/acentos) de las 6 `capa_2_options` contra los títulos/columnas de las 6 ramas de `capa_3_plan`. Solapamiento <15% o <3 palabras → AVISO (heurístico, no error). Calibrado contra el catálogo actual (0 falsos positivos nuevos, solo marca CIR-S2 10% y TER-S1 9%, ya documentados como mapeo indirecto no roto) y contra el backup roto de PSI-S3/RES-S1/OPE-S1 (los pilla los 3 sin fallar). Deploy: `0517a97` → mergeado a `main`.
+
+### XXIV.B — QA manual real detecta 2 problemas nuevos
+
+Maite probó en producción con una cuenta de test (NEURO-S3) y encontró:
+
+1. **Redondeo de € a 0 decimales escondía resultados pequeños.** `formatearResultadoCalculadora` (`TreatmentPage.tsx`) mostraba "0 €" para un margen/hora de 0,25€, pareciendo que la calculadora no calculaba nada. Fix: precisión adaptativa (2 decimales si <10€, 1 si <100€, 0 en el resto — sin cambio visual en totales grandes). Deploy: `1610d24`.
+
+2. **3 "simuladores" que no simulaban nada.** `UCI-S3.r5` (Comparativa de margen real), `UCI-S3.r6` (Rentabilidad real por cliente) y `NEURO-S3.r3` (Simulador de subida de precios) eran tablas de captura pura sin ninguna columna `calculada` — su propio nombre prometía un cálculo que no entregaban. Se les añadió el cálculo real (margen neto, coste total de servicio, impacto neto de la subida de precio). Deploy: `7037988`.
+
+### XXIV.C — El hallazgo de fondo: 85% del catálogo no calculaba nada
+
+A raíz de lo anterior, auditoría completa de las 205 secciones nativas de los 30 síntomas: **172 (84%) no tenían ninguna columna `calculada`**. En vez de revisar una a una, se aplicó un filtro (≥2 columnas numéricas combinables = candidata real; <2 = probable checklist legítimo sin necesidad de cálculo):
+
+| | Secciones | Resultado |
+|---|---|---|
+| Candidatas reales (≥2 num.) | 55 | **51 con fórmula real añadida** + 4 confirmadas sin cambio (sin combinación con sentido) |
+| Checklists / plantillas cualitativas (<2 num.) | 114 | Revisadas: 81 tienen columna de estado (Sí/No/Pendiente/Hecho) — correctas tal cual; 33 son plantillas de consultoría (RACI, escalado, formularios de calificación...) donde el valor es cualitativo, no aritmético — correctas tal cual |
+| Con cálculo ya existente (antes de hoy) | 33 | Sin tocar |
+
+**Resultado final: 130/205 secciones (63%) con cálculo real, 75/205 (37%) confirmadas como checklists/plantillas donde un cálculo sería ruido inventado.** 0 secciones sin revisar. `validar_sintomas.py`: 0 errores en todo el proceso.
+
+Las 51 fórmulas se agruparon por patrón para ir rápido, no una por una:
+- **Tiempo × coste/hora = coste total** (14 secciones): UNI-S1, UNI-S3, PSI-S1, RES-S2, CLI-S1, NEURO-S3.r1
+- **Embudo comercial: conversión/CAC/ROI** (11 secciones): CARDIO-S1, CARDIO-S2, CARDIO-S3, NEURO-S3.r4
+- **Importe × %/plazo, financiero** (8 secciones): UCI-S1, UCI-S2, NEURO-S2.r2
+- **% completado / avance** (5 secciones): UNI-S1, UNI-S2, NEURO-S1.r4, CIR-S2
+- **Antes/después + varios** (7 secciones): UCI-S3.r3, UNI-S3, NEURO-S2.r5, UNI-S2.r2, CLI-S1.r4, OPE-S1.r5
+- **Estratégico/cualitativo con gap o media simple** (6 secciones): NEURO-S1.r1/r2/r3/r5, NEURO-S2.r1, RES-S3.r3
+
+Deploys: `91accda` → `80eedc3` → `8678831` (`main`).
+
+### XXIV.D — Commits de sesión
+
+| Repo | Commit | Contenido |
+|------|--------|-----------|
+| masesora_backend | `0517a97` | Linter de contaminación de catálogo |
+| Masesora_frontend | `1610d24` | Redondeo € adaptativo en calculadoras |
+| masesora_backend | `7037988` | 3 falsos simuladores → cálculo real |
+| masesora_backend | `91accda`+`80eedc3` | 43 secciones candidatas con fórmula |
+| masesora_backend | `8678831` | 6 secciones finales (estratégico/cualitativo) |
+
+Todo en `main` en ambos repos, ramas de trabajo borradas tras mergear.
+
+### XXIV.E — Estado del catálogo al cierre de la sesión (30 síntomas, 2 pasadas de ux-validator + auditoría de cálculo)
+
+| Métrica | Valor |
+|---------|-------|
+| Síntomas auditados con masframe-ux-validator | 30/30 (2 pasadas) |
+| Bloqueantes encontrados y corregidos | 5 (T1 transversal, UCI-S3, PSI-S3, RES-S1, OPE-S1) + CARDIO-S1 |
+| Secciones nativas con columna calculada | 130/205 (63%) |
+| Secciones confirmadas correctas sin cálculo | 75/205 (37%) |
+| Linter de contaminación de catálogo | Implementado y en `main` |
+| Bugs críticos pendientes | 0 |
+| BI Dashboard | Sin iniciar (fuera de alcance, decisión explícita) |
 
 ---
 
@@ -993,3 +1057,4 @@ Ninguna rama mergeada a `main` todavía — pendiente de revisión de Maite. PRs
 *§XXI añadida en sesión 4 ago 2026 — Fase 6 auditoría completa del catálogo nativo (items A-G), 50 columnas calculadas*
 *§XXII añadida en sesión 5 ago 2026 — auditoría clínica KPI (30 síntomas), WOW C3→C4, fixes estructurales, backlog = 0*
 *§XXIII añadida en sesión 5 ago 2026 (tarde) — 2ª pasada masframe-ux-validator, bug UCI-S3, 3 contaminaciones de catálogo, T1 transversal, CARDIO-S1*
+*§XXIV añadida en sesión 5 ago 2026 (noche) — linter de contaminación, QA manual real, 130/205 secciones nativas con columna calculada*
