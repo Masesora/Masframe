@@ -89,7 +89,8 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Producto"
           },
           {
             "titulo": "2. Fijar precio de liquidación y canal de venta",
@@ -143,7 +144,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "entidad_compartida": "Producto"
           },
           {
             "titulo": "3. Seguimiento semanal de ventas",
@@ -371,7 +373,8 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Cliente"
           },
           {
             "titulo": "2. Protocolo de reclamación escalonado",
@@ -427,7 +430,8 @@
                 "unidad": "eur"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Cliente"
           },
           {
             "titulo": "3. Acuerdos de pago con clientes morosos",
@@ -475,7 +479,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Cliente"
           }
         ]
       },
@@ -677,7 +682,8 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Cliente"
           },
           {
             "titulo": "2. Hitos de entrega para liberar anticipo",
@@ -732,7 +738,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Cliente"
           },
           {
             "titulo": "3. Cierre y liquidación de anticipos",
@@ -796,7 +803,8 @@
                 "unidad": "eur"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "entidad_compartida": "Cliente"
           }
         ]
       },
