@@ -4487,20 +4487,11 @@
               },
               {
                 "etiqueta": "Hoy",
-                "tipo": "numero",
-                "clave": "hoy"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Objetivo 3 años",
-                "tipo": "numero",
-                "clave": "objetivo"
-              },
-              {
-                "etiqueta": "Gap a cerrar",
-                "tipo": "calculada",
-                "clave": "gap",
-                "formula": "objetivo-hoy",
-                "unidad": "numero"
+                "tipo": "numero"
               }
             ],
             "filas_iniciales": 7
@@ -4519,8 +4510,7 @@
               },
               {
                 "etiqueta": "Impacto en valoración (€)",
-                "tipo": "numero",
-                "clave": "impacto"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Dificultad",
@@ -4533,15 +4523,7 @@
               },
               {
                 "etiqueta": "Plazo (meses)",
-                "tipo": "numero",
-                "clave": "plazo"
-              },
-              {
-                "etiqueta": "Impacto mensualizado (€/mes)",
-                "tipo": "calculada",
-                "clave": "impacto_mes",
-                "formula": "impacto/plazo",
-                "unidad": "eur"
+                "tipo": "numero"
               }
             ],
             "filas_iniciales": 1
@@ -4568,13 +4550,11 @@
               },
               {
                 "etiqueta": "Comprende visión (1-5)",
-                "tipo": "numero",
-                "clave": "comprende"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Comparte visión (1-5)",
-                "tipo": "numero",
-                "clave": "comparte"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Duda planteada",
@@ -4583,13 +4563,6 @@
               {
                 "etiqueta": "Acción seguimiento",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Alineación media (1-5)",
-                "tipo": "calculada",
-                "clave": "alineacion",
-                "formula": "(comprende+comparte)/2",
-                "unidad": "numero"
               }
             ],
             "filas_iniciales": 5
@@ -4728,37 +4701,19 @@
               },
               {
                 "etiqueta": "H. Operativo",
-                "tipo": "numero",
-                "clave": "h_op"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "H. Estratégico",
-                "tipo": "numero",
-                "clave": "h_estr"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "H. Comercial",
-                "tipo": "numero",
-                "clave": "h_com"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "H. Admin",
-                "tipo": "numero",
-                "clave": "h_admin"
-              },
-              {
-                "etiqueta": "Total horas registradas",
-                "tipo": "calculada",
-                "clave": "total_h",
-                "formula": "h_op+h_estr+h_com+h_admin",
-                "unidad": "numero"
-              },
-              {
-                "etiqueta": "% tiempo estratégico",
-                "tipo": "calculada",
-                "clave": "pct_estr",
-                "formula": "h_estr*100/total_h",
-                "unidad": "pct"
+                "tipo": "numero"
               }
             ],
             "filas_iniciales": 4
@@ -4996,18 +4951,15 @@
               },
               {
                 "etiqueta": "H. Estratégicas",
-                "tipo": "numero",
-                "clave": "h_estr"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "H. Operativas",
-                "tipo": "numero",
-                "clave": "h_op"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "H. Comerciales",
-                "tipo": "numero",
-                "clave": "h_com"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Interrupciones",
@@ -5021,20 +4973,6 @@
                   "No",
                   "Parcial"
                 ]
-              },
-              {
-                "etiqueta": "Total horas planificadas",
-                "tipo": "calculada",
-                "clave": "total_h",
-                "formula": "h_estr+h_op+h_com",
-                "unidad": "numero"
-              },
-              {
-                "etiqueta": "% tiempo estratégico",
-                "tipo": "calculada",
-                "clave": "pct_estr",
-                "formula": "h_estr*100/total_h",
-                "unidad": "pct"
               }
             ],
             "filas_iniciales": 20
@@ -9631,13 +9569,11 @@
               },
               {
                 "etiqueta": "Valor técnico (1-5)",
-                "tipo": "numero",
-                "clave": "valor"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Coste al clima (1-5)",
-                "tipo": "numero",
-                "clave": "coste_clima"
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Riesgo de su salida",
@@ -9651,13 +9587,6 @@
                   "Dar oportunidad clara",
                   "Salida ordenada"
                 ]
-              },
-              {
-                "etiqueta": "Balance de la decisión",
-                "tipo": "calculada",
-                "clave": "balance",
-                "formula": "valor-coste_clima",
-                "unidad": "numero"
               }
             ],
             "filas_iniciales": 1
