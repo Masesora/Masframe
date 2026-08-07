@@ -57,21 +57,24 @@
         "titulo": "Liquidar capital inmovilizado en inventario sin rotación",
         "secciones": [
           {
-            "titulo": "1. Inventariar y valorar el stock (FIFO)",
+            "titulo": "Tus productos con más capital atrapado — no hace falta meterlos todos, con 2 o 3 basta",
             "columnas": [
               {
                 "etiqueta": "Referencia / Producto",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Ref. 4521"
               },
               {
                 "etiqueta": "Unidades",
                 "tipo": "numero",
-                "clave": "uds"
+                "clave": "uds",
+                "placeholder": "40"
               },
               {
                 "etiqueta": "Coste unitario (€)",
                 "tipo": "numero",
-                "clave": "coste"
+                "clave": "coste",
+                "placeholder": "25"
               },
               {
                 "etiqueta": "Valor Total (€)",
@@ -81,37 +84,10 @@
                 "unidad": "eur"
               },
               {
-                "etiqueta": "Días sin movimiento",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Producto"
-          },
-          {
-            "titulo": "2. Fijar precio de liquidación y canal de venta",
-            "columnas": [
-              {
-                "etiqueta": "Referencia / Producto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Unidades",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Coste unitario (€)",
-                "tipo": "numero",
-                "clave": "coste"
-              },
-              {
                 "etiqueta": "Margen mínimo aceptable (%)",
                 "tipo": "numero",
-                "clave": "margen_obj"
+                "clave": "margen_obj",
+                "placeholder": "20"
               },
               {
                 "etiqueta": "Precio Mín. (€)",
@@ -123,14 +99,8 @@
               {
                 "etiqueta": "Precio propuesto (€)",
                 "tipo": "numero",
-                "clave": "precio_prop"
-              },
-              {
-                "etiqueta": "Margen Real (%)",
-                "tipo": "calculada",
-                "clave": "margen_real",
-                "formula": "(precio_prop-coste)/precio_prop*100",
-                "unidad": "pct"
+                "clave": "precio_prop",
+                "placeholder": "35"
               },
               {
                 "etiqueta": "Canal de venta",
@@ -148,7 +118,7 @@
             "entidad_compartida": "Producto"
           },
           {
-            "titulo": "3. Seguimiento semanal de ventas",
+            "titulo": "2. Seguimiento semanal de ventas",
             "columnas": [
               {
                 "etiqueta": "Semana",
@@ -1469,24 +1439,24 @@
         "titulo": "Mapa de flujo operativo",
         "secciones": [
           {
+            "titulo": "Tus pasos con más tiempo perdido — no hace falta mapear el proceso entero, con 2 o 3 basta",
             "columnas": [
               {
                 "etiqueta": "Paso / Actividad",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Revisar pedido antes de enviar"
               },
               {
                 "etiqueta": "T. Estimado (min)",
                 "tipo": "numero",
-                "clave": "t_estimado"
+                "clave": "t_estimado",
+                "placeholder": "10"
               },
               {
                 "etiqueta": "T. Real Prom. (min)",
                 "tipo": "numero",
-                "clave": "t_real"
+                "clave": "t_real",
+                "placeholder": "25"
               },
               {
                 "etiqueta": "Gap (min)",
@@ -1494,14 +1464,6 @@
                 "clave": "gap_tiempo",
                 "formula": "t_real-t_estimado",
                 "unidad": "numero"
-              },
-              {
-                "etiqueta": "¿Valor Cliente?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
               },
               {
                 "etiqueta": "Tipo",
@@ -1515,48 +1477,9 @@
                 ]
               },
               {
-                "etiqueta": "Observaciones",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 5,
-            "titulo": "1. Inventario y análisis del flujo operativo",
-            "entidad_compartida": "Paso"
-          },
-          {
-            "titulo": "2. Plan de mejora por paso",
-            "entidad_compartida": "Paso",
-            "columnas": [
-              {
-                "etiqueta": "Paso / Actividad",
-                "tipo": "texto"
-              },
-              {
                 "etiqueta": "Acción de mejora",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Tipo",
-                "tipo": "opciones",
-                "opciones": [
-                  "Eliminar",
-                  "Automatizar",
-                  "Simplificar",
-                  "Reasignar",
-                  "Estandarizar"
-                ]
-              },
-              {
-                "etiqueta": "Ahorro estimado (min)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Automatizar la revisión con una checklist"
               },
               {
                 "etiqueta": "Estado",
@@ -1566,9 +1489,15 @@
                   "En curso",
                   "Hecho"
                 ]
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto",
+                "placeholder": "ej. Tú mismo"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 2,
+            "entidad_compartida": "Paso"
           }
         ]
       },
@@ -1631,37 +1560,24 @@
         "titulo": "SLAs internos y tiempos de respuesta",
         "secciones": [
           {
-            "titulo": "1. Definición de SLAs",
+            "titulo": "Tus tipos de solicitud con peor cumplimiento de SLA — no hace falta meterlos todos, con 2 o 3 basta",
             "columnas": [
               {
                 "etiqueta": "Tipo de solicitud",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Receptor",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Presupuesto a cliente"
               },
               {
                 "etiqueta": "T. Máx comprometido (h)",
                 "tipo": "numero",
-                "clave": "tmax"
+                "clave": "tmax",
+                "placeholder": "24"
               },
               {
                 "etiqueta": "T. Real Prom. (h)",
                 "tipo": "numero",
-                "clave": "treal"
-              },
-              {
-                "etiqueta": "¿Protocolo?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Consecuencia si incumple",
-                "tipo": "texto"
+                "clave": "treal",
+                "placeholder": "48"
               },
               {
                 "etiqueta": "Desviación sobre el compromiso (h)",
@@ -1669,37 +1585,28 @@
                 "clave": "desviacion",
                 "formula": "treal-tmax",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Cumpliendo SLA",
+                  "Incumpliendo SLA",
+                  "Sin protocolo definido"
+                ]
+              },
+              {
+                "etiqueta": "Acción de mejora",
+                "tipo": "texto",
+                "placeholder": "ej. Definir protocolo de escalado para picos de demanda"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto",
+                "placeholder": "ej. Tú mismo"
               }
             ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "TipoSolicitud"
-          },
-          {
-            "titulo": "2. Tracker semanal de cumplimiento",
-            "columnas": [
-              {
-                "etiqueta": "Tipo de solicitud",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Solicitudes recibidas",
-                "tipo": "numero",
-                "clave": "recibidas"
-              },
-              {
-                "etiqueta": "Dentro de SLA",
-                "tipo": "numero",
-                "clave": "dentro"
-              },
-              {
-                "etiqueta": "% cumplimiento SLA",
-                "tipo": "calculada",
-                "clave": "pct_sla",
-                "formula": "dentro*100/recibidas",
-                "unidad": "pct"
-              }
-            ],
-            "filas_iniciales": 3,
+            "filas_iniciales": 2,
             "entidad_compartida": "TipoSolicitud"
           }
         ]
@@ -1709,47 +1616,36 @@
         "titulo": "Estándar para tareas repetidas",
         "secciones": [
           {
+            "titulo": "Tus tareas con más ahorro potencial — no hace falta estandarizarlas todas, con 2 o 3 basta",
             "columnas": [
               {
                 "etiqueta": "Tarea",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Preparar el pedido semanal a proveedor"
               },
               {
                 "etiqueta": "Ocurrencias/mes",
                 "tipo": "numero",
-                "clave": "ocurrencias"
+                "clave": "ocurrencias",
+                "placeholder": "8"
               },
               {
                 "etiqueta": "T. sin estándar (min)",
                 "tipo": "numero",
-                "clave": "t_sin"
-              },
-              {
-                "etiqueta": "Personas (nº)",
-                "tipo": "numero",
-                "clave": "personas"
-              },
-              {
-                "etiqueta": "¿Documentada?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Variabilidad",
-                "tipo": "opciones",
-                "opciones": [
-                  "Alta",
-                  "Media",
-                  "Baja"
-                ]
+                "clave": "t_sin",
+                "placeholder": "30"
               },
               {
                 "etiqueta": "T. con estándar (min)",
                 "tipo": "numero",
-                "clave": "t_con"
+                "clave": "t_con",
+                "placeholder": "15"
+              },
+              {
+                "etiqueta": "Personas (nº)",
+                "tipo": "numero",
+                "clave": "personas",
+                "placeholder": "2"
               },
               {
                 "etiqueta": "Ahorro/mes (min)",
@@ -1757,39 +1653,6 @@
                 "clave": "ahorro_mes",
                 "formula": "(t_sin-t_con)*personas*ocurrencias",
                 "unidad": "numero"
-              }
-            ],
-            "filas_iniciales": 4,
-            "titulo": "1. Identificación y priorización de tareas a estandarizar",
-            "entidad_compartida": "Tarea"
-          },
-          {
-            "titulo": "2. Ficha de estándar por tarea",
-            "entidad_compartida": "Tarea",
-            "columnas": [
-              {
-                "etiqueta": "Tarea",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Qué hacer (pasos clave)",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Quién lo ejecuta",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Cuándo / frecuencia",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Herramienta / método",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Dónde está documentado",
-                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
@@ -1799,9 +1662,15 @@
                   "En redacción",
                   "Publicado"
                 ]
+              },
+              {
+                "etiqueta": "Acción de estandarización",
+                "tipo": "texto",
+                "placeholder": "ej. Escribir guía de 3 pasos y subirla a la carpeta compartida"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 2,
+            "entidad_compartida": "Tarea"
           }
         ]
       },
