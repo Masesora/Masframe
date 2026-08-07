@@ -198,37 +198,24 @@
         "titulo": "Liberar liquidez bloqueada en trabajos y proyectos en curso",
         "secciones": [
           {
-            "titulo": "1. Analizar estado y avance de proyectos en curso",
+            "titulo": "Tus proyectos con más liquidez atrapada — no hace falta meterlos todos, con 2 o 3 basta",
             "columnas": [
               {
                 "etiqueta": "Proyecto / Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fase actual",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "% completado",
-                "tipo": "numero"
+                "tipo": "texto",
+                "placeholder": "Nombre del proyecto o cliente"
               },
               {
                 "etiqueta": "Importe total (€)",
                 "tipo": "numero",
-                "clave": "importe_total"
+                "clave": "importe_total",
+                "placeholder": "15000"
               },
               {
                 "etiqueta": "Cobrado (€)",
                 "tipo": "numero",
-                "clave": "cobrado"
-              },
-              {
-                "etiqueta": "Acción para desbloquear",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
+                "clave": "cobrado",
+                "placeholder": "6000"
               },
               {
                 "etiqueta": "Pendiente de cobrar (€)",
@@ -236,97 +223,33 @@
                 "clave": "pendiente",
                 "formula": "importe_total-cobrado",
                 "unidad": "eur"
-              }
-            ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Proyecto"
-          },
-          {
-            "titulo": "2. Planificar hitos de entrega para liberar cobros",
-            "columnas": [
-              {
-                "etiqueta": "Proyecto / Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Hito",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "% Completado",
-                "tipo": "numero",
-                "clave": "pct"
-              },
-              {
-                "etiqueta": "Importe hito (€)",
-                "tipo": "numero",
-                "clave": "importe_hito"
-              },
-              {
-                "etiqueta": "Fecha prevista cobro",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha real cobro",
-                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Pendiente",
-                  "Facturado",
+                  "En curso",
+                  "Hito entregado, pendiente cobro",
                   "Cobrado"
                 ]
               },
               {
-                "etiqueta": "Importe cobrable ahora (€)",
-                "tipo": "calculada",
-                "clave": "cobrable",
-                "formula": "importe_hito*pct/100",
-                "unidad": "eur"
-              }
-            ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Proyecto"
-          },
-          {
-            "titulo": "3. Control semanal de entregas y activación de pagos",
-            "columnas": [
-              {
-                "etiqueta": "Proyecto",
-                "tipo": "texto"
+                "etiqueta": "Acción para desbloquear",
+                "tipo": "texto",
+                "placeholder": "ej. Entregar informe final para poder facturar el resto"
               },
               {
-                "etiqueta": "Entregable",
-                "tipo": "texto"
+                "etiqueta": "Responsable",
+                "tipo": "texto",
+                "placeholder": "ej. Tú mismo"
               },
               {
                 "etiqueta": "Fecha compromiso",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha entrega real",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Cobrado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Fecha cobro",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. 30/09/2026"
               }
             ],
-            "filas_iniciales": 3,
+            "filas_iniciales": 2,
             "entidad_compartida": "Proyecto"
           }
         ]
@@ -336,91 +259,24 @@
         "titulo": "Reducir la morosidad y acelerar los cobros activos",
         "secciones": [
           {
-            "titulo": "1. Aging de cobros — facturas vencidas",
+            "titulo": "Tus clientes con más morosidad — no hace falta meterlos todos, con 2 o 3 basta",
             "columnas": [
               {
                 "etiqueta": "Cliente",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "Nombre del cliente"
               },
               {
-                "etiqueta": "Factura nº",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Fecha emisión",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pendiente",
-                  "Prometido",
-                  "En disputa",
-                  "Incobrable"
-                ]
-              },
-              {
-                "etiqueta": "Acción asignada",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha compromiso",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Cliente"
-          },
-          {
-            "titulo": "2. Protocolo de reclamación escalonado",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
+                "etiqueta": "Importe pendiente (€)",
                 "tipo": "numero",
-                "clave": "importe"
+                "clave": "importe",
+                "placeholder": "3000"
               },
               {
-                "etiqueta": "Días mora",
+                "etiqueta": "Días de mora",
                 "tipo": "numero",
-                "clave": "dias"
-              },
-              {
-                "etiqueta": "Acción asignada",
-                "tipo": "opciones",
-                "opciones": [
-                  "Recordatorio amistoso",
-                  "Llamada",
-                  "Carta formal",
-                  "Gestor de cobros",
-                  "Vía legal"
-                ]
-              },
-              {
-                "etiqueta": "Fecha próx. acción",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pendiente",
-                  "En gestión",
-                  "Resuelto",
-                  "Incobrable"
-                ]
+                "clave": "dias",
+                "placeholder": "ej. 45"
               },
               {
                 "etiqueta": "Coste financiero de la demora (€)",
@@ -428,58 +284,35 @@
                 "clave": "coste_fin",
                 "formula": "importe*dias*0.1/365",
                 "unidad": "eur"
-              }
-            ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Cliente"
-          },
-          {
-            "titulo": "3. Acuerdos de pago con clientes morosos",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto"
               },
               {
-                "etiqueta": "Deuda total (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Cuotas acordadas",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Importe / cuota (€)",
-                "tipo": "numero",
-                "clave": "importe_cuota"
-              },
-              {
-                "etiqueta": "Fecha 1ª cuota",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Cuotas pagadas",
-                "tipo": "numero",
-                "clave": "cuotas_pagadas"
-              },
-              {
-                "etiqueta": "Importe Recuperado (€)",
-                "tipo": "calculada",
-                "clave": "importe_recuperado",
-                "formula": "importe_cuota*cuotas_pagadas",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Estado acuerdo",
+                "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Activo",
-                  "Incumplido",
-                  "Completado"
+                  "Pendiente",
+                  "En gestión",
+                  "Acuerdo de pago",
+                  "Cobrado",
+                  "Incobrable"
                 ]
+              },
+              {
+                "etiqueta": "Acción asignada",
+                "tipo": "texto",
+                "placeholder": "ej. Llamar para acordar un plan de pago en 3 cuotas"
+              },
+              {
+                "etiqueta": "Fecha próx. acción",
+                "tipo": "texto",
+                "placeholder": "ej. 20/09/2026"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto",
+                "placeholder": "ej. Tú mismo"
               }
             ],
-            "filas_iniciales": 3,
+            "filas_iniciales": 2,
             "entidad_compartida": "Cliente"
           }
         ]
