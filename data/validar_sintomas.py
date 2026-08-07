@@ -121,7 +121,9 @@ def _lint_nativa(sid, prefix, recurso, E, W):
         # recoger claves de columnas inputables (para validar formulas)
         claves_input = {}
         claves_calc  = {}
-        tipos_validos = {"texto","numero","opciones","calculada"}
+        # "decision": botones de escenario en vez de texto libre -- guarda un valor numerico igual
+        # que "numero", solo cambia como se rellena. Ver ColumnaHerramientaConfig en TreatmentPage.tsx.
+        tipos_validos = {"texto","numero","opciones","calculada","decision"}
         for c in cols:
             clave    = c.get("clave","")
             etiqueta = c.get("etiqueta","")
@@ -134,6 +136,17 @@ def _lint_nativa(sid, prefix, recurso, E, W):
                 opts = c.get("opciones")
                 if not opts or not isinstance(opts, list) or len(opts) == 0:
                     E.append(f"{sp} col '{etiqueta}': tipo opciones sin opciones[]")
+
+            if ctipo == "decision":
+                dopts = c.get("decision_opciones")
+                if not dopts or not isinstance(dopts, list) or len(dopts) < 2:
+                    E.append(f"{sp} col '{etiqueta}': tipo decision con menos de 2 decision_opciones[] — no es una decision real si no hay nada que comparar")
+                elif not c.get("clave"):
+                    E.append(f"{sp} col '{etiqueta}': tipo decision sin clave — su escenario elegido no puede alimentar ninguna columna calculada")
+                else:
+                    for o in dopts:
+                        if not isinstance(o, dict) or "label" not in o or "valor" not in o:
+                            E.append(f"{sp} col '{etiqueta}': decision_opciones[] con entrada sin 'label'/'valor': {o!r}")
 
             if clave and ctipo != "calculada":
                 claves_input[clave] = 10.0   # valor simulado
