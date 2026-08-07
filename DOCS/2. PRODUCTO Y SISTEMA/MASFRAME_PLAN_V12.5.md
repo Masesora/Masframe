@@ -1048,6 +1048,80 @@ Todo en `main` en ambos repos, ramas de trabajo borradas tras mergear.
 
 ---
 
+## XXV. SESIÓN 7 AGO 2026 — Revisión en vivo por síntoma (Maite) + rediseño C3/C4 de "formulario" a "sistema"
+
+Maite empieza a revisar el producto en producción (`masfront.onrender.com`) síntoma a síntoma, herramienta a herramienta, dando feedback en vivo — método explícitamente distinto a las auditorías anteriores (§XVII, §XXIII): no es un barrido nuestro, es la dueña del producto usándolo como lo usaría un cliente real. Arranca por UCI-S1.
+
+### XXV.A — Playbook de UX aplicado a Anticipos (UCI-S1.r5) y generalizado
+
+Feedback real sobre la tabla de Anticipos: complejidad visual, redundancia con software que el cliente ya usa, sin recompensa al terminar, columna "Acción de desbloqueo" sin ninguna pista de qué escribir. Cuatro fixes, aplicados como patrón reutilizable (no solo a esta herramienta):
+
+1. `placeholder` en columnas texto/numero de `ColumnaHerramientaConfig` — ejemplo visible en cada celda vacía.
+2. Fila de `TOTAL` por sección (suma en vivo de columnas numero/calculada).
+3. `EvidenciaAdjunta` reposicionada a la cabecera de la herramienta con copy de atajo ("¿ya llevas esto en tu Excel? Sube el archivo y avanza") en vez de al pie tras 3 tablas obligatorias.
+4. Contenido piloto de `placeholder` para las 17 columnas de UCI-S1.r5.
+
+Aplica a las 168 herramientas nativas del catálogo (los 2 primeros puntos son cambios estructurales en `TreatmentPage.tsx`, no de contenido).
+
+### XXV.B — Hallazgo de seguridad crítico (fuera del hilo de UX, encontrado por auditoría de funnel)
+
+`PATCH /ese/{codigo}` no exigía autenticación ni verificaba nada contra Stripe — cualquiera con el código MAS (visible en la URL, no secreto) podía activar la cuenta de otro cliente mandando `pago_confirmado:true` sin pagar, disparando generación real de contrato y factura. Fix: `Depends(get_current_user)` + `check_owns_or_internal` + verificación server-side del `PaymentIntent` contra Stripe (`stripe.PaymentIntent.retrieve`, status debe ser `succeeded`) + protección de replay (un mismo `stripe_payment_intent` no puede activar 2 códigos) + contraste de importe contra `intent.amount`. Frontend: las 2 llamadas que activaban la cuenta tras pagar no mandaban el Bearer token — corregido en ambas (`ScannerReceptionPage.tsx`, `PaymentSuccessPage.tsx`). **Fuera de alcance documentado:** el `amount` con el que se crea el `PaymentIntent` en `/payments/create-payment-intent` lo sigue decidiendo el cliente sin validar contra el precio real del plan — requiere portar la tabla de precios al backend, decisión de producto aparte.
+
+### XXV.C — De "ledger de 3 tablas" a "triaje de 1" (Opción C) — patrón detectado y aplicado a 7 ramas
+
+Feedback en vivo sobre Anticipos: *"esto ya lo llevas en tu Excel o software... piensa, no ejecutes"*. Comprobado antes de tocar nada (no por conjetura) que C4/C5 no absorben el seguimiento por fila — solo llevan un check global por herramienta. La solución no es reducir tablas, es reducir la ambición: de "cuéntamelo todo" a "dime los 2-3 que más te ahogan". 3 tablas casi idénticas (misma `entidad_compartida` repetida) se funden en 1, con `Estado` sustituyendo las tablas de seguimiento y `filas_iniciales` bajando a 2.
+
+Escaneado el catálogo completo por el mismo patrón (2+ secciones con `entidad_compartida` repetida) — 6 candidatos, todos en UCI-S1/UNI-S1, todos aplicados con el tratamiento que correspondía a cada caso (no mecánicamente igual):
+
+| Rama | Tratamiento |
+|---|---|
+| UCI-S1.r5 (Anticipos) | Fusión completa 3→1 |
+| UCI-S1.r2 (Liquidez en proyectos) | Fusión completa 3→1 |
+| UCI-S1.r3 (Morosidad) | Fusión completa 3→1 |
+| UCI-S1.r1 (Inventario) | Fusión parcial: secciones 1+2 (mismo Producto) sí; sección 3 (registro de ventas semanales, no es "estado actual", es un log de eventos) se deja intacta |
+| UNI-S1.r1 (Mapa de flujo) | Fusión completa 2→1 |
+| UNI-S1.r3 (SLAs internos) | Fusión completa 2→1 |
+| UNI-S1.r4 (Estándar de tareas) | La 2ª sección no era un duplicado — era un formulario de autoría de SOP completo. Sustituida por un compromiso de acción, no forzada en el mismo molde |
+
+### XXV.D — Título duplicado + checklist de C4 interactivo (aplica a las 168)
+
+Feedback: el título de la herramienta aparecía 2 veces literales (tarjeta de `FlowItem` + `🔧 {config.titulo}` dentro de `HerramientaNativa`/`Calculadora`) y una 3ª mención casi idéntica ("🎯 propósito") antes de cualquier contenido real. Quitados ambos bloques — estructural, no de contenido, aplica a las 168 herramientas porque `HerramientaNativa`/`Calculadora` solo se instancian en 1 sitio del código.
+
+Petición: trasladar la columna "Acción de desbloqueo" a C4 para que tenga recompensa. Se descubrió que ya existía un extractor por regex (`⚡ Acciones concretas de tu diagnóstico`, auditado sobre las 98/168 herramientas — ver §XXI) que reconocía columnas accionables, pero en modo solo-lectura. Convertido en checklist interactivo (`C4EjecucionItem.sub_items: {texto, done}[]`), sincronizado por texto (no por posición) para no perder el estado si se reordenan filas. Vive dentro del mismo item de C4, no como items nuevos — C5 casa sus datos contra el `id` de la tarea de C3 (`Capa5.activeItems`) y un id sintético por fila se habría perdido en silencio ahí.
+
+### XXV.E — El rediseño grande, todavía en diseño: C3/C4 de "formulario" a "sistema" (piloto UCI-S1)
+
+Serie de correcciones en cascada de Maite sobre mis propuestas sucesivas, cada vez subiendo el nivel de exigencia — resumen del razonamiento final, no de las vueltas intermedias:
+
+**Corrección de fondo:** todas las mejoras anteriores (placeholder, totales, checklist, fusión de tablas) son mejores formularios — más cortos, más listos, pero el cliente sigue solo delante de una pantalla rellenando cosas. No es lo que se espera de "la primera y genuina clínica de empresas".
+
+**Análisis de las 6 ramas de `capa_2_options` de UCI-S1 leídas literales, no en abstracto:** r4 (financiación) ya era, dentro del propio catálogo, la mejor herramienta — no es una tabla, es un comparador de instrumentos con coste real (TAE) y una decisión explícita (Estudiar/Descartar/Solicitar). r2/r3/r5 (recién fusionadas) calculan bien pero piden "Acción: texto libre" — tracking disfrazado de decisión. r6 es la peor: 3 tablas con "Acción 1/2/3 - hecho/detalle" repetido, sin tocar aún.
+
+**Diseño C3↔C4 acordado, rama a rama:**
+
+| Rama | Modo C3 | Modo C4 |
+|---|---|---|
+| r1 (mercancía parada) | **Simulador**: galería de tarjetas (múltiples productos), slider de precio + medidor de margen en vivo + canal como botones visuales | Misma tarjeta, cambia a confirmación: ¿vendido?, precio real, fecha |
+| r2 (proyectos a medias) | Lista con **decisión embebida** por fila: escenarios (entregar completo / cerrar parcial ya) que recalculan importe y fecha en vivo | Confirmar resultado real |
+| r3 (morosidad) | **Escalera visual** de reclamación (recupera la estructura de opciones que tenía el catálogo antes de la fusión §XXV.C) | Seguimiento hasta resultado final: Cobrado / Incobrable |
+| r4 (desfase cobros/pagos) | **Comparador** de instrumentos de financiación, coste real, veredicto automático | Seguimiento de aprobación: Solicitado → Aprobado/Rechazado → importe real |
+| r5 (anticipos) | Mismo patrón que r2 | Confirmar resultado real |
+| r6 (facturación bloqueada) | **Pipeline visual**: tarjeta por factura, Bloqueada → En gestión → Desbloqueada | Certificación automática al llegar a "Desbloqueada" |
+
+Los 6 C4 convergen en solo 3 formas: confirmar resultado real (r1/r2/r5), proceso con estado intermedio (r3/r4), certificación automática por pipeline (r6) — no son 6 problemas de diseño sueltos.
+
+**Plan de construcción, aditivo, sin tocar los 160+ síntomas no rediseñados:** nuevos valores de `tipo` (`simulador`/`comparador`/`pipeline`) que conviven con `nativa`/`calculadora`; una columna nueva `tipo:"decision"` **dentro** de `HerramientaNativaConfig` (para r2/r3/r5 — reutiliza `entidad_compartida`/totales/checklist ya verificados, cero componente nuevo); un marcador `c4_modo` que `Capa4` lee y que si no existe se comporta exactamente como hoy. Orden de construcción, uno verificado en vivo antes del siguiente: (1) columna `decision` → r2/r3/r5, (2) pipeline → r6, (3) simulador → r1, (4) comparador → r4.
+
+**Capa adicional acordada — Panel de Diagnóstico Vivo:** sobre las herramientas que el cliente tenga realmente abiertas en C3 (confirmado en código: mínimo 2 causas en C1, sin máximo, y la familia matriz no descarta automáticamente — puede haber 2 a 6 ramas comprometidas a la vez, no siempre 6). Suma el € atrapado en todos los frentes abiertos y solo habla cuando los números reales contradicen la prioridad marcada a ojo en C2 (si coinciden, se calla). **Explícitamente sin IA** — ni cuenta nueva ni coste variable ni generación de texto por modelo; aritmética + plantilla. Filosofía confirmada por Maite: no es un diagnóstico autónomo, es la mesa de trabajo para que el CC y el cliente lo miren codo a codo — el sistema hace la aritmética, la conversación la hacen las personas.
+
+**Estado al cierre de §XXV: diseño cerrado y aprobado por Maite, construcción no iniciada.** Próximo paso: columna `decision` en r2/r3/r5.
+
+### XXV.F — Pendiente sin decidir, independiente de lo anterior
+
+"Sin puntuar" en C2 (familia matriz): el valor por defecto de impacto/esfuerzo (3,3) es indistinguible de una puntuación real hecha a propósito — el aviso `⚠️ N elementos sin puntuar` se dispara con datos recién creados sin que el cliente haya hecho nada. Propuesta pendiente de confirmar: que el valor nazca vacío (no un 3 disfrazado) hasta que el cliente mueva el control por primera vez, en vez de añadir un campo `tocado` aparte (rechazado por Maite — no resuelve el problema de fondo, solo lo esconde).
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1058,3 +1132,4 @@ Todo en `main` en ambos repos, ramas de trabajo borradas tras mergear.
 *§XXII añadida en sesión 5 ago 2026 — auditoría clínica KPI (30 síntomas), WOW C3→C4, fixes estructurales, backlog = 0*
 *§XXIII añadida en sesión 5 ago 2026 (tarde) — 2ª pasada masframe-ux-validator, bug UCI-S3, 3 contaminaciones de catálogo, T1 transversal, CARDIO-S1*
 *§XXIV añadida en sesión 5 ago 2026 (noche) — linter de contaminación, QA manual real, 130/205 secciones nativas con columna calculada*
+*§XXV añadida en sesión 7 ago 2026 — revisión en vivo por síntoma (Maite), playbook de UX, fix de seguridad crítico, patrón "ledger→triaje" en 7 ramas, rediseño C3/C4 de formulario a sistema (piloto UCI-S1, diseño cerrado)*

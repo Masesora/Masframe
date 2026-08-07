@@ -204,14 +204,30 @@
                 ]
               },
               {
-                "etiqueta": "Acción para desbloquear",
-                "tipo": "texto",
-                "placeholder": "ej. Entregar informe final para poder facturar el resto"
+                "etiqueta": "Decisión",
+                "tipo": "decision",
+                "clave": "pct_recuperable",
+                "decision_opciones": [
+                  {
+                    "label": "Entregar completo y cobrar todo",
+                    "valor": 100
+                  },
+                  {
+                    "label": "Renegociar alcance",
+                    "valor": 80
+                  },
+                  {
+                    "label": "Cerrar parcial y cobrar ya",
+                    "valor": 60
+                  }
+                ]
               },
               {
-                "etiqueta": "Responsable",
-                "tipo": "texto",
-                "placeholder": "ej. Tú mismo"
+                "etiqueta": "Recuperación estimada (€)",
+                "tipo": "calculada",
+                "clave": "recuperacion",
+                "formula": "pendiente*pct_recuperable/100",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Fecha compromiso",
@@ -267,19 +283,43 @@
                 ]
               },
               {
-                "etiqueta": "Acción asignada",
-                "tipo": "texto",
-                "placeholder": "ej. Llamar para acordar un plan de pago en 3 cuotas"
+                "etiqueta": "Decisión",
+                "tipo": "decision",
+                "clave": "prob_cobro",
+                "decision_opciones": [
+                  {
+                    "label": "Recordatorio amistoso",
+                    "valor": 30
+                  },
+                  {
+                    "label": "Llamada",
+                    "valor": 45
+                  },
+                  {
+                    "label": "Carta formal",
+                    "valor": 60
+                  },
+                  {
+                    "label": "Gestor de cobros",
+                    "valor": 75
+                  },
+                  {
+                    "label": "Vía legal",
+                    "valor": 90
+                  }
+                ]
+              },
+              {
+                "etiqueta": "Recuperación estimada (€)",
+                "tipo": "calculada",
+                "clave": "recuperacion",
+                "formula": "importe*prob_cobro/100",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Fecha próx. acción",
                 "tipo": "texto",
                 "placeholder": "ej. 20/09/2026"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto",
-                "placeholder": "ej. Tú mismo"
               }
             ],
             "filas_iniciales": 2,
@@ -481,9 +521,30 @@
                 ]
               },
               {
-                "etiqueta": "Acción de desbloqueo",
-                "tipo": "texto",
-                "placeholder": "ej. Enviar maqueta final al cliente para poder facturar el resto"
+                "etiqueta": "Decisión",
+                "tipo": "decision",
+                "clave": "pct_recuperable",
+                "decision_opciones": [
+                  {
+                    "label": "Entregar completo y cobrar todo",
+                    "valor": 100
+                  },
+                  {
+                    "label": "Renegociar alcance",
+                    "valor": 80
+                  },
+                  {
+                    "label": "Cerrar parcial y cobrar ya",
+                    "valor": 60
+                  }
+                ]
+              },
+              {
+                "etiqueta": "Recuperación estimada (€)",
+                "tipo": "calculada",
+                "clave": "recuperacion",
+                "formula": "pendiente_ejec*pct_recuperable/100",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Fecha compromiso",
