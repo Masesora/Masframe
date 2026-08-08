@@ -140,6 +140,13 @@ def _lint_columnas(sid, sp, cols, E, W):
             if smin is not None and smax is not None and smin >= smax:
                 E.append(f"{sp} col '{etiqueta}': tipo slider con min={smin} >= max={smax} — rango vacío")
 
+        # contribuye_valor (Sala de Control, §XXV.H): calcularValorFila en TreatmentPage.tsx solo
+        # suma columnas "numero"/"slider"/"calculada" -- marcarlo en texto/opciones/decision no
+        # rompe nada mientras el motor las ignore silenciosamente, pero engaña al autor del
+        # catalogo (parece que va a sumar y nunca lo hace).
+        if c.get("contribuye_valor") and ctipo not in ("numero", "slider", "calculada"):
+            E.append(f"{sp} col '{etiqueta}': contribuye_valor=true sobre tipo {ctipo!r} — el motor solo suma numero/slider/calculada, esta columna nunca se sumaria")
+
         if ctipo == "decision":
             dopts = c.get("decision_opciones")
             if not dopts or not isinstance(dopts, list) or len(dopts) < 2:
