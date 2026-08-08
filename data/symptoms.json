@@ -103,6 +103,14 @@
             "unidad": "pct"
           },
           {
+            "etiqueta": "Valor estimado (€)",
+            "tipo": "calculada",
+            "clave": "valor_estimado",
+            "formula": "uds*precio_prop",
+            "unidad": "eur",
+            "contribuye_valor": true
+          },
+          {
             "etiqueta": "Canal de venta",
             "tipo": "opciones",
             "estilo": "botones",
@@ -181,7 +189,8 @@
                 "tipo": "calculada",
                 "clave": "recuperacion",
                 "formula": "pendiente*pct_recuperable/100",
-                "unidad": "eur"
+                "unidad": "eur",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Fecha compromiso",
@@ -268,7 +277,8 @@
                 "tipo": "calculada",
                 "clave": "recuperacion",
                 "formula": "importe*prob_cobro/100",
-                "unidad": "eur"
+                "unidad": "eur",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Fecha próx. acción",
@@ -350,7 +360,8 @@
                 "tipo": "calculada",
                 "clave": "liquidez",
                 "formula": "(volumen/30)*dias_ganados",
-                "unidad": "eur"
+                "unidad": "eur",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Estado negociación",
@@ -519,7 +530,8 @@
                 "tipo": "calculada",
                 "clave": "recuperacion",
                 "formula": "pendiente_ejec*pct_recuperable/100",
-                "unidad": "eur"
+                "unidad": "eur",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Fecha compromiso",
@@ -555,7 +567,8 @@
             "etiqueta": "Importe a facturar (€)",
             "tipo": "numero",
             "clave": "importe",
-            "placeholder": "3200"
+            "placeholder": "3200",
+            "contribuye_valor": true
           },
           {
             "etiqueta": "Motivo del bloqueo",
