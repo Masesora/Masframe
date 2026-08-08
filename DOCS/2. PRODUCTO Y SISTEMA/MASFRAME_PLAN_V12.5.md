@@ -1257,6 +1257,22 @@ En resumen: no hay ningún bloqueante nuevo para empezar el rollout, pero **reco
 
 Ninguna de las dos se empieza en esta sesión — quedan registradas como backlog explícito para cuando Maite dé la orden de arrancarlas.
 
+## XXX. SESIÓN 8 AGO 2026 (noche) — Cierre del gap "conteo" de §XXIX.A: verificado en vivo, y un bug real encontrado por el camino
+
+### XXX.A — Verificación en vivo con UNI-S1
+
+Primer paso acordado antes del rollout (§XXIX.A): forzar un síntoma real en modo `kpi_recovery_mode="conteo"` con 2+ frentes. Elegido `UNI-S1` (`recovery_unit_label="entregas limpias ganadas"`, 6 ramas nativas igual que UCI-S1) — no un síntoma inventado, uno real de `symptoms.json` con ese modo. Forzados 3 frentes vía mock, rellenados 2 con datos reales.
+
+**El propio código de la Sala de Control (cabecera, stepper, informe de cierre) era correcto**: la cabecera mostró "45 entregas limpias ganadas", nunca un €. Confirma la confianza por simetría de código que ya se tenía.
+
+### XXX.B — Bug real encontrado al verificar (no en la Sala de Control, en código anterior)
+
+Al rellenar datos reales aparecieron 2 sitios de la misma pantalla, ajenos a la Sala de Control, con `fmtEuro(item.valor)` fijo sin mirar `recoveryMode`: el badge junto al nombre de cada tarjeta ("5 €" en vez de "5 entregas limpias ganadas") y el panel "💰 Valor planificado" del final de C3. Existían desde antes de §XXVII, dormidos porque hasta entonces solo `HerramientaCalculadora` alimentaba `item.valor` — `contribuye_valor` (§XXVII.C) los despertó al extender la alimentación a nativa/pipeline/simulador.
+
+Corregido en `masesora-frontend#18` (mergeada): 3 badges por ítem + el panel, mismo patrón `recoveryMode === "conteo"` ya usado en Capa5, y ocultos también en modo "estructural" (sin valor sumable por ítem, mismo motivo que ya llevó a que la Sala de Control no muestre total ahí). Verificado en vivo: `UNI-S1` ya muestra la etiqueta correcta en los 3 sitios; `UCI-S1` (financiero) sin regresión.
+
+Con esto, el gap explícito de §XXIX.A queda cerrado — la Sala de Control y todo lo que muestra `item.valor` en C3 es coherente en los 3 modos (financiero/conteo/estructural) antes de empezar el rollout a los 29 síntomas restantes.
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -1274,3 +1290,4 @@ Ninguna de las dos se empieza en esta sesión — quedan registradas como backlo
 *§XXVII añadida en sesión 8 ago 2026 (noche) — Sala de Control: stepper multi-frente para C3 (piloto UCI-S1), corrección mode-aware tras verificar `kpi_recovery_mode` en las 30 síntomas, prerrequisito `contribuye_valor` C3→C4, verificado en vivo con Playwright*
 *§XXVIII añadida en sesión 8 ago 2026 (noche) — cita editorial para el cuadro de introducción de capa (CapaShell), y cierre: las 4 PRs de la sesión revisadas y mergeadas (masesora-frontend#15/#16/#17, masframe#12)*
 *§XXIX añadida en sesión 8 ago 2026 (noche) — auditoría previa al rollout de la Sala de Control (gap real: modo "conteo" sin verificar en vivo; riesgo de ramas legacy descartado, 0/30 síntomas), y 2 tareas nuevas de backlog: certificado de alta (DischargePage) y narrativa de justi_capaN en todo el catálogo*
+*§XXX añadida en sesión 8 ago 2026 (noche) — cierre del gap "conteo" de §XXIX.A: verificado en vivo con UNI-S1 (correcto), y fix de un bug real encontrado por el camino (badges/panel de valor ajenos a la Sala de Control mostrando € fijo) — masesora-frontend#18*
