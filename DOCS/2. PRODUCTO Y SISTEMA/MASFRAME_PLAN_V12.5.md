@@ -1238,6 +1238,25 @@ Las 4 en `main` de su repo respectivo, sin CI configurado en ninguno de los dos 
 
 Pendiente explícito para sesiones futuras: extender la Sala de Control a los 29 síntomas restantes (§XXVII.D, pospuesto a propósito hasta validar UCI-S1), y la pasada de reescritura de copy de `justi_capaN` señalada en §XXVIII.A.
 
+## XXIX. SESIÓN 8 AGO 2026 (noche) — Auditoría previa al rollout + 2 tareas nuevas de backlog
+
+### XXIX.A — "¿Algo más antes de extender a los 29 síntomas?"
+
+Maite confirma en vivo que UCI-S1 ha mejorado y pregunta si queda algo más antes del rollout general. Repaso en código (no de memoria) sobre lo ya mergeado, buscando específicamente riesgos que solo se manifiestan al generalizar a los otros 29 síntomas:
+
+- **Comprobado y descartado**: `itemCompletado` (Sala de Control, §XXVII.D) devuelve `false` siempre para un `FlowItem` sin `herramienta_config` — es decir, un frente construido con ramas legacy de `capa_3_plan` (arrays `.steps` de herramientas `.html`, en vez de un objeto nativo) nunca se marcaría como completado, y el informe de cierre nunca aparecería para ese frente. Comprobado con un script sobre `symptoms.json`: **0 de 30 síntomas** tienen ya ninguna rama legacy en `capa_3_plan` (el catálogo está 100% en componentes nativos desde §XX) — el riesgo existe en la lógica pero no tiene ningún caso real que lo dispare hoy. Queda como algo a vigilar solo si en el futuro se reintrodujera alguna rama `.html` suelta.
+- **Gap real, no resuelto todavía**: el camino `kpi_recovery_mode="conteo"` (19 de los 30 síntomas — con diferencia el modo más común del catálogo) nunca se verificó en vivo dentro de la Sala de Control, solo se verificó `financiero` y `estructural` (§XXVII.E). Comparte el mismo código que `financiero` (solo cambia el formateo del ternario), así que la confianza es alta, pero no es lo mismo que haberlo visto funcionar. Recomendado: antes o como primer paso del rollout, forzar un síntoma en modo `conteo` con 2+ frentes y confirmar visualmente.
+- **Detalle menor, no bloqueante**: `itemCompletado` usa un umbral más laxo para `calculadora` (cualquier campo tecleado) que para `nativa` (cada sección con ≥1 fila) — inconsistencia cosmética entre criterios de "completado", sin impacto en UCI-S1 (no usa ninguna rama `calculadora`), pendiente de homogeneizar si aparece un síntoma con ramas mixtas nativa+calculadora en la Sala de Control.
+
+En resumen: no hay ningún bloqueante nuevo para empezar el rollout, pero **recomiendo verificar el camino "conteo" en vivo como primer paso**, dado que es el modo mayoritario del catálogo y hasta ahora solo se ha confiado en la simetría del código.
+
+### XXIX.B — 2 tareas nuevas de backlog (pedidas por Maite, sin ejecutar todavía)
+
+1. **Certificado de alta (`DischargePage.tsx`, `CertificadoSection`)**: revisar y enriquecer con datos reales recogidos a lo largo de las capas. Estado actual verificado en código: el certificado ya muestra empresa/ACI/síntoma/KPI inicio (C0) → KPI alta (C6)/fecha, más un "Acta de tratamiento" que lee `session.c3.items`. No incorpora nada de C1 (priorización), C2 (decisión comprometida), ni el valor real ejecutado en C4/C5 — que a partir de §XXVII.C ya trae cifras reales en más síntomas gracias a `contribuye_valor`, no solo en los que usan calculadora. Punto de partida natural para la mejora.
+2. **Narrativa de `justi_capaN` en las 6 capas × 30 síntomas**: la reescritura de copy señalada en §XXVIII.A ("se nota que lo ha hecho la IA en cuanto a narrativa") se queda ahí para UCI-S1 sin resolver y se amplía ahora a **todo el catálogo** — mismo campo (`justi_capa1` a `justi_capa6`), mismo criterio: voz directa y humana, no redacción genérica de IA. Pendiente definir con Maite el criterio de voz antes de tocar contenido, tal como se acordó para el rediseño visual del mismo cuadro.
+
+Ninguna de las dos se empieza en esta sesión — quedan registradas como backlog explícito para cuando Maite dé la orden de arrancarlas.
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -1254,3 +1273,4 @@ Pendiente explícito para sesiones futuras: extender la Sala de Control a los 29
 *§XXVI añadida en sesión 8 ago 2026 — cierre del hallazgo de pago pendiente de §XXV.B (precio de PaymentIntent calculado en servidor, anti-swap de síntomas), decisión de producto "Consultar" para facturación ≥500.000€/mes, y fix de `config/pricing_policy.py` desincronizado del precio real*
 *§XXVII añadida en sesión 8 ago 2026 (noche) — Sala de Control: stepper multi-frente para C3 (piloto UCI-S1), corrección mode-aware tras verificar `kpi_recovery_mode` en las 30 síntomas, prerrequisito `contribuye_valor` C3→C4, verificado en vivo con Playwright*
 *§XXVIII añadida en sesión 8 ago 2026 (noche) — cita editorial para el cuadro de introducción de capa (CapaShell), y cierre: las 4 PRs de la sesión revisadas y mergeadas (masesora-frontend#15/#16/#17, masframe#12)*
+*§XXIX añadida en sesión 8 ago 2026 (noche) — auditoría previa al rollout de la Sala de Control (gap real: modo "conteo" sin verificar en vivo; riesgo de ramas legacy descartado, 0/30 síntomas), y 2 tareas nuevas de backlog: certificado de alta (DischargePage) y narrativa de justi_capaN en todo el catálogo*
