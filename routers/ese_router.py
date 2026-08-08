@@ -427,10 +427,10 @@ async def actualizar_pago(
                 detail="Este pago ya se usó para activar otro expediente",
             )
         # El importe declarado por el cliente debe coincidir con lo que Stripe cobró de
-        # verdad (Stripe trabaja en céntimos). No valida que el importe cobrado sea el
-        # precio correcto del plan — eso depende del `amount` con el que se creó el
-        # PaymentIntent en /payments/create-payment-intent, que hoy también acepta
-        # cualquier valor del cliente y queda fuera del alcance de este fix puntual.
+        # verdad (Stripe trabaja en céntimos). Desde que /payments/create-payment-intent
+        # calcula `amount` en servidor (ver payments_router.py, sesión 8 ago 2026) en vez de
+        # aceptar el valor del cliente, esta comprobación ya está anclada a un precio real,
+        # no solo a que dos números que manda el propio cliente coincidan entre sí.
         if data.importe is not None:
             centimos_esperados = round(data.importe * 100)
             if abs(intent.amount - centimos_esperados) > 1:
@@ -438,6 +438,22 @@ async def actualizar_pago(
                     status_code=400,
                     detail="El importe no coincide con el pago verificado en Stripe",
                 )
+        # Swap de síntomas: el cliente podría pagar el PaymentIntent de un plan pequeño (pocos
+        # síntomas, precio bajo) y luego, en esta misma llamada, activar una lista de síntomas
+        # más larga que la que se usó para calcular ese precio. Los metadatos del PaymentIntent
+        # los fijó el servidor al crearlo (el cliente no puede tocarlos con la clave
+        # publicable), así que son la fuente fiable de qué se pagó de verdad.
+        activos = data.especialidades_activas or data.sintomas_activos
+        if activos is not None:
+            sintomas_pagados = (intent.metadata or {}).get("sintomas", "")
+            if sintomas_pagados:
+                pagados_set = set(sintomas_pagados.split(","))
+                activos_set = set(str(s) for s in activos)
+                if activos_set != pagados_set:
+                    raise HTTPException(
+                        status_code=400,
+                        detail="Los síntomas a activar no coinciden con los que se pagaron",
+                    )
         update_data["fase"] = "pago_completado"
         update_data["fecha_activacion"] = ahora.isoformat()
 
