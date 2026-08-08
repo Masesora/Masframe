@@ -16,17 +16,20 @@ def get_clients_collection():
 
 # Precios reales, en euros — DEBE coincidir exactamente con getPrecio() en
 # masesora-frontend/src/pages/ScannerReceptionPage.tsx (fuente original del precio que ve
-# el cliente en pantalla). [tier bajo, tier medio, tier enterprise], por plan.
+# el cliente en pantalla). [tier bajo, tier medio], por plan. Facturación ≥500.000€/mes no
+# tiene precio fijo -- "Consultar" (ver _tier_facturacion), decisión de producto sesión 8 ago
+# 2026: una empresa de ese tamaño necesita una conversación antes de comprometerse a un
+# checkout automático, no cobro en línea para ese tramo.
 PRECIOS_EUR = {
-    "PRE": [399, 999, 2499],
-    "PAE": [999, 2900, 9999],
-    "PIE": [1499, 4500, 24499],
+    "PRE": [399, 999],
+    "PAE": [999, 2900],
+    "PIE": [1499, 4500],
 }
 
 
-def _tier_facturacion(facturacion: float) -> int:
+def _tier_facturacion(facturacion: float) -> "int | None":
     if facturacion >= 500000:
-        return 2
+        return None  # "Consultar" -- sin checkout automático para este tramo
     if facturacion < 15000:
         return 0
     return 1
@@ -69,6 +72,14 @@ async def create_payment_intent(data: dict):
     facturacion = float(cliente.get("facturacion") or 0)
     plan = _plan_por_num_sintomas(len(sintomas))
     tier = _tier_facturacion(facturacion)
+    if tier is None:
+        # Defensa en profundidad: el frontend ya no deja llegar hasta aquí para este tramo
+        # (bloquea el checkout y redirige a contacto), pero el servidor tampoco confía en
+        # eso -- si de algún modo se llega, se rechaza en vez de cobrar cualquier cosa.
+        raise HTTPException(
+            status_code=400,
+            detail="Esta facturación requiere una propuesta a medida — contacta con el equipo antes de proceder al pago",
+        )
     precio_eur = PRECIOS_EUR[plan][tier]
     amount = precio_eur * 100  # Stripe trabaja en céntimos
 
