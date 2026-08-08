@@ -1215,6 +1215,29 @@ Verificado contra `vite build` + `vite preview` (no dev/StrictMode — el doble-
 
 PRs abiertos: `masframe#12` (contribuye_valor en symptoms.json + validador), `masesora-frontend` rama `feature/c3-sala-control` (pendiente de abrir el PR). Pendiente explícito: extender el patrón a los 29 síntomas restantes — deliberadamente pospuesto hasta validar UCI-S1 con Maite, tal como se acordó.
 
+## XXVIII. SESIÓN 8 AGO 2026 (noche) — Cita editorial para el cuadro de introducción de capa + cierre de las 4 PRs de la sesión
+
+### XXVIII.A — Hallazgo de Maite al revisar el push de la Sala de Control
+
+Revisando en vivo el resultado de §XXVII, Maite señala el cuadro que muestra `justi_capaN` (visible en las 6 capas de los 30 síntomas, vía el componente compartido `CapaShell` en `masesora-frontend`): *"el UX tiene que ver un texto atractivo para introducirle y animarle a que empiece la capa, ahora está en un cuadro azul con la letra muy pequeña"*. Verificado en código, no por impresión: el cuadro era literalmente el mismo tratamiento visual que un aviso de sistema (`background: #eff6ff`, `border: #bfdbfe`, `fontSize: 0.84rem`, `color: #1e3a8a`), sin ninguna jerarquía frente al resto de la pantalla.
+
+Antes de tocar código: 3 propuestas visuales mostradas como artefacto aparte (maqueta con el texto real de `justi_capa3`, sin cambiar el copy — esa reescritura, que Maite también señaló como "se nota que lo ha hecho la IA en cuanto a narrativa", queda pendiente como pasada de contenido independiente). Maite elige la "cita editorial": reutiliza el mismo trazo que ya usa la cita de cabecera del síntoma (`symptom.logica`/`description_symptom`) — borde dorado a la izquierda + cursiva, sin caja — en vez de inventar un estilo nuevo. Cambio de un único componente compartido, sin tocar `symptoms.json`; verificado en vivo con Playwright contra build de producción sobre UCI-S1.
+
+### XXVIII.B — Cierre: las 4 PRs de la sesión revisadas y mergeadas
+
+A petición expresa de Maite ("revisa la X y mergea si está bien"), cada PR se revisó de nuevo (diff completo, mergeable_state, CI, comentarios pendientes) antes de mergear — no se mergeó nada solo por la verificación ya hecha durante la construcción:
+
+| PR | Repo | Contenido | Squash |
+|---|---|---|---|
+| `masesora-frontend#17` | frontend | Cita editorial (§XXVIII.A) | `3d5c809` |
+| `masesora-frontend#16` | frontend | Sala de Control (§XXVII) | `62317ad` |
+| `masframe#12` | backend | Precio server-side + anti-swap + "Consultar" ≥500.000€/mes + `pricing_policy.py` (§XXVI) + `contribuye_valor` (§XXVII.C) | `57f14d9` |
+| `masesora-frontend#15` | frontend | Contraparte frontend del fix de precio server-side (§XXVI) | `9423a35` |
+
+Las 4 en `main` de su repo respectivo, sin CI configurado en ninguno de los dos repos (0 checks), sin comentarios de revisión pendientes en ninguna. Con esto, todo el trabajo de esta sesión (8 ago 2026, mañana y noche) queda desplegado: fix de seguridad de pago, decisión de "Consultar" para facturación alta, Sala de Control, y la cita editorial.
+
+Pendiente explícito para sesiones futuras: extender la Sala de Control a los 29 síntomas restantes (§XXVII.D, pospuesto a propósito hasta validar UCI-S1), y la pasada de reescritura de copy de `justi_capaN` señalada en §XXVIII.A.
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -1230,3 +1253,4 @@ PRs abiertos: `masframe#12` (contribuye_valor en symptoms.json + validador), `ma
 *§XXV añadida en sesión 7 ago 2026 — revisión en vivo por síntoma (Maite), playbook de UX, fix de seguridad crítico, patrón "ledger→triaje" en 7 ramas, rediseño C3/C4 de formulario a sistema (piloto UCI-S1); ampliada 7-8 ago 2026 con fix de "Sin puntuar" y las 4 fases del orden de construcción completas y mergeadas — decision (r2/r3/r5), pipeline (r6), simulador (r1), comparador (r4) — las 6 ramas de UCI-S1 rediseñadas*
 *§XXVI añadida en sesión 8 ago 2026 — cierre del hallazgo de pago pendiente de §XXV.B (precio de PaymentIntent calculado en servidor, anti-swap de síntomas), decisión de producto "Consultar" para facturación ≥500.000€/mes, y fix de `config/pricing_policy.py` desincronizado del precio real*
 *§XXVII añadida en sesión 8 ago 2026 (noche) — Sala de Control: stepper multi-frente para C3 (piloto UCI-S1), corrección mode-aware tras verificar `kpi_recovery_mode` en las 30 síntomas, prerrequisito `contribuye_valor` C3→C4, verificado en vivo con Playwright*
+*§XXVIII añadida en sesión 8 ago 2026 (noche) — cita editorial para el cuadro de introducción de capa (CapaShell), y cierre: las 4 PRs de la sesión revisadas y mergeadas (masesora-frontend#15/#16/#17, masframe#12)*
