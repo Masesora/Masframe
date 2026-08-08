@@ -557,168 +557,60 @@
         ]
       },
       "r6": {
-        "tipo": "nativa",
+        "tipo": "pipeline",
         "titulo": "Activar la facturación paralizada por procesos internos",
-        "secciones": [
+        "entidad_nombre": "Factura",
+        "etapas": [
+          "Bloqueada",
+          "En gestión",
+          "Desbloqueada"
+        ],
+        "columnas": [
           {
-            "titulo": "1. Facturación pendiente por desbloquear",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Trabajo / Proyecto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe a facturar (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Motivo del bloqueo",
-                "tipo": "opciones",
-                "opciones": [
-                  "Falta validación cliente",
-                  "Falta información interna",
-                  "Pendiente aprobación",
-                  "Otro"
-                ]
-              },
-              {
-                "etiqueta": "Responsable de desbloquear",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción concreta",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 3
+            "etiqueta": "Cliente",
+            "tipo": "texto",
+            "placeholder": "ej. Constructora Vidal"
           },
           {
-            "titulo": "2. Diagnóstico del proceso de facturación",
-            "columnas": [
-              {
-                "etiqueta": "Factura / Expediente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Fecha servicio prestado",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Motivo del bloqueo",
-                "tipo": "opciones",
-                "opciones": [
-                  "Falta aprobación interna",
-                  "Datos del cliente incompletos",
-                  "Contrato no firmado",
-                  "Disputa de precio",
-                  "Error en pedido",
-                  "Pendiente de conformidad",
-                  "Otro"
-                ]
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción desbloqueadora",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Bloqueada",
-                  "En gestión",
-                  "Desbloqueada"
-                ]
-              }
-            ],
-            "filas_iniciales": 3
+            "etiqueta": "Factura / Expediente",
+            "tipo": "texto",
+            "placeholder": "ej. FRA-2026-014"
           },
           {
-            "titulo": "3. Checklist operativo de facturación",
-            "columnas": [
-              {
-                "etiqueta": "Expediente / Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción 1 - hecho",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Acción 1 - detalle",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción 2 - hecho",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Acción 2 - detalle",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción 3 - hecho",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Acción 3 - detalle",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Facturado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Fecha facturación",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 3
+            "etiqueta": "Importe a facturar (€)",
+            "tipo": "numero",
+            "clave": "importe",
+            "placeholder": "3200"
+          },
+          {
+            "etiqueta": "Motivo del bloqueo",
+            "tipo": "opciones",
+            "opciones": [
+              "Falta validación del cliente",
+              "Falta información interna",
+              "Pendiente de aprobación",
+              "Contrato no firmado",
+              "Disputa de precio",
+              "Otro"
+            ]
+          },
+          {
+            "etiqueta": "Responsable de desbloquear",
+            "tipo": "texto",
+            "placeholder": "ej. Dpto. administración"
+          },
+          {
+            "etiqueta": "Fecha límite",
+            "tipo": "texto",
+            "placeholder": "ej. 15/09/2026"
+          },
+          {
+            "etiqueta": "Acción concreta",
+            "tipo": "texto",
+            "placeholder": "ej. Enviar contrato para firma"
           }
-        ]
+        ],
+        "filas_iniciales": 2
       }
     },
     "kpi_recovery_mode": "financiero",

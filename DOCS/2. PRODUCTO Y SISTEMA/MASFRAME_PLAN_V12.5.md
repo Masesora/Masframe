@@ -1116,9 +1116,21 @@ Los 6 C4 convergen en solo 3 formas: confirmar resultado real (r1/r2/r5), proces
 
 **Estado al cierre de §XXV: diseño cerrado y aprobado por Maite, construcción no iniciada.** Próximo paso: columna `decision` en r2/r3/r5.
 
-### XXV.F — Pendiente sin decidir, independiente de lo anterior
+### XXV.F — "Sin puntuar" (C2, familia matriz) — RESUELTO
 
-"Sin puntuar" en C2 (familia matriz): el valor por defecto de impacto/esfuerzo (3,3) es indistinguible de una puntuación real hecha a propósito — el aviso `⚠️ N elementos sin puntuar` se dispara con datos recién creados sin que el cliente haya hecho nada. Propuesta pendiente de confirmar: que el valor nazca vacío (no un 3 disfrazado) hasta que el cliente mueva el control por primera vez, en vez de añadir un campo `tocado` aparte (rechazado por Maite — no resuelve el problema de fondo, solo lo esconde).
+"Sin puntuar" en C2 (familia matriz): el valor por defecto de impacto/esfuerzo (3,3) era indistinguible de una puntuación real hecha a propósito — el aviso `⚠️ N elementos sin puntuar` se disparaba con datos recién creados sin que el cliente hubiera hecho nada, y encima con AND (`eje_x===3 && eje_y===3`) en vez de OR, así que tocar solo un eje ya limpiaba el aviso aunque el otro siguiera sin puntuar. Descartada la opción de un campo `tocado` aparte (rechazada por Maite en su momento — no resuelve el problema de fondo, solo lo esconde). Construido: el valor de creación pasa a `0` (sentinel fuera de rango, inequívoco), con un helper `ejeVal(v) = v>0 ? v : 3` que normaliza ese `0` a `3` solo en los puntos de cómputo/visualización (scoring, cuadrante, SVG, Stepper), mientras la detección de "sin puntuar" usa el `0` crudo con OR. Verificado con Playwright: aviso preciso desde el primer render, tocar un solo eje ya no lo limpia, un 3/3 real deliberado sí lo limpia. PR `masesora-frontend#11`, mergeado.
+
+### XXV.G — Construcción del orden acordado: decision (r2/r3/r5) y pipeline (r6)
+
+Los 2 primeros pasos del orden de construcción de §XXV.E, cada uno verificado en vivo con Playwright + mock backend antes de dar el siguiente:
+
+**1. Columna `decision` (r2/r3/r5) — mergeado.** Botones de escenario en vez de "Acción: texto libre" — cada opción escribe su `valor` numérico en la celda por el mismo mecanismo que ya usa `tipo:"numero"`, así que una columna `calculada` posterior ("Recuperación estimada") recalcula en vivo según qué escenario se elige. `derivarAccionesConcretas` (checklist de C4) resuelve el valor numérico a la etiqueta legible del escenario. r5 (Anticipos)/r2 (Liquidez)/r3 (Morosidad, con la escalera de gestión de cobro recuperada del catálogo pre-fusión) llevan cada una sus propios `decision_opciones`, no una plantilla genérica.
+
+**2. Modo `pipeline` (r6) — construido, verificado, PRs abiertos.** r6 (facturación bloqueada) era la peor herramienta del catálogo original: 3 tablas casi idénticas con "Acción 1/2/3 - hecho/detalle" repetido para la misma factura en 3 estados de madurez. Nuevo `tipo:"pipeline"` (convive con `nativa`/`calculadora`, cero cambios en las 160+ herramientas no rediseñadas): tablero de tarjetas agrupadas por etapa (Bloqueada → En gestión → Desbloqueada), reutilizando `ColumnaHerramientaConfig` para los campos de cada tarjeta. C4 lleva un efecto de **certificación automática**: cuando todas las tarjetas llegan a la etapa final, la tarea se marca hecha sola (con el valor real = suma de las tarjetas), sin pedir un check aparte — el tablero visual ya es la evidencia de cierre.
+
+Verificado en vivo: tablero de 3 etapas, mover tarjetas actualiza contador/totales € en tiempo real, mover todas a "Desbloqueada" certifica C4 solo y cascada hasta el certificado de C5 (3500€, 100%) sin intervención manual. Bug real encontrado y corregido en el propio proceso de verificación (nunca llegó a producción): el efecto de certificación, en su primer intento, escribía sobre `c4Items` desactualizado en el mismo commit en que el efecto de auto-sync creaba el item C4 por primera vez — como el array estaba vacío en ese instante, el patch nunca se aplicaba, y como el efecto depende de `data` (que él mismo reescribía cada vez con un array vacío nuevo), se retroalimentaba en un bucle de renders infinito. Fix: esperar a que el auto-sync haya creado el slot antes de intentar parchearlo.
+
+Pendiente de este orden: (3) simulador → r1, (4) comparador → r4. El Panel de Diagnóstico Vivo (§XXV.E) sigue diseñado pero sin hueco asignado en el orden de build.
 
 ---
 
@@ -1132,4 +1144,4 @@ Los 6 C4 convergen en solo 3 formas: confirmar resultado real (r1/r2/r5), proces
 *§XXII añadida en sesión 5 ago 2026 — auditoría clínica KPI (30 síntomas), WOW C3→C4, fixes estructurales, backlog = 0*
 *§XXIII añadida en sesión 5 ago 2026 (tarde) — 2ª pasada masframe-ux-validator, bug UCI-S3, 3 contaminaciones de catálogo, T1 transversal, CARDIO-S1*
 *§XXIV añadida en sesión 5 ago 2026 (noche) — linter de contaminación, QA manual real, 130/205 secciones nativas con columna calculada*
-*§XXV añadida en sesión 7 ago 2026 — revisión en vivo por síntoma (Maite), playbook de UX, fix de seguridad crítico, patrón "ledger→triaje" en 7 ramas, rediseño C3/C4 de formulario a sistema (piloto UCI-S1, diseño cerrado)*
+*§XXV añadida en sesión 7 ago 2026 — revisión en vivo por síntoma (Maite), playbook de UX, fix de seguridad crítico, patrón "ledger→triaje" en 7 ramas, rediseño C3/C4 de formulario a sistema (piloto UCI-S1); ampliada la misma sesión (noche) con fix de "Sin puntuar", columna `decision` (r2/r3/r5) y modo `pipeline` (r6) construidos y verificados en vivo*
