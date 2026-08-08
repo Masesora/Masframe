@@ -1142,6 +1142,40 @@ Verificado en vivo: entre 3 ofertas de financiación (100€/50€/75€ de cost
 
 ---
 
+## XXVI. SESIÓN 8 AGO 2026 — Cierre del hallazgo de pago pendiente + decisión de "Consultar" para facturación alta
+
+Retomando el hallazgo que §XXV.B había dejado explícitamente fuera de alcance: *"el `amount` con el que se crea el PaymentIntent en `/payments/create-payment-intent` lo sigue decidiendo el cliente sin validar contra el precio real del plan"*.
+
+### XXVI.A — El exploit, confirmado en código
+
+`payments_router.py` leía `amount = data.get("amount", 0)` del body tal cual y lo pasaba directo a `stripe.PaymentIntent.create` — sin autenticación, sin comparar contra ningún precio real. Cualquiera podía pedir un PaymentIntent de 1 céntimo, pagarlo de verdad (un cargo real en Stripe, solo que ínfimo) y activar una cuenta de un plan de hasta 24.499€: la verificación de `/ese/{codigo}` (§XXV.B) solo comprobaba que el `importe` declarado coincidiera con `intent.amount` — pero `intent.amount` lo había fijado esa misma llamada sin ningún anclaje a un precio real. Las dos comprobaciones existentes comparaban números que el propio cliente controlaba en ambos extremos.
+
+### XXVI.B — Fix: precio calculado en servidor + anti-swap de síntomas
+
+`payments_router.py`: el importe se calcula SIEMPRE en el servidor — se ignora el `amount` del cliente. Se busca el cliente por `codigo` (ya existente desde FASE 1/ESE submit), se lee `facturacion` de ese registro (no editable en esta petición) y se cruza con `sintomas` (body de esta llamada) contra la misma tabla de precios que usa el checkout real (`getPrecio` en `ScannerReceptionPage.tsx`, portada 1:1 a Python). Plan y síntomas quedan en los metadatos del PaymentIntent en Stripe (el cliente no puede tocarlos con la clave publicable). `ese_router.py` (`actualizar_pago`): nueva comprobación anti-swap — el cliente no puede pagar el precio de pocos síntomas y activar una lista más larga en la misma llamada de confirmación, comparando contra esos metadatos. Compatible con PaymentIntents creados antes del fix (sin metadata, la comprobación se salta).
+
+### XXVI.C — Decisión de producto: facturación ≥500.000€/mes sin checkout automático
+
+Al revisar el fix, Maite decide que ese tramo (ya alto, umbral sin cambios) no debe tener precio fijo de autocompra — una empresa de ese tamaño necesita una conversación antes de comprometerse a un checkout de hasta 24.499€, y en fase de lanzamiento no compensa construir un flujo de venta específico para un caso tan infrecuente ("las empresas que facturan 500.000€ al mes ya tienen consultorías más específicas y no van a acudir a mí").
+
+- `getPrecio()` (frontend) devuelve `number | null` — null en ese tramo. La UI de "Consultar" (`fmtPrecio`, badges de precio) ya existía en el código pero estaba **muerta** porque `getPrecio` nunca llegaba a devolver null.
+- Bug real que habría explotado al activar esto sin más cambios: el botón "Activar por..." calculaba su `aria-label` con `precio.toLocaleString(...)` sin comprobar null — habría crasheado la página. Corregido con un guard.
+- El botón, en ese tramo, redirige a WhatsApp con mensaje pre-rellenado en vez de abrir el pago.
+- Defensa en profundidad en el modal: `total={getPrecio(...) || precioActivo || 399}` caía a 399€ (el precio MÁS BARATO) si ambos eran null — justo el caso a bloquear habría dejado pasar un checkout a precio incorrecto. Ahora el modal decide qué pintar (aviso de contacto o formulario de pago) según si el precio es null, nunca con un fallback numérico inventado.
+- `payments_router.py` rechaza con 400 si se le pide un PaymentIntent para ese tramo — el servidor no confía en que el frontend ya lo bloquee.
+
+### XXVI.D — Hallazgo colateral: `config/pricing_policy.py` desincronizado (corregido)
+
+Esta tabla no cobra nada de verdad — alimenta el presupuesto que se enseña en el triaje (`build_triaje_for_code.py`) y la herramienta manual de presupuestos del CC. Confirmado en código que NO la usa el generador real de contrato/factura (`routers/contracts.py`, lee `importe`/`plan` ya guardados, no recalcula nada) ni dos consumidores que resultaron ser código muerto (`contracts/contract_router.py` — `/contracts/auto`, nunca registrado en `main.py`; `presupuesto_service.py` — `calcular_presupuesto`, nunca importado por nadie).
+
+Hallado: `"prices"` y `"description"` de PRE y PIE estaban CRUZADOS entre sí (PRE tenía los precios/descripción reales de PIE y viceversa — `"code"`/`"name"` ya estaban bien), y el umbral de `"enterprise"` era 60.000€/mes en vez de 500.000€. `get_product_price` ya devolvía `None` para "enterprise" (el mismo comportamiento "personalizado" acordado en §XXVI.C) — solo hacía falta corregir el umbral para que se disparase en el tramo correcto. Corregido; las 3 fuentes de precio del sistema (checkout real, `payments_router.py`, `pricing_policy.py`) coinciden ahora exactamente, verificado cruzando 7 facturaciones distintas.
+
+### XXVI.E — Verificación
+
+Sintaxis de todos los archivos Python (`ast.parse`); tabla de precios portada probada contra 11 combinaciones de nº de síntomas × facturación reproduciendo `getPrecio()` exactamente; `pricing_policy.py` cruzado contra `payments_router.py` en 7 facturaciones, coinciden en las 7 incluyendo el "Consultar" a partir de 500.000€; `npm run build` limpio. No hay Stripe/Mongo disponibles en el sandbox de esta sesión para una prueba end-to-end real contra Stripe — pendiente de verificación manual en staging antes de mergear a producción. PRs abiertos: `masframe#12`, `masesora-frontend#15`.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1153,3 +1187,4 @@ Verificado en vivo: entre 3 ofertas de financiación (100€/50€/75€ de cost
 *§XXIII añadida en sesión 5 ago 2026 (tarde) — 2ª pasada masframe-ux-validator, bug UCI-S3, 3 contaminaciones de catálogo, T1 transversal, CARDIO-S1*
 *§XXIV añadida en sesión 5 ago 2026 (noche) — linter de contaminación, QA manual real, 130/205 secciones nativas con columna calculada*
 *§XXV añadida en sesión 7 ago 2026 — revisión en vivo por síntoma (Maite), playbook de UX, fix de seguridad crítico, patrón "ledger→triaje" en 7 ramas, rediseño C3/C4 de formulario a sistema (piloto UCI-S1); ampliada 7-8 ago 2026 con fix de "Sin puntuar" y las 4 fases del orden de construcción completas y mergeadas — decision (r2/r3/r5), pipeline (r6), simulador (r1), comparador (r4) — las 6 ramas de UCI-S1 rediseñadas*
+*§XXVI añadida en sesión 8 ago 2026 — cierre del hallazgo de pago pendiente de §XXV.B (precio de PaymentIntent calculado en servidor, anti-swap de síntomas), decisión de producto "Consultar" para facturación ≥500.000€/mes, y fix de `config/pricing_policy.py` desincronizado del precio real*
