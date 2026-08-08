@@ -213,6 +213,26 @@ def _lint_nativa(sid, prefix, recurso, E, W):
 
         _lint_columnas(sid, sp, cols, E, W)
 
+        # veredicto automatico (piloto UCI-S1.r4, "comparador" §XXV.E): la clave debe existir
+        # como columna "calculada" de la propia seccion (es la que HerramientaNativa compara
+        # ENTRE filas para elegir un ganador -- si no es calculada, comparar valores tecleados
+        # a mano no dice nada real sobre coste).
+        vered = sec.get("veredicto")
+        if vered:
+            vclave = vered.get("clave", "")
+            vcol = next((c for c in cols if c.get("clave") == vclave), None)
+            if not vcol:
+                E.append(f"{sp}: veredicto.clave={vclave!r} no existe en esta seccion")
+            elif vcol.get("tipo") != "calculada":
+                E.append(f"{sp}: veredicto.clave={vclave!r} no es una columna 'calculada' — comparar un dato tecleado a mano entre filas no es un veredicto real")
+            if vered.get("direccion") not in ("menor", "mayor"):
+                E.append(f"{sp}: veredicto.direccion={vered.get('direccion')!r} invalido (solo 'menor' o 'mayor')")
+            cnom = vered.get("columna_nombre")
+            if cnom is not None and (not isinstance(cnom, int) or cnom < 0 or cnom >= len(cols)):
+                E.append(f"{sp}: veredicto.columna_nombre={cnom!r} fuera de rango (la seccion tiene {len(cols)} columnas)")
+            if not vered.get("etiqueta"):
+                W.append(f"{sp}: veredicto sin 'etiqueta' — se usara un texto generico")
+
         # entidad_compartida: la primera columna de cada seccion que la declara debe
         # tener la misma etiqueta (o clave) que las otras secciones que comparten entidad
         ec = sec.get("entidad_compartida")

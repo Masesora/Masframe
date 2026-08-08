@@ -421,9 +421,30 @@
                   "Descartar",
                   "Solicitar"
                 ]
+              },
+              {
+                "etiqueta": "Estado de solicitud",
+                "tipo": "opciones",
+                "opciones": [
+                  "—",
+                  "Pendiente",
+                  "Aprobado",
+                  "Rechazado"
+                ]
+              },
+              {
+                "etiqueta": "Importe aprobado (€)",
+                "tipo": "numero",
+                "placeholder": "ej. 15000"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "veredicto": {
+              "clave": "coste_mensual",
+              "direccion": "menor",
+              "etiqueta": "Más barato ahora mismo",
+              "columna_nombre": 1
+            }
           }
         ]
       },
