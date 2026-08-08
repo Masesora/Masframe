@@ -1174,6 +1174,47 @@ Hallado: `"prices"` y `"description"` de PRE y PIE estaban CRUZADOS entre sí (P
 
 Sintaxis de todos los archivos Python (`ast.parse`); tabla de precios portada probada contra 11 combinaciones de nº de síntomas × facturación reproduciendo `getPrecio()` exactamente; `pricing_policy.py` cruzado contra `payments_router.py` en 7 facturaciones, coinciden en las 7 incluyendo el "Consultar" a partir de 500.000€; `npm run build` limpio. No hay Stripe/Mongo disponibles en el sandbox de esta sesión para una prueba end-to-end real contra Stripe — pendiente de verificación manual en staging antes de mergear a producción. PRs abiertos: `masframe#12`, `masesora-frontend#15`.
 
+## XXVII. SESIÓN 8 AGO 2026 (noche) — Sala de Control: de formulario apilado a orquestador multi-frente (C3, piloto UCI-S1)
+
+### XXVII.A — El problema: "de dos a seis tablas de esa estructura es horroroso"
+
+Tras el rediseño de las 6 ramas de UCI-S1 (§XXV), Maite revisa en vivo un caso con varios frentes comprometidos en C2 (normal tener entre 2 y 6) y confirma que, aunque cada tabla individual ya está bien, **la suma de 2 a 6 tarjetas completas apiladas en la misma pantalla es el problema en sí** — no un defecto de ninguna herramienta concreta. Encargo explícito: "ponte el nivel dios de programación... piensa en la herramienta que nos falta en C3 para completar un C4 que va a ser el valor completo de MASFRAME", diseñar a fondo antes de tocar código, y construirlo primero solo en UCI-S1 antes de plantear el rollout a los 30 síntomas.
+
+### XXVII.B — Corrección de rumbo antes de construir: no todos los síntomas tienen un total sumable
+
+Primer diseño (borrador): cabecera con contador € que "se afina" de estimado a confirmado. Maite pide expresamente parar y comprobar si sirve para el resto del catálogo antes de seguir. Verificación en código (no supuesta): `kpi_recovery_mode` se reparte en **financiero (3 síntomas: UCI-S1, UCI-S2, CLI-S1), conteo (19) y estructural (8)** — y en modo estructural el KPI de cierre (`actualNum` en C6) se obtiene **re-midiendo los inputs originales de C0** (`remeasure_a`/`remeasure_b`), no sumando ningún valor por frente; ese modo no tiene, y nunca ha tenido, un total acumulable por ítem. Un contador € en la cabecera habría sido un número inventado en 8 de 30 síntomas. Rediseño: la cabecera y el informe de cierre son **conscientes del modo** (mismo patrón `recoveryMode`/`recoveryLabel` que ya usan Capa4/Capa5) — financiero/conteo muestran el total; estructural muestra cobertura de diagnóstico (N de M frentes analizados) y una nota de que el resultado se confirma re-midiendo al cierre del ciclo, nunca un total fabricado.
+
+### XXVII.C — Prerrequisito cerrado: C3→C4 no tenía valor que agregar en 5 de 6 ramas
+
+Antes de construir la cabecera agregada, verificación en código de qué alimentaba `FlowItem.valor` (el campo que Capa4/Capa5 ya suman): solo `HerramientaCalculadora`, vía `onValorCalculado`. `HerramientaNativa`, `HerramientaPipeline` y `HerramientaSimulador` — que son las que usan las 6 ramas de UCI-S1, cero calculadoras entre ellas — nunca lo alimentaban. Sin cerrar esto, la Sala de Control no habría tenido ningún dato real que sumar. Cerrado con:
+
+- `ColumnaHerramientaConfig.contribuye_valor` (nuevo, mismo patrón que `alimenta_valor` de calculadora): marca la(s) columna(s) numero/slider/calculada de una tabla cuyo valor, sumado por fila y por herramienta, alimenta `FlowItem.valor`.
+- `calcularValorFila`/`calcularValorHerramienta` (TreatmentPage.tsx): suman esas columnas; las 3 herramientas nativas las llaman en un `useEffect` y reportan a `onValorCalculado`, igual que ya hacía calculadora.
+- `data/symptoms.json`: marcadas las columnas de valor real por rama de UCI-S1 — r1 (nueva columna calculada "Valor estimado (€)", no existía ninguna), r2/r3/r5 ("Recuperación estimada"), r4 (específicamente "Liquidez liberada/mes" de la sección 2, no "Coste mensual" de la sección 3 — un coste no es una recuperación), r6 ("Importe a facturar"). Verificado columna por columna contra un dump real de las 6 ramas antes de editar, no de memoria.
+- `validar_sintomas.py`: nuevo chequeo — `contribuye_valor=true` sobre un tipo de columna que el motor no suma (texto/opciones/decision) es un error de catálogo silencioso. 0 errores, 21 avisos tras la pasada (sin cambios respecto a antes).
+
+### XXVII.D — Diseño final: stepper "monitor de constantes", opt-in, aditivo
+
+Activo únicamente cuando hay 2+ `item.grupo` distintos entre los FlowItems `c3-plan-*` (multi-frente real); con 1 solo frente, cero cambio visual. Componentes:
+
+- **Cabecera agregada**: nº de frentes, contador "N/M completados", barra de progreso, y la línea de valor mode-aware de §XXVII.B.
+- **Stepper**: una píldora por frente, con punto rojo/ámbar/verde (pendiente/activo/completado) y clic para cambiar el frente activo — solo las tarjetas del frente activo (más cualquier tarea manual) se renderizan; el resto queda colapsado en la píldora.
+- **"Completado" por frente**: reconstruido desde `datos_estructurados`/`valores_calculadora` con el mismo umbral que cada herramienta ya usa para su propio aviso "🎉" interno (nativa: cada sección con ≥1 fila con columna 0 rellena; pipeline: todas las tarjetas en la etapa final; simulador: ≥1 tarjeta con columna 0 rellena; calculadora: algún campo tecleado).
+- **Informe de cierre**: aparece cuando todos los frentes están completos — desglose por frente (con o sin € según el modo) y total, o la nota de re-medición en modo estructural.
+- **Refactor de bajo riesgo**: el bloque existente de ~326 líneas de tarjeta-por-ítem se reutiliza sin extraer — se renombra la fuente del `.map` a `itemsToRender` (= `items` completo si 1 solo frente; filtrado al frente activo + tareas manuales si multi-frente) y se corrige la única referencia interna que dependía del array completo por índice (`items[idx-1]` → `itemsToRender[idx-1]`, el chequeo de cabecera de grupo de items legacy).
+
+### XXVII.E — Verificación en vivo (Playwright, build de producción)
+
+Verificado contra `vite build` + `vite preview` (no dev/StrictMode — el doble-montaje de efectos de React 18 en desarrollo hace que el fetch inicial se dispare 2 veces y sobrescriba transitoriamente los ítems recién aplicados por el efecto de `capa_3_plan`; es ruido del entorno de desarrollo, no un bug — confirmado inyectando logging temporal y contrastando dev vs. build de producción antes de dar el diseño por bueno):
+
+- **UCI-S1, 3 frentes forzados** (r4 nativa + r1 simulador + r6 pipeline, vía mock backend): cabecera "3 frentes abiertos", stepper con 3 píldoras, cambio de frente activo al clicar cada píldora, punto rojo→verde al completar cada uno, informe de cierre financiero con desglose y total al completar los 3.
+- **Mismo caso forzado a `kpi_recovery_mode="estructural"`**: cabecera muestra "Cobertura de diagnóstico: N de M frentes analizados" (nunca un €), informe de cierre con la nota de re-medición en C6, sin ningún total inventado.
+- **1 solo frente comprometido**: Sala de Control no aparece; tarjeta idéntica a la existente antes de este cambio (confirmado por captura, sin ninguna diferencia visual).
+- `npm run build` limpio antes y después de retirar el logging de diagnóstico usado durante la investigación.
+- No verificado en vivo (por símplice ausencia de un síntoma de prueba a mano con 2+ frentes en modo "conteo"): ese camino comparte el mismo código que "financiero" —difieren solo en el formateo del ternario `recoveryMode === "conteo"`, ya usado y probado en Capa4/Capa5 desde antes de esta sesión — confianza por simetría de código, no por prueba en vivo directa; señalado aquí explícitamente en vez de darlo por hecho.
+
+PRs abiertos: `masframe#12` (contribuye_valor en symptoms.json + validador), `masesora-frontend` rama `feature/c3-sala-control` (pendiente de abrir el PR). Pendiente explícito: extender el patrón a los 29 síntomas restantes — deliberadamente pospuesto hasta validar UCI-S1 con Maite, tal como se acordó.
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -1188,3 +1229,4 @@ Sintaxis de todos los archivos Python (`ast.parse`); tabla de precios portada pr
 *§XXIV añadida en sesión 5 ago 2026 (noche) — linter de contaminación, QA manual real, 130/205 secciones nativas con columna calculada*
 *§XXV añadida en sesión 7 ago 2026 — revisión en vivo por síntoma (Maite), playbook de UX, fix de seguridad crítico, patrón "ledger→triaje" en 7 ramas, rediseño C3/C4 de formulario a sistema (piloto UCI-S1); ampliada 7-8 ago 2026 con fix de "Sin puntuar" y las 4 fases del orden de construcción completas y mergeadas — decision (r2/r3/r5), pipeline (r6), simulador (r1), comparador (r4) — las 6 ramas de UCI-S1 rediseñadas*
 *§XXVI añadida en sesión 8 ago 2026 — cierre del hallazgo de pago pendiente de §XXV.B (precio de PaymentIntent calculado en servidor, anti-swap de síntomas), decisión de producto "Consultar" para facturación ≥500.000€/mes, y fix de `config/pricing_policy.py` desincronizado del precio real*
+*§XXVII añadida en sesión 8 ago 2026 (noche) — Sala de Control: stepper multi-frente para C3 (piloto UCI-S1), corrección mode-aware tras verificar `kpi_recovery_mode` en las 30 síntomas, prerrequisito `contribuye_valor` C3→C4, verificado en vivo con Playwright*
