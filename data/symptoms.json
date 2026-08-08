@@ -53,115 +53,69 @@
     "capa_1_options": "Tengo mercancía parada y demasiado dinero atrapado en productos que no se venden.; Tengo proyectos a medio hacer que consumen recursos pero aún no generan ingresos.; Mis clientes tardan meses en pagar y eso me deja sin dinero para el día a día.; Cobro demasiado tarde respecto a cuando tengo que pagar proveedores y nóminas.; He recibido anticipos que aún no he convertido en trabajo cobrado porque voy retrasado.; Tengo trabajos terminados que aún no he facturado porque me faltan trámites o vistos buenos.",
     "capa_3_plan": {
       "r1": {
-        "tipo": "nativa",
+        "tipo": "simulador",
         "titulo": "Liquidar capital inmovilizado en inventario sin rotación",
-        "secciones": [
+        "entidad_nombre": "Producto",
+        "columnas": [
           {
-            "titulo": "Tus productos con más capital atrapado — no hace falta meterlos todos, con 2 o 3 basta",
-            "columnas": [
-              {
-                "etiqueta": "Referencia / Producto",
-                "tipo": "texto",
-                "placeholder": "ej. Ref. 4521"
-              },
-              {
-                "etiqueta": "Unidades",
-                "tipo": "numero",
-                "clave": "uds",
-                "placeholder": "40"
-              },
-              {
-                "etiqueta": "Coste unitario (€)",
-                "tipo": "numero",
-                "clave": "coste",
-                "placeholder": "25"
-              },
-              {
-                "etiqueta": "Valor Total (€)",
-                "tipo": "calculada",
-                "clave": "valor_total",
-                "formula": "uds*coste",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Margen mínimo aceptable (%)",
-                "tipo": "numero",
-                "clave": "margen_obj",
-                "placeholder": "20"
-              },
-              {
-                "etiqueta": "Precio Mín. (€)",
-                "tipo": "calculada",
-                "clave": "precio_min",
-                "formula": "coste/(1-margen_obj/100)",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Precio propuesto (€)",
-                "tipo": "numero",
-                "clave": "precio_prop",
-                "placeholder": "35"
-              },
-              {
-                "etiqueta": "Canal de venta",
-                "tipo": "opciones",
-                "opciones": [
-                  "Wallapop",
-                  "Proveedor",
-                  "Competidor",
-                  "Remate",
-                  "Cliente directo"
-                ]
-              }
-            ],
-            "filas_iniciales": 2,
-            "entidad_compartida": "Producto"
+            "etiqueta": "Referencia / Producto",
+            "tipo": "texto",
+            "placeholder": "ej. Ref. 4521 — mesas de roble"
           },
           {
-            "titulo": "2. Seguimiento semanal de ventas",
-            "columnas": [
-              {
-                "etiqueta": "Semana",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Producto vendido",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Unidades",
-                "tipo": "numero",
-                "clave": "uds"
-              },
-              {
-                "etiqueta": "Precio real (€)",
-                "tipo": "numero",
-                "clave": "precio"
-              },
-              {
-                "etiqueta": "Total recuperado (€)",
-                "tipo": "calculada",
-                "clave": "total_recuperado",
-                "formula": "uds*precio",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Canal usado",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Vendido",
-                  "Negociando",
-                  "Sin salida"
-                ]
-              }
-            ],
-            "filas_iniciales": 1
+            "etiqueta": "Unidades",
+            "tipo": "numero",
+            "clave": "uds",
+            "placeholder": "40"
+          },
+          {
+            "etiqueta": "Coste unitario (€)",
+            "tipo": "numero",
+            "clave": "coste",
+            "placeholder": "25"
+          },
+          {
+            "etiqueta": "Margen mínimo aceptable (%)",
+            "tipo": "numero",
+            "clave": "margen_obj",
+            "placeholder": "20"
+          },
+          {
+            "etiqueta": "Precio propuesto (€)",
+            "tipo": "slider",
+            "clave": "precio_prop",
+            "min": 0,
+            "max": 100,
+            "paso": 1
+          },
+          {
+            "etiqueta": "Precio mínimo recomendado (€)",
+            "tipo": "calculada",
+            "clave": "precio_min",
+            "formula": "coste/(1-margen_obj/100)",
+            "unidad": "eur"
+          },
+          {
+            "etiqueta": "Margen resultante (%)",
+            "tipo": "calculada",
+            "clave": "margen_pct",
+            "formula": "(precio_prop-coste)/precio_prop*100",
+            "unidad": "pct"
+          },
+          {
+            "etiqueta": "Canal de venta",
+            "tipo": "opciones",
+            "estilo": "botones",
+            "opciones": [
+              "Wallapop",
+              "Proveedor",
+              "Competidor",
+              "Remate",
+              "Cliente directo"
+            ]
           }
-        ]
+        ],
+        "filas_iniciales": 2
       },
       "r2": {
         "tipo": "nativa",

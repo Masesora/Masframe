@@ -91,8 +91,11 @@ def lint_capa3(s, E, W):
         elif tipo == "pipeline":
             _lint_pipeline(sid, prefix, recurso, E, W)
 
-        elif tipo not in ("nativa","calculadora","pipeline"):
-            E.append(f"{prefix}.tipo desconocido: {tipo!r} (solo 'nativa', 'calculadora' o 'pipeline')")
+        elif tipo == "simulador":
+            _lint_simulador(sid, prefix, recurso, E, W)
+
+        elif tipo not in ("nativa","calculadora","pipeline","simulador"):
+            E.append(f"{prefix}.tipo desconocido: {tipo!r} (solo 'nativa', 'calculadora', 'pipeline' o 'simulador')")
 
 # Validacion de columnas compartida entre 'nativa' (una lista de columnas por seccion) y
 # 'pipeline' (una lista de columnas plana, sin secciones — la etapa organiza las tarjetas,
@@ -113,8 +116,10 @@ def _lint_columnas(sid, sp, cols, E, W):
     claves_input = {}
     claves_calc  = {}
     # "decision": botones de escenario en vez de texto libre -- guarda un valor numerico igual
-    # que "numero", solo cambia como se rellena. Ver ColumnaHerramientaConfig en TreatmentPage.tsx.
-    tipos_validos = {"texto","numero","opciones","calculada","decision"}
+    # que "numero", solo cambia como se rellena. "slider" (piloto UCI-S1.r1): igual que "numero"
+    # para calcularFilaCalculadas, solo cambia como se rellena (arrastrando, no tecleando). Ver
+    # ColumnaHerramientaConfig en TreatmentPage.tsx.
+    tipos_validos = {"texto","numero","opciones","calculada","decision","slider"}
     for c in cols:
         clave    = c.get("clave","")
         etiqueta = c.get("etiqueta","")
@@ -127,6 +132,13 @@ def _lint_columnas(sid, sp, cols, E, W):
             opts = c.get("opciones")
             if not opts or not isinstance(opts, list) or len(opts) == 0:
                 E.append(f"{sp} col '{etiqueta}': tipo opciones sin opciones[]")
+
+        if ctipo == "slider":
+            if not clave:
+                E.append(f"{sp} col '{etiqueta}': tipo slider sin clave — su valor no puede alimentar ninguna columna calculada")
+            smin, smax = c.get("min"), c.get("max")
+            if smin is not None and smax is not None and smin >= smax:
+                E.append(f"{sp} col '{etiqueta}': tipo slider con min={smin} >= max={smax} — rango vacío")
 
         if ctipo == "decision":
             dopts = c.get("decision_opciones")
@@ -241,6 +253,23 @@ def _lint_pipeline(sid, prefix, recurso, E, W):
             opts_norm = {o.strip().lower() for o in (c.get("opciones") or []) if isinstance(o, str)}
             if opts_norm and opts_norm == etapas_norm:
                 W.append(f"{prefix} col '{c.get('etiqueta','')}': sus opciones[] coinciden con 'etapas' — el pipeline ya gestiona la etapa aparte, esta columna es redundante")
+
+# ── Contrato del motor 'simulador' (Fase 2, piloto UCI-S1.r1, sesion 7 ago 2026 §XXV.E) ──
+# Galeria de tarjetas donde el cliente prueba un precio (slider + medidor de margen en vivo)
+# antes de comprometerse. Mismo contrato de columnas que 'pipeline' (plano, sin 'secciones'),
+# via _lint_columnas.
+def _lint_simulador(sid, prefix, recurso, E, W):
+    if not recurso.get("entidad_nombre"):
+        W.append(f"{prefix}: tipo simulador sin 'entidad_nombre' (ej. 'Producto') — se usara un generico en los textos")
+
+    cols = recurso.get("columnas", [])
+    fi   = recurso.get("filas_iniciales", 0)
+    if fi <= 0:
+        W.append(f"{prefix}: filas_iniciales={fi} (el usuario no vera tarjetas al abrir)")
+    _lint_columnas(sid, prefix, cols, E, W)
+
+    if not any(c.get("tipo") == "slider" for c in cols):
+        W.append(f"{prefix}: tipo simulador sin ninguna columna 'slider' — sin precio que probar no hay nada que simular")
 
 def _lint_calculadora(sid, prefix, recurso, E, W):
     campos    = recurso.get("campos", [])
@@ -370,6 +399,10 @@ def lint_contaminacion(s, W):
                 partes_c3.append(col.get("etiqueta", ""))
             for etapa in recurso.get("etapas", []) or []:
                 partes_c3.append(etapa)
+        # simulador (sin 'secciones', columnas planas — ver _lint_simulador)
+        if recurso.get("tipo") == "simulador":
+            for col in recurso.get("columnas", []) or []:
+                partes_c3.append(col.get("etiqueta", ""))
     vocab_c3 = _texto_significativo(" ".join(partes_c3))
 
     overlap = vocab_c2 & vocab_c3
