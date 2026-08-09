@@ -1537,7 +1537,8 @@
                   "Cumpliendo SLA",
                   "Incumpliendo SLA",
                   "Sin protocolo definido"
-                ]
+                ],
+                "contribuye_valor_si": "Cumpliendo SLA"
               },
               {
                 "etiqueta": "Acción de mejora",
@@ -2606,6 +2607,14 @@
                 "clave": "reduccion",
                 "formula": "(antes-despues)*100/antes",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Retrabajos evitados",
+                "tipo": "calculada",
+                "clave": "retrabajos_evitados",
+                "formula": "antes-despues",
+                "unidad": "numero",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 4
@@ -4619,7 +4628,8 @@
                   "Terminar",
                   "Pausar",
                   "Cancelar"
-                ]
+                ],
+                "contribuye_valor_si": "Terminar"
               },
               {
                 "etiqueta": "Fecha compromiso",
@@ -4704,7 +4714,8 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               },
               {
                 "etiqueta": "Prioridad 2",
@@ -4716,7 +4727,8 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               },
               {
                 "etiqueta": "Prioridad 3",
@@ -4728,7 +4740,8 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               },
               {
                 "etiqueta": "Nº interrupciones",
@@ -6164,7 +6177,8 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "contribuye_valor_si": "No"
               }
             ],
             "filas_iniciales": 3
@@ -6196,7 +6210,8 @@
                   "Sin asignar",
                   "Asignada",
                   "En marcha"
-                ]
+                ],
+                "contribuye_valor_si": "Asignada"
               }
             ],
             "filas_iniciales": 2
@@ -6401,7 +6416,8 @@
                   "Aprobado",
                   "En revision",
                   "Pendiente"
-                ]
+                ],
+                "contribuye_valor_si": "Aprobado"
               }
             ],
             "filas_iniciales": 6
@@ -6605,7 +6621,8 @@
                   "Planificado",
                   "Publicado",
                   "Pendiente"
-                ]
+                ],
+                "contribuye_valor_si": "Publicado"
               }
             ],
             "filas_iniciales": 5
@@ -6671,7 +6688,8 @@
                   "Pendiente",
                   "En curso",
                   "Resuelto"
-                ]
+                ],
+                "contribuye_valor_si": "Resuelto"
               }
             ],
             "filas_iniciales": 6
@@ -6696,7 +6714,8 @@
                   "Completo",
                   "Basico",
                   "Pendiente"
-                ]
+                ],
+                "contribuye_valor_si": "Completo"
               },
               {
                 "etiqueta": "Ejemplos incluidos",
@@ -8050,7 +8069,8 @@
                   "Por decidir",
                   "Reasignar",
                   "Mantener"
-                ]
+                ],
+                "contribuye_valor_si": "Reasignar"
               }
             ],
             "filas_iniciales": 2
@@ -9178,7 +9198,8 @@
                   "Separar",
                   "Mantener",
                   "Mediar antes"
-                ]
+                ],
+                "contribuye_valor_si": "Separar"
               }
             ],
             "filas_iniciales": 2
@@ -9591,7 +9612,8 @@
               {
                 "etiqueta": "Puntuación (1-5)",
                 "tipo": "numero",
-                "clave": "puntuacion"
+                "clave": "puntuacion",
+                "contribuye_valor_si": "5"
               },
               {
                 "etiqueta": "Fecha",
@@ -9760,7 +9782,8 @@
                   "Si",
                   "No",
                   "Por confirmar"
-                ]
+                ],
+                "contribuye_valor_si": "Si"
               },
               {
                 "etiqueta": "Accion de fidelizacion aplicada",

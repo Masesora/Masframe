@@ -147,6 +147,22 @@ def _lint_columnas(sid, sp, cols, E, W):
         if c.get("contribuye_valor") and ctipo not in ("numero", "slider", "calculada"):
             E.append(f"{sp} col '{etiqueta}': contribuye_valor=true sobre tipo {ctipo!r} — el motor solo suma numero/slider/calculada, esta columna nunca se sumaria")
 
+        # contribuye_valor_si (rollout síntomas "conteo", §XXXIII): cuenta +1 por fila cuya
+        # columna coincida exactamente con este valor, en vez de sumar una cantidad. Solo tiene
+        # sentido sobre "opciones" (el valor debe ser una de sus propias opciones -- si no,
+        # nunca podria coincidir con nada tecleado) o "numero" (compara el numero exacto).
+        # Mutuamente excluyente con contribuye_valor en la misma columna.
+        cvs = c.get("contribuye_valor_si")
+        if cvs is not None:
+            if ctipo not in ("opciones", "numero"):
+                E.append(f"{sp} col '{etiqueta}': contribuye_valor_si sobre tipo {ctipo!r} — el motor solo lo interpreta en opciones/numero, esta columna nunca contaria")
+            elif ctipo == "opciones":
+                copts = c.get("opciones") or []
+                if cvs not in copts:
+                    E.append(f"{sp} col '{etiqueta}': contribuye_valor_si={cvs!r} no está entre sus propias opciones {copts!r} — nunca coincidiria con nada que el cliente pueda elegir")
+            if c.get("contribuye_valor"):
+                E.append(f"{sp} col '{etiqueta}': contribuye_valor y contribuye_valor_si a la vez — son mutuamente excluyentes, calcularValorFila solo mira contribuye_valor_si")
+
         if ctipo == "decision":
             dopts = c.get("decision_opciones")
             if not dopts or not isinstance(dopts, list) or len(dopts) < 2:
