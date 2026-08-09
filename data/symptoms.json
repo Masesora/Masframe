@@ -7228,8 +7228,18 @@
             "titulo": "Planificación de contenidos por semana y canal",
             "columnas": [
               {
-                "etiqueta": "Semana / fecha",
-                "tipo": "texto"
+                "etiqueta": "Semana",
+                "tipo": "opciones",
+                "opciones": [
+                  "Semana 1",
+                  "Semana 2",
+                  "Semana 3",
+                  "Semana 4"
+                ],
+                "cuenta_unicos_si": {
+                  "clave_condicion": "estado",
+                  "valor_condicion": "Publicado"
+                }
               },
               {
                 "etiqueta": "Canal",
@@ -7275,7 +7285,8 @@
                   "En creación",
                   "Programado",
                   "Publicado"
-                ]
+                ],
+                "clave": "estado"
               }
             ],
             "filas_iniciales": 8
@@ -8288,7 +8299,8 @@
                   "No",
                   "En curso",
                   "N/A"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
             "filas_iniciales": 5
