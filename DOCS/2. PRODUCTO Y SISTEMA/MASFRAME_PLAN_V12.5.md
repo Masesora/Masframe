@@ -1393,6 +1393,35 @@ Con esto: **13/19 síntomas "conteo" resueltos** con datos reales del catálogo.
 
 ---
 
+## XXXVI. SESIÓN 9 AGO 2026 (cont.) — "De límite real nada": los 6 últimos también se resuelven
+
+### XXXVI.A — El error de §XXXV: "solo se confirma con el tiempo" no es una razón
+
+Maite, tras leer §XXXV: *"DE LIMITE REAL NADA, VAMOS A CONVERTIRLOS EN PROBLEMAS QUE SE RESUELVEN"*. Con razón, otra vez: "el dato solo se conoce con el tiempo" no distingue nada — **las 13 columnas `Estado`/`Decisión` ya usadas también tardan en llegar a su valor** (Publicado, Resuelto, Asignada...). Ningún cliente rellena la tabla entera de una sentada; la Sala de Control ya asume que el plan se completa progresivamente. La pregunta correcta nunca fue "¿se sabe ya?" sino **"¿existe (o se puede añadir) una columna que el cliente rellene honestamente cuando el resultado real se conozca?"** — con esa pregunta, los 6 caen:
+
+| Síntoma | Solución | Tipo |
+|---|---|---|
+| `OPE-S1` "errores de arranque evitados" | `r2."¿Está documentado?"="Sí"` | Columna EXISTENTE, 0 cambios de contenido — documentar un proceso crítico es la acción que evita el error del siguiente empleado |
+| `RES-S1` "bajas evitadas" | Nueva columna en `r1`: "¿Se quedó? (seguimiento)" (Sí/No/Pendiente) | Autoinforme — la pregunta de cierre que le faltaba a "Conversación de retención" |
+| `UNI-S2` "entregas a plazo ganadas" | Nuevas columnas en `r3`: "Fecha entrega objetivo" + "¿Entregado a plazo?" | Autoinforme — "Gestión de colas" ya tenía la fecha de entrada, le faltaba el destino |
+| `TER-S3` "clientes por recomendación" | Nueva columna en `r1`: "¿Recomendó a alguien? (seguimiento)" | Autoinforme — única de las 6 ramas indexada por Cliente/servicio, encaja sin forzar nada |
+| `PSI-S1` "días de ausencia reducidos" | Nueva columna en `r3`: "Días de baja evitados (seguimiento trimestral)" (numero) | Autoinforme directo, sin fórmula — mismo nivel de confianza que ya usa el modo financiero |
+| `OPE-S2` "horas de fundador liberadas/semana" *(antes "días sin intervención ganados")* | `suma_si` nuevo: suma `r1."Horas fundador/semana"` en filas con `"¿Candidato para delegar?"="Sí"` | Motor nuevo + **cambio de unidad**: convertir horas→días habría inventado una jornada (¿8h? ¿6h?) que no existe en ningún sitio del catálogo — mejor una unidad honesta que un número con un factor inventado |
+
+### XXXVI.B — `suma_si`: complemento de `cuenta_unicos_si` para sumar, no solo contar
+
+Mismo mecanismo de referencia por `clave_condicion` que `cuenta_unicos_si` (§XXXV), pero suma una cantidad (`numero`/`calculada`) en vez de contar valores únicos. Vive en `calcularValorHerramienta` por el mismo motivo: necesita ver la tabla entera, no una fila aislada.
+
+**Bug de diseño encontrado y corregido antes de tocar el catálogo** (no en vivo esta vez — al escribir el mecanismo): la columna que sirve de *condición* (`"¿Candidato para delegar?"`) también arranca en `opciones[0]` — que en este caso resultó ser exactamente `"Sí"`, el valor buscado. Sin fix, cualquier fila con horas tecleadas pero sin tocar el desplegable de al lado ya habría sumado esas horas desde el minuto cero. Corregido de raíz: `filaVaciaHerramienta` ahora blanquea también cualquier columna que sea la `clave_condicion` de un `cuenta_unicos_si`/`suma_si` de otra columna de la tabla (`esColumnaCondicion`), no solo la columna marcada — cierra esta clase de bug para cualquier mecanismo futuro, no solo para este caso.
+
+### XXXVI.C — Verificado en vivo, los 6
+
+Playwright contra build de producción, uno por uno: `OPE-S2` (fila con horas=10 sin tocar "Candidato" → no suma; tras marcar "Sí" → 10; fila con "No" → sigue en 10; fila con "Sí" → 18), `RES-S1`, `UNI-S2`, `TER-S3`, `OPE-S1` (secuencia Sí/No/valor-intermedio → cuenta solo el "Sí", sin inflar en la fila inicial), `PSI-S1` (suma directa 3+2=5). `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Con esto: 19/19 síntomas "conteo" resueltos con datos reales — el rollout completo.**
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1414,3 +1443,4 @@ Con esto: **13/19 síntomas "conteo" resueltos** con datos reales del catálogo.
 *§XXXIII añadida en sesión 9 ago 2026 — contribuye_valor_si: cuenta filas por estado en vez de solo sumar cantidades, de 2 a 11 de 19 síntomas "conteo" resueltos con datos ya existentes en el catálogo, y fix de un bug real (filas vacías contaban de más) encontrado en vivo — masesora-frontend#20, masframe#20*
 *§XXXIV añadida en sesión 9 ago 2026 (cont.) — reconciliación post-merge: CARDIO-S1/S3 faltaban en el commit de §XXXIII por descuido, cerrado marcando las mismas 4 columnas ya documentadas; 11/19 "conteo" quedan resueltos de verdad, no solo en el plan*
 *§XXXV añadida en sesión 9 ago 2026 (cont.) — cuenta_unicos_si: cuenta valores únicos de una columna (no filas duplicadas), cierra CIR-S3 y PSI-S3 — 13/19 "conteo" resueltos; los 6 restantes confirmados como límite real (dato solo confirmable con el tiempo, o sin tabla fuente) — masesora-frontend#21, masframe#22*
+*§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*

@@ -178,6 +178,21 @@ def _lint_columnas(sid, sp, cols, E, W):
             if c.get("contribuye_valor") or c.get("contribuye_valor_si") is not None:
                 E.append(f"{sp} col '{etiqueta}': cuenta_unicos_si junto con contribuye_valor/contribuye_valor_si en la misma columna — son mutuamente excluyentes")
 
+        # suma_si (§XXXVI): complemento de cuenta_unicos_si para cuando la unidad SÍ es una
+        # cantidad (horas, €...) pero solo debe sumarse en las filas que cumplen una condicion en
+        # OTRA columna -- ej. "Horas fundador/semana" solo cuenta en las filas marcadas como
+        # candidatas a delegar. Solo tiene sentido sobre numero/calculada (lo que ya suma
+        # contribuye_valor).
+        ss = c.get("suma_si")
+        if ss is not None:
+            if ctipo not in ("numero", "calculada"):
+                E.append(f"{sp} col '{etiqueta}': suma_si sobre tipo {ctipo!r} — el motor solo suma numero/calculada, esta columna nunca se sumaria")
+            clave_cond = ss.get("clave_condicion")
+            if not any(cc.get("clave") == clave_cond for cc in cols):
+                E.append(f"{sp} col '{etiqueta}': suma_si.clave_condicion={clave_cond!r} no coincide con la 'clave' de ninguna columna de esta tabla")
+            if c.get("contribuye_valor") or c.get("contribuye_valor_si") is not None or c.get("cuenta_unicos_si") is not None:
+                E.append(f"{sp} col '{etiqueta}': suma_si junto con contribuye_valor/contribuye_valor_si/cuenta_unicos_si en la misma columna — son mutuamente excluyentes")
+
         if ctipo == "decision":
             dopts = c.get("decision_opciones")
             if not dopts or not isinstance(dopts, list) or len(dopts) < 2:
