@@ -926,7 +926,7 @@
     "capa_1_options": "Fijo precios sin calcular si realmente cubren todos mis costes, incluidos los que no aparecen en la factura.; Hago descuentos para fidelizar o cerrar ventas sin saber si con eso me quedo en negativo.; Los costes han subido pero todavía no he podido trasladarlos al precio del cliente.; Hay trabajo que hago y no cobro: soporte, revisiones o cambios que doy por incluidos.; Tengo varios servicios pero no sé cuál de ellos me deja margen de verdad.; Hay clientes concretos que facturan razonablemente bien pero de los que me queda muy poco margen real.",
     "c2_herramienta": "margen",
     "kpi_recovery_mode": "estructural",
-    "recovery_unit_label": "€ de coste cortado",
+    "recovery_unit_label": "re-medir margen",
     "kpi_name": "Margen mensual",
     "kpi_unit": "%",
     "capa_3_plan": {
