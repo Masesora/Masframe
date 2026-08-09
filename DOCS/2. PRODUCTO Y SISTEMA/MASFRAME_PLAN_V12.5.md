@@ -1358,6 +1358,14 @@ PRs abiertas: `masesora-frontend#20`, `masframe#20`.
 
 ---
 
+## XXXIV. SESIÓN 9 AGO 2026 (cont.) — Reconciliación: CARDIO-S1/S3 faltaban en el commit de §XXXIII
+
+Tras mergear `masesora-frontend#20`/`masframe#20`, verificación directa contra `symptoms.json` en `main` (no dada por hecha): la tabla de §XXXIII.B documentaba 11/19 síntomas resueltos, pero el script que se ejecutó y commiteó solo marcó los 9 "conteo" nuevos (los que usan `contribuye_valor_si`). `CARDIO-S1` y `CARDIO-S3` — los 2 originales, que usan `contribuye_valor` normal sobre columnas ya numéricas — se quedaron fuera del commit por un descuido, no por ningún problema de contenido.
+
+Cerrado ahora: marcado `contribuye_valor: true` en las mismas 4 columnas ya documentadas en §XXXIII.B — `CARDIO-S1.r1` "Clientes cerrados/mes", `CARDIO-S1.r4` "Clientes", `CARDIO-S1.r5` "Convertidos", `CARDIO-S3.r6` "Leads calificados/mes" — sin volver a derivarlas de cero, siguiendo exactamente lo ya aprobado. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios). Con esto, los **11/19 "conteo" quedan realmente resueltos en el catálogo**, no solo documentados.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1377,3 +1385,4 @@ PRs abiertas: `masesora-frontend#20`, `masframe#20`.
 *§XXXI añadida en sesión 8 ago 2026 (noche) — "con los 29": el volcado del catálogo reveló que el rollout no es mecánico (126 ramas "conteo"/"estructural" sin columna de recuperación real), mejor alternativa implementada (cobertura en vez de "0€" cuando no hay dato real, sin números sueltos sin contexto), UCI-S2 marcado, CLI-S1 identificado como pendiente de contenido — masesora-frontend#19, masframe#16*
 *§XXXII añadida en sesión 9 ago 2026 — CLI-S1 cierra el rollout financiero (r5/r6 con columnas nuevas, r2 fuera de la suma), aclarado que CLI-S1/UCI-S3 resuelven problemas distintos, y fix de recovery_unit_label copiado en UCI-S3 — masframe#18*
 *§XXXIII añadida en sesión 9 ago 2026 — contribuye_valor_si: cuenta filas por estado en vez de solo sumar cantidades, de 2 a 11 de 19 síntomas "conteo" resueltos con datos ya existentes en el catálogo, y fix de un bug real (filas vacías contaban de más) encontrado en vivo — masesora-frontend#20, masframe#20*
+*§XXXIV añadida en sesión 9 ago 2026 (cont.) — reconciliación post-merge: CARDIO-S1/S3 faltaban en el commit de §XXXIII por descuido, cerrado marcando las mismas 4 columnas ya documentadas; 11/19 "conteo" quedan resueltos de verdad, no solo en el plan*

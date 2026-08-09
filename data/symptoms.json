@@ -2706,7 +2706,8 @@
               {
                 "etiqueta": "Clientes cerrados/mes",
                 "tipo": "numero",
-                "clave": "clientes"
+                "clave": "clientes",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Coste/lead (€)",
@@ -2868,7 +2869,8 @@
               {
                 "etiqueta": "Clientes",
                 "tipo": "numero",
-                "clave": "clientes"
+                "clave": "clientes",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Ticket medio (€)",
@@ -2931,7 +2933,8 @@
               {
                 "etiqueta": "Convertidos",
                 "tipo": "numero",
-                "clave": "convertidos"
+                "clave": "convertidos",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Último contacto",
@@ -3921,7 +3924,8 @@
               {
                 "etiqueta": "Leads calificados/mes",
                 "tipo": "numero",
-                "clave": "calificados"
+                "clave": "calificados",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Clientes cerrados",
