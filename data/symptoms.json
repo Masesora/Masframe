@@ -5508,8 +5508,7 @@
             "clave": "beneficio",
             "etiqueta": "Beneficio neto real (€)",
             "formula": "ingresos - gastos - sueldo - impuestos",
-            "unidad": "eur",
-            "alimenta_valor": true
+            "unidad": "eur"
           },
           {
             "clave": "margen",
@@ -5623,7 +5622,13 @@
               },
               {
                 "etiqueta": "Horas/mes",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "horas"
+              },
+              {
+                "etiqueta": "Coste hora (€)",
+                "tipo": "numero",
+                "clave": "coste_hora"
               },
               {
                 "etiqueta": "¿Automatizable?",
@@ -5636,6 +5641,14 @@
               {
                 "etiqueta": "Con qué (herramienta)",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste mensual automatizable (€)",
+                "tipo": "calculada",
+                "clave": "coste_mensual_auto",
+                "formula": "horas*coste_hora",
+                "unidad": "eur",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 3
@@ -5656,6 +5669,11 @@
                 "etiqueta": "Horas/mes",
                 "tipo": "numero",
                 "clave": "horas"
+              },
+              {
+                "etiqueta": "Coste hora propio (€)",
+                "tipo": "numero",
+                "clave": "coste_hora_propio"
               },
               {
                 "etiqueta": "Valor",
@@ -5686,6 +5704,14 @@
                 "clave": "coste_hora_impl",
                 "formula": "coste_externo/horas",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Valor liberado/mes (€)",
+                "tipo": "calculada",
+                "clave": "valor_liberado",
+                "formula": "horas*coste_hora_propio",
+                "unidad": "eur",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 2
