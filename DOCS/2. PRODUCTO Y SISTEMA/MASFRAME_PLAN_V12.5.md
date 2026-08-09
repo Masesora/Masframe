@@ -1472,6 +1472,23 @@ PR abierta: `masesora-frontend` (`feat/c6-remedicion-real`).
 
 **Con esto se cierran los 2 puntos pendientes de la auditoría CARDIO-S1 (§XXXVII.A) — primer síntoma certificado end-to-end con el nuevo eje de trabajo.**
 
+### XXXVII.E — Última pieza: 4/5 ramas de C3 sin columna de acción
+
+Cierre del último hallazgo de §XXXVII.A. `r1` (Auditoría canales), `r2` (Presencia digital), `r4` (Rendimiento canales) y `r5` (Sistema referidos) eran tablas de medición pura — el cliente rellenaba números y veía ROI/conversión/CAC calculados, pero ninguna columna preguntaba "¿qué vas a hacer con esto?". Consecuencia técnica concreta, no solo de experiencia: `derivarAccionesConcretas` (el checklist "⚡ Acciones concretas" de C4, §XXII.F) busca columnas con nombres tipo "acción/decisión/plan" — sin ninguna, el checklist salía **vacío** para esas 4 ramas; solo `r3` (que ya tenía "Próxima acción") lo generaba.
+
+Añadida una columna `Decisión` (`opciones`, no `tipo:"decision"` — no hacía falta recalcular nada en la fila, y `derivarAccionesConcretas` ya reconoce "Decisión" igual que "Acción") a cada una de las 4 ramas, con opciones específicas al contexto de cada tabla, no una plantilla genérica:
+
+| Rama | Opciones |
+|---|---|
+| r1 Auditoría canales | Potenciar (más inversión) · Mantener · Optimizar antes de escalar · Abandonar canal |
+| r2 Presencia digital | Crear/activar · Actualizar y relanzar · Mantener como está · Descartar canal |
+| r4 Rendimiento canales | Escalar inversión · Mantener inversión actual · Reducir inversión · Cerrar canal |
+| r5 Sistema referidos | Pedir referido activamente · Activar incentivo · Agradecer y mantener · Sin acción |
+
+`python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios). Verificado en vivo con Playwright: fila de `r1` con Canal="Instagram", Decisión="Potenciar (más inversión)" → C4 muestra **"⚡ TUS ACCIONES CONCRETAS · Potenciar (más inversión) — Instagram"** (antes, vacío para esta rama).
+
+**CARDIO-S1 queda completamente cerrado — los 4 hallazgos de §XXXVII.A resueltos.**
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -1496,4 +1513,4 @@ PR abierta: `masesora-frontend` (`feat/c6-remedicion-real`).
 *§XXXIV añadida en sesión 9 ago 2026 (cont.) — reconciliación post-merge: CARDIO-S1/S3 faltaban en el commit de §XXXIII por descuido, cerrado marcando las mismas 4 columnas ya documentadas; 11/19 "conteo" quedan resueltos de verdad, no solo en el plan*
 *§XXXV añadida en sesión 9 ago 2026 (cont.) — cuenta_unicos_si: cuenta valores únicos de una columna (no filas duplicadas), cierra CIR-S3 y PSI-S3 — 13/19 "conteo" resueltos; los 6 restantes confirmados como límite real (dato solo confirmable con el tiempo, o sin tabla fuente) — masesora-frontend#21, masframe#22*
 *§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*
-*§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico), primera pasada en CARDIO-S1 completa — gate C2→C3 de matriz (decisión: puntuar prioriza, no filtra, aclarado en copy), descarte no permanente en C2 corregido (14/30 síntomas), input_revised_1/2/result_revised conectados a C6 para conteo/financiero (re-medición real manda sobre el cálculo automático) — CARDIO-S1 es el primer síntoma certificado end-to-end con el nuevo eje de trabajo, todo verificado en vivo*
+*§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico). CARDIO-S1 completo, los 4 hallazgos cerrados: gate C2→C3 de matriz (decisión: puntuar prioriza, no filtra, aclarado en copy), descarte no permanente en C2 (14/30 síntomas), input_revised_1/2/result_revised conectados a C6 para conteo/financiero (re-medición real manda sobre el cálculo automático), y columna Decisión añadida a 4 ramas de C3 que dejaban vacío el checklist de C4 — primer síntoma certificado end-to-end con el nuevo eje de trabajo, todo verificado en vivo*

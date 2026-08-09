@@ -2746,6 +2746,16 @@
                 "clave": "cac",
                 "formula": "costelead*leads/clientes",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar (más inversión)",
+                  "Mantener",
+                  "Optimizar antes de escalar",
+                  "Abandonar canal"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -2803,6 +2813,16 @@
                 "clave": "conversion",
                 "formula": "leads*100/seguidores",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear/activar",
+                  "Actualizar y relanzar",
+                  "Mantener como está",
+                  "Descartar canal"
+                ]
               }
             ],
             "filas_iniciales": 6
@@ -2920,6 +2940,16 @@
                 "clave": "roi",
                 "formula": "(ingresos-inversion)*100/inversion",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Escalar inversión",
+                  "Mantener inversión actual",
+                  "Reducir inversión",
+                  "Cerrar canal"
+                ]
               }
             ],
             "filas_iniciales": 4
@@ -2969,6 +2999,16 @@
                 "clave": "conversion",
                 "formula": "convertidos*100/referidos",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pedir referido activamente",
+                  "Activar incentivo",
+                  "Agradecer y mantener",
+                  "Sin acción"
+                ]
               }
             ],
             "filas_iniciales": 4
