@@ -1273,6 +1273,39 @@ Corregido en `masesora-frontend#18` (mergeada): 3 badges por ítem + el panel, m
 
 Con esto, el gap explícito de §XXIX.A queda cerrado — la Sala de Control y todo lo que muestra `item.valor` en C3 es coherente en los 3 modos (financiero/conteo/estructural) antes de empezar el rollout a los 29 síntomas restantes.
 
+## XXXI. SESIÓN 8 AGO 2026 (noche) — "Con los 29": el rollout no era el trabajo mecánico que parecía, y una mejor alternativa
+
+### XXXI.A — Volcado del catálogo: el rollout de `contribuye_valor` no es un mecanizado
+
+Maite pide arrancar el rollout a los 29 síntomas restantes. Antes de tocar `symptoms.json`, volcado completo (no supuesto) de las columnas numéricas/calculadas de los 6 síntomas... de los 29 restantes por `kpi_recovery_mode`:
+
+- **8 estructural**: se descartan deliberadamente. Ese modo no tiene valor sumable por ítem (§XXVII.B) — marcar `contribuye_valor` ahí sería fabricar un número que el propio diseño dice que no existe.
+- **19 conteo**: el hallazgo real. Sus tablas C3 miden casi siempre tiempo, coste, porcentajes o puntuaciones (1-5, 1-10) — **casi ninguna tiene una columna que cuente la unidad de recuperación real** (p. ej. `CARDIO-S1` mide "nuevos clientes captados" pero sus tablas solo tienen leads/coste/CAC; `TER-S1` mide "reseñas de 5★ ganadas" pero solo tiene puntuaciones NPS). Marcar cualquiera de esas columnas sería inventar un número — exactamente el error que este catálogo lleva evitando desde §XXV.
+- **2 financiero** (`CLI-S1`, `UCI-S2`): la propuesta inicial era "mecánico, igual que UCI-S1" — resultó ser cierto solo para uno de los dos.
+
+Primera propuesta descartada por el propio Claude tras revisarla: proponer columna a columna antes de escribir nada para los 19 "conteo", sin haber sacado ningún beneficio real a los otros 29 síntomas todavía. Maite pide una alternativa mejor.
+
+### XXXI.B — La alternativa: separar "la experiencia" de "el número" (implementada)
+
+En vez de bloquear el rollout completo a terminar de marcar 126 ramas de contenido, se generaliza el patrón que "estructural" ya tenía: la cabecera y el informe de cierre de la Sala de Control muestran el €/unidad **solo si hay un valor real que mostrar** (`tieneValorReal = recoveryMode !== "estructural" && valorFrentesTotal > 0`), sea cual sea el modo. Sin valor real —por ser estructural, o porque el síntoma aún no tiene `contribuye_valor` marcado— se muestra la misma "Cobertura de diagnóstico: N de M frentes analizados" con una frase distinta según el motivo. Ningún cliente ve nunca un "0€" que parezca un fallo, ni un número suelto sin contexto (comprobado explícitamente a petición de Maite: el "0" siempre va dentro de la frase completa; los badges por ítem y el panel "Valor planificado" directamente no se pintan si no hay valor real, en vez de mostrar un "0").
+
+**Efecto**: la Sala de Control se despliega a los 30 síntomas hoy, sin depender de las 126 ramas de contenido pendientes. Añadir columnas de valor real pasa de ser un bloqueante a una mejora incremental, síntoma a síntoma, sin fecha fija.
+
+Mergeado: `masesora-frontend#19`.
+
+### XXXI.C — `UCI-S2` sí, `CLI-S1` no (todavía)
+
+Con el bloqueo resuelto, se revisan igualmente los 2 síntomas financiero con el mismo cuidado columna a columna que UCI-S1 (no se fuerza nada a ciegas):
+
+- **`UCI-S2`** ("€ cobrados"): sí tiene columnas limpias. Marcado `masframe#16` — `r1` ("Importe (€)" facturado al entregar), `r3` ("Importe (€)" de la reclamación en firme, con estado "Cobrada"; su "Coste financiero de la demora" queda sin marcar, es un coste no una recuperación), `r5` ("Importe a cobrar ya (€)"). `r2` (diagnóstico, no acción de cobro) deliberadamente sin marcar para no duplicar el mismo importe si el cliente compromete r2 y r3 a la vez sobre las mismas facturas. `r4`/`r6` no tienen columnas numéricas.
+- **`CLI-S1`** ("€ de coste cortado"): **sin tocar, a propósito**. Ninguna de sus 6 ramas tiene una columna que represente "coste cortado" sin inventársela — `r4` es un dashboard genérico de seguimiento (no €), `r5` mide horas no €, `r6` tiene columnas de COSTE de externalizar (lo contrario de un ahorro). Necesita una columna nueva por rama, igual que la mayoría de los 19 "conteo" — se trata como tal, no se fuerza un marcado incorrecto solo por ser nominalmente "financiero".
+
+### XXXI.D — Estado del rollout tras esta sesión
+
+La Sala de Control (stepper, cabecera, informe de cierre) ya es coherente en los 30 síntomas, sin ningún número inventado, verificado en vivo. De los 3 síntomas financiero, 2 tienen valor real (`UCI-S1`, `UCI-S2`); `CLI-S1` y los 19 "conteo" quedan pendientes de una pasada de contenido (añadir columnas reales por rama) — explícitamente no bloqueante, backlog abierto para cuando se decida abordarlo.
+
+PRs de esta sesión (revisadas y mergeadas a petición expresa, verificado el estado en remoto tras cada merge): `masesora-frontend#19`, `masframe#16`.
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -1291,3 +1324,4 @@ Con esto, el gap explícito de §XXIX.A queda cerrado — la Sala de Control y t
 *§XXVIII añadida en sesión 8 ago 2026 (noche) — cita editorial para el cuadro de introducción de capa (CapaShell), y cierre: las 4 PRs de la sesión revisadas y mergeadas (masesora-frontend#15/#16/#17, masframe#12)*
 *§XXIX añadida en sesión 8 ago 2026 (noche) — auditoría previa al rollout de la Sala de Control (gap real: modo "conteo" sin verificar en vivo; riesgo de ramas legacy descartado, 0/30 síntomas), y 2 tareas nuevas de backlog: certificado de alta (DischargePage) y narrativa de justi_capaN en todo el catálogo*
 *§XXX añadida en sesión 8 ago 2026 (noche) — cierre del gap "conteo" de §XXIX.A: verificado en vivo con UNI-S1 (correcto), y fix de un bug real encontrado por el camino (badges/panel de valor ajenos a la Sala de Control mostrando € fijo) — masesora-frontend#18*
+*§XXXI añadida en sesión 8 ago 2026 (noche) — "con los 29": el volcado del catálogo reveló que el rollout no es mecánico (126 ramas "conteo"/"estructural" sin columna de recuperación real), mejor alternativa implementada (cobertura en vez de "0€" cuando no hay dato real, sin números sueltos sin contexto), UCI-S2 marcado, CLI-S1 identificado como pendiente de contenido — masesora-frontend#19, masframe#16*
