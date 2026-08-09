@@ -163,6 +163,21 @@ def _lint_columnas(sid, sp, cols, E, W):
             if c.get("contribuye_valor"):
                 E.append(f"{sp} col '{etiqueta}': contribuye_valor y contribuye_valor_si a la vez — son mutuamente excluyentes, calcularValorFila solo mira contribuye_valor_si")
 
+        # cuenta_unicos_si (§XXXV): cuenta valores UNICOS de esta columna entre las filas que
+        # cumplen una condicion en OTRA columna (referenciada por su "clave"), para unidades como
+        # "semanas comunicando" donde contar filas contaria duplicados (misma semana, 3 piezas
+        # publicadas) como si fueran unidades distintas. Solo fiable sobre "opciones" controladas
+        # -- un valor de texto libre escrito distinto en cada fila rompe el conteo silenciosamente.
+        cus = c.get("cuenta_unicos_si")
+        if cus is not None:
+            if ctipo != "opciones":
+                E.append(f"{sp} col '{etiqueta}': cuenta_unicos_si sobre tipo {ctipo!r} — solo es fiable sobre 'opciones' controladas, un valor de texto libre rompería el conteo de únicos")
+            clave_cond = cus.get("clave_condicion")
+            if not any(cc.get("clave") == clave_cond for cc in cols):
+                E.append(f"{sp} col '{etiqueta}': cuenta_unicos_si.clave_condicion={clave_cond!r} no coincide con la 'clave' de ninguna columna de esta tabla")
+            if c.get("contribuye_valor") or c.get("contribuye_valor_si") is not None:
+                E.append(f"{sp} col '{etiqueta}': cuenta_unicos_si junto con contribuye_valor/contribuye_valor_si en la misma columna — son mutuamente excluyentes")
+
         if ctipo == "decision":
             dopts = c.get("decision_opciones")
             if not dopts or not isinstance(dopts, list) or len(dopts) < 2:

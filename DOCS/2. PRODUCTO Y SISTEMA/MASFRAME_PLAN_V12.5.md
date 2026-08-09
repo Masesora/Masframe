@@ -1366,6 +1366,33 @@ Cerrado ahora: marcado `contribuye_valor: true` en las mismas 4 columnas ya docu
 
 ---
 
+## XXXV. SESIÓN 9 AGO 2026 (cont.) — Los 8 restantes: 2 con nueva pieza de motor, 6 confirmados como límite real
+
+### XXXV.A — Pasada fresca a los 8, no la misma excusa de antes
+
+Con `contribuye_valor_si` ya construido, se volvieron a mirar los 8 síntomas "conteo" que quedaron en backlog en §XXXIII — no dando por buena la razón genérica de la primera pasada. Resultado: **6 siguen sin solución limpia, pero cada uno por una razón distinta y concreta**, no por "el motor no sabe contar estados" (eso ya se resolvió):
+
+- **Dato solo confirmable con el tiempo** (`OPE-S1`, `OPE-S2`, `PSI-S1`, `RES-S1`): "bajas evitadas", "días de ausencia reducidos" — el resultado no se conoce al rellenar la tabla, solo meses después.
+- **Sin tabla fuente** (`TER-S3`, `UNI-S2`): ninguna de las 6 ramas registra el evento que mide la unidad de recuperación.
+
+### XXXV.B — Los 2 que sí: `cuenta_unicos_si` (semanas/personas distintas, no filas)
+
+`CIR-S3` ("semanas comunicando ganadas") y `PSI-S3` ("personas que se implican") tenían el problema opuesto: contar FILAS por estado (`contribuye_valor_si`) habría contado duplicados como si fueran unidades distintas — 3 piezas publicadas la misma semana ≠ 3 semanas comunicando; 3 propuestas de la misma persona ≠ 3 personas implicadas.
+
+Nuevo campo en `ColumnaHerramientaConfig`: `cuenta_unicos_si: { clave_condicion, valor_condicion }` — cuenta valores ÚNICOS de esta columna entre las filas cuya OTRA columna (referenciada por `clave`) coincide con un valor. Vive en `calcularValorHerramienta` (no en `calcularValorFila`, que es por-fila y no puede deduplicar entre filas). Solo válido sobre columnas `opciones` controladas — un valor de texto libre roto por errores de tecleo ("Semana 1" vs "semana 1") invalidaría el conteo; chequeo añadido a `validar_sintomas.py`.
+
+Aplicado:
+- `CIR-S3.r1`: columna "Semana / fecha" (texto libre) reconvertida a "Semana" (opciones: Semana 1-4, mismo patrón que ya usa `OPE-S1.r1`) + `cuenta_unicos_si` condicionado a `Estado=Publicado`.
+- `PSI-S3.r2`: `contribuye_valor_si="Sí"` sobre "Si se aceptó, ¿se implementó?" (no sobre "Decisión=Aceptada" — una propuesta aceptada en papel no es lo mismo que una implementada; señal más fuerte de implicación real). Este no necesitó `cuenta_unicos_si` — usa el mecanismo existente.
+
+Se reutilizó el mismo fix defensivo de fila vacía de §XXXIII.C (arranca en `""`, no en `opciones[0]`) también para columnas `cuenta_unicos_si`.
+
+Verificado en vivo con Playwright contra build de producción: `CIR-S3` con 2 filas "Semana 1"/Publicado duplicadas → cuenta 1 (no 2); añadida "Semana 2"/Publicado → 2; añadida "Semana 3"/Pendiente → sigue en 2 (la condición filtra). `PSI-S3`: "No"/"En curso" no suman, dos "Sí" → 2. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos.
+
+Con esto: **13/19 síntomas "conteo" resueltos** con datos reales del catálogo.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1386,3 +1413,4 @@ Cerrado ahora: marcado `contribuye_valor: true` en las mismas 4 columnas ya docu
 *§XXXII añadida en sesión 9 ago 2026 — CLI-S1 cierra el rollout financiero (r5/r6 con columnas nuevas, r2 fuera de la suma), aclarado que CLI-S1/UCI-S3 resuelven problemas distintos, y fix de recovery_unit_label copiado en UCI-S3 — masframe#18*
 *§XXXIII añadida en sesión 9 ago 2026 — contribuye_valor_si: cuenta filas por estado en vez de solo sumar cantidades, de 2 a 11 de 19 síntomas "conteo" resueltos con datos ya existentes en el catálogo, y fix de un bug real (filas vacías contaban de más) encontrado en vivo — masesora-frontend#20, masframe#20*
 *§XXXIV añadida en sesión 9 ago 2026 (cont.) — reconciliación post-merge: CARDIO-S1/S3 faltaban en el commit de §XXXIII por descuido, cerrado marcando las mismas 4 columnas ya documentadas; 11/19 "conteo" quedan resueltos de verdad, no solo en el plan*
+*§XXXV añadida en sesión 9 ago 2026 (cont.) — cuenta_unicos_si: cuenta valores únicos de una columna (no filas duplicadas), cierra CIR-S3 y PSI-S3 — 13/19 "conteo" resueltos; los 6 restantes confirmados como límite real (dato solo confirmable con el tiempo, o sin tabla fuente) — masesora-frontend#21, masframe#22*
