@@ -1306,6 +1306,16 @@ La Sala de Control (stepper, cabecera, informe de cierre) ya es coherente en los
 
 PRs de esta sesión (revisadas y mergeadas a petición expresa, verificado el estado en remoto tras cada merge): `masesora-frontend#19`, `masframe#16`.
 
+## XXXII. SESIÓN 9 AGO 2026 — `CLI-S1` cierra el rollout financiero; `UCI-S3` limpio
+
+`CLI-S1` ("Ceguera de Control") propuesto columna a columna antes de tocar nada, aprobado por Maite: `r1`/`r3`/`r4` sin columna nueva (indicadores/métricas en texto libre del cliente, sin unidad fija que asumir); `r5` con "Coste hora (€)" + "Coste mensual automatizable (€)" nuevas; `r6` con "Coste hora propio (€)" + "Valor liberado/mes (€)" nuevas. `r2` (calculadora) tenía `alimenta_valor` desde antes de esta sesión sobre "Beneficio neto real" — el beneficio TOTAL, no "coste cortado" — se quita a petición expresa, para no mezclar magnitudes en la Sala de Control. Verificado en vivo: 500€+300€=800€ correctos; `r2` ya no aporta.
+
+Maite preguntó si `CLI-S1` y `UCI-S3` (mismo `kpi_formula`, mismo `recovery_unit_label` hasta ahora) resuelven el mismo problema. Comprobado con el contenido completo de ambos (no solo el nombre): son distintos — `CLI-S1` es falta de infraestructura de visibilidad, `UCI-S3` es precios/márgenes sin analizar por servicio y cliente — sin solapamiento entre sus 6 ramas C3. Sí salió un descuido real: `UCI-S3` tenía el `recovery_unit_label` de `CLI-S1` copiado literalmente, inconsistente con el patrón "re-medir X" de los otros 7 estructurales. Corregido a "re-medir margen".
+
+`python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios). Mergeado: `masframe#18`.
+
+Con esto, los 3 síntomas financiero (`UCI-S1`, `UCI-S2`, `CLI-S1`) tienen valor real en la Sala de Control. Pendiente: los 19 "conteo" (backlog de contenido, no bloqueante).
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -1325,3 +1335,4 @@ PRs de esta sesión (revisadas y mergeadas a petición expresa, verificado el es
 *§XXIX añadida en sesión 8 ago 2026 (noche) — auditoría previa al rollout de la Sala de Control (gap real: modo "conteo" sin verificar en vivo; riesgo de ramas legacy descartado, 0/30 síntomas), y 2 tareas nuevas de backlog: certificado de alta (DischargePage) y narrativa de justi_capaN en todo el catálogo*
 *§XXX añadida en sesión 8 ago 2026 (noche) — cierre del gap "conteo" de §XXIX.A: verificado en vivo con UNI-S1 (correcto), y fix de un bug real encontrado por el camino (badges/panel de valor ajenos a la Sala de Control mostrando € fijo) — masesora-frontend#18*
 *§XXXI añadida en sesión 8 ago 2026 (noche) — "con los 29": el volcado del catálogo reveló que el rollout no es mecánico (126 ramas "conteo"/"estructural" sin columna de recuperación real), mejor alternativa implementada (cobertura en vez de "0€" cuando no hay dato real, sin números sueltos sin contexto), UCI-S2 marcado, CLI-S1 identificado como pendiente de contenido — masesora-frontend#19, masframe#16*
+*§XXXII añadida en sesión 9 ago 2026 — CLI-S1 cierra el rollout financiero (r5/r6 con columnas nuevas, r2 fuera de la suma), aclarado que CLI-S1/UCI-S3 resuelven problemas distintos, y fix de recovery_unit_label copiado en UCI-S3 — masframe#18*
