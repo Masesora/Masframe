@@ -1454,6 +1454,24 @@ Aplicado: nota de puntuación de C2 (misma que ya explicaba los ejes) ampliada c
 
 Queda pendiente de decisión: `input_revised_1/2`/`result_revised` muertos en las 30 síntomas (§XXXVII.A).
 
+### XXXVII.D — Cierre: input_revised_1/2/result_revised conectados a C6 (conteo y financiero)
+
+Maite confirma el planteamiento original: esos 3 campos existen para dar **garantía al método** — una comprobación independiente del resultado real, no la misma contabilidad interna de lo que el cliente marcó "hecho". Verificado con CARDIO-S1 en concreto: hoy "¿cuántos clientes nuevos han entrado?" se calcula como `InputA original + Σ valor_real de tareas C4 confirmadas` — es el propio sistema contando lo que el propio cliente marcó, no una re-medición externa.
+
+El mecanismo de re-medición real (`remeasure_a`/`remeasure_b`) ya existía en el código, pero solo se activaba en modo `estructural` — `conteo` y `financiero` nunca podían ofrecerlo, dejando `input_revised_1/2`/`result_revised` sin ningún efecto en 22/30 síntomas (los 8 `estructural` sí los tenían disponibles, aunque con las etiquetas equivocadas — ver abajo).
+
+**Aplicado:**
+- La re-medición real, cuando el cliente la rellena, manda sobre el cálculo automático **en cualquier modo**, no solo estructural. Sin rellenarla, el comportamiento no cambia (fallback al cálculo actual — cero regresión).
+- El formulario usa las etiquetas de `input_revised_1/2` (ej. "Facturación mensual (post)") en vez de reutilizar las de C0 con un sufijo "(actual)" pegado — bug menor que también afectaba a los 8 síntomas `estructural` que ya usaban este bloque.
+- Nuevo indicador con la etiqueta de `result_revised` (el Δ) cuando hay re-medición.
+- Corregido de paso: el subtítulo del KPI decía "calculado con lo confirmado en C5" incluso cuando el número venía de la re-medición real — ahora dice "confirmado con tu re-medición real".
+
+Verificado en vivo con Playwright contra build de producción (CARDIO-S1, `conteo`): el bloque de re-medición aparece (antes nunca, en este modo); KPI auto-calculado 100% → tras re-medir 4/5 → 80% (la re-medición manda de verdad, no coincide con el auto-cálculo); Δ visible con la etiqueta de `result_revised`; subtítulo correcto.
+
+PR abierta: `masesora-frontend` (`feat/c6-remedicion-real`).
+
+**Con esto se cierran los 2 puntos pendientes de la auditoría CARDIO-S1 (§XXXVII.A) — primer síntoma certificado end-to-end con el nuevo eje de trabajo.**
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -1478,4 +1496,4 @@ Queda pendiente de decisión: `input_revised_1/2`/`result_revised` muertos en la
 *§XXXIV añadida en sesión 9 ago 2026 (cont.) — reconciliación post-merge: CARDIO-S1/S3 faltaban en el commit de §XXXIII por descuido, cerrado marcando las mismas 4 columnas ya documentadas; 11/19 "conteo" quedan resueltos de verdad, no solo en el plan*
 *§XXXV añadida en sesión 9 ago 2026 (cont.) — cuenta_unicos_si: cuenta valores únicos de una columna (no filas duplicadas), cierra CIR-S3 y PSI-S3 — 13/19 "conteo" resueltos; los 6 restantes confirmados como límite real (dato solo confirmable con el tiempo, o sin tabla fuente) — masesora-frontend#21, masframe#22*
 *§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*
-*§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico), primera pasada en CARDIO-S1 (gate C2→C3 de la familia matriz no filtra por puntuación, 4/5 ramas de C3 sin columna de acción, input_revised_1/2/result_revised muertos en las 30 síntomas); fix aplicado: descarte manual en C2 no era permanente (familia matriz, 14/30 síntomas); decisión de producto: puntuar prioriza, no filtra — aclarado en el copy de C2 — verificado en vivo*
+*§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico), primera pasada en CARDIO-S1 completa — gate C2→C3 de matriz (decisión: puntuar prioriza, no filtra, aclarado en copy), descarte no permanente en C2 corregido (14/30 síntomas), input_revised_1/2/result_revised conectados a C6 para conteo/financiero (re-medición real manda sobre el cálculo automático) — CARDIO-S1 es el primer síntoma certificado end-to-end con el nuevo eje de trabajo, todo verificado en vivo*
