@@ -2072,6 +2072,21 @@
               {
                 "etiqueta": "Motivo bloqueo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha entrega objetivo",
+                "tipo": "texto",
+                "placeholder": "ej. 20/09/2026"
+              },
+              {
+                "etiqueta": "¿Entregado a plazo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Aún no entregado"
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
             "filas_iniciales": 3
@@ -7741,6 +7756,13 @@
               {
                 "etiqueta": "Acción de redistribución",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Días de baja evitados (seguimiento trimestral)",
+                "tipo": "numero",
+                "clave": "bajas_evitadas",
+                "placeholder": "ej. 3",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 5
@@ -8586,6 +8608,16 @@
               {
                 "etiqueta": "Fecha próxima conversación",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Se quedó? (seguimiento)",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Pendiente de confirmar"
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
             "filas_iniciales": 5
@@ -10132,6 +10164,16 @@
               {
                 "etiqueta": "Mejora demostrable",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Recomendó a alguien? (seguimiento)",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Aún no"
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
             "filas_iniciales": 3
@@ -10402,7 +10444,8 @@
                   "Sí",
                   "No",
                   "Parcialmente"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               },
               {
                 "etiqueta": "Formato de documentación",
@@ -10655,7 +10698,7 @@
     "justi_capa6": "Este indicador mide qué parte de tu operación funciona sin depender de ti. Compáralo con C0; si sube, la empresa aguanta el día a día sin tu intervención constante.",
     "capa_1_options": "Si yo no estoy disponible la empresa se para o toma decisiones malas que luego hay que corregir.; Demasiadas decisiones del día a día dependen exclusivamente de mí aunque no tendría que ser así.; No tengo claro qué puedo delegar sin que la calidad o el control se vean comprometidos.; No puedo ausentarme unos días sin que el equipo me llame para resolver situaciones que podría resolver solo.; El equipo depende de mí para casi cualquier decisión aunque tengan experiencia y criterio para tomarlas.; He construido un puesto de trabajo que me necesita a mí, no una empresa que funcione sin mí.",
     "kpi_recovery_mode": "conteo",
-    "recovery_unit_label": "días sin intervención ganados",
+    "recovery_unit_label": "horas de fundador liberadas/semana",
     "kpi_name": "Días sin depender de ti",
     "kpi_unit": "%",
     "capa_3_plan": {
@@ -10701,7 +10744,12 @@
               },
               {
                 "etiqueta": "Horas fundador/semana (h)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "horas_fundador",
+                "suma_si": {
+                  "clave_condicion": "candidato_delegar",
+                  "valor_condicion": "Sí"
+                }
               },
               {
                 "etiqueta": "Potencial delegación (1-5)",
@@ -10720,7 +10768,8 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "clave": "candidato_delegar"
               },
               {
                 "etiqueta": "Nombre candidato",
