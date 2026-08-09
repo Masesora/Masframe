@@ -1316,6 +1316,46 @@ Maite preguntó si `CLI-S1` y `UCI-S3` (mismo `kpi_formula`, mismo `recovery_uni
 
 Con esto, los 3 síntomas financiero (`UCI-S1`, `UCI-S2`, `CLI-S1`) tienen valor real en la Sala de Control. Pendiente: los 19 "conteo" (backlog de contenido, no bloqueante).
 
+## XXXIII. SESIÓN 9 AGO 2026 — Los 19 "conteo": primera respuesta insuficiente, mejor solución, y un bug real en el camino
+
+### XXXIII.A — Primera pasada: 2 de 19, rechazada por Maite
+
+Volcado del contenido completo (no solo columnas) de los 19 síntomas "conteo". Primera conclusión: solo 2 (`CARDIO-S1`, `CARDIO-S3`) tenían una columna existente que sumara directamente su unidad de recuperación; los otros 17 quedaban en backlog sin resolver, con el argumento de que su unidad es un *recuento de filas por estado* y el motor solo sabe sumar cantidades. Maite: *"no es suficiente, esto no es una consultora de primer nivel, revisa tu respuesta"* — con razón: muchas de esas tablas ya tienen la señal (`Estado`, `Decisión`, `¿Completada?`), el motor simplemente no sabía leerla como valor. Rendirse en 17/19 no era la respuesta correcta; construir la pieza que falta, sí.
+
+### XXXIII.B — `contribuye_valor_si`: contar filas por estado, no solo sumar cantidades
+
+Nuevo campo en `ColumnaHerramientaConfig` (`masesora-frontend`): cuenta +1 por fila cuya columna coincide exactamente con un valor, en vez de sumar una cantidad. Válido sobre `opciones` (compara el texto elegido) o `numero` (compara el número exacto — p. ej. `Puntuación=5` para contar solo reseñas de 5★). Mutuamente excluyente con `contribuye_valor` en la misma columna.
+
+Con esta pieza, volcados los valores reales de cada columna candidata (nunca adivinados) y subido de **2 a 11 de 19 síntomas resueltos con datos que ya existían en las tablas**, sin inventar ningún campo:
+
+| Síntoma | Rama(s) | Señal usada |
+|---|---|---|
+| CARDIO-S1 | r1, r4, r5 | Clientes cerrados/mes, Clientes, Convertidos (numero, ya existían) |
+| CARDIO-S3 | r6 | Leads calificados/mes (numero, ya existía) |
+| CIR-S1 | r1, r4, r5, r6 | Estado=Aprobado/Publicado/Resuelto, Nivel de detalle=Completo |
+| CLI-S3 | r2, r3 | ¿Necesita pasar por ti?=No, Estado=Asignada |
+| NEURO-S2 | r2, r4×3 | Decisión=Terminar, ¿P1/P2/P3 completada?=Sí |
+| PSI-S2 | r4 | Decisión=Reasignar |
+| RES-S3 | r2 | Decisión=Separar |
+| TER-S1 | r5 | Puntuación=5 (numero) |
+| TER-S2 | r1 | Señal de vuelta detectada=Si |
+| UNI-S1 | r3 | Estado=Cumpliendo SLA |
+| UNI-S3 | r6 | Nueva calculada: Errores ANTES − Errores DESPUÉS (columnas ya existentes) |
+
+Los otros 8 (`CIR-S3`, `OPE-S1`, `OPE-S2`, `PSI-S1`, `PSI-S3`, `RES-S1`, `TER-S3`, `UNI-S2`) siguen fuera a propósito: la unidad requiere una conversión inventada (p. ej. "días de ausencia" no sale de "horas de sobrecarga") o solo se confirma con el tiempo (una baja evitada no se sabe al rellenar datos, se sabe meses después) — mismo criterio que ya evitó forzar `CLI-S1`/`UCI-S2`.
+
+### XXXIII.C — Bug real encontrado en vivo: filas vacías contaban de más
+
+Verificando `CIR-S1` en vivo apareció "6 materiales actualizados" **antes de rellenar nada**. Causa: `filaVaciaHerramienta` ya rellenaba toda columna `opciones` nueva con su primera opción (`opciones[0]`) para que el `<select>` no se viera en blanco — y varias de las marcas de `contribuye_valor_si` coincidían justo con esa primera opción por defecto, así que cada fila sin tocar ya contaba como lograda desde el minuto cero.
+
+Corregido en el motor (no reordenando texto, más robusto para cualquier marca futura): una columna con `contribuye_valor_si` arranca en `""` en vez de `opciones[0]`, con una `<option value="">— Sin marcar —</option>` añadida en los 3 sitios donde se renderiza, para que el desplegable no muestre visualmente una opción real como elegida sin serlo. El resto del catálogo de columnas `opciones` no cambia.
+
+Verificado en vivo con Playwright contra build de producción, `CIR-S1`: con 0 datos → cobertura (nunca un número inflado); tras marcar `r1.Estado=Aprobado` → 1; tras marcar `r4` en su 2ª sección (el caso más propenso a fallar, dos secciones en la misma rama) → 2.
+
+`python3 data/validar_sintomas.py`: nuevo chequeo para `contribuye_valor_si` (tipo válido, el valor debe estar entre las propias `opciones` de la columna, mutuamente excluyente con `contribuye_valor`). 0 errores, 21 avisos (sin cambios).
+
+PRs abiertas: `masesora-frontend#20`, `masframe#20`.
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -1336,3 +1376,4 @@ Con esto, los 3 síntomas financiero (`UCI-S1`, `UCI-S2`, `CLI-S1`) tienen valor
 *§XXX añadida en sesión 8 ago 2026 (noche) — cierre del gap "conteo" de §XXIX.A: verificado en vivo con UNI-S1 (correcto), y fix de un bug real encontrado por el camino (badges/panel de valor ajenos a la Sala de Control mostrando € fijo) — masesora-frontend#18*
 *§XXXI añadida en sesión 8 ago 2026 (noche) — "con los 29": el volcado del catálogo reveló que el rollout no es mecánico (126 ramas "conteo"/"estructural" sin columna de recuperación real), mejor alternativa implementada (cobertura en vez de "0€" cuando no hay dato real, sin números sueltos sin contexto), UCI-S2 marcado, CLI-S1 identificado como pendiente de contenido — masesora-frontend#19, masframe#16*
 *§XXXII añadida en sesión 9 ago 2026 — CLI-S1 cierra el rollout financiero (r5/r6 con columnas nuevas, r2 fuera de la suma), aclarado que CLI-S1/UCI-S3 resuelven problemas distintos, y fix de recovery_unit_label copiado en UCI-S3 — masframe#18*
+*§XXXIII añadida en sesión 9 ago 2026 — contribuye_valor_si: cuenta filas por estado en vez de solo sumar cantidades, de 2 a 11 de 19 síntomas "conteo" resueltos con datos ya existentes en el catálogo, y fix de un bug real (filas vacías contaban de más) encontrado en vivo — masesora-frontend#20, masframe#20*
