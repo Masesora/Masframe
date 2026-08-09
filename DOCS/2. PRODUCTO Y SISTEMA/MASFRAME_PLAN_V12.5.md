@@ -1446,7 +1446,13 @@ Fix: nuevo campo persistido `c2.removedC1RefIds`. `removeItem()` registra el des
 
 Verificado en vivo con Playwright contra build de producción (CARDIO-S1): 3 causas → 3 tarjetas; borrar 1 con ✕ → 2; marcar OTRA causa no relacionada → sigue en 2+1=3 (**antes resucitaba a 4**); deseleccionar la causa borrada → sigue en 3; reseleccionarla → 4 (vuelve fresca). Confirmado también en el payload de guardado (`removedC1RefIds` correcto en cada paso). Afecta a las 14 síntomas de familia "matriz", no solo CARDIO-S1.
 
-PR abierta: `masesora-frontend` (`fix/c1-c2-descarte-persistente`).
+### XXXVII.C — Decisión de producto: puntuar prioriza, no filtra
+
+Maite decide el primer punto pendiente de §XXXVII.A: *"Puntuar solo prioriza, no filtra — dilo en el copy"*. Confirmado el diseño real de la familia matriz — todo lo seleccionado en C1 se compromete a C3, la puntuación de impacto/esfuerzo solo ordena visualmente cuál conviene atacar antes. El único filtro real es el ✕ de cada tarjeta (cuyo descarte ya es persistente desde §XXXVII.B).
+
+Aplicado: nota de puntuación de C2 (misma que ya explicaba los ejes) ampliada con la aclaración explícita — *"Todo lo que marques aquí se trabajará — puntuar solo decide el orden, no descarta nada (para eso está el ✕ de cada tarjeta)"*. Verificado en vivo con Playwright, el copy aparece en su sitio. Mismo commit/PR que §XXXVII.B (`masesora-frontend`, `fix/c1-c2-descarte-persistente`).
+
+Queda pendiente de decisión: `input_revised_1/2`/`result_revised` muertos en las 30 síntomas (§XXXVII.A).
 
 ---
 
@@ -1472,4 +1478,4 @@ PR abierta: `masesora-frontend` (`fix/c1-c2-descarte-persistente`).
 *§XXXIV añadida en sesión 9 ago 2026 (cont.) — reconciliación post-merge: CARDIO-S1/S3 faltaban en el commit de §XXXIII por descuido, cerrado marcando las mismas 4 columnas ya documentadas; 11/19 "conteo" quedan resueltos de verdad, no solo en el plan*
 *§XXXV añadida en sesión 9 ago 2026 (cont.) — cuenta_unicos_si: cuenta valores únicos de una columna (no filas duplicadas), cierra CIR-S3 y PSI-S3 — 13/19 "conteo" resueltos; los 6 restantes confirmados como límite real (dato solo confirmable con el tiempo, o sin tabla fuente) — masesora-frontend#21, masframe#22*
 *§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*
-*§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico), primera pasada en CARDIO-S1 (gate C2→C3 de la familia matriz no filtra por puntuación, 4/5 ramas de C3 sin columna de acción, input_revised_1/2/result_revised muertos en las 30 síntomas), y fix aplicado: el descarte manual en C2 no era permanente (familia matriz, 14/30 síntomas) — verificado en vivo*
+*§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico), primera pasada en CARDIO-S1 (gate C2→C3 de la familia matriz no filtra por puntuación, 4/5 ramas de C3 sin columna de acción, input_revised_1/2/result_revised muertos en las 30 síntomas); fix aplicado: descarte manual en C2 no era permanente (familia matriz, 14/30 síntomas); decisión de producto: puntuar prioriza, no filtra — aclarado en el copy de C2 — verificado en vivo*
