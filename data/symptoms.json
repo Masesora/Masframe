@@ -688,7 +688,8 @@
               },
               {
                 "etiqueta": "Importe (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 3
@@ -744,7 +745,8 @@
               {
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
-                "clave": "importe"
+                "clave": "importe",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Días vencido",
@@ -837,7 +839,8 @@
                 "tipo": "calculada",
                 "clave": "a_cobrar",
                 "formula": "importe*pct/100",
-                "unidad": "eur"
+                "unidad": "eur",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 3
