@@ -1422,6 +1422,34 @@ Playwright contra build de producción, uno por uno: `OPE-S2` (fila con horas=10
 
 ---
 
+## XXXVII. SESIÓN 9 AGO 2026 (cont.) — Cambio de eje: auditoría real por síntoma antes de beta
+
+Cierre de la sesión (§XXXVI) con Maite sintiendo "las neveras llenas pero no sale ni una tortilla" — el motor funciona (verificado repetidamente hoy), pero nunca se hizo un barrido completo, síntoma a síntoma, de la EXPERIENCIA como sistema. Hallazgo grande al revisar el historial: el rediseño "formulario→sistema" de §XXV (decisión/pipeline/simulador/comparador) solo se aplicó a UCI-S1 (piloto). Los otros 29 nunca lo recibieron — todo lo construido desde entonces (Sala de Control, `contribuye_valor_si`, `cuenta_unicos_si`, `suma_si`) es ancho, no profundo: un mecanismo, 30 síntomas, nunca "un síntoma, hasta el final". Decisión: cambiar de eje — un síntoma completo antes de tocar el siguiente, con el skill `masframe-ux-validator` (experiencia + estado técnico, código real, no conjeturas).
+
+### XXXVII.A — Primera auditoría real: CARDIO-S1
+
+Persona: Marta, EntreTelas (taller de costura, Valencia, 3 empleadas, ~9.000€/mes) — sufre las 6 causas de `capa_1_priorizacion` a la vez. Recorrido C0→C6 completo, doble lente (experiencia + estado técnico con archivo:línea). Hallazgos:
+
+- **C0:** Input B ("clientes nuevos que te habías propuesto captar") obliga a Marta a inventar un número que el propio síntoma dice que no tiene (es la causa #6).
+- **C2→C3, familia matriz (14/30 síntomas):** `committedIdxs` (TreatmentPage.tsx:4620-4642) filtra el gate solo por `categoria`, nunca mira si el cliente puntuó impacto/esfuerzo — en cuanto se seleccionan 2+ causas en C1, TODAS quedan comprometidas para C3 antes de puntuar nada. Puntuar solo reordena visualmente. **Pendiente de decisión de producto** (no aplicado): ¿el diseño real es "todo lo seleccionado se trabaja" (y decirlo en el copy), o C2 debería filtrar de verdad por puntuación?
+- **C2, descarte no permanente (bug real, corregido — ver §XXXVII.B).**
+- **C3:** 4 de 5 ramas nativas de CARDIO-S1 (r1/r2/r4/r5) son tablas de medición (CAC, ROI, conversión) sin ninguna columna de acción/decisión — solo r3 tiene "Próxima acción". Encaja con el diagnóstico general: formulario con matemáticas, no sistema todavía.
+- **C6, catálogo entero:** `input_revised_1`, `input_revised_2`, `result_revised` — declarados en la interfaz TS (TreatmentPage.tsx:89-91) y **nunca leídos ni renderizados en ningún otro sitio del archivo**. El re-medido manual real usa `remeasure_a`/`remeasure_b` (:7385-7397), solo visible en modo `estructural`. El linter (`validar_sintomas.py:702-712`) exige que esos 3 campos existan y sean coherentes, reforzando la ilusión de que se usan. **90 campos de texto (3×30 síntomas) sin ningún efecto en el producto — pendiente de decisión** (conectarlos a algo real en C6, o retirarlos del schema/linter).
+
+Veredicto: experiencia 🟠, técnico 🟠 — el camino núcleo completa y el recovery value viaja correctamente, pero no está lista para venta tal cual.
+
+### XXXVII.B — Fix aplicado: el descarte en C2 no era permanente (familia matriz)
+
+El único hallazgo técnico de CARDIO-S1 con solución de código clara (no una decisión de producto pendiente). Botón ✕ en C2 borra la fila del array `items`, pero el efecto de reconstrucción C1→C2 (TreatmentPage.tsx, dentro de `Capa2`) se dispara con CUALQUIER cambio de `c1data` y recreaba cualquier ítem borrado cuyo origen en C1 siguiera marcado — descartar una causa y luego tocar cualquier OTRO checkbox de C1 la resucitaba sin puntuar.
+
+Fix: nuevo campo persistido `c2.removedC1RefIds`. `removeItem()` registra el descarte cuando es un ítem `c1-ref-*`; la reconstrucción lo respeta y no recrea esos ids. El descarte se olvida solo si ese origen concreto se deselecciona en C1 — deseleccionar y volver a seleccionar cuenta como elección nueva, no como "recuperar lo borrado" (para que el olvido no sea permanente de más).
+
+Verificado en vivo con Playwright contra build de producción (CARDIO-S1): 3 causas → 3 tarjetas; borrar 1 con ✕ → 2; marcar OTRA causa no relacionada → sigue en 2+1=3 (**antes resucitaba a 4**); deseleccionar la causa borrada → sigue en 3; reseleccionarla → 4 (vuelve fresca). Confirmado también en el payload de guardado (`removedC1RefIds` correcto en cada paso). Afecta a las 14 síntomas de familia "matriz", no solo CARDIO-S1.
+
+PR abierta: `masesora-frontend` (`fix/c1-c2-descarte-persistente`).
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1444,3 +1472,4 @@ Playwright contra build de producción, uno por uno: `OPE-S2` (fila con horas=10
 *§XXXIV añadida en sesión 9 ago 2026 (cont.) — reconciliación post-merge: CARDIO-S1/S3 faltaban en el commit de §XXXIII por descuido, cerrado marcando las mismas 4 columnas ya documentadas; 11/19 "conteo" quedan resueltos de verdad, no solo en el plan*
 *§XXXV añadida en sesión 9 ago 2026 (cont.) — cuenta_unicos_si: cuenta valores únicos de una columna (no filas duplicadas), cierra CIR-S3 y PSI-S3 — 13/19 "conteo" resueltos; los 6 restantes confirmados como límite real (dato solo confirmable con el tiempo, o sin tabla fuente) — masesora-frontend#21, masframe#22*
 *§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*
+*§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico), primera pasada en CARDIO-S1 (gate C2→C3 de la familia matriz no filtra por puntuación, 4/5 ramas de C3 sin columna de acción, input_revised_1/2/result_revised muertos en las 30 síntomas), y fix aplicado: el descarte manual en C2 no era permanente (familia matriz, 14/30 síntomas) — verificado en vivo*
