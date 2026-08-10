@@ -1548,9 +1548,47 @@ Causa (TreatmentPage.tsx): `inicialNum` (línea 7185) se lee de `c0data.kpi_valu
 | Re-medición con mejora grande que supera objetivo | ✅ Alta se dispara correctamente |
 | Re-medición con los mismos valores originales (sin cambio real) | ✅ "aún no ha mejorado" |
 
-PR abierta (draft): `masesora-frontend#26`.
+PR mergeada: `masesora-frontend#26` (`cbc29a7`).
 
-**Auditoría CARDIO-S2 en curso** — pendiente: verificación de C5 (Cobrómetro) en vivo, veredicto doble formal. Tras cerrarla, sigue CARDIO-S3 con el mismo rigor.
+### XXXIX.C — C5 verificado en vivo, y un tercer hallazgo (copy contradictorio en C6)
+
+C5 (Cobrómetro) verificado en vivo, accordeón expandido tras auto-completarse al terminar C4: "Progreso de ejecución: 3 de 3 acciones ejecutadas" + "Certificado de valor: el valor se certifica con la mejora de tu KPI en el seguimiento (C6)", **cero € en pantalla** — correcto para `estructural`, `hayValor` (Capa5) exige `recoveryMode === "financiero"`. Auto-completar C5 al cerrar C4 es coherente aquí: no hay nada financiero que el cliente deba confirmar.
+
+Con el fix de §XXXIX.B ya aplicado, en C6 con `!mejoro && c4Complete` aparecían **dos avisos que se contradecían**: el correcto de re-medición ("Este KPI no se calcula con lo recuperado...") y, justo debajo (`TreatmentPage.tsx:7522`), un aviso genérico *"Completa los valores reales en C5 — el KPI se actualizará automáticamente cuando confirmes el valor recuperado en cada tarea"* — falso en los dos puntos para `estructural`: no hay ningún valor que rellenar en C5 (verificado, cero inputs), y el KPI nunca se recalcula automáticamente desde C5/C4 en este modo (línea ~7203). Afecta a los 8 síntomas `estructural`.
+
+**Fix aplicado y verificado en vivo:** mensaje condicionado por `recoveryMode` (~7517-7527) — `estructural` apunta a re-medir en el propio C6, el resto mantiene el texto original sin cambios (confirmado: ambas cadenas coexisten en el bundle compilado, sin regresión). PR mergeada: `masesora-frontend#27`.
+
+### XXXIX.D — Veredicto y cierre
+
+🟢 **Experiencia:** fluye limpio, sin jerga, sin datos imposibles — Javier entiende cada paso. 🟢 **Técnico:** los 2 bugs reales encontrados (falso "Has superado" por redondeo, y aviso contradictorio en C6) quedan cerrados y verificados en vivo; sin bloqueantes de flujo de estado C0→C6. Nota de coherencia sin fix (pendiente de decisión de producto): el `qualityCheck` de la familia C2 "regla" no impone el "máximo 5" que dice su propio copy.
+
+**CARDIO-S2 certificado end-to-end.** Sigue CARDIO-S3 con el mismo rigor.
+
+---
+
+## XL. SESIÓN 10 AGO 2026 (cont.) — Auditoría CARDIO-S3: el riesgo #1 de la taxonomía, verificado sano
+
+Tercer y último síntoma de CARDIO. Persona: Sonia, diseño de interiores freelance — 40 contactos/mes, solo 5 oportunidades reales calificadas (12,5%), pierde tiempo en consultas que nunca cierran. Familia C2: **Árbol de Decisiones** — tercera familia distinta auditada esta sesión (matriz→CARDIO-S1, regla→CARDIO-S2, árbol→CARDIO-S3).
+
+### XL.A — El riesgo que más preocupaba (taxonomía del validator, bug #1): confirmado ya resuelto
+
+El árbol es la familia que la propia taxonomía de `masframe-ux-validator` señala como riesgo #1 ("pérdida de selección múltiple: el cliente marca N 'Sí' y solo viaja 1"). `decision_comprometida` (TreatmentPage.tsx:3018) sigue siendo un string único que solo guarda el primer "Sí" -- pero ya no es la fuente de verdad para C3: `committedDescriptions` (~794-804) y `committedIdxs` (~4692-4714) recogen **todos** los ítems `categoria === "si"`, y son los que deciden qué ramas de `capa_3_plan` monta C3 (fix ya documentado en el propio código, comentario de línea 789, de una sesión anterior a esta auditoría).
+
+Verificado en vivo con Sonia marcando 3 "Sí": Sala de Control mostró correctamente "3 FRENTES ABIERTOS" con las 3 causas correctas -- confirmado, no asumido. Nota metodológica: el primer intento del test dio solo 1 frente por clicar los 3 botones en el mismo tick de JS antes del re-render de React (mismo patrón de falso positivo que la truncación de pills en CARDIO-S2, §XXXIX) -- con clicks espaciados, los 3 registran bien. Descartado como bug de test antes de reportarlo.
+
+### XL.B — Resto de verificaciones en vivo, todas correctas -- sin fixes
+
+- Columnas de acción de r1/r3/r6: ninguna es `tipo: "opciones"` con etiqueta que matchee `ACCION_REGEX` -- no recurre el bug de acciones fantasma de §XXXVIII.
+- Fórmula invertida (`(InputB/InputA)*100`, al revés que CARDIO-S1/S2): KPI inicial 12,5%, correcto. Tras recuperar 6 oportunidades calificadas vía r6 (única rama con `contribuye_valor`), KPI actual 27,5% -- el algoritmo de C6 (~7213-7230) prueba empíricamente ambas direcciones y elige la que mejora, sin asumir qué variable es cuál -- generaliza bien al orden invertido.
+- Sala de Control (conteo): copy correcto y mode-aware -- "6 oportunidades calificadas ganadas" (usa `recovery_unit_label`), sin €. C5 también sin € en pantalla.
+- Alta se disparó legítimamente (27,5% > objetivo 20%, mejora real de 15 puntos) -- caso distinto y no confundible con el bug de redondeo ya cerrado en §XXXIX.B.
+- Gate C2 árbol (~8990-8993): exige al menos 1 "Sí", coherente con su copy -- a diferencia de "regla" (§XXXIX.A), que no fuerza su propio "máximo 5".
+
+### XL.C — Veredicto
+
+🟢 **Experiencia**, 🟢 **Técnico** -- **CARDIO-S3 certificado end-to-end, sin fixes pendientes.**
+
+Con esto quedan auditados los 3 síntomas de CARDIO. Balance de la especialidad: 6 hallazgos reales encontrados y cerrados entre CARDIO-S1 y CARDIO-S2 (0 en CARDIO-S3), y 2 notas de coherencia sin fix aplicado (pendientes de decisión de producto): gate de matriz no filtra por puntuación (aclarado en copy, §XXXVII.C) y "regla" no impone su propio "máximo 5" (§XXXIX.A).
 
 ---
 
@@ -1578,4 +1616,5 @@ PR abierta (draft): `masesora-frontend#26`.
 *§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*
 *§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico). CARDIO-S1 completo, los 4 hallazgos cerrados: gate C2→C3 de matriz (decisión: puntuar prioriza, no filtra, aclarado en copy), descarte no permanente en C2 (14/30 síntomas), input_revised_1/2/result_revised conectados a C6 para conteo/financiero (re-medición real manda sobre el cálculo automático), y columna Decisión añadida a 4 ramas de C3 que dejaban vacío el checklist de C4 — primer síntoma certificado end-to-end con el nuevo eje de trabajo, todo verificado en vivo*
 *§XXXVIII añadida en sesión 9-10 ago 2026 — re-auditoría CARDIO-S1 en vivo con Playwright (caso real de Marta), 2 bugs más encontrados que la lectura de código no había cazado: DesglosadorInput mostrando caja de desglose confusa en las 30 síntomas (0/60 campos la necesitan de verdad), y acciones fantasma en el checklist de C4 por filas en blanco (14 columnas en 8 síntomas) -- este último introducido por el propio trabajo de §XXXVII, cazado antes de mergear*
-*§XXXIX añadida en sesión 10 ago 2026 — auditoría CARDIO-S2 (persona Javier/Metalatek): familia C2 "regla" confirmada sana, bug crítico de C6 encontrado en vivo -- falso "Has superado el síntoma"/botón de Alta sin re-medir nada, causado por comparar un KPI inicial redondeado (guardado en C0) contra un KPI actual recalculado con precisión flotante completa, afecta a las 30 síntomas del catálogo -- fix (roundKpiForCompare) aplicado y verificado en vivo (masesora-frontend#26); auditoría de CARDIO-S2 sigue en curso (C5, veredicto)*
+*§XXXIX añadida en sesión 10 ago 2026 — auditoría CARDIO-S2 completa (persona Javier/Metalatek): familia C2 "regla" confirmada sana, 2 bugs reales de C6 encontrados en vivo y cerrados -- falso "Has superado el síntoma" por redondeo (afecta a las 30 síntomas, fix roundKpiForCompare, masesora-frontend#26) y aviso contradictorio apuntando a C5 en modo estructural (afecta a 8 síntomas, fix mode-aware, masesora-frontend#27); CARDIO-S2 certificado end-to-end, veredicto 🟢🟢*
+*§XL añadida en sesión 10 ago 2026 (cont.) — auditoría CARDIO-S3 completa (persona Sonia): familia C2 "árbol" -- el riesgo #1 de la taxonomía del validator (pérdida de selección múltiple) confirmado ya resuelto en vivo (multi-"Sí" monta múltiples ramas en C3 correctamente), fórmula con InputA/InputB invertidos verificada sin problema (el algoritmo de C6 es direction-agnostic), sin nuevos bugs -- CARDIO-S3 certificado end-to-end sin fixes, veredicto 🟢🟢. Cierra la auditoría completa de la especialidad CARDIO (3/3 síntomas, 6 hallazgos reales cerrados en total)*
