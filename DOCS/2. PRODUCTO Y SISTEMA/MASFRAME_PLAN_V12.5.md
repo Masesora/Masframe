@@ -1422,6 +1422,100 @@ Playwright contra build de producción, uno por uno: `OPE-S2` (fila con horas=10
 
 ---
 
+## XXXVII. SESIÓN 9 AGO 2026 (cont.) — Cambio de eje: auditoría real por síntoma antes de beta
+
+Cierre de la sesión (§XXXVI) con Maite sintiendo "las neveras llenas pero no sale ni una tortilla" — el motor funciona (verificado repetidamente hoy), pero nunca se hizo un barrido completo, síntoma a síntoma, de la EXPERIENCIA como sistema. Hallazgo grande al revisar el historial: el rediseño "formulario→sistema" de §XXV (decisión/pipeline/simulador/comparador) solo se aplicó a UCI-S1 (piloto). Los otros 29 nunca lo recibieron — todo lo construido desde entonces (Sala de Control, `contribuye_valor_si`, `cuenta_unicos_si`, `suma_si`) es ancho, no profundo: un mecanismo, 30 síntomas, nunca "un síntoma, hasta el final". Decisión: cambiar de eje — un síntoma completo antes de tocar el siguiente, con el skill `masframe-ux-validator` (experiencia + estado técnico, código real, no conjeturas).
+
+### XXXVII.A — Primera auditoría real: CARDIO-S1
+
+Persona: Marta, EntreTelas (taller de costura, Valencia, 3 empleadas, ~9.000€/mes) — sufre las 6 causas de `capa_1_priorizacion` a la vez. Recorrido C0→C6 completo, doble lente (experiencia + estado técnico con archivo:línea). Hallazgos:
+
+- **C0:** Input B ("clientes nuevos que te habías propuesto captar") obliga a Marta a inventar un número que el propio síntoma dice que no tiene (es la causa #6).
+- **C2→C3, familia matriz (14/30 síntomas):** `committedIdxs` (TreatmentPage.tsx:4620-4642) filtra el gate solo por `categoria`, nunca mira si el cliente puntuó impacto/esfuerzo — en cuanto se seleccionan 2+ causas en C1, TODAS quedan comprometidas para C3 antes de puntuar nada. Puntuar solo reordena visualmente. **Pendiente de decisión de producto** (no aplicado): ¿el diseño real es "todo lo seleccionado se trabaja" (y decirlo en el copy), o C2 debería filtrar de verdad por puntuación?
+- **C2, descarte no permanente (bug real, corregido — ver §XXXVII.B).**
+- **C3:** 4 de 5 ramas nativas de CARDIO-S1 (r1/r2/r4/r5) son tablas de medición (CAC, ROI, conversión) sin ninguna columna de acción/decisión — solo r3 tiene "Próxima acción". Encaja con el diagnóstico general: formulario con matemáticas, no sistema todavía.
+- **C6, catálogo entero:** `input_revised_1`, `input_revised_2`, `result_revised` — declarados en la interfaz TS (TreatmentPage.tsx:89-91) y **nunca leídos ni renderizados en ningún otro sitio del archivo**. El re-medido manual real usa `remeasure_a`/`remeasure_b` (:7385-7397), solo visible en modo `estructural`. El linter (`validar_sintomas.py:702-712`) exige que esos 3 campos existan y sean coherentes, reforzando la ilusión de que se usan. **90 campos de texto (3×30 síntomas) sin ningún efecto en el producto — pendiente de decisión** (conectarlos a algo real en C6, o retirarlos del schema/linter).
+
+Veredicto: experiencia 🟠, técnico 🟠 — el camino núcleo completa y el recovery value viaja correctamente, pero no está lista para venta tal cual.
+
+### XXXVII.B — Fix aplicado: el descarte en C2 no era permanente (familia matriz)
+
+El único hallazgo técnico de CARDIO-S1 con solución de código clara (no una decisión de producto pendiente). Botón ✕ en C2 borra la fila del array `items`, pero el efecto de reconstrucción C1→C2 (TreatmentPage.tsx, dentro de `Capa2`) se dispara con CUALQUIER cambio de `c1data` y recreaba cualquier ítem borrado cuyo origen en C1 siguiera marcado — descartar una causa y luego tocar cualquier OTRO checkbox de C1 la resucitaba sin puntuar.
+
+Fix: nuevo campo persistido `c2.removedC1RefIds`. `removeItem()` registra el descarte cuando es un ítem `c1-ref-*`; la reconstrucción lo respeta y no recrea esos ids. El descarte se olvida solo si ese origen concreto se deselecciona en C1 — deseleccionar y volver a seleccionar cuenta como elección nueva, no como "recuperar lo borrado" (para que el olvido no sea permanente de más).
+
+Verificado en vivo con Playwright contra build de producción (CARDIO-S1): 3 causas → 3 tarjetas; borrar 1 con ✕ → 2; marcar OTRA causa no relacionada → sigue en 2+1=3 (**antes resucitaba a 4**); deseleccionar la causa borrada → sigue en 3; reseleccionarla → 4 (vuelve fresca). Confirmado también en el payload de guardado (`removedC1RefIds` correcto en cada paso). Afecta a las 14 síntomas de familia "matriz", no solo CARDIO-S1.
+
+### XXXVII.C — Decisión de producto: puntuar prioriza, no filtra
+
+Maite decide el primer punto pendiente de §XXXVII.A: *"Puntuar solo prioriza, no filtra — dilo en el copy"*. Confirmado el diseño real de la familia matriz — todo lo seleccionado en C1 se compromete a C3, la puntuación de impacto/esfuerzo solo ordena visualmente cuál conviene atacar antes. El único filtro real es el ✕ de cada tarjeta (cuyo descarte ya es persistente desde §XXXVII.B).
+
+Aplicado: nota de puntuación de C2 (misma que ya explicaba los ejes) ampliada con la aclaración explícita — *"Todo lo que marques aquí se trabajará — puntuar solo decide el orden, no descarta nada (para eso está el ✕ de cada tarjeta)"*. Verificado en vivo con Playwright, el copy aparece en su sitio. Mismo commit/PR que §XXXVII.B (`masesora-frontend`, `fix/c1-c2-descarte-persistente`).
+
+Queda pendiente de decisión: `input_revised_1/2`/`result_revised` muertos en las 30 síntomas (§XXXVII.A).
+
+### XXXVII.D — Cierre: input_revised_1/2/result_revised conectados a C6 (conteo y financiero)
+
+Maite confirma el planteamiento original: esos 3 campos existen para dar **garantía al método** — una comprobación independiente del resultado real, no la misma contabilidad interna de lo que el cliente marcó "hecho". Verificado con CARDIO-S1 en concreto: hoy "¿cuántos clientes nuevos han entrado?" se calcula como `InputA original + Σ valor_real de tareas C4 confirmadas` — es el propio sistema contando lo que el propio cliente marcó, no una re-medición externa.
+
+El mecanismo de re-medición real (`remeasure_a`/`remeasure_b`) ya existía en el código, pero solo se activaba en modo `estructural` — `conteo` y `financiero` nunca podían ofrecerlo, dejando `input_revised_1/2`/`result_revised` sin ningún efecto en 22/30 síntomas (los 8 `estructural` sí los tenían disponibles, aunque con las etiquetas equivocadas — ver abajo).
+
+**Aplicado:**
+- La re-medición real, cuando el cliente la rellena, manda sobre el cálculo automático **en cualquier modo**, no solo estructural. Sin rellenarla, el comportamiento no cambia (fallback al cálculo actual — cero regresión).
+- El formulario usa las etiquetas de `input_revised_1/2` (ej. "Facturación mensual (post)") en vez de reutilizar las de C0 con un sufijo "(actual)" pegado — bug menor que también afectaba a los 8 síntomas `estructural` que ya usaban este bloque.
+- Nuevo indicador con la etiqueta de `result_revised` (el Δ) cuando hay re-medición.
+- Corregido de paso: el subtítulo del KPI decía "calculado con lo confirmado en C5" incluso cuando el número venía de la re-medición real — ahora dice "confirmado con tu re-medición real".
+
+Verificado en vivo con Playwright contra build de producción (CARDIO-S1, `conteo`): el bloque de re-medición aparece (antes nunca, en este modo); KPI auto-calculado 100% → tras re-medir 4/5 → 80% (la re-medición manda de verdad, no coincide con el auto-cálculo); Δ visible con la etiqueta de `result_revised`; subtítulo correcto.
+
+PR abierta: `masesora-frontend` (`feat/c6-remedicion-real`).
+
+**Con esto se cierran los 2 puntos pendientes de la auditoría CARDIO-S1 (§XXXVII.A) — primer síntoma certificado end-to-end con el nuevo eje de trabajo.**
+
+### XXXVII.E — Última pieza: 4/5 ramas de C3 sin columna de acción
+
+Cierre del último hallazgo de §XXXVII.A. `r1` (Auditoría canales), `r2` (Presencia digital), `r4` (Rendimiento canales) y `r5` (Sistema referidos) eran tablas de medición pura — el cliente rellenaba números y veía ROI/conversión/CAC calculados, pero ninguna columna preguntaba "¿qué vas a hacer con esto?". Consecuencia técnica concreta, no solo de experiencia: `derivarAccionesConcretas` (el checklist "⚡ Acciones concretas" de C4, §XXII.F) busca columnas con nombres tipo "acción/decisión/plan" — sin ninguna, el checklist salía **vacío** para esas 4 ramas; solo `r3` (que ya tenía "Próxima acción") lo generaba.
+
+Añadida una columna `Decisión` (`opciones`, no `tipo:"decision"` — no hacía falta recalcular nada en la fila, y `derivarAccionesConcretas` ya reconoce "Decisión" igual que "Acción") a cada una de las 4 ramas, con opciones específicas al contexto de cada tabla, no una plantilla genérica:
+
+| Rama | Opciones |
+|---|---|
+| r1 Auditoría canales | Potenciar (más inversión) · Mantener · Optimizar antes de escalar · Abandonar canal |
+| r2 Presencia digital | Crear/activar · Actualizar y relanzar · Mantener como está · Descartar canal |
+| r4 Rendimiento canales | Escalar inversión · Mantener inversión actual · Reducir inversión · Cerrar canal |
+| r5 Sistema referidos | Pedir referido activamente · Activar incentivo · Agradecer y mantener · Sin acción |
+
+`python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios). Verificado en vivo con Playwright: fila de `r1` con Canal="Instagram", Decisión="Potenciar (más inversión)" → C4 muestra **"⚡ TUS ACCIONES CONCRETAS · Potenciar (más inversión) — Instagram"** (antes, vacío para esta rama).
+
+**CARDIO-S1 queda completamente cerrado — los 4 hallazgos de §XXXVII.A resueltos.**
+
+---
+
+## XXXVIII. SESIÓN 9-10 AGO 2026 — Re-auditoría CARDIO-S1: "quiero la mejor tortilla" — 2 bugs reales más, encontrados solo en vivo
+
+Maite, tras cerrar §XXXVII: *"vuelve a pasar el VALIDATOR por CARDIO-S1 y realmente comprobamos el caso de Marta... quiero una tortilla, perfecta, dorada, nivel 3 estrellas Michelin"*. Segunda pasada, esta vez sin conformarse con leer código: recorrido completo C0→C6 en vivo con Playwright, mismos datos reales de Marta (EntreTelas), sobre el build ya con los 4 fixes de §XXXVII aplicados.
+
+### XXXVIII.A — 2 bugs reales que la lectura de código no había cazado
+
+1. **C0, catálogo entero:** `DesglosadorInput` (TreatmentPage.tsx:1249-1310) — su condición `esVacio = !rawText || rawText==="—"` no distinguía "sin desglose real" de "vacío". Cualquier `input_a`/`input_b` sin `"+"` (comprobado: **0 de 60 campos en las 30 síntomas** usan un desglose real) mostraba una caja "+ Añadir concepto"/"Total: X.XX" con el label repetido dos veces, para lo que debería ser un simple número. Visto solo al cargar la pantalla real, no leyendo el componente por encima.
+
+2. **C4, checklist "⚡ Acciones concretas":** verificado con Marta rellenando 1 sola fila en `CARDIO-S1.r1` (la tabla tiene `filas_iniciales: 3`), el checklist de C4 mostró **3 "acciones"** en vez de 1 — 2 fantasma, extraídas de las 2 filas nunca tocadas. Causa: la columna `Decisión` que se añadió en §XXXVII.E es `opciones` normal (no `contribuye_valor_si`), así que `filaVaciaHerramienta` la rellenaba con `opciones[0]` ("Potenciar (más inversión)") en cada fila en blanco — el mismo bug de §XXXIII.C, pero en un tercer consumidor (`derivarAccionesConcretas`) que el fix original no protegía. Comprobado contra el catálogo: **14 columnas en 8 síntomas afectadas** (`UCI-S1.r4`, `CIR-S1.r2`, `CIR-S2.r2/r3`, `NEURO-S2.r5`, `CLI-S1.r6`, `PSI-S3.r2/r6`, `RES-S1.r2`, `RES-S3.r3`), no solo las 4 columnas de CARDIO-S1 añadidas hoy — un bug introducido por el propio trabajo de esta sesión, cazado antes de mergear gracias a la re-verificación en vivo.
+
+También confirmado (no bug, matiz de copy): el gate de C2 (`qualityCheck`, TreatmentPage.tsx:8962-8963) exige puntuar al menos un elemento antes de avanzar — el copy nuevo de §XXXVII.C no lo menciona. Anotado, sin fix aplicado (pendiente de decisión: avisar en el copy, o quitar la exigencia).
+
+### XXXVIII.B — Fixes aplicados y verificados en vivo
+
+- `DesglosadorInput`: `esSimple = esVacio || !tieneSubItems`, usado tanto en el render como en `calcTotal()`.
+- `ACCION_REGEX` extraído a constante compartida entre `filaVaciaHerramienta` y `derivarAccionesConcretas` — cualquier columna que el checklist de C4 reconoce como accionable ahora arranca en `""` en fila nueva, mismo criterio defensivo que ya protegía a `contribuye_valor_si`/`cuenta_unicos_si`/`suma_si`.
+
+Verificado en vivo con Playwright, mismo recorrido completo de Marta: C0 ya sin la caja de desglose; C4 con 1 acción real (antes 3); total sigue en **4 nuevos clientes captados**, KPI 40%→120%, "Objetivo alcanzado" — el fix no toca el cálculo de valor, solo el checklist de acciones.
+
+PR abierta: `masesora-frontend` (`fix/desglosador-y-acciones-fantasma`).
+
+**Lección del método:** el primer pase de auditoría (§XXXVII), basado en lectura de código, encontró 4 hallazgos reales. La segunda pasada, exigiendo el recorrido en vivo con datos reales, encontró 2 más — uno de ellos introducido por el propio trabajo de la primera pasada. Verificar en vivo no es redundante con leer código: son cazas de bugs distintas.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1444,3 +1538,5 @@ Playwright contra build de producción, uno por uno: `OPE-S2` (fila con horas=10
 *§XXXIV añadida en sesión 9 ago 2026 (cont.) — reconciliación post-merge: CARDIO-S1/S3 faltaban en el commit de §XXXIII por descuido, cerrado marcando las mismas 4 columnas ya documentadas; 11/19 "conteo" quedan resueltos de verdad, no solo en el plan*
 *§XXXV añadida en sesión 9 ago 2026 (cont.) — cuenta_unicos_si: cuenta valores únicos de una columna (no filas duplicadas), cierra CIR-S3 y PSI-S3 — 13/19 "conteo" resueltos; los 6 restantes confirmados como límite real (dato solo confirmable con el tiempo, o sin tabla fuente) — masesora-frontend#21, masframe#22*
 *§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*
+*§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico). CARDIO-S1 completo, los 4 hallazgos cerrados: gate C2→C3 de matriz (decisión: puntuar prioriza, no filtra, aclarado en copy), descarte no permanente en C2 (14/30 síntomas), input_revised_1/2/result_revised conectados a C6 para conteo/financiero (re-medición real manda sobre el cálculo automático), y columna Decisión añadida a 4 ramas de C3 que dejaban vacío el checklist de C4 — primer síntoma certificado end-to-end con el nuevo eje de trabajo, todo verificado en vivo*
+*§XXXVIII añadida en sesión 9-10 ago 2026 — re-auditoría CARDIO-S1 en vivo con Playwright (caso real de Marta), 2 bugs más encontrados que la lectura de código no había cazado: DesglosadorInput mostrando caja de desglose confusa en las 30 síntomas (0/60 campos la necesitan de verdad), y acciones fantasma en el checklist de C4 por filas en blanco (14 columnas en 8 síntomas) -- este último introducido por el propio trabajo de §XXXVII, cazado antes de mergear*
