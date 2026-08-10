@@ -1516,6 +1516,44 @@ PR abierta: `masesora-frontend` (`fix/desglosador-y-acciones-fantasma`).
 
 ---
 
+## XXXIX. SESIÓN 10 AGO 2026 — Auditoría CARDIO-S2: bug crítico de C6 (falso "Has superado" sin re-medir nada)
+
+Maite, tras cerrar CARDIO-S1: *"hacemos lo mismo con los otros 2 síntomas de CARDIO?"*. Auditoría `masframe-ux-validator` de CARDIO-S2 (Arritmia Comercial, `kpi_recovery_mode: "estructural"`, familia C2 "regla" — `Elimina elementos hasta conservar máximo 5`), persona Javier / Metalatek, recorrido completo C0→C6 en vivo con Playwright sobre build de producción.
+
+### XXXIX.A — Confirmado sano: familia "regla" y la generalización de fixes previos
+
+- C2 "regla" (TreatmentPage.tsx ~3077-3151): toggle explícito reversible `✕ Eliminar`/`↩ Recuperar` (`categoria: "out"`/`""`), no hard-delete — mecánica distinta a la familia "matriz" de CARDIO-S1 pero coherente con su propio copy.
+- Confirmado (no asumido) que **ninguna** columna de acción de CARDIO-S2 es `tipo: "opciones"` (todas `"texto"`) — el bug de acciones fantasma de §XXXVIII.B no recurre aquí, sin tocar código para comprobarlo.
+- `DesglosadorInput` (fix de §XXXVIII.B): `input_a`/`input_b` de CARDIO-S2 tampoco tienen desglose real — la caja limpia de número simple se confirma en una segunda síntoma, no sobreajustada a CARDIO-S1.
+- Nota de coherencia, sin fix aplicado: el `qualityCheck` de la familia "regla" (~8956-8961) solo exige "al menos 1 conservado" — no fuerza el "máximo 5" que dice el copy. El cliente puede confirmar C2 con las 6 causas seleccionadas; `overLimit` solo pinta un badge ⚠️, no bloquea. Pendiente de decisión de producto.
+
+### XXXIX.B — Bug crítico encontrado en vivo: falso "Has superado" por ruido de redondeo
+
+Con Javier completando C0→C4 (KPI inicial 15.000€/45.000€ = 33,33%) y **sin re-medir nada en C6**, la capa mostraba a la vez:
+
+```
+📍 KPI INICIAL: 33.3     📊 KPI ACTUAL: 33.3
+✓ Has mejorado tu KPI...
+¡Enhorabuena! Has superado Arritmia Comercial → Ver mi Certificado de Alta
+```
+
+Causa (TreatmentPage.tsx): `inicialNum` (línea 7185) se lee de `c0data.kpi_value`, un string **ya redondeado** al guardarse en C0 (`Capa0`, ~1455-1456: `Math.round` si está a <0.05 del entero, si no `.toFixed(2)`). `actualNum` (7198-7206), cuando no hay re-medición real, cae a `baseNum = calcKpiFormula(...)` — recalculado con **precisión flotante completa**, sin ese redondeo. Para cualquier `kpi_formula` con decimal periódico (`(15000/45000)*100 = 33.333...`), `actualNum (33.333...) > inicialNum (33.33)` es cierto sin que haya cambiado ningún dato real — disparaba `mejoro` (7245) y, con C4 completo, `readyForAlta` (7252) y el banner de Alta/Certificado (7528). Verificado numéricamente aparte antes de tocar código. **Afecta a los 30 síntomas del catálogo**, no solo a CARDIO-S2.
+
+**Fix aplicado y verificado en vivo:** nueva `roundKpiForCompare()` (~7165) aplica el mismo criterio de redondeo que usa C0 al guardar; `mejoro` ahora compara `inicialNumCmp`/`actualNumCmp` (mismo redondeo en ambos lados) en vez de un valor redondeado contra uno de precisión completa. Playwright, mismo caso de Javier:
+
+| Caso | Resultado |
+|---|---|
+| Sin re-medición (el bug) | ✅ ahora "aún no ha mejorado", sin banner de Alta |
+| Re-medición con mejora real pequeña (+0,23pp) | ✅ sigue detectándose — el fix no esconde cambios genuinos |
+| Re-medición con mejora grande que supera objetivo | ✅ Alta se dispara correctamente |
+| Re-medición con los mismos valores originales (sin cambio real) | ✅ "aún no ha mejorado" |
+
+PR abierta (draft): `masesora-frontend#26`.
+
+**Auditoría CARDIO-S2 en curso** — pendiente: verificación de C5 (Cobrómetro) en vivo, veredicto doble formal. Tras cerrarla, sigue CARDIO-S3 con el mismo rigor.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1540,3 +1578,4 @@ PR abierta: `masesora-frontend` (`fix/desglosador-y-acciones-fantasma`).
 *§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*
 *§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico). CARDIO-S1 completo, los 4 hallazgos cerrados: gate C2→C3 de matriz (decisión: puntuar prioriza, no filtra, aclarado en copy), descarte no permanente en C2 (14/30 síntomas), input_revised_1/2/result_revised conectados a C6 para conteo/financiero (re-medición real manda sobre el cálculo automático), y columna Decisión añadida a 4 ramas de C3 que dejaban vacío el checklist de C4 — primer síntoma certificado end-to-end con el nuevo eje de trabajo, todo verificado en vivo*
 *§XXXVIII añadida en sesión 9-10 ago 2026 — re-auditoría CARDIO-S1 en vivo con Playwright (caso real de Marta), 2 bugs más encontrados que la lectura de código no había cazado: DesglosadorInput mostrando caja de desglose confusa en las 30 síntomas (0/60 campos la necesitan de verdad), y acciones fantasma en el checklist de C4 por filas en blanco (14 columnas en 8 síntomas) -- este último introducido por el propio trabajo de §XXXVII, cazado antes de mergear*
+*§XXXIX añadida en sesión 10 ago 2026 — auditoría CARDIO-S2 (persona Javier/Metalatek): familia C2 "regla" confirmada sana, bug crítico de C6 encontrado en vivo -- falso "Has superado el síntoma"/botón de Alta sin re-medir nada, causado por comparar un KPI inicial redondeado (guardado en C0) contra un KPI actual recalculado con precisión flotante completa, afecta a las 30 síntomas del catálogo -- fix (roundKpiForCompare) aplicado y verificado en vivo (masesora-frontend#26); auditoría de CARDIO-S2 sigue en curso (C5, veredicto)*
