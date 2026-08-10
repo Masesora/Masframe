@@ -2958,13 +2958,35 @@
       },
       "r5": {
         "tipo": "pipeline",
-        "titulo": "Pide que te recomienden",
+        "titulo": "Consigue clientes nuevos sin gastar en publicidad",
         "entidad_nombre": "cliente",
         "etapas": [
           "Cliente elegido",
           "Le has escrito",
           "Te trajo un cliente"
         ],
+        "proyeccion": {
+          "titulo": "¿Cuánto podrías ganar activando esto?",
+          "entradas": [
+            {
+              "clave": "clientes_actuales",
+              "etiqueta": "¿Cuántos clientes tienes ahora?",
+              "placeholder": "ej. 40"
+            },
+            {
+              "clave": "pct_recomienda",
+              "etiqueta": "¿Qué % crees que te recomendaría a alguien?",
+              "placeholder": "ej. 20"
+            },
+            {
+              "clave": "ticket_medio",
+              "etiqueta": "¿Cuánto te deja de media un cliente nuevo? (€)",
+              "placeholder": "ej. 60"
+            }
+          ],
+          "formula": "clientes_actuales*pct_recomienda/100*ticket_medio",
+          "texto": "Si el {pct_recomienda}% de tus {clientes_actuales} clientes te recomienda a 1 persona → +{resultado} €/mes"
+        },
         "variables_globales": [
           {
             "clave": "regalo",
