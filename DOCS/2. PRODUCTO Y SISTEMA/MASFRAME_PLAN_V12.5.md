@@ -1592,6 +1592,35 @@ Con esto quedan auditados los 3 síntomas de CARDIO. Balance de la especialidad:
 
 ---
 
+## XLI. SESIÓN 10 AGO 2026 (cont.) — Auditoría UCI: hallazgo crítico catálogo entero (Alta sin objetivo alcanzado)
+
+Segunda especialidad auditada tras cerrar CARDIO. UCI tiene 3 síntomas (UCI-S1/S2 matriz, UCI-S3 semáforo -- familia aún no auditada esta sesión). Empieza por UCI-S1, el piloto histórico de la Sala de Control (§XXV), primera vez auditado en vivo con el método `masframe-ux-validator`.
+
+### XLI.A — Persona y primera vez en modo `financiero` esta sesión
+
+Marc, carpintería a medida, 3 empleados -- caja de 3.000€ con gastos fijos de 4.000€/mes (22,5 días de runway), clientes que tardan en pagar y anticipos sin ejecutar. Encaja con Obstrucción de Caja. UCI-S1 es `kpi_recovery_mode: financiero` -- las 6 auditorías previas de esta sesión fueron conteo/estructural, así que es la primera vez que se verifica en vivo el Cierre económico de C5 con € reales.
+
+### XLI.B — Hallazgo crítico: el botón de Alta no comprobaba el objetivo clínico
+
+Con Marc recuperando 1.845€ reales (Sala de Control → C4 → C5 "Cierre económico" 1.845€/1.845€ 100% → C6), el KPI sube de 22,5 a 36,3 días -- mejora real, pero el objetivo es >45 días y solo se recorre el 62% del camino. Aun así C6 mostraba a la vez:
+
+```
+✓ Has mejorado tu KPI (aún no llegas al objetivo)...
+¡Enhorabuena! Has superado Obstrucción de Caja → Ver mi Certificado de Alta
+```
+
+Causa (`TreatmentPage.tsx:7267`): `readyForAlta = c4Complete && mejoro` nunca comprobaba `alcanzoObjetivo` -- el propio componente ya lo calcula y lo usa para el texto del pill justo encima ("Objetivo alcanzado" vs "aún no llegas al objetivo"), pero el botón de Alta lo ignoraba. Mismo hueco en el checklist `missing` (~7290): nunca exigía llegar al objetivo, solo `c4Complete` y `mejoro`. Un cliente podía pedir su Certificado de Alta con cualquier mejora, aunque fuera de 1 punto, sin haber alcanzado el objetivo clínico real. **Bug preexistente** (commit `1610d24`, 5 ago 2026, no introducido esta sesión) -- no cazado en las 6 auditorías previas porque en todas `mejoro` era falso (el bug de redondeo de §XXXIX.B, ya cerrado) o `alcanzoObjetivo` ya era cierto (CARDIO-S3). **Afecta a los 30 síntomas del catálogo.**
+
+**Fix aplicado y verificado en vivo:** `readyForAlta = c4Complete && mejoro && alcanzoObjetivo`, más un aviso nuevo en "Para dar el alta" cuando hay mejora real pero aún no se alcanza el objetivo. De paso, plural mal formado en el Certificado de valor de C5 ("2 intervenciónes" → "2 intervenciones"). Playwright confirmó: ya no aparece el banner contradictorio, en su lugar el checklist correcto; el camino legítimo (mejora que sí alcanza el objetivo) sigue intacto -- el fix solo añade una condición `AND`. PR: `masesora-frontend#28`.
+
+### XLI.C — Resto de UCI-S1, verificado sano
+
+C2 matriz exige puntuar ≥1 elemento (no solo seleccionar). C3: Sala de Control mode-aware para financiero ("💰 VALOR TOTAL ESTIMADO ENTRE FRENTES"). Columnas `tipo:"decision"` y `tipo:"opciones"` sin riesgo de acciones fantasma. C5 financiero: `valor_real` se auto-rellena desde el estimado de C3 al marcar tarea hecha.
+
+Auditoría de UCI-S1 en curso -- pendiente cerrar veredicto formal antes de seguir con UCI-S2/S3.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1618,3 +1647,4 @@ Con esto quedan auditados los 3 síntomas de CARDIO. Balance de la especialidad:
 *§XXXVIII añadida en sesión 9-10 ago 2026 — re-auditoría CARDIO-S1 en vivo con Playwright (caso real de Marta), 2 bugs más encontrados que la lectura de código no había cazado: DesglosadorInput mostrando caja de desglose confusa en las 30 síntomas (0/60 campos la necesitan de verdad), y acciones fantasma en el checklist de C4 por filas en blanco (14 columnas en 8 síntomas) -- este último introducido por el propio trabajo de §XXXVII, cazado antes de mergear*
 *§XXXIX añadida en sesión 10 ago 2026 — auditoría CARDIO-S2 completa (persona Javier/Metalatek): familia C2 "regla" confirmada sana, 2 bugs reales de C6 encontrados en vivo y cerrados -- falso "Has superado el síntoma" por redondeo (afecta a las 30 síntomas, fix roundKpiForCompare, masesora-frontend#26) y aviso contradictorio apuntando a C5 en modo estructural (afecta a 8 síntomas, fix mode-aware, masesora-frontend#27); CARDIO-S2 certificado end-to-end, veredicto 🟢🟢*
 *§XL añadida en sesión 10 ago 2026 (cont.) — auditoría CARDIO-S3 completa (persona Sonia): familia C2 "árbol" -- el riesgo #1 de la taxonomía del validator (pérdida de selección múltiple) confirmado ya resuelto en vivo (multi-"Sí" monta múltiples ramas en C3 correctamente), fórmula con InputA/InputB invertidos verificada sin problema (el algoritmo de C6 es direction-agnostic), sin nuevos bugs -- CARDIO-S3 certificado end-to-end sin fixes, veredicto 🟢🟢. Cierra la auditoría completa de la especialidad CARDIO (3/3 síntomas, 6 hallazgos reales cerrados en total)*
+*§XLI añadida en sesión 10 ago 2026 (cont.) — arranca la auditoría de UCI, primer síntoma UCI-S1 (persona Marc, primera vez en modo financiero esta sesión): hallazgo crítico -- el botón de Alta (readyForAlta) nunca comprobaba alcanzoObjetivo, solo mejoro + C4 completo, mostrando "¡Enhorabuena! Has superado..." con solo el 62% del camino al objetivo recorrido; bug preexistente (5 ago 2026) que afecta a los 30 síntomas del catálogo, no cazado en las 6 auditorías previas por casualidad de los casos probados -- fix aplicado y verificado en vivo (masesora-frontend#28); resto de UCI-S1 verificado sano, auditoría en curso*
