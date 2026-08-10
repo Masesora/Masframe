@@ -2957,63 +2957,54 @@
         ]
       },
       "r5": {
-        "tipo": "nativa",
-        "titulo": "Sistema referidos",
-        "secciones": [
+        "tipo": "pipeline",
+        "titulo": "Pide que te recomienden",
+        "entidad_nombre": "cliente",
+        "etapas": [
+          "Cliente elegido",
+          "Le has escrito",
+          "Te trajo un cliente"
+        ],
+        "variables_globales": [
           {
-            "columnas": [
-              {
-                "etiqueta": "Cliente fuente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "NPS (1-10)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Referidos generados",
-                "tipo": "numero",
-                "clave": "referidos"
-              },
-              {
-                "etiqueta": "Convertidos",
-                "tipo": "numero",
-                "clave": "convertidos",
-                "contribuye_valor": true
-              },
-              {
-                "etiqueta": "Último contacto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Incentivo activo?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Conversión referidos (%)",
-                "tipo": "calculada",
-                "clave": "conversion",
-                "formula": "convertidos*100/referidos",
-                "unidad": "pct"
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pedir referido activamente",
-                  "Activar incentivo",
-                  "Agradecer y mantener",
-                  "Sin acción"
-                ]
-              }
-            ],
-            "filas_iniciales": 4
+            "clave": "regalo",
+            "etiqueta": "¿Qué le vas a dar a quien te recomiende?",
+            "placeholder": "ej. 15% de descuento en su próxima visita"
+          },
+          {
+            "clave": "vocativo_cliente",
+            "etiqueta": "¿Cómo llamas tú a tus clientes?",
+            "placeholder": "ej. pacientes, clientas, socios"
           }
-        ]
+        ],
+        "accion_rapida": {
+          "tipo": "whatsapp",
+          "campo_telefono": "telefono",
+          "plantilla": "Hola {nombre}, como {vocativo_cliente} de confianza, si me recomiendas a alguien este mes, los dos os lleváis {regalo}. ¿Me ayudas a pasarle mi contacto?"
+        },
+        "columnas": [
+          {
+            "etiqueta": "Nombre",
+            "tipo": "texto",
+            "placeholder": "ej. Ana García"
+          },
+          {
+            "etiqueta": "WhatsApp",
+            "tipo": "texto",
+            "clave": "telefono",
+            "placeholder": "ej. 600111222"
+          },
+          {
+            "etiqueta": "Trajo un cliente",
+            "tipo": "opciones",
+            "opciones": [
+              "No",
+              "Sí"
+            ],
+            "contribuye_valor_si": "Sí"
+          }
+        ],
+        "filas_iniciales": 3
       },
       "r6": {
         "tipo": "calculadora",
