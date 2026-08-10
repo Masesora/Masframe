@@ -690,6 +690,16 @@
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
                 "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Facturar ahora mismo",
+                  "Automatizar facturación al entregar",
+                  "Delegar a administración",
+                  "Ya se factura a tiempo"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -726,6 +736,15 @@
                 "clave": "coste_fin",
                 "formula": "importe*dias*0.1/365",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reclamar ya",
+                  "Aún no vencido, esperar",
+                  "Pasar a incobrable"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -800,6 +819,16 @@
               {
                 "etiqueta": "% anticipo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Exigir anticipo obligatorio",
+                  "Acortar plazo de pago",
+                  "Formalizar por contrato",
+                  "Mantener condiciones actuales"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -841,6 +870,16 @@
                 "formula": "importe*pct/100",
                 "unidad": "eur",
                 "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pedir anticipo ahora",
+                  "No aplica, ya cobrado",
+                  "Aplicar a futuros proyectos similares",
+                  "Sin acción"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -864,6 +903,16 @@
               {
                 "etiqueta": "Mensaje tipo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar recordatorio automático",
+                  "Delegar a gestoría",
+                  "Mantener seguimiento manual",
+                  "Sin acción por ahora"
+                ]
               }
             ],
             "filas_iniciales": 4
