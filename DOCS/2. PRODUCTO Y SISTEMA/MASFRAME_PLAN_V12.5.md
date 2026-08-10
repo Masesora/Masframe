@@ -1491,6 +1491,31 @@ Añadida una columna `Decisión` (`opciones`, no `tipo:"decision"` — no hacía
 
 ---
 
+## XXXVIII. SESIÓN 9-10 AGO 2026 — Re-auditoría CARDIO-S1: "quiero la mejor tortilla" — 2 bugs reales más, encontrados solo en vivo
+
+Maite, tras cerrar §XXXVII: *"vuelve a pasar el VALIDATOR por CARDIO-S1 y realmente comprobamos el caso de Marta... quiero una tortilla, perfecta, dorada, nivel 3 estrellas Michelin"*. Segunda pasada, esta vez sin conformarse con leer código: recorrido completo C0→C6 en vivo con Playwright, mismos datos reales de Marta (EntreTelas), sobre el build ya con los 4 fixes de §XXXVII aplicados.
+
+### XXXVIII.A — 2 bugs reales que la lectura de código no había cazado
+
+1. **C0, catálogo entero:** `DesglosadorInput` (TreatmentPage.tsx:1249-1310) — su condición `esVacio = !rawText || rawText==="—"` no distinguía "sin desglose real" de "vacío". Cualquier `input_a`/`input_b` sin `"+"` (comprobado: **0 de 60 campos en las 30 síntomas** usan un desglose real) mostraba una caja "+ Añadir concepto"/"Total: X.XX" con el label repetido dos veces, para lo que debería ser un simple número. Visto solo al cargar la pantalla real, no leyendo el componente por encima.
+
+2. **C4, checklist "⚡ Acciones concretas":** verificado con Marta rellenando 1 sola fila en `CARDIO-S1.r1` (la tabla tiene `filas_iniciales: 3`), el checklist de C4 mostró **3 "acciones"** en vez de 1 — 2 fantasma, extraídas de las 2 filas nunca tocadas. Causa: la columna `Decisión` que se añadió en §XXXVII.E es `opciones` normal (no `contribuye_valor_si`), así que `filaVaciaHerramienta` la rellenaba con `opciones[0]` ("Potenciar (más inversión)") en cada fila en blanco — el mismo bug de §XXXIII.C, pero en un tercer consumidor (`derivarAccionesConcretas`) que el fix original no protegía. Comprobado contra el catálogo: **14 columnas en 8 síntomas afectadas** (`UCI-S1.r4`, `CIR-S1.r2`, `CIR-S2.r2/r3`, `NEURO-S2.r5`, `CLI-S1.r6`, `PSI-S3.r2/r6`, `RES-S1.r2`, `RES-S3.r3`), no solo las 4 columnas de CARDIO-S1 añadidas hoy — un bug introducido por el propio trabajo de esta sesión, cazado antes de mergear gracias a la re-verificación en vivo.
+
+También confirmado (no bug, matiz de copy): el gate de C2 (`qualityCheck`, TreatmentPage.tsx:8962-8963) exige puntuar al menos un elemento antes de avanzar — el copy nuevo de §XXXVII.C no lo menciona. Anotado, sin fix aplicado (pendiente de decisión: avisar en el copy, o quitar la exigencia).
+
+### XXXVIII.B — Fixes aplicados y verificados en vivo
+
+- `DesglosadorInput`: `esSimple = esVacio || !tieneSubItems`, usado tanto en el render como en `calcTotal()`.
+- `ACCION_REGEX` extraído a constante compartida entre `filaVaciaHerramienta` y `derivarAccionesConcretas` — cualquier columna que el checklist de C4 reconoce como accionable ahora arranca en `""` en fila nueva, mismo criterio defensivo que ya protegía a `contribuye_valor_si`/`cuenta_unicos_si`/`suma_si`.
+
+Verificado en vivo con Playwright, mismo recorrido completo de Marta: C0 ya sin la caja de desglose; C4 con 1 acción real (antes 3); total sigue en **4 nuevos clientes captados**, KPI 40%→120%, "Objetivo alcanzado" — el fix no toca el cálculo de valor, solo el checklist de acciones.
+
+PR abierta: `masesora-frontend` (`fix/desglosador-y-acciones-fantasma`).
+
+**Lección del método:** el primer pase de auditoría (§XXXVII), basado en lectura de código, encontró 4 hallazgos reales. La segunda pasada, exigiendo el recorrido en vivo con datos reales, encontró 2 más — uno de ellos introducido por el propio trabajo de la primera pasada. Verificar en vivo no es redundante con leer código: son cazas de bugs distintas.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1514,3 +1539,4 @@ Añadida una columna `Decisión` (`opciones`, no `tipo:"decision"` — no hacía
 *§XXXV añadida en sesión 9 ago 2026 (cont.) — cuenta_unicos_si: cuenta valores únicos de una columna (no filas duplicadas), cierra CIR-S3 y PSI-S3 — 13/19 "conteo" resueltos; los 6 restantes confirmados como límite real (dato solo confirmable con el tiempo, o sin tabla fuente) — masesora-frontend#21, masframe#22*
 *§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*
 *§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico). CARDIO-S1 completo, los 4 hallazgos cerrados: gate C2→C3 de matriz (decisión: puntuar prioriza, no filtra, aclarado en copy), descarte no permanente en C2 (14/30 síntomas), input_revised_1/2/result_revised conectados a C6 para conteo/financiero (re-medición real manda sobre el cálculo automático), y columna Decisión añadida a 4 ramas de C3 que dejaban vacío el checklist de C4 — primer síntoma certificado end-to-end con el nuevo eje de trabajo, todo verificado en vivo*
+*§XXXVIII añadida en sesión 9-10 ago 2026 — re-auditoría CARDIO-S1 en vivo con Playwright (caso real de Marta), 2 bugs más encontrados que la lectura de código no había cazado: DesglosadorInput mostrando caja de desglose confusa en las 30 síntomas (0/60 campos la necesitan de verdad), y acciones fantasma en el checklist de C4 por filas en blanco (14 columnas en 8 síntomas) -- este último introducido por el propio trabajo de §XXXVII, cazado antes de mergear*
