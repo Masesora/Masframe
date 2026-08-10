@@ -2986,6 +2986,7 @@
           {
             "etiqueta": "Nombre",
             "tipo": "texto",
+            "clave": "nombre",
             "placeholder": "ej. Ana García"
           },
           {
