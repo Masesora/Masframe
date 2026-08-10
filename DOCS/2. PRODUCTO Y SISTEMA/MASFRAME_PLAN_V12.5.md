@@ -1592,6 +1592,60 @@ Con esto quedan auditados los 3 síntomas de CARDIO. Balance de la especialidad:
 
 ---
 
+## XLI. SESIÓN 10 AGO 2026 (cont.) — Auditoría UCI: hallazgo crítico catálogo entero (Alta sin objetivo alcanzado)
+
+Segunda especialidad auditada tras cerrar CARDIO. UCI tiene 3 síntomas (UCI-S1/S2 matriz, UCI-S3 con `c2_herramienta: "margen"` -- ver §XLI.E, el nombre "semáforo" de su `capa_2_decision` no gobierna la UI real). Empieza por UCI-S1, el piloto histórico de la Sala de Control (§XXV), primera vez auditado en vivo con el método `masframe-ux-validator`.
+
+### XLI.A — Persona y primera vez en modo `financiero` esta sesión
+
+Marc, carpintería a medida, 3 empleados -- caja de 3.000€ con gastos fijos de 4.000€/mes (22,5 días de runway), clientes que tardan en pagar y anticipos sin ejecutar. Encaja con Obstrucción de Caja. UCI-S1 es `kpi_recovery_mode: financiero` -- las 6 auditorías previas de esta sesión fueron conteo/estructural, así que es la primera vez que se verifica en vivo el Cierre económico de C5 con € reales.
+
+### XLI.B — Hallazgo crítico: el botón de Alta no comprobaba el objetivo clínico
+
+Con Marc recuperando 1.845€ reales (Sala de Control → C4 → C5 "Cierre económico" 1.845€/1.845€ 100% → C6), el KPI sube de 22,5 a 36,3 días -- mejora real, pero el objetivo es >45 días y solo se recorre el 62% del camino. Aun así C6 mostraba a la vez:
+
+```
+✓ Has mejorado tu KPI (aún no llegas al objetivo)...
+¡Enhorabuena! Has superado Obstrucción de Caja → Ver mi Certificado de Alta
+```
+
+Causa (`TreatmentPage.tsx:7267`): `readyForAlta = c4Complete && mejoro` nunca comprobaba `alcanzoObjetivo` -- el propio componente ya lo calcula y lo usa para el texto del pill justo encima ("Objetivo alcanzado" vs "aún no llegas al objetivo"), pero el botón de Alta lo ignoraba. Mismo hueco en el checklist `missing` (~7290): nunca exigía llegar al objetivo, solo `c4Complete` y `mejoro`. Un cliente podía pedir su Certificado de Alta con cualquier mejora, aunque fuera de 1 punto, sin haber alcanzado el objetivo clínico real. **Bug preexistente** (commit `1610d24`, 5 ago 2026, no introducido esta sesión) -- no cazado en las 6 auditorías previas porque en todas `mejoro` era falso (el bug de redondeo de §XXXIX.B, ya cerrado) o `alcanzoObjetivo` ya era cierto (CARDIO-S3). **Afecta a los 30 síntomas del catálogo.**
+
+**Fix aplicado y verificado en vivo:** `readyForAlta = c4Complete && mejoro && alcanzoObjetivo`, más un aviso nuevo en "Para dar el alta" cuando hay mejora real pero aún no se alcanza el objetivo. De paso, plural mal formado en el Certificado de valor de C5 ("2 intervenciónes" → "2 intervenciones"). Playwright confirmó: ya no aparece el banner contradictorio, en su lugar el checklist correcto; el camino legítimo (mejora que sí alcanza el objetivo) sigue intacto -- el fix solo añade una condición `AND`. PR: `masesora-frontend#28`.
+
+### XLI.C — Resto de UCI-S1, verificado sano
+
+C2 matriz exige puntuar ≥1 elemento (no solo seleccionar). C3: Sala de Control mode-aware para financiero ("💰 VALOR TOTAL ESTIMADO ENTRE FRENTES"). Columnas `tipo:"decision"` y `tipo:"opciones"` sin riesgo de acciones fantasma. C5 financiero: `valor_real` se auto-rellena desde el estimado de C3 al marcar tarea hecha.
+
+**Veredicto UCI-S1**: 🟢 experiencia, 🟢 técnico (tras el fix de `readyForAlta`) -- certificado end-to-end.
+
+### XLI.D — UCI-S2: mismo patrón que el hallazgo original de CARDIO-S1, pero peor
+
+Persona Elena, estudio de reformas -- 8.000€ facturados sin cobrar de 30.000€ totales. **5 de las 6 ramas de C3** (r1, r2, r4, r5, r6 -- todas menos r3, que ya tenía "Acción de reclamación") no tenían ninguna columna que `derivarAccionesConcretas` reconociera como acción, dejando vacío el checklist "⚡ Acciones concretas" de C4 pese a que el cliente rellena datos reales. Verificado en vivo antes de tocar el catálogo: con r4 (Pactar condiciones de pago) totalmente rellenada, el checklist de C4 no aparecía en absoluto.
+
+**Fix aplicado y verificado en vivo:** columna `Decisión` (opciones, contexto específico por rama) añadida a r1/r2/r4/r5/r6 -- mismo patrón que las 4 columnas de CARDIO-S1 (§XXXVII.E). Playwright confirmó las 5 ramas mostrando su decisión + contexto real (ej. "Exigir anticipo obligatorio — Reformas particulares"), cada una con su propio responsable, sin contaminación cruzada. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto UCI-S2**: 🟢 experiencia, 🟢 técnico (tras la columna Decisión) -- certificado end-to-end.
+
+### XLI.E — UCI-S3: el hallazgo más extenso de la sesión, y la familia "semáforo" desmitificada
+
+Persona Diego, asesoría -- factura 12.000€/mes con 9.000€ de costes directos (25% margen, objetivo >30%). Antes de auditar el catálogo, dos verificaciones en vivo sanas:
+
+- **`c2_herramienta: "margen"` anula a la familia genérica "semáforo"** -- UCI-S3 es el único síntoma del catálogo con "semáforo" en `capa_2_decision`, así que esa UI genérica no la usa nadie de verdad; el semáforo real vive dentro de `Capa2Margen`, clasificación 🟢/🟡/🔴 por ítem calculada en vivo. Confirmado con Diego: un ítem salió "🟡 Optimizable" (margen 17%), otro "🟢 Pilar" (margen 40%) -- cálculo correcto.
+- **Multi-selección C1→C2→C3 en modo margen**: 2 causas marcadas abren correctamente 2 frentes en la Sala de Control -- mismo tipo de verificación que el árbol de CARDIO-S3 (§XL), aquí también sana. Primer intento con clicks síncronos falló (patrón ya conocido de artefacto de test, descartado antes de reportar).
+
+**El hallazgo:** `r1, r2, r3, r5, r6` (todas menos `r4`) son tablas de cálculo puro -- precio mínimo viable, impacto de descuentos, repricing, comparativa de márgenes, rentabilidad por cliente -- sin ninguna columna de acción, pese a que cada tabla ya calcula el gap/problema exacto (ej. r1 calcula "Gap (€)" entre precio actual y precio mínimo viable, pero nunca pregunta qué hacer con ese gap). `r4` (tipo `"calculadora"`, herramienta de un solo cálculo, no tabla por filas) queda fuera de alcance: `derivarAccionesConcretas` (`TreatmentPage.tsx:6179`) excluye por diseño cualquier herramienta que no sea `"nativa"` -- límite arquitectónico más amplio que afecta a todas las calculadoras del catálogo, anotado sin fix, pendiente de decisión de producto sobre qué es una "acción concreta" ahí.
+
+**Fix aplicado y verificado en vivo:** columna `Decisión` añadida a r1/r2/r3/r5/r6. Playwright confirmó las 5 ramas con su decisión + contexto real (ej. "Subir precio ahora — Auditoría fiscal"), cada una con su propio responsable. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto UCI-S3**: 🟢 experiencia, 🟢 técnico (tras la columna Decisión) -- certificado end-to-end, con la única nota pendiente de producto sobre las herramientas "calculadora".
+
+### XLI.F — Cierre de la especialidad UCI
+
+3/3 síntomas auditados. Balance: 1 hallazgo crítico catálogo-entero (Alta sin objetivo alcanzado, 30 síntomas, UCI-S1), 10 columnas de acción añadidas entre UCI-S2 (5) y UCI-S3 (5), y 1 nota de producto pendiente (herramientas "calculadora" sin checklist de acción). PRs: `masesora-frontend#28` (código), `masframe#27` (docs + datos, este mismo).
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1618,3 +1672,4 @@ Con esto quedan auditados los 3 síntomas de CARDIO. Balance de la especialidad:
 *§XXXVIII añadida en sesión 9-10 ago 2026 — re-auditoría CARDIO-S1 en vivo con Playwright (caso real de Marta), 2 bugs más encontrados que la lectura de código no había cazado: DesglosadorInput mostrando caja de desglose confusa en las 30 síntomas (0/60 campos la necesitan de verdad), y acciones fantasma en el checklist de C4 por filas en blanco (14 columnas en 8 síntomas) -- este último introducido por el propio trabajo de §XXXVII, cazado antes de mergear*
 *§XXXIX añadida en sesión 10 ago 2026 — auditoría CARDIO-S2 completa (persona Javier/Metalatek): familia C2 "regla" confirmada sana, 2 bugs reales de C6 encontrados en vivo y cerrados -- falso "Has superado el síntoma" por redondeo (afecta a las 30 síntomas, fix roundKpiForCompare, masesora-frontend#26) y aviso contradictorio apuntando a C5 en modo estructural (afecta a 8 síntomas, fix mode-aware, masesora-frontend#27); CARDIO-S2 certificado end-to-end, veredicto 🟢🟢*
 *§XL añadida en sesión 10 ago 2026 (cont.) — auditoría CARDIO-S3 completa (persona Sonia): familia C2 "árbol" -- el riesgo #1 de la taxonomía del validator (pérdida de selección múltiple) confirmado ya resuelto en vivo (multi-"Sí" monta múltiples ramas en C3 correctamente), fórmula con InputA/InputB invertidos verificada sin problema (el algoritmo de C6 es direction-agnostic), sin nuevos bugs -- CARDIO-S3 certificado end-to-end sin fixes, veredicto 🟢🟢. Cierra la auditoría completa de la especialidad CARDIO (3/3 síntomas, 6 hallazgos reales cerrados en total)*
+*§XLI añadida en sesión 10 ago 2026 (cont.) — auditoría completa de UCI (3/3 síntomas). UCI-S1 (persona Marc, primera vez en modo financiero esta sesión): hallazgo crítico catálogo-entero -- el botón de Alta (readyForAlta) nunca comprobaba alcanzoObjetivo, solo mejoro + C4 completo, mostrando "¡Enhorabuena! Has superado..." con solo el 62% del camino al objetivo recorrido; bug preexistente (5 ago 2026), afecta a los 30 síntomas, fix verificado en vivo (masesora-frontend#28). UCI-S2 (persona Elena) y UCI-S3 (persona Diego, familia "margen" que anula a "semáforo" -- el semáforo real vive por-ítem en Capa2Margen): mismo patrón que el hallazgo original de CARDIO-S1, 5+5 ramas de C3 sin columna de acción, cerradas con el mismo fix de columna Decisión; UCI-S3.r4 (tipo calculadora) queda anotado como límite arquitectónico sin fix. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres*
