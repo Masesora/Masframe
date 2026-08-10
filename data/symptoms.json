@@ -1029,6 +1029,16 @@
                 "clave": "gap",
                 "formula": "precio_actual-precio_minimo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir precio ahora",
+                  "Renegociar coste directo",
+                  "Descontinuar servicio",
+                  "Precio ya viable"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -1099,6 +1109,16 @@
                 "clave": "mp",
                 "formula": "(pt-prc)*ud",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reducir descuento habitual",
+                  "Eliminar descuento a este segmento",
+                  "Mantener descuento (justificado)",
+                  "Renegociar coste de entrega"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -1160,6 +1180,16 @@
                 "clave": "gap_mes",
                 "formula": "(var_coste-var_precio)*uds",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir precio ya",
+                  "Subir precio gradualmente",
+                  "Buscar proveedor alternativo",
+                  "Absorber el coste (justificado)"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -1293,6 +1323,16 @@
                 "clave": "margen_neto",
                 "formula": "ventas*margen_bruto/100-coste_equipo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar esta línea",
+                  "Mantener",
+                  "Reestructurar o reducir",
+                  "Descontinuar línea"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -1361,6 +1401,16 @@
                   "Alto",
                   "Medio",
                   "Bajo"
+                ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener cliente",
+                  "Renegociar condiciones",
+                  "Reducir tiempo dedicado",
+                  "Desvincular cliente"
                 ]
               }
             ],
