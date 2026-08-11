@@ -10617,9 +10617,20 @@
               {
                 "etiqueta": "Fecha límite",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar antes de la fecha límite",
+                  "Formar a un segundo responsable en paralelo",
+                  "Aceptar el riesgo por ahora",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10749,9 +10760,20 @@
                 "clave": "horas_totales",
                 "formula": "horas*duracion",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener el acompañamiento",
+                  "Aumentar horas de mentoría",
+                  "Cerrar el acompañamiento (ya es autónomo)",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
