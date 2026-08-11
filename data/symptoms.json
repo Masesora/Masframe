@@ -6832,9 +6832,20 @@
                   "Pendiente"
                 ],
                 "contribuye_valor_si": "Aprobado"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Rediseñar ahora",
+                  "Programar para más adelante",
+                  "Delegar a diseñador externo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6869,9 +6880,20 @@
                   "No",
                   "En revision"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aplicar el texto mejorado ya",
+                  "Seguir puliendo antes de aplicar",
+                  "Mantener el texto actual",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Validacion con clientes",
@@ -7005,9 +7027,20 @@
               {
                 "etiqueta": "Responsable de contenido",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear plantilla ahora",
+                  "Delegar a diseñador",
+                  "Posponer al próximo trimestre",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Calendario de publicacion (semana tipo)",
@@ -7037,9 +7070,20 @@
                   "Pendiente"
                 ],
                 "contribuye_valor_si": "Publicado"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar según lo planificado",
+                  "Reprogramar",
+                  "Delegar a otra persona",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7150,9 +7194,20 @@
               {
                 "etiqueta": "Ultima actualizacion",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Completar esta sección ahora",
+                  "Revisar con el equipo antes de publicar",
+                  "Delegar a responsable de marca",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 7
+            "filas_iniciales": 7,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Distribucion y adopcion por el equipo",
@@ -7181,9 +7236,20 @@
               {
                 "etiqueta": "Dudas o inconsistencias reportadas",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reforzar formación con esta persona",
+                  "Reenviar el manual",
+                  "Aclarar dudas en próxima reunión",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
