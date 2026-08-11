@@ -7864,9 +7864,20 @@
                 "clave": "horas_mes",
                 "formula": "frec*tiempo*4.33",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear protocolo de urgencia real",
+                  "Formar al equipo para filtrar peticiones",
+                  "Hablar con el origen de la urgencia",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7968,9 +7979,20 @@
               {
                 "etiqueta": "Solución implementada",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bloquear franjas sin interrupciones",
+                  "Filtrar/redirigir ese tipo de interrupción",
+                  "Formar al equipo para no generarlas",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8027,9 +8049,20 @@
                 "clave": "horas_mes",
                 "formula": "frec*horas",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Implementar la medida preventiva ya",
+                  "Delegar la gestión de este tipo de crisis",
+                  "Documentar el protocolo para la próxima vez",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8074,9 +8107,20 @@
                   "Planificado",
                   "Pendiente"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar este ritual ya",
+                  "Planificarlo para el próximo mes",
+                  "Asignar quién lo lidera",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
