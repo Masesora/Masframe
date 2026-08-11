@@ -5299,9 +5299,20 @@
                 "clave": "margen_pct",
                 "formula": "margen_bruto*100/fact",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener",
+                  "Subir precio",
+                  "Reducir coste",
+                  "Eliminar del catálogo"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5472,9 +5483,20 @@
                 "clave": "impacto_neto",
                 "formula": "ingresos_nuevos-ingresos_actuales",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir el precio",
+                  "Mantener el precio actual",
+                  "Subir menos de lo simulado",
+                  "Necesito más datos"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5536,9 +5558,20 @@
                 "clave": "fact_cliente",
                 "formula": "fact/clientes",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Especializarse en este servicio",
+                  "Mantener en el catálogo",
+                  "Reducir inversión",
+                  "Retirar del catálogo"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
