@@ -1602,9 +1602,20 @@
                 "clave": "coste_mensual",
                 "formula": "frec*dur*coste_hora*4.33",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Rediseñar el proceso",
+                  "Añadir recursos",
+                  "Delegar a otra persona/sistema",
+                  "Aceptar el coste por ahora"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
