@@ -7785,9 +7785,20 @@
                   "Publicado"
                 ],
                 "clave": "estado"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar según lo planificado",
+                  "Reprogramar para otra semana",
+                  "Delegar a otra persona del equipo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 8
+            "filas_iniciales": 8,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7822,9 +7833,20 @@
                   "Parcialmente",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aplicar ya en todos los canales",
+                  "Formar al equipo en este parámetro",
+                  "Revisar definición antes de aplicar",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7926,9 +7948,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aprobar mensaje y usarlo ya",
+                  "Validar con más clientes antes de usar",
+                  "Reescribir el mensaje",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
