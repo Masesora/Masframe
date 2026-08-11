@@ -5661,9 +5661,20 @@
               {
                 "etiqueta": "Objetivo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Incorporarlo al cuadro de mando",
+                  "Necesita definir mejor cómo medirlo",
+                  "Descartarlo, no es representativo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5789,9 +5800,20 @@
                 "clave": "media",
                 "formula": "(s1+s2+s3+s4)/4",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener en el cuadro de mando",
+                  "Ajustar el objetivo de esta métrica",
+                  "Sustituir por otra métrica",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
