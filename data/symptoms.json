@@ -8106,9 +8106,20 @@
                 "clave": "horas_mes",
                 "formula": "frec*tiempo*4.33",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear protocolo de urgencia real",
+                  "Formar al equipo para filtrar peticiones",
+                  "Hablar con el origen de la urgencia",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8210,9 +8221,20 @@
               {
                 "etiqueta": "Solución implementada",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bloquear franjas sin interrupciones",
+                  "Filtrar/redirigir ese tipo de interrupción",
+                  "Formar al equipo para no generarlas",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8269,9 +8291,20 @@
                 "clave": "horas_mes",
                 "formula": "frec*horas",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Implementar la medida preventiva ya",
+                  "Delegar la gestión de este tipo de crisis",
+                  "Documentar el protocolo para la próxima vez",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8316,9 +8349,20 @@
                   "Planificado",
                   "Pendiente"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar este ritual ya",
+                  "Planificarlo para el próximo mes",
+                  "Asignar quién lo lidera",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -8412,9 +8456,20 @@
               {
                 "etiqueta": "Saturación (1-5)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar a otro rol",
+                  "Adaptar el rol actual a su perfil",
+                  "Mantener y observar",
+                  "Encaja bien, sin cambios"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8443,9 +8498,20 @@
               {
                 "etiqueta": "Reasignar a",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar ya",
+                  "Reasignar en el próximo trimestre",
+                  "Mantener por ahora",
+                  "Ya está bien asignada"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8526,9 +8592,20 @@
               {
                 "etiqueta": "Contratar el perfil que el rol necesita",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Adaptar el rol a la persona",
+                  "Contratar el perfil que hace falta",
+                  "Combinar ambas",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8566,9 +8643,20 @@
               {
                 "etiqueta": "Coste estimado (€/mes)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Externalizar ya",
+                  "Formar/contratar perfil interno",
+                  "Posponer la decisión",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -8732,7 +8820,7 @@
             "titulo": "Qué tareas adormecen y cómo introducir reto",
             "columnas": [
               {
-                "etiqueta": "Tarea repetitiva / rutinaria",
+                "etiqueta": "Actividad repetitiva / rutinaria",
                 "tipo": "texto"
               },
               {
@@ -8759,9 +8847,20 @@
                   "En prueba",
                   "Implementada"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Implementar la rotación ya",
+                  "Probarla un mes",
+                  "Descartar por ahora",
+                  "Ya aporta suficiente reto"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8811,9 +8910,20 @@
                   "Bajo",
                   "Sin medir"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reconocerlo ya",
+                  "Programar el reconocimiento",
+                  "Delegar el reconocimiento al responsable directo",
+                  "No requiere reconocimiento adicional"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8851,9 +8961,20 @@
               {
                 "etiqueta": "Próxima revisión",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Agendar la sesión ya",
+                  "Comunicarlo en la próxima reunión de equipo",
+                  "Delegar la comunicación al mando directo",
+                  "Ya está comunicado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
