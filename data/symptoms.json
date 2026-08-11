@@ -4821,9 +4821,20 @@
                 "clave": "pct_estr",
                 "formula": "h_estr*100/total_h",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Proteger mejor el bloque la próxima semana",
+                  "Delegar interrupciones recurrentes",
+                  "Mantener el plan actual",
+                  "Ajustar el bloque"
+                ]
               }
             ],
-            "filas_iniciales": 20
+            "filas_iniciales": 20,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -4984,9 +4995,20 @@
               {
                 "etiqueta": "Nº interrupciones",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Repetir la misma prioridad",
+                  "Reformular la prioridad",
+                  "Proteger mejor el tiempo",
+                  "Ya completada, sin cambios"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           },
           {
             "titulo": "2. Análisis tipos de interrupción",
@@ -5015,9 +5037,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Eliminar esta interrupción",
+                  "Delegar esta interrupción",
+                  "Aceptarla (no evitable)",
+                  "Crear un filtro para bloquearla"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
