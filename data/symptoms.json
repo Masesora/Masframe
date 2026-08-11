@@ -8214,9 +8214,20 @@
               {
                 "etiqueta": "Saturación (1-5)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar a otro rol",
+                  "Adaptar el rol actual a su perfil",
+                  "Mantener y observar",
+                  "Encaja bien, sin cambios"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8245,9 +8256,20 @@
               {
                 "etiqueta": "Reasignar a",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar ya",
+                  "Reasignar en el próximo trimestre",
+                  "Mantener por ahora",
+                  "Ya está bien asignada"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8328,9 +8350,20 @@
               {
                 "etiqueta": "Contratar el perfil que el rol necesita",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Adaptar el rol a la persona",
+                  "Contratar el perfil que hace falta",
+                  "Combinar ambas",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8368,9 +8401,20 @@
               {
                 "etiqueta": "Coste estimado (€/mes)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Externalizar ya",
+                  "Formar/contratar perfil interno",
+                  "Posponer la decisión",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       }
