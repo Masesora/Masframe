@@ -2507,9 +2507,20 @@
                 "clave": "coste_mensual",
                 "formula": "ocurr*retrabajo*coste_hora",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar la causa raíz",
+                  "Crear checklist de verificación en esa fase",
+                  "Formar al equipo en ese error",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2555,9 +2566,20 @@
                 "clave": "coste",
                 "formula": "horas*coste_hora",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Repercutir el coste al cliente cuando aplique",
+                  "Atacar la causa raíz de fondo",
+                  "Aceptar el coste como parte del servicio",
+                  "Ya está resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2599,9 +2621,20 @@
                 "clave": "tiempo_fallo",
                 "formula": "(tiempo*4.33)/fallos",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear checklist de salida en esa fase",
+                  "Rediseñar esa fase del proceso",
+                  "Reforzar la revisión en esa fase",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2660,9 +2693,20 @@
                 "clave": "coste",
                 "formula": "horas*coste_hora",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Contactar al cliente para cerrar el tema",
+                  "Cerrar el origen para que no se repita",
+                  "Compensar al cliente",
+                  "Ya está resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2709,9 +2753,20 @@
                 "clave": "pct_error",
                 "formula": "errores*100/entregas",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reforzar la formación de esa persona",
+                  "Ajustar su carga de trabajo",
+                  "Revisar si el protocolo es claro",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
