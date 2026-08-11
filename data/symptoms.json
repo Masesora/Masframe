@@ -7367,9 +7367,20 @@
                   "No",
                   "Candidato"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Confirmar como producto estrella y potenciar",
+                  "Seguir observando este trimestre",
+                  "Descartar como candidato",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7631,9 +7642,20 @@
                 "clave": "desviacion",
                 "formula": "ingresos_real-ingresos_obj",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener objetivo de mezcla",
+                  "Ajustar objetivo al alza",
+                  "Reforzar comercialmente este servicio",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       }
