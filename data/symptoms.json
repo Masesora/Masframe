@@ -2074,9 +2074,20 @@
                   "Media",
                   "Baja"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Estandarizar formulario de entrada",
+                  "Exigir info completa antes de aceptar",
+                  "Delegar el filtro a otra persona",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2131,9 +2142,20 @@
                 "clave": "horas_espera",
                 "formula": "frec*espera*4.33",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear protocolo escrito",
+                  "Reducir tiempo de espera acordado",
+                  "Escalar a dirección",
+                  "Ya funciona bien"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2306,9 +2328,20 @@
                   "Sí",
                   "Podría evitarse"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reforzar la revisión",
+                  "Simplificar el proceso",
+                  "Formar al responsable",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2346,9 +2379,20 @@
                 "clave": "horas_sem",
                 "formula": "contactos*tiempo_medio/60",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reducir frecuencia de contacto",
+                  "Cambiar de canal",
+                  "Automatizar respuestas frecuentes",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
