@@ -8578,7 +8578,7 @@
             "titulo": "Qué tareas adormecen y cómo introducir reto",
             "columnas": [
               {
-                "etiqueta": "Tarea repetitiva / rutinaria",
+                "etiqueta": "Actividad repetitiva / rutinaria",
                 "tipo": "texto"
               },
               {
@@ -8605,9 +8605,20 @@
                   "En prueba",
                   "Implementada"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Implementar la rotación ya",
+                  "Probarla un mes",
+                  "Descartar por ahora",
+                  "Ya aporta suficiente reto"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8657,9 +8668,20 @@
                   "Bajo",
                   "Sin medir"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reconocerlo ya",
+                  "Programar el reconocimiento",
+                  "Delegar el reconocimiento al responsable directo",
+                  "No requiere reconocimiento adicional"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8697,9 +8719,20 @@
               {
                 "etiqueta": "Próxima revisión",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Agendar la sesión ya",
+                  "Comunicarlo en la próxima reunión de equipo",
+                  "Delegar la comunicación al mando directo",
+                  "Ya está comunicado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
