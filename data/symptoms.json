@@ -702,7 +702,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -747,7 +748,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -831,7 +833,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -882,7 +885,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -915,7 +919,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -1041,7 +1046,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1121,7 +1127,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1192,7 +1199,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1335,7 +1343,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1414,7 +1423,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -2857,7 +2867,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2924,7 +2935,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -3051,7 +3063,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -3110,7 +3123,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
