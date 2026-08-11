@@ -4221,9 +4221,20 @@
                 "clave": "gap",
                 "formula": "objetivo-hoy",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Definir plan de acción",
+                  "Revisar el objetivo",
+                  "Delegar el seguimiento",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 7
+            "filas_iniciales": 7,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -4262,9 +4273,20 @@
                 "clave": "impacto_mes",
                 "formula": "impacto/plazo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar ya",
+                  "Planificar para más adelante",
+                  "Descartar",
+                  "Delegar a alguien del equipo"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -4343,9 +4365,20 @@
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Objetivo 2",
@@ -4370,9 +4403,20 @@
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Objetivo 3",
@@ -4397,9 +4441,20 @@
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Histórico trimestral",
@@ -4479,9 +4534,20 @@
                 "clave": "pct_estr",
                 "formula": "h_estr*100/total_h",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bloquear más tiempo la próxima semana",
+                  "Delegar tareas operativas",
+                  "Mantener el ritmo actual",
+                  "Necesito ayuda para reorganizar"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           },
           {
             "titulo": "2. Registro de sesiones estratégicas",
