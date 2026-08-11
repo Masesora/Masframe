@@ -1649,6 +1649,46 @@ Persona Diego, asesoría -- factura 12.000€/mes con 9.000€ de costes directo
 
 ---
 
+## XLII. SESIÓN 10-11 AGO 2026 — Renderer de tarjeta para C3: de bug de UX a pieza del framework
+
+Tras cerrar UCI, debate de diseño sobre por qué las tablas nativas de C3 "se sienten como deberes en un Excel". Conclusión tras varias vueltas: no es estético -- **el cliente llama siempre al CC porque no sabe usar una tabla de N columnas sin que se la expliquen**, y el protocolo no se sostiene solo si depende de esa llamada. Eso sí es sustancial para la beta; una tarjeta más bonita por sí sola no lo era.
+
+### XLII.A — Decisión de alcance: renderer genérico, no rediseño caso a caso
+
+Con 114 herramientas en el catálogo, rediseñar cada una a mano no escala. Se descarta también "tabla → conversación proactiva" (explorado y corregido en el propio debate: eso es **seguimiento post-Alta**, fuera de las 7 capas, no una forma nueva de C3). La solución: un modo de vista opt-in, `vista?: "tabla" | "tarjeta"` en `SeccionHerramientaConfig` -- mismas columnas, mismo dato, solo cambia el contenedor. Sin declarar, cero cambio de comportamiento (150+ secciones existentes intactas).
+
+### XLII.B — Construido y verificado en vivo
+
+`SeccionTablaNativa` (`TreatmentPage.tsx`) gana una rama de render alternativa: cada fila se pinta como tarjeta (campos etiquetados uno debajo de otro) y las columnas `opciones`/`decision` -- la Decisión que antes vivía perdida en la última columna -- pasan a ser botones grandes. Comparte `addRow`/`removeRow`/`updateCell`/`veredicto`/`entidad_compartida` con la tabla, cero lógica duplicada. PR: `masesora-frontend#30`.
+
+Activado en las 14 ramas que ya tenían columna Decisión de esta sesión: CARDIO-S1 (r1/r2/r4/r5), UCI-S2 (r1/r2/r4/r5/r6), UCI-S3 (r1/r2/r3/r5/r6) -- CARDIO-S1.r5 se añadió en un segundo commit porque en el primero se excluyó a propósito (otra sesión la está rediseñando a `pipeline` con motor de referidos + WhatsApp; se confirmó que seguía siendo `nativa` sin conflicto antes de activarla). PR: `masframe#29`.
+
+Verificado en vivo con Playwright (UCI-S2/persona Elena, CARDIO-S1/persona Marta): ramas con `vista:"tarjeta"` sin `<table>` en el DOM, botones de Decisión clicables directamente; ramas de control sin el flag, sin regresión.
+
+### XLII.C — Fuera de alcance, anotado en backlog
+
+Sugerencia automática de qué botón marcar (pre-seleccionar la Decisión según el resto de datos de la fila): necesita una regla de negocio distinta por cada columna, no algo que deba inventar sin criterio de producto -- fast-follow, no bloqueante. Acuerdo con Maite: de aquí en adelante, cada auditoría nueva que añada una columna Decisión activa `vista:"tarjeta"` en el mismo movimiento, en vez de hacerlo en dos pasadas separadas.
+
+---
+
+## XLIII. SESIÓN 11 AGO 2026 — Auditoría NEURO-S1, primera del resto del catálogo
+
+Especialidad NEURO (Neurología Estratégica), síntoma NEURO-S1 "Amnesia Estratégica" -- primera auditoría tras cerrar CARDIO y UCI, ya con el renderer de tarjeta disponible desde el primer movimiento (fundido con la auditoría, según lo acordado en §XLII.C).
+
+Persona: Fernando, fabricante de muebles a medida, 12 empleados, factura 25.000€/mes sin objetivo de facturación a 12 meses definido -- el equipo interpreta las prioridades cada uno a su manera. C2 es matriz "Urgente vs Importante", mismo mecanismo ya auditado en CARDIO-S1/UCI-S1/S2.
+
+**Mismo patrón que CARDIO-S1/UCI-S2/S3:** 4 de las 6 ramas de C3 (r1 Canvas de visión, r2 Palancas de valor, r4 OKRs anuales, r5 Auditoría de tiempo estratégico) medían sin preguntar qué hacer. r3 (Tracker de alineación) y r6 (Revisión trimestral) ya tenían columna de acción propia.
+
+Columna `Decisión` añadida, contexto específico por rama -- incluye el primer caso multi-sección de la sesión: r4 (OKRs) tiene 4 secciones ("Objetivo 1/2/3" + "Histórico trimestral"), Decisión solo en las 3 de objetivo, no en el histórico (tracker de tendencia, no punto de decisión); r5 tiene 2 secciones, Decisión solo en "Registro semanal de tiempo" (la de sesiones estratégicas ya tiene su propia columna de estado). `vista:"tarjeta"` activada en las mismas secciones exactas -- primera vez verificando en vivo el caso mixto (una rama con secciones en tarjeta y secciones en tabla a la vez): confirmado con precisión (r4: "Objetivo 1" en tarjeta con Decisión en botones, exactamente 1 `<table>` en pantalla -- el Histórico intacto).
+
+Verificado en vivo con Playwright (persona Fernando): las 4 ramas muestran su decisión + contexto real en C4, cada una con su propio responsable, sin contaminación cruzada. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto NEURO-S1**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+Auditoría de NEURO en curso -- siguen NEURO-S2 y NEURO-S3.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1676,3 +1716,5 @@ Persona Diego, asesoría -- factura 12.000€/mes con 9.000€ de costes directo
 *§XXXIX añadida en sesión 10 ago 2026 — auditoría CARDIO-S2 completa (persona Javier/Metalatek): familia C2 "regla" confirmada sana, 2 bugs reales de C6 encontrados en vivo y cerrados -- falso "Has superado el síntoma" por redondeo (afecta a las 30 síntomas, fix roundKpiForCompare, masesora-frontend#26) y aviso contradictorio apuntando a C5 en modo estructural (afecta a 8 síntomas, fix mode-aware, masesora-frontend#27); CARDIO-S2 certificado end-to-end, veredicto 🟢🟢*
 *§XL añadida en sesión 10 ago 2026 (cont.) — auditoría CARDIO-S3 completa (persona Sonia): familia C2 "árbol" -- el riesgo #1 de la taxonomía del validator (pérdida de selección múltiple) confirmado ya resuelto en vivo (multi-"Sí" monta múltiples ramas en C3 correctamente), fórmula con InputA/InputB invertidos verificada sin problema (el algoritmo de C6 es direction-agnostic), sin nuevos bugs -- CARDIO-S3 certificado end-to-end sin fixes, veredicto 🟢🟢. Cierra la auditoría completa de la especialidad CARDIO (3/3 síntomas, 6 hallazgos reales cerrados en total)*
 *§XLI añadida en sesión 10 ago 2026 (cont.) — auditoría completa de UCI (3/3 síntomas). UCI-S1 (persona Marc, primera vez en modo financiero esta sesión): hallazgo crítico catálogo-entero -- el botón de Alta (readyForAlta) nunca comprobaba alcanzoObjetivo, solo mejoro + C4 completo, mostrando "¡Enhorabuena! Has superado..." con solo el 62% del camino al objetivo recorrido; bug preexistente (5 ago 2026), afecta a los 30 síntomas, fix verificado en vivo (masesora-frontend#28). UCI-S2 (persona Elena) y UCI-S3 (persona Diego, familia "margen" que anula a "semáforo" -- el semáforo real vive por-ítem en Capa2Margen): mismo patrón que el hallazgo original de CARDIO-S1, 5+5 ramas de C3 sin columna de acción, cerradas con el mismo fix de columna Decisión; UCI-S3.r4 (tipo calculadora) queda anotado como límite arquitectónico sin fix. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres*
+*§XLII añadida en sesión 10-11 ago 2026 — renderer de tarjeta para C3: bug de UX real (el cliente llama siempre al CC porque no sabe usar una tabla sin que se la expliquen, el protocolo no se sostiene solo), no cosmético. vista:"tarjeta" opt-in en SeccionHerramientaConfig, cero riesgo para las secciones que no lo activen, construido y activado en las 14 ramas ya auditadas (CARDIO-S1, UCI-S2, UCI-S3) -- masesora-frontend#30, masframe#29. Sugerencia automática de Decisión queda en backlog (necesita reglas de negocio por columna). Acuerdo: de aquí en adelante, auditoría y renderer se aplican juntos, no en pasadas separadas*
+*§XLIII añadida en sesión 11 ago 2026 — auditoría NEURO-S1 (persona Fernando), primera del resto del catálogo tras cerrar CARDIO/UCI: mismo patrón de 4/6 ramas de C3 sin columna de acción, cerrado con Decisión + vista:tarjeta ya en el mismo movimiento -- primer caso multi-sección verificado en vivo (r4 OKRs: 3 secciones tarjeta + 1 tabla intacta a la vez). Certificado end-to-end, veredicto 🟢🟢. Auditoría de NEURO en curso (quedan NEURO-S2/S3)*
