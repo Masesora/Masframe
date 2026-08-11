@@ -1713,6 +1713,34 @@ Verificado en vivo con Playwright (persona Nuria): r1/r3/r4 sin `<table>` en el 
 
 ---
 
+## XLIV. SESIÓN 11 AGO 2026 — Auditoría UNI (Unidad de Procesos): el segundo bug estructural de la sesión
+
+Especialidad UNI (Unidad de Procesos). UNI-S1 (Esclerosis Operativa, persona Antonio/Taller Mecánico Ruiz): mismo patrón de columna de acción faltante, solo r2 (Identificación de cuellos de botella) de las 6 ramas -- 5/6 ya tenían acción propia. Certificado end-to-end, 🟢🟢.
+
+### XLIV.A — UNI-S2: el segundo bug estructural de la sesión, familia "carga" con puerta C2→C3 muerta
+
+Persona Elena, Estudio Bloom Arquitectura -- KPI de entregas a plazo, C2 es "Análisis de Carga" (familia `carga`, un solo eje de puntuación vía Stepper, distinta de la matriz de dos ejes). Al intentar verificar en vivo el patrón habitual de columnas de acción (r1 Auditoría de entrada, r2 Coordinación entre áreas, r5 Control de calidad, r6 Comunicación con cliente -- 4/6 sin acción, r3/r4 ya la tenían), se encontró un **bug bloqueante, no cosmético**: la puerta de calidad de C2 (`TreatmentPage.tsx` ~9150) exigía puntuar `eje_x` Y `eje_y`, pero el renderer de "carga" (~3255-3317) solo escribe `eje_x` -- `eje_y` nunca se toca en este uiType. Resultado: **la puerta nunca se abría, sin importar lo que hiciera el cliente**, confirmado en vivo (Stepper subido a 4/5 en los 4 ítems seleccionados, "Ajusta al menos un elemento para continuar" seguía bloqueando "Confirmo datos"). Afecta también a OPE-S3 (única otra rama del catálogo con familia carga/capacidad).
+
+Fix: excepción para `"carga"`/`"capacidad"` en la puerta de C2 (mismo patrón que las excepciones ya existentes de árbol/regla), basta con puntuar `eje_x` en al menos un elemento -- `masesora-frontend#31`. Verificado en vivo tras el fix: C3 abre correctamente ("4 FRENTES ABIERTOS"), las 4 ramas con su Decisión + responsable propio sin contaminación cruzada, C4 poblado bien. Columnas Decisión + `vista:"tarjeta"` aplicadas en las 4 ramas en el mismo movimiento.
+
+**Veredicto UNI-S2**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end (tras el fix).
+
+### XLIV.B — UNI-S3: Fuga de Calidad Crónica
+
+Persona Javier, Imprenta Digital Prisma -- C2 matriz "Impacto vs Esfuerzo", mecanismo ya auditado repetidas veces. 5 de las 6 ramas (r1 Análisis de frecuencia de errores, r2 Coste de retrabajo, r3 Origen del fallo por fase, r4 Impacto externo: quejas de cliente, r5 Consistencia de entregas por persona) sin columna de acción real; r6 (Protocolo de verificación previa a entrega) ya la tenía -- su columna "Paso del proceso" (texto libre) ES la acción de cada fila del checklist, confirmado revisando `derivarAccionesConcretas` antes de descartarla como falso positivo del regex.
+
+Verificado en vivo con Playwright (persona Javier): 5 frentes abiertos en C3, cada uno con su Decisión + responsable propio sin contaminación cruzada, C4 poblado correctamente. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto UNI-S3**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIV.C — Cierre de la especialidad UNI, y paralelización de la auditoría
+
+3/3 síntomas auditados. Balance: 10 columnas de acción añadidas (1 en UNI-S1, 4 en UNI-S2, 5 en UNI-S3) + 1 bug estructural real cerrado (puerta muerta de la familia "carga", masesora-frontend#31, afecta también a OPE-S3). Veredicto 🟢🟢 en los tres.
+
+A partir de aquí, y a petición explícita del usuario ("más agentes, menos dependencia de mí"), las 6 especialidades restantes del catálogo (CLI, CIR, PSI, RES, TER, OPE -- 18 síntomas) se auditan en paralelo con subagentes autónomos, uno por especialidad, cada uno en su propio worktree y su propio clon de frontend/mock/puertos, aplicando el mismo patrón mecánico documentado en §XLII-§XLIV y con la misma instrucción de no arreglar bugs estructurales por su cuenta -- solo reportarlos, con el mismo rigor que el bug de "carga", para decidir el fix centralizadamente.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1742,3 +1770,4 @@ Verificado en vivo con Playwright (persona Nuria): r1/r3/r4 sin `<table>` en el 
 *§XLI añadida en sesión 10 ago 2026 (cont.) — auditoría completa de UCI (3/3 síntomas). UCI-S1 (persona Marc, primera vez en modo financiero esta sesión): hallazgo crítico catálogo-entero -- el botón de Alta (readyForAlta) nunca comprobaba alcanzoObjetivo, solo mejoro + C4 completo, mostrando "¡Enhorabuena! Has superado..." con solo el 62% del camino al objetivo recorrido; bug preexistente (5 ago 2026), afecta a los 30 síntomas, fix verificado en vivo (masesora-frontend#28). UCI-S2 (persona Elena) y UCI-S3 (persona Diego, familia "margen" que anula a "semáforo" -- el semáforo real vive por-ítem en Capa2Margen): mismo patrón que el hallazgo original de CARDIO-S1, 5+5 ramas de C3 sin columna de acción, cerradas con el mismo fix de columna Decisión; UCI-S3.r4 (tipo calculadora) queda anotado como límite arquitectónico sin fix. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres*
 *§XLII añadida en sesión 10-11 ago 2026 — renderer de tarjeta para C3: bug de UX real (el cliente llama siempre al CC porque no sabe usar una tabla sin que se la expliquen, el protocolo no se sostiene solo), no cosmético. vista:"tarjeta" opt-in en SeccionHerramientaConfig, cero riesgo para las secciones que no lo activen, construido y activado en las 14 ramas ya auditadas (CARDIO-S1, UCI-S2, UCI-S3) -- masesora-frontend#30, masframe#29. Sugerencia automática de Decisión queda en backlog (necesita reglas de negocio por columna). Acuerdo: de aquí en adelante, auditoría y renderer se aplican juntos, no en pasadas separadas*
 *§XLIII añadida en sesión 11 ago 2026 — auditoría completa de NEURO (3/3 síntomas). NEURO-S1 (persona Fernando, 4/6 ramas afectadas, primer caso multi-sección con mezcla tarjeta/tabla en la misma rama), NEURO-S2 (persona Rosa, solo 2/6, el más sano hasta ahora) y NEURO-S3 (persona Nuria, árbol de decisiones re-verificado sano, 3/6 nativa afectadas + 3 "calculadora" fuera de alcance por el mismo límite arquitectónico de UCI-S3.r4): mismo patrón de columnas de acción faltantes en los 3, cerrado con Decisión + vista:tarjeta fundidas en el mismo movimiento desde el primero. 10 columnas de acción añadidas en total, sin bugs de corrección nuevos. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres -- cierra la especialidad NEURO*
+*§XLIV añadida en sesión 11 ago 2026 (cont.) — auditoría completa de UNI (3/3 síntomas). UNI-S1 (persona Antonio, 1/6 ramas afectadas) y UNI-S3 (persona Javier, 5/6 afectadas, r6 confirmado ya-OK vía `derivarAccionesConcretas` antes de descartarlo) siguen el patrón habitual. UNI-S2 (persona Elena) trae el segundo bug estructural real de la sesión: la puerta C2→C3 de la familia "carga" nunca se abría (exigía puntuar 2 ejes cuando el renderer solo usa 1) -- afecta también a OPE-S3, fix verificado en vivo y pusheado (masesora-frontend#31). 10 columnas de acción + 1 bug estructural cerrados, veredicto 🟢🟢 en los tres -- cierra la especialidad UNI. A partir de aquí, las 6 especialidades restantes (CLI, CIR, PSI, RES, TER, OPE) se auditan en paralelo con subagentes autónomos, uno por especialidad, a petición explícita del usuario*
