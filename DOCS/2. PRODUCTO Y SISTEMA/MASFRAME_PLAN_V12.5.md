@@ -1695,7 +1695,21 @@ Verificado en vivo con Playwright (persona Rosa): r1 y ambas secciones de r4 sin
 
 **Veredicto NEURO-S2**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
 
-Auditoría de NEURO en curso -- sigue NEURO-S3.
+### XLIII.B — NEURO-S3: árbol re-verificado sano, límite de "calculadora" confirmado por segunda vez
+
+Persona Nuria, Estudio Creativo Vega -- 10% de margen neto sobre facturación, objetivo >15%. C2 es Árbol de Decisiones -- multi-selección re-verificada sana (3 "Sí" abren correctamente 3 frentes en la Sala de Control, mismo mecanismo ya confirmado en CARDIO-S3 §XL).
+
+De las 6 ramas, solo 3 son `nativa` (r1 Análisis de servicios por margen, r3 Simulador de subida de precios, r4 Índice de especialización) y las 3 sin columna de acción. Las otras 3 (r2, r5, r6) son `calculadora` y quedan fuera de alcance -- mismo límite arquitectónico ya documentado en UCI-S3.r4 (§XLI.E): `derivarAccionesConcretas` excluye por diseño cualquier herramienta que no sea `nativa`.
+
+Columnas añadidas: r1 (Mantener / Subir precio / Reducir coste / Eliminar del catálogo); r3 (Subir el precio / Mantener el precio actual / Subir menos de lo simulado / Necesito más datos); r4 (Especializarse en este servicio / Mantener en el catálogo / Reducir inversión / Retirar del catálogo). `vista:"tarjeta"` en las 3.
+
+Verificado en vivo con Playwright (persona Nuria): r1/r3/r4 sin `<table>` en el DOM, los 3 botones de Decisión clicables. C4 muestra las 3 decisiones reales, cada rama con su propio responsable, sin contaminación cruzada. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto NEURO-S3**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIII.C — Cierre de la especialidad NEURO
+
+3/3 síntomas auditados. Balance: 10 columnas de acción añadidas (4 en NEURO-S1, 3 en NEURO-S2, 3 en NEURO-S3), sin bugs de corrección nuevos (a diferencia de CARDIO/UCI, aquí el catálogo estaba técnicamente sano salvo por el patrón de columnas de acción faltantes). Primer ciclo completo con auditoría + `vista:"tarjeta"` fundidas en el mismo movimiento, incluyendo el primer caso multi-sección con mezcla tarjeta/tabla en la misma rama (NEURO-S1.r4). Veredicto 🟢🟢 en los 3.
 
 ---
 
@@ -1727,4 +1741,4 @@ Auditoría de NEURO en curso -- sigue NEURO-S3.
 *§XL añadida en sesión 10 ago 2026 (cont.) — auditoría CARDIO-S3 completa (persona Sonia): familia C2 "árbol" -- el riesgo #1 de la taxonomía del validator (pérdida de selección múltiple) confirmado ya resuelto en vivo (multi-"Sí" monta múltiples ramas en C3 correctamente), fórmula con InputA/InputB invertidos verificada sin problema (el algoritmo de C6 es direction-agnostic), sin nuevos bugs -- CARDIO-S3 certificado end-to-end sin fixes, veredicto 🟢🟢. Cierra la auditoría completa de la especialidad CARDIO (3/3 síntomas, 6 hallazgos reales cerrados en total)*
 *§XLI añadida en sesión 10 ago 2026 (cont.) — auditoría completa de UCI (3/3 síntomas). UCI-S1 (persona Marc, primera vez en modo financiero esta sesión): hallazgo crítico catálogo-entero -- el botón de Alta (readyForAlta) nunca comprobaba alcanzoObjetivo, solo mejoro + C4 completo, mostrando "¡Enhorabuena! Has superado..." con solo el 62% del camino al objetivo recorrido; bug preexistente (5 ago 2026), afecta a los 30 síntomas, fix verificado en vivo (masesora-frontend#28). UCI-S2 (persona Elena) y UCI-S3 (persona Diego, familia "margen" que anula a "semáforo" -- el semáforo real vive por-ítem en Capa2Margen): mismo patrón que el hallazgo original de CARDIO-S1, 5+5 ramas de C3 sin columna de acción, cerradas con el mismo fix de columna Decisión; UCI-S3.r4 (tipo calculadora) queda anotado como límite arquitectónico sin fix. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres*
 *§XLII añadida en sesión 10-11 ago 2026 — renderer de tarjeta para C3: bug de UX real (el cliente llama siempre al CC porque no sabe usar una tabla sin que se la expliquen, el protocolo no se sostiene solo), no cosmético. vista:"tarjeta" opt-in en SeccionHerramientaConfig, cero riesgo para las secciones que no lo activen, construido y activado en las 14 ramas ya auditadas (CARDIO-S1, UCI-S2, UCI-S3) -- masesora-frontend#30, masframe#29. Sugerencia automática de Decisión queda en backlog (necesita reglas de negocio por columna). Acuerdo: de aquí en adelante, auditoría y renderer se aplican juntos, no en pasadas separadas*
-*§XLIII añadida en sesión 11 ago 2026 — auditoría NEURO-S1 (persona Fernando) y NEURO-S2 (persona Rosa), primeros 2/3 del resto del catálogo tras cerrar CARDIO/UCI: mismo patrón de ramas de C3 sin columna de acción (4/6 en NEURO-S1, primer caso multi-sección verificado en vivo con r4 OKRs; solo 2/6 en NEURO-S2, el más sano hasta ahora), cerrado con Decisión + vista:tarjeta ya en el mismo movimiento en ambos. Certificados end-to-end, veredicto 🟢🟢 en los dos. Auditoría de NEURO en curso (queda NEURO-S3)*
+*§XLIII añadida en sesión 11 ago 2026 — auditoría completa de NEURO (3/3 síntomas). NEURO-S1 (persona Fernando, 4/6 ramas afectadas, primer caso multi-sección con mezcla tarjeta/tabla en la misma rama), NEURO-S2 (persona Rosa, solo 2/6, el más sano hasta ahora) y NEURO-S3 (persona Nuria, árbol de decisiones re-verificado sano, 3/6 nativa afectadas + 3 "calculadora" fuera de alcance por el mismo límite arquitectónico de UCI-S3.r4): mismo patrón de columnas de acción faltantes en los 3, cerrado con Decisión + vista:tarjeta fundidas en el mismo movimiento desde el primero. 10 columnas de acción añadidas en total, sin bugs de corrección nuevos. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres -- cierra la especialidad NEURO*
