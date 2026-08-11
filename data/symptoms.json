@@ -11001,9 +11001,20 @@
               {
                 "etiqueta": "Fecha límite",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar antes de la fecha límite",
+                  "Probarlo con otra persona ahora",
+                  "Aceptar el riesgo por ahora",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -11058,9 +11069,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Avanzar a la siguiente etapa",
+                  "Mantener supervisión actual",
+                  "Revertir la delegación",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
