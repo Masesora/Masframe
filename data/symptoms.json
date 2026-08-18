@@ -6058,9 +6058,20 @@
               {
                 "etiqueta": "Gasto anual (€)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Empezar a aplicarlo ya",
+                  "Consultarlo con el asesor antes",
+                  "No aplica a mi actividad",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 10
+            "filas_iniciales": 10,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6224,9 +6235,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Archivar justificante",
+                  "Solicitar justificante que falta",
+                  "Descartar el gasto de la deducción",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
