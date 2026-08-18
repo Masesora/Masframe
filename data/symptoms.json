@@ -10281,9 +10281,20 @@
               {
                 "etiqueta": "Fecha revisión",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar este elemento",
+                  "Ajustar el incentivo ofrecido",
+                  "Descartar este elemento",
+                  "Ya está activo y funcionando"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10381,9 +10392,20 @@
               {
                 "etiqueta": "Canal de distribución",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar ya",
+                  "Pedir permiso al cliente",
+                  "Descartar este caso",
+                  "Ya está publicado"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10431,9 +10453,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pedir reseña o referido ahora",
+                  "Programar seguimiento personal",
+                  "Investigar la insatisfacción",
+                  "Sin acción necesaria"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10473,9 +10506,20 @@
                   "Planificada",
                   "Pausada"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar esta iniciativa",
+                  "Relanzar con más difusión",
+                  "Pausar iniciativa",
+                  "Mantener como está"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
