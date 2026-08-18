@@ -9433,9 +9433,20 @@
               {
                 "etiqueta": "Coste (€/mes)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Actuar ya, el coste lo justifica",
+                  "Seguir midiendo un mes más",
+                  "Delegar el seguimiento a RRHH",
+                  "No requiere acción inmediata"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9539,9 +9550,20 @@
               {
                 "etiqueta": "Resultado buscado",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Programar la conversación ya",
+                  "Mediar antes con ambas partes por separado",
+                  "Escalar a dirección o RRHH",
+                  "Aún no es el momento"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9570,9 +9592,19 @@
                   "No",
                   "Sí"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Gestionar internamente",
+                  "Buscar ayuda externa (coach/mediador)",
+                  "Aún evaluando"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9602,9 +9634,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reunión abierta con todo el equipo",
+                  "Conversaciones individuales",
+                  "Combinar ambas",
+                  "Aún sin decidir"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       }
