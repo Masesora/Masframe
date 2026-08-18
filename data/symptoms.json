@@ -2807,6 +2807,7 @@
       "r1": {
         "tipo": "nativa",
         "titulo": "Auditoría canales",
+        "intro": "Vamos a revisar de dónde vienen de verdad tus clientes: por cada canal que uses (boca a boca, redes, Google, recomendaciones...), apunta cuántas personas te preguntan al mes y cuántas acaban comprando. Así ves cuál te está funcionando y cuál solo te ocupa tiempo.",
         "secciones": [
           {
             "columnas": [
@@ -2823,7 +2824,7 @@
                 ]
               },
               {
-                "etiqueta": "Leads/mes",
+                "etiqueta": "Personas que preguntan/mes",
                 "tipo": "numero",
                 "clave": "leads"
               },
@@ -2834,12 +2835,12 @@
                 "contribuye_valor": true
               },
               {
-                "etiqueta": "Coste/lead (€)",
+                "etiqueta": "Cuánto te cuesta cada pregunta (€)",
                 "tipo": "numero",
                 "clave": "costelead"
               },
               {
-                "etiqueta": "ROI %",
+                "etiqueta": "¿Te compensa? (€ ganado por cada € gastado)",
                 "tipo": "numero"
               },
               {
