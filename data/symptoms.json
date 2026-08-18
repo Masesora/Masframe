@@ -10545,9 +10545,20 @@
               {
                 "etiqueta": "Fecha revisión",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar este elemento",
+                  "Ajustar el incentivo ofrecido",
+                  "Descartar este elemento",
+                  "Ya está activo y funcionando"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10645,9 +10656,20 @@
               {
                 "etiqueta": "Canal de distribución",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar ya",
+                  "Pedir permiso al cliente",
+                  "Descartar este caso",
+                  "Ya está publicado"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10695,9 +10717,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pedir reseña o referido ahora",
+                  "Programar seguimiento personal",
+                  "Investigar la insatisfacción",
+                  "Sin acción necesaria"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10737,9 +10770,20 @@
                   "Planificada",
                   "Pausada"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar esta iniciativa",
+                  "Relanzar con más difusión",
+                  "Pausar iniciativa",
+                  "Mantener como está"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -10860,9 +10904,20 @@
               {
                 "etiqueta": "Cómo mostrarlo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Añadir explicación al entregar",
+                  "Crear documento o informe que lo muestre",
+                  "Mostrarlo en una reunión de cierre",
+                  "Ya se muestra bien"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10887,9 +10942,20 @@
               {
                 "etiqueta": "Cómo recolocar la percepción",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Ajustar el discurso de venta",
+                  "Comunicar expectativas realistas desde el inicio",
+                  "Reforzar el resultado ya entregado",
+                  "La promesa ya está alineada"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10919,9 +10985,20 @@
               {
                 "etiqueta": "Cómo comunicárselo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Comunicárselo directamente ahora",
+                  "Preparar un informe para esa persona",
+                  "Delegar la comunicación a otro miembro del equipo",
+                  "Ya lo percibe correctamente"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
