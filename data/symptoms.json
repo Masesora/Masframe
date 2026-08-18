@@ -690,9 +690,20 @@
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
                 "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Facturar ahora mismo",
+                  "Automatizar facturación al entregar",
+                  "Delegar a administración",
+                  "Ya se factura a tiempo"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -726,9 +737,19 @@
                 "clave": "coste_fin",
                 "formula": "importe*dias*0.1/365",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reclamar ya",
+                  "Aún no vencido, esperar",
+                  "Pasar a incobrable"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -800,9 +821,20 @@
               {
                 "etiqueta": "% anticipo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Exigir anticipo obligatorio",
+                  "Acortar plazo de pago",
+                  "Formalizar por contrato",
+                  "Mantener condiciones actuales"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -841,9 +873,20 @@
                 "formula": "importe*pct/100",
                 "unidad": "eur",
                 "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pedir anticipo ahora",
+                  "No aplica, ya cobrado",
+                  "Aplicar a futuros proyectos similares",
+                  "Sin acción"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -864,9 +907,20 @@
               {
                 "etiqueta": "Mensaje tipo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar recordatorio automático",
+                  "Delegar a gestoría",
+                  "Mantener seguimiento manual",
+                  "Sin acción por ahora"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -980,9 +1034,20 @@
                 "clave": "gap",
                 "formula": "precio_actual-precio_minimo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir precio ahora",
+                  "Renegociar coste directo",
+                  "Descontinuar servicio",
+                  "Precio ya viable"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1050,9 +1115,20 @@
                 "clave": "mp",
                 "formula": "(pt-prc)*ud",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reducir descuento habitual",
+                  "Eliminar descuento a este segmento",
+                  "Mantener descuento (justificado)",
+                  "Renegociar coste de entrega"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1111,9 +1187,20 @@
                 "clave": "gap_mes",
                 "formula": "(var_coste-var_precio)*uds",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir precio ya",
+                  "Subir precio gradualmente",
+                  "Buscar proveedor alternativo",
+                  "Absorber el coste (justificado)"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1244,9 +1331,20 @@
                 "clave": "margen_neto",
                 "formula": "ventas*margen_bruto/100-coste_equipo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar esta línea",
+                  "Mantener",
+                  "Reestructurar o reducir",
+                  "Descontinuar línea"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1313,9 +1411,20 @@
                   "Medio",
                   "Bajo"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener cliente",
+                  "Renegociar condiciones",
+                  "Reducir tiempo dedicado",
+                  "Desvincular cliente"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -2758,7 +2867,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2825,7 +2935,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2952,7 +3063,8 @@
                 ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
