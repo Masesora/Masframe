@@ -3020,6 +3020,7 @@
           {
             "etiqueta": "Trajo un cliente",
             "tipo": "opciones",
+            "estilo": "botones",
             "opciones": [
               "No",
               "Sí"
