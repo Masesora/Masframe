@@ -8830,9 +8830,20 @@
                   "No",
                   "Parcialmente"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Iniciar plan de sucesión",
+                  "Reforzar el plan existente",
+                  "Delegar preparación a RRHH",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8977,9 +8988,20 @@
               {
                 "etiqueta": "Fecha límite",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar ahora",
+                  "Formar/transferir a la persona indicada",
+                  "Grabar procedimiento en vídeo",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9023,9 +9045,20 @@
                   "En preparación",
                   "Cubierto"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Formar al backup ya identificado",
+                  "Buscar backup externo",
+                  "Redistribuir funciones entre el equipo",
+                  "Aceptar el riesgo por ahora"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       }
