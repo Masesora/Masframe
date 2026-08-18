@@ -9151,9 +9151,20 @@
                 "clave": "coste_mensual",
                 "formula": "coste_hora*horas*4.33",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Redistribuir esas horas a otra persona",
+                  "Automatizar o eliminar la tarea",
+                  "Formar para poder delegarla",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9183,9 +9194,20 @@
                 "clave": "coste_mensual",
                 "formula": "coste_hora*horas",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar esas horas a alguien con menor coste",
+                  "Automatizar la tarea",
+                  "Eliminarla del todo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9318,9 +9340,20 @@
               {
                 "etiqueta": "Fecha",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Lanzar el reto ya",
+                  "Planificarlo para el próximo trimestre",
+                  "Necesita más preparación antes",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       }
