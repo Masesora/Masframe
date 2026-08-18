@@ -6300,9 +6300,20 @@
               {
                 "etiqueta": "Gasto anual (€)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Empezar a aplicarlo ya",
+                  "Consultarlo con el asesor antes",
+                  "No aplica a mi actividad",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 10
+            "filas_iniciales": 10,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6466,9 +6477,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Archivar justificante",
+                  "Solicitar justificante que falta",
+                  "Descartar el gasto de la deducción",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6675,9 +6697,20 @@
               {
                 "etiqueta": "Cuándo escala al siguiente nivel",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Fijar este nivel como está",
+                  "Redefinir quién lo resuelve",
+                  "Ajustar el tiempo de escalado",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6702,9 +6735,20 @@
               {
                 "etiqueta": "Límites (dónde acaba)",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aprobar la descripción tal cual",
+                  "Necesita revisión con la persona",
+                  "Redefinir límites del rol",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6729,9 +6773,20 @@
               {
                 "etiqueta": "Responsable",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Acordado y comunicado al equipo",
+                  "Aplazar a otra sesión",
+                  "Resolver fuera de la sesión (1:1)",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
