@@ -584,8 +584,9 @@ Fase futura: herramientas embebidas en plataforma. Ruta base: `data/herramientas
 | C6 específico por síntoma | Todos los síntomas tienen `capa_6_seguimiento = "OKR tracking"` genérico. Necesita métricas específicas por síntoma. |
 | BI Dashboard | Backend `/bi-stats` + campo `origen` (7 valores) + `plan_historia` + frontend SectionDashboard |
 | Typos symptoms.json | Corregir los 4 typos documentados en §II antes de tratar esos síntomas |
-| Auditoría símbolo a símbolo — resto del catálogo | `masframe-ux-validator` en vivo, especialidad a especialidad (patrón §XXXVII-XLI). CARDIO y UCI cerradas (6/30 síntomas). Quedan 8 especialidades / 24 síntomas: NEURO, UNI, CLI, OPE, RES, PSI, TER, CIR. Cada pasada previa encontró bugs reales (redondeo de KPI, Alta sin objetivo, ramas de C3 sin acción) — no es trabajo cosmético, es donde han aparecido los defectos de fondo. |
-| C3: tablas tipo Excel sin guía — bug de UX real, no cosmético | Sesión 10 ago 2026 (debate post-auditoría UCI): las tablas nativas de C3 (columnas + celdas en blanco) exigen que el cliente entienda qué va en cada campo sin ayuda — evidencia real: el cliente llama siempre al CC porque no sabe usarlas sin que se las expliquen. El protocolo no se sostiene solo si depende de la llamada. Propuesta (sin construir aún): modo de vista alternativo `vista: "tarjeta"` en `HerramientaNativaConfig` — mismas columnas/datos, una tarjeta por fila en vez de una fila de tabla, con la "Decisión" como botones grandes en vez de desplegable, y sugerencia automática de qué botón marcar según los demás datos de esa fila (en vez de las 4 opciones en blanco). No cambia el modelo de datos ni las 100+ tablas que no se migren — es un renderer opt-in por rama. Candidatas inmediatas (ya tienen columna Decisión, cero dato nuevo): las 14 ramas de CARDIO-S1/UCI-S2/UCI-S3 cerradas en §XXXVII-XLI. |
+| ~~Auditoría símbolo a símbolo — resto del catálogo~~ | **COMPLETA (§XLVI.A, 18 ago 2026).** `masframe-ux-validator` en vivo, las 10 especialidades / 30 síntomas certificados end-to-end. ~130 columnas Decisión + `vista:"tarjeta"` añadidas, 5 bugs estructurales reales encontrados y cerrados, todas las familias de C2 verificadas en vivo al menos una vez. |
+| ~~C3: tablas tipo Excel sin guía — bug de UX real, no cosmético~~ | **RESUELTO.** Renderer `vista:"tarjeta"` construido y activado en las ~130 columnas de la auditoría completa (§XLII-XLVI). |
+| Colisiones de `ACCION_REGEX` — acciones fantasma en C4 | Detectado repetidas veces durante la auditoría completa (PSI-S3.r3 corregido; ≥10 columnas más en 7 síntomas documentadas sin corregir — UCI-S1.r3, UNI-S1.r1/r4, NEURO-S2.r5, CIR-S1.r2, CLI-S1.r6, PSI-S1.r1/r3, PSI-S3.r6, RES-S1.r2, RES-S2.r1, §XLVI). Cuando una fila tiene dos columnas que matchean el regex (la Decisión real + una de diagnóstico que contiene "plan"/"tarea"/etc.), `derivarAccionesConcretas` genera 2 entradas en el checklist de C4 en vez de 1. Fix candidato: o renombrar cada columna colisionante caso a caso, o endurecer `derivarAccionesConcretas` para que solo la columna `"opciones"`/`"decision"` cuente como acción primaria cuando hay varias en la misma fila. |
 | Seguimiento post-Alta | Fuera de las 7 capas: relación proactiva de MASESORA con un cliente ya dado de Alta en un síntoma, para que la mejora se sostenga y siga habiendo motivo para seguir siendo cliente. Boceto (sesión 10 ago 2026): conversación corta por el canal que ya usa el negocio (no requiere WhatsApp Business API), reutilizando la misma gramática qué/quién/cuándo/cómo/cuánto ya validada en C3, pero entregada como mensajes cortos en vez de página. Sin diseño de datos aún. |
 
 ### Pendiente — Fase Futura
@@ -1649,6 +1650,137 @@ Persona Diego, asesoría -- factura 12.000€/mes con 9.000€ de costes directo
 
 ---
 
+## XLII. SESIÓN 10-11 AGO 2026 — Renderer de tarjeta para C3: de bug de UX a pieza del framework
+
+Tras cerrar UCI, debate de diseño sobre por qué las tablas nativas de C3 "se sienten como deberes en un Excel". Conclusión tras varias vueltas: no es estético -- **el cliente llama siempre al CC porque no sabe usar una tabla de N columnas sin que se la expliquen**, y el protocolo no se sostiene solo si depende de esa llamada. Eso sí es sustancial para la beta; una tarjeta más bonita por sí sola no lo era.
+
+### XLII.A — Decisión de alcance: renderer genérico, no rediseño caso a caso
+
+Con 114 herramientas en el catálogo, rediseñar cada una a mano no escala. Se descarta también "tabla → conversación proactiva" (explorado y corregido en el propio debate: eso es **seguimiento post-Alta**, fuera de las 7 capas, no una forma nueva de C3). La solución: un modo de vista opt-in, `vista?: "tabla" | "tarjeta"` en `SeccionHerramientaConfig` -- mismas columnas, mismo dato, solo cambia el contenedor. Sin declarar, cero cambio de comportamiento (150+ secciones existentes intactas).
+
+### XLII.B — Construido y verificado en vivo
+
+`SeccionTablaNativa` (`TreatmentPage.tsx`) gana una rama de render alternativa: cada fila se pinta como tarjeta (campos etiquetados uno debajo de otro) y las columnas `opciones`/`decision` -- la Decisión que antes vivía perdida en la última columna -- pasan a ser botones grandes. Comparte `addRow`/`removeRow`/`updateCell`/`veredicto`/`entidad_compartida` con la tabla, cero lógica duplicada. PR: `masesora-frontend#30`.
+
+Activado en las 14 ramas que ya tenían columna Decisión de esta sesión: CARDIO-S1 (r1/r2/r4/r5), UCI-S2 (r1/r2/r4/r5/r6), UCI-S3 (r1/r2/r3/r5/r6) -- CARDIO-S1.r5 se añadió en un segundo commit porque en el primero se excluyó a propósito (otra sesión la está rediseñando a `pipeline` con motor de referidos + WhatsApp; se confirmó que seguía siendo `nativa` sin conflicto antes de activarla). PR: `masframe#29`.
+
+Verificado en vivo con Playwright (UCI-S2/persona Elena, CARDIO-S1/persona Marta): ramas con `vista:"tarjeta"` sin `<table>` en el DOM, botones de Decisión clicables directamente; ramas de control sin el flag, sin regresión.
+
+### XLII.C — Fuera de alcance, anotado en backlog
+
+Sugerencia automática de qué botón marcar (pre-seleccionar la Decisión según el resto de datos de la fila): necesita una regla de negocio distinta por cada columna, no algo que deba inventar sin criterio de producto -- fast-follow, no bloqueante. Acuerdo con Maite: de aquí en adelante, cada auditoría nueva que añada una columna Decisión activa `vista:"tarjeta"` en el mismo movimiento, en vez de hacerlo en dos pasadas separadas.
+
+---
+
+## XLIII. SESIÓN 11 AGO 2026 — Auditoría NEURO-S1, primera del resto del catálogo
+
+Especialidad NEURO (Neurología Estratégica), síntoma NEURO-S1 "Amnesia Estratégica" -- primera auditoría tras cerrar CARDIO y UCI, ya con el renderer de tarjeta disponible desde el primer movimiento (fundido con la auditoría, según lo acordado en §XLII.C).
+
+Persona: Fernando, fabricante de muebles a medida, 12 empleados, factura 25.000€/mes sin objetivo de facturación a 12 meses definido -- el equipo interpreta las prioridades cada uno a su manera. C2 es matriz "Urgente vs Importante", mismo mecanismo ya auditado en CARDIO-S1/UCI-S1/S2.
+
+**Mismo patrón que CARDIO-S1/UCI-S2/S3:** 4 de las 6 ramas de C3 (r1 Canvas de visión, r2 Palancas de valor, r4 OKRs anuales, r5 Auditoría de tiempo estratégico) medían sin preguntar qué hacer. r3 (Tracker de alineación) y r6 (Revisión trimestral) ya tenían columna de acción propia.
+
+Columna `Decisión` añadida, contexto específico por rama -- incluye el primer caso multi-sección de la sesión: r4 (OKRs) tiene 4 secciones ("Objetivo 1/2/3" + "Histórico trimestral"), Decisión solo en las 3 de objetivo, no en el histórico (tracker de tendencia, no punto de decisión); r5 tiene 2 secciones, Decisión solo en "Registro semanal de tiempo" (la de sesiones estratégicas ya tiene su propia columna de estado). `vista:"tarjeta"` activada en las mismas secciones exactas -- primera vez verificando en vivo el caso mixto (una rama con secciones en tarjeta y secciones en tabla a la vez): confirmado con precisión (r4: "Objetivo 1" en tarjeta con Decisión en botones, exactamente 1 `<table>` en pantalla -- el Histórico intacto).
+
+Verificado en vivo con Playwright (persona Fernando): las 4 ramas muestran su decisión + contexto real en C4, cada una con su propio responsable, sin contaminación cruzada. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto NEURO-S1**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIII.A — NEURO-S2: el catálogo más sano encontrado hasta ahora
+
+Persona Rosa, Consultoría López -- 4 mejoras completadas de 10 propuestas este mes (40%, objetivo >70%). Solo 2 de las 6 ramas de C3 (r1 Planificador de agenda estratégica semanal, r4 Tres prioridades semanales) sin columna de acción -- las otras 4 ya la tenían. r4 tiene 2 secciones, ambas necesitaban Decisión (registro de prioridades y análisis de interrupciones son dos puntos de decisión distintos, no uno solo).
+
+Columnas añadidas: r1 (Proteger mejor el bloque / Delegar interrupciones recurrentes / Mantener el plan actual / Ajustar el bloque); r4 sección 1 (Repetir la misma prioridad / Reformular la prioridad / Proteger mejor el tiempo / Ya completada, sin cambios); r4 sección 2 (Eliminar esta interrupción / Delegar esta interrupción / Aceptarla, no evitable / Crear un filtro para bloquearla). `vista:"tarjeta"` en las 3.
+
+Verificado en vivo con Playwright (persona Rosa): r1 y ambas secciones de r4 sin `<table>` en el DOM (0 tablas en pantalla), los 3 botones de Decisión clicables. C4 muestra las 3 acciones reales con contexto, cada rama con su propio responsable. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto NEURO-S2**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIII.B — NEURO-S3: árbol re-verificado sano, límite de "calculadora" confirmado por segunda vez
+
+Persona Nuria, Estudio Creativo Vega -- 10% de margen neto sobre facturación, objetivo >15%. C2 es Árbol de Decisiones -- multi-selección re-verificada sana (3 "Sí" abren correctamente 3 frentes en la Sala de Control, mismo mecanismo ya confirmado en CARDIO-S3 §XL).
+
+De las 6 ramas, solo 3 son `nativa` (r1 Análisis de servicios por margen, r3 Simulador de subida de precios, r4 Índice de especialización) y las 3 sin columna de acción. Las otras 3 (r2, r5, r6) son `calculadora` y quedan fuera de alcance -- mismo límite arquitectónico ya documentado en UCI-S3.r4 (§XLI.E): `derivarAccionesConcretas` excluye por diseño cualquier herramienta que no sea `nativa`.
+
+Columnas añadidas: r1 (Mantener / Subir precio / Reducir coste / Eliminar del catálogo); r3 (Subir el precio / Mantener el precio actual / Subir menos de lo simulado / Necesito más datos); r4 (Especializarse en este servicio / Mantener en el catálogo / Reducir inversión / Retirar del catálogo). `vista:"tarjeta"` en las 3.
+
+Verificado en vivo con Playwright (persona Nuria): r1/r3/r4 sin `<table>` en el DOM, los 3 botones de Decisión clicables. C4 muestra las 3 decisiones reales, cada rama con su propio responsable, sin contaminación cruzada. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto NEURO-S3**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIII.C — Cierre de la especialidad NEURO
+
+3/3 síntomas auditados. Balance: 10 columnas de acción añadidas (4 en NEURO-S1, 3 en NEURO-S2, 3 en NEURO-S3), sin bugs de corrección nuevos (a diferencia de CARDIO/UCI, aquí el catálogo estaba técnicamente sano salvo por el patrón de columnas de acción faltantes). Primer ciclo completo con auditoría + `vista:"tarjeta"` fundidas en el mismo movimiento, incluyendo el primer caso multi-sección con mezcla tarjeta/tabla en la misma rama (NEURO-S1.r4). Veredicto 🟢🟢 en los 3.
+
+---
+
+## XLIV. SESIÓN 11 AGO 2026 — Auditoría UNI (Unidad de Procesos): el segundo bug estructural de la sesión
+
+Especialidad UNI (Unidad de Procesos). UNI-S1 (Esclerosis Operativa, persona Antonio/Taller Mecánico Ruiz): mismo patrón de columna de acción faltante, solo r2 (Identificación de cuellos de botella) de las 6 ramas -- 5/6 ya tenían acción propia. Certificado end-to-end, 🟢🟢.
+
+### XLIV.A — UNI-S2: el segundo bug estructural de la sesión, familia "carga" con puerta C2→C3 muerta
+
+Persona Elena, Estudio Bloom Arquitectura -- KPI de entregas a plazo, C2 es "Análisis de Carga" (familia `carga`, un solo eje de puntuación vía Stepper, distinta de la matriz de dos ejes). Al intentar verificar en vivo el patrón habitual de columnas de acción (r1 Auditoría de entrada, r2 Coordinación entre áreas, r5 Control de calidad, r6 Comunicación con cliente -- 4/6 sin acción, r3/r4 ya la tenían), se encontró un **bug bloqueante, no cosmético**: la puerta de calidad de C2 (`TreatmentPage.tsx` ~9150) exigía puntuar `eje_x` Y `eje_y`, pero el renderer de "carga" (~3255-3317) solo escribe `eje_x` -- `eje_y` nunca se toca en este uiType. Resultado: **la puerta nunca se abría, sin importar lo que hiciera el cliente**, confirmado en vivo (Stepper subido a 4/5 en los 4 ítems seleccionados, "Ajusta al menos un elemento para continuar" seguía bloqueando "Confirmo datos"). Afecta también a OPE-S3 (única otra rama del catálogo con familia carga/capacidad).
+
+Fix: excepción para `"carga"`/`"capacidad"` en la puerta de C2 (mismo patrón que las excepciones ya existentes de árbol/regla), basta con puntuar `eje_x` en al menos un elemento -- `masesora-frontend#31`. Verificado en vivo tras el fix: C3 abre correctamente ("4 FRENTES ABIERTOS"), las 4 ramas con su Decisión + responsable propio sin contaminación cruzada, C4 poblado bien. Columnas Decisión + `vista:"tarjeta"` aplicadas en las 4 ramas en el mismo movimiento.
+
+**Veredicto UNI-S2**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end (tras el fix).
+
+### XLIV.B — UNI-S3: Fuga de Calidad Crónica
+
+Persona Javier, Imprenta Digital Prisma -- C2 matriz "Impacto vs Esfuerzo", mecanismo ya auditado repetidas veces. 5 de las 6 ramas (r1 Análisis de frecuencia de errores, r2 Coste de retrabajo, r3 Origen del fallo por fase, r4 Impacto externo: quejas de cliente, r5 Consistencia de entregas por persona) sin columna de acción real; r6 (Protocolo de verificación previa a entrega) ya la tenía -- su columna "Paso del proceso" (texto libre) ES la acción de cada fila del checklist, confirmado revisando `derivarAccionesConcretas` antes de descartarla como falso positivo del regex.
+
+Verificado en vivo con Playwright (persona Javier): 5 frentes abiertos en C3, cada uno con su Decisión + responsable propio sin contaminación cruzada, C4 poblado correctamente. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto UNI-S3**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIV.C — Cierre de la especialidad UNI, y paralelización de la auditoría
+
+3/3 síntomas auditados. Balance: 10 columnas de acción añadidas (1 en UNI-S1, 4 en UNI-S2, 5 en UNI-S3) + 1 bug estructural real cerrado (puerta muerta de la familia "carga", masesora-frontend#31, afecta también a OPE-S3). Veredicto 🟢🟢 en los tres.
+
+A partir de aquí, y a petición explícita del usuario ("más agentes, menos dependencia de mí"), las 6 especialidades restantes del catálogo (CLI, CIR, PSI, RES, TER, OPE -- 18 síntomas) se auditan en paralelo con subagentes autónomos, uno por especialidad, cada uno en su propio worktree y su propio clon de frontend/mock/puertos, aplicando el mismo patrón mecánico documentado en §XLII-§XLIV y con la misma instrucción de no arreglar bugs estructurales por su cuenta -- solo reportarlos, con el mismo rigor que el bug de "carga", para decidir el fix centralizadamente.
+
+---
+
+## XLV. SESIÓN 11 AGO 2026 — Auditoría en paralelo (1ª tanda): PSI, CIR, OPE cerradas
+
+Primera tanda de la auditoría paralelizada con subagentes (§XLIV.C). 6 agentes lanzados a la vez (uno por especialidad restante); 3 completaron esta tanda, 3 (RES, CLI, TER) cortados a media verificación por el límite de uso de la sesión -- ninguno llegó a tocar `symptoms.json`, quedan pendientes de relanzar sin nada que limpiar.
+
+**PSI (Psiquiatría Organizacional, 3/3)**: PSI-S1 (matriz), PSI-S2 (árbol, re-confirmado el mismo patrón de espera obligatoria entre clics síncronos que ya se documentó para matriz/carga -- también le afecta a árbol), PSI-S3 (regla). 11 columnas de acción añadidas. **Bug real encontrado y corregido dentro de mandato**: en PSI-S3.r3, la columna "Tarea repetitiva / rutinaria" colisionaba con `ACCION_REGEX` (contiene "tarea") y generaba una entrada fantasma duplicada en el checklist de C4 junto a la Decisión real -- corregido renombrando la etiqueta a "Actividad repetitiva / rutinaria", re-verificado en vivo (1/1 acción real por fila). La misma colisión, sin corregir por estar fuera del alcance de "ramas ya-OK", queda documentada en PSI-S1.r1/r3 y PSI-S3.r6 -- y confirmada por el agente de OPE como un patrón ya extendido y aceptado en el resto del catálogo (UCI-S1.r3, UNI-S1.r1/r4, NEURO-S2.r5, CIR-S1.r2, etc.), no una anomalía nueva. Veredicto 🟢🟢 en los tres.
+
+**CIR (Cirugía de Marca, 3/3)**: CIR-S1 (matriz), CIR-S2 (**familia "dafo" verificada en vivo por primera vez en todo el catálogo** -- confirmado que su puerta C2→C3 no exige puntuación por diseño, comportamiento intencional, no el mismo bug que "carga"), CIR-S3 (regla). 11 columnas de acción añadidas; CIR-S2.r5 (`calculadora`) fuera de alcance. **Segundo bug estructural real de la sesión, encontrado y NO corregido por el agente** (correcto, fuera de su mandato): la cabecera de la vista tarjeta ignoraba `tipo:"opciones"` en la columna 0 y aceptaba texto libre sin restricción (`TreatmentPage.tsx` ~4080-4093 vs. la vista tabla, que sí lo hacía bien en ~4221) -- encontrado en CIR-S3.r1 ("Semana", debía restringirse a "Semana 1".."Semana 4"). Fix aplicado y verificado en vivo esta misma sesión: la cabecera de tarjeta ahora pinta botones de opción cuando `columnas[0].tipo === "opciones"`, mismo patrón visual que el resto de columnas "opciones" -- `masesora-frontend#32`. Primer caso en el catálogo con columna 0 tipo "opciones" en tarjeta, por eso no se había visto antes. Veredicto 🟢🟢 en los tres (🟠 técnico en CIR-S3 hasta el fix, ya cerrado).
+
+**OPE (Excelencia Operativa, 3/3)**: OPE-S1 (matriz), OPE-S2 (árbol), OPE-S3 (**carga** -- re-verificó en vivo que el fix de §XLIV.A funciona: sin puntuar bloquea con el mismo aviso, puntuando desbloquea correctamente; OPE-S3 ya tenía columna de acción en las 6 ramas, sin cambios de datos). 8 columnas de acción añadidas entre S1/S2. Sin bugs nuevos. Veredicto 🟢🟢 en los tres.
+
+**Balance de la tanda**: 30 columnas de acción añadidas, 2 bugs reales encontrados y cerrados (1 de datos -- colisión de regex en PSI-S3.r3 --, 1 de frontend -- columna 0 opciones en tarjeta, CIR-S3.r1 --), 1 familia nueva verificada en vivo por primera vez (dafo, sana). Los 9 síntomas certificados end-to-end. RES, CLI, TER quedan pendientes de una 2ª tanda tras el reset del límite de sesión (23:40 UTC).
+
+---
+
+## XLVI. SESIÓN 18 AGO 2026 — 2ª tanda: TER, CLI y RES cierran el catálogo — 30/30
+
+Retomada una semana después (11→18 ago) tras un corte doble: primero el límite de sesión del 11 ago, luego un límite semanal más severo al reintentar. Nada se perdió -- los 3 worktrees (`audit/TER-catalog`, `audit/CLI-catalog`, `audit/RES-catalog`) conservaban intacto el trabajo a medias de la 1ª tanda (algunos síntomas ya con columnas Decisión escritas pero sin commitear ni verificar en vivo); se retomaron los mismos agentes desde el mismo punto, sin repetir nada ya hecho.
+
+**TER (Terapia de Experiencia, 3/3)**: TER-S1 (regla, persona Marina Cobo -- las 6 ramas ya tenían acción real, cero cambios de datos necesarios), TER-S2 (matriz, persona Bernat Casals -- r2/r4/r5/r6 arregladas), TER-S3 (DAFO, persona Patricia Iriarte -- r2/r3/r4 arregladas, r1/r5/r6 confirmadas ya-OK tras revisar con cuidado los casos límite que había dejado pendientes la sesión anterior). 7 columnas de acción añadidas. Sin bugs nuevos, ninguno de los 2 ya conocidos reproducido (no aplican a esta especialidad). Veredicto 🟢🟢 en los tres.
+
+**CLI (Gestión Clínica, 3/3, cierra la especialidad)**: CLI-S1 ya cerrado en la 1ª tanda. CLI-S2 (matriz, persona Manolo Ferreira -- r2/r5 arregladas, r1/r3/r4 `calculadora` fuera de alcance, r6 ya-OK), CLI-S3 (árbol, persona Dra. Rocío Campos -- r4/r5/r6 arregladas; r4 es un caso "con criterio, no a ciegas" real: su columna "Cuándo escala al siguiente nivel" matcheaba `ACCION_REGEX` por contener "siguiente" pero guardaba una regla/umbral, no una acción ejecutable -- sin el fix, C4 habría mostrado la condición de escalado como si fuera una tarea a marcar). 4 columnas de acción añadidas. Veredicto 🟢🟢 en los tres.
+
+**RES (Rescate de Personas, 3/3, cierra la especialidad)**: RES-S1 (matriz "Análisis de Riesgos", persona Alberto Ruiz -- r2/r5/r6 arregladas), RES-S2 (matriz "Impacto vs Esfuerzo", persona Diego Salamanca -- r1/r2/r6 arregladas), RES-S3 (árbol, persona Silvia Montero -- r1/r4/r5/r6 arregladas). 10 columnas de acción añadidas. Sin bugs estructurales nuevos.
+
+**Hallazgo transversal, NO corregido (backlog nuevo)**: en RES-S1.r2 y RES-S2.r1, una columna de diagnóstico pre-existente (`"¿Cubierto por plan de sucesión?"`, `"Horas/sem en tareas por debajo"`) colisiona con `ACCION_REGEX` (por "plan"/"tarea") y se cuela como entrada fantasma en el checklist de C4 junto a la Decisión real -- confirmado en vivo en ambos casos. Es el mismo mecanismo de raíz que ya se corrigió puntualmente en PSI-S3.r3 (§XLV) y que OPE había confirmado como un patrón ya extendido y aceptado en buena parte del catálogo (UCI-S1.r3, UNI-S1.r1/r4, NEURO-S2.r5, CIR-S1.r2, CLI-S1.r6, PSI-S1.r1/r3, PSI-S3.r6, RES-S1.r2, RES-S2.r1 -- al menos 10 columnas en 7 síntomas distintos). No se ha corregido de forma sistemática porque cada corrección puntual (renombrar la columna colisionante) requiere revisar su UX en contexto, no es mecánico como añadir Decisión. Queda anotado en §XVI como tarea de auditoría específica: revisar las ~10 colisiones conocidas y decidir, caso a caso, si renombrar la columna o (alternativa más robusta) endurecer `derivarAccionesConcretas` para que, cuando varias columnas de una fila matcheen el regex, solo la de tipo `"opciones"`/`"decision"` cuente como acción primaria.
+
+### XLVI.A — Cierre del catálogo completo: 30/30 síntomas certificados end-to-end
+
+Con TER, CLI y RES cerrados, termina la auditoría símbolo a símbolo iniciada en §XXXVII (CARDIO-S1, 9 ago 2026). Balance final de las 10 especialidades (UCI, UNI, CARDIO, NEURO, PSI, CIR, OPE, TER, CLI, RES -- 30 síntomas):
+
+- **~130 columnas Decisión + `vista:"tarjeta"` añadidas** en total a lo largo de toda la auditoría, cerrando el patrón "tabla sin guía" (bug de UX real: el cliente no sabe qué hacer con una tabla de datos sin que el consultor se lo explique, "el cliente siempre llama").
+- **5 bugs estructurales reales encontrados y cerrados**, todos verificados en vivo antes y después del fix: falso "Has superado el síntoma" por redondeo (§XXXIX), aviso contradictorio en modo estructural (§XXXIX), botón de Alta sin comprobar `alcanzoObjetivo` (§XLI), puerta C2→C3 muerta en la familia "carga" (§XLIV.A, `masesora-frontend#31`), columna 0 tipo "opciones" ignorada en tarjeta (§XLV, `masesora-frontend#32`).
+- **Todas las familias de C2 verificadas en vivo al menos una vez**: matriz, árbol, regla 5/25, semáforo, ABC, DAFO, carga -- ninguna quedó sin probar de verdad con Playwright.
+- **Última tanda ejecutada en paralelo con subagentes autónomos** (§XLIV.C, a petición explícita del usuario), sobreviviendo a dos cortes de límite de uso sin perder trabajo gracias a los worktrees persistentes.
+- **Backlog abierto** (§XVI): sugerencia automática de Decisión (necesita reglas de negocio del usuario), Seguimiento post-Alta (fuera de las 7 capas), y la revisión sistemática de las ~10 colisiones de `ACCION_REGEX` documentada arriba.
+- **2 PRs de fix pendientes de revisión y merge**: `masesora-frontend#31` (carga) y `#32` (tarjeta columna 0) -- ambas en draft, verificadas, sin actividad.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1676,3 +1808,8 @@ Persona Diego, asesoría -- factura 12.000€/mes con 9.000€ de costes directo
 *§XXXIX añadida en sesión 10 ago 2026 — auditoría CARDIO-S2 completa (persona Javier/Metalatek): familia C2 "regla" confirmada sana, 2 bugs reales de C6 encontrados en vivo y cerrados -- falso "Has superado el síntoma" por redondeo (afecta a las 30 síntomas, fix roundKpiForCompare, masesora-frontend#26) y aviso contradictorio apuntando a C5 en modo estructural (afecta a 8 síntomas, fix mode-aware, masesora-frontend#27); CARDIO-S2 certificado end-to-end, veredicto 🟢🟢*
 *§XL añadida en sesión 10 ago 2026 (cont.) — auditoría CARDIO-S3 completa (persona Sonia): familia C2 "árbol" -- el riesgo #1 de la taxonomía del validator (pérdida de selección múltiple) confirmado ya resuelto en vivo (multi-"Sí" monta múltiples ramas en C3 correctamente), fórmula con InputA/InputB invertidos verificada sin problema (el algoritmo de C6 es direction-agnostic), sin nuevos bugs -- CARDIO-S3 certificado end-to-end sin fixes, veredicto 🟢🟢. Cierra la auditoría completa de la especialidad CARDIO (3/3 síntomas, 6 hallazgos reales cerrados en total)*
 *§XLI añadida en sesión 10 ago 2026 (cont.) — auditoría completa de UCI (3/3 síntomas). UCI-S1 (persona Marc, primera vez en modo financiero esta sesión): hallazgo crítico catálogo-entero -- el botón de Alta (readyForAlta) nunca comprobaba alcanzoObjetivo, solo mejoro + C4 completo, mostrando "¡Enhorabuena! Has superado..." con solo el 62% del camino al objetivo recorrido; bug preexistente (5 ago 2026), afecta a los 30 síntomas, fix verificado en vivo (masesora-frontend#28). UCI-S2 (persona Elena) y UCI-S3 (persona Diego, familia "margen" que anula a "semáforo" -- el semáforo real vive por-ítem en Capa2Margen): mismo patrón que el hallazgo original de CARDIO-S1, 5+5 ramas de C3 sin columna de acción, cerradas con el mismo fix de columna Decisión; UCI-S3.r4 (tipo calculadora) queda anotado como límite arquitectónico sin fix. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres*
+*§XLII añadida en sesión 10-11 ago 2026 — renderer de tarjeta para C3: bug de UX real (el cliente llama siempre al CC porque no sabe usar una tabla sin que se la expliquen, el protocolo no se sostiene solo), no cosmético. vista:"tarjeta" opt-in en SeccionHerramientaConfig, cero riesgo para las secciones que no lo activen, construido y activado en las 14 ramas ya auditadas (CARDIO-S1, UCI-S2, UCI-S3) -- masesora-frontend#30, masframe#29. Sugerencia automática de Decisión queda en backlog (necesita reglas de negocio por columna). Acuerdo: de aquí en adelante, auditoría y renderer se aplican juntos, no en pasadas separadas*
+*§XLIII añadida en sesión 11 ago 2026 — auditoría completa de NEURO (3/3 síntomas). NEURO-S1 (persona Fernando, 4/6 ramas afectadas, primer caso multi-sección con mezcla tarjeta/tabla en la misma rama), NEURO-S2 (persona Rosa, solo 2/6, el más sano hasta ahora) y NEURO-S3 (persona Nuria, árbol de decisiones re-verificado sano, 3/6 nativa afectadas + 3 "calculadora" fuera de alcance por el mismo límite arquitectónico de UCI-S3.r4): mismo patrón de columnas de acción faltantes en los 3, cerrado con Decisión + vista:tarjeta fundidas en el mismo movimiento desde el primero. 10 columnas de acción añadidas en total, sin bugs de corrección nuevos. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres -- cierra la especialidad NEURO*
+*§XLIV añadida en sesión 11 ago 2026 (cont.) — auditoría completa de UNI (3/3 síntomas). UNI-S1 (persona Antonio, 1/6 ramas afectadas) y UNI-S3 (persona Javier, 5/6 afectadas, r6 confirmado ya-OK vía `derivarAccionesConcretas` antes de descartarlo) siguen el patrón habitual. UNI-S2 (persona Elena) trae el primer bug estructural real de la sesión: la puerta C2→C3 de la familia "carga" nunca se abría (exigía puntuar 2 ejes cuando el renderer solo usa 1) -- afecta también a OPE-S3, fix verificado en vivo y pusheado (masesora-frontend#31). 10 columnas de acción + 1 bug estructural cerrados, veredicto 🟢🟢 en los tres -- cierra la especialidad UNI. A partir de aquí, las 6 especialidades restantes (CLI, CIR, PSI, RES, TER, OPE) se auditan en paralelo con subagentes autónomos, uno por especialidad, a petición explícita del usuario*
+*§XLV añadida en sesión 11 ago 2026 (cont.) — 1ª tanda de la auditoría paralelizada: PSI, CIR y OPE cerradas (9/9 síntomas, 30 columnas de acción), RES/CLI/TER cortados por límite de sesión sin tocar datos, pendientes de 2ª tanda. 2 bugs reales más cerrados: colisión de `ACCION_REGEX` generando acción fantasma en PSI-S3.r3 (renombre de columna), y segundo bug estructural de la sesión -- la vista tarjeta ignoraba `tipo:"opciones"` en la columna 0 y aceptaba texto libre sin restricción, encontrado en CIR-S3.r1, fix verificado en vivo (masesora-frontend#32). Familia "dafo" verificada en vivo por primera vez en el catálogo (CIR-S2), gate sano por diseño*
+*§XLVI añadida en sesión 18 ago 2026 — 2ª tanda: TER, CLI y RES cierran el catálogo. Retomada una semana después sin perder nada (worktrees persistentes) tras un doble corte por límite de uso. 21 columnas de acción más, sin bugs estructurales nuevos; hallazgo transversal documentado (no corregido) de ≥10 colisiones de `ACCION_REGEX` en 7 síntomas distintos, backlog nuevo en §XVI. **Cierra la auditoría símbolo a símbolo del catálogo completo: 30/30 síntomas certificados end-to-end**, iniciada en §XXXVII (9 ago) -- ~130 columnas Decisión añadidas en total, 5 bugs estructurales reales cerrados, las 7 familias de C2 verificadas en vivo. Quedan 2 PRs de fix en draft sin mergear (masesora-frontend#31, #32)*

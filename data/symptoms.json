@@ -1602,9 +1602,20 @@
                 "clave": "coste_mensual",
                 "formula": "frec*dur*coste_hora*4.33",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Rediseñar el proceso",
+                  "Añadir recursos",
+                  "Delegar a otra persona/sistema",
+                  "Aceptar el coste por ahora"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2063,9 +2074,20 @@
                   "Media",
                   "Baja"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Estandarizar formulario de entrada",
+                  "Exigir info completa antes de aceptar",
+                  "Delegar el filtro a otra persona",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2120,9 +2142,20 @@
                 "clave": "horas_espera",
                 "formula": "frec*espera*4.33",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear protocolo escrito",
+                  "Reducir tiempo de espera acordado",
+                  "Escalar a dirección",
+                  "Ya funciona bien"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2295,9 +2328,20 @@
                   "Sí",
                   "Podría evitarse"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reforzar la revisión",
+                  "Simplificar el proceso",
+                  "Formar al responsable",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2335,9 +2379,20 @@
                 "clave": "horas_sem",
                 "formula": "contactos*tiempo_medio/60",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reducir frecuencia de contacto",
+                  "Cambiar de canal",
+                  "Automatizar respuestas frecuentes",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -2452,9 +2507,20 @@
                 "clave": "coste_mensual",
                 "formula": "ocurr*retrabajo*coste_hora",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar la causa raíz",
+                  "Crear checklist de verificación en esa fase",
+                  "Formar al equipo en ese error",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2500,9 +2566,20 @@
                 "clave": "coste",
                 "formula": "horas*coste_hora",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Repercutir el coste al cliente cuando aplique",
+                  "Atacar la causa raíz de fondo",
+                  "Aceptar el coste como parte del servicio",
+                  "Ya está resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2544,9 +2621,20 @@
                 "clave": "tiempo_fallo",
                 "formula": "(tiempo*4.33)/fallos",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear checklist de salida en esa fase",
+                  "Rediseñar esa fase del proceso",
+                  "Reforzar la revisión en esa fase",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2605,9 +2693,20 @@
                 "clave": "coste",
                 "formula": "horas*coste_hora",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Contactar al cliente para cerrar el tema",
+                  "Cerrar el origen para que no se repita",
+                  "Compensar al cliente",
+                  "Ya está resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2654,9 +2753,20 @@
                 "clave": "pct_error",
                 "formula": "errores*100/entregas",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reforzar la formación de esa persona",
+                  "Ajustar su carga de trabajo",
+                  "Revisar si el protocolo es claro",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -4236,9 +4346,20 @@
                 "clave": "gap",
                 "formula": "objetivo-hoy",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Definir plan de acción",
+                  "Revisar el objetivo",
+                  "Delegar el seguimiento",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 7
+            "filas_iniciales": 7,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -4277,9 +4398,20 @@
                 "clave": "impacto_mes",
                 "formula": "impacto/plazo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar ya",
+                  "Planificar para más adelante",
+                  "Descartar",
+                  "Delegar a alguien del equipo"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -4358,9 +4490,20 @@
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Objetivo 2",
@@ -4385,9 +4528,20 @@
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Objetivo 3",
@@ -4412,9 +4566,20 @@
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Histórico trimestral",
@@ -4494,9 +4659,20 @@
                 "clave": "pct_estr",
                 "formula": "h_estr*100/total_h",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bloquear más tiempo la próxima semana",
+                  "Delegar tareas operativas",
+                  "Mantener el ritmo actual",
+                  "Necesito ayuda para reorganizar"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           },
           {
             "titulo": "2. Registro de sesiones estratégicas",
@@ -4770,9 +4946,20 @@
                 "clave": "pct_estr",
                 "formula": "h_estr*100/total_h",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Proteger mejor el bloque la próxima semana",
+                  "Delegar interrupciones recurrentes",
+                  "Mantener el plan actual",
+                  "Ajustar el bloque"
+                ]
               }
             ],
-            "filas_iniciales": 20
+            "filas_iniciales": 20,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -4933,9 +5120,20 @@
               {
                 "etiqueta": "Nº interrupciones",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Repetir la misma prioridad",
+                  "Reformular la prioridad",
+                  "Proteger mejor el tiempo",
+                  "Ya completada, sin cambios"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           },
           {
             "titulo": "2. Análisis tipos de interrupción",
@@ -4964,9 +5162,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Eliminar esta interrupción",
+                  "Delegar esta interrupción",
+                  "Aceptarla (no evitable)",
+                  "Crear un filtro para bloquearla"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5215,9 +5424,20 @@
                 "clave": "margen_pct",
                 "formula": "margen_bruto*100/fact",
                 "unidad": "pct"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener",
+                  "Subir precio",
+                  "Reducir coste",
+                  "Eliminar del catálogo"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5388,9 +5608,20 @@
                 "clave": "impacto_neto",
                 "formula": "ingresos_nuevos-ingresos_actuales",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir el precio",
+                  "Mantener el precio actual",
+                  "Subir menos de lo simulado",
+                  "Necesito más datos"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5452,9 +5683,20 @@
                 "clave": "fact_cliente",
                 "formula": "fact/clientes",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Especializarse en este servicio",
+                  "Mantener en el catálogo",
+                  "Reducir inversión",
+                  "Retirar del catálogo"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5676,9 +5918,20 @@
               {
                 "etiqueta": "Objetivo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Incorporarlo al cuadro de mando",
+                  "Necesita definir mejor cómo medirlo",
+                  "Descartarlo, no es representativo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5804,9 +6057,20 @@
                 "clave": "media",
                 "formula": "(s1+s2+s3+s4)/4",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener en el cuadro de mando",
+                  "Ajustar el objetivo de esta métrica",
+                  "Sustituir por otra métrica",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6051,9 +6315,20 @@
               {
                 "etiqueta": "Gasto anual (€)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Empezar a aplicarlo ya",
+                  "Consultarlo con el asesor antes",
+                  "No aplica a mi actividad",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 10
+            "filas_iniciales": 10,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6217,9 +6492,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Archivar justificante",
+                  "Solicitar justificante que falta",
+                  "Descartar el gasto de la deducción",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6426,9 +6712,20 @@
               {
                 "etiqueta": "Cuándo escala al siguiente nivel",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Fijar este nivel como está",
+                  "Redefinir quién lo resuelve",
+                  "Ajustar el tiempo de escalado",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6453,9 +6750,20 @@
               {
                 "etiqueta": "Límites (dónde acaba)",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aprobar la descripción tal cual",
+                  "Necesita revisión con la persona",
+                  "Redefinir límites del rol",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6480,9 +6788,20 @@
               {
                 "etiqueta": "Responsable",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Acordado y comunicado al equipo",
+                  "Aplazar a otra sesión",
+                  "Resolver fuera de la sesión (1:1)",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -6605,9 +6924,20 @@
                   "Pendiente"
                 ],
                 "contribuye_valor_si": "Aprobado"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Rediseñar ahora",
+                  "Programar para más adelante",
+                  "Delegar a diseñador externo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6642,9 +6972,20 @@
                   "No",
                   "En revision"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aplicar el texto mejorado ya",
+                  "Seguir puliendo antes de aplicar",
+                  "Mantener el texto actual",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Validacion con clientes",
@@ -6778,9 +7119,20 @@
               {
                 "etiqueta": "Responsable de contenido",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear plantilla ahora",
+                  "Delegar a diseñador",
+                  "Posponer al próximo trimestre",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Calendario de publicacion (semana tipo)",
@@ -6810,9 +7162,20 @@
                   "Pendiente"
                 ],
                 "contribuye_valor_si": "Publicado"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar según lo planificado",
+                  "Reprogramar",
+                  "Delegar a otra persona",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6923,9 +7286,20 @@
               {
                 "etiqueta": "Ultima actualizacion",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Completar esta sección ahora",
+                  "Revisar con el equipo antes de publicar",
+                  "Delegar a responsable de marca",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 7
+            "filas_iniciales": 7,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Distribucion y adopcion por el equipo",
@@ -6954,9 +7328,20 @@
               {
                 "etiqueta": "Dudas o inconsistencias reportadas",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reforzar formación con esta persona",
+                  "Reenviar el manual",
+                  "Aclarar dudas en próxima reunión",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -7074,9 +7459,20 @@
                   "No",
                   "Candidato"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Confirmar como producto estrella y potenciar",
+                  "Seguir observando este trimestre",
+                  "Descartar como candidato",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7338,9 +7734,20 @@
                 "clave": "desviacion",
                 "formula": "ingresos_real-ingresos_obj",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener objetivo de mezcla",
+                  "Ajustar objetivo al alza",
+                  "Reforzar comercialmente este servicio",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -7470,9 +7877,20 @@
                   "Publicado"
                 ],
                 "clave": "estado"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar según lo planificado",
+                  "Reprogramar para otra semana",
+                  "Delegar a otra persona del equipo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 8
+            "filas_iniciales": 8,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7507,9 +7925,20 @@
                   "Parcialmente",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aplicar ya en todos los canales",
+                  "Formar al equipo en este parámetro",
+                  "Revisar definición antes de aplicar",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7611,9 +8040,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aprobar mensaje y usarlo ya",
+                  "Validar con más clientes antes de usar",
+                  "Reescribir el mensaje",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7879,9 +8319,20 @@
                 "clave": "horas_mes",
                 "formula": "frec*tiempo*4.33",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear protocolo de urgencia real",
+                  "Formar al equipo para filtrar peticiones",
+                  "Hablar con el origen de la urgencia",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7983,9 +8434,20 @@
               {
                 "etiqueta": "Solución implementada",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bloquear franjas sin interrupciones",
+                  "Filtrar/redirigir ese tipo de interrupción",
+                  "Formar al equipo para no generarlas",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8042,9 +8504,20 @@
                 "clave": "horas_mes",
                 "formula": "frec*horas",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Implementar la medida preventiva ya",
+                  "Delegar la gestión de este tipo de crisis",
+                  "Documentar el protocolo para la próxima vez",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8089,9 +8562,20 @@
                   "Planificado",
                   "Pendiente"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar este ritual ya",
+                  "Planificarlo para el próximo mes",
+                  "Asignar quién lo lidera",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -8185,9 +8669,20 @@
               {
                 "etiqueta": "Saturación (1-5)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar a otro rol",
+                  "Adaptar el rol actual a su perfil",
+                  "Mantener y observar",
+                  "Encaja bien, sin cambios"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8216,9 +8711,20 @@
               {
                 "etiqueta": "Reasignar a",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar ya",
+                  "Reasignar en el próximo trimestre",
+                  "Mantener por ahora",
+                  "Ya está bien asignada"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8299,9 +8805,20 @@
               {
                 "etiqueta": "Contratar el perfil que el rol necesita",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Adaptar el rol a la persona",
+                  "Contratar el perfil que hace falta",
+                  "Combinar ambas",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8339,9 +8856,20 @@
               {
                 "etiqueta": "Coste estimado (€/mes)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Externalizar ya",
+                  "Formar/contratar perfil interno",
+                  "Posponer la decisión",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -8505,7 +9033,7 @@
             "titulo": "Qué tareas adormecen y cómo introducir reto",
             "columnas": [
               {
-                "etiqueta": "Tarea repetitiva / rutinaria",
+                "etiqueta": "Actividad repetitiva / rutinaria",
                 "tipo": "texto"
               },
               {
@@ -8532,9 +9060,20 @@
                   "En prueba",
                   "Implementada"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Implementar la rotación ya",
+                  "Probarla un mes",
+                  "Descartar por ahora",
+                  "Ya aporta suficiente reto"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8584,9 +9123,20 @@
                   "Bajo",
                   "Sin medir"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reconocerlo ya",
+                  "Programar el reconocimiento",
+                  "Delegar el reconocimiento al responsable directo",
+                  "No requiere reconocimiento adicional"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8624,9 +9174,20 @@
               {
                 "etiqueta": "Próxima revisión",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Agendar la sesión ya",
+                  "Comunicarlo en la próxima reunión de equipo",
+                  "Delegar la comunicación al mando directo",
+                  "Ya está comunicado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8845,9 +9406,20 @@
                   "No",
                   "Parcialmente"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Iniciar plan de sucesión",
+                  "Reforzar el plan existente",
+                  "Delegar preparación a RRHH",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8992,9 +9564,20 @@
               {
                 "etiqueta": "Fecha límite",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar ahora",
+                  "Formar/transferir a la persona indicada",
+                  "Grabar procedimiento en vídeo",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9038,9 +9621,20 @@
                   "En preparación",
                   "Cubierto"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Formar al backup ya identificado",
+                  "Buscar backup externo",
+                  "Redistribuir funciones entre el equipo",
+                  "Aceptar el riesgo por ahora"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -9133,9 +9727,20 @@
                 "clave": "coste_mensual",
                 "formula": "coste_hora*horas*4.33",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Redistribuir esas horas a otra persona",
+                  "Automatizar o eliminar la tarea",
+                  "Formar para poder delegarla",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9165,9 +9770,20 @@
                 "clave": "coste_mensual",
                 "formula": "coste_hora*horas",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar esas horas a alguien con menor coste",
+                  "Automatizar la tarea",
+                  "Eliminarla del todo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9300,9 +9916,20 @@
               {
                 "etiqueta": "Fecha",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Lanzar el reto ya",
+                  "Planificarlo para el próximo trimestre",
+                  "Necesita más preparación antes",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -9382,9 +10009,20 @@
               {
                 "etiqueta": "Coste (€/mes)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Actuar ya, el coste lo justifica",
+                  "Seguir midiendo un mes más",
+                  "Delegar el seguimiento a RRHH",
+                  "No requiere acción inmediata"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9488,9 +10126,20 @@
               {
                 "etiqueta": "Resultado buscado",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Programar la conversación ya",
+                  "Mediar antes con ambas partes por separado",
+                  "Escalar a dirección o RRHH",
+                  "Aún no es el momento"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9519,9 +10168,19 @@
                   "No",
                   "Sí"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Gestionar internamente",
+                  "Buscar ayuda externa (coach/mediador)",
+                  "Aún evaluando"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9551,9 +10210,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reunión abierta con todo el equipo",
+                  "Conversaciones individuales",
+                  "Combinar ambas",
+                  "Aún sin decidir"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -10054,9 +10724,20 @@
               {
                 "etiqueta": "Fecha revisión",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar este elemento",
+                  "Ajustar el incentivo ofrecido",
+                  "Descartar este elemento",
+                  "Ya está activo y funcionando"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10154,9 +10835,20 @@
               {
                 "etiqueta": "Canal de distribución",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar ya",
+                  "Pedir permiso al cliente",
+                  "Descartar este caso",
+                  "Ya está publicado"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10204,9 +10896,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pedir reseña o referido ahora",
+                  "Programar seguimiento personal",
+                  "Investigar la insatisfacción",
+                  "Sin acción necesaria"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10246,9 +10949,20 @@
                   "Planificada",
                   "Pausada"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar esta iniciativa",
+                  "Relanzar con más difusión",
+                  "Pausar iniciativa",
+                  "Mantener como está"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -10369,9 +11083,20 @@
               {
                 "etiqueta": "Cómo mostrarlo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Añadir explicación al entregar",
+                  "Crear documento o informe que lo muestre",
+                  "Mostrarlo en una reunión de cierre",
+                  "Ya se muestra bien"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10396,9 +11121,20 @@
               {
                 "etiqueta": "Cómo recolocar la percepción",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Ajustar el discurso de venta",
+                  "Comunicar expectativas realistas desde el inicio",
+                  "Reforzar el resultado ya entregado",
+                  "La promesa ya está alineada"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10428,9 +11164,20 @@
               {
                 "etiqueta": "Cómo comunicárselo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Comunicárselo directamente ahora",
+                  "Preparar un informe para esa persona",
+                  "Delegar la comunicación a otro miembro del equipo",
+                  "Ya lo percibe correctamente"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10632,9 +11379,20 @@
               {
                 "etiqueta": "Fecha límite",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar antes de la fecha límite",
+                  "Formar a un segundo responsable en paralelo",
+                  "Aceptar el riesgo por ahora",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10764,9 +11522,20 @@
                 "clave": "horas_totales",
                 "formula": "horas*duracion",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener el acompañamiento",
+                  "Aumentar horas de mentoría",
+                  "Cerrar el acompañamiento (ya es autónomo)",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10994,9 +11763,20 @@
               {
                 "etiqueta": "Fecha límite",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar antes de la fecha límite",
+                  "Probarlo con otra persona ahora",
+                  "Aceptar el riesgo por ahora",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -11051,9 +11831,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Avanzar a la siguiente etapa",
+                  "Mantener supervisión actual",
+                  "Revertir la delegación",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
