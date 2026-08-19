@@ -11417,7 +11417,8 @@
               },
               {
                 "etiqueta": "Semana",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Duda o pregunta",
@@ -11462,7 +11463,8 @@
               },
               {
                 "etiqueta": "Semana",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Nivel esperado (%)",
@@ -11481,7 +11483,8 @@
                 "tipo": "calculada",
                 "clave": "gap",
                 "formula": "esperado-real",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Acción correctora",
@@ -12341,19 +12344,22 @@
               {
                 "etiqueta": "Capacidad real (uds/h)",
                 "tipo": "numero",
-                "clave": "cap_real"
+                "clave": "cap_real",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Demanda real (uds/h)",
                 "tipo": "numero",
-                "clave": "dem_real"
+                "clave": "dem_real",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Carga sobre capacidad",
                 "tipo": "calculada",
                 "clave": "carga",
                 "formula": "dem_real-cap_real",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Impacto en el sistema",
