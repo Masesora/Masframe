@@ -1747,9 +1747,20 @@
               {
                 "etiqueta": "Responsable",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir midiendo igual",
+                  "Ajustar la meta a algo realista",
+                  "Crear un plan para cerrar la brecha",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           },
           {
             "titulo": "2. Pasos sin valor a eliminar",
@@ -1914,9 +1925,20 @@
                 "clave": "horas_inv",
                 "formula": "horas_est*pct/100",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Priorizar esta documentación ahora",
+                  "Reasignar a otra persona",
+                  "Posponer a la siguiente revisión",
+                  "Ya está documentado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -2810,9 +2832,20 @@
                 "formula": "antes-despues",
                 "unidad": "numero",
                 "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir aplicando el checklist en cada entrega",
+                  "Reforzar el checklist en este punto",
+                  "Investigar por qué no se aplicó",
+                  "Ya está funcionando bien"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
