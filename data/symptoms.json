@@ -6084,7 +6084,8 @@
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Automatizable?",
@@ -6129,7 +6130,8 @@
               {
                 "etiqueta": "Coste hora propio (€)",
                 "tipo": "numero",
-                "clave": "coste_hora_propio"
+                "clave": "coste_hora_propio",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Valor",
@@ -6159,7 +6161,8 @@
                 "tipo": "calculada",
                 "clave": "coste_hora_impl",
                 "formula": "coste_externo/horas",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Valor liberado/mes (€)",
