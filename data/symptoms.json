@@ -3461,6 +3461,10 @@
                 "unidad": "numero"
               },
               {
+                "etiqueta": "Acción correctora",
+                "tipo": "texto"
+              },
+              {
                 "etiqueta": "% objetivo",
                 "tipo": "calculada",
                 "clave": "pct_objetivo",
