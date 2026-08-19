@@ -130,7 +130,7 @@
         "titulo": "Liberar liquidez bloqueada en trabajos y proyectos en curso",
         "secciones": [
           {
-            "titulo": "Tus proyectos con más liquidez atrapada — no hace falta meterlos todos, con 2 o 3 basta",
+            "titulo": "Tus proyectos con más liquidez atrapada — empieza por los 2-3 más urgentes, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Proyecto / Cliente",
@@ -208,7 +208,7 @@
         "titulo": "Reducir la morosidad y acelerar los cobros activos",
         "secciones": [
           {
-            "titulo": "Tus clientes con más morosidad — no hace falta meterlos todos, con 2 o 3 basta",
+            "titulo": "Tus clientes con más morosidad — empieza por los 2-3 más urgentes, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Cliente",
@@ -296,35 +296,29 @@
         "titulo": "Corregir el desfase entre el ciclo de cobros y el de pagos",
         "secciones": [
           {
-            "titulo": "1. Calendario semanal de tesorería",
+            "titulo": "1. Tu desfase real",
             "columnas": [
               {
-                "etiqueta": "Semana",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Cobros previstos (€)",
+                "etiqueta": "Días que tardas en cobrar de media",
                 "tipo": "numero",
-                "clave": "cobros"
+                "clave": "dias_cobro",
+                "placeholder": "ej. 60"
               },
               {
-                "etiqueta": "Pagos comprometidos (€)",
+                "etiqueta": "Días que tardas en pagar de media",
                 "tipo": "numero",
-                "clave": "pagos"
+                "clave": "dias_pago",
+                "placeholder": "ej. 30"
               },
               {
-                "etiqueta": "Saldo Neto (€)",
+                "etiqueta": "Desfase (días)",
                 "tipo": "calculada",
-                "clave": "saldo_neto",
-                "formula": "cobros-pagos",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Notas",
-                "tipo": "texto"
+                "clave": "desfase_dias",
+                "formula": "dias_cobro-dias_pago",
+                "unidad": "numero"
               }
             ],
-            "filas_iniciales": 13
+            "filas_iniciales": 1
           },
           {
             "titulo": "2. Negociación de plazos con proveedores",
@@ -464,7 +458,7 @@
         "titulo": "Convertir los anticipos retenidos en ingresos ejecutados",
         "secciones": [
           {
-            "titulo": "Tus anticipos más urgentes — no hace falta meterlos todos, con 2 o 3 basta",
+            "titulo": "Tus anticipos más urgentes — empieza por los 2-3 más urgentes, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Cliente",
@@ -478,32 +472,13 @@
                 "placeholder": "8000"
               },
               {
-                "etiqueta": "% ejecución actual",
-                "tipo": "numero",
-                "clave": "pct_ejec",
-                "placeholder": "ej. 40"
-              },
-              {
-                "etiqueta": "Importe ejecutado (€)",
-                "tipo": "calculada",
-                "clave": "importe_ejec",
-                "formula": "importe_ant*pct_ejec/100",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Pendiente ejecutar (€)",
-                "tipo": "calculada",
-                "clave": "pendiente_ejec",
-                "formula": "importe_ant-importe_ejec",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Estado",
+                "etiqueta": "Motivo por el que no avanza",
                 "tipo": "opciones",
                 "opciones": [
-                  "Pendiente",
-                  "Hito cumplido",
-                  "Cerrado"
+                  "Trabajo sin arrancar",
+                  "Cliente sin dar luz verde",
+                  "Falta un hito intermedio sin programar",
+                  "Ya está listo, falta facturar"
                 ]
               },
               {
@@ -512,16 +487,20 @@
                 "clave": "pct_recuperable",
                 "decision_opciones": [
                   {
-                    "label": "Entregar completo y cobrar todo",
-                    "valor": 100
-                  },
-                  {
-                    "label": "Renegociar alcance",
-                    "valor": 80
-                  },
-                  {
-                    "label": "Cerrar parcial y cobrar ya",
+                    "label": "Arrancar el trabajo ya",
                     "valor": 60
+                  },
+                  {
+                    "label": "Contactar al cliente para luz verde",
+                    "valor": 50
+                  },
+                  {
+                    "label": "Programar el hito que falta",
+                    "valor": 70
+                  },
+                  {
+                    "label": "Facturar ahora",
+                    "valor": 100
                   }
                 ]
               },
@@ -529,7 +508,7 @@
                 "etiqueta": "Recuperación estimada (€)",
                 "tipo": "calculada",
                 "clave": "recuperacion",
-                "formula": "pendiente_ejec*pct_recuperable/100",
+                "formula": "importe_ant*pct_recuperable/100",
                 "unidad": "eur",
                 "contribuye_valor": true
               },
@@ -545,7 +524,7 @@
       },
       "r6": {
         "tipo": "pipeline",
-        "titulo": "Activar la facturación paralizada por procesos internos",
+        "titulo": "Facturas bloqueadas sin cobrar",
         "entidad_nombre": "Factura",
         "etapas": [
           "Bloqueada",
@@ -1492,7 +1471,7 @@
         "titulo": "Mapa de flujo operativo",
         "secciones": [
           {
-            "titulo": "Tus pasos con más tiempo perdido — no hace falta mapear el proceso entero, con 2 o 3 basta",
+            "titulo": "Tus pasos con más tiempo perdido — empieza por los 2-3 que más tiempo te cuestan, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Paso / Actividad",
@@ -1624,7 +1603,7 @@
         "titulo": "SLAs internos y tiempos de respuesta",
         "secciones": [
           {
-            "titulo": "Tus tipos de solicitud con peor cumplimiento de SLA — no hace falta meterlos todos, con 2 o 3 basta",
+            "titulo": "Tus tipos de solicitud con peor cumplimiento de SLA — empieza por los 2-3 peores, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Tipo de solicitud",
@@ -1681,7 +1660,7 @@
         "titulo": "Estándar para tareas repetidas",
         "secciones": [
           {
-            "titulo": "Tus tareas con más ahorro potencial — no hace falta estandarizarlas todas, con 2 o 3 basta",
+            "titulo": "Tus tareas con más ahorro potencial — empieza por las 2-3 con más ahorro, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Tarea",
