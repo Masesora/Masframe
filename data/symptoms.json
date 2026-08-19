@@ -10361,7 +10361,8 @@
               {
                 "etiqueta": "Puntuación (0-10)",
                 "tipo": "numero",
-                "clave": "puntuacion"
+                "clave": "puntuacion",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Categoría",
