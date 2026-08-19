@@ -4233,6 +4233,16 @@
                 "formula": "(ingresos-costecanal)*100/costecanal",
                 "unidad": "pct",
                 "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar (más inversión)",
+                  "Mantener",
+                  "Optimizar antes de escalar",
+                  "Abandonar canal"
+                ]
               }
             ],
             "filas_iniciales": 3
