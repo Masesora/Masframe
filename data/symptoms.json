@@ -322,7 +322,21 @@
                 "no_sumar": true
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 1,
+            "interpretacion": {
+              "clave": "desfase_dias",
+              "reglas": [
+                {
+                  "min": 1,
+                  "color": "rojo",
+                  "texto": "Cobras de media más tarde de lo que tienes que pagar: tienes un hueco de caja real. Dos palancas para cerrarlo -- pide más días a tus proveedores (sección 2) o busca financiación puente para cubrirlo mientras tanto (sección 3)."
+                },
+                {
+                  "color": "verde",
+                  "texto": "Cobras antes de tener que pagar -- no tienes un hueco de caja por este motivo. Puedes revisar igualmente las secciones 2 y 3 si quieres más colchón, pero no es urgente."
+                }
+              ]
+            }
           },
           {
             "titulo": "2. Negociación de plazos con proveedores",
@@ -501,11 +515,6 @@
             "placeholder": "ej. Constructora Vidal"
           },
           {
-            "etiqueta": "Factura / Expediente",
-            "tipo": "texto",
-            "placeholder": "ej. FRA-2026-014"
-          },
-          {
             "etiqueta": "Importe a facturar (€)",
             "tipo": "numero",
             "clave": "importe",
@@ -525,19 +534,27 @@
             ]
           },
           {
-            "etiqueta": "Responsable de desbloquear",
-            "tipo": "texto",
-            "placeholder": "ej. Dpto. administración"
-          },
-          {
-            "etiqueta": "Fecha límite",
-            "tipo": "texto",
-            "placeholder": "ej. 15/09/2026"
-          },
-          {
-            "etiqueta": "Acción concreta",
-            "tipo": "texto",
-            "placeholder": "ej. Enviar contrato para firma"
+            "etiqueta": "Decisión",
+            "tipo": "decision",
+            "decision_opciones": [
+              {
+                "label": "Emitir la factura ahora, ya está lista",
+                "valor": 1
+              },
+              {
+                "label": "Pedir lo que falta para poder emitirla",
+                "valor": 2
+              },
+              {
+                "label": "Renegociar antes de facturar",
+                "valor": 3
+              },
+              {
+                "label": "Aún sin decidir",
+                "valor": 4
+              }
+            ],
+            "clave": "decision"
           }
         ],
         "filas_iniciales": 2
