@@ -1267,7 +1267,8 @@
               {
                 "etiqueta": "Coste Hora Eq. (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste equipo (€)",
@@ -1327,7 +1328,8 @@
               {
                 "etiqueta": "Coste Hora Propio (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas totales (h)",
