@@ -225,7 +225,8 @@
                 "etiqueta": "Días de mora",
                 "tipo": "numero",
                 "clave": "dias",
-                "placeholder": "ej. 45"
+                "placeholder": "ej. 45",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste financiero de la demora (€)",
@@ -302,20 +303,23 @@
                 "etiqueta": "Días que tardas en cobrar de media",
                 "tipo": "numero",
                 "clave": "dias_cobro",
-                "placeholder": "ej. 60"
+                "placeholder": "ej. 60",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Días que tardas en pagar de media",
                 "tipo": "numero",
                 "clave": "dias_pago",
-                "placeholder": "ej. 30"
+                "placeholder": "ej. 30",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Desfase (días)",
                 "tipo": "calculada",
                 "clave": "desfase_dias",
                 "formula": "dias_cobro-dias_pago",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 1
@@ -335,19 +339,22 @@
               {
                 "etiqueta": "Plazo actual (días)",
                 "tipo": "numero",
-                "clave": "plazo_actual"
+                "clave": "plazo_actual",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Plazo solicitado (días)",
                 "tipo": "numero",
-                "clave": "plazo_solicitado"
+                "clave": "plazo_solicitado",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Días ganados",
                 "tipo": "calculada",
                 "clave": "dias_ganados",
                 "formula": "plazo_solicitado-plazo_actual",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Liquidez liberada/mes (€)",
@@ -401,7 +408,8 @@
               {
                 "etiqueta": "TAE (%)",
                 "tipo": "numero",
-                "clave": "tae"
+                "clave": "tae",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste mensual (€)",
@@ -412,7 +420,8 @@
               },
               {
                 "etiqueta": "Plazo (meses)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Garantías requeridas",
@@ -708,7 +717,8 @@
               {
                 "etiqueta": "Días vencido",
                 "tipo": "numero",
-                "clave": "dias"
+                "clave": "dias",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste financiero de la demora (€)",
@@ -751,7 +761,8 @@
               {
                 "etiqueta": "Días vencido",
                 "tipo": "numero",
-                "clave": "dias"
+                "clave": "dias",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Acción de reclamación",
@@ -843,7 +854,8 @@
               {
                 "etiqueta": "% anticipo",
                 "tipo": "numero",
-                "clave": "pct"
+                "clave": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Importe a cobrar ya (€)",
@@ -993,7 +1005,8 @@
               {
                 "etiqueta": "Margen Obj. %",
                 "tipo": "numero",
-                "clave": "margen_obj"
+                "clave": "margen_obj",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Precio Mín. Viable (€)",
@@ -1048,7 +1061,8 @@
               {
                 "etiqueta": "Descuento Hab. %",
                 "tipo": "numero",
-                "clave": "dp"
+                "clave": "dp",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Precio Real Cobrado (€)",
@@ -1072,21 +1086,24 @@
                 "tipo": "calculada",
                 "clave": "mt",
                 "formula": "(pt-ce)/pt*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Margen c/ Desc. %",
                 "tipo": "calculada",
                 "clave": "md",
                 "formula": "(prc-ce)/prc*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Diferencia Margen (pp)",
                 "tipo": "calculada",
                 "clave": "dif",
                 "formula": "md-mt",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Margen Perdido/mes (€)",
@@ -1285,7 +1302,8 @@
               {
                 "etiqueta": "Margen Bruto %",
                 "tipo": "numero",
-                "clave": "margen_bruto"
+                "clave": "margen_bruto",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas Equipo/mes",
@@ -1380,7 +1398,8 @@
               },
               {
                 "etiqueta": "NPS (1-5)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Potencial",
@@ -1551,7 +1570,8 @@
               {
                 "etiqueta": "Duración media (h)",
                 "tipo": "numero",
-                "clave": "dur"
+                "clave": "dur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Impacto",
@@ -1752,7 +1772,8 @@
                 "tipo": "calculada",
                 "clave": "pct_cumplimiento",
                 "formula": "(valor_actual/meta)*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Frecuencia medición",
@@ -1878,7 +1899,8 @@
                 "tipo": "calculada",
                 "clave": "meses_payback",
                 "formula": "costeresolver/costedep",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 4
@@ -1918,7 +1940,8 @@
               {
                 "etiqueta": "% Completado",
                 "tipo": "numero",
-                "clave": "pct"
+                "clave": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas estimadas",
@@ -2346,7 +2369,8 @@
               },
               {
                 "etiqueta": "% iniciados cliente",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Motivo principal",
@@ -2731,7 +2755,8 @@
                 "tipo": "calculada",
                 "clave": "pct_error",
                 "formula": "errores*100/entregas",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -2819,7 +2844,8 @@
                 "tipo": "calculada",
                 "clave": "reduccion",
                 "formula": "(antes-despues)*100/antes",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Retrabajos evitados",
@@ -2937,7 +2963,8 @@
                 "tipo": "calculada",
                 "clave": "conversion",
                 "formula": "clientes*100/leads",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste por cliente (€)",
@@ -3012,7 +3039,8 @@
                 "tipo": "calculada",
                 "clave": "conversion",
                 "formula": "leads*100/seguidores",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -3090,7 +3118,8 @@
               },
               {
                 "etiqueta": "Meses trabajado",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Inversión (€)",
@@ -3140,7 +3169,8 @@
                 "tipo": "calculada",
                 "clave": "roi",
                 "formula": "(ingresos-inversion)*100/inversion",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -3414,7 +3444,8 @@
                 "tipo": "calculada",
                 "clave": "pct_objetivo",
                 "formula": "ingresos*100/objetivo",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 8
@@ -3478,7 +3509,8 @@
                 "tipo": "calculada",
                 "clave": "pct_objetivo",
                 "formula": "total*100/objetivo",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 4
@@ -3516,7 +3548,8 @@
               },
               {
                 "etiqueta": "Tiempo máx (días)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Acción si supera",
@@ -3524,7 +3557,8 @@
               },
               {
                 "etiqueta": "Probabilidad %",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Responsable",
@@ -3753,7 +3787,8 @@
               {
                 "etiqueta": "Probabilidad %",
                 "tipo": "numero",
-                "clave": "prob"
+                "clave": "prob",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Mes cierre",
@@ -3806,7 +3841,8 @@
               {
                 "etiqueta": "Probabilidad %",
                 "tipo": "numero",
-                "clave": "prob"
+                "clave": "prob",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Valor (€)",
@@ -4047,7 +4083,8 @@
               },
               {
                 "etiqueta": "Peso (1-5)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Respuesta mínima",
@@ -4219,7 +4256,8 @@
                 "tipo": "calculada",
                 "clave": "pct_calif",
                 "formula": "calificados*100/totales",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ingresos generados (€)",
@@ -4233,7 +4271,8 @@
                 "tipo": "calculada",
                 "clave": "roi",
                 "formula": "(ingresos-costecanal)*100/costecanal",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 3
@@ -4369,7 +4408,8 @@
               {
                 "etiqueta": "Plazo (meses)",
                 "tipo": "numero",
-                "clave": "plazo"
+                "clave": "plazo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Impacto mensualizado (€/mes)",
@@ -4415,12 +4455,14 @@
               {
                 "etiqueta": "Comprende visión (1-5)",
                 "tipo": "numero",
-                "clave": "comprende"
+                "clave": "comprende",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Comparte visión (1-5)",
                 "tipo": "numero",
-                "clave": "comparte"
+                "clave": "comparte",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Duda planteada",
@@ -4435,7 +4477,8 @@
                 "tipo": "calculada",
                 "clave": "alineacion",
                 "formula": "(comprende+comparte)/2",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 5
@@ -4468,7 +4511,8 @@
                 "tipo": "calculada",
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -4506,7 +4550,8 @@
                 "tipo": "calculada",
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -4544,7 +4589,8 @@
                 "tipo": "calculada",
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -4570,24 +4616,28 @@
               {
                 "etiqueta": "Obj 1 %",
                 "tipo": "numero",
-                "clave": "o1"
+                "clave": "o1",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Obj 2 %",
                 "tipo": "numero",
-                "clave": "o2"
+                "clave": "o2",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Obj 3 %",
                 "tipo": "numero",
-                "clave": "o3"
+                "clave": "o3",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Cumplimiento medio (%)",
                 "tipo": "calculada",
                 "clave": "cumpl_medio",
                 "formula": "(o1+o2+o3)/3",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 4
@@ -4637,7 +4687,8 @@
                 "tipo": "calculada",
                 "clave": "pct_estr",
                 "formula": "h_estr*100/total_h",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -4924,7 +4975,8 @@
                 "tipo": "calculada",
                 "clave": "pct_estr",
                 "formula": "h_estr*100/total_h",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -4959,7 +5011,8 @@
               {
                 "etiqueta": "% Completado",
                 "tipo": "numero",
-                "clave": "pct"
+                "clave": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "H. invertidas",
@@ -5402,7 +5455,8 @@
                 "tipo": "calculada",
                 "clave": "margen_pct",
                 "formula": "margen_bruto*100/fact",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -5622,7 +5676,8 @@
               {
                 "etiqueta": "Margen %",
                 "tipo": "numero",
-                "clave": "margen"
+                "clave": "margen",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Nº clientes",
@@ -5631,7 +5686,8 @@
               },
               {
                 "etiqueta": "Crecimiento 6 meses %",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Diferencial?",
@@ -6035,7 +6091,8 @@
                 "tipo": "calculada",
                 "clave": "media",
                 "formula": "(s1+s2+s3+s4)/4",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -7428,7 +7485,8 @@
                 "tipo": "calculada",
                 "clave": "margen_pct",
                 "formula": "margen_u/precio*100",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Es el estrella?",
@@ -7500,7 +7558,8 @@
                 "tipo": "calculada",
                 "clave": "margen_n_pct",
                 "formula": "margen_n/ingresos*100",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -7531,7 +7590,8 @@
               {
                 "etiqueta": "Margen neto (%)",
                 "tipo": "numero",
-                "clave": "margen"
+                "clave": "margen",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas dedicadas/mes",
@@ -7955,7 +8015,8 @@
                 "tipo": "calculada",
                 "clave": "pct",
                 "formula": "valor/meta*100",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Tendencia",
@@ -8647,7 +8708,8 @@
               },
               {
                 "etiqueta": "Saturación (1-5)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -9356,12 +9418,14 @@
               {
                 "etiqueta": "Meses hasta rendir al 100%",
                 "tipo": "numero",
-                "clave": "meses_rampa"
+                "clave": "meses_rampa",
+                "no_sumar": true
               },
               {
                 "etiqueta": "% productividad perdida durante ese tiempo",
                 "tipo": "numero",
-                "clave": "pct_perdida"
+                "clave": "pct_perdida",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste de baja productividad (€)",
@@ -10052,12 +10116,14 @@
               {
                 "etiqueta": "Valor técnico (1-5)",
                 "tipo": "numero",
-                "clave": "valor"
+                "clave": "valor",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste al clima (1-5)",
                 "tipo": "numero",
-                "clave": "coste_clima"
+                "clave": "coste_clima",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Riesgo de su salida",
@@ -10313,7 +10379,8 @@
               {
                 "etiqueta": "Días resolución",
                 "tipo": "numero",
-                "clave": "dias_res"
+                "clave": "dias_res",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 5
@@ -10389,12 +10456,14 @@
               {
                 "etiqueta": "Puntuación media (1-5)",
                 "tipo": "numero",
-                "clave": "punt_media"
+                "clave": "punt_media",
+                "no_sumar": true
               },
               {
                 "etiqueta": "% Satisfechos (>=4)",
                 "tipo": "numero",
-                "clave": "pct_satisf"
+                "clave": "pct_satisf",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Punto crítico principal",
@@ -10478,7 +10547,8 @@
                 "etiqueta": "Puntuación (1-5)",
                 "tipo": "numero",
                 "clave": "puntuacion",
-                "contribuye_valor_si": "5"
+                "contribuye_valor_si": "5",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Fecha",
@@ -10527,7 +10597,8 @@
               {
                 "etiqueta": "Prob. churn (%)",
                 "tipo": "numero",
-                "clave": "prob_churn"
+                "clave": "prob_churn",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Acción preventiva",
@@ -10853,7 +10924,8 @@
               {
                 "etiqueta": "Puntuación (1-5)",
                 "tipo": "numero",
-                "clave": "puntuacion"
+                "clave": "puntuacion",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Comentario clave",
@@ -11438,12 +11510,14 @@
               {
                 "etiqueta": "Nivel esperado (%)",
                 "tipo": "numero",
-                "clave": "esperado"
+                "clave": "esperado",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Nivel real (%)",
                 "tipo": "numero",
-                "clave": "real"
+                "clave": "real",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Gap (puntos)",
@@ -11716,7 +11790,8 @@
               },
               {
                 "etiqueta": "Documentado (%)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Dónde está documentado",
@@ -12127,19 +12202,22 @@
               {
                 "etiqueta": "T. medio espera (días)",
                 "tipo": "numero",
-                "clave": "t_espera"
+                "clave": "t_espera",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. objetivo (días)",
                 "tipo": "numero",
-                "clave": "t_obj"
+                "clave": "t_obj",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Gap (días)",
                 "tipo": "calculada",
                 "clave": "gap_dias",
                 "formula": "t_espera-t_obj",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Cuello de botella identificado",
@@ -12185,7 +12263,8 @@
                 "tipo": "calculada",
                 "clave": "pct_urg",
                 "formula": "h_urg/h_total*100",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Origen principal",
