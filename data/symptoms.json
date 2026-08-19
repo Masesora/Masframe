@@ -382,83 +382,37 @@
             "filas_iniciales": 3
           },
           {
-            "titulo": "3. Comparativa de financiación a corto plazo",
+            "titulo": "3. Financiación puente",
             "columnas": [
               {
-                "etiqueta": "Instrumento",
+                "etiqueta": "Vía de financiación a explorar",
                 "tipo": "opciones",
                 "opciones": [
-                  "Póliza de crédito",
-                  "Factoring",
-                  "Confirming",
-                  "Descuento comercial",
-                  "Préstamo corto plazo",
-                  "Socio inversor"
+                  "Línea de crédito con tu banco",
+                  "Factoring / adelanto de facturas",
+                  "Préstamo a corto plazo",
+                  "Buscar un socio o inversor",
+                  "Ninguna, prefiero ajustar sin financiación externa"
                 ]
               },
               {
-                "etiqueta": "Entidad",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe disp. (€)",
-                "tipo": "numero",
-                "clave": "importe"
-              },
-              {
-                "etiqueta": "TAE (%)",
-                "tipo": "numero",
-                "clave": "tae",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Coste mensual (€)",
-                "tipo": "calculada",
-                "clave": "coste_mensual",
-                "formula": "importe*(tae/100)/12",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Plazo (meses)",
-                "tipo": "numero",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Garantías requeridas",
-                "tipo": "texto"
+                "etiqueta": "Con quién vas a hablar",
+                "tipo": "texto",
+                "placeholder": "ej. Mi banco, un gestor de factoring..."
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Estudiar",
-                  "Descartar",
-                  "Solicitar"
+                  "Pedir cita esta semana",
+                  "Reunir la documentación primero",
+                  "Esperar y ver cómo evoluciona el mes",
+                  "Descartado por ahora"
                 ]
-              },
-              {
-                "etiqueta": "Estado de solicitud",
-                "tipo": "opciones",
-                "opciones": [
-                  "—",
-                  "Pendiente",
-                  "Aprobado",
-                  "Rechazado"
-                ]
-              },
-              {
-                "etiqueta": "Importe aprobado (€)",
-                "tipo": "numero",
-                "placeholder": "ej. 15000"
               }
             ],
-            "filas_iniciales": 3,
-            "veredicto": {
-              "clave": "coste_mensual",
-              "direccion": "menor",
-              "etiqueta": "Más barato ahora mismo",
-              "columna_nombre": 1
-            }
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
