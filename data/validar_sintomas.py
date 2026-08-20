@@ -24,6 +24,15 @@ C2_HERR  = {"", "retencion", "margen"}
 GENERIC_COLS = {"Elemento / paso a trabajar", "Elemento / paso a trabajar "}
 ACTION_PLAN_OK = {"CIR-S1"}  # unico sintoma donde la plantilla generica es correcta por diseno
 
+# Excepcion deliberada al invariante I-1 ("capa_1_options/capa_2_options siempre 6 items,
+# capa_3_plan siempre r1-r6"), decidida con Maite el 20 ago 2026 solo para este sintoma: de las
+# 6 "causas" originales de UCI-S2 (Fuga Invisible) solo 2 resultaron ser reales, distintas,
+# inmediatas y no redundantes con software ya existente -- las otras 4 eran o bien el propio
+# software del cliente resolviendolas ya, o consultoria generica sin justificar el precio. Ver
+# memoria project_ux_validator_5ago2026 / MASFRAME_PLAN_V12.5.md (pendiente de nueva seccion).
+# No es un patron a copiar en otros sintomas -- es la excepcion, no la regla.
+CAUSAS_REDUCIDAS = {"UCI-S2": 2}
+
 def c2_family(dec):
     n=(dec or "").lower()
     if "dafo" in n: return "dafo"
@@ -72,10 +81,15 @@ def lint_capa3(s, E, W):
         W.append("capa_3_plan ausente o no es dict")
         return
 
-    # todos los recursos r1-r6 deben existir
-    for rk in ["r1","r2","r3","r4","r5","r6"]:
+    # todos los recursos r1-r6 deben existir (o r1-rN si el sintoma esta en CAUSAS_REDUCIDAS)
+    n_ramas = CAUSAS_REDUCIDAS.get(sid, 6)
+    for rk in [f"r{i}" for i in range(1, n_ramas + 1)]:
         if rk not in cp:
             E.append(f"capa_3_plan.{rk} ausente")
+    if sid in CAUSAS_REDUCIDAS:
+        extra = [rk for rk in cp if rk.startswith("r") and rk[1:].isdigit() and int(rk[1:]) > n_ramas]
+        if extra:
+            E.append(f"capa_3_plan tiene ramas {extra} de sobra -- {sid} esta limitado a {n_ramas} causas (CAUSAS_REDUCIDAS)")
 
     for rk, recurso in cp.items():
         if not isinstance(recurso, dict): continue
@@ -297,6 +311,17 @@ def _lint_nativa(sid, prefix, recurso, E, W):
                 cur_label = cols[0].get("etiqueta","")
                 if cur_label.strip() != prev_label.strip():
                     W.append(f"{prefix}.sec[{i}]: entidad_compartida='{ec}' pero primera columna '{cur_label}' difiere de sec[{prev_i}] '{prev_label}' — el frontend las vincula por posicion, asegurate de que son la misma entidad")
+
+        # carta_reclamacion (UCI-S2.r2, 20 ago 2026): el generador de PDF en TreatmentPage.tsx
+        # busca estas 4 claves exactas por nombre -- si falta una, el boton simplemente no
+        # aparece (config invalida silenciosa para el cliente), asi que aqui se marca como ERROR
+        # de catalogo, no un aviso.
+        if sec.get("carta_reclamacion"):
+            claves_sec = {c.get("clave") for c in cols}
+            requeridas = {"cliente", "factura", "importe", "dias_retraso"}
+            faltan = requeridas - claves_sec
+            if faltan:
+                E.append(f"{sp}: carta_reclamacion=true pero faltan columnas con clave {sorted(faltan)} — el boton de PDF no aparecera")
 
 # ── Contrato del motor 'pipeline' (Fase 2, piloto UCI-S1.r6, sesion 7 ago 2026 §XXV.E) ──
 # Entidad que avanza por etapas visibles (tarjetas agrupadas por etapa, ej. Bloqueada → En
@@ -661,17 +686,18 @@ def lint(s):
     # --- claves requeridas ---
     for k in REQUIRED:
         if k not in s: E.append(f"falta el campo requerido '{k}'")
-    # --- C2 options: string, 6 items ---
+    # --- C2 options: string, 6 items (o N items si el sintoma esta en CAUSAS_REDUCIDAS) ---
+    n_causas = CAUSAS_REDUCIDAS.get(sid, 6)
     c2=s.get("capa_2_options")
     if not isinstance(c2,str): E.append("capa_2_options no es string (el frontend hace .split(';'))")
     else:
         items=[x for x in (p.strip() for p in c2.split(";")) if x]
-        if len(items)!=6: E.append(f"capa_2_options tiene {len(items)} items (deben ser 6)")
-    # --- C1 options: 6 items ---
+        if len(items)!=n_causas: E.append(f"capa_2_options tiene {len(items)} items (deben ser {n_causas})")
+    # --- C1 options: mismo N ---
     c1=s.get("capa_1_options")
     if isinstance(c1,str):
         it1=[x for x in (p.strip() for p in c1.split(";")) if x]
-        if len(it1)!=6: E.append(f"capa_1_options tiene {len(it1)} items (deben ser 6)")
+        if len(it1)!=n_causas: E.append(f"capa_1_options tiene {len(it1)} items (deben ser {n_causas})")
         if isinstance(c2,str) and len(it1)!=len([x for x in (p.strip() for p in c2.split(';')) if x]):
             W.append("capa_1_options y capa_2_options no tienen el mismo nº de items (consonancia C1-C2)")
     else:

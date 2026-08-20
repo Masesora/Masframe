@@ -575,9 +575,9 @@
     "symptom_name": "Fuga Invisible",
     "logica": "Facturas y entregas, pero el dinero se queda en la calle: lo has ganado y no lo has cobrado.",
     "plan": "PIE",
-    "description_symptom": "Si facturas con normalidad pero tu cuenta no lo refleja, el problema no es cuánto ganas — es cuánto cobras. El dinero que te deben tus clientes es beneficio que ya es tuyo pero que estás financiando gratis, y cuanto más tarda, más se parece a una pérdida.",
-    "kpi_question": "Introduce cuánto de lo que has facturado en los últimos 3 meses sigue SIN cobrar (facturas emitidas pendientes de pago) y el total facturado en esos 3 meses. Si más del 20% sigue en la calle, tu beneficio existe en papel pero no en tu cuenta.",
-    "kpi_impact": "Cuando menos del 20% de lo facturado queda sin cobrar, el dinero que ganas llega de verdad a tu caja y dejas de financiar a tus clientes gratis.",
+    "description_symptom": "Si facturas con normalidad pero tu cuenta no lo refleja, el problema no es cuánto ganas — es cuánto tienes ya vencido sin cobrar. Ese dinero es beneficio tuyo que estás financiando gratis a tus clientes, y cuanto más se alarga el retraso, más se parece a una pérdida.",
+    "kpi_question": "Introduce el importe total de tus facturas actualmente VENCIDAS (ya ha pasado su fecha de pago, aunque sea por un solo día) y el total facturado en los últimos 3 meses. Si más del 20% de lo facturado está vencido sin cobrar, tienes una fuga real de caja — no confundas esto con facturas que aún están dentro de su plazo normal de pago.",
+    "kpi_impact": "Cuando menos del 20% de lo facturado está vencido sin cobrar, el dinero que ya has ganado —y que tus clientes ya deberían haber pagado— entra de verdad en tu caja.",
     "kpi_formula": "(InputA/InputB)*100",
     "kpi_objective": "<20%",
     "threshold_critical": 70,
@@ -587,40 +587,40 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Facturación de los últimos 3 meses aún sin cobrar (€)"
+        "label": "Facturación VENCIDA sin cobrar, últimos 3 meses (€)"
       },
       {
         "id": "inputB",
         "label": "Facturación total de los últimos 3 meses (€)"
       }
     ],
-    "input_a": "Facturación de los últimos 3 meses aún sin cobrar (€)",
+    "input_a": "Facturación VENCIDA sin cobrar, últimos 3 meses (€)",
     "input_b": "Facturación total de los últimos 3 meses (€)",
-    "input_revised_1": "Facturación sin cobrar (post)",
+    "input_revised_1": "Facturación vencida sin cobrar (post)",
     "input_revised_2": "Facturación total 3 meses (post)",
-    "result_revised": "Δ facturación sin cobrar",
+    "result_revised": "Δ facturación vencida sin cobrar",
     "impact_treatment": "Identificamos exactamente qué facturas y qué clientes tienen tu dinero retenido y por cuánto. Lo que ya facturaste deja de quedarse en la calle y pasa a entrar en tu cuenta.",
     "optimizer_impact": "Entrada inmediata de dinero en cuenta sin necesidad de facturar ni vender más.",
     "optimizer_decision": "Radiografía de Cobros Pendientes por Cliente",
-    "example": "Peluquería: de 9.000€ facturados en los últimos 3 meses, 2.700€ siguen sin cobrar, un 30% en la calle. Tras facturar al entregar y reclamar lo vencido, baja al 12% y ese dinero entra por fin en cuenta.",
-    "capa_1_priorizacion": "Facturas emitidas tarde, no al entregar; sin saber cuánto te deben tus clientes hoy; facturas antiguas vencidas que nunca reclamaste en firme; plazos de cobro largos por no pactar condiciones claras; sin pedir anticipo ni señal en los trabajos que lo justifican; cobros perseguidos a mano, sin recordatorios que avisen.",
-    "justi_capa1": "El dinero se atasca por distintas vías. Señala cuáles reconoces para localizar por qué lo que ya has ganado no llega a tu cuenta.",
+    "example": "Peluquería: de 9.000€ facturados en los últimos 3 meses, 1.800€ están vencidos sin cobrar, un 20% en la calle. Tras facturar al entregar y reclamar lo vencido con carta formal, baja al 8% y ese dinero entra por fin en cuenta.",
+    "capa_1_priorizacion": "Emito las facturas tarde, cuando me acuerdo, no al entregar.; Hay facturas ya vencidas que nunca reclamé en firme.",
+    "justi_capa1": "El dinero se atasca por dos vías distintas: lo que nunca facturaste a tiempo, y lo que sí facturaste pero ya venció sin que lo reclamaras en firme. Señala cuál reconoces.",
     "capa_2_decision": "Impacto vs Esfuerzo",
-    "capa_2_options": "Facturar en el acto, al entregar, no a fin de mes.; Sacar la lista de lo que te deben hoy, ordenada por antigüedad.; Reclamar en firme las facturas vencidas, empezando por las mayores.; Pactar por escrito las condiciones de pago en cada venta.; Pedir anticipo o señal en los trabajos que lo justifiquen.; Montar recordatorios automáticos de cobro a los pocos días del vencimiento.",
-    "justi_capa2": "Priorizas qué acción de cobro mueve más dinero con menos esfuerzo: normalmente facturar antes y reclamar lo vencido pesan más que renegociar plazos. Ordenas por impacto en tu caja.",
+    "capa_2_options": "Facturar en el acto, al entregar, no a fin de mes.; Reclamar en firme cada factura vencida, con una carta formal, no perseguirla a mano.",
+    "justi_capa2": "Priorizas cuál de las dos fugas te cuesta más caja ahora mismo: facturar antes corta la fuga en el origen; reclamar lo vencido recupera lo que ya se te ha escapado.",
     "capa_3_comprension": "Mapa de cobros",
     "justi_capa3": "El Mapa de cobros te muestra quién te debe, cuánto y desde cuándo — la antigüedad de cada deuda. Verás dónde está atascado el dinero que ya ganaste y qué reclamar primero.",
-    "capa_4_cambio": "Rediseño del sistema de cobro",
-    "justi_capa4": "Aquí montas tu sistema de cobro: facturación inmediata al entregar, condiciones de pago por escrito y recordatorios automáticos. El objetivo es que el dinero entre solo, sin perseguirlo.",
-    "capa_5_ejecucion": "Lista de comprobación de rentabilidad",
-    "justi_capa5": "Esta lista de comprobación te sirve para confirmar, una a una, que las acciones del nuevo sistema de cobro se han puesto en marcha y que las facturas pendientes están entrando de verdad en tu cuenta.",
-    "capa_6_seguimiento": "Seguimiento: Facturación sin cobrar",
-    "justi_capa6": "Este indicador mide cuánto de lo que facturas sigue sin cobrar. Compáralo con C0; si baja, el dinero que ya habías ganado está entrando por fin en tu cuenta.",
-    "capa_1_options": "Emito las facturas tarde, cuando me acuerdo, no al entregar.; No sé cuánto dinero me deben mis clientes ahora mismo.; Hay facturas antiguas sin cobrar que nunca reclamé en firme.; Cobro a plazos largos porque nunca pacté condiciones claras.; No pido anticipo ni señal aunque el trabajo lo justifique.; Persigo los cobros a mano, sin recordatorios ni un sistema que avise.",
+    "capa_4_cambio": "Facturar al entregar y reclamar lo vencido",
+    "justi_capa4": "Aquí montas las dos piezas que de verdad frenan la fuga: facturar en el momento de entregar, para que nada se quede sin emitir, y reclamar en firme —por escrito, con carta formal— cada factura que ya ha vencido. Nada de perseguir cobros a mano.",
+    "capa_5_ejecucion": "Checklist de facturación y reclamación",
+    "justi_capa5": "Esta lista de comprobación te sirve para confirmar, una a una, que cada entrega se ha facturado en el acto y que cada factura vencida ha recibido ya su carta de reclamación.",
+    "capa_6_seguimiento": "Seguimiento: Facturación vencida sin cobrar",
+    "justi_capa6": "Este indicador mide cuánto de lo que facturas sigue vencido sin cobrar. Compáralo con C0; si baja, el dinero que ya habías ganado —y que tus clientes ya deberían haber pagado— está entrando por fin en tu cuenta.",
+    "capa_1_options": "Emito las facturas tarde, cuando me acuerdo, no al entregar.; Hay facturas ya vencidas que nunca reclamé en firme.",
     "c2_herramienta": "",
     "kpi_recovery_mode": "financiero",
     "recovery_unit_label": "€ cobrados",
-    "kpi_name": "Facturación sin cobrar",
+    "kpi_name": "Facturación vencida sin cobrar",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": {
@@ -673,17 +673,19 @@
       },
       "r2": {
         "tipo": "nativa",
-        "titulo": "La lista de lo que te deben, por antigüedad",
+        "titulo": "Reclamar en firme cada factura vencida",
         "secciones": [
           {
             "columnas": [
               {
                 "etiqueta": "Cliente",
-                "tipo": "texto"
+                "tipo": "texto",
+                "clave": "cliente"
               },
               {
                 "etiqueta": "Nº factura",
-                "tipo": "texto"
+                "tipo": "texto",
+                "clave": "factura"
               },
               {
                 "etiqueta": "Importe (€)",
@@ -691,16 +693,16 @@
                 "clave": "importe"
               },
               {
-                "etiqueta": "Días vencido",
+                "etiqueta": "Días de retraso desde el vencimiento",
                 "tipo": "numero",
-                "clave": "dias",
+                "clave": "dias_retraso",
                 "no_sumar": true
               },
               {
                 "etiqueta": "Coste financiero de la demora (€)",
                 "tipo": "calculada",
                 "clave": "coste_fin",
-                "formula": "importe*dias*0.1/365",
+                "formula": "importe*dias_retraso*0.1/365",
                 "unidad": "eur"
               },
               {
@@ -708,186 +710,14 @@
                 "tipo": "opciones",
                 "opciones": [
                   "Reclamar ya",
-                  "Aún no vencido, esperar",
-                  "Pasar a incobrable"
-                ]
-              }
-            ],
-            "filas_iniciales": 3,
-            "vista": "tarjeta"
-          }
-        ]
-      },
-      "r3": {
-        "tipo": "nativa",
-        "titulo": "Reclamar en firme las vencidas, de mayor a menor",
-        "secciones": [
-          {
-            "columnas": [
-              {
-                "etiqueta": "Factura",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero",
-                "clave": "importe",
-                "contribuye_valor": true
-              },
-              {
-                "etiqueta": "Días vencido",
-                "tipo": "numero",
-                "clave": "dias",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Acción de reclamación",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pendiente",
-                  "Reclamada",
-                  "Prometido",
+                  "Aún no vencida, esperar",
                   "Cobrada"
                 ]
-              },
-              {
-                "etiqueta": "Coste financiero de la demora (€)",
-                "tipo": "calculada",
-                "clave": "coste_fin",
-                "formula": "importe*dias*0.1/365",
-                "unidad": "eur"
-              }
-            ],
-            "filas_iniciales": 3
-          }
-        ]
-      },
-      "r4": {
-        "tipo": "nativa",
-        "titulo": "Pactar por escrito las condiciones de pago",
-        "secciones": [
-          {
-            "columnas": [
-              {
-                "etiqueta": "Tipo de cliente / venta",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Plazo de pago",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Forma de pago",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "% anticipo",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Exigir anticipo obligatorio",
-                  "Acortar plazo de pago",
-                  "Formalizar por contrato",
-                  "Mantener condiciones actuales"
-                ]
               }
             ],
             "filas_iniciales": 3,
-            "vista": "tarjeta"
-          }
-        ]
-      },
-      "r5": {
-        "tipo": "nativa",
-        "titulo": "Pedir anticipo o señal donde tenga sentido",
-        "secciones": [
-          {
-            "columnas": [
-              {
-                "etiqueta": "Trabajo / proyecto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero",
-                "clave": "importe"
-              },
-              {
-                "etiqueta": "¿Requiere anticipo?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "% anticipo",
-                "tipo": "numero",
-                "clave": "pct",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Importe a cobrar ya (€)",
-                "tipo": "calculada",
-                "clave": "a_cobrar",
-                "formula": "importe*pct/100",
-                "unidad": "eur",
-                "contribuye_valor": true
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pedir anticipo ahora",
-                  "No aplica, ya cobrado",
-                  "Aplicar a futuros proyectos similares",
-                  "Sin acción"
-                ]
-              }
-            ],
-            "filas_iniciales": 3,
-            "vista": "tarjeta"
-          }
-        ]
-      },
-      "r6": {
-        "tipo": "nativa",
-        "titulo": "Recordatorios de cobro automáticos",
-        "secciones": [
-          {
-            "columnas": [
-              {
-                "etiqueta": "Momento",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Canal",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Mensaje tipo",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Activar recordatorio automático",
-                  "Delegar a gestoría",
-                  "Mantener seguimiento manual",
-                  "Sin acción por ahora"
-                ]
-              }
-            ],
-            "filas_iniciales": 4,
-            "vista": "tarjeta"
+            "vista": "tarjeta",
+            "carta_reclamacion": true
           }
         ]
       }
