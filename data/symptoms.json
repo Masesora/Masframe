@@ -631,11 +631,13 @@
             "columnas": [
               {
                 "etiqueta": "Trabajo entregado",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Reforma cocina Sra. García"
               },
               {
                 "etiqueta": "Fecha entrega",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "DD/MM/AAAA"
               },
               {
                 "etiqueta": "¿Facturado el mismo día?",
@@ -649,6 +651,7 @@
               {
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
+                "placeholder": "ej. 450",
                 "suma_si": {
                   "clave_condicion": "facturado",
                   "valor_condicion": "No",
@@ -680,23 +683,27 @@
               {
                 "etiqueta": "Cliente",
                 "tipo": "texto",
-                "clave": "cliente"
+                "clave": "cliente",
+                "placeholder": "ej. Construcciones Pérez SL"
               },
               {
                 "etiqueta": "Nº factura",
                 "tipo": "texto",
-                "clave": "factura"
+                "clave": "factura",
+                "placeholder": "ej. F-2026-014"
               },
               {
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
-                "clave": "importe"
+                "clave": "importe",
+                "placeholder": "ej. 850"
               },
               {
                 "etiqueta": "Días de retraso desde el vencimiento",
                 "tipo": "numero",
                 "clave": "dias_retraso",
-                "no_sumar": true
+                "no_sumar": true,
+                "placeholder": "ej. 15"
               },
               {
                 "etiqueta": "Coste financiero de la demora (€)",
