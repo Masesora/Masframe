@@ -643,17 +643,12 @@
                 "opciones": [
                   "No",
                   "Sí"
-                ],
-                "clave": "facturado"
+                ]
               },
               {
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
-                "suma_si": {
-                  "clave_condicion": "facturado",
-                  "valor_condicion": "No",
-                  "etiqueta_total": "Sin facturar todavía (€)"
-                }
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Decisión",
