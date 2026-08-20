@@ -17,8 +17,11 @@ from pymongo import MongoClient
 import random, string
 import os
 import json
+import stripe
 
-from routers.auth_deps import require_cc_or_admin
+from routers.auth_deps import require_cc_or_admin, get_current_user, check_owns_or_internal
+
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 from email_service import send_ese_email, send_pago_email
 from routers.contracts import generar_documentos_interno
@@ -368,7 +371,15 @@ async def get_ese(codigo: str):
 # ─────────────────────────────────────────────────────────────
 
 @router.patch("/{codigo}")
-async def actualizar_pago(codigo: str, data: PagoUpdate):
+async def actualizar_pago(
+    codigo: str,
+    data: PagoUpdate,
+    user: dict = Depends(get_current_user),
+):
+    # Sin esto cualquiera con el código MAS (visible en la URL de scanner-reception,
+    # nada secreto) podía activar la cuenta de OTRO cliente sin tocar Stripe para nada.
+    check_owns_or_internal(user, codigo)
+
     col = get_collection()
 
     cliente = col.find_one({"codigo": codigo})
@@ -383,6 +394,66 @@ async def actualizar_pago(codigo: str, data: PagoUpdate):
     update_data["updated_at"] = ahora
 
     if data.pago_confirmado:
+        # El cliente puede mandar pago_confirmado:true sin haber pagado nada — antes se
+        # confiaba tal cual y esto generaba contrato + factura reales. Verificamos el
+        # PaymentIntent directamente contra Stripe (no contra lo que diga el body) antes
+        # de activar nada.
+        if not data.stripe_payment_intent:
+            raise HTTPException(
+                status_code=400,
+                detail="Falta la referencia de pago de Stripe",
+            )
+        try:
+            intent = stripe.PaymentIntent.retrieve(data.stripe_payment_intent)
+        except stripe.error.StripeError as e:
+            raise HTTPException(
+                status_code=402,
+                detail=f"No se pudo verificar el pago con Stripe: {str(e)}",
+            )
+        if intent.status != "succeeded":
+            raise HTTPException(
+                status_code=402,
+                detail=f"El pago no está confirmado en Stripe (estado: {intent.status})",
+            )
+        # Un mismo PaymentIntent no puede activar dos expedientes distintos (replay del
+        # mismo pago real contra otro código, o reintento tras ya haberlo consumido).
+        ya_usado = col.find_one({
+            "stripe_payment_intent": data.stripe_payment_intent,
+            "codigo": {"$ne": codigo},
+        })
+        if ya_usado:
+            raise HTTPException(
+                status_code=409,
+                detail="Este pago ya se usó para activar otro expediente",
+            )
+        # El importe declarado por el cliente debe coincidir con lo que Stripe cobró de
+        # verdad (Stripe trabaja en céntimos). Desde que /payments/create-payment-intent
+        # calcula `amount` en servidor (ver payments_router.py, sesión 8 ago 2026) en vez de
+        # aceptar el valor del cliente, esta comprobación ya está anclada a un precio real,
+        # no solo a que dos números que manda el propio cliente coincidan entre sí.
+        if data.importe is not None:
+            centimos_esperados = round(data.importe * 100)
+            if abs(intent.amount - centimos_esperados) > 1:
+                raise HTTPException(
+                    status_code=400,
+                    detail="El importe no coincide con el pago verificado en Stripe",
+                )
+        # Swap de síntomas: el cliente podría pagar el PaymentIntent de un plan pequeño (pocos
+        # síntomas, precio bajo) y luego, en esta misma llamada, activar una lista de síntomas
+        # más larga que la que se usó para calcular ese precio. Los metadatos del PaymentIntent
+        # los fijó el servidor al crearlo (el cliente no puede tocarlos con la clave
+        # publicable), así que son la fuente fiable de qué se pagó de verdad.
+        activos = data.especialidades_activas or data.sintomas_activos
+        if activos is not None:
+            sintomas_pagados = (intent.metadata or {}).get("sintomas", "")
+            if sintomas_pagados:
+                pagados_set = set(sintomas_pagados.split(","))
+                activos_set = set(str(s) for s in activos)
+                if activos_set != pagados_set:
+                    raise HTTPException(
+                        status_code=400,
+                        detail="Los síntomas a activar no coinciden con los que se pagaron",
+                    )
         update_data["fase"] = "pago_completado"
         update_data["fecha_activacion"] = ahora.isoformat()
 

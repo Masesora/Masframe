@@ -584,6 +584,10 @@ Fase futura: herramientas embebidas en plataforma. Ruta base: `data/herramientas
 | C6 específico por síntoma | Todos los síntomas tienen `capa_6_seguimiento = "OKR tracking"` genérico. Necesita métricas específicas por síntoma. |
 | BI Dashboard | Backend `/bi-stats` + campo `origen` (7 valores) + `plan_historia` + frontend SectionDashboard |
 | Typos symptoms.json | Corregir los 4 typos documentados en §II antes de tratar esos síntomas |
+| ~~Auditoría símbolo a símbolo — resto del catálogo~~ | **COMPLETA (§XLVI.A, 18 ago 2026).** `masframe-ux-validator` en vivo, las 10 especialidades / 30 síntomas certificados end-to-end. ~130 columnas Decisión + `vista:"tarjeta"` añadidas, 5 bugs estructurales reales encontrados y cerrados, todas las familias de C2 verificadas en vivo al menos una vez. |
+| ~~C3: tablas tipo Excel sin guía — bug de UX real, no cosmético~~ | **RESUELTO.** Renderer `vista:"tarjeta"` construido y activado en las ~130 columnas de la auditoría completa (§XLII-XLVI). |
+| Colisiones de `ACCION_REGEX` — acciones fantasma en C4 | Detectado repetidas veces durante la auditoría completa (PSI-S3.r3 corregido; ≥10 columnas más en 7 síntomas documentadas sin corregir — UCI-S1.r3, UNI-S1.r1/r4, NEURO-S2.r5, CIR-S1.r2, CLI-S1.r6, PSI-S1.r1/r3, PSI-S3.r6, RES-S1.r2, RES-S2.r1, §XLVI). Cuando una fila tiene dos columnas que matchean el regex (la Decisión real + una de diagnóstico que contiene "plan"/"tarea"/etc.), `derivarAccionesConcretas` genera 2 entradas en el checklist de C4 en vez de 1. Fix candidato: o renombrar cada columna colisionante caso a caso, o endurecer `derivarAccionesConcretas` para que solo la columna `"opciones"`/`"decision"` cuente como acción primaria cuando hay varias en la misma fila. |
+| Seguimiento post-Alta | Fuera de las 7 capas: relación proactiva de MASESORA con un cliente ya dado de Alta en un síntoma, para que la mejora se sostenga y siga habiendo motivo para seguir siendo cliente. Boceto (sesión 10 ago 2026): conversación corta por el canal que ya usa el negocio (no requiere WhatsApp Business API), reutilizando la misma gramática qué/quién/cuándo/cómo/cuánto ya validada en C3, pero entregada como mensajes cortos en vez de página. Sin diseño de datos aún. |
 
 ### Pendiente — Fase Futura
 
@@ -1048,6 +1052,811 @@ Todo en `main` en ambos repos, ramas de trabajo borradas tras mergear.
 
 ---
 
+## XXV. SESIÓN 7 AGO 2026 — Revisión en vivo por síntoma (Maite) + rediseño C3/C4 de "formulario" a "sistema"
+
+Maite empieza a revisar el producto en producción (`masfront.onrender.com`) síntoma a síntoma, herramienta a herramienta, dando feedback en vivo — método explícitamente distinto a las auditorías anteriores (§XVII, §XXIII): no es un barrido nuestro, es la dueña del producto usándolo como lo usaría un cliente real. Arranca por UCI-S1.
+
+### XXV.A — Playbook de UX aplicado a Anticipos (UCI-S1.r5) y generalizado
+
+Feedback real sobre la tabla de Anticipos: complejidad visual, redundancia con software que el cliente ya usa, sin recompensa al terminar, columna "Acción de desbloqueo" sin ninguna pista de qué escribir. Cuatro fixes, aplicados como patrón reutilizable (no solo a esta herramienta):
+
+1. `placeholder` en columnas texto/numero de `ColumnaHerramientaConfig` — ejemplo visible en cada celda vacía.
+2. Fila de `TOTAL` por sección (suma en vivo de columnas numero/calculada).
+3. `EvidenciaAdjunta` reposicionada a la cabecera de la herramienta con copy de atajo ("¿ya llevas esto en tu Excel? Sube el archivo y avanza") en vez de al pie tras 3 tablas obligatorias.
+4. Contenido piloto de `placeholder` para las 17 columnas de UCI-S1.r5.
+
+Aplica a las 168 herramientas nativas del catálogo (los 2 primeros puntos son cambios estructurales en `TreatmentPage.tsx`, no de contenido).
+
+### XXV.B — Hallazgo de seguridad crítico (fuera del hilo de UX, encontrado por auditoría de funnel)
+
+`PATCH /ese/{codigo}` no exigía autenticación ni verificaba nada contra Stripe — cualquiera con el código MAS (visible en la URL, no secreto) podía activar la cuenta de otro cliente mandando `pago_confirmado:true` sin pagar, disparando generación real de contrato y factura. Fix: `Depends(get_current_user)` + `check_owns_or_internal` + verificación server-side del `PaymentIntent` contra Stripe (`stripe.PaymentIntent.retrieve`, status debe ser `succeeded`) + protección de replay (un mismo `stripe_payment_intent` no puede activar 2 códigos) + contraste de importe contra `intent.amount`. Frontend: las 2 llamadas que activaban la cuenta tras pagar no mandaban el Bearer token — corregido en ambas (`ScannerReceptionPage.tsx`, `PaymentSuccessPage.tsx`). **Fuera de alcance documentado:** el `amount` con el que se crea el `PaymentIntent` en `/payments/create-payment-intent` lo sigue decidiendo el cliente sin validar contra el precio real del plan — requiere portar la tabla de precios al backend, decisión de producto aparte.
+
+### XXV.C — De "ledger de 3 tablas" a "triaje de 1" (Opción C) — patrón detectado y aplicado a 7 ramas
+
+Feedback en vivo sobre Anticipos: *"esto ya lo llevas en tu Excel o software... piensa, no ejecutes"*. Comprobado antes de tocar nada (no por conjetura) que C4/C5 no absorben el seguimiento por fila — solo llevan un check global por herramienta. La solución no es reducir tablas, es reducir la ambición: de "cuéntamelo todo" a "dime los 2-3 que más te ahogan". 3 tablas casi idénticas (misma `entidad_compartida` repetida) se funden en 1, con `Estado` sustituyendo las tablas de seguimiento y `filas_iniciales` bajando a 2.
+
+Escaneado el catálogo completo por el mismo patrón (2+ secciones con `entidad_compartida` repetida) — 6 candidatos, todos en UCI-S1/UNI-S1, todos aplicados con el tratamiento que correspondía a cada caso (no mecánicamente igual):
+
+| Rama | Tratamiento |
+|---|---|
+| UCI-S1.r5 (Anticipos) | Fusión completa 3→1 |
+| UCI-S1.r2 (Liquidez en proyectos) | Fusión completa 3→1 |
+| UCI-S1.r3 (Morosidad) | Fusión completa 3→1 |
+| UCI-S1.r1 (Inventario) | Fusión parcial: secciones 1+2 (mismo Producto) sí; sección 3 (registro de ventas semanales, no es "estado actual", es un log de eventos) se deja intacta |
+| UNI-S1.r1 (Mapa de flujo) | Fusión completa 2→1 |
+| UNI-S1.r3 (SLAs internos) | Fusión completa 2→1 |
+| UNI-S1.r4 (Estándar de tareas) | La 2ª sección no era un duplicado — era un formulario de autoría de SOP completo. Sustituida por un compromiso de acción, no forzada en el mismo molde |
+
+### XXV.D — Título duplicado + checklist de C4 interactivo (aplica a las 168)
+
+Feedback: el título de la herramienta aparecía 2 veces literales (tarjeta de `FlowItem` + `🔧 {config.titulo}` dentro de `HerramientaNativa`/`Calculadora`) y una 3ª mención casi idéntica ("🎯 propósito") antes de cualquier contenido real. Quitados ambos bloques — estructural, no de contenido, aplica a las 168 herramientas porque `HerramientaNativa`/`Calculadora` solo se instancian en 1 sitio del código.
+
+Petición: trasladar la columna "Acción de desbloqueo" a C4 para que tenga recompensa. Se descubrió que ya existía un extractor por regex (`⚡ Acciones concretas de tu diagnóstico`, auditado sobre las 98/168 herramientas — ver §XXI) que reconocía columnas accionables, pero en modo solo-lectura. Convertido en checklist interactivo (`C4EjecucionItem.sub_items: {texto, done}[]`), sincronizado por texto (no por posición) para no perder el estado si se reordenan filas. Vive dentro del mismo item de C4, no como items nuevos — C5 casa sus datos contra el `id` de la tarea de C3 (`Capa5.activeItems`) y un id sintético por fila se habría perdido en silencio ahí.
+
+### XXV.E — El rediseño grande, todavía en diseño: C3/C4 de "formulario" a "sistema" (piloto UCI-S1)
+
+Serie de correcciones en cascada de Maite sobre mis propuestas sucesivas, cada vez subiendo el nivel de exigencia — resumen del razonamiento final, no de las vueltas intermedias:
+
+**Corrección de fondo:** todas las mejoras anteriores (placeholder, totales, checklist, fusión de tablas) son mejores formularios — más cortos, más listos, pero el cliente sigue solo delante de una pantalla rellenando cosas. No es lo que se espera de "la primera y genuina clínica de empresas".
+
+**Análisis de las 6 ramas de `capa_2_options` de UCI-S1 leídas literales, no en abstracto:** r4 (financiación) ya era, dentro del propio catálogo, la mejor herramienta — no es una tabla, es un comparador de instrumentos con coste real (TAE) y una decisión explícita (Estudiar/Descartar/Solicitar). r2/r3/r5 (recién fusionadas) calculan bien pero piden "Acción: texto libre" — tracking disfrazado de decisión. r6 es la peor: 3 tablas con "Acción 1/2/3 - hecho/detalle" repetido, sin tocar aún.
+
+**Diseño C3↔C4 acordado, rama a rama:**
+
+| Rama | Modo C3 | Modo C4 |
+|---|---|---|
+| r1 (mercancía parada) | **Simulador**: galería de tarjetas (múltiples productos), slider de precio + medidor de margen en vivo + canal como botones visuales | Misma tarjeta, cambia a confirmación: ¿vendido?, precio real, fecha |
+| r2 (proyectos a medias) | Lista con **decisión embebida** por fila: escenarios (entregar completo / cerrar parcial ya) que recalculan importe y fecha en vivo | Confirmar resultado real |
+| r3 (morosidad) | **Escalera visual** de reclamación (recupera la estructura de opciones que tenía el catálogo antes de la fusión §XXV.C) | Seguimiento hasta resultado final: Cobrado / Incobrable |
+| r4 (desfase cobros/pagos) | **Comparador** de instrumentos de financiación, coste real, veredicto automático | Seguimiento de aprobación: Solicitado → Aprobado/Rechazado → importe real |
+| r5 (anticipos) | Mismo patrón que r2 | Confirmar resultado real |
+| r6 (facturación bloqueada) | **Pipeline visual**: tarjeta por factura, Bloqueada → En gestión → Desbloqueada | Certificación automática al llegar a "Desbloqueada" |
+
+Los 6 C4 convergen en solo 3 formas: confirmar resultado real (r1/r2/r5), proceso con estado intermedio (r3/r4), certificación automática por pipeline (r6) — no son 6 problemas de diseño sueltos.
+
+**Plan de construcción, aditivo, sin tocar los 160+ síntomas no rediseñados:** nuevos valores de `tipo` (`simulador`/`comparador`/`pipeline`) que conviven con `nativa`/`calculadora`; una columna nueva `tipo:"decision"` **dentro** de `HerramientaNativaConfig` (para r2/r3/r5 — reutiliza `entidad_compartida`/totales/checklist ya verificados, cero componente nuevo); un marcador `c4_modo` que `Capa4` lee y que si no existe se comporta exactamente como hoy. Orden de construcción, uno verificado en vivo antes del siguiente: (1) columna `decision` → r2/r3/r5, (2) pipeline → r6, (3) simulador → r1, (4) comparador → r4.
+
+**Capa adicional acordada — Panel de Diagnóstico Vivo:** sobre las herramientas que el cliente tenga realmente abiertas en C3 (confirmado en código: mínimo 2 causas en C1, sin máximo, y la familia matriz no descarta automáticamente — puede haber 2 a 6 ramas comprometidas a la vez, no siempre 6). Suma el € atrapado en todos los frentes abiertos y solo habla cuando los números reales contradicen la prioridad marcada a ojo en C2 (si coinciden, se calla). **Explícitamente sin IA** — ni cuenta nueva ni coste variable ni generación de texto por modelo; aritmética + plantilla. Filosofía confirmada por Maite: no es un diagnóstico autónomo, es la mesa de trabajo para que el CC y el cliente lo miren codo a codo — el sistema hace la aritmética, la conversación la hacen las personas.
+
+**Estado al cierre de §XXV: diseño cerrado y aprobado por Maite, construcción no iniciada.** Próximo paso: columna `decision` en r2/r3/r5. → **Actualización (§XXV.G): las 4 fases construidas y mergeadas en la misma sesión — ver más abajo.**
+
+### XXV.F — "Sin puntuar" (C2, familia matriz) — RESUELTO
+
+"Sin puntuar" en C2 (familia matriz): el valor por defecto de impacto/esfuerzo (3,3) era indistinguible de una puntuación real hecha a propósito — el aviso `⚠️ N elementos sin puntuar` se disparaba con datos recién creados sin que el cliente hubiera hecho nada, y encima con AND (`eje_x===3 && eje_y===3`) en vez de OR, así que tocar solo un eje ya limpiaba el aviso aunque el otro siguiera sin puntuar. Descartada la opción de un campo `tocado` aparte (rechazada por Maite en su momento — no resuelve el problema de fondo, solo lo esconde). Construido: el valor de creación pasa a `0` (sentinel fuera de rango, inequívoco), con un helper `ejeVal(v) = v>0 ? v : 3` que normaliza ese `0` a `3` solo en los puntos de cómputo/visualización (scoring, cuadrante, SVG, Stepper), mientras la detección de "sin puntuar" usa el `0` crudo con OR. Verificado con Playwright: aviso preciso desde el primer render, tocar un solo eje ya no lo limpia, un 3/3 real deliberado sí lo limpia. PR `masesora-frontend#11`, mergeado.
+
+### XXV.G — Construcción completa del orden acordado: decision, pipeline, simulador, comparador
+
+Las 4 fases del orden de construcción de §XXV.E, cada una verificada en vivo con Playwright + mock backend antes de dar la siguiente, todas mergeadas en la misma sesión (7-8 ago 2026). Con esto, las 6 ramas de UCI-S1 quedan rediseñadas de "formulario" a "sistema".
+
+**1. Columna `decision` (r2/r3/r5) — mergeado.** Botones de escenario en vez de "Acción: texto libre" — cada opción escribe su `valor` numérico en la celda por el mismo mecanismo que ya usa `tipo:"numero"`, así que una columna `calculada` posterior ("Recuperación estimada") recalcula en vivo según qué escenario se elige. `derivarAccionesConcretas` (checklist de C4) resuelve el valor numérico a la etiqueta legible del escenario. r5 (Anticipos)/r2 (Liquidez)/r3 (Morosidad, con la escalera de gestión de cobro recuperada del catálogo pre-fusión) llevan cada una sus propios `decision_opciones`, no una plantilla genérica.
+
+**2. Modo `pipeline` (r6) — mergeado.** r6 (facturación bloqueada) era la peor herramienta del catálogo original: 3 tablas casi idénticas con "Acción 1/2/3 - hecho/detalle" repetido para la misma factura en 3 estados de madurez. Nuevo `tipo:"pipeline"` (convive con `nativa`/`calculadora`, cero cambios en las 160+ herramientas no rediseñadas): tablero de tarjetas agrupadas por etapa (Bloqueada → En gestión → Desbloqueada), reutilizando `ColumnaHerramientaConfig` para los campos de cada tarjeta. C4 lleva un efecto de **certificación automática**: cuando todas las tarjetas llegan a la etapa final, la tarea se marca hecha sola (con el valor real = suma de las tarjetas), sin pedir un check aparte — el tablero visual ya es la evidencia de cierre.
+
+Verificado en vivo: tablero de 3 etapas, mover tarjetas actualiza contador/totales € en tiempo real, mover todas a "Desbloqueada" certifica C4 solo y cascada hasta el certificado de C5 (3500€, 100%) sin intervención manual. Bug real encontrado y corregido en el propio proceso de verificación (nunca llegó a producción): el efecto de certificación, en su primer intento, escribía sobre `c4Items` desactualizado en el mismo commit en que el efecto de auto-sync creaba el item C4 por primera vez — como el array estaba vacío en ese instante, el patch nunca se aplicaba, y como el efecto depende de `data` (que él mismo reescribía cada vez con un array vacío nuevo), se retroalimentaba en un bucle de renders infinito. Fix: esperar a que el auto-sync haya creado el slot antes de intentar parchearlo.
+
+**3. Modo `simulador` (r1) — mergeado.** r1 (mercancía parada) pasa de una tabla de precios a un simulador real: el cliente prueba un precio con un `tipo:"slider"` nuevo (min/max/paso, igual que "numero" para `calcularFilaCalculadas`, solo cambia cómo se rellena) y ve el margen resultante en vivo, pintado como barra de color contra el objetivo de la propia fila (verde si cumple, rojo si no) — no un umbral fijo. Canal de venta como botones (`opciones` con `estilo:"botones"`, mismo patrón visual que `decision`). C4 reutiliza la MISMA tarjeta en modo confirmación (`C4EjecucionItem.confirmaciones_venta`: ¿vendido?/importe real/fecha, anclado por nombre de producto igual que `sub_items` por texto) — a diferencia de r6, **no certifica sola**: un producto puede legítimamente quedar sin vender, el cierre sigue siendo el check manual. Sustituye las 2 tablas anteriores (config de precios + log de ventas semanal, cuyo rol ahora cubre la confirmación de C4).
+
+Verificado en vivo: margen correcto y en tiempo real al mover el slider (33.3% verde a precio=30/coste=20, -33.3% rojo/pérdida a precio=15/coste=20), confirmación de venta en C4 actualiza el valor real sin marcar la tarea como hecha sola.
+
+**4. Veredicto automático / "comparador" (r4) — mergeado.** A diferencia de los 3 anteriores, r4 (desfase cobros/pagos) NO se rehizo de raíz: el catálogo ya lo valoraba como "la mejor herramienta" — comparador real de instrumentos de financiación con coste real (TAE) y decisión explícita. Le faltaba comparar ENTRE filas, no dentro de cada una. Nuevo campo aditivo `SeccionHerramientaConfig.veredicto` (disponible para cualquier sección `nativa`, no solo r4): `{ clave, direccion, etiqueta, columna_nombre? }` — banner "🏆 {etiqueta}: {ganador}" + fila resaltada, recalculado en cada edición. `columna_nombre` resuelve un matiz real: en r4 la columna 0 es "Instrumento" (categoría que se repite entre filas — 2 pólizas de crédito de bancos distintos son la misma opción de columna 0), la que de verdad distingue una oferta es la Entidad (columna 1). Secciones 1 (calendario) y 2 (negociación de plazos) sin tocar — tácticas legítimamente distintas dentro del mismo frente, no la misma entidad repetida.
+
+Verificado en vivo: entre 3 ofertas de financiación (100€/50€/75€ de coste mensual), el banner y la fila resaltada señalan a la más barata (Banco B) y se recalculan en vivo al cambiar el TAE de la ganadora (pasa a Banco C).
+
+**Pendiente, fuera de este orden ya cerrado:** el Panel de Diagnóstico Vivo (§XXV.E) sigue diseñado pero sin hueco asignado en ningún orden de build — próxima decisión de producto a tomar aparte.
+
+---
+
+## XXVI. SESIÓN 8 AGO 2026 — Cierre del hallazgo de pago pendiente + decisión de "Consultar" para facturación alta
+
+Retomando el hallazgo que §XXV.B había dejado explícitamente fuera de alcance: *"el `amount` con el que se crea el PaymentIntent en `/payments/create-payment-intent` lo sigue decidiendo el cliente sin validar contra el precio real del plan"*.
+
+### XXVI.A — El exploit, confirmado en código
+
+`payments_router.py` leía `amount = data.get("amount", 0)` del body tal cual y lo pasaba directo a `stripe.PaymentIntent.create` — sin autenticación, sin comparar contra ningún precio real. Cualquiera podía pedir un PaymentIntent de 1 céntimo, pagarlo de verdad (un cargo real en Stripe, solo que ínfimo) y activar una cuenta de un plan de hasta 24.499€: la verificación de `/ese/{codigo}` (§XXV.B) solo comprobaba que el `importe` declarado coincidiera con `intent.amount` — pero `intent.amount` lo había fijado esa misma llamada sin ningún anclaje a un precio real. Las dos comprobaciones existentes comparaban números que el propio cliente controlaba en ambos extremos.
+
+### XXVI.B — Fix: precio calculado en servidor + anti-swap de síntomas
+
+`payments_router.py`: el importe se calcula SIEMPRE en el servidor — se ignora el `amount` del cliente. Se busca el cliente por `codigo` (ya existente desde FASE 1/ESE submit), se lee `facturacion` de ese registro (no editable en esta petición) y se cruza con `sintomas` (body de esta llamada) contra la misma tabla de precios que usa el checkout real (`getPrecio` en `ScannerReceptionPage.tsx`, portada 1:1 a Python). Plan y síntomas quedan en los metadatos del PaymentIntent en Stripe (el cliente no puede tocarlos con la clave publicable). `ese_router.py` (`actualizar_pago`): nueva comprobación anti-swap — el cliente no puede pagar el precio de pocos síntomas y activar una lista más larga en la misma llamada de confirmación, comparando contra esos metadatos. Compatible con PaymentIntents creados antes del fix (sin metadata, la comprobación se salta).
+
+### XXVI.C — Decisión de producto: facturación ≥500.000€/mes sin checkout automático
+
+Al revisar el fix, Maite decide que ese tramo (ya alto, umbral sin cambios) no debe tener precio fijo de autocompra — una empresa de ese tamaño necesita una conversación antes de comprometerse a un checkout de hasta 24.499€, y en fase de lanzamiento no compensa construir un flujo de venta específico para un caso tan infrecuente ("las empresas que facturan 500.000€ al mes ya tienen consultorías más específicas y no van a acudir a mí").
+
+- `getPrecio()` (frontend) devuelve `number | null` — null en ese tramo. La UI de "Consultar" (`fmtPrecio`, badges de precio) ya existía en el código pero estaba **muerta** porque `getPrecio` nunca llegaba a devolver null.
+- Bug real que habría explotado al activar esto sin más cambios: el botón "Activar por..." calculaba su `aria-label` con `precio.toLocaleString(...)` sin comprobar null — habría crasheado la página. Corregido con un guard.
+- El botón, en ese tramo, redirige a WhatsApp con mensaje pre-rellenado en vez de abrir el pago.
+- Defensa en profundidad en el modal: `total={getPrecio(...) || precioActivo || 399}` caía a 399€ (el precio MÁS BARATO) si ambos eran null — justo el caso a bloquear habría dejado pasar un checkout a precio incorrecto. Ahora el modal decide qué pintar (aviso de contacto o formulario de pago) según si el precio es null, nunca con un fallback numérico inventado.
+- `payments_router.py` rechaza con 400 si se le pide un PaymentIntent para ese tramo — el servidor no confía en que el frontend ya lo bloquee.
+
+### XXVI.D — Hallazgo colateral: `config/pricing_policy.py` desincronizado (corregido)
+
+Esta tabla no cobra nada de verdad — alimenta el presupuesto que se enseña en el triaje (`build_triaje_for_code.py`) y la herramienta manual de presupuestos del CC. Confirmado en código que NO la usa el generador real de contrato/factura (`routers/contracts.py`, lee `importe`/`plan` ya guardados, no recalcula nada) ni dos consumidores que resultaron ser código muerto (`contracts/contract_router.py` — `/contracts/auto`, nunca registrado en `main.py`; `presupuesto_service.py` — `calcular_presupuesto`, nunca importado por nadie).
+
+Hallado: `"prices"` y `"description"` de PRE y PIE estaban CRUZADOS entre sí (PRE tenía los precios/descripción reales de PIE y viceversa — `"code"`/`"name"` ya estaban bien), y el umbral de `"enterprise"` era 60.000€/mes en vez de 500.000€. `get_product_price` ya devolvía `None` para "enterprise" (el mismo comportamiento "personalizado" acordado en §XXVI.C) — solo hacía falta corregir el umbral para que se disparase en el tramo correcto. Corregido; las 3 fuentes de precio del sistema (checkout real, `payments_router.py`, `pricing_policy.py`) coinciden ahora exactamente, verificado cruzando 7 facturaciones distintas.
+
+### XXVI.E — Verificación
+
+Sintaxis de todos los archivos Python (`ast.parse`); tabla de precios portada probada contra 11 combinaciones de nº de síntomas × facturación reproduciendo `getPrecio()` exactamente; `pricing_policy.py` cruzado contra `payments_router.py` en 7 facturaciones, coinciden en las 7 incluyendo el "Consultar" a partir de 500.000€; `npm run build` limpio. No hay Stripe/Mongo disponibles en el sandbox de esta sesión para una prueba end-to-end real contra Stripe — pendiente de verificación manual en staging antes de mergear a producción. PRs abiertos: `masframe#12`, `masesora-frontend#15`.
+
+## XXVII. SESIÓN 8 AGO 2026 (noche) — Sala de Control: de formulario apilado a orquestador multi-frente (C3, piloto UCI-S1)
+
+### XXVII.A — El problema: "de dos a seis tablas de esa estructura es horroroso"
+
+Tras el rediseño de las 6 ramas de UCI-S1 (§XXV), Maite revisa en vivo un caso con varios frentes comprometidos en C2 (normal tener entre 2 y 6) y confirma que, aunque cada tabla individual ya está bien, **la suma de 2 a 6 tarjetas completas apiladas en la misma pantalla es el problema en sí** — no un defecto de ninguna herramienta concreta. Encargo explícito: "ponte el nivel dios de programación... piensa en la herramienta que nos falta en C3 para completar un C4 que va a ser el valor completo de MASFRAME", diseñar a fondo antes de tocar código, y construirlo primero solo en UCI-S1 antes de plantear el rollout a los 30 síntomas.
+
+### XXVII.B — Corrección de rumbo antes de construir: no todos los síntomas tienen un total sumable
+
+Primer diseño (borrador): cabecera con contador € que "se afina" de estimado a confirmado. Maite pide expresamente parar y comprobar si sirve para el resto del catálogo antes de seguir. Verificación en código (no supuesta): `kpi_recovery_mode` se reparte en **financiero (3 síntomas: UCI-S1, UCI-S2, CLI-S1), conteo (19) y estructural (8)** — y en modo estructural el KPI de cierre (`actualNum` en C6) se obtiene **re-midiendo los inputs originales de C0** (`remeasure_a`/`remeasure_b`), no sumando ningún valor por frente; ese modo no tiene, y nunca ha tenido, un total acumulable por ítem. Un contador € en la cabecera habría sido un número inventado en 8 de 30 síntomas. Rediseño: la cabecera y el informe de cierre son **conscientes del modo** (mismo patrón `recoveryMode`/`recoveryLabel` que ya usan Capa4/Capa5) — financiero/conteo muestran el total; estructural muestra cobertura de diagnóstico (N de M frentes analizados) y una nota de que el resultado se confirma re-midiendo al cierre del ciclo, nunca un total fabricado.
+
+### XXVII.C — Prerrequisito cerrado: C3→C4 no tenía valor que agregar en 5 de 6 ramas
+
+Antes de construir la cabecera agregada, verificación en código de qué alimentaba `FlowItem.valor` (el campo que Capa4/Capa5 ya suman): solo `HerramientaCalculadora`, vía `onValorCalculado`. `HerramientaNativa`, `HerramientaPipeline` y `HerramientaSimulador` — que son las que usan las 6 ramas de UCI-S1, cero calculadoras entre ellas — nunca lo alimentaban. Sin cerrar esto, la Sala de Control no habría tenido ningún dato real que sumar. Cerrado con:
+
+- `ColumnaHerramientaConfig.contribuye_valor` (nuevo, mismo patrón que `alimenta_valor` de calculadora): marca la(s) columna(s) numero/slider/calculada de una tabla cuyo valor, sumado por fila y por herramienta, alimenta `FlowItem.valor`.
+- `calcularValorFila`/`calcularValorHerramienta` (TreatmentPage.tsx): suman esas columnas; las 3 herramientas nativas las llaman en un `useEffect` y reportan a `onValorCalculado`, igual que ya hacía calculadora.
+- `data/symptoms.json`: marcadas las columnas de valor real por rama de UCI-S1 — r1 (nueva columna calculada "Valor estimado (€)", no existía ninguna), r2/r3/r5 ("Recuperación estimada"), r4 (específicamente "Liquidez liberada/mes" de la sección 2, no "Coste mensual" de la sección 3 — un coste no es una recuperación), r6 ("Importe a facturar"). Verificado columna por columna contra un dump real de las 6 ramas antes de editar, no de memoria.
+- `validar_sintomas.py`: nuevo chequeo — `contribuye_valor=true` sobre un tipo de columna que el motor no suma (texto/opciones/decision) es un error de catálogo silencioso. 0 errores, 21 avisos tras la pasada (sin cambios respecto a antes).
+
+### XXVII.D — Diseño final: stepper "monitor de constantes", opt-in, aditivo
+
+Activo únicamente cuando hay 2+ `item.grupo` distintos entre los FlowItems `c3-plan-*` (multi-frente real); con 1 solo frente, cero cambio visual. Componentes:
+
+- **Cabecera agregada**: nº de frentes, contador "N/M completados", barra de progreso, y la línea de valor mode-aware de §XXVII.B.
+- **Stepper**: una píldora por frente, con punto rojo/ámbar/verde (pendiente/activo/completado) y clic para cambiar el frente activo — solo las tarjetas del frente activo (más cualquier tarea manual) se renderizan; el resto queda colapsado en la píldora.
+- **"Completado" por frente**: reconstruido desde `datos_estructurados`/`valores_calculadora` con el mismo umbral que cada herramienta ya usa para su propio aviso "🎉" interno (nativa: cada sección con ≥1 fila con columna 0 rellena; pipeline: todas las tarjetas en la etapa final; simulador: ≥1 tarjeta con columna 0 rellena; calculadora: algún campo tecleado).
+- **Informe de cierre**: aparece cuando todos los frentes están completos — desglose por frente (con o sin € según el modo) y total, o la nota de re-medición en modo estructural.
+- **Refactor de bajo riesgo**: el bloque existente de ~326 líneas de tarjeta-por-ítem se reutiliza sin extraer — se renombra la fuente del `.map` a `itemsToRender` (= `items` completo si 1 solo frente; filtrado al frente activo + tareas manuales si multi-frente) y se corrige la única referencia interna que dependía del array completo por índice (`items[idx-1]` → `itemsToRender[idx-1]`, el chequeo de cabecera de grupo de items legacy).
+
+### XXVII.E — Verificación en vivo (Playwright, build de producción)
+
+Verificado contra `vite build` + `vite preview` (no dev/StrictMode — el doble-montaje de efectos de React 18 en desarrollo hace que el fetch inicial se dispare 2 veces y sobrescriba transitoriamente los ítems recién aplicados por el efecto de `capa_3_plan`; es ruido del entorno de desarrollo, no un bug — confirmado inyectando logging temporal y contrastando dev vs. build de producción antes de dar el diseño por bueno):
+
+- **UCI-S1, 3 frentes forzados** (r4 nativa + r1 simulador + r6 pipeline, vía mock backend): cabecera "3 frentes abiertos", stepper con 3 píldoras, cambio de frente activo al clicar cada píldora, punto rojo→verde al completar cada uno, informe de cierre financiero con desglose y total al completar los 3.
+- **Mismo caso forzado a `kpi_recovery_mode="estructural"`**: cabecera muestra "Cobertura de diagnóstico: N de M frentes analizados" (nunca un €), informe de cierre con la nota de re-medición en C6, sin ningún total inventado.
+- **1 solo frente comprometido**: Sala de Control no aparece; tarjeta idéntica a la existente antes de este cambio (confirmado por captura, sin ninguna diferencia visual).
+- `npm run build` limpio antes y después de retirar el logging de diagnóstico usado durante la investigación.
+- No verificado en vivo (por símplice ausencia de un síntoma de prueba a mano con 2+ frentes en modo "conteo"): ese camino comparte el mismo código que "financiero" —difieren solo en el formateo del ternario `recoveryMode === "conteo"`, ya usado y probado en Capa4/Capa5 desde antes de esta sesión — confianza por simetría de código, no por prueba en vivo directa; señalado aquí explícitamente en vez de darlo por hecho.
+
+PRs abiertos: `masframe#12` (contribuye_valor en symptoms.json + validador), `masesora-frontend` rama `feature/c3-sala-control` (pendiente de abrir el PR). Pendiente explícito: extender el patrón a los 29 síntomas restantes — deliberadamente pospuesto hasta validar UCI-S1 con Maite, tal como se acordó.
+
+## XXVIII. SESIÓN 8 AGO 2026 (noche) — Cita editorial para el cuadro de introducción de capa + cierre de las 4 PRs de la sesión
+
+### XXVIII.A — Hallazgo de Maite al revisar el push de la Sala de Control
+
+Revisando en vivo el resultado de §XXVII, Maite señala el cuadro que muestra `justi_capaN` (visible en las 6 capas de los 30 síntomas, vía el componente compartido `CapaShell` en `masesora-frontend`): *"el UX tiene que ver un texto atractivo para introducirle y animarle a que empiece la capa, ahora está en un cuadro azul con la letra muy pequeña"*. Verificado en código, no por impresión: el cuadro era literalmente el mismo tratamiento visual que un aviso de sistema (`background: #eff6ff`, `border: #bfdbfe`, `fontSize: 0.84rem`, `color: #1e3a8a`), sin ninguna jerarquía frente al resto de la pantalla.
+
+Antes de tocar código: 3 propuestas visuales mostradas como artefacto aparte (maqueta con el texto real de `justi_capa3`, sin cambiar el copy — esa reescritura, que Maite también señaló como "se nota que lo ha hecho la IA en cuanto a narrativa", queda pendiente como pasada de contenido independiente). Maite elige la "cita editorial": reutiliza el mismo trazo que ya usa la cita de cabecera del síntoma (`symptom.logica`/`description_symptom`) — borde dorado a la izquierda + cursiva, sin caja — en vez de inventar un estilo nuevo. Cambio de un único componente compartido, sin tocar `symptoms.json`; verificado en vivo con Playwright contra build de producción sobre UCI-S1.
+
+### XXVIII.B — Cierre: las 4 PRs de la sesión revisadas y mergeadas
+
+A petición expresa de Maite ("revisa la X y mergea si está bien"), cada PR se revisó de nuevo (diff completo, mergeable_state, CI, comentarios pendientes) antes de mergear — no se mergeó nada solo por la verificación ya hecha durante la construcción:
+
+| PR | Repo | Contenido | Squash |
+|---|---|---|---|
+| `masesora-frontend#17` | frontend | Cita editorial (§XXVIII.A) | `3d5c809` |
+| `masesora-frontend#16` | frontend | Sala de Control (§XXVII) | `62317ad` |
+| `masframe#12` | backend | Precio server-side + anti-swap + "Consultar" ≥500.000€/mes + `pricing_policy.py` (§XXVI) + `contribuye_valor` (§XXVII.C) | `57f14d9` |
+| `masesora-frontend#15` | frontend | Contraparte frontend del fix de precio server-side (§XXVI) | `9423a35` |
+
+Las 4 en `main` de su repo respectivo, sin CI configurado en ninguno de los dos repos (0 checks), sin comentarios de revisión pendientes en ninguna. Con esto, todo el trabajo de esta sesión (8 ago 2026, mañana y noche) queda desplegado: fix de seguridad de pago, decisión de "Consultar" para facturación alta, Sala de Control, y la cita editorial.
+
+Pendiente explícito para sesiones futuras: extender la Sala de Control a los 29 síntomas restantes (§XXVII.D, pospuesto a propósito hasta validar UCI-S1), y la pasada de reescritura de copy de `justi_capaN` señalada en §XXVIII.A.
+
+## XXIX. SESIÓN 8 AGO 2026 (noche) — Auditoría previa al rollout + 2 tareas nuevas de backlog
+
+### XXIX.A — "¿Algo más antes de extender a los 29 síntomas?"
+
+Maite confirma en vivo que UCI-S1 ha mejorado y pregunta si queda algo más antes del rollout general. Repaso en código (no de memoria) sobre lo ya mergeado, buscando específicamente riesgos que solo se manifiestan al generalizar a los otros 29 síntomas:
+
+- **Comprobado y descartado**: `itemCompletado` (Sala de Control, §XXVII.D) devuelve `false` siempre para un `FlowItem` sin `herramienta_config` — es decir, un frente construido con ramas legacy de `capa_3_plan` (arrays `.steps` de herramientas `.html`, en vez de un objeto nativo) nunca se marcaría como completado, y el informe de cierre nunca aparecería para ese frente. Comprobado con un script sobre `symptoms.json`: **0 de 30 síntomas** tienen ya ninguna rama legacy en `capa_3_plan` (el catálogo está 100% en componentes nativos desde §XX) — el riesgo existe en la lógica pero no tiene ningún caso real que lo dispare hoy. Queda como algo a vigilar solo si en el futuro se reintrodujera alguna rama `.html` suelta.
+- **Gap real, no resuelto todavía**: el camino `kpi_recovery_mode="conteo"` (19 de los 30 síntomas — con diferencia el modo más común del catálogo) nunca se verificó en vivo dentro de la Sala de Control, solo se verificó `financiero` y `estructural` (§XXVII.E). Comparte el mismo código que `financiero` (solo cambia el formateo del ternario), así que la confianza es alta, pero no es lo mismo que haberlo visto funcionar. Recomendado: antes o como primer paso del rollout, forzar un síntoma en modo `conteo` con 2+ frentes y confirmar visualmente.
+- **Detalle menor, no bloqueante**: `itemCompletado` usa un umbral más laxo para `calculadora` (cualquier campo tecleado) que para `nativa` (cada sección con ≥1 fila) — inconsistencia cosmética entre criterios de "completado", sin impacto en UCI-S1 (no usa ninguna rama `calculadora`), pendiente de homogeneizar si aparece un síntoma con ramas mixtas nativa+calculadora en la Sala de Control.
+
+En resumen: no hay ningún bloqueante nuevo para empezar el rollout, pero **recomiendo verificar el camino "conteo" en vivo como primer paso**, dado que es el modo mayoritario del catálogo y hasta ahora solo se ha confiado en la simetría del código.
+
+### XXIX.B — 2 tareas nuevas de backlog (pedidas por Maite, sin ejecutar todavía)
+
+1. **Certificado de alta (`DischargePage.tsx`, `CertificadoSection`)**: revisar y enriquecer con datos reales recogidos a lo largo de las capas. Estado actual verificado en código: el certificado ya muestra empresa/ACI/síntoma/KPI inicio (C0) → KPI alta (C6)/fecha, más un "Acta de tratamiento" que lee `session.c3.items`. No incorpora nada de C1 (priorización), C2 (decisión comprometida), ni el valor real ejecutado en C4/C5 — que a partir de §XXVII.C ya trae cifras reales en más síntomas gracias a `contribuye_valor`, no solo en los que usan calculadora. Punto de partida natural para la mejora.
+2. **Narrativa de `justi_capaN` en las 6 capas × 30 síntomas**: la reescritura de copy señalada en §XXVIII.A ("se nota que lo ha hecho la IA en cuanto a narrativa") se queda ahí para UCI-S1 sin resolver y se amplía ahora a **todo el catálogo** — mismo campo (`justi_capa1` a `justi_capa6`), mismo criterio: voz directa y humana, no redacción genérica de IA. Pendiente definir con Maite el criterio de voz antes de tocar contenido, tal como se acordó para el rediseño visual del mismo cuadro.
+
+Ninguna de las dos se empieza en esta sesión — quedan registradas como backlog explícito para cuando Maite dé la orden de arrancarlas.
+
+## XXX. SESIÓN 8 AGO 2026 (noche) — Cierre del gap "conteo" de §XXIX.A: verificado en vivo, y un bug real encontrado por el camino
+
+### XXX.A — Verificación en vivo con UNI-S1
+
+Primer paso acordado antes del rollout (§XXIX.A): forzar un síntoma real en modo `kpi_recovery_mode="conteo"` con 2+ frentes. Elegido `UNI-S1` (`recovery_unit_label="entregas limpias ganadas"`, 6 ramas nativas igual que UCI-S1) — no un síntoma inventado, uno real de `symptoms.json` con ese modo. Forzados 3 frentes vía mock, rellenados 2 con datos reales.
+
+**El propio código de la Sala de Control (cabecera, stepper, informe de cierre) era correcto**: la cabecera mostró "45 entregas limpias ganadas", nunca un €. Confirma la confianza por simetría de código que ya se tenía.
+
+### XXX.B — Bug real encontrado al verificar (no en la Sala de Control, en código anterior)
+
+Al rellenar datos reales aparecieron 2 sitios de la misma pantalla, ajenos a la Sala de Control, con `fmtEuro(item.valor)` fijo sin mirar `recoveryMode`: el badge junto al nombre de cada tarjeta ("5 €" en vez de "5 entregas limpias ganadas") y el panel "💰 Valor planificado" del final de C3. Existían desde antes de §XXVII, dormidos porque hasta entonces solo `HerramientaCalculadora` alimentaba `item.valor` — `contribuye_valor` (§XXVII.C) los despertó al extender la alimentación a nativa/pipeline/simulador.
+
+Corregido en `masesora-frontend#18` (mergeada): 3 badges por ítem + el panel, mismo patrón `recoveryMode === "conteo"` ya usado en Capa5, y ocultos también en modo "estructural" (sin valor sumable por ítem, mismo motivo que ya llevó a que la Sala de Control no muestre total ahí). Verificado en vivo: `UNI-S1` ya muestra la etiqueta correcta en los 3 sitios; `UCI-S1` (financiero) sin regresión.
+
+Con esto, el gap explícito de §XXIX.A queda cerrado — la Sala de Control y todo lo que muestra `item.valor` en C3 es coherente en los 3 modos (financiero/conteo/estructural) antes de empezar el rollout a los 29 síntomas restantes.
+
+## XXXI. SESIÓN 8 AGO 2026 (noche) — "Con los 29": el rollout no era el trabajo mecánico que parecía, y una mejor alternativa
+
+### XXXI.A — Volcado del catálogo: el rollout de `contribuye_valor` no es un mecanizado
+
+Maite pide arrancar el rollout a los 29 síntomas restantes. Antes de tocar `symptoms.json`, volcado completo (no supuesto) de las columnas numéricas/calculadas de los 6 síntomas... de los 29 restantes por `kpi_recovery_mode`:
+
+- **8 estructural**: se descartan deliberadamente. Ese modo no tiene valor sumable por ítem (§XXVII.B) — marcar `contribuye_valor` ahí sería fabricar un número que el propio diseño dice que no existe.
+- **19 conteo**: el hallazgo real. Sus tablas C3 miden casi siempre tiempo, coste, porcentajes o puntuaciones (1-5, 1-10) — **casi ninguna tiene una columna que cuente la unidad de recuperación real** (p. ej. `CARDIO-S1` mide "nuevos clientes captados" pero sus tablas solo tienen leads/coste/CAC; `TER-S1` mide "reseñas de 5★ ganadas" pero solo tiene puntuaciones NPS). Marcar cualquiera de esas columnas sería inventar un número — exactamente el error que este catálogo lleva evitando desde §XXV.
+- **2 financiero** (`CLI-S1`, `UCI-S2`): la propuesta inicial era "mecánico, igual que UCI-S1" — resultó ser cierto solo para uno de los dos.
+
+Primera propuesta descartada por el propio Claude tras revisarla: proponer columna a columna antes de escribir nada para los 19 "conteo", sin haber sacado ningún beneficio real a los otros 29 síntomas todavía. Maite pide una alternativa mejor.
+
+### XXXI.B — La alternativa: separar "la experiencia" de "el número" (implementada)
+
+En vez de bloquear el rollout completo a terminar de marcar 126 ramas de contenido, se generaliza el patrón que "estructural" ya tenía: la cabecera y el informe de cierre de la Sala de Control muestran el €/unidad **solo si hay un valor real que mostrar** (`tieneValorReal = recoveryMode !== "estructural" && valorFrentesTotal > 0`), sea cual sea el modo. Sin valor real —por ser estructural, o porque el síntoma aún no tiene `contribuye_valor` marcado— se muestra la misma "Cobertura de diagnóstico: N de M frentes analizados" con una frase distinta según el motivo. Ningún cliente ve nunca un "0€" que parezca un fallo, ni un número suelto sin contexto (comprobado explícitamente a petición de Maite: el "0" siempre va dentro de la frase completa; los badges por ítem y el panel "Valor planificado" directamente no se pintan si no hay valor real, en vez de mostrar un "0").
+
+**Efecto**: la Sala de Control se despliega a los 30 síntomas hoy, sin depender de las 126 ramas de contenido pendientes. Añadir columnas de valor real pasa de ser un bloqueante a una mejora incremental, síntoma a síntoma, sin fecha fija.
+
+Mergeado: `masesora-frontend#19`.
+
+### XXXI.C — `UCI-S2` sí, `CLI-S1` no (todavía)
+
+Con el bloqueo resuelto, se revisan igualmente los 2 síntomas financiero con el mismo cuidado columna a columna que UCI-S1 (no se fuerza nada a ciegas):
+
+- **`UCI-S2`** ("€ cobrados"): sí tiene columnas limpias. Marcado `masframe#16` — `r1` ("Importe (€)" facturado al entregar), `r3` ("Importe (€)" de la reclamación en firme, con estado "Cobrada"; su "Coste financiero de la demora" queda sin marcar, es un coste no una recuperación), `r5` ("Importe a cobrar ya (€)"). `r2` (diagnóstico, no acción de cobro) deliberadamente sin marcar para no duplicar el mismo importe si el cliente compromete r2 y r3 a la vez sobre las mismas facturas. `r4`/`r6` no tienen columnas numéricas.
+- **`CLI-S1`** ("€ de coste cortado"): **sin tocar, a propósito**. Ninguna de sus 6 ramas tiene una columna que represente "coste cortado" sin inventársela — `r4` es un dashboard genérico de seguimiento (no €), `r5` mide horas no €, `r6` tiene columnas de COSTE de externalizar (lo contrario de un ahorro). Necesita una columna nueva por rama, igual que la mayoría de los 19 "conteo" — se trata como tal, no se fuerza un marcado incorrecto solo por ser nominalmente "financiero".
+
+### XXXI.D — Estado del rollout tras esta sesión
+
+La Sala de Control (stepper, cabecera, informe de cierre) ya es coherente en los 30 síntomas, sin ningún número inventado, verificado en vivo. De los 3 síntomas financiero, 2 tienen valor real (`UCI-S1`, `UCI-S2`); `CLI-S1` y los 19 "conteo" quedan pendientes de una pasada de contenido (añadir columnas reales por rama) — explícitamente no bloqueante, backlog abierto para cuando se decida abordarlo.
+
+PRs de esta sesión (revisadas y mergeadas a petición expresa, verificado el estado en remoto tras cada merge): `masesora-frontend#19`, `masframe#16`.
+
+## XXXII. SESIÓN 9 AGO 2026 — `CLI-S1` cierra el rollout financiero; `UCI-S3` limpio
+
+`CLI-S1` ("Ceguera de Control") propuesto columna a columna antes de tocar nada, aprobado por Maite: `r1`/`r3`/`r4` sin columna nueva (indicadores/métricas en texto libre del cliente, sin unidad fija que asumir); `r5` con "Coste hora (€)" + "Coste mensual automatizable (€)" nuevas; `r6` con "Coste hora propio (€)" + "Valor liberado/mes (€)" nuevas. `r2` (calculadora) tenía `alimenta_valor` desde antes de esta sesión sobre "Beneficio neto real" — el beneficio TOTAL, no "coste cortado" — se quita a petición expresa, para no mezclar magnitudes en la Sala de Control. Verificado en vivo: 500€+300€=800€ correctos; `r2` ya no aporta.
+
+Maite preguntó si `CLI-S1` y `UCI-S3` (mismo `kpi_formula`, mismo `recovery_unit_label` hasta ahora) resuelven el mismo problema. Comprobado con el contenido completo de ambos (no solo el nombre): son distintos — `CLI-S1` es falta de infraestructura de visibilidad, `UCI-S3` es precios/márgenes sin analizar por servicio y cliente — sin solapamiento entre sus 6 ramas C3. Sí salió un descuido real: `UCI-S3` tenía el `recovery_unit_label` de `CLI-S1` copiado literalmente, inconsistente con el patrón "re-medir X" de los otros 7 estructurales. Corregido a "re-medir margen".
+
+`python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios). Mergeado: `masframe#18`.
+
+Con esto, los 3 síntomas financiero (`UCI-S1`, `UCI-S2`, `CLI-S1`) tienen valor real en la Sala de Control. Pendiente: los 19 "conteo" (backlog de contenido, no bloqueante).
+
+## XXXIII. SESIÓN 9 AGO 2026 — Los 19 "conteo": primera respuesta insuficiente, mejor solución, y un bug real en el camino
+
+### XXXIII.A — Primera pasada: 2 de 19, rechazada por Maite
+
+Volcado del contenido completo (no solo columnas) de los 19 síntomas "conteo". Primera conclusión: solo 2 (`CARDIO-S1`, `CARDIO-S3`) tenían una columna existente que sumara directamente su unidad de recuperación; los otros 17 quedaban en backlog sin resolver, con el argumento de que su unidad es un *recuento de filas por estado* y el motor solo sabe sumar cantidades. Maite: *"no es suficiente, esto no es una consultora de primer nivel, revisa tu respuesta"* — con razón: muchas de esas tablas ya tienen la señal (`Estado`, `Decisión`, `¿Completada?`), el motor simplemente no sabía leerla como valor. Rendirse en 17/19 no era la respuesta correcta; construir la pieza que falta, sí.
+
+### XXXIII.B — `contribuye_valor_si`: contar filas por estado, no solo sumar cantidades
+
+Nuevo campo en `ColumnaHerramientaConfig` (`masesora-frontend`): cuenta +1 por fila cuya columna coincide exactamente con un valor, en vez de sumar una cantidad. Válido sobre `opciones` (compara el texto elegido) o `numero` (compara el número exacto — p. ej. `Puntuación=5` para contar solo reseñas de 5★). Mutuamente excluyente con `contribuye_valor` en la misma columna.
+
+Con esta pieza, volcados los valores reales de cada columna candidata (nunca adivinados) y subido de **2 a 11 de 19 síntomas resueltos con datos que ya existían en las tablas**, sin inventar ningún campo:
+
+| Síntoma | Rama(s) | Señal usada |
+|---|---|---|
+| CARDIO-S1 | r1, r4, r5 | Clientes cerrados/mes, Clientes, Convertidos (numero, ya existían) |
+| CARDIO-S3 | r6 | Leads calificados/mes (numero, ya existía) |
+| CIR-S1 | r1, r4, r5, r6 | Estado=Aprobado/Publicado/Resuelto, Nivel de detalle=Completo |
+| CLI-S3 | r2, r3 | ¿Necesita pasar por ti?=No, Estado=Asignada |
+| NEURO-S2 | r2, r4×3 | Decisión=Terminar, ¿P1/P2/P3 completada?=Sí |
+| PSI-S2 | r4 | Decisión=Reasignar |
+| RES-S3 | r2 | Decisión=Separar |
+| TER-S1 | r5 | Puntuación=5 (numero) |
+| TER-S2 | r1 | Señal de vuelta detectada=Si |
+| UNI-S1 | r3 | Estado=Cumpliendo SLA |
+| UNI-S3 | r6 | Nueva calculada: Errores ANTES − Errores DESPUÉS (columnas ya existentes) |
+
+Los otros 8 (`CIR-S3`, `OPE-S1`, `OPE-S2`, `PSI-S1`, `PSI-S3`, `RES-S1`, `TER-S3`, `UNI-S2`) siguen fuera a propósito: la unidad requiere una conversión inventada (p. ej. "días de ausencia" no sale de "horas de sobrecarga") o solo se confirma con el tiempo (una baja evitada no se sabe al rellenar datos, se sabe meses después) — mismo criterio que ya evitó forzar `CLI-S1`/`UCI-S2`.
+
+### XXXIII.C — Bug real encontrado en vivo: filas vacías contaban de más
+
+Verificando `CIR-S1` en vivo apareció "6 materiales actualizados" **antes de rellenar nada**. Causa: `filaVaciaHerramienta` ya rellenaba toda columna `opciones` nueva con su primera opción (`opciones[0]`) para que el `<select>` no se viera en blanco — y varias de las marcas de `contribuye_valor_si` coincidían justo con esa primera opción por defecto, así que cada fila sin tocar ya contaba como lograda desde el minuto cero.
+
+Corregido en el motor (no reordenando texto, más robusto para cualquier marca futura): una columna con `contribuye_valor_si` arranca en `""` en vez de `opciones[0]`, con una `<option value="">— Sin marcar —</option>` añadida en los 3 sitios donde se renderiza, para que el desplegable no muestre visualmente una opción real como elegida sin serlo. El resto del catálogo de columnas `opciones` no cambia.
+
+Verificado en vivo con Playwright contra build de producción, `CIR-S1`: con 0 datos → cobertura (nunca un número inflado); tras marcar `r1.Estado=Aprobado` → 1; tras marcar `r4` en su 2ª sección (el caso más propenso a fallar, dos secciones en la misma rama) → 2.
+
+`python3 data/validar_sintomas.py`: nuevo chequeo para `contribuye_valor_si` (tipo válido, el valor debe estar entre las propias `opciones` de la columna, mutuamente excluyente con `contribuye_valor`). 0 errores, 21 avisos (sin cambios).
+
+PRs abiertas: `masesora-frontend#20`, `masframe#20`.
+
+---
+
+## XXXIV. SESIÓN 9 AGO 2026 (cont.) — Reconciliación: CARDIO-S1/S3 faltaban en el commit de §XXXIII
+
+Tras mergear `masesora-frontend#20`/`masframe#20`, verificación directa contra `symptoms.json` en `main` (no dada por hecha): la tabla de §XXXIII.B documentaba 11/19 síntomas resueltos, pero el script que se ejecutó y commiteó solo marcó los 9 "conteo" nuevos (los que usan `contribuye_valor_si`). `CARDIO-S1` y `CARDIO-S3` — los 2 originales, que usan `contribuye_valor` normal sobre columnas ya numéricas — se quedaron fuera del commit por un descuido, no por ningún problema de contenido.
+
+Cerrado ahora: marcado `contribuye_valor: true` en las mismas 4 columnas ya documentadas en §XXXIII.B — `CARDIO-S1.r1` "Clientes cerrados/mes", `CARDIO-S1.r4` "Clientes", `CARDIO-S1.r5` "Convertidos", `CARDIO-S3.r6` "Leads calificados/mes" — sin volver a derivarlas de cero, siguiendo exactamente lo ya aprobado. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios). Con esto, los **11/19 "conteo" quedan realmente resueltos en el catálogo**, no solo documentados.
+
+---
+
+## XXXV. SESIÓN 9 AGO 2026 (cont.) — Los 8 restantes: 2 con nueva pieza de motor, 6 confirmados como límite real
+
+### XXXV.A — Pasada fresca a los 8, no la misma excusa de antes
+
+Con `contribuye_valor_si` ya construido, se volvieron a mirar los 8 síntomas "conteo" que quedaron en backlog en §XXXIII — no dando por buena la razón genérica de la primera pasada. Resultado: **6 siguen sin solución limpia, pero cada uno por una razón distinta y concreta**, no por "el motor no sabe contar estados" (eso ya se resolvió):
+
+- **Dato solo confirmable con el tiempo** (`OPE-S1`, `OPE-S2`, `PSI-S1`, `RES-S1`): "bajas evitadas", "días de ausencia reducidos" — el resultado no se conoce al rellenar la tabla, solo meses después.
+- **Sin tabla fuente** (`TER-S3`, `UNI-S2`): ninguna de las 6 ramas registra el evento que mide la unidad de recuperación.
+
+### XXXV.B — Los 2 que sí: `cuenta_unicos_si` (semanas/personas distintas, no filas)
+
+`CIR-S3` ("semanas comunicando ganadas") y `PSI-S3` ("personas que se implican") tenían el problema opuesto: contar FILAS por estado (`contribuye_valor_si`) habría contado duplicados como si fueran unidades distintas — 3 piezas publicadas la misma semana ≠ 3 semanas comunicando; 3 propuestas de la misma persona ≠ 3 personas implicadas.
+
+Nuevo campo en `ColumnaHerramientaConfig`: `cuenta_unicos_si: { clave_condicion, valor_condicion }` — cuenta valores ÚNICOS de esta columna entre las filas cuya OTRA columna (referenciada por `clave`) coincide con un valor. Vive en `calcularValorHerramienta` (no en `calcularValorFila`, que es por-fila y no puede deduplicar entre filas). Solo válido sobre columnas `opciones` controladas — un valor de texto libre roto por errores de tecleo ("Semana 1" vs "semana 1") invalidaría el conteo; chequeo añadido a `validar_sintomas.py`.
+
+Aplicado:
+- `CIR-S3.r1`: columna "Semana / fecha" (texto libre) reconvertida a "Semana" (opciones: Semana 1-4, mismo patrón que ya usa `OPE-S1.r1`) + `cuenta_unicos_si` condicionado a `Estado=Publicado`.
+- `PSI-S3.r2`: `contribuye_valor_si="Sí"` sobre "Si se aceptó, ¿se implementó?" (no sobre "Decisión=Aceptada" — una propuesta aceptada en papel no es lo mismo que una implementada; señal más fuerte de implicación real). Este no necesitó `cuenta_unicos_si` — usa el mecanismo existente.
+
+Se reutilizó el mismo fix defensivo de fila vacía de §XXXIII.C (arranca en `""`, no en `opciones[0]`) también para columnas `cuenta_unicos_si`.
+
+Verificado en vivo con Playwright contra build de producción: `CIR-S3` con 2 filas "Semana 1"/Publicado duplicadas → cuenta 1 (no 2); añadida "Semana 2"/Publicado → 2; añadida "Semana 3"/Pendiente → sigue en 2 (la condición filtra). `PSI-S3`: "No"/"En curso" no suman, dos "Sí" → 2. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos.
+
+Con esto: **13/19 síntomas "conteo" resueltos** con datos reales del catálogo.
+
+---
+
+## XXXVI. SESIÓN 9 AGO 2026 (cont.) — "De límite real nada": los 6 últimos también se resuelven
+
+### XXXVI.A — El error de §XXXV: "solo se confirma con el tiempo" no es una razón
+
+Maite, tras leer §XXXV: *"DE LIMITE REAL NADA, VAMOS A CONVERTIRLOS EN PROBLEMAS QUE SE RESUELVEN"*. Con razón, otra vez: "el dato solo se conoce con el tiempo" no distingue nada — **las 13 columnas `Estado`/`Decisión` ya usadas también tardan en llegar a su valor** (Publicado, Resuelto, Asignada...). Ningún cliente rellena la tabla entera de una sentada; la Sala de Control ya asume que el plan se completa progresivamente. La pregunta correcta nunca fue "¿se sabe ya?" sino **"¿existe (o se puede añadir) una columna que el cliente rellene honestamente cuando el resultado real se conozca?"** — con esa pregunta, los 6 caen:
+
+| Síntoma | Solución | Tipo |
+|---|---|---|
+| `OPE-S1` "errores de arranque evitados" | `r2."¿Está documentado?"="Sí"` | Columna EXISTENTE, 0 cambios de contenido — documentar un proceso crítico es la acción que evita el error del siguiente empleado |
+| `RES-S1` "bajas evitadas" | Nueva columna en `r1`: "¿Se quedó? (seguimiento)" (Sí/No/Pendiente) | Autoinforme — la pregunta de cierre que le faltaba a "Conversación de retención" |
+| `UNI-S2` "entregas a plazo ganadas" | Nuevas columnas en `r3`: "Fecha entrega objetivo" + "¿Entregado a plazo?" | Autoinforme — "Gestión de colas" ya tenía la fecha de entrada, le faltaba el destino |
+| `TER-S3` "clientes por recomendación" | Nueva columna en `r1`: "¿Recomendó a alguien? (seguimiento)" | Autoinforme — única de las 6 ramas indexada por Cliente/servicio, encaja sin forzar nada |
+| `PSI-S1` "días de ausencia reducidos" | Nueva columna en `r3`: "Días de baja evitados (seguimiento trimestral)" (numero) | Autoinforme directo, sin fórmula — mismo nivel de confianza que ya usa el modo financiero |
+| `OPE-S2` "horas de fundador liberadas/semana" *(antes "días sin intervención ganados")* | `suma_si` nuevo: suma `r1."Horas fundador/semana"` en filas con `"¿Candidato para delegar?"="Sí"` | Motor nuevo + **cambio de unidad**: convertir horas→días habría inventado una jornada (¿8h? ¿6h?) que no existe en ningún sitio del catálogo — mejor una unidad honesta que un número con un factor inventado |
+
+### XXXVI.B — `suma_si`: complemento de `cuenta_unicos_si` para sumar, no solo contar
+
+Mismo mecanismo de referencia por `clave_condicion` que `cuenta_unicos_si` (§XXXV), pero suma una cantidad (`numero`/`calculada`) en vez de contar valores únicos. Vive en `calcularValorHerramienta` por el mismo motivo: necesita ver la tabla entera, no una fila aislada.
+
+**Bug de diseño encontrado y corregido antes de tocar el catálogo** (no en vivo esta vez — al escribir el mecanismo): la columna que sirve de *condición* (`"¿Candidato para delegar?"`) también arranca en `opciones[0]` — que en este caso resultó ser exactamente `"Sí"`, el valor buscado. Sin fix, cualquier fila con horas tecleadas pero sin tocar el desplegable de al lado ya habría sumado esas horas desde el minuto cero. Corregido de raíz: `filaVaciaHerramienta` ahora blanquea también cualquier columna que sea la `clave_condicion` de un `cuenta_unicos_si`/`suma_si` de otra columna de la tabla (`esColumnaCondicion`), no solo la columna marcada — cierra esta clase de bug para cualquier mecanismo futuro, no solo para este caso.
+
+### XXXVI.C — Verificado en vivo, los 6
+
+Playwright contra build de producción, uno por uno: `OPE-S2` (fila con horas=10 sin tocar "Candidato" → no suma; tras marcar "Sí" → 10; fila con "No" → sigue en 10; fila con "Sí" → 18), `RES-S1`, `UNI-S2`, `TER-S3`, `OPE-S1` (secuencia Sí/No/valor-intermedio → cuenta solo el "Sí", sin inflar en la fila inicial), `PSI-S1` (suma directa 3+2=5). `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Con esto: 19/19 síntomas "conteo" resueltos con datos reales — el rollout completo.**
+
+---
+
+## XXXVII. SESIÓN 9 AGO 2026 (cont.) — Cambio de eje: auditoría real por síntoma antes de beta
+
+Cierre de la sesión (§XXXVI) con Maite sintiendo "las neveras llenas pero no sale ni una tortilla" — el motor funciona (verificado repetidamente hoy), pero nunca se hizo un barrido completo, síntoma a síntoma, de la EXPERIENCIA como sistema. Hallazgo grande al revisar el historial: el rediseño "formulario→sistema" de §XXV (decisión/pipeline/simulador/comparador) solo se aplicó a UCI-S1 (piloto). Los otros 29 nunca lo recibieron — todo lo construido desde entonces (Sala de Control, `contribuye_valor_si`, `cuenta_unicos_si`, `suma_si`) es ancho, no profundo: un mecanismo, 30 síntomas, nunca "un síntoma, hasta el final". Decisión: cambiar de eje — un síntoma completo antes de tocar el siguiente, con el skill `masframe-ux-validator` (experiencia + estado técnico, código real, no conjeturas).
+
+### XXXVII.A — Primera auditoría real: CARDIO-S1
+
+Persona: Marta, EntreTelas (taller de costura, Valencia, 3 empleadas, ~9.000€/mes) — sufre las 6 causas de `capa_1_priorizacion` a la vez. Recorrido C0→C6 completo, doble lente (experiencia + estado técnico con archivo:línea). Hallazgos:
+
+- **C0:** Input B ("clientes nuevos que te habías propuesto captar") obliga a Marta a inventar un número que el propio síntoma dice que no tiene (es la causa #6).
+- **C2→C3, familia matriz (14/30 síntomas):** `committedIdxs` (TreatmentPage.tsx:4620-4642) filtra el gate solo por `categoria`, nunca mira si el cliente puntuó impacto/esfuerzo — en cuanto se seleccionan 2+ causas en C1, TODAS quedan comprometidas para C3 antes de puntuar nada. Puntuar solo reordena visualmente. **Pendiente de decisión de producto** (no aplicado): ¿el diseño real es "todo lo seleccionado se trabaja" (y decirlo en el copy), o C2 debería filtrar de verdad por puntuación?
+- **C2, descarte no permanente (bug real, corregido — ver §XXXVII.B).**
+- **C3:** 4 de 5 ramas nativas de CARDIO-S1 (r1/r2/r4/r5) son tablas de medición (CAC, ROI, conversión) sin ninguna columna de acción/decisión — solo r3 tiene "Próxima acción". Encaja con el diagnóstico general: formulario con matemáticas, no sistema todavía.
+- **C6, catálogo entero:** `input_revised_1`, `input_revised_2`, `result_revised` — declarados en la interfaz TS (TreatmentPage.tsx:89-91) y **nunca leídos ni renderizados en ningún otro sitio del archivo**. El re-medido manual real usa `remeasure_a`/`remeasure_b` (:7385-7397), solo visible en modo `estructural`. El linter (`validar_sintomas.py:702-712`) exige que esos 3 campos existan y sean coherentes, reforzando la ilusión de que se usan. **90 campos de texto (3×30 síntomas) sin ningún efecto en el producto — pendiente de decisión** (conectarlos a algo real en C6, o retirarlos del schema/linter).
+
+Veredicto: experiencia 🟠, técnico 🟠 — el camino núcleo completa y el recovery value viaja correctamente, pero no está lista para venta tal cual.
+
+### XXXVII.B — Fix aplicado: el descarte en C2 no era permanente (familia matriz)
+
+El único hallazgo técnico de CARDIO-S1 con solución de código clara (no una decisión de producto pendiente). Botón ✕ en C2 borra la fila del array `items`, pero el efecto de reconstrucción C1→C2 (TreatmentPage.tsx, dentro de `Capa2`) se dispara con CUALQUIER cambio de `c1data` y recreaba cualquier ítem borrado cuyo origen en C1 siguiera marcado — descartar una causa y luego tocar cualquier OTRO checkbox de C1 la resucitaba sin puntuar.
+
+Fix: nuevo campo persistido `c2.removedC1RefIds`. `removeItem()` registra el descarte cuando es un ítem `c1-ref-*`; la reconstrucción lo respeta y no recrea esos ids. El descarte se olvida solo si ese origen concreto se deselecciona en C1 — deseleccionar y volver a seleccionar cuenta como elección nueva, no como "recuperar lo borrado" (para que el olvido no sea permanente de más).
+
+Verificado en vivo con Playwright contra build de producción (CARDIO-S1): 3 causas → 3 tarjetas; borrar 1 con ✕ → 2; marcar OTRA causa no relacionada → sigue en 2+1=3 (**antes resucitaba a 4**); deseleccionar la causa borrada → sigue en 3; reseleccionarla → 4 (vuelve fresca). Confirmado también en el payload de guardado (`removedC1RefIds` correcto en cada paso). Afecta a las 14 síntomas de familia "matriz", no solo CARDIO-S1.
+
+### XXXVII.C — Decisión de producto: puntuar prioriza, no filtra
+
+Maite decide el primer punto pendiente de §XXXVII.A: *"Puntuar solo prioriza, no filtra — dilo en el copy"*. Confirmado el diseño real de la familia matriz — todo lo seleccionado en C1 se compromete a C3, la puntuación de impacto/esfuerzo solo ordena visualmente cuál conviene atacar antes. El único filtro real es el ✕ de cada tarjeta (cuyo descarte ya es persistente desde §XXXVII.B).
+
+Aplicado: nota de puntuación de C2 (misma que ya explicaba los ejes) ampliada con la aclaración explícita — *"Todo lo que marques aquí se trabajará — puntuar solo decide el orden, no descarta nada (para eso está el ✕ de cada tarjeta)"*. Verificado en vivo con Playwright, el copy aparece en su sitio. Mismo commit/PR que §XXXVII.B (`masesora-frontend`, `fix/c1-c2-descarte-persistente`).
+
+Queda pendiente de decisión: `input_revised_1/2`/`result_revised` muertos en las 30 síntomas (§XXXVII.A).
+
+### XXXVII.D — Cierre: input_revised_1/2/result_revised conectados a C6 (conteo y financiero)
+
+Maite confirma el planteamiento original: esos 3 campos existen para dar **garantía al método** — una comprobación independiente del resultado real, no la misma contabilidad interna de lo que el cliente marcó "hecho". Verificado con CARDIO-S1 en concreto: hoy "¿cuántos clientes nuevos han entrado?" se calcula como `InputA original + Σ valor_real de tareas C4 confirmadas` — es el propio sistema contando lo que el propio cliente marcó, no una re-medición externa.
+
+El mecanismo de re-medición real (`remeasure_a`/`remeasure_b`) ya existía en el código, pero solo se activaba en modo `estructural` — `conteo` y `financiero` nunca podían ofrecerlo, dejando `input_revised_1/2`/`result_revised` sin ningún efecto en 22/30 síntomas (los 8 `estructural` sí los tenían disponibles, aunque con las etiquetas equivocadas — ver abajo).
+
+**Aplicado:**
+- La re-medición real, cuando el cliente la rellena, manda sobre el cálculo automático **en cualquier modo**, no solo estructural. Sin rellenarla, el comportamiento no cambia (fallback al cálculo actual — cero regresión).
+- El formulario usa las etiquetas de `input_revised_1/2` (ej. "Facturación mensual (post)") en vez de reutilizar las de C0 con un sufijo "(actual)" pegado — bug menor que también afectaba a los 8 síntomas `estructural` que ya usaban este bloque.
+- Nuevo indicador con la etiqueta de `result_revised` (el Δ) cuando hay re-medición.
+- Corregido de paso: el subtítulo del KPI decía "calculado con lo confirmado en C5" incluso cuando el número venía de la re-medición real — ahora dice "confirmado con tu re-medición real".
+
+Verificado en vivo con Playwright contra build de producción (CARDIO-S1, `conteo`): el bloque de re-medición aparece (antes nunca, en este modo); KPI auto-calculado 100% → tras re-medir 4/5 → 80% (la re-medición manda de verdad, no coincide con el auto-cálculo); Δ visible con la etiqueta de `result_revised`; subtítulo correcto.
+
+PR abierta: `masesora-frontend` (`feat/c6-remedicion-real`).
+
+**Con esto se cierran los 2 puntos pendientes de la auditoría CARDIO-S1 (§XXXVII.A) — primer síntoma certificado end-to-end con el nuevo eje de trabajo.**
+
+### XXXVII.E — Última pieza: 4/5 ramas de C3 sin columna de acción
+
+Cierre del último hallazgo de §XXXVII.A. `r1` (Auditoría canales), `r2` (Presencia digital), `r4` (Rendimiento canales) y `r5` (Sistema referidos) eran tablas de medición pura — el cliente rellenaba números y veía ROI/conversión/CAC calculados, pero ninguna columna preguntaba "¿qué vas a hacer con esto?". Consecuencia técnica concreta, no solo de experiencia: `derivarAccionesConcretas` (el checklist "⚡ Acciones concretas" de C4, §XXII.F) busca columnas con nombres tipo "acción/decisión/plan" — sin ninguna, el checklist salía **vacío** para esas 4 ramas; solo `r3` (que ya tenía "Próxima acción") lo generaba.
+
+Añadida una columna `Decisión` (`opciones`, no `tipo:"decision"` — no hacía falta recalcular nada en la fila, y `derivarAccionesConcretas` ya reconoce "Decisión" igual que "Acción") a cada una de las 4 ramas, con opciones específicas al contexto de cada tabla, no una plantilla genérica:
+
+| Rama | Opciones |
+|---|---|
+| r1 Auditoría canales | Potenciar (más inversión) · Mantener · Optimizar antes de escalar · Abandonar canal |
+| r2 Presencia digital | Crear/activar · Actualizar y relanzar · Mantener como está · Descartar canal |
+| r4 Rendimiento canales | Escalar inversión · Mantener inversión actual · Reducir inversión · Cerrar canal |
+| r5 Sistema referidos | Pedir referido activamente · Activar incentivo · Agradecer y mantener · Sin acción |
+
+`python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios). Verificado en vivo con Playwright: fila de `r1` con Canal="Instagram", Decisión="Potenciar (más inversión)" → C4 muestra **"⚡ TUS ACCIONES CONCRETAS · Potenciar (más inversión) — Instagram"** (antes, vacío para esta rama).
+
+**CARDIO-S1 queda completamente cerrado — los 4 hallazgos de §XXXVII.A resueltos.**
+
+---
+
+## XXXVIII. SESIÓN 9-10 AGO 2026 — Re-auditoría CARDIO-S1: "quiero la mejor tortilla" — 2 bugs reales más, encontrados solo en vivo
+
+Maite, tras cerrar §XXXVII: *"vuelve a pasar el VALIDATOR por CARDIO-S1 y realmente comprobamos el caso de Marta... quiero una tortilla, perfecta, dorada, nivel 3 estrellas Michelin"*. Segunda pasada, esta vez sin conformarse con leer código: recorrido completo C0→C6 en vivo con Playwright, mismos datos reales de Marta (EntreTelas), sobre el build ya con los 4 fixes de §XXXVII aplicados.
+
+### XXXVIII.A — 2 bugs reales que la lectura de código no había cazado
+
+1. **C0, catálogo entero:** `DesglosadorInput` (TreatmentPage.tsx:1249-1310) — su condición `esVacio = !rawText || rawText==="—"` no distinguía "sin desglose real" de "vacío". Cualquier `input_a`/`input_b` sin `"+"` (comprobado: **0 de 60 campos en las 30 síntomas** usan un desglose real) mostraba una caja "+ Añadir concepto"/"Total: X.XX" con el label repetido dos veces, para lo que debería ser un simple número. Visto solo al cargar la pantalla real, no leyendo el componente por encima.
+
+2. **C4, checklist "⚡ Acciones concretas":** verificado con Marta rellenando 1 sola fila en `CARDIO-S1.r1` (la tabla tiene `filas_iniciales: 3`), el checklist de C4 mostró **3 "acciones"** en vez de 1 — 2 fantasma, extraídas de las 2 filas nunca tocadas. Causa: la columna `Decisión` que se añadió en §XXXVII.E es `opciones` normal (no `contribuye_valor_si`), así que `filaVaciaHerramienta` la rellenaba con `opciones[0]` ("Potenciar (más inversión)") en cada fila en blanco — el mismo bug de §XXXIII.C, pero en un tercer consumidor (`derivarAccionesConcretas`) que el fix original no protegía. Comprobado contra el catálogo: **14 columnas en 8 síntomas afectadas** (`UCI-S1.r4`, `CIR-S1.r2`, `CIR-S2.r2/r3`, `NEURO-S2.r5`, `CLI-S1.r6`, `PSI-S3.r2/r6`, `RES-S1.r2`, `RES-S3.r3`), no solo las 4 columnas de CARDIO-S1 añadidas hoy — un bug introducido por el propio trabajo de esta sesión, cazado antes de mergear gracias a la re-verificación en vivo.
+
+También confirmado (no bug, matiz de copy): el gate de C2 (`qualityCheck`, TreatmentPage.tsx:8962-8963) exige puntuar al menos un elemento antes de avanzar — el copy nuevo de §XXXVII.C no lo menciona. Anotado, sin fix aplicado (pendiente de decisión: avisar en el copy, o quitar la exigencia).
+
+### XXXVIII.B — Fixes aplicados y verificados en vivo
+
+- `DesglosadorInput`: `esSimple = esVacio || !tieneSubItems`, usado tanto en el render como en `calcTotal()`.
+- `ACCION_REGEX` extraído a constante compartida entre `filaVaciaHerramienta` y `derivarAccionesConcretas` — cualquier columna que el checklist de C4 reconoce como accionable ahora arranca en `""` en fila nueva, mismo criterio defensivo que ya protegía a `contribuye_valor_si`/`cuenta_unicos_si`/`suma_si`.
+
+Verificado en vivo con Playwright, mismo recorrido completo de Marta: C0 ya sin la caja de desglose; C4 con 1 acción real (antes 3); total sigue en **4 nuevos clientes captados**, KPI 40%→120%, "Objetivo alcanzado" — el fix no toca el cálculo de valor, solo el checklist de acciones.
+
+PR abierta: `masesora-frontend` (`fix/desglosador-y-acciones-fantasma`).
+
+**Lección del método:** el primer pase de auditoría (§XXXVII), basado en lectura de código, encontró 4 hallazgos reales. La segunda pasada, exigiendo el recorrido en vivo con datos reales, encontró 2 más — uno de ellos introducido por el propio trabajo de la primera pasada. Verificar en vivo no es redundante con leer código: son cazas de bugs distintas.
+
+---
+
+## XXXIX. SESIÓN 10 AGO 2026 — Auditoría CARDIO-S2: bug crítico de C6 (falso "Has superado" sin re-medir nada)
+
+Maite, tras cerrar CARDIO-S1: *"hacemos lo mismo con los otros 2 síntomas de CARDIO?"*. Auditoría `masframe-ux-validator` de CARDIO-S2 (Arritmia Comercial, `kpi_recovery_mode: "estructural"`, familia C2 "regla" — `Elimina elementos hasta conservar máximo 5`), persona Javier / Metalatek, recorrido completo C0→C6 en vivo con Playwright sobre build de producción.
+
+### XXXIX.A — Confirmado sano: familia "regla" y la generalización de fixes previos
+
+- C2 "regla" (TreatmentPage.tsx ~3077-3151): toggle explícito reversible `✕ Eliminar`/`↩ Recuperar` (`categoria: "out"`/`""`), no hard-delete — mecánica distinta a la familia "matriz" de CARDIO-S1 pero coherente con su propio copy.
+- Confirmado (no asumido) que **ninguna** columna de acción de CARDIO-S2 es `tipo: "opciones"` (todas `"texto"`) — el bug de acciones fantasma de §XXXVIII.B no recurre aquí, sin tocar código para comprobarlo.
+- `DesglosadorInput` (fix de §XXXVIII.B): `input_a`/`input_b` de CARDIO-S2 tampoco tienen desglose real — la caja limpia de número simple se confirma en una segunda síntoma, no sobreajustada a CARDIO-S1.
+- Nota de coherencia, sin fix aplicado: el `qualityCheck` de la familia "regla" (~8956-8961) solo exige "al menos 1 conservado" — no fuerza el "máximo 5" que dice el copy. El cliente puede confirmar C2 con las 6 causas seleccionadas; `overLimit` solo pinta un badge ⚠️, no bloquea. Pendiente de decisión de producto.
+
+### XXXIX.B — Bug crítico encontrado en vivo: falso "Has superado" por ruido de redondeo
+
+Con Javier completando C0→C4 (KPI inicial 15.000€/45.000€ = 33,33%) y **sin re-medir nada en C6**, la capa mostraba a la vez:
+
+```
+📍 KPI INICIAL: 33.3     📊 KPI ACTUAL: 33.3
+✓ Has mejorado tu KPI...
+¡Enhorabuena! Has superado Arritmia Comercial → Ver mi Certificado de Alta
+```
+
+Causa (TreatmentPage.tsx): `inicialNum` (línea 7185) se lee de `c0data.kpi_value`, un string **ya redondeado** al guardarse en C0 (`Capa0`, ~1455-1456: `Math.round` si está a <0.05 del entero, si no `.toFixed(2)`). `actualNum` (7198-7206), cuando no hay re-medición real, cae a `baseNum = calcKpiFormula(...)` — recalculado con **precisión flotante completa**, sin ese redondeo. Para cualquier `kpi_formula` con decimal periódico (`(15000/45000)*100 = 33.333...`), `actualNum (33.333...) > inicialNum (33.33)` es cierto sin que haya cambiado ningún dato real — disparaba `mejoro` (7245) y, con C4 completo, `readyForAlta` (7252) y el banner de Alta/Certificado (7528). Verificado numéricamente aparte antes de tocar código. **Afecta a los 30 síntomas del catálogo**, no solo a CARDIO-S2.
+
+**Fix aplicado y verificado en vivo:** nueva `roundKpiForCompare()` (~7165) aplica el mismo criterio de redondeo que usa C0 al guardar; `mejoro` ahora compara `inicialNumCmp`/`actualNumCmp` (mismo redondeo en ambos lados) en vez de un valor redondeado contra uno de precisión completa. Playwright, mismo caso de Javier:
+
+| Caso | Resultado |
+|---|---|
+| Sin re-medición (el bug) | ✅ ahora "aún no ha mejorado", sin banner de Alta |
+| Re-medición con mejora real pequeña (+0,23pp) | ✅ sigue detectándose — el fix no esconde cambios genuinos |
+| Re-medición con mejora grande que supera objetivo | ✅ Alta se dispara correctamente |
+| Re-medición con los mismos valores originales (sin cambio real) | ✅ "aún no ha mejorado" |
+
+PR mergeada: `masesora-frontend#26` (`cbc29a7`).
+
+### XXXIX.C — C5 verificado en vivo, y un tercer hallazgo (copy contradictorio en C6)
+
+C5 (Cobrómetro) verificado en vivo, accordeón expandido tras auto-completarse al terminar C4: "Progreso de ejecución: 3 de 3 acciones ejecutadas" + "Certificado de valor: el valor se certifica con la mejora de tu KPI en el seguimiento (C6)", **cero € en pantalla** — correcto para `estructural`, `hayValor` (Capa5) exige `recoveryMode === "financiero"`. Auto-completar C5 al cerrar C4 es coherente aquí: no hay nada financiero que el cliente deba confirmar.
+
+Con el fix de §XXXIX.B ya aplicado, en C6 con `!mejoro && c4Complete` aparecían **dos avisos que se contradecían**: el correcto de re-medición ("Este KPI no se calcula con lo recuperado...") y, justo debajo (`TreatmentPage.tsx:7522`), un aviso genérico *"Completa los valores reales en C5 — el KPI se actualizará automáticamente cuando confirmes el valor recuperado en cada tarea"* — falso en los dos puntos para `estructural`: no hay ningún valor que rellenar en C5 (verificado, cero inputs), y el KPI nunca se recalcula automáticamente desde C5/C4 en este modo (línea ~7203). Afecta a los 8 síntomas `estructural`.
+
+**Fix aplicado y verificado en vivo:** mensaje condicionado por `recoveryMode` (~7517-7527) — `estructural` apunta a re-medir en el propio C6, el resto mantiene el texto original sin cambios (confirmado: ambas cadenas coexisten en el bundle compilado, sin regresión). PR mergeada: `masesora-frontend#27`.
+
+### XXXIX.D — Veredicto y cierre
+
+🟢 **Experiencia:** fluye limpio, sin jerga, sin datos imposibles — Javier entiende cada paso. 🟢 **Técnico:** los 2 bugs reales encontrados (falso "Has superado" por redondeo, y aviso contradictorio en C6) quedan cerrados y verificados en vivo; sin bloqueantes de flujo de estado C0→C6. Nota de coherencia sin fix (pendiente de decisión de producto): el `qualityCheck` de la familia C2 "regla" no impone el "máximo 5" que dice su propio copy.
+
+**CARDIO-S2 certificado end-to-end.** Sigue CARDIO-S3 con el mismo rigor.
+
+---
+
+## XL. SESIÓN 10 AGO 2026 (cont.) — Auditoría CARDIO-S3: el riesgo #1 de la taxonomía, verificado sano
+
+Tercer y último síntoma de CARDIO. Persona: Sonia, diseño de interiores freelance — 40 contactos/mes, solo 5 oportunidades reales calificadas (12,5%), pierde tiempo en consultas que nunca cierran. Familia C2: **Árbol de Decisiones** — tercera familia distinta auditada esta sesión (matriz→CARDIO-S1, regla→CARDIO-S2, árbol→CARDIO-S3).
+
+### XL.A — El riesgo que más preocupaba (taxonomía del validator, bug #1): confirmado ya resuelto
+
+El árbol es la familia que la propia taxonomía de `masframe-ux-validator` señala como riesgo #1 ("pérdida de selección múltiple: el cliente marca N 'Sí' y solo viaja 1"). `decision_comprometida` (TreatmentPage.tsx:3018) sigue siendo un string único que solo guarda el primer "Sí" -- pero ya no es la fuente de verdad para C3: `committedDescriptions` (~794-804) y `committedIdxs` (~4692-4714) recogen **todos** los ítems `categoria === "si"`, y son los que deciden qué ramas de `capa_3_plan` monta C3 (fix ya documentado en el propio código, comentario de línea 789, de una sesión anterior a esta auditoría).
+
+Verificado en vivo con Sonia marcando 3 "Sí": Sala de Control mostró correctamente "3 FRENTES ABIERTOS" con las 3 causas correctas -- confirmado, no asumido. Nota metodológica: el primer intento del test dio solo 1 frente por clicar los 3 botones en el mismo tick de JS antes del re-render de React (mismo patrón de falso positivo que la truncación de pills en CARDIO-S2, §XXXIX) -- con clicks espaciados, los 3 registran bien. Descartado como bug de test antes de reportarlo.
+
+### XL.B — Resto de verificaciones en vivo, todas correctas -- sin fixes
+
+- Columnas de acción de r1/r3/r6: ninguna es `tipo: "opciones"` con etiqueta que matchee `ACCION_REGEX` -- no recurre el bug de acciones fantasma de §XXXVIII.
+- Fórmula invertida (`(InputB/InputA)*100`, al revés que CARDIO-S1/S2): KPI inicial 12,5%, correcto. Tras recuperar 6 oportunidades calificadas vía r6 (única rama con `contribuye_valor`), KPI actual 27,5% -- el algoritmo de C6 (~7213-7230) prueba empíricamente ambas direcciones y elige la que mejora, sin asumir qué variable es cuál -- generaliza bien al orden invertido.
+- Sala de Control (conteo): copy correcto y mode-aware -- "6 oportunidades calificadas ganadas" (usa `recovery_unit_label`), sin €. C5 también sin € en pantalla.
+- Alta se disparó legítimamente (27,5% > objetivo 20%, mejora real de 15 puntos) -- caso distinto y no confundible con el bug de redondeo ya cerrado en §XXXIX.B.
+- Gate C2 árbol (~8990-8993): exige al menos 1 "Sí", coherente con su copy -- a diferencia de "regla" (§XXXIX.A), que no fuerza su propio "máximo 5".
+
+### XL.C — Veredicto
+
+🟢 **Experiencia**, 🟢 **Técnico** -- **CARDIO-S3 certificado end-to-end, sin fixes pendientes.**
+
+Con esto quedan auditados los 3 síntomas de CARDIO. Balance de la especialidad: 6 hallazgos reales encontrados y cerrados entre CARDIO-S1 y CARDIO-S2 (0 en CARDIO-S3), y 2 notas de coherencia sin fix aplicado (pendientes de decisión de producto): gate de matriz no filtra por puntuación (aclarado en copy, §XXXVII.C) y "regla" no impone su propio "máximo 5" (§XXXIX.A).
+
+---
+
+## XLI. SESIÓN 10 AGO 2026 (cont.) — Auditoría UCI: hallazgo crítico catálogo entero (Alta sin objetivo alcanzado)
+
+Segunda especialidad auditada tras cerrar CARDIO. UCI tiene 3 síntomas (UCI-S1/S2 matriz, UCI-S3 con `c2_herramienta: "margen"` -- ver §XLI.E, el nombre "semáforo" de su `capa_2_decision` no gobierna la UI real). Empieza por UCI-S1, el piloto histórico de la Sala de Control (§XXV), primera vez auditado en vivo con el método `masframe-ux-validator`.
+
+### XLI.A — Persona y primera vez en modo `financiero` esta sesión
+
+Marc, carpintería a medida, 3 empleados -- caja de 3.000€ con gastos fijos de 4.000€/mes (22,5 días de runway), clientes que tardan en pagar y anticipos sin ejecutar. Encaja con Obstrucción de Caja. UCI-S1 es `kpi_recovery_mode: financiero` -- las 6 auditorías previas de esta sesión fueron conteo/estructural, así que es la primera vez que se verifica en vivo el Cierre económico de C5 con € reales.
+
+### XLI.B — Hallazgo crítico: el botón de Alta no comprobaba el objetivo clínico
+
+Con Marc recuperando 1.845€ reales (Sala de Control → C4 → C5 "Cierre económico" 1.845€/1.845€ 100% → C6), el KPI sube de 22,5 a 36,3 días -- mejora real, pero el objetivo es >45 días y solo se recorre el 62% del camino. Aun así C6 mostraba a la vez:
+
+```
+✓ Has mejorado tu KPI (aún no llegas al objetivo)...
+¡Enhorabuena! Has superado Obstrucción de Caja → Ver mi Certificado de Alta
+```
+
+Causa (`TreatmentPage.tsx:7267`): `readyForAlta = c4Complete && mejoro` nunca comprobaba `alcanzoObjetivo` -- el propio componente ya lo calcula y lo usa para el texto del pill justo encima ("Objetivo alcanzado" vs "aún no llegas al objetivo"), pero el botón de Alta lo ignoraba. Mismo hueco en el checklist `missing` (~7290): nunca exigía llegar al objetivo, solo `c4Complete` y `mejoro`. Un cliente podía pedir su Certificado de Alta con cualquier mejora, aunque fuera de 1 punto, sin haber alcanzado el objetivo clínico real. **Bug preexistente** (commit `1610d24`, 5 ago 2026, no introducido esta sesión) -- no cazado en las 6 auditorías previas porque en todas `mejoro` era falso (el bug de redondeo de §XXXIX.B, ya cerrado) o `alcanzoObjetivo` ya era cierto (CARDIO-S3). **Afecta a los 30 síntomas del catálogo.**
+
+**Fix aplicado y verificado en vivo:** `readyForAlta = c4Complete && mejoro && alcanzoObjetivo`, más un aviso nuevo en "Para dar el alta" cuando hay mejora real pero aún no se alcanza el objetivo. De paso, plural mal formado en el Certificado de valor de C5 ("2 intervenciónes" → "2 intervenciones"). Playwright confirmó: ya no aparece el banner contradictorio, en su lugar el checklist correcto; el camino legítimo (mejora que sí alcanza el objetivo) sigue intacto -- el fix solo añade una condición `AND`. PR: `masesora-frontend#28`.
+
+### XLI.C — Resto de UCI-S1, verificado sano
+
+C2 matriz exige puntuar ≥1 elemento (no solo seleccionar). C3: Sala de Control mode-aware para financiero ("💰 VALOR TOTAL ESTIMADO ENTRE FRENTES"). Columnas `tipo:"decision"` y `tipo:"opciones"` sin riesgo de acciones fantasma. C5 financiero: `valor_real` se auto-rellena desde el estimado de C3 al marcar tarea hecha.
+
+**Veredicto UCI-S1**: 🟢 experiencia, 🟢 técnico (tras el fix de `readyForAlta`) -- certificado end-to-end.
+
+### XLI.D — UCI-S2: mismo patrón que el hallazgo original de CARDIO-S1, pero peor
+
+Persona Elena, estudio de reformas -- 8.000€ facturados sin cobrar de 30.000€ totales. **5 de las 6 ramas de C3** (r1, r2, r4, r5, r6 -- todas menos r3, que ya tenía "Acción de reclamación") no tenían ninguna columna que `derivarAccionesConcretas` reconociera como acción, dejando vacío el checklist "⚡ Acciones concretas" de C4 pese a que el cliente rellena datos reales. Verificado en vivo antes de tocar el catálogo: con r4 (Pactar condiciones de pago) totalmente rellenada, el checklist de C4 no aparecía en absoluto.
+
+**Fix aplicado y verificado en vivo:** columna `Decisión` (opciones, contexto específico por rama) añadida a r1/r2/r4/r5/r6 -- mismo patrón que las 4 columnas de CARDIO-S1 (§XXXVII.E). Playwright confirmó las 5 ramas mostrando su decisión + contexto real (ej. "Exigir anticipo obligatorio — Reformas particulares"), cada una con su propio responsable, sin contaminación cruzada. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto UCI-S2**: 🟢 experiencia, 🟢 técnico (tras la columna Decisión) -- certificado end-to-end.
+
+### XLI.E — UCI-S3: el hallazgo más extenso de la sesión, y la familia "semáforo" desmitificada
+
+Persona Diego, asesoría -- factura 12.000€/mes con 9.000€ de costes directos (25% margen, objetivo >30%). Antes de auditar el catálogo, dos verificaciones en vivo sanas:
+
+- **`c2_herramienta: "margen"` anula a la familia genérica "semáforo"** -- UCI-S3 es el único síntoma del catálogo con "semáforo" en `capa_2_decision`, así que esa UI genérica no la usa nadie de verdad; el semáforo real vive dentro de `Capa2Margen`, clasificación 🟢/🟡/🔴 por ítem calculada en vivo. Confirmado con Diego: un ítem salió "🟡 Optimizable" (margen 17%), otro "🟢 Pilar" (margen 40%) -- cálculo correcto.
+- **Multi-selección C1→C2→C3 en modo margen**: 2 causas marcadas abren correctamente 2 frentes en la Sala de Control -- mismo tipo de verificación que el árbol de CARDIO-S3 (§XL), aquí también sana. Primer intento con clicks síncronos falló (patrón ya conocido de artefacto de test, descartado antes de reportar).
+
+**El hallazgo:** `r1, r2, r3, r5, r6` (todas menos `r4`) son tablas de cálculo puro -- precio mínimo viable, impacto de descuentos, repricing, comparativa de márgenes, rentabilidad por cliente -- sin ninguna columna de acción, pese a que cada tabla ya calcula el gap/problema exacto (ej. r1 calcula "Gap (€)" entre precio actual y precio mínimo viable, pero nunca pregunta qué hacer con ese gap). `r4` (tipo `"calculadora"`, herramienta de un solo cálculo, no tabla por filas) queda fuera de alcance: `derivarAccionesConcretas` (`TreatmentPage.tsx:6179`) excluye por diseño cualquier herramienta que no sea `"nativa"` -- límite arquitectónico más amplio que afecta a todas las calculadoras del catálogo, anotado sin fix, pendiente de decisión de producto sobre qué es una "acción concreta" ahí.
+
+**Fix aplicado y verificado en vivo:** columna `Decisión` añadida a r1/r2/r3/r5/r6. Playwright confirmó las 5 ramas con su decisión + contexto real (ej. "Subir precio ahora — Auditoría fiscal"), cada una con su propio responsable. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto UCI-S3**: 🟢 experiencia, 🟢 técnico (tras la columna Decisión) -- certificado end-to-end, con la única nota pendiente de producto sobre las herramientas "calculadora".
+
+### XLI.F — Cierre de la especialidad UCI
+
+3/3 síntomas auditados. Balance: 1 hallazgo crítico catálogo-entero (Alta sin objetivo alcanzado, 30 síntomas, UCI-S1), 10 columnas de acción añadidas entre UCI-S2 (5) y UCI-S3 (5), y 1 nota de producto pendiente (herramientas "calculadora" sin checklist de acción). PRs: `masesora-frontend#28` (código), `masframe#27` (docs + datos, este mismo).
+
+---
+
+## XLII. SESIÓN 10-11 AGO 2026 — Renderer de tarjeta para C3: de bug de UX a pieza del framework
+
+Tras cerrar UCI, debate de diseño sobre por qué las tablas nativas de C3 "se sienten como deberes en un Excel". Conclusión tras varias vueltas: no es estético -- **el cliente llama siempre al CC porque no sabe usar una tabla de N columnas sin que se la expliquen**, y el protocolo no se sostiene solo si depende de esa llamada. Eso sí es sustancial para la beta; una tarjeta más bonita por sí sola no lo era.
+
+### XLII.A — Decisión de alcance: renderer genérico, no rediseño caso a caso
+
+Con 114 herramientas en el catálogo, rediseñar cada una a mano no escala. Se descarta también "tabla → conversación proactiva" (explorado y corregido en el propio debate: eso es **seguimiento post-Alta**, fuera de las 7 capas, no una forma nueva de C3). La solución: un modo de vista opt-in, `vista?: "tabla" | "tarjeta"` en `SeccionHerramientaConfig` -- mismas columnas, mismo dato, solo cambia el contenedor. Sin declarar, cero cambio de comportamiento (150+ secciones existentes intactas).
+
+### XLII.B — Construido y verificado en vivo
+
+`SeccionTablaNativa` (`TreatmentPage.tsx`) gana una rama de render alternativa: cada fila se pinta como tarjeta (campos etiquetados uno debajo de otro) y las columnas `opciones`/`decision` -- la Decisión que antes vivía perdida en la última columna -- pasan a ser botones grandes. Comparte `addRow`/`removeRow`/`updateCell`/`veredicto`/`entidad_compartida` con la tabla, cero lógica duplicada. PR: `masesora-frontend#30`.
+
+Activado en las 14 ramas que ya tenían columna Decisión de esta sesión: CARDIO-S1 (r1/r2/r4/r5), UCI-S2 (r1/r2/r4/r5/r6), UCI-S3 (r1/r2/r3/r5/r6) -- CARDIO-S1.r5 se añadió en un segundo commit porque en el primero se excluyó a propósito (otra sesión la está rediseñando a `pipeline` con motor de referidos + WhatsApp; se confirmó que seguía siendo `nativa` sin conflicto antes de activarla). PR: `masframe#29`.
+
+Verificado en vivo con Playwright (UCI-S2/persona Elena, CARDIO-S1/persona Marta): ramas con `vista:"tarjeta"` sin `<table>` en el DOM, botones de Decisión clicables directamente; ramas de control sin el flag, sin regresión.
+
+### XLII.C — Fuera de alcance, anotado en backlog
+
+Sugerencia automática de qué botón marcar (pre-seleccionar la Decisión según el resto de datos de la fila): necesita una regla de negocio distinta por cada columna, no algo que deba inventar sin criterio de producto -- fast-follow, no bloqueante. Acuerdo con Maite: de aquí en adelante, cada auditoría nueva que añada una columna Decisión activa `vista:"tarjeta"` en el mismo movimiento, en vez de hacerlo en dos pasadas separadas.
+
+---
+
+## XLIII. SESIÓN 11 AGO 2026 — Auditoría NEURO-S1, primera del resto del catálogo
+
+Especialidad NEURO (Neurología Estratégica), síntoma NEURO-S1 "Amnesia Estratégica" -- primera auditoría tras cerrar CARDIO y UCI, ya con el renderer de tarjeta disponible desde el primer movimiento (fundido con la auditoría, según lo acordado en §XLII.C).
+
+Persona: Fernando, fabricante de muebles a medida, 12 empleados, factura 25.000€/mes sin objetivo de facturación a 12 meses definido -- el equipo interpreta las prioridades cada uno a su manera. C2 es matriz "Urgente vs Importante", mismo mecanismo ya auditado en CARDIO-S1/UCI-S1/S2.
+
+**Mismo patrón que CARDIO-S1/UCI-S2/S3:** 4 de las 6 ramas de C3 (r1 Canvas de visión, r2 Palancas de valor, r4 OKRs anuales, r5 Auditoría de tiempo estratégico) medían sin preguntar qué hacer. r3 (Tracker de alineación) y r6 (Revisión trimestral) ya tenían columna de acción propia.
+
+Columna `Decisión` añadida, contexto específico por rama -- incluye el primer caso multi-sección de la sesión: r4 (OKRs) tiene 4 secciones ("Objetivo 1/2/3" + "Histórico trimestral"), Decisión solo en las 3 de objetivo, no en el histórico (tracker de tendencia, no punto de decisión); r5 tiene 2 secciones, Decisión solo en "Registro semanal de tiempo" (la de sesiones estratégicas ya tiene su propia columna de estado). `vista:"tarjeta"` activada en las mismas secciones exactas -- primera vez verificando en vivo el caso mixto (una rama con secciones en tarjeta y secciones en tabla a la vez): confirmado con precisión (r4: "Objetivo 1" en tarjeta con Decisión en botones, exactamente 1 `<table>` en pantalla -- el Histórico intacto).
+
+Verificado en vivo con Playwright (persona Fernando): las 4 ramas muestran su decisión + contexto real en C4, cada una con su propio responsable, sin contaminación cruzada. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto NEURO-S1**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIII.A — NEURO-S2: el catálogo más sano encontrado hasta ahora
+
+Persona Rosa, Consultoría López -- 4 mejoras completadas de 10 propuestas este mes (40%, objetivo >70%). Solo 2 de las 6 ramas de C3 (r1 Planificador de agenda estratégica semanal, r4 Tres prioridades semanales) sin columna de acción -- las otras 4 ya la tenían. r4 tiene 2 secciones, ambas necesitaban Decisión (registro de prioridades y análisis de interrupciones son dos puntos de decisión distintos, no uno solo).
+
+Columnas añadidas: r1 (Proteger mejor el bloque / Delegar interrupciones recurrentes / Mantener el plan actual / Ajustar el bloque); r4 sección 1 (Repetir la misma prioridad / Reformular la prioridad / Proteger mejor el tiempo / Ya completada, sin cambios); r4 sección 2 (Eliminar esta interrupción / Delegar esta interrupción / Aceptarla, no evitable / Crear un filtro para bloquearla). `vista:"tarjeta"` en las 3.
+
+Verificado en vivo con Playwright (persona Rosa): r1 y ambas secciones de r4 sin `<table>` en el DOM (0 tablas en pantalla), los 3 botones de Decisión clicables. C4 muestra las 3 acciones reales con contexto, cada rama con su propio responsable. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto NEURO-S2**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIII.B — NEURO-S3: árbol re-verificado sano, límite de "calculadora" confirmado por segunda vez
+
+Persona Nuria, Estudio Creativo Vega -- 10% de margen neto sobre facturación, objetivo >15%. C2 es Árbol de Decisiones -- multi-selección re-verificada sana (3 "Sí" abren correctamente 3 frentes en la Sala de Control, mismo mecanismo ya confirmado en CARDIO-S3 §XL).
+
+De las 6 ramas, solo 3 son `nativa` (r1 Análisis de servicios por margen, r3 Simulador de subida de precios, r4 Índice de especialización) y las 3 sin columna de acción. Las otras 3 (r2, r5, r6) son `calculadora` y quedan fuera de alcance -- mismo límite arquitectónico ya documentado en UCI-S3.r4 (§XLI.E): `derivarAccionesConcretas` excluye por diseño cualquier herramienta que no sea `nativa`.
+
+Columnas añadidas: r1 (Mantener / Subir precio / Reducir coste / Eliminar del catálogo); r3 (Subir el precio / Mantener el precio actual / Subir menos de lo simulado / Necesito más datos); r4 (Especializarse en este servicio / Mantener en el catálogo / Reducir inversión / Retirar del catálogo). `vista:"tarjeta"` en las 3.
+
+Verificado en vivo con Playwright (persona Nuria): r1/r3/r4 sin `<table>` en el DOM, los 3 botones de Decisión clicables. C4 muestra las 3 decisiones reales, cada rama con su propio responsable, sin contaminación cruzada. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto NEURO-S3**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIII.C — Cierre de la especialidad NEURO
+
+3/3 síntomas auditados. Balance: 10 columnas de acción añadidas (4 en NEURO-S1, 3 en NEURO-S2, 3 en NEURO-S3), sin bugs de corrección nuevos (a diferencia de CARDIO/UCI, aquí el catálogo estaba técnicamente sano salvo por el patrón de columnas de acción faltantes). Primer ciclo completo con auditoría + `vista:"tarjeta"` fundidas en el mismo movimiento, incluyendo el primer caso multi-sección con mezcla tarjeta/tabla en la misma rama (NEURO-S1.r4). Veredicto 🟢🟢 en los 3.
+
+---
+
+## XLIV. SESIÓN 11 AGO 2026 — Auditoría UNI (Unidad de Procesos): el segundo bug estructural de la sesión
+
+Especialidad UNI (Unidad de Procesos). UNI-S1 (Esclerosis Operativa, persona Antonio/Taller Mecánico Ruiz): mismo patrón de columna de acción faltante, solo r2 (Identificación de cuellos de botella) de las 6 ramas -- 5/6 ya tenían acción propia. Certificado end-to-end, 🟢🟢.
+
+### XLIV.A — UNI-S2: el segundo bug estructural de la sesión, familia "carga" con puerta C2→C3 muerta
+
+Persona Elena, Estudio Bloom Arquitectura -- KPI de entregas a plazo, C2 es "Análisis de Carga" (familia `carga`, un solo eje de puntuación vía Stepper, distinta de la matriz de dos ejes). Al intentar verificar en vivo el patrón habitual de columnas de acción (r1 Auditoría de entrada, r2 Coordinación entre áreas, r5 Control de calidad, r6 Comunicación con cliente -- 4/6 sin acción, r3/r4 ya la tenían), se encontró un **bug bloqueante, no cosmético**: la puerta de calidad de C2 (`TreatmentPage.tsx` ~9150) exigía puntuar `eje_x` Y `eje_y`, pero el renderer de "carga" (~3255-3317) solo escribe `eje_x` -- `eje_y` nunca se toca en este uiType. Resultado: **la puerta nunca se abría, sin importar lo que hiciera el cliente**, confirmado en vivo (Stepper subido a 4/5 en los 4 ítems seleccionados, "Ajusta al menos un elemento para continuar" seguía bloqueando "Confirmo datos"). Afecta también a OPE-S3 (única otra rama del catálogo con familia carga/capacidad).
+
+Fix: excepción para `"carga"`/`"capacidad"` en la puerta de C2 (mismo patrón que las excepciones ya existentes de árbol/regla), basta con puntuar `eje_x` en al menos un elemento -- `masesora-frontend#31`. Verificado en vivo tras el fix: C3 abre correctamente ("4 FRENTES ABIERTOS"), las 4 ramas con su Decisión + responsable propio sin contaminación cruzada, C4 poblado bien. Columnas Decisión + `vista:"tarjeta"` aplicadas en las 4 ramas en el mismo movimiento.
+
+**Veredicto UNI-S2**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end (tras el fix).
+
+### XLIV.B — UNI-S3: Fuga de Calidad Crónica
+
+Persona Javier, Imprenta Digital Prisma -- C2 matriz "Impacto vs Esfuerzo", mecanismo ya auditado repetidas veces. 5 de las 6 ramas (r1 Análisis de frecuencia de errores, r2 Coste de retrabajo, r3 Origen del fallo por fase, r4 Impacto externo: quejas de cliente, r5 Consistencia de entregas por persona) sin columna de acción real; r6 (Protocolo de verificación previa a entrega) ya la tenía -- su columna "Paso del proceso" (texto libre) ES la acción de cada fila del checklist, confirmado revisando `derivarAccionesConcretas` antes de descartarla como falso positivo del regex.
+
+Verificado en vivo con Playwright (persona Javier): 5 frentes abiertos en C3, cada uno con su Decisión + responsable propio sin contaminación cruzada, C4 poblado correctamente. `python3 data/validar_sintomas.py`: 0 errores, 21 avisos (sin cambios).
+
+**Veredicto UNI-S3**: 🟢 experiencia, 🟢 técnico -- certificado end-to-end.
+
+### XLIV.C — Cierre de la especialidad UNI, y paralelización de la auditoría
+
+3/3 síntomas auditados. Balance: 10 columnas de acción añadidas (1 en UNI-S1, 4 en UNI-S2, 5 en UNI-S3) + 1 bug estructural real cerrado (puerta muerta de la familia "carga", masesora-frontend#31, afecta también a OPE-S3). Veredicto 🟢🟢 en los tres.
+
+A partir de aquí, y a petición explícita del usuario ("más agentes, menos dependencia de mí"), las 6 especialidades restantes del catálogo (CLI, CIR, PSI, RES, TER, OPE -- 18 síntomas) se auditan en paralelo con subagentes autónomos, uno por especialidad, cada uno en su propio worktree y su propio clon de frontend/mock/puertos, aplicando el mismo patrón mecánico documentado en §XLII-§XLIV y con la misma instrucción de no arreglar bugs estructurales por su cuenta -- solo reportarlos, con el mismo rigor que el bug de "carga", para decidir el fix centralizadamente.
+
+---
+
+## XLV. SESIÓN 11 AGO 2026 — Auditoría en paralelo (1ª tanda): PSI, CIR, OPE cerradas
+
+Primera tanda de la auditoría paralelizada con subagentes (§XLIV.C). 6 agentes lanzados a la vez (uno por especialidad restante); 3 completaron esta tanda, 3 (RES, CLI, TER) cortados a media verificación por el límite de uso de la sesión -- ninguno llegó a tocar `symptoms.json`, quedan pendientes de relanzar sin nada que limpiar.
+
+**PSI (Psiquiatría Organizacional, 3/3)**: PSI-S1 (matriz), PSI-S2 (árbol, re-confirmado el mismo patrón de espera obligatoria entre clics síncronos que ya se documentó para matriz/carga -- también le afecta a árbol), PSI-S3 (regla). 11 columnas de acción añadidas. **Bug real encontrado y corregido dentro de mandato**: en PSI-S3.r3, la columna "Tarea repetitiva / rutinaria" colisionaba con `ACCION_REGEX` (contiene "tarea") y generaba una entrada fantasma duplicada en el checklist de C4 junto a la Decisión real -- corregido renombrando la etiqueta a "Actividad repetitiva / rutinaria", re-verificado en vivo (1/1 acción real por fila). La misma colisión, sin corregir por estar fuera del alcance de "ramas ya-OK", queda documentada en PSI-S1.r1/r3 y PSI-S3.r6 -- y confirmada por el agente de OPE como un patrón ya extendido y aceptado en el resto del catálogo (UCI-S1.r3, UNI-S1.r1/r4, NEURO-S2.r5, CIR-S1.r2, etc.), no una anomalía nueva. Veredicto 🟢🟢 en los tres.
+
+**CIR (Cirugía de Marca, 3/3)**: CIR-S1 (matriz), CIR-S2 (**familia "dafo" verificada en vivo por primera vez en todo el catálogo** -- confirmado que su puerta C2→C3 no exige puntuación por diseño, comportamiento intencional, no el mismo bug que "carga"), CIR-S3 (regla). 11 columnas de acción añadidas; CIR-S2.r5 (`calculadora`) fuera de alcance. **Segundo bug estructural real de la sesión, encontrado y NO corregido por el agente** (correcto, fuera de su mandato): la cabecera de la vista tarjeta ignoraba `tipo:"opciones"` en la columna 0 y aceptaba texto libre sin restricción (`TreatmentPage.tsx` ~4080-4093 vs. la vista tabla, que sí lo hacía bien en ~4221) -- encontrado en CIR-S3.r1 ("Semana", debía restringirse a "Semana 1".."Semana 4"). Fix aplicado y verificado en vivo esta misma sesión: la cabecera de tarjeta ahora pinta botones de opción cuando `columnas[0].tipo === "opciones"`, mismo patrón visual que el resto de columnas "opciones" -- `masesora-frontend#32`. Primer caso en el catálogo con columna 0 tipo "opciones" en tarjeta, por eso no se había visto antes. Veredicto 🟢🟢 en los tres (🟠 técnico en CIR-S3 hasta el fix, ya cerrado).
+
+**OPE (Excelencia Operativa, 3/3)**: OPE-S1 (matriz), OPE-S2 (árbol), OPE-S3 (**carga** -- re-verificó en vivo que el fix de §XLIV.A funciona: sin puntuar bloquea con el mismo aviso, puntuando desbloquea correctamente; OPE-S3 ya tenía columna de acción en las 6 ramas, sin cambios de datos). 8 columnas de acción añadidas entre S1/S2. Sin bugs nuevos. Veredicto 🟢🟢 en los tres.
+
+**Balance de la tanda**: 30 columnas de acción añadidas, 2 bugs reales encontrados y cerrados (1 de datos -- colisión de regex en PSI-S3.r3 --, 1 de frontend -- columna 0 opciones en tarjeta, CIR-S3.r1 --), 1 familia nueva verificada en vivo por primera vez (dafo, sana). Los 9 síntomas certificados end-to-end. RES, CLI, TER quedan pendientes de una 2ª tanda tras el reset del límite de sesión (23:40 UTC).
+
+---
+
+## XLVI. SESIÓN 18 AGO 2026 — 2ª tanda: TER, CLI y RES cierran el catálogo — 30/30
+
+Retomada una semana después (11→18 ago) tras un corte doble: primero el límite de sesión del 11 ago, luego un límite semanal más severo al reintentar. Nada se perdió -- los 3 worktrees (`audit/TER-catalog`, `audit/CLI-catalog`, `audit/RES-catalog`) conservaban intacto el trabajo a medias de la 1ª tanda (algunos síntomas ya con columnas Decisión escritas pero sin commitear ni verificar en vivo); se retomaron los mismos agentes desde el mismo punto, sin repetir nada ya hecho.
+
+**TER (Terapia de Experiencia, 3/3)**: TER-S1 (regla, persona Marina Cobo -- las 6 ramas ya tenían acción real, cero cambios de datos necesarios), TER-S2 (matriz, persona Bernat Casals -- r2/r4/r5/r6 arregladas), TER-S3 (DAFO, persona Patricia Iriarte -- r2/r3/r4 arregladas, r1/r5/r6 confirmadas ya-OK tras revisar con cuidado los casos límite que había dejado pendientes la sesión anterior). 7 columnas de acción añadidas. Sin bugs nuevos, ninguno de los 2 ya conocidos reproducido (no aplican a esta especialidad). Veredicto 🟢🟢 en los tres.
+
+**CLI (Gestión Clínica, 3/3, cierra la especialidad)**: CLI-S1 ya cerrado en la 1ª tanda. CLI-S2 (matriz, persona Manolo Ferreira -- r2/r5 arregladas, r1/r3/r4 `calculadora` fuera de alcance, r6 ya-OK), CLI-S3 (árbol, persona Dra. Rocío Campos -- r4/r5/r6 arregladas; r4 es un caso "con criterio, no a ciegas" real: su columna "Cuándo escala al siguiente nivel" matcheaba `ACCION_REGEX` por contener "siguiente" pero guardaba una regla/umbral, no una acción ejecutable -- sin el fix, C4 habría mostrado la condición de escalado como si fuera una tarea a marcar). 4 columnas de acción añadidas. Veredicto 🟢🟢 en los tres.
+
+**RES (Rescate de Personas, 3/3, cierra la especialidad)**: RES-S1 (matriz "Análisis de Riesgos", persona Alberto Ruiz -- r2/r5/r6 arregladas), RES-S2 (matriz "Impacto vs Esfuerzo", persona Diego Salamanca -- r1/r2/r6 arregladas), RES-S3 (árbol, persona Silvia Montero -- r1/r4/r5/r6 arregladas). 10 columnas de acción añadidas. Sin bugs estructurales nuevos.
+
+**Hallazgo transversal, NO corregido (backlog nuevo)**: en RES-S1.r2 y RES-S2.r1, una columna de diagnóstico pre-existente (`"¿Cubierto por plan de sucesión?"`, `"Horas/sem en tareas por debajo"`) colisiona con `ACCION_REGEX` (por "plan"/"tarea") y se cuela como entrada fantasma en el checklist de C4 junto a la Decisión real -- confirmado en vivo en ambos casos. Es el mismo mecanismo de raíz que ya se corrigió puntualmente en PSI-S3.r3 (§XLV) y que OPE había confirmado como un patrón ya extendido y aceptado en buena parte del catálogo (UCI-S1.r3, UNI-S1.r1/r4, NEURO-S2.r5, CIR-S1.r2, CLI-S1.r6, PSI-S1.r1/r3, PSI-S3.r6, RES-S1.r2, RES-S2.r1 -- al menos 10 columnas en 7 síntomas distintos). No se ha corregido de forma sistemática porque cada corrección puntual (renombrar la columna colisionante) requiere revisar su UX en contexto, no es mecánico como añadir Decisión. Queda anotado en §XVI como tarea de auditoría específica: revisar las ~10 colisiones conocidas y decidir, caso a caso, si renombrar la columna o (alternativa más robusta) endurecer `derivarAccionesConcretas` para que, cuando varias columnas de una fila matcheen el regex, solo la de tipo `"opciones"`/`"decision"` cuente como acción primaria.
+
+### XLVI.A — Cierre del catálogo completo: 30/30 síntomas certificados end-to-end
+
+Con TER, CLI y RES cerrados, termina la auditoría símbolo a símbolo iniciada en §XXXVII (CARDIO-S1, 9 ago 2026). Balance final de las 10 especialidades (UCI, UNI, CARDIO, NEURO, PSI, CIR, OPE, TER, CLI, RES -- 30 síntomas):
+
+- **~130 columnas Decisión + `vista:"tarjeta"` añadidas** en total a lo largo de toda la auditoría, cerrando el patrón "tabla sin guía" (bug de UX real: el cliente no sabe qué hacer con una tabla de datos sin que el consultor se lo explique, "el cliente siempre llama").
+- **5 bugs estructurales reales encontrados y cerrados**, todos verificados en vivo antes y después del fix: falso "Has superado el síntoma" por redondeo (§XXXIX), aviso contradictorio en modo estructural (§XXXIX), botón de Alta sin comprobar `alcanzoObjetivo` (§XLI), puerta C2→C3 muerta en la familia "carga" (§XLIV.A, `masesora-frontend#31`), columna 0 tipo "opciones" ignorada en tarjeta (§XLV, `masesora-frontend#32`).
+- **Todas las familias de C2 verificadas en vivo al menos una vez**: matriz, árbol, regla 5/25, semáforo, ABC, DAFO, carga -- ninguna quedó sin probar de verdad con Playwright.
+- **Última tanda ejecutada en paralelo con subagentes autónomos** (§XLIV.C, a petición explícita del usuario), sobreviviendo a dos cortes de límite de uso sin perder trabajo gracias a los worktrees persistentes.
+- **Backlog abierto** (§XVI): sugerencia automática de Decisión (necesita reglas de negocio del usuario), Seguimiento post-Alta (fuera de las 7 capas), y la revisión sistemática de las ~10 colisiones de `ACCION_REGEX` documentada arriba.
+- **2 PRs de fix pendientes de revisión y merge**: `masesora-frontend#31` (carga) y `#32` (tarjeta columna 0) -- ambas en draft, verificadas, sin actividad.
+
+---
+
+## XLVII. SESIÓN 19 AGO 2026 — Cierre de síntomas para beta: el validador certificaba plomería, no criterio de negocio
+
+Con el catálogo 30/30 técnicamente cerrado (§XLVI.A), se pidió una pasada final antes de beta. Al recorrer UCI-S1 en vivo con capturas reales (persona Marc, Carpintería Oliveras) y mirarlas de verdad -- no solo extraer texto -- aparecieron varios problemas que ninguna auditoría anterior había cazado porque el `masframe-ux-validator` verificaba flujo de estado y columnas de acción, pero nunca juicio visual ni de negocio. Encaje explícito con el usuario: **"tu validator sigue siendo una mierda"** -- diagnóstico correcto, encajado sin desviar, y corregido primero en la práctica (los 4 hallazgos de abajo) y después en la skill misma (§XLVII.D), no solo prometido.
+
+### XLVII.A — 4 hallazgos reales en UCI-S1, cerrados uno a uno
+
+1. **Colisión visual en la matriz de C2.** Las cajas de píldora/etiqueta nunca comprobaban colisión mutua entre sí (solo los puntos tenían jitter, y las cajas solo se recortaban contra los límites del SVG) -- con puntuaciones parecidas, las píldoras se solapaban formando una maraña ilegible. Fix: capa de anti-colisión por barrido vertical agrupado por lado (izquierda/derecha del eje), aplicada de forma uniforme a ganador y normales antes de renderizar -- `masesora-frontend#36`, verificado en vivo con 0 colisiones en el peor caso (6 puntuaciones clusterizadas) y con captura. Afecta a las 14 síntomas de la familia matriz, no solo UCI-S1.
+
+2. **Copy de resignación, no de consultoría.** "Empieza por los 2-3 que más dinero te tienen bloqueado. Los demás los añades después si hace falta" -- leído en voz alta, suena a "con que hagas uno ya vale", lo contrario de lo que vende una consultoría premium. Corregido a "...sigue añadiendo el resto mientras trabajas el plan" (continuar es el método, no un extra opcional) en las 6 apariciones del mismo patrón textual encontradas en todo el catálogo (UCI-S1.r2/r3/r5 y UNI-S1.r1/r3/r4) -- `masframe#32`.
+
+3. **UCI-S1.r4 -- dos rediseños en la misma rama, en dos rondas distintas.** Primero la sección 1 ("Calendario semanal de tesorería", 5 columnas × 13 filas) se sustituyó por "Tu desfase real" (3 campos: días que tarda en cobrar, días que tarda en pagar, desfase calculado) -- `masframe#32`. Días después, en una segunda ronda con captura real de la fila TOTAL, apareció el problema más serio: la sección 3 ("comparativa de financiación", 10 columnas × 3 filas con TAE/plazo/garantías) sumaba en la fila TOTAL columnas que nunca debieron sumarse (TAE + TAE + TAE, Plazo + Plazo + Plazo), un resultado sin sentido de negocio ("para qué, no construyas sin sentido"). Dos decisiones tomadas juntas: (a) fix de causa raíz -- campo nuevo `no_sumar?: boolean` en `ColumnaHerramientaConfig`, la fila TOTAL y la suma por columna lo respetan (`masesora-frontend#34`); (b) rediseño de contenido -- la propia tabla comparativa de 3 vías de financiación con TAE/plazo/garantías se sustituyó por una decisión simple de 3 campos (vía a explorar, con quién hablar, decisión), sin pedirle a un dueño de pyme que compare productos financieros como si fuera un experto (`masframe#34`).
+
+4. **UCI-S1.r5 no resolvía lo que su propio título prometía.** "Convertir anticipos que ya has recibido en trabajo cobrado" pedía % ejecutado/importe ejecutado/pendiente -- pero el problema real del síntoma (anticipos cobrados sin que el trabajo avance) no quedaba resuelto por esas columnas. Redisañado con columnas que sí atacan la causa (motivo por el que no avanza, decisión con % de recuperación contextual por motivo, recuperación estimada calculada, fecha de compromiso) -- `masframe#32`. De paso, r6 ("Activar la facturación paralizada por procesos internos") se renombró a "Facturas bloqueadas sin cobrar": "procesos internos" es vocabulario de UNI, no de UCI, colado en el título.
+
+### XLVII.B — Barrido de catálogo del mismo bug de `no_sumar`
+
+El hallazgo 3 (fila TOTAL sumando valores no aditivos) no era exclusivo de UCI-S1. Barrido asistido por regex pero con criterio manual en cada caso (tasas/plazos/medias/puntuaciones 1-5 → `no_sumar: true`; cantidades reales acumulables → sin tocar, aunque el regex matcheara) sobre las 30 síntomas: **79 columnas marcadas en 9 especialidades** (UCI, UNI, CARDIO, NEURO, CLI, CIR, PSI, RES, TER) -- `masframe#33`.
+
+### XLVII.C — C6: el panel de re-medición manual era redundante en 2 de 3 modos
+
+El panel opcional de re-medición manual de C6 (override de `recovery_mode`) se mostraba para los tres modos (`financiero`/`estructural`/`conteo`) con el mismo mecanismo. Al revisarlo con el usuario ("¿de verdad hace falta, si ya estamos calculando el KPI con lo recuperado en C5?"): para `financiero`/`conteo` es un dato autoinformado que duplica lo que C4/C5 ya calculan, sin ser una verificación externa real; para `estructural` es la ÚNICA forma de cerrar C6 (no hay cálculo automático posible). Decisión: mantenerlo solo para `estructural`, retirarlo de `financiero`/`conteo` -- `masesora-frontend#35`.
+
+### XLVII.D — La skill misma se corrige, no solo la conversación
+
+Encaje directo del "tu validator sigue siendo una mierda": los 4 hallazgos de arriba comparten un rasgo -- ninguno es un bug de flujo de estado (lo que el validator sí caza bien desde julio), todos son juicio visual o de negocio que solo aparece mirando una captura real con datos reales, o leyendo el copy en voz alta, o preguntándose "¿para qué sirve esto?". La skill `masframe-ux-validator` se actualizó con una sección nueva, "Juicio de diseño y de negocio -- lo que Playwright headless nunca caza", con 5 reglas: capturas de pantalla obligatorias y miradas de verdad (no solo `innerText`), chequeo de tono de copy contra lenguaje de resignación, comparación de cada rama contra sus hermanas de la misma capa (redundancia), explicación visible obligatoria para todo bloque de campos, y detección de vocabulario cruzado entre especialidades. Además, taxonomía ampliada con los items #8-#11 (columna de acción ausente, colisión de regex generando acción fantasma, límite de la calculadora en C4, fila TOTAL sumando valores no aditivos).
+
+---
+
+## XLVIII. SESIÓN 19 AGO 2026 (cont.) — Pasada de juicio de diseño en las 27 síntomas restantes, en paralelo con 10 agentes
+
+Con la skill corregida (§XLVII.D), se aplicó el mismo nivel de escrutinio -- capturas reales miradas, tono de copy, complejidad proporcional ("test de la Paqui"), redundancia entre ramas hermanas, vocabulario cruzado -- al resto del catálogo. 10 agentes en paralelo, uno por especialidad (UCI-S2/S3 + UNI + CARDIO + NEURO + CLI + CIR + PSI + RES + TER + OPE), cada uno con una persona real distinta por síntoma y mandato explícito de **no autocertificar** hallazgos de juicio -- solo reportarlos con cita/captura/propuesta concreta para que el usuario decida, aplicando solo los dos patrones mecánicos ya aprobados (`no_sumar` que faltara, columna Decisión que faltara) con commit propio. Un agente (UNI) se perdió por un corte de conexión a media tarea y se relanzó desde cero sin pérdida de trabajo previo (no había commits ni capturas del intento fallido).
+
+### XLVIII.A — 6 PRs mecánicas mergeadas (mismo patrón ya aprobado, cero criterio nuevo)
+
+`masframe#35` (UCI-S3, 2 columnas de tasa €/hora), `#36` (TER-S1, 1 columna de puntuación NPS), `#37` (OPE-S1/S3, columnas de índice ordinal y de tasa), `#38` (CLI-S1, 3 columnas de tasa €/hora), `#39` (CARDIO-S2/S3, 2 columnas Decisión ausentes), `#40` (UNI-S1/S3, 3 columnas Decisión ausentes) -- 0 errores del validador en cada una, todas re-verificadas en vivo antes del commit. Un caso de fix duplicado detectado y descartado sin pérdida (CLI llegó a escribir el mismo fix de tasa €/hora que ya se había mergeado por otra vía; el cherry-pick salió vacío, confirmando que eran idénticos, sin tocar nada más).
+
+### XLVIII.B — Hallazgos de juicio, sin tocar (pendientes de decisión del usuario)
+
+No autocertificados -- lista para revisar, agrupada por patrón repetido y por severidad:
+
+**Crítico -- bug estructural, no solo de diseño:**
+- **RES-S1**: la puerta C1→C2→C3 (unida por posición de array, no por contenido) lleva al cliente a la herramienta equivocada en 5 de 6 caminos -- marca "conocimiento no documentado" y el sistema le abre una calculadora de brecha salarial. El validador automático no lo detecta (mide solapamiento de vocabulario agregado, no alineación por índice); solo aparece recorriendo el flujo en vivo con datos reales. RES-S2 y UNI-S2 tienen el mismo mecanismo, mucho más acotado (1-4 índices desalineados, no 5 de 6).
+- **CIR-S2**: las 6 ramas de `capa_3_plan` (todas de márgen/rentabilidad) no responden a ninguna de las 6 opciones de `capa_2_options` (todas de diferenciación de marca) -- confirmado de forma independiente por el propio linter (`solapan 4/41 palabras clave, 10%`) y por el recorrido en vivo. Causa raíz probable: el JSON tiene dos narrativas mezcladas (`capa_1_priorizacion` en clave de diferenciación, `capa_1_options`/`capa_3_plan` en clave de margen) de un rediseño a medias.
+- **OPE-S3**: la puerta C2 de la familia "carga" (pensada para puntuar áreas/personas de 1 a 5) está montada sobre `capa_2_options` que son preguntas abiertas en primera persona -- el cliente ve una pregunta con un selector de "saturación" al lado, sin sentido de responder así, y el texto interrogativo contamina después los títulos de los 4 frentes de C3.
+- **NEURO-S3.r6**: la calculadora "Diagnóstico de urgencia de rediseño" no diagnostica nada -- de 9 campos rellenados, solo 3 (los de cronograma) alimentan alguna fórmula; los 6 restantes (margen, tendencia, satisfacción del dueño...) se tecleán y no producen ningún resultado.
+
+**Patrón repetido en varias especialidades (mismo mecanismo, instancias distintas):**
+- **Acción fantasma por colisión de `ACCION_REGEX`**: una columna identificador matchea el regex por accidente (contiene "decisión", "tarea", "plan"...) y aparece en el checklist de C4 en vez de la decisión real, que no matchea. Confirmado en vivo, de forma independiente, en UNI-S1.r5, NEURO-S2.r3/r6 y ya documentado desde §XLV/§XLVI en al menos 10 columnas de 7 síntomas -- sigue sin resolverse de forma sistemática (backlog de §XVI).
+- **Rama redundante con su hermana de la misma capa**: UCI-S2.r2/r3, PSI-S2.r1/r4, PSI-S3.r1/r5, TER-S1.r1/r6 y r2/r3, TER-S2.r2/r6, CIR-S1.r1 (Estado/Decisión), CIR-S2.r1/r2, CARDIO-S1.r1/r4, CARDIO-S2.r6 (confirmado también por el linter automático), NEURO-S1.r4/r6, NEURO-S3.r1/r4, RES-S1.r5/r6, RES-S2.r1/r2, CLI-S3.r2/r5 -- mismo dato pedido dos veces con envoltorio distinto.
+- **"Dato que la Paqui no tiene" (falla el test de proporcionalidad)**: UCI-S3 (% sin tope min/max, bug transversal del motor -- `min`/`max` existen en `ColumnaHerramientaConfig` pero ningún renderer los aplica al input, produciendo totales absurdos como -4.580.530€ de margen), CLI-S2.r3 (tipo IRPF y coste de estructura SL de memoria), RES-S1.r4 (banda salarial de mercado exacta), PSI-S2.r1 ("perfil DISC" sin explicar qué es ni cómo obtenerlo), CLI-S1.r4 (4 semanas de histórico retroactivo a alguien que nunca ha llevado seguimiento).
+- **Filas nuevas con opciones pre-marcadas por defecto**, sesgando la respuesta antes de que el cliente toque nada: confirmado de forma independiente en OPE-S1, UNI-S2, UNI-S3, RES-S3, CIR-S2 -- causa común en `filaVaciaHerramienta` (`TreatmentPage.tsx` ~3946-3964), que solo protege de esto a las columnas ya reconocidas como acción/condición.
+- **`filas_iniciales` desproporcionado**: NEURO-S2.r1 (20 filas → página de 14.094px y 20 acciones fantasma en C4, el hallazgo de UX más severo de toda la pasada), PSI-S1.r2/r3/r5, CIR-S3.r1.
+- **Truncado de texto sin "…"** en selects/celdas de tabla nativa: CIR-S1.r3/r5, PSI-S1.r3 -- probablemente sistémico del componente, no de un síntoma concreto.
+
+**Menores / de un solo síntoma**: detallados en el hilo de conversación de la sesión, no repetidos aquí por espacio -- ver capturas y citas exactas en los informes de cada agente si se retoman.
+
+### XLVIII.C — Qué queda para la siguiente sesión
+
+Nada de lo listado en §XLVIII.B se ha tocado -- son hallazgos, no fixes. La decisión de qué atacar primero (empezando probablemente por los 4 críticos: RES-S1, CIR-S2, OPE-S3, NEURO-S3.r6, que son los únicos con bug estructural real detrás del juicio de diseño) queda pendiente de que el usuario los revise con calma.
+
+---
+
+## XLIX. SESIÓN 19 AGO 2026 (cont.) — Cierre real de UCI-S1: 2 hallazgos más, encontrados por el usuario probando en directo
+
+Tras §XLVII/§XLVIII, el usuario recorrió UCI-S1 él mismo en el navegador (no un agente) y encontró 2 problemas más que ninguna pasada anterior había cazado -- ambos en las mismas 2 ramas ya tocadas hoy (r4, r6), confirmando que "cerrado" para un síntoma tan revisado todavía admitía una vuelta más de ojo real.
+
+**1. r4.sec1 "Tu desfase real" -- el número calculado no decía nada.** Con días_cobro=10/días_pago=20 (desfase=-10), la tabla mostraba el resultado y ningún mensaje: "Paqui no lo entiende". Causa raíz: `SeccionHerramientaConfig` tenía `veredicto` (comparación entre filas) pero nada equivalente a `HerramientaCalculadora.semaforo` (mensaje condicionado a un umbral) para una sección "nativa". Fix de motor nuevo: campo `interpretacion?: { clave, reglas: {min?, color, texto}[] }`, evaluado sobre la última fila con datos, con el mismo criterio de umbrales que `semaforo` -- `masesora-frontend#37`. Aplicado a UCI-S1.r4.sec1: desfase positivo (cobras más tarde de lo que pagas) → banner rojo que conecta explícitamente con las secciones 2 y 3 de la misma rama ("pide más días a tus proveedores, o busca financiación puente"); desfase negativo → banner verde tranquilizador. Verificado en vivo con Playwright en ambos sentidos, con capturas -- `masframe#42`.
+
+**2. r6 "Facturas bloqueadas sin cobrar" seguía siendo farragosa.** Pese al rename de §XLVII, la solución de C3 pedía 7 campos por factura (Cliente, Factura/Expediente, Importe, Motivo, Responsable de desbloquear, Fecha límite, Acción concreta) para un problema que el usuario describió como "tan simple como ponerse a realizar la factura pendiente". Simplificada a 4 columnas (Cliente, Importe a facturar, Motivo del bloqueo, Decisión) -- la opción más simple de Decisión es literalmente "Emitir la factura ahora, ya está lista", la primera de la lista. Se retiraron 3 campos redundantes o prescindibles: "Factura/Expediente" (referencia interna), "Responsable de desbloquear"/"Fecha límite" (ya cubiertos por los campos de Responsable/días que la Sala de Control muestra para cada frente) y "Acción concreta" en texto libre (sustituida por la Decisión estructurada, que además ahora sí alimenta el checklist de C4) -- `masframe#42`.
+
+**3. Pregunta de encaje de catálogo, respondida sin necesidad de tocar nada**: ¿pasaría satisfactoriamente por UCI-S1 una barbería con 5.000€ de facturación y 4.500€ de gastos (margen del 10%)? Verificado por fórmula (`kpi_formula = (InputA/InputB)*30`, días de caja) y por contenido de las 6 ramas: el cálculo del KPI no rompe con cifras ajustadas (sin división por cero, sin NaN), pero **UCI-S1 no es el síntoma correcto para ese negocio** -- las 4 ramas de causas reales del catálogo (mercancía parada, proyectos a medias, clientes morosos, desfase cobro/pago, anticipos, facturación parada) describen dinero atrapado DENTRO del negocio (inventario, proyectos, cuentas por cobrar), un patrón de negocio B2B/por encargos como la propia carpintería de Marc -- no el ciclo de cobro inmediato de una barbería (servicio walk-in, cobro en el acto). Ese negocio encajaría mejor en UCI-S3 (Anemia de Margen). No es un bug: es la misma regla de la skill ("la persona tiene que sufrir el síntoma de verdad; si no encaja nadie, es un hueco de catálogo") aplicada correctamente -- confirma que el catálogo actual no fuerza sensatez donde no la hay.
+
+Con estos 2 fixes, el usuario cerró la revisión de UCI-S1 explícitamente: **"corregimos esto y terminamos, pinta bastante bien"**.
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -1058,3 +1867,28 @@ Todo en `main` en ambos repos, ramas de trabajo borradas tras mergear.
 *§XXII añadida en sesión 5 ago 2026 — auditoría clínica KPI (30 síntomas), WOW C3→C4, fixes estructurales, backlog = 0*
 *§XXIII añadida en sesión 5 ago 2026 (tarde) — 2ª pasada masframe-ux-validator, bug UCI-S3, 3 contaminaciones de catálogo, T1 transversal, CARDIO-S1*
 *§XXIV añadida en sesión 5 ago 2026 (noche) — linter de contaminación, QA manual real, 130/205 secciones nativas con columna calculada*
+*§XXV añadida en sesión 7 ago 2026 — revisión en vivo por síntoma (Maite), playbook de UX, fix de seguridad crítico, patrón "ledger→triaje" en 7 ramas, rediseño C3/C4 de formulario a sistema (piloto UCI-S1); ampliada 7-8 ago 2026 con fix de "Sin puntuar" y las 4 fases del orden de construcción completas y mergeadas — decision (r2/r3/r5), pipeline (r6), simulador (r1), comparador (r4) — las 6 ramas de UCI-S1 rediseñadas*
+*§XXVI añadida en sesión 8 ago 2026 — cierre del hallazgo de pago pendiente de §XXV.B (precio de PaymentIntent calculado en servidor, anti-swap de síntomas), decisión de producto "Consultar" para facturación ≥500.000€/mes, y fix de `config/pricing_policy.py` desincronizado del precio real*
+*§XXVII añadida en sesión 8 ago 2026 (noche) — Sala de Control: stepper multi-frente para C3 (piloto UCI-S1), corrección mode-aware tras verificar `kpi_recovery_mode` en las 30 síntomas, prerrequisito `contribuye_valor` C3→C4, verificado en vivo con Playwright*
+*§XXVIII añadida en sesión 8 ago 2026 (noche) — cita editorial para el cuadro de introducción de capa (CapaShell), y cierre: las 4 PRs de la sesión revisadas y mergeadas (masesora-frontend#15/#16/#17, masframe#12)*
+*§XXIX añadida en sesión 8 ago 2026 (noche) — auditoría previa al rollout de la Sala de Control (gap real: modo "conteo" sin verificar en vivo; riesgo de ramas legacy descartado, 0/30 síntomas), y 2 tareas nuevas de backlog: certificado de alta (DischargePage) y narrativa de justi_capaN en todo el catálogo*
+*§XXX añadida en sesión 8 ago 2026 (noche) — cierre del gap "conteo" de §XXIX.A: verificado en vivo con UNI-S1 (correcto), y fix de un bug real encontrado por el camino (badges/panel de valor ajenos a la Sala de Control mostrando € fijo) — masesora-frontend#18*
+*§XXXI añadida en sesión 8 ago 2026 (noche) — "con los 29": el volcado del catálogo reveló que el rollout no es mecánico (126 ramas "conteo"/"estructural" sin columna de recuperación real), mejor alternativa implementada (cobertura en vez de "0€" cuando no hay dato real, sin números sueltos sin contexto), UCI-S2 marcado, CLI-S1 identificado como pendiente de contenido — masesora-frontend#19, masframe#16*
+*§XXXII añadida en sesión 9 ago 2026 — CLI-S1 cierra el rollout financiero (r5/r6 con columnas nuevas, r2 fuera de la suma), aclarado que CLI-S1/UCI-S3 resuelven problemas distintos, y fix de recovery_unit_label copiado en UCI-S3 — masframe#18*
+*§XXXIII añadida en sesión 9 ago 2026 — contribuye_valor_si: cuenta filas por estado en vez de solo sumar cantidades, de 2 a 11 de 19 síntomas "conteo" resueltos con datos ya existentes en el catálogo, y fix de un bug real (filas vacías contaban de más) encontrado en vivo — masesora-frontend#20, masframe#20*
+*§XXXIV añadida en sesión 9 ago 2026 (cont.) — reconciliación post-merge: CARDIO-S1/S3 faltaban en el commit de §XXXIII por descuido, cerrado marcando las mismas 4 columnas ya documentadas; 11/19 "conteo" quedan resueltos de verdad, no solo en el plan*
+*§XXXV añadida en sesión 9 ago 2026 (cont.) — cuenta_unicos_si: cuenta valores únicos de una columna (no filas duplicadas), cierra CIR-S3 y PSI-S3 — 13/19 "conteo" resueltos; los 6 restantes confirmados como límite real (dato solo confirmable con el tiempo, o sin tabla fuente) — masesora-frontend#21, masframe#22*
+*§XXXVI añadida en sesión 9 ago 2026 (cont.) — "de límite real nada": corregido el error de §XXXV (tardar en confirmarse no es una razón, ya lo hacen las 13 columnas anteriores), suma_si nuevo (complemento de cuenta_unicos_si para sumar en vez de contar), fix de bug de columna-condición encontrado antes de tocar el catálogo, y 6 columnas de autoinforme/seguimiento añadidas — 19/19 síntomas "conteo" resueltos, rollout completo*
+*§XXXVII añadida en sesión 9 ago 2026 (cont.) — cambio de eje hacia beta: auditoría real síntoma a síntoma con masframe-ux-validator (experiencia + estado técnico). CARDIO-S1 completo, los 4 hallazgos cerrados: gate C2→C3 de matriz (decisión: puntuar prioriza, no filtra, aclarado en copy), descarte no permanente en C2 (14/30 síntomas), input_revised_1/2/result_revised conectados a C6 para conteo/financiero (re-medición real manda sobre el cálculo automático), y columna Decisión añadida a 4 ramas de C3 que dejaban vacío el checklist de C4 — primer síntoma certificado end-to-end con el nuevo eje de trabajo, todo verificado en vivo*
+*§XXXVIII añadida en sesión 9-10 ago 2026 — re-auditoría CARDIO-S1 en vivo con Playwright (caso real de Marta), 2 bugs más encontrados que la lectura de código no había cazado: DesglosadorInput mostrando caja de desglose confusa en las 30 síntomas (0/60 campos la necesitan de verdad), y acciones fantasma en el checklist de C4 por filas en blanco (14 columnas en 8 síntomas) -- este último introducido por el propio trabajo de §XXXVII, cazado antes de mergear*
+*§XXXIX añadida en sesión 10 ago 2026 — auditoría CARDIO-S2 completa (persona Javier/Metalatek): familia C2 "regla" confirmada sana, 2 bugs reales de C6 encontrados en vivo y cerrados -- falso "Has superado el síntoma" por redondeo (afecta a las 30 síntomas, fix roundKpiForCompare, masesora-frontend#26) y aviso contradictorio apuntando a C5 en modo estructural (afecta a 8 síntomas, fix mode-aware, masesora-frontend#27); CARDIO-S2 certificado end-to-end, veredicto 🟢🟢*
+*§XL añadida en sesión 10 ago 2026 (cont.) — auditoría CARDIO-S3 completa (persona Sonia): familia C2 "árbol" -- el riesgo #1 de la taxonomía del validator (pérdida de selección múltiple) confirmado ya resuelto en vivo (multi-"Sí" monta múltiples ramas en C3 correctamente), fórmula con InputA/InputB invertidos verificada sin problema (el algoritmo de C6 es direction-agnostic), sin nuevos bugs -- CARDIO-S3 certificado end-to-end sin fixes, veredicto 🟢🟢. Cierra la auditoría completa de la especialidad CARDIO (3/3 síntomas, 6 hallazgos reales cerrados en total)*
+*§XLI añadida en sesión 10 ago 2026 (cont.) — auditoría completa de UCI (3/3 síntomas). UCI-S1 (persona Marc, primera vez en modo financiero esta sesión): hallazgo crítico catálogo-entero -- el botón de Alta (readyForAlta) nunca comprobaba alcanzoObjetivo, solo mejoro + C4 completo, mostrando "¡Enhorabuena! Has superado..." con solo el 62% del camino al objetivo recorrido; bug preexistente (5 ago 2026), afecta a los 30 síntomas, fix verificado en vivo (masesora-frontend#28). UCI-S2 (persona Elena) y UCI-S3 (persona Diego, familia "margen" que anula a "semáforo" -- el semáforo real vive por-ítem en Capa2Margen): mismo patrón que el hallazgo original de CARDIO-S1, 5+5 ramas de C3 sin columna de acción, cerradas con el mismo fix de columna Decisión; UCI-S3.r4 (tipo calculadora) queda anotado como límite arquitectónico sin fix. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres*
+*§XLII añadida en sesión 10-11 ago 2026 — renderer de tarjeta para C3: bug de UX real (el cliente llama siempre al CC porque no sabe usar una tabla sin que se la expliquen, el protocolo no se sostiene solo), no cosmético. vista:"tarjeta" opt-in en SeccionHerramientaConfig, cero riesgo para las secciones que no lo activen, construido y activado en las 14 ramas ya auditadas (CARDIO-S1, UCI-S2, UCI-S3) -- masesora-frontend#30, masframe#29. Sugerencia automática de Decisión queda en backlog (necesita reglas de negocio por columna). Acuerdo: de aquí en adelante, auditoría y renderer se aplican juntos, no en pasadas separadas*
+*§XLIII añadida en sesión 11 ago 2026 — auditoría completa de NEURO (3/3 síntomas). NEURO-S1 (persona Fernando, 4/6 ramas afectadas, primer caso multi-sección con mezcla tarjeta/tabla en la misma rama), NEURO-S2 (persona Rosa, solo 2/6, el más sano hasta ahora) y NEURO-S3 (persona Nuria, árbol de decisiones re-verificado sano, 3/6 nativa afectadas + 3 "calculadora" fuera de alcance por el mismo límite arquitectónico de UCI-S3.r4): mismo patrón de columnas de acción faltantes en los 3, cerrado con Decisión + vista:tarjeta fundidas en el mismo movimiento desde el primero. 10 columnas de acción añadidas en total, sin bugs de corrección nuevos. Los 3 síntomas certificados end-to-end, veredicto 🟢🟢 en los tres -- cierra la especialidad NEURO*
+*§XLIV añadida en sesión 11 ago 2026 (cont.) — auditoría completa de UNI (3/3 síntomas). UNI-S1 (persona Antonio, 1/6 ramas afectadas) y UNI-S3 (persona Javier, 5/6 afectadas, r6 confirmado ya-OK vía `derivarAccionesConcretas` antes de descartarlo) siguen el patrón habitual. UNI-S2 (persona Elena) trae el primer bug estructural real de la sesión: la puerta C2→C3 de la familia "carga" nunca se abría (exigía puntuar 2 ejes cuando el renderer solo usa 1) -- afecta también a OPE-S3, fix verificado en vivo y pusheado (masesora-frontend#31). 10 columnas de acción + 1 bug estructural cerrados, veredicto 🟢🟢 en los tres -- cierra la especialidad UNI. A partir de aquí, las 6 especialidades restantes (CLI, CIR, PSI, RES, TER, OPE) se auditan en paralelo con subagentes autónomos, uno por especialidad, a petición explícita del usuario*
+*§XLV añadida en sesión 11 ago 2026 (cont.) — 1ª tanda de la auditoría paralelizada: PSI, CIR y OPE cerradas (9/9 síntomas, 30 columnas de acción), RES/CLI/TER cortados por límite de sesión sin tocar datos, pendientes de 2ª tanda. 2 bugs reales más cerrados: colisión de `ACCION_REGEX` generando acción fantasma en PSI-S3.r3 (renombre de columna), y segundo bug estructural de la sesión -- la vista tarjeta ignoraba `tipo:"opciones"` en la columna 0 y aceptaba texto libre sin restricción, encontrado en CIR-S3.r1, fix verificado en vivo (masesora-frontend#32). Familia "dafo" verificada en vivo por primera vez en el catálogo (CIR-S2), gate sano por diseño*
+*§XLVI añadida en sesión 18 ago 2026 — 2ª tanda: TER, CLI y RES cierran el catálogo. Retomada una semana después sin perder nada (worktrees persistentes) tras un doble corte por límite de uso. 21 columnas de acción más, sin bugs estructurales nuevos; hallazgo transversal documentado (no corregido) de ≥10 colisiones de `ACCION_REGEX` en 7 síntomas distintos, backlog nuevo en §XVI. **Cierra la auditoría símbolo a símbolo del catálogo completo: 30/30 síntomas certificados end-to-end**, iniciada en §XXXVII (9 ago) -- ~130 columnas Decisión añadidas en total, 5 bugs estructurales reales cerrados, las 7 familias de C2 verificadas en vivo. Quedan 2 PRs de fix en draft sin mergear (masesora-frontend#31, #32)*
+*§XLVII añadida en sesión 19 ago 2026 — cierre de síntomas para beta: revisión en vivo con capturas reales (persona Marc, UCI-S1) sacó a la luz que el validador certificaba plomería (flujo de estado) pero no juicio de negocio ni visual -- encajado directamente ("tu validator sigue siendo una mierda"). 4 hallazgos reales cerrados: colisión visual de píldoras en la matriz (masesora-frontend#36, afecta a 14 síntomas), copy de resignación corregido en 6 apariciones (masframe#32), UCI-S1.r4 rediseñado dos veces (calendario de tesorería irrealista → "tu desfase real"; comparativa financiera TAE/plazo sumando sin sentido en TOTAL → decisión simple de 3 campos + campo nuevo `no_sumar` en el motor, masesora-frontend#34, masframe#32/#34), UCI-S1.r5 no resolvía lo que prometía, rediseñado (masframe#32). Barrido de `no_sumar` a 79 columnas en 9 especialidades (masframe#33). Panel de re-medición manual de C6 retirado de financiero/conteo por redundante, mantenido solo en estructural donde es el único cierre posible (masesora-frontend#35). La skill `masframe-ux-validator` corregida con una sección nueva ("Juicio de diseño y de negocio") y 4 items de taxonomía más (#8-#11) -- el fix no quedó solo prometido en la conversación*
+*§XLVIII añadida en sesión 19 ago 2026 (cont.) — pasada de juicio de diseño en las 27 síntomas restantes, 10 agentes en paralelo con mandato de no autocertificar hallazgos de juicio (solo reportar con cita/captura/propuesta, aplicando solo los 2 patrones mecánicos ya aprobados). 6 PRs mecánicas mergeadas sin criterio nuevo (masframe#35-#40). Hallazgos de juicio sin tocar, pendientes de decisión del usuario: **4 críticos con bug estructural real** -- RES-S1 (puerta C1→C2→C3 lleva a la herramienta equivocada en 5/6 caminos, invisible al linter automático), CIR-S2 (las 6 ramas de C3 no responden a ninguna opción de C2, dos narrativas mezcladas en el JSON), OPE-S3 (la familia "carga" montada sobre preguntas abiertas sin sentido de puntuar), NEURO-S3.r6 (calculadora que no calcula: 6 de 9 campos no alimentan ninguna fórmula) -- más varios patrones repetidos en múltiples especialidades (acción fantasma por colisión de regex, ramas redundantes entre hermanas, datos que la Paqui no tiene, filas pre-marcadas por defecto, `filas_iniciales` desproporcionado, texto truncado sin "…"). Nada de esto se ha tocado -- es la agenda de la siguiente sesión*
+*§XLIX añadida en sesión 19 ago 2026 (cont.) — cierre real de UCI-S1: el usuario probó el síntoma él mismo en el navegador tras §XLVII/§XLVIII y encontró 2 problemas más en las mismas ramas ya tocadas hoy. Mecanismo de motor nuevo, `interpretacion` en `SeccionHerramientaConfig` (banner rojo/verde condicionado a un umbral, equivalente a `semaforo` pero para secciones nativa) -- aplicado a UCI-S1.r4.sec1 "Tu desfase real", que antes mostraba un número sin ninguna guía ("Paqui no lo entiende"); ahora conecta explícitamente el resultado con las 2 palancas reales de la misma rama (negociar plazos, financiación puente) -- masesora-frontend#37, masframe#42. r6 "Facturas bloqueadas sin cobrar" simplificada de 7 a 4 columnas, con "Emitir la factura ahora, ya está lista" como primera opción de Decisión -- masframe#42. De paso, verificado (sin tocar nada) que UCI-S1 no es el síntoma correcto para un negocio de cobro inmediato (ej. barbería) -- encaja mejor en UCI-S3, confirmando que el catálogo no fuerza sensatez donde no la hay. Cierre explícito del usuario: "corregimos esto y terminamos, pinta bastante bien"*

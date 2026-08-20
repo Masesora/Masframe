@@ -53,180 +53,101 @@
     "capa_1_options": "Tengo mercancía parada y demasiado dinero atrapado en productos que no se venden.; Tengo proyectos a medio hacer que consumen recursos pero aún no generan ingresos.; Mis clientes tardan meses en pagar y eso me deja sin dinero para el día a día.; Cobro demasiado tarde respecto a cuando tengo que pagar proveedores y nóminas.; He recibido anticipos que aún no he convertido en trabajo cobrado porque voy retrasado.; Tengo trabajos terminados que aún no he facturado porque me faltan trámites o vistos buenos.",
     "capa_3_plan": {
       "r1": {
-        "tipo": "nativa",
+        "tipo": "simulador",
         "titulo": "Liquidar capital inmovilizado en inventario sin rotación",
-        "secciones": [
+        "entidad_nombre": "Producto",
+        "columnas": [
           {
-            "titulo": "1. Inventariar y valorar el stock (FIFO)",
-            "columnas": [
-              {
-                "etiqueta": "Referencia / Producto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Unidades",
-                "tipo": "numero",
-                "clave": "uds"
-              },
-              {
-                "etiqueta": "Coste unitario (€)",
-                "tipo": "numero",
-                "clave": "coste"
-              },
-              {
-                "etiqueta": "Valor Total (€)",
-                "tipo": "calculada",
-                "clave": "valor_total",
-                "formula": "uds*coste",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Días sin movimiento",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 3
+            "etiqueta": "Referencia / Producto",
+            "tipo": "texto",
+            "placeholder": "ej. Ref. 4521 — mesas de roble"
           },
           {
-            "titulo": "2. Fijar precio de liquidación y canal de venta",
-            "columnas": [
-              {
-                "etiqueta": "Referencia / Producto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Unidades",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Coste unitario (€)",
-                "tipo": "numero",
-                "clave": "coste"
-              },
-              {
-                "etiqueta": "Margen mínimo aceptable (%)",
-                "tipo": "numero",
-                "clave": "margen_obj"
-              },
-              {
-                "etiqueta": "Precio Mín. (€)",
-                "tipo": "calculada",
-                "clave": "precio_min",
-                "formula": "coste/(1-margen_obj/100)",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Precio propuesto (€)",
-                "tipo": "numero",
-                "clave": "precio_prop"
-              },
-              {
-                "etiqueta": "Margen Real (%)",
-                "tipo": "calculada",
-                "clave": "margen_real",
-                "formula": "(precio_prop-coste)/precio_prop*100",
-                "unidad": "pct"
-              },
-              {
-                "etiqueta": "Canal de venta",
-                "tipo": "opciones",
-                "opciones": [
-                  "Wallapop",
-                  "Proveedor",
-                  "Competidor",
-                  "Remate",
-                  "Cliente directo"
-                ]
-              }
-            ],
-            "filas_iniciales": 2
+            "etiqueta": "Unidades",
+            "tipo": "numero",
+            "clave": "uds",
+            "placeholder": "40"
           },
           {
-            "titulo": "3. Seguimiento semanal de ventas",
-            "columnas": [
-              {
-                "etiqueta": "Semana",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Producto vendido",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Unidades",
-                "tipo": "numero",
-                "clave": "uds"
-              },
-              {
-                "etiqueta": "Precio real (€)",
-                "tipo": "numero",
-                "clave": "precio"
-              },
-              {
-                "etiqueta": "Total recuperado (€)",
-                "tipo": "calculada",
-                "clave": "total_recuperado",
-                "formula": "uds*precio",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Canal usado",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Vendido",
-                  "Negociando",
-                  "Sin salida"
-                ]
-              }
-            ],
-            "filas_iniciales": 1
+            "etiqueta": "Coste unitario (€)",
+            "tipo": "numero",
+            "clave": "coste",
+            "placeholder": "25"
+          },
+          {
+            "etiqueta": "Margen mínimo aceptable (%)",
+            "tipo": "numero",
+            "clave": "margen_obj",
+            "placeholder": "20"
+          },
+          {
+            "etiqueta": "Precio propuesto (€)",
+            "tipo": "slider",
+            "clave": "precio_prop",
+            "min": 0,
+            "max": 100,
+            "paso": 1
+          },
+          {
+            "etiqueta": "Precio mínimo recomendado (€)",
+            "tipo": "calculada",
+            "clave": "precio_min",
+            "formula": "coste/(1-margen_obj/100)",
+            "unidad": "eur"
+          },
+          {
+            "etiqueta": "Margen resultante (%)",
+            "tipo": "calculada",
+            "clave": "margen_pct",
+            "formula": "(precio_prop-coste)/precio_prop*100",
+            "unidad": "pct"
+          },
+          {
+            "etiqueta": "Valor estimado (€)",
+            "tipo": "calculada",
+            "clave": "valor_estimado",
+            "formula": "uds*precio_prop",
+            "unidad": "eur",
+            "contribuye_valor": true
+          },
+          {
+            "etiqueta": "Canal de venta",
+            "tipo": "opciones",
+            "estilo": "botones",
+            "opciones": [
+              "Wallapop",
+              "Proveedor",
+              "Competidor",
+              "Remate",
+              "Cliente directo"
+            ]
           }
-        ]
+        ],
+        "filas_iniciales": 2
       },
       "r2": {
         "tipo": "nativa",
         "titulo": "Liberar liquidez bloqueada en trabajos y proyectos en curso",
         "secciones": [
           {
-            "titulo": "1. Analizar estado y avance de proyectos en curso",
+            "titulo": "Tus proyectos con más liquidez atrapada — empieza por los 2-3 más urgentes, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Proyecto / Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fase actual",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "% completado",
-                "tipo": "numero"
+                "tipo": "texto",
+                "placeholder": "Nombre del proyecto o cliente"
               },
               {
                 "etiqueta": "Importe total (€)",
                 "tipo": "numero",
-                "clave": "importe_total"
+                "clave": "importe_total",
+                "placeholder": "15000"
               },
               {
                 "etiqueta": "Cobrado (€)",
                 "tipo": "numero",
-                "clave": "cobrado"
-              },
-              {
-                "etiqueta": "Acción para desbloquear",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
+                "clave": "cobrado",
+                "placeholder": "6000"
               },
               {
                 "etiqueta": "Pendiente de cobrar (€)",
@@ -234,97 +155,50 @@
                 "clave": "pendiente",
                 "formula": "importe_total-cobrado",
                 "unidad": "eur"
-              }
-            ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Proyecto"
-          },
-          {
-            "titulo": "2. Planificar hitos de entrega para liberar cobros",
-            "columnas": [
-              {
-                "etiqueta": "Proyecto / Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Hito",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "% Completado",
-                "tipo": "numero",
-                "clave": "pct"
-              },
-              {
-                "etiqueta": "Importe hito (€)",
-                "tipo": "numero",
-                "clave": "importe_hito"
-              },
-              {
-                "etiqueta": "Fecha prevista cobro",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha real cobro",
-                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Pendiente",
-                  "Facturado",
+                  "En curso",
+                  "Hito entregado, pendiente cobro",
                   "Cobrado"
                 ]
               },
               {
-                "etiqueta": "Importe cobrable ahora (€)",
-                "tipo": "calculada",
-                "clave": "cobrable",
-                "formula": "importe_hito*pct/100",
-                "unidad": "eur"
-              }
-            ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "Proyecto"
-          },
-          {
-            "titulo": "3. Control semanal de entregas y activación de pagos",
-            "columnas": [
-              {
-                "etiqueta": "Proyecto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Entregable",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha compromiso",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha entrega real",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Cobrado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
+                "etiqueta": "Decisión",
+                "tipo": "decision",
+                "clave": "pct_recuperable",
+                "decision_opciones": [
+                  {
+                    "label": "Entregar completo y cobrar todo",
+                    "valor": 100
+                  },
+                  {
+                    "label": "Renegociar alcance",
+                    "valor": 80
+                  },
+                  {
+                    "label": "Cerrar parcial y cobrar ya",
+                    "valor": 60
+                  }
                 ]
               },
               {
-                "etiqueta": "Fecha cobro",
-                "tipo": "texto"
+                "etiqueta": "Recuperación estimada (€)",
+                "tipo": "calculada",
+                "clave": "recuperacion",
+                "formula": "pendiente*pct_recuperable/100",
+                "unidad": "eur",
+                "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Fecha compromiso",
+                "tipo": "texto",
+                "placeholder": "ej. 30/09/2026"
               }
             ],
-            "filas_iniciales": 3,
+            "filas_iniciales": 2,
             "entidad_compartida": "Proyecto"
           }
         ]
@@ -334,90 +208,25 @@
         "titulo": "Reducir la morosidad y acelerar los cobros activos",
         "secciones": [
           {
-            "titulo": "1. Aging de cobros — facturas vencidas",
+            "titulo": "Tus clientes con más morosidad — empieza por los 2-3 más urgentes, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Cliente",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "Nombre del cliente"
               },
               {
-                "etiqueta": "Factura nº",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Fecha emisión",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pendiente",
-                  "Prometido",
-                  "En disputa",
-                  "Incobrable"
-                ]
-              },
-              {
-                "etiqueta": "Acción asignada",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha compromiso",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 3
-          },
-          {
-            "titulo": "2. Protocolo de reclamación escalonado",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
+                "etiqueta": "Importe pendiente (€)",
                 "tipo": "numero",
-                "clave": "importe"
+                "clave": "importe",
+                "placeholder": "3000"
               },
               {
-                "etiqueta": "Días mora",
+                "etiqueta": "Días de mora",
                 "tipo": "numero",
-                "clave": "dias"
-              },
-              {
-                "etiqueta": "Acción asignada",
-                "tipo": "opciones",
-                "opciones": [
-                  "Recordatorio amistoso",
-                  "Llamada",
-                  "Carta formal",
-                  "Gestor de cobros",
-                  "Vía legal"
-                ]
-              },
-              {
-                "etiqueta": "Fecha próx. acción",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pendiente",
-                  "En gestión",
-                  "Resuelto",
-                  "Incobrable"
-                ]
+                "clave": "dias",
+                "placeholder": "ej. 45",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste financiero de la demora (€)",
@@ -425,57 +234,61 @@
                 "clave": "coste_fin",
                 "formula": "importe*dias*0.1/365",
                 "unidad": "eur"
-              }
-            ],
-            "filas_iniciales": 3
-          },
-          {
-            "titulo": "3. Acuerdos de pago con clientes morosos",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto"
               },
               {
-                "etiqueta": "Deuda total (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Cuotas acordadas",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Importe / cuota (€)",
-                "tipo": "numero",
-                "clave": "importe_cuota"
-              },
-              {
-                "etiqueta": "Fecha 1ª cuota",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Cuotas pagadas",
-                "tipo": "numero",
-                "clave": "cuotas_pagadas"
-              },
-              {
-                "etiqueta": "Importe Recuperado (€)",
-                "tipo": "calculada",
-                "clave": "importe_recuperado",
-                "formula": "importe_cuota*cuotas_pagadas",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Estado acuerdo",
+                "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Activo",
-                  "Incumplido",
-                  "Completado"
+                  "Pendiente",
+                  "En gestión",
+                  "Acuerdo de pago",
+                  "Cobrado",
+                  "Incobrable"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "decision",
+                "clave": "prob_cobro",
+                "decision_opciones": [
+                  {
+                    "label": "Recordatorio amistoso",
+                    "valor": 30
+                  },
+                  {
+                    "label": "Llamada",
+                    "valor": 45
+                  },
+                  {
+                    "label": "Carta formal",
+                    "valor": 60
+                  },
+                  {
+                    "label": "Gestor de cobros",
+                    "valor": 75
+                  },
+                  {
+                    "label": "Vía legal",
+                    "valor": 90
+                  }
+                ]
+              },
+              {
+                "etiqueta": "Recuperación estimada (€)",
+                "tipo": "calculada",
+                "clave": "recuperacion",
+                "formula": "importe*prob_cobro/100",
+                "unidad": "eur",
+                "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Fecha próx. acción",
+                "tipo": "texto",
+                "placeholder": "ej. 20/09/2026"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 2,
+            "entidad_compartida": "Cliente"
           }
         ]
       },
@@ -484,35 +297,46 @@
         "titulo": "Corregir el desfase entre el ciclo de cobros y el de pagos",
         "secciones": [
           {
-            "titulo": "1. Calendario semanal de tesorería",
+            "titulo": "1. Tu desfase real",
             "columnas": [
               {
-                "etiqueta": "Semana",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Cobros previstos (€)",
+                "etiqueta": "Días que tardas en cobrar de media",
                 "tipo": "numero",
-                "clave": "cobros"
+                "clave": "dias_cobro",
+                "placeholder": "ej. 60",
+                "no_sumar": true
               },
               {
-                "etiqueta": "Pagos comprometidos (€)",
+                "etiqueta": "Días que tardas en pagar de media",
                 "tipo": "numero",
-                "clave": "pagos"
+                "clave": "dias_pago",
+                "placeholder": "ej. 30",
+                "no_sumar": true
               },
               {
-                "etiqueta": "Saldo Neto (€)",
+                "etiqueta": "Desfase (días)",
                 "tipo": "calculada",
-                "clave": "saldo_neto",
-                "formula": "cobros-pagos",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Notas",
-                "tipo": "texto"
+                "clave": "desfase_dias",
+                "formula": "dias_cobro-dias_pago",
+                "unidad": "numero",
+                "no_sumar": true
               }
             ],
-            "filas_iniciales": 13
+            "filas_iniciales": 1,
+            "interpretacion": {
+              "clave": "desfase_dias",
+              "reglas": [
+                {
+                  "min": 1,
+                  "color": "rojo",
+                  "texto": "Cobras de media más tarde de lo que tienes que pagar: tienes un hueco de caja real. Dos palancas para cerrarlo -- pide más días a tus proveedores (sección 2) o busca financiación puente para cubrirlo mientras tanto (sección 3)."
+                },
+                {
+                  "color": "verde",
+                  "texto": "Cobras antes de tener que pagar -- no tienes un hueco de caja por este motivo. Puedes revisar igualmente las secciones 2 y 3 si quieres más colchón, pero no es urgente."
+                }
+              ]
+            }
           },
           {
             "titulo": "2. Negociación de plazos con proveedores",
@@ -529,26 +353,30 @@
               {
                 "etiqueta": "Plazo actual (días)",
                 "tipo": "numero",
-                "clave": "plazo_actual"
+                "clave": "plazo_actual",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Plazo solicitado (días)",
                 "tipo": "numero",
-                "clave": "plazo_solicitado"
+                "clave": "plazo_solicitado",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Días ganados",
                 "tipo": "calculada",
                 "clave": "dias_ganados",
                 "formula": "plazo_solicitado-plazo_actual",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Liquidez liberada/mes (€)",
                 "tipo": "calculada",
                 "clave": "liquidez",
                 "formula": "(volumen/30)*dias_ganados",
-                "unidad": "eur"
+                "unidad": "eur",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Estado negociación",
@@ -568,60 +396,37 @@
             "filas_iniciales": 3
           },
           {
-            "titulo": "3. Comparativa de financiación a corto plazo",
+            "titulo": "3. Financiación puente",
             "columnas": [
               {
-                "etiqueta": "Instrumento",
+                "etiqueta": "Vía de financiación a explorar",
                 "tipo": "opciones",
                 "opciones": [
-                  "Póliza de crédito",
-                  "Factoring",
-                  "Confirming",
-                  "Descuento comercial",
-                  "Préstamo corto plazo",
-                  "Socio inversor"
+                  "Línea de crédito con tu banco",
+                  "Factoring / adelanto de facturas",
+                  "Préstamo a corto plazo",
+                  "Buscar un socio o inversor",
+                  "Ninguna, prefiero ajustar sin financiación externa"
                 ]
               },
               {
-                "etiqueta": "Entidad",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe disp. (€)",
-                "tipo": "numero",
-                "clave": "importe"
-              },
-              {
-                "etiqueta": "TAE (%)",
-                "tipo": "numero",
-                "clave": "tae"
-              },
-              {
-                "etiqueta": "Coste mensual (€)",
-                "tipo": "calculada",
-                "clave": "coste_mensual",
-                "formula": "importe*(tae/100)/12",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Plazo (meses)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Garantías requeridas",
-                "tipo": "texto"
+                "etiqueta": "Con quién vas a hablar",
+                "tipo": "texto",
+                "placeholder": "ej. Mi banco, un gestor de factoring..."
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Estudiar",
-                  "Descartar",
-                  "Solicitar"
+                  "Pedir cita esta semana",
+                  "Reunir la documentación primero",
+                  "Esperar y ver cómo evoluciona el mes",
+                  "Descartado por ahora"
                 ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -630,339 +435,129 @@
         "titulo": "Convertir los anticipos retenidos en ingresos ejecutados",
         "secciones": [
           {
-            "titulo": "1. Anticipos pendientes de ejecutar",
+            "titulo": "Tus anticipos más urgentes — empieza por los 2-3 más urgentes, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Concepto",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "Nombre del cliente"
               },
               {
                 "etiqueta": "Importe anticipado (€)",
                 "tipo": "numero",
-                "clave": "importe_ant"
+                "clave": "importe_ant",
+                "placeholder": "8000"
               },
               {
-                "etiqueta": "Fecha recibido",
-                "tipo": "texto"
+                "etiqueta": "Motivo por el que no avanza",
+                "tipo": "opciones",
+                "opciones": [
+                  "Trabajo sin arrancar",
+                  "Cliente sin dar luz verde",
+                  "Falta un hito intermedio sin programar",
+                  "Ya está listo, falta facturar"
+                ]
               },
               {
-                "etiqueta": "% ejecución actual",
-                "tipo": "numero",
-                "clave": "pct_ejec"
+                "etiqueta": "Decisión",
+                "tipo": "decision",
+                "clave": "pct_recuperable",
+                "decision_opciones": [
+                  {
+                    "label": "Arrancar el trabajo ya",
+                    "valor": 60
+                  },
+                  {
+                    "label": "Contactar al cliente para luz verde",
+                    "valor": 50
+                  },
+                  {
+                    "label": "Programar el hito que falta",
+                    "valor": 70
+                  },
+                  {
+                    "label": "Facturar ahora",
+                    "valor": 100
+                  }
+                ]
               },
               {
-                "etiqueta": "Importe ejecutado (€)",
+                "etiqueta": "Recuperación estimada (€)",
                 "tipo": "calculada",
-                "clave": "importe_ejec",
-                "formula": "importe_ant*pct_ejec/100",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Pendiente ejecutar (€)",
-                "tipo": "calculada",
-                "clave": "pendiente_ejec",
-                "formula": "importe_ant-importe_ejec",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Fecha compromiso entrega",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción de desbloqueo",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 3
-          },
-          {
-            "titulo": "2. Hitos de entrega para liberar anticipo",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Anticipo total (€)",
-                "tipo": "numero",
-                "clave": "anticipo_total"
-              },
-              {
-                "etiqueta": "Hito",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "% a liberar",
-                "tipo": "numero",
-                "clave": "pct_liberar"
-              },
-              {
-                "etiqueta": "Importe a liberar (€)",
-                "tipo": "calculada",
-                "clave": "importe_liberar",
-                "formula": "anticipo_total*pct_liberar/100",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Entregable requerido",
-                "tipo": "texto"
+                "clave": "recuperacion",
+                "formula": "importe_ant*pct_recuperable/100",
+                "unidad": "eur",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Fecha compromiso",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Entregado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Anticipo liberado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                "tipo": "texto",
+                "placeholder": "ej. 30/09/2026"
               }
             ],
-            "filas_iniciales": 3
-          },
-          {
-            "titulo": "3. Cierre y liquidación de anticipos",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Anticipo inicial (€)",
-                "tipo": "numero",
-                "clave": "anticipo"
-              },
-              {
-                "etiqueta": "Fecha recepción anticipo",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Entregables completados",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acta conformidad firmada",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Factura final emitida",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Saldo pendiente a facturar (€)",
-                "tipo": "numero",
-                "clave": "saldo"
-              },
-              {
-                "etiqueta": "Fecha cierre prevista",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "En ejecución",
-                  "Pendiente firma",
-                  "Cerrado"
-                ]
-              },
-              {
-                "etiqueta": "Ejecutado (€)",
-                "tipo": "calculada",
-                "clave": "ejecutado",
-                "formula": "anticipo-saldo",
-                "unidad": "eur"
-              }
-            ],
-            "filas_iniciales": 3
+            "filas_iniciales": 2
           }
         ]
       },
       "r6": {
-        "tipo": "nativa",
-        "titulo": "Activar la facturación paralizada por procesos internos",
-        "secciones": [
+        "tipo": "pipeline",
+        "titulo": "Facturas bloqueadas sin cobrar",
+        "entidad_nombre": "Factura",
+        "etapas": [
+          "Bloqueada",
+          "En gestión",
+          "Desbloqueada"
+        ],
+        "columnas": [
           {
-            "titulo": "1. Facturación pendiente por desbloquear",
-            "columnas": [
-              {
-                "etiqueta": "Cliente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Trabajo / Proyecto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe a facturar (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Motivo del bloqueo",
-                "tipo": "opciones",
-                "opciones": [
-                  "Falta validación cliente",
-                  "Falta información interna",
-                  "Pendiente aprobación",
-                  "Otro"
-                ]
-              },
-              {
-                "etiqueta": "Responsable de desbloquear",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción concreta",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 3
+            "etiqueta": "Cliente",
+            "tipo": "texto",
+            "placeholder": "ej. Constructora Vidal"
           },
           {
-            "titulo": "2. Diagnóstico del proceso de facturación",
-            "columnas": [
-              {
-                "etiqueta": "Factura / Expediente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Fecha servicio prestado",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Motivo del bloqueo",
-                "tipo": "opciones",
-                "opciones": [
-                  "Falta aprobación interna",
-                  "Datos del cliente incompletos",
-                  "Contrato no firmado",
-                  "Disputa de precio",
-                  "Error en pedido",
-                  "Pendiente de conformidad",
-                  "Otro"
-                ]
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción desbloqueadora",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Bloqueada",
-                  "En gestión",
-                  "Desbloqueada"
-                ]
-              }
-            ],
-            "filas_iniciales": 3
+            "etiqueta": "Importe a facturar (€)",
+            "tipo": "numero",
+            "clave": "importe",
+            "placeholder": "3200",
+            "contribuye_valor": true
           },
           {
-            "titulo": "3. Checklist operativo de facturación",
-            "columnas": [
+            "etiqueta": "Motivo del bloqueo",
+            "tipo": "opciones",
+            "opciones": [
+              "Falta validación del cliente",
+              "Falta información interna",
+              "Pendiente de aprobación",
+              "Contrato no firmado",
+              "Disputa de precio",
+              "Otro"
+            ]
+          },
+          {
+            "etiqueta": "Decisión",
+            "tipo": "decision",
+            "decision_opciones": [
               {
-                "etiqueta": "Expediente / Cliente",
-                "tipo": "texto"
+                "label": "Emitir la factura ahora, ya está lista",
+                "valor": 1
               },
               {
-                "etiqueta": "Importe (€)",
-                "tipo": "numero"
+                "label": "Pedir lo que falta para poder emitirla",
+                "valor": 2
               },
               {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
+                "label": "Renegociar antes de facturar",
+                "valor": 3
               },
               {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción 1 - hecho",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Acción 1 - detalle",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción 2 - hecho",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Acción 2 - detalle",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción 3 - hecho",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Acción 3 - detalle",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Facturado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Fecha facturación",
-                "tipo": "texto"
+                "label": "Aún sin decidir",
+                "valor": 4
               }
             ],
-            "filas_iniciales": 3
+            "clave": "decision"
           }
-        ]
+        ],
+        "filas_iniciales": 2
       }
     },
     "kpi_recovery_mode": "financiero",
@@ -1052,10 +647,22 @@
               },
               {
                 "etiqueta": "Importe (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Facturar ahora mismo",
+                  "Automatizar facturación al entregar",
+                  "Delegar a administración",
+                  "Ya se factura a tiempo"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1081,7 +688,8 @@
               {
                 "etiqueta": "Días vencido",
                 "tipo": "numero",
-                "clave": "dias"
+                "clave": "dias",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste financiero de la demora (€)",
@@ -1089,9 +697,19 @@
                 "clave": "coste_fin",
                 "formula": "importe*dias*0.1/365",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reclamar ya",
+                  "Aún no vencido, esperar",
+                  "Pasar a incobrable"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1108,12 +726,14 @@
               {
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
-                "clave": "importe"
+                "clave": "importe",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Días vencido",
                 "tipo": "numero",
-                "clave": "dias"
+                "clave": "dias",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Acción de reclamación",
@@ -1162,9 +782,20 @@
               {
                 "etiqueta": "% anticipo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Exigir anticipo obligatorio",
+                  "Acortar plazo de pago",
+                  "Formalizar por contrato",
+                  "Mantener condiciones actuales"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1194,17 +825,30 @@
               {
                 "etiqueta": "% anticipo",
                 "tipo": "numero",
-                "clave": "pct"
+                "clave": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Importe a cobrar ya (€)",
                 "tipo": "calculada",
                 "clave": "a_cobrar",
                 "formula": "importe*pct/100",
-                "unidad": "eur"
+                "unidad": "eur",
+                "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pedir anticipo ahora",
+                  "No aplica, ya cobrado",
+                  "Aplicar a futuros proyectos similares",
+                  "Sin acción"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1225,9 +869,20 @@
               {
                 "etiqueta": "Mensaje tipo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar recordatorio automático",
+                  "Delegar a gestoría",
+                  "Mantener seguimiento manual",
+                  "Sin acción por ahora"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -1287,7 +942,7 @@
     "capa_1_options": "Fijo precios sin calcular si realmente cubren todos mis costes, incluidos los que no aparecen en la factura.; Hago descuentos para fidelizar o cerrar ventas sin saber si con eso me quedo en negativo.; Los costes han subido pero todavía no he podido trasladarlos al precio del cliente.; Hay trabajo que hago y no cobro: soporte, revisiones o cambios que doy por incluidos.; Tengo varios servicios pero no sé cuál de ellos me deja margen de verdad.; Hay clientes concretos que facturan razonablemente bien pero de los que me queda muy poco margen real.",
     "c2_herramienta": "margen",
     "kpi_recovery_mode": "estructural",
-    "recovery_unit_label": "€ de coste cortado",
+    "recovery_unit_label": "re-medir margen",
     "kpi_name": "Margen mensual",
     "kpi_unit": "%",
     "capa_3_plan": {
@@ -1321,7 +976,8 @@
               {
                 "etiqueta": "Margen Obj. %",
                 "tipo": "numero",
-                "clave": "margen_obj"
+                "clave": "margen_obj",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Precio Mín. Viable (€)",
@@ -1341,9 +997,20 @@
                 "clave": "gap",
                 "formula": "precio_actual-precio_minimo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir precio ahora",
+                  "Renegociar coste directo",
+                  "Descontinuar servicio",
+                  "Precio ya viable"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1365,7 +1032,8 @@
               {
                 "etiqueta": "Descuento Hab. %",
                 "tipo": "numero",
-                "clave": "dp"
+                "clave": "dp",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Precio Real Cobrado (€)",
@@ -1389,21 +1057,24 @@
                 "tipo": "calculada",
                 "clave": "mt",
                 "formula": "(pt-ce)/pt*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Margen c/ Desc. %",
                 "tipo": "calculada",
                 "clave": "md",
                 "formula": "(prc-ce)/prc*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Diferencia Margen (pp)",
                 "tipo": "calculada",
                 "clave": "dif",
                 "formula": "md-mt",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Margen Perdido/mes (€)",
@@ -1411,9 +1082,20 @@
                 "clave": "mp",
                 "formula": "(pt-prc)*ud",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reducir descuento habitual",
+                  "Eliminar descuento a este segmento",
+                  "Mantener descuento (justificado)",
+                  "Renegociar coste de entrega"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1472,9 +1154,20 @@
                 "clave": "gap_mes",
                 "formula": "(var_coste-var_precio)*uds",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir precio ya",
+                  "Subir precio gradualmente",
+                  "Buscar proveedor alternativo",
+                  "Absorber el coste (justificado)"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1484,7 +1177,8 @@
         "campos": [
           {
             "clave": "facturacion",
-            "etiqueta": "Facturación mensual (€)"
+            "etiqueta": "Facturación mensual (€)",
+            "precarga_desde_c0": "input_a"
           },
           {
             "clave": "tarifa",
@@ -1579,7 +1273,8 @@
               {
                 "etiqueta": "Margen Bruto %",
                 "tipo": "numero",
-                "clave": "margen_bruto"
+                "clave": "margen_bruto",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas Equipo/mes",
@@ -1589,7 +1284,8 @@
               {
                 "etiqueta": "Coste Hora Eq. (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste equipo (€)",
@@ -1604,9 +1300,20 @@
                 "clave": "margen_neto",
                 "formula": "ventas*margen_bruto/100-coste_equipo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar esta línea",
+                  "Mantener",
+                  "Reestructurar o reducir",
+                  "Descontinuar línea"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1638,7 +1345,8 @@
               {
                 "etiqueta": "Coste Hora Propio (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas totales (h)",
@@ -1663,7 +1371,8 @@
               },
               {
                 "etiqueta": "NPS (1-5)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Potencial",
@@ -1673,9 +1382,20 @@
                   "Medio",
                   "Bajo"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener cliente",
+                  "Renegociar condiciones",
+                  "Reducir tiempo dedicado",
+                  "Desvincular cliente"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -1743,24 +1463,24 @@
         "titulo": "Mapa de flujo operativo",
         "secciones": [
           {
+            "titulo": "Tus pasos con más tiempo perdido — empieza por los 2-3 que más tiempo te cuestan, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Paso / Actividad",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Revisar pedido antes de enviar"
               },
               {
                 "etiqueta": "T. Estimado (min)",
                 "tipo": "numero",
-                "clave": "t_estimado"
+                "clave": "t_estimado",
+                "placeholder": "10"
               },
               {
                 "etiqueta": "T. Real Prom. (min)",
                 "tipo": "numero",
-                "clave": "t_real"
+                "clave": "t_real",
+                "placeholder": "25"
               },
               {
                 "etiqueta": "Gap (min)",
@@ -1768,14 +1488,6 @@
                 "clave": "gap_tiempo",
                 "formula": "t_real-t_estimado",
                 "unidad": "numero"
-              },
-              {
-                "etiqueta": "¿Valor Cliente?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
               },
               {
                 "etiqueta": "Tipo",
@@ -1789,48 +1501,9 @@
                 ]
               },
               {
-                "etiqueta": "Observaciones",
-                "tipo": "texto"
-              }
-            ],
-            "filas_iniciales": 5,
-            "titulo": "1. Inventario y análisis del flujo operativo",
-            "entidad_compartida": "Paso"
-          },
-          {
-            "titulo": "2. Plan de mejora por paso",
-            "entidad_compartida": "Paso",
-            "columnas": [
-              {
-                "etiqueta": "Paso / Actividad",
-                "tipo": "texto"
-              },
-              {
                 "etiqueta": "Acción de mejora",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Tipo",
-                "tipo": "opciones",
-                "opciones": [
-                  "Eliminar",
-                  "Automatizar",
-                  "Simplificar",
-                  "Reasignar",
-                  "Estandarizar"
-                ]
-              },
-              {
-                "etiqueta": "Ahorro estimado (min)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Fecha límite",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Responsable",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Automatizar la revisión con una checklist"
               },
               {
                 "etiqueta": "Estado",
@@ -1840,9 +1513,15 @@
                   "En curso",
                   "Hecho"
                 ]
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto",
+                "placeholder": "ej. Tú mismo"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 2,
+            "entidad_compartida": "Paso"
           }
         ]
       },
@@ -1864,7 +1543,8 @@
               {
                 "etiqueta": "Duración media (h)",
                 "tipo": "numero",
-                "clave": "dur"
+                "clave": "dur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Impacto",
@@ -1894,9 +1574,20 @@
                 "clave": "coste_mensual",
                 "formula": "frec*dur*coste_hora*4.33",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Rediseñar el proceso",
+                  "Añadir recursos",
+                  "Delegar a otra persona/sistema",
+                  "Aceptar el coste por ahora"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -1905,37 +1596,24 @@
         "titulo": "SLAs internos y tiempos de respuesta",
         "secciones": [
           {
-            "titulo": "1. Definición de SLAs",
+            "titulo": "Tus tipos de solicitud con peor cumplimiento de SLA — empieza por los 2-3 peores, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Tipo de solicitud",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Receptor",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Presupuesto a cliente"
               },
               {
                 "etiqueta": "T. Máx comprometido (h)",
                 "tipo": "numero",
-                "clave": "tmax"
+                "clave": "tmax",
+                "placeholder": "24"
               },
               {
                 "etiqueta": "T. Real Prom. (h)",
                 "tipo": "numero",
-                "clave": "treal"
-              },
-              {
-                "etiqueta": "¿Protocolo?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Consecuencia si incumple",
-                "tipo": "texto"
+                "clave": "treal",
+                "placeholder": "48"
               },
               {
                 "etiqueta": "Desviación sobre el compromiso (h)",
@@ -1943,37 +1621,29 @@
                 "clave": "desviacion",
                 "formula": "treal-tmax",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Cumpliendo SLA",
+                  "Incumpliendo SLA",
+                  "Sin protocolo definido"
+                ],
+                "contribuye_valor_si": "Cumpliendo SLA"
+              },
+              {
+                "etiqueta": "Acción de mejora",
+                "tipo": "texto",
+                "placeholder": "ej. Definir protocolo de escalado para picos de demanda"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto",
+                "placeholder": "ej. Tú mismo"
               }
             ],
-            "filas_iniciales": 3,
-            "entidad_compartida": "TipoSolicitud"
-          },
-          {
-            "titulo": "2. Tracker semanal de cumplimiento",
-            "columnas": [
-              {
-                "etiqueta": "Tipo de solicitud",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Solicitudes recibidas",
-                "tipo": "numero",
-                "clave": "recibidas"
-              },
-              {
-                "etiqueta": "Dentro de SLA",
-                "tipo": "numero",
-                "clave": "dentro"
-              },
-              {
-                "etiqueta": "% cumplimiento SLA",
-                "tipo": "calculada",
-                "clave": "pct_sla",
-                "formula": "dentro*100/recibidas",
-                "unidad": "pct"
-              }
-            ],
-            "filas_iniciales": 3,
+            "filas_iniciales": 2,
             "entidad_compartida": "TipoSolicitud"
           }
         ]
@@ -1983,47 +1653,36 @@
         "titulo": "Estándar para tareas repetidas",
         "secciones": [
           {
+            "titulo": "Tus tareas con más ahorro potencial — empieza por las 2-3 con más ahorro, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
                 "etiqueta": "Tarea",
-                "tipo": "texto"
+                "tipo": "texto",
+                "placeholder": "ej. Preparar el pedido semanal a proveedor"
               },
               {
                 "etiqueta": "Ocurrencias/mes",
                 "tipo": "numero",
-                "clave": "ocurrencias"
+                "clave": "ocurrencias",
+                "placeholder": "8"
               },
               {
                 "etiqueta": "T. sin estándar (min)",
                 "tipo": "numero",
-                "clave": "t_sin"
-              },
-              {
-                "etiqueta": "Personas (nº)",
-                "tipo": "numero",
-                "clave": "personas"
-              },
-              {
-                "etiqueta": "¿Documentada?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Variabilidad",
-                "tipo": "opciones",
-                "opciones": [
-                  "Alta",
-                  "Media",
-                  "Baja"
-                ]
+                "clave": "t_sin",
+                "placeholder": "30"
               },
               {
                 "etiqueta": "T. con estándar (min)",
                 "tipo": "numero",
-                "clave": "t_con"
+                "clave": "t_con",
+                "placeholder": "15"
+              },
+              {
+                "etiqueta": "Personas (nº)",
+                "tipo": "numero",
+                "clave": "personas",
+                "placeholder": "2"
               },
               {
                 "etiqueta": "Ahorro/mes (min)",
@@ -2031,39 +1690,6 @@
                 "clave": "ahorro_mes",
                 "formula": "(t_sin-t_con)*personas*ocurrencias",
                 "unidad": "numero"
-              }
-            ],
-            "filas_iniciales": 4,
-            "titulo": "1. Identificación y priorización de tareas a estandarizar",
-            "entidad_compartida": "Tarea"
-          },
-          {
-            "titulo": "2. Ficha de estándar por tarea",
-            "entidad_compartida": "Tarea",
-            "columnas": [
-              {
-                "etiqueta": "Tarea",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Qué hacer (pasos clave)",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Quién lo ejecuta",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Cuándo / frecuencia",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Herramienta / método",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Dónde está documentado",
-                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
@@ -2073,9 +1699,15 @@
                   "En redacción",
                   "Publicado"
                 ]
+              },
+              {
+                "etiqueta": "Acción de estandarización",
+                "tipo": "texto",
+                "placeholder": "ej. Escribir guía de 3 pasos y subirla a la carpeta compartida"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 2,
+            "entidad_compartida": "Tarea"
           }
         ]
       },
@@ -2113,7 +1745,8 @@
                 "tipo": "calculada",
                 "clave": "pct_cumplimiento",
                 "formula": "(valor_actual/meta)*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Frecuencia medición",
@@ -2131,9 +1764,20 @@
               {
                 "etiqueta": "Responsable",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir midiendo igual",
+                  "Ajustar la meta a algo realista",
+                  "Crear un plan para cerrar la brecha",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           },
           {
             "titulo": "2. Pasos sin valor a eliminar",
@@ -2239,7 +1883,8 @@
                 "tipo": "calculada",
                 "clave": "meses_payback",
                 "formula": "costeresolver/costedep",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 4
@@ -2279,7 +1924,8 @@
               {
                 "etiqueta": "% Completado",
                 "tipo": "numero",
-                "clave": "pct"
+                "clave": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas estimadas",
@@ -2296,9 +1942,20 @@
                 "clave": "horas_inv",
                 "formula": "horas_est*pct/100",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Priorizar esta documentación ahora",
+                  "Reasignar a otra persona",
+                  "Posponer a la siguiente revisión",
+                  "Ya está documentado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -2414,9 +2071,20 @@
                   "Media",
                   "Baja"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Estandarizar formulario de entrada",
+                  "Exigir info completa antes de aceptar",
+                  "Delegar el filtro a otra persona",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2471,9 +2139,20 @@
                 "clave": "horas_espera",
                 "formula": "frec*espera*4.33",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear protocolo escrito",
+                  "Reducir tiempo de espera acordado",
+                  "Escalar a dirección",
+                  "Ya funciona bien"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2532,6 +2211,21 @@
               {
                 "etiqueta": "Motivo bloqueo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Fecha entrega objetivo",
+                "tipo": "texto",
+                "placeholder": "ej. 20/09/2026"
+              },
+              {
+                "etiqueta": "¿Entregado a plazo?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Aún no entregado"
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
             "filas_iniciales": 3
@@ -2631,9 +2325,20 @@
                   "Sí",
                   "Podría evitarse"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reforzar la revisión",
+                  "Simplificar el proceso",
+                  "Formar al responsable",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2659,7 +2364,8 @@
               },
               {
                 "etiqueta": "% iniciados cliente",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Motivo principal",
@@ -2671,9 +2377,20 @@
                 "clave": "horas_sem",
                 "formula": "contactos*tiempo_medio/60",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reducir frecuencia de contacto",
+                  "Cambiar de canal",
+                  "Automatizar respuestas frecuentes",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -2788,9 +2505,20 @@
                 "clave": "coste_mensual",
                 "formula": "ocurr*retrabajo*coste_hora",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar la causa raíz",
+                  "Crear checklist de verificación en esa fase",
+                  "Formar al equipo en ese error",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2836,9 +2564,20 @@
                 "clave": "coste",
                 "formula": "horas*coste_hora",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Repercutir el coste al cliente cuando aplique",
+                  "Atacar la causa raíz de fondo",
+                  "Aceptar el coste como parte del servicio",
+                  "Ya está resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2880,9 +2619,20 @@
                 "clave": "tiempo_fallo",
                 "formula": "(tiempo*4.33)/fallos",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear checklist de salida en esa fase",
+                  "Rediseñar esa fase del proceso",
+                  "Reforzar la revisión en esa fase",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2941,9 +2691,20 @@
                 "clave": "coste",
                 "formula": "horas*coste_hora",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Contactar al cliente para cerrar el tema",
+                  "Cerrar el origen para que no se repita",
+                  "Compensar al cliente",
+                  "Ya está resuelto"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -2989,10 +2750,22 @@
                 "tipo": "calculada",
                 "clave": "pct_error",
                 "formula": "errores*100/entregas",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reforzar la formación de esa persona",
+                  "Ajustar su carga de trabajo",
+                  "Revisar si el protocolo es claro",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -3066,10 +2839,30 @@
                 "tipo": "calculada",
                 "clave": "reduccion",
                 "formula": "(antes-despues)*100/antes",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Retrabajos evitados",
+                "tipo": "calculada",
+                "clave": "retrabajos_evitados",
+                "formula": "antes-despues",
+                "unidad": "numero",
+                "contribuye_valor": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir aplicando el checklist en cada entrega",
+                  "Reforzar el checklist en este punto",
+                  "Investigar por qué no se aplicó",
+                  "Ya está funcionando bien"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -3135,6 +2928,7 @@
       "r1": {
         "tipo": "nativa",
         "titulo": "Auditoría canales",
+        "intro": "Vamos a revisar de dónde vienen de verdad tus clientes: por cada canal que uses (boca a boca, redes, Google, recomendaciones...), apunta cuántas personas te preguntan al mes y cuántas acaban comprando. Así ves cuál te está funcionando y cuál solo te ocupa tiempo.",
         "secciones": [
           {
             "columnas": [
@@ -3151,22 +2945,23 @@
                 ]
               },
               {
-                "etiqueta": "Leads/mes",
+                "etiqueta": "Personas que preguntan/mes",
                 "tipo": "numero",
                 "clave": "leads"
               },
               {
                 "etiqueta": "Clientes cerrados/mes",
                 "tipo": "numero",
-                "clave": "clientes"
+                "clave": "clientes",
+                "contribuye_valor": true
               },
               {
-                "etiqueta": "Coste/lead (€)",
+                "etiqueta": "Cuánto te cuesta cada pregunta (€)",
                 "tipo": "numero",
                 "clave": "costelead"
               },
               {
-                "etiqueta": "ROI %",
+                "etiqueta": "¿Te compensa? (€ ganado por cada € gastado)",
                 "tipo": "numero"
               },
               {
@@ -3174,7 +2969,8 @@
                 "tipo": "calculada",
                 "clave": "conversion",
                 "formula": "clientes*100/leads",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste por cliente (€)",
@@ -3182,9 +2978,20 @@
                 "clave": "cac",
                 "formula": "costelead*leads/clientes",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar (más inversión)",
+                  "Mantener",
+                  "Optimizar antes de escalar",
+                  "Abandonar canal"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -3238,10 +3045,22 @@
                 "tipo": "calculada",
                 "clave": "conversion",
                 "formula": "leads*100/seguidores",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear/activar",
+                  "Actualizar y relanzar",
+                  "Mantener como está",
+                  "Descartar canal"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -3305,7 +3124,8 @@
               },
               {
                 "etiqueta": "Meses trabajado",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Inversión (€)",
@@ -3320,7 +3140,8 @@
               {
                 "etiqueta": "Clientes",
                 "tipo": "numero",
-                "clave": "clientes"
+                "clave": "clientes",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Ticket medio (€)",
@@ -3354,60 +3175,98 @@
                 "tipo": "calculada",
                 "clave": "roi",
                 "formula": "(ingresos-inversion)*100/inversion",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Escalar inversión",
+                  "Mantener inversión actual",
+                  "Reducir inversión",
+                  "Cerrar canal"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
       "r5": {
-        "tipo": "nativa",
-        "titulo": "Sistema referidos",
-        "secciones": [
+        "tipo": "pipeline",
+        "titulo": "Consigue clientes nuevos sin gastar en publicidad",
+        "entidad_nombre": "cliente",
+        "etapas": [
+          "Cliente elegido",
+          "Le has escrito",
+          "Te trajo un cliente"
+        ],
+        "proyeccion": {
+          "titulo": "¿Cuánto podrías ganar activando esto?",
+          "entradas": [
+            {
+              "clave": "clientes_actuales",
+              "etiqueta": "¿Cuántos clientes tienes ahora?",
+              "placeholder": "ej. 40"
+            },
+            {
+              "clave": "pct_recomienda",
+              "etiqueta": "¿Qué % crees que te recomendaría a alguien?",
+              "placeholder": "ej. 20"
+            },
+            {
+              "clave": "ticket_medio",
+              "etiqueta": "¿Cuánto te deja de media un cliente nuevo? (€)",
+              "placeholder": "ej. 60"
+            }
+          ],
+          "formula": "clientes_actuales*pct_recomienda/100*ticket_medio",
+          "texto": "Si el {pct_recomienda}% de tus {clientes_actuales} clientes te recomienda a 1 persona → +{resultado} €/mes"
+        },
+        "variables_globales": [
           {
-            "columnas": [
-              {
-                "etiqueta": "Cliente fuente",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "NPS (1-10)",
-                "tipo": "numero"
-              },
-              {
-                "etiqueta": "Referidos generados",
-                "tipo": "numero",
-                "clave": "referidos"
-              },
-              {
-                "etiqueta": "Convertidos",
-                "tipo": "numero",
-                "clave": "convertidos"
-              },
-              {
-                "etiqueta": "Último contacto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Incentivo activo?",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              },
-              {
-                "etiqueta": "Conversión referidos (%)",
-                "tipo": "calculada",
-                "clave": "conversion",
-                "formula": "convertidos*100/referidos",
-                "unidad": "pct"
-              }
-            ],
-            "filas_iniciales": 4
+            "clave": "regalo",
+            "etiqueta": "¿Qué le vas a dar a quien te recomiende?",
+            "placeholder": "ej. 15% de descuento en su próxima visita"
+          },
+          {
+            "clave": "vocativo_cliente",
+            "etiqueta": "¿Cómo llamas tú a tus clientes?",
+            "placeholder": "ej. pacientes, clientas, socios"
           }
-        ]
+        ],
+        "accion_rapida": {
+          "tipo": "whatsapp",
+          "campo_telefono": "telefono",
+          "plantilla": "Hola {nombre}, como {vocativo_cliente} de confianza, si me recomiendas a alguien este mes, los dos os lleváis {regalo}. ¿Me ayudas a pasarle mi contacto?"
+        },
+        "columnas": [
+          {
+            "etiqueta": "Nombre",
+            "tipo": "texto",
+            "clave": "nombre",
+            "placeholder": "ej. Ana García"
+          },
+          {
+            "etiqueta": "WhatsApp",
+            "tipo": "texto",
+            "clave": "telefono",
+            "placeholder": "ej. 600111222"
+          },
+          {
+            "etiqueta": "Trajo un cliente",
+            "tipo": "opciones",
+            "estilo": "botones",
+            "opciones": [
+              "No",
+              "Sí"
+            ],
+            "contribuye_valor_si": "Sí"
+          }
+        ],
+        "filas_iniciales": 3
       },
       "r6": {
         "tipo": "calculadora",
@@ -3591,7 +3450,8 @@
                 "tipo": "calculada",
                 "clave": "pct_objetivo",
                 "formula": "ingresos*100/objetivo",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 8
@@ -3651,11 +3511,16 @@
                 "unidad": "numero"
               },
               {
+                "etiqueta": "Acción correctora",
+                "tipo": "texto"
+              },
+              {
                 "etiqueta": "% objetivo",
                 "tipo": "calculada",
                 "clave": "pct_objetivo",
                 "formula": "total*100/objetivo",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 4
@@ -3693,7 +3558,8 @@
               },
               {
                 "etiqueta": "Tiempo máx (días)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Acción si supera",
@@ -3701,7 +3567,8 @@
               },
               {
                 "etiqueta": "Probabilidad %",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Responsable",
@@ -3930,7 +3797,8 @@
               {
                 "etiqueta": "Probabilidad %",
                 "tipo": "numero",
-                "clave": "prob"
+                "clave": "prob",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Mes cierre",
@@ -3983,7 +3851,8 @@
               {
                 "etiqueta": "Probabilidad %",
                 "tipo": "numero",
-                "clave": "prob"
+                "clave": "prob",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Valor (€)",
@@ -4224,7 +4093,8 @@
               },
               {
                 "etiqueta": "Peso (1-5)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Respuesta mínima",
@@ -4373,7 +4243,8 @@
               {
                 "etiqueta": "Leads calificados/mes",
                 "tipo": "numero",
-                "clave": "calificados"
+                "clave": "calificados",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Clientes cerrados",
@@ -4395,7 +4266,8 @@
                 "tipo": "calculada",
                 "clave": "pct_calif",
                 "formula": "calificados*100/totales",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ingresos generados (€)",
@@ -4409,7 +4281,18 @@
                 "tipo": "calculada",
                 "clave": "roi",
                 "formula": "(ingresos-costecanal)*100/costecanal",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar (más inversión)",
+                  "Mantener",
+                  "Optimizar antes de escalar",
+                  "Abandonar canal"
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -4501,9 +4384,20 @@
                 "clave": "gap",
                 "formula": "objetivo-hoy",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Definir plan de acción",
+                  "Revisar el objetivo",
+                  "Delegar el seguimiento",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 7
+            "filas_iniciales": 7,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -4534,7 +4428,8 @@
               {
                 "etiqueta": "Plazo (meses)",
                 "tipo": "numero",
-                "clave": "plazo"
+                "clave": "plazo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Impacto mensualizado (€/mes)",
@@ -4542,9 +4437,20 @@
                 "clave": "impacto_mes",
                 "formula": "impacto/plazo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar ya",
+                  "Planificar para más adelante",
+                  "Descartar",
+                  "Delegar a alguien del equipo"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -4569,12 +4475,14 @@
               {
                 "etiqueta": "Comprende visión (1-5)",
                 "tipo": "numero",
-                "clave": "comprende"
+                "clave": "comprende",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Comparte visión (1-5)",
                 "tipo": "numero",
-                "clave": "comparte"
+                "clave": "comparte",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Duda planteada",
@@ -4589,7 +4497,8 @@
                 "tipo": "calculada",
                 "clave": "alineacion",
                 "formula": "(comprende+comparte)/2",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 5
@@ -4622,10 +4531,22 @@
                 "tipo": "calculada",
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Objetivo 2",
@@ -4649,10 +4570,22 @@
                 "tipo": "calculada",
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Objetivo 3",
@@ -4676,10 +4609,22 @@
                 "tipo": "calculada",
                 "clave": "pct_progreso",
                 "formula": "(valor_actual/meta)*100",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Histórico trimestral",
@@ -4691,24 +4636,28 @@
               {
                 "etiqueta": "Obj 1 %",
                 "tipo": "numero",
-                "clave": "o1"
+                "clave": "o1",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Obj 2 %",
                 "tipo": "numero",
-                "clave": "o2"
+                "clave": "o2",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Obj 3 %",
                 "tipo": "numero",
-                "clave": "o3"
+                "clave": "o3",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Cumplimiento medio (%)",
                 "tipo": "calculada",
                 "clave": "cumpl_medio",
                 "formula": "(o1+o2+o3)/3",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 4
@@ -4758,10 +4707,22 @@
                 "tipo": "calculada",
                 "clave": "pct_estr",
                 "formula": "h_estr*100/total_h",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bloquear más tiempo la próxima semana",
+                  "Delegar tareas operativas",
+                  "Mantener el ritmo actual",
+                  "Necesito ayuda para reorganizar"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           },
           {
             "titulo": "2. Registro de sesiones estratégicas",
@@ -5034,10 +4995,22 @@
                 "tipo": "calculada",
                 "clave": "pct_estr",
                 "formula": "h_estr*100/total_h",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Proteger mejor el bloque la próxima semana",
+                  "Delegar interrupciones recurrentes",
+                  "Mantener el plan actual",
+                  "Ajustar el bloque"
+                ]
               }
             ],
-            "filas_iniciales": 20
+            "filas_iniciales": 20,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5058,7 +5031,8 @@
               {
                 "etiqueta": "% Completado",
                 "tipo": "numero",
-                "clave": "pct"
+                "clave": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "H. invertidas",
@@ -5080,7 +5054,8 @@
                   "Terminar",
                   "Pausar",
                   "Cancelar"
-                ]
+                ],
+                "contribuye_valor_si": "Terminar"
               },
               {
                 "etiqueta": "Fecha compromiso",
@@ -5165,7 +5140,8 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               },
               {
                 "etiqueta": "Prioridad 2",
@@ -5177,7 +5153,8 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               },
               {
                 "etiqueta": "Prioridad 3",
@@ -5189,14 +5166,26 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               },
               {
                 "etiqueta": "Nº interrupciones",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Repetir la misma prioridad",
+                  "Reformular la prioridad",
+                  "Proteger mejor el tiempo",
+                  "Ya completada, sin cambios"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           },
           {
             "titulo": "2. Análisis tipos de interrupción",
@@ -5225,9 +5214,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Eliminar esta interrupción",
+                  "Delegar esta interrupción",
+                  "Aceptarla (no evitable)",
+                  "Crear un filtro para bloquearla"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5475,10 +5475,22 @@
                 "tipo": "calculada",
                 "clave": "margen_pct",
                 "formula": "margen_bruto*100/fact",
-                "unidad": "pct"
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener",
+                  "Subir precio",
+                  "Reducir coste",
+                  "Eliminar del catálogo"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5649,9 +5661,20 @@
                 "clave": "impacto_neto",
                 "formula": "ingresos_nuevos-ingresos_actuales",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir el precio",
+                  "Mantener el precio actual",
+                  "Subir menos de lo simulado",
+                  "Necesito más datos"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5673,7 +5696,8 @@
               {
                 "etiqueta": "Margen %",
                 "tipo": "numero",
-                "clave": "margen"
+                "clave": "margen",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Nº clientes",
@@ -5682,7 +5706,8 @@
               },
               {
                 "etiqueta": "Crecimiento 6 meses %",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Diferencial?",
@@ -5713,9 +5738,20 @@
                 "clave": "fact_cliente",
                 "formula": "fact/clientes",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Especializarse en este servicio",
+                  "Mantener en el catálogo",
+                  "Reducir inversión",
+                  "Retirar del catálogo"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5937,9 +5973,20 @@
               {
                 "etiqueta": "Objetivo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Incorporarlo al cuadro de mando",
+                  "Necesita definir mejor cómo medirlo",
+                  "Descartarlo, no es representativo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5969,8 +6016,7 @@
             "clave": "beneficio",
             "etiqueta": "Beneficio neto real (€)",
             "formula": "ingresos - gastos - sueldo - impuestos",
-            "unidad": "eur",
-            "alimenta_valor": true
+            "unidad": "eur"
           },
           {
             "clave": "margen",
@@ -6065,10 +6111,22 @@
                 "tipo": "calculada",
                 "clave": "media",
                 "formula": "(s1+s2+s3+s4)/4",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener en el cuadro de mando",
+                  "Ajustar el objetivo de esta métrica",
+                  "Sustituir por otra métrica",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6084,7 +6142,14 @@
               },
               {
                 "etiqueta": "Horas/mes",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "horas"
+              },
+              {
+                "etiqueta": "Coste hora (€)",
+                "tipo": "numero",
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Automatizable?",
@@ -6097,6 +6162,14 @@
               {
                 "etiqueta": "Con qué (herramienta)",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Coste mensual automatizable (€)",
+                "tipo": "calculada",
+                "clave": "coste_mensual_auto",
+                "formula": "horas*coste_hora",
+                "unidad": "eur",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 3
@@ -6117,6 +6190,12 @@
                 "etiqueta": "Horas/mes",
                 "tipo": "numero",
                 "clave": "horas"
+              },
+              {
+                "etiqueta": "Coste hora propio (€)",
+                "tipo": "numero",
+                "clave": "coste_hora_propio",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Valor",
@@ -6146,7 +6225,16 @@
                 "tipo": "calculada",
                 "clave": "coste_hora_impl",
                 "formula": "coste_externo/horas",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Valor liberado/mes (€)",
+                "tipo": "calculada",
+                "clave": "valor_liberado",
+                "formula": "horas*coste_hora_propio",
+                "unidad": "eur",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 2
@@ -6218,7 +6306,8 @@
         "campos": [
           {
             "clave": "beneficio_bruto_anual",
-            "etiqueta": "Beneficio bruto anual (€)"
+            "etiqueta": "Beneficio bruto anual (€)",
+            "precarga_desde_c0": "input_b"
           },
           {
             "clave": "irpf_is_pagado",
@@ -6285,9 +6374,20 @@
               {
                 "etiqueta": "Gasto anual (€)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Empezar a aplicarlo ya",
+                  "Consultarlo con el asesor antes",
+                  "No aplica a mi actividad",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 10
+            "filas_iniciales": 10,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6451,9 +6551,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Archivar justificante",
+                  "Solicitar justificante que falta",
+                  "Descartar el gasto de la deducción",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 1
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6598,7 +6709,8 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "contribuye_valor_si": "No"
               }
             ],
             "filas_iniciales": 3
@@ -6630,7 +6742,8 @@
                   "Sin asignar",
                   "Asignada",
                   "En marcha"
-                ]
+                ],
+                "contribuye_valor_si": "Asignada"
               }
             ],
             "filas_iniciales": 2
@@ -6658,9 +6771,20 @@
               {
                 "etiqueta": "Cuándo escala al siguiente nivel",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Fijar este nivel como está",
+                  "Redefinir quién lo resuelve",
+                  "Ajustar el tiempo de escalado",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6685,9 +6809,20 @@
               {
                 "etiqueta": "Límites (dónde acaba)",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aprobar la descripción tal cual",
+                  "Necesita revisión con la persona",
+                  "Redefinir límites del rol",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6712,9 +6847,20 @@
               {
                 "etiqueta": "Responsable",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Acordado y comunicado al equipo",
+                  "Aplazar a otra sesión",
+                  "Resolver fuera de la sesión (1:1)",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -6835,10 +6981,22 @@
                   "Aprobado",
                   "En revision",
                   "Pendiente"
+                ],
+                "contribuye_valor_si": "Aprobado"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Rediseñar ahora",
+                  "Programar para más adelante",
+                  "Delegar a diseñador externo",
+                  "Ya está bien así"
                 ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -6873,9 +7031,20 @@
                   "No",
                   "En revision"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aplicar el texto mejorado ya",
+                  "Seguir puliendo antes de aplicar",
+                  "Mantener el texto actual",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Validacion con clientes",
@@ -7009,9 +7178,20 @@
               {
                 "etiqueta": "Responsable de contenido",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear plantilla ahora",
+                  "Delegar a diseñador",
+                  "Posponer al próximo trimestre",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Calendario de publicacion (semana tipo)",
@@ -7039,10 +7219,22 @@
                   "Planificado",
                   "Publicado",
                   "Pendiente"
+                ],
+                "contribuye_valor_si": "Publicado"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar según lo planificado",
+                  "Reprogramar",
+                  "Delegar a otra persona",
+                  "Ya está bien así"
                 ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7105,7 +7297,8 @@
                   "Pendiente",
                   "En curso",
                   "Resuelto"
-                ]
+                ],
+                "contribuye_valor_si": "Resuelto"
               }
             ],
             "filas_iniciales": 6
@@ -7130,7 +7323,8 @@
                   "Completo",
                   "Basico",
                   "Pendiente"
-                ]
+                ],
+                "contribuye_valor_si": "Completo"
               },
               {
                 "etiqueta": "Ejemplos incluidos",
@@ -7151,9 +7345,20 @@
               {
                 "etiqueta": "Ultima actualizacion",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Completar esta sección ahora",
+                  "Revisar con el equipo antes de publicar",
+                  "Delegar a responsable de marca",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 7
+            "filas_iniciales": 7,
+            "vista": "tarjeta"
           },
           {
             "titulo": "Distribucion y adopcion por el equipo",
@@ -7182,9 +7387,20 @@
               {
                 "etiqueta": "Dudas o inconsistencias reportadas",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reforzar formación con esta persona",
+                  "Reenviar el manual",
+                  "Aclarar dudas en próxima reunión",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -7292,7 +7508,8 @@
                 "tipo": "calculada",
                 "clave": "margen_pct",
                 "formula": "margen_u/precio*100",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Es el estrella?",
@@ -7302,9 +7519,20 @@
                   "No",
                   "Candidato"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Confirmar como producto estrella y potenciar",
+                  "Seguir observando este trimestre",
+                  "Descartar como candidato",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7353,7 +7581,8 @@
                 "tipo": "calculada",
                 "clave": "margen_n_pct",
                 "formula": "margen_n/ingresos*100",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -7384,7 +7613,8 @@
               {
                 "etiqueta": "Margen neto (%)",
                 "tipo": "numero",
-                "clave": "margen"
+                "clave": "margen",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas dedicadas/mes",
@@ -7566,9 +7796,20 @@
                 "clave": "desviacion",
                 "formula": "ingresos_real-ingresos_obj",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener objetivo de mezcla",
+                  "Ajustar objetivo al alza",
+                  "Reforzar comercialmente este servicio",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -7639,8 +7880,18 @@
             "titulo": "Planificación de contenidos por semana y canal",
             "columnas": [
               {
-                "etiqueta": "Semana / fecha",
-                "tipo": "texto"
+                "etiqueta": "Semana",
+                "tipo": "opciones",
+                "opciones": [
+                  "Semana 1",
+                  "Semana 2",
+                  "Semana 3",
+                  "Semana 4"
+                ],
+                "cuenta_unicos_si": {
+                  "clave_condicion": "estado",
+                  "valor_condicion": "Publicado"
+                }
               },
               {
                 "etiqueta": "Canal",
@@ -7686,10 +7937,22 @@
                   "En creación",
                   "Programado",
                   "Publicado"
+                ],
+                "clave": "estado"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar según lo planificado",
+                  "Reprogramar para otra semana",
+                  "Delegar a otra persona del equipo",
+                  "Ya está bien así"
                 ]
               }
             ],
-            "filas_iniciales": 8
+            "filas_iniciales": 8,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7724,9 +7987,20 @@
                   "Parcialmente",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aplicar ya en todos los canales",
+                  "Formar al equipo en este parámetro",
+                  "Revisar definición antes de aplicar",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -7764,7 +8038,8 @@
                 "tipo": "calculada",
                 "clave": "pct",
                 "formula": "valor/meta*100",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Tendencia",
@@ -7828,9 +8103,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Aprobar mensaje y usarlo ya",
+                  "Validar con más clientes antes de usar",
+                  "Reescribir el mensaje",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8096,9 +8382,20 @@
                 "clave": "horas_mes",
                 "formula": "frec*tiempo*4.33",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Crear protocolo de urgencia real",
+                  "Formar al equipo para filtrar peticiones",
+                  "Hablar con el origen de la urgencia",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8141,6 +8438,13 @@
               {
                 "etiqueta": "Acción de redistribución",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Días de baja evitados (seguimiento trimestral)",
+                "tipo": "numero",
+                "clave": "bajas_evitadas",
+                "placeholder": "ej. 3",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 5
@@ -8193,9 +8497,20 @@
               {
                 "etiqueta": "Solución implementada",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bloquear franjas sin interrupciones",
+                  "Filtrar/redirigir ese tipo de interrupción",
+                  "Formar al equipo para no generarlas",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8252,9 +8567,20 @@
                 "clave": "horas_mes",
                 "formula": "frec*horas",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Implementar la medida preventiva ya",
+                  "Delegar la gestión de este tipo de crisis",
+                  "Documentar el protocolo para la próxima vez",
+                  "Ya está controlado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8299,9 +8625,20 @@
                   "Planificado",
                   "Pendiente"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar este ritual ya",
+                  "Planificarlo para el próximo mes",
+                  "Asignar quién lo lidera",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -8394,10 +8731,22 @@
               },
               {
                 "etiqueta": "Saturación (1-5)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar a otro rol",
+                  "Adaptar el rol actual a su perfil",
+                  "Mantener y observar",
+                  "Encaja bien, sin cambios"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8426,9 +8775,20 @@
               {
                 "etiqueta": "Reasignar a",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar ya",
+                  "Reasignar en el próximo trimestre",
+                  "Mantener por ahora",
+                  "Ya está bien asignada"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8484,7 +8844,8 @@
                   "Por decidir",
                   "Reasignar",
                   "Mantener"
-                ]
+                ],
+                "contribuye_valor_si": "Reasignar"
               }
             ],
             "filas_iniciales": 2
@@ -8508,9 +8869,20 @@
               {
                 "etiqueta": "Contratar el perfil que el rol necesita",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Adaptar el rol a la persona",
+                  "Contratar el perfil que hace falta",
+                  "Combinar ambas",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8548,9 +8920,20 @@
               {
                 "etiqueta": "Coste estimado (€/mes)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Externalizar ya",
+                  "Formar/contratar perfil interno",
+                  "Posponer la decisión",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -8698,7 +9081,8 @@
                   "No",
                   "En curso",
                   "N/A"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
             "filas_iniciales": 5
@@ -8713,7 +9097,7 @@
             "titulo": "Qué tareas adormecen y cómo introducir reto",
             "columnas": [
               {
-                "etiqueta": "Tarea repetitiva / rutinaria",
+                "etiqueta": "Actividad repetitiva / rutinaria",
                 "tipo": "texto"
               },
               {
@@ -8740,9 +9124,20 @@
                   "En prueba",
                   "Implementada"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Implementar la rotación ya",
+                  "Probarla un mes",
+                  "Descartar por ahora",
+                  "Ya aporta suficiente reto"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8792,9 +9187,20 @@
                   "Bajo",
                   "Sin medir"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reconocerlo ya",
+                  "Programar el reconocimiento",
+                  "Delegar el reconocimiento al responsable directo",
+                  "No requiere reconocimiento adicional"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8832,9 +9238,20 @@
               {
                 "etiqueta": "Próxima revisión",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Agendar la sesión ya",
+                  "Comunicarlo en la próxima reunión de equipo",
+                  "Delegar la comunicación al mando directo",
+                  "Ya está comunicado"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -8984,6 +9401,16 @@
               {
                 "etiqueta": "Fecha próxima conversación",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Se quedó? (seguimiento)",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Pendiente de confirmar"
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
             "filas_iniciales": 5
@@ -9014,12 +9441,14 @@
               {
                 "etiqueta": "Meses hasta rendir al 100%",
                 "tipo": "numero",
-                "clave": "meses_rampa"
+                "clave": "meses_rampa",
+                "no_sumar": true
               },
               {
                 "etiqueta": "% productividad perdida durante ese tiempo",
                 "tipo": "numero",
-                "clave": "pct_perdida"
+                "clave": "pct_perdida",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste de baja productividad (€)",
@@ -9043,9 +9472,20 @@
                   "No",
                   "Parcialmente"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Iniciar plan de sucesión",
+                  "Reforzar el plan existente",
+                  "Delegar preparación a RRHH",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9190,9 +9630,20 @@
               {
                 "etiqueta": "Fecha límite",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar ahora",
+                  "Formar/transferir a la persona indicada",
+                  "Grabar procedimiento en vídeo",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9236,9 +9687,20 @@
                   "En preparación",
                   "Cubierto"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Formar al backup ya identificado",
+                  "Buscar backup externo",
+                  "Redistribuir funciones entre el equipo",
+                  "Aceptar el riesgo por ahora"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -9331,9 +9793,20 @@
                 "clave": "coste_mensual",
                 "formula": "coste_hora*horas*4.33",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Redistribuir esas horas a otra persona",
+                  "Automatizar o eliminar la tarea",
+                  "Formar para poder delegarla",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9363,9 +9836,20 @@
                 "clave": "coste_mensual",
                 "formula": "coste_hora*horas",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reasignar esas horas a alguien con menor coste",
+                  "Automatizar la tarea",
+                  "Eliminarla del todo",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9498,9 +9982,20 @@
               {
                 "etiqueta": "Fecha",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Lanzar el reto ya",
+                  "Planificarlo para el próximo trimestre",
+                  "Necesita más preparación antes",
+                  "Aún no es prioridad"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -9580,9 +10075,20 @@
               {
                 "etiqueta": "Coste (€/mes)",
                 "tipo": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Actuar ya, el coste lo justifica",
+                  "Seguir midiendo un mes más",
+                  "Delegar el seguimiento a RRHH",
+                  "No requiere acción inmediata"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9612,7 +10118,8 @@
                   "Separar",
                   "Mantener",
                   "Mediar antes"
-                ]
+                ],
+                "contribuye_valor_si": "Separar"
               }
             ],
             "filas_iniciales": 2
@@ -9632,12 +10139,14 @@
               {
                 "etiqueta": "Valor técnico (1-5)",
                 "tipo": "numero",
-                "clave": "valor"
+                "clave": "valor",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste al clima (1-5)",
                 "tipo": "numero",
-                "clave": "coste_clima"
+                "clave": "coste_clima",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Riesgo de su salida",
@@ -9685,9 +10194,20 @@
               {
                 "etiqueta": "Resultado buscado",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Programar la conversación ya",
+                  "Mediar antes con ambas partes por separado",
+                  "Escalar a dirección o RRHH",
+                  "Aún no es el momento"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9716,9 +10236,19 @@
                   "No",
                   "Sí"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Gestionar internamente",
+                  "Buscar ayuda externa (coach/mediador)",
+                  "Aún evaluando"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -9748,9 +10278,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reunión abierta con todo el equipo",
+                  "Conversaciones individuales",
+                  "Combinar ambas",
+                  "Aún sin decidir"
+                ]
               }
             ],
-            "filas_iniciales": 2
+            "filas_iniciales": 2,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -9861,7 +10402,8 @@
               {
                 "etiqueta": "Días resolución",
                 "tipo": "numero",
-                "clave": "dias_res"
+                "clave": "dias_res",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 5
@@ -9886,7 +10428,8 @@
               {
                 "etiqueta": "Puntuación (0-10)",
                 "tipo": "numero",
-                "clave": "puntuacion"
+                "clave": "puntuacion",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Categoría",
@@ -9937,12 +10480,14 @@
               {
                 "etiqueta": "Puntuación media (1-5)",
                 "tipo": "numero",
-                "clave": "punt_media"
+                "clave": "punt_media",
+                "no_sumar": true
               },
               {
                 "etiqueta": "% Satisfechos (>=4)",
                 "tipo": "numero",
-                "clave": "pct_satisf"
+                "clave": "pct_satisf",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Punto crítico principal",
@@ -10025,7 +10570,9 @@
               {
                 "etiqueta": "Puntuación (1-5)",
                 "tipo": "numero",
-                "clave": "puntuacion"
+                "clave": "puntuacion",
+                "contribuye_valor_si": "5",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Fecha",
@@ -10074,7 +10621,8 @@
               {
                 "etiqueta": "Prob. churn (%)",
                 "tipo": "numero",
-                "clave": "prob_churn"
+                "clave": "prob_churn",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Acción preventiva",
@@ -10194,7 +10742,8 @@
                   "Si",
                   "No",
                   "Por confirmar"
-                ]
+                ],
+                "contribuye_valor_si": "Si"
               },
               {
                 "etiqueta": "Accion de fidelizacion aplicada",
@@ -10249,9 +10798,20 @@
               {
                 "etiqueta": "Fecha revisión",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Activar este elemento",
+                  "Ajustar el incentivo ofrecido",
+                  "Descartar este elemento",
+                  "Ya está activo y funcionando"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10349,9 +10909,20 @@
               {
                 "etiqueta": "Canal de distribución",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar ya",
+                  "Pedir permiso al cliente",
+                  "Descartar este caso",
+                  "Ya está publicado"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10377,7 +10948,8 @@
               {
                 "etiqueta": "Puntuación (1-5)",
                 "tipo": "numero",
-                "clave": "puntuacion"
+                "clave": "puntuacion",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Comentario clave",
@@ -10399,9 +10971,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pedir reseña o referido ahora",
+                  "Programar seguimiento personal",
+                  "Investigar la insatisfacción",
+                  "Sin acción necesaria"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10441,9 +11024,20 @@
                   "Planificada",
                   "Pausada"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Potenciar esta iniciativa",
+                  "Relanzar con más difusión",
+                  "Pausar iniciativa",
+                  "Mantener como está"
+                ]
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -10527,6 +11121,16 @@
               {
                 "etiqueta": "Mejora demostrable",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Recomendó a alguien? (seguimiento)",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "Aún no"
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
             "filas_iniciales": 3
@@ -10554,9 +11158,20 @@
               {
                 "etiqueta": "Cómo mostrarlo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Añadir explicación al entregar",
+                  "Crear documento o informe que lo muestre",
+                  "Mostrarlo en una reunión de cierre",
+                  "Ya se muestra bien"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10581,9 +11196,20 @@
               {
                 "etiqueta": "Cómo recolocar la percepción",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Ajustar el discurso de venta",
+                  "Comunicar expectativas realistas desde el inicio",
+                  "Reforzar el resultado ya entregado",
+                  "La promesa ya está alineada"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10613,9 +11239,20 @@
               {
                 "etiqueta": "Cómo comunicárselo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Comunicárselo directamente ahora",
+                  "Preparar un informe para esa persona",
+                  "Delegar la comunicación a otro miembro del equipo",
+                  "Ya lo percibe correctamente"
+                ]
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10797,7 +11434,8 @@
                   "Sí",
                   "No",
                   "Parcialmente"
-                ]
+                ],
+                "contribuye_valor_si": "Sí"
               },
               {
                 "etiqueta": "Formato de documentación",
@@ -10816,9 +11454,20 @@
               {
                 "etiqueta": "Fecha límite",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar antes de la fecha límite",
+                  "Formar a un segundo responsable en paralelo",
+                  "Aceptar el riesgo por ahora",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 6
+            "filas_iniciales": 6,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10835,7 +11484,8 @@
               },
               {
                 "etiqueta": "Semana",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Duda o pregunta",
@@ -10857,6 +11507,10 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Acción para no repetirla",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 6
@@ -10876,24 +11530,28 @@
               },
               {
                 "etiqueta": "Semana",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Nivel esperado (%)",
                 "tipo": "numero",
-                "clave": "esperado"
+                "clave": "esperado",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Nivel real (%)",
                 "tipo": "numero",
-                "clave": "real"
+                "clave": "real",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Gap (puntos)",
                 "tipo": "calculada",
                 "clave": "gap",
                 "formula": "esperado-real",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Acción correctora",
@@ -10944,9 +11602,20 @@
                 "clave": "horas_totales",
                 "formula": "horas*duracion",
                 "unidad": "numero"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Mantener el acompañamiento",
+                  "Aumentar horas de mentoría",
+                  "Cerrar el acompañamiento (ya es autónomo)",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -10974,7 +11643,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Requisito para poder delegarlo",
+                "etiqueta": "Acción para poder delegarlo",
                 "tipo": "texto"
               },
               {
@@ -11046,7 +11715,7 @@
     "justi_capa6": "Este indicador mide qué parte de tu operación funciona sin depender de ti. Compáralo con C0; si sube, la empresa aguanta el día a día sin tu intervención constante.",
     "capa_1_options": "Si yo no estoy disponible la empresa se para o toma decisiones malas que luego hay que corregir.; Demasiadas decisiones del día a día dependen exclusivamente de mí aunque no tendría que ser así.; No tengo claro qué puedo delegar sin que la calidad o el control se vean comprometidos.; No puedo ausentarme unos días sin que el equipo me llame para resolver situaciones que podría resolver solo.; El equipo depende de mí para casi cualquier decisión aunque tengan experiencia y criterio para tomarlas.; He construido un puesto de trabajo que me necesita a mí, no una empresa que funcione sin mí.",
     "kpi_recovery_mode": "conteo",
-    "recovery_unit_label": "días sin intervención ganados",
+    "recovery_unit_label": "horas de fundador liberadas/semana",
     "kpi_name": "Días sin depender de ti",
     "kpi_unit": "%",
     "capa_3_plan": {
@@ -11092,7 +11761,12 @@
               },
               {
                 "etiqueta": "Horas fundador/semana (h)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "clave": "horas_fundador",
+                "suma_si": {
+                  "clave_condicion": "candidato_delegar",
+                  "valor_condicion": "Sí"
+                }
               },
               {
                 "etiqueta": "Potencial delegación (1-5)",
@@ -11111,10 +11785,15 @@
                 "opciones": [
                   "Sí",
                   "No"
-                ]
+                ],
+                "clave": "candidato_delegar"
               },
               {
                 "etiqueta": "Nombre candidato",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción de delegación",
                 "tipo": "texto"
               }
             ],
@@ -11138,7 +11817,8 @@
               },
               {
                 "etiqueta": "Documentado (%)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Dónde está documentado",
@@ -11164,9 +11844,20 @@
               {
                 "etiqueta": "Fecha límite",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Documentar antes de la fecha límite",
+                  "Probarlo con otra persona ahora",
+                  "Aceptar el riesgo por ahora",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -11221,9 +11912,20 @@
                   "Sí",
                   "No"
                 ]
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Avanzar a la siguiente etapa",
+                  "Mantener supervisión actual",
+                  "Revertir la delegación",
+                  "Ya está bien así"
+                ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -11325,7 +12027,7 @@
                 ]
               },
               {
-                "etiqueta": "Gap identificado",
+                "etiqueta": "Gap y acción para cerrarlo",
                 "tipo": "texto"
               }
             ],
@@ -11527,19 +12229,22 @@
               {
                 "etiqueta": "T. medio espera (días)",
                 "tipo": "numero",
-                "clave": "t_espera"
+                "clave": "t_espera",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. objetivo (días)",
                 "tipo": "numero",
-                "clave": "t_obj"
+                "clave": "t_obj",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Gap (días)",
                 "tipo": "calculada",
                 "clave": "gap_dias",
                 "formula": "t_espera-t_obj",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Cuello de botella identificado",
@@ -11585,7 +12290,8 @@
                 "tipo": "calculada",
                 "clave": "pct_urg",
                 "formula": "h_urg/h_total*100",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Origen principal",
@@ -11705,19 +12411,22 @@
               {
                 "etiqueta": "Capacidad real (uds/h)",
                 "tipo": "numero",
-                "clave": "cap_real"
+                "clave": "cap_real",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Demanda real (uds/h)",
                 "tipo": "numero",
-                "clave": "dem_real"
+                "clave": "dem_real",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Carga sobre capacidad",
                 "tipo": "calculada",
                 "clave": "carga",
                 "formula": "dem_real-cap_real",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Impacto en el sistema",

@@ -88,8 +88,160 @@ def lint_capa3(s, E, W):
         elif tipo == "calculadora":
             _lint_calculadora(sid, prefix, recurso, E, W)
 
-        elif tipo not in ("nativa","calculadora"):
-            E.append(f"{prefix}.tipo desconocido: {tipo!r} (solo 'nativa' o 'calculadora')")
+        elif tipo == "pipeline":
+            _lint_pipeline(sid, prefix, recurso, E, W)
+
+        elif tipo == "simulador":
+            _lint_simulador(sid, prefix, recurso, E, W)
+
+        elif tipo not in ("nativa","calculadora","pipeline","simulador"):
+            E.append(f"{prefix}.tipo desconocido: {tipo!r} (solo 'nativa', 'calculadora', 'pipeline' o 'simulador')")
+
+# Validacion de columnas compartida entre 'nativa' (una lista de columnas por seccion) y
+# 'pipeline' (una lista de columnas plana, sin secciones — la etapa organiza las tarjetas,
+# no una seccion mas). Mismo contrato de tipos/formulas en ambos casos porque ambos usan el
+# mismo ColumnaHerramientaConfig y el mismo motor evaluarFormula en TreatmentPage.tsx.
+def _lint_columnas(sid, sp, cols, E, W):
+    if not cols:
+        E.append(f"{sp}: sin columnas")
+        return
+
+    # plantilla generica en sintoma que no es plan de accion
+    if sid not in ACTION_PLAN_OK:
+        first_label = cols[0].get("etiqueta","")
+        if first_label in GENERIC_COLS:
+            W.append(f"{sp}: usa plantilla generica ('Elemento / paso a trabajar') — revisar si el contenido es especifico al proposito del sintoma")
+
+    # recoger claves de columnas inputables (para validar formulas)
+    claves_input = {}
+    claves_calc  = {}
+    # "decision": botones de escenario en vez de texto libre -- guarda un valor numerico igual
+    # que "numero", solo cambia como se rellena. "slider" (piloto UCI-S1.r1): igual que "numero"
+    # para calcularFilaCalculadas, solo cambia como se rellena (arrastrando, no tecleando). Ver
+    # ColumnaHerramientaConfig en TreatmentPage.tsx.
+    tipos_validos = {"texto","numero","opciones","calculada","decision","slider"}
+    for c in cols:
+        clave    = c.get("clave","")
+        etiqueta = c.get("etiqueta","")
+        ctipo    = c.get("tipo","texto")
+
+        if ctipo not in tipos_validos:
+            E.append(f"{sp} col '{etiqueta}': tipo desconocido {ctipo!r}")
+
+        if ctipo == "opciones":
+            opts = c.get("opciones")
+            if not opts or not isinstance(opts, list) or len(opts) == 0:
+                E.append(f"{sp} col '{etiqueta}': tipo opciones sin opciones[]")
+
+        if ctipo == "slider":
+            if not clave:
+                E.append(f"{sp} col '{etiqueta}': tipo slider sin clave — su valor no puede alimentar ninguna columna calculada")
+            smin, smax = c.get("min"), c.get("max")
+            if smin is not None and smax is not None and smin >= smax:
+                E.append(f"{sp} col '{etiqueta}': tipo slider con min={smin} >= max={smax} — rango vacío")
+
+        # contribuye_valor (Sala de Control, §XXV.H): calcularValorFila en TreatmentPage.tsx solo
+        # suma columnas "numero"/"slider"/"calculada" -- marcarlo en texto/opciones/decision no
+        # rompe nada mientras el motor las ignore silenciosamente, pero engaña al autor del
+        # catalogo (parece que va a sumar y nunca lo hace).
+        if c.get("contribuye_valor") and ctipo not in ("numero", "slider", "calculada"):
+            E.append(f"{sp} col '{etiqueta}': contribuye_valor=true sobre tipo {ctipo!r} — el motor solo suma numero/slider/calculada, esta columna nunca se sumaria")
+
+        # contribuye_valor_si (rollout síntomas "conteo", §XXXIII): cuenta +1 por fila cuya
+        # columna coincida exactamente con este valor, en vez de sumar una cantidad. Solo tiene
+        # sentido sobre "opciones" (el valor debe ser una de sus propias opciones -- si no,
+        # nunca podria coincidir con nada tecleado) o "numero" (compara el numero exacto).
+        # Mutuamente excluyente con contribuye_valor en la misma columna.
+        cvs = c.get("contribuye_valor_si")
+        if cvs is not None:
+            if ctipo not in ("opciones", "numero"):
+                E.append(f"{sp} col '{etiqueta}': contribuye_valor_si sobre tipo {ctipo!r} — el motor solo lo interpreta en opciones/numero, esta columna nunca contaria")
+            elif ctipo == "opciones":
+                copts = c.get("opciones") or []
+                if cvs not in copts:
+                    E.append(f"{sp} col '{etiqueta}': contribuye_valor_si={cvs!r} no está entre sus propias opciones {copts!r} — nunca coincidiria con nada que el cliente pueda elegir")
+            if c.get("contribuye_valor"):
+                E.append(f"{sp} col '{etiqueta}': contribuye_valor y contribuye_valor_si a la vez — son mutuamente excluyentes, calcularValorFila solo mira contribuye_valor_si")
+
+        # cuenta_unicos_si (§XXXV): cuenta valores UNICOS de esta columna entre las filas que
+        # cumplen una condicion en OTRA columna (referenciada por su "clave"), para unidades como
+        # "semanas comunicando" donde contar filas contaria duplicados (misma semana, 3 piezas
+        # publicadas) como si fueran unidades distintas. Solo fiable sobre "opciones" controladas
+        # -- un valor de texto libre escrito distinto en cada fila rompe el conteo silenciosamente.
+        cus = c.get("cuenta_unicos_si")
+        if cus is not None:
+            if ctipo != "opciones":
+                E.append(f"{sp} col '{etiqueta}': cuenta_unicos_si sobre tipo {ctipo!r} — solo es fiable sobre 'opciones' controladas, un valor de texto libre rompería el conteo de únicos")
+            clave_cond = cus.get("clave_condicion")
+            if not any(cc.get("clave") == clave_cond for cc in cols):
+                E.append(f"{sp} col '{etiqueta}': cuenta_unicos_si.clave_condicion={clave_cond!r} no coincide con la 'clave' de ninguna columna de esta tabla")
+            if c.get("contribuye_valor") or c.get("contribuye_valor_si") is not None:
+                E.append(f"{sp} col '{etiqueta}': cuenta_unicos_si junto con contribuye_valor/contribuye_valor_si en la misma columna — son mutuamente excluyentes")
+
+        # suma_si (§XXXVI): complemento de cuenta_unicos_si para cuando la unidad SÍ es una
+        # cantidad (horas, €...) pero solo debe sumarse en las filas que cumplen una condicion en
+        # OTRA columna -- ej. "Horas fundador/semana" solo cuenta en las filas marcadas como
+        # candidatas a delegar. Solo tiene sentido sobre numero/calculada (lo que ya suma
+        # contribuye_valor).
+        ss = c.get("suma_si")
+        if ss is not None:
+            if ctipo not in ("numero", "calculada"):
+                E.append(f"{sp} col '{etiqueta}': suma_si sobre tipo {ctipo!r} — el motor solo suma numero/calculada, esta columna nunca se sumaria")
+            clave_cond = ss.get("clave_condicion")
+            if not any(cc.get("clave") == clave_cond for cc in cols):
+                E.append(f"{sp} col '{etiqueta}': suma_si.clave_condicion={clave_cond!r} no coincide con la 'clave' de ninguna columna de esta tabla")
+            if c.get("contribuye_valor") or c.get("contribuye_valor_si") is not None or c.get("cuenta_unicos_si") is not None:
+                E.append(f"{sp} col '{etiqueta}': suma_si junto con contribuye_valor/contribuye_valor_si/cuenta_unicos_si en la misma columna — son mutuamente excluyentes")
+
+        if ctipo == "decision":
+            dopts = c.get("decision_opciones")
+            if not dopts or not isinstance(dopts, list) or len(dopts) < 2:
+                E.append(f"{sp} col '{etiqueta}': tipo decision con menos de 2 decision_opciones[] — no es una decision real si no hay nada que comparar")
+            elif not c.get("clave"):
+                E.append(f"{sp} col '{etiqueta}': tipo decision sin clave — su escenario elegido no puede alimentar ninguna columna calculada")
+            else:
+                for o in dopts:
+                    if not isinstance(o, dict) or "label" not in o or "valor" not in o:
+                        E.append(f"{sp} col '{etiqueta}': decision_opciones[] con entrada sin 'label'/'valor': {o!r}")
+
+        if clave and ctipo != "calculada":
+            claves_input[clave] = 10.0   # valor simulado
+
+        if ctipo == "calculada":
+            if not clave:
+                E.append(f"{sp} col '{etiqueta}': calculada sin clave")
+            if not c.get("formula"):
+                E.append(f"{sp} col '{etiqueta}': calculada sin formula")
+
+    # validar formulas de columnas calculadas
+    for c in cols:
+        if c.get("tipo") != "calculada": continue
+        clave   = c.get("clave","")
+        formula = c.get("formula","")
+        etiqueta= c.get("etiqueta","")
+        if not formula: continue
+
+        # contexto disponible: claves_input + calculadas anteriores
+        contexto = {**claves_input, **claves_calc}
+        resultado, err = evaluar_formula(formula, contexto)
+        if err:
+            if "division por cero" in err:
+                W.append(f"{sp} col '{etiqueta}': formula puede dividir por cero con valores reales: {formula!r}")
+            else:
+                E.append(f"{sp} col '{etiqueta}': formula invalida — {err} — formula={formula!r}")
+        else:
+            claves_calc[clave] = resultado  # disponible para calculadas siguientes
+
+        # tokens no soportados por evaluarFormula del frontend
+        for tok in ["ceil","round","max","min","Math","if","abs"]:
+            if re.search(r'\b' + tok + r'\b', formula):
+                E.append(f"{sp} col '{etiqueta}': formula usa '{tok}' — evaluarFormula del frontend solo soporta + - * / ( ): {formula!r}")
+
+        # claves referenciadas existen?
+        tokens_formula = re.findall(r"[a-zA-Z_][a-zA-Z0-9_]*", formula)
+        for tok in tokens_formula:
+            if tok not in claves_input and tok not in claves_calc:
+                E.append(f"{sp} col '{etiqueta}': formula referencia clave '{tok}' que no existe en esta seccion: {formula!r}")
 
 def _lint_nativa(sid, prefix, recurso, E, W):
     secciones = recurso.get("secciones", [])
@@ -112,67 +264,27 @@ def _lint_nativa(sid, prefix, recurso, E, W):
         if fi <= 0:
             W.append(f"{sp}: filas_iniciales={fi} (el usuario no verá filas al abrir)")
 
-        # plantilla generica en sintoma que no es plan de accion
-        if sid not in ACTION_PLAN_OK:
-            first_label = cols[0].get("etiqueta","")
-            if first_label in GENERIC_COLS:
-                W.append(f"{sp}: usa plantilla generica ('Elemento / paso a trabajar') — revisar si el contenido es especifico al proposito del sintoma")
+        _lint_columnas(sid, sp, cols, E, W)
 
-        # recoger claves de columnas inputables (para validar formulas)
-        claves_input = {}
-        claves_calc  = {}
-        tipos_validos = {"texto","numero","opciones","calculada"}
-        for c in cols:
-            clave    = c.get("clave","")
-            etiqueta = c.get("etiqueta","")
-            ctipo    = c.get("tipo","texto")
-
-            if ctipo not in tipos_validos:
-                E.append(f"{sp} col '{etiqueta}': tipo desconocido {ctipo!r}")
-
-            if ctipo == "opciones":
-                opts = c.get("opciones")
-                if not opts or not isinstance(opts, list) or len(opts) == 0:
-                    E.append(f"{sp} col '{etiqueta}': tipo opciones sin opciones[]")
-
-            if clave and ctipo != "calculada":
-                claves_input[clave] = 10.0   # valor simulado
-
-            if ctipo == "calculada":
-                if not clave:
-                    E.append(f"{sp} col '{etiqueta}': calculada sin clave")
-                if not c.get("formula"):
-                    E.append(f"{sp} col '{etiqueta}': calculada sin formula")
-
-        # validar formulas de columnas calculadas
-        for c in cols:
-            if c.get("tipo") != "calculada": continue
-            clave   = c.get("clave","")
-            formula = c.get("formula","")
-            etiqueta= c.get("etiqueta","")
-            if not formula: continue
-
-            # contexto disponible: claves_input + calculadas anteriores
-            contexto = {**claves_input, **claves_calc}
-            resultado, err = evaluar_formula(formula, contexto)
-            if err:
-                if "division por cero" in err:
-                    W.append(f"{sp} col '{etiqueta}': formula puede dividir por cero con valores reales: {formula!r}")
-                else:
-                    E.append(f"{sp} col '{etiqueta}': formula invalida — {err} — formula={formula!r}")
-            else:
-                claves_calc[clave] = resultado  # disponible para calculadas siguientes
-
-            # tokens no soportados por evaluarFormula del frontend
-            for tok in ["ceil","round","max","min","Math","if","abs"]:
-                if re.search(r'\b' + tok + r'\b', formula):
-                    E.append(f"{sp} col '{etiqueta}': formula usa '{tok}' — evaluarFormula del frontend solo soporta + - * / ( ): {formula!r}")
-
-            # claves referenciadas existen?
-            tokens_formula = re.findall(r"[a-zA-Z_][a-zA-Z0-9_]*", formula)
-            for tok in tokens_formula:
-                if tok not in claves_input and tok not in claves_calc:
-                    E.append(f"{sp} col '{etiqueta}': formula referencia clave '{tok}' que no existe en esta seccion: {formula!r}")
+        # veredicto automatico (piloto UCI-S1.r4, "comparador" §XXV.E): la clave debe existir
+        # como columna "calculada" de la propia seccion (es la que HerramientaNativa compara
+        # ENTRE filas para elegir un ganador -- si no es calculada, comparar valores tecleados
+        # a mano no dice nada real sobre coste).
+        vered = sec.get("veredicto")
+        if vered:
+            vclave = vered.get("clave", "")
+            vcol = next((c for c in cols if c.get("clave") == vclave), None)
+            if not vcol:
+                E.append(f"{sp}: veredicto.clave={vclave!r} no existe en esta seccion")
+            elif vcol.get("tipo") != "calculada":
+                E.append(f"{sp}: veredicto.clave={vclave!r} no es una columna 'calculada' — comparar un dato tecleado a mano entre filas no es un veredicto real")
+            if vered.get("direccion") not in ("menor", "mayor"):
+                E.append(f"{sp}: veredicto.direccion={vered.get('direccion')!r} invalido (solo 'menor' o 'mayor')")
+            cnom = vered.get("columna_nombre")
+            if cnom is not None and (not isinstance(cnom, int) or cnom < 0 or cnom >= len(cols)):
+                E.append(f"{sp}: veredicto.columna_nombre={cnom!r} fuera de rango (la seccion tiene {len(cols)} columnas)")
+            if not vered.get("etiqueta"):
+                W.append(f"{sp}: veredicto sin 'etiqueta' — se usara un texto generico")
 
         # entidad_compartida: la primera columna de cada seccion que la declara debe
         # tener la misma etiqueta (o clave) que las otras secciones que comparten entidad
@@ -185,6 +297,52 @@ def _lint_nativa(sid, prefix, recurso, E, W):
                 cur_label = cols[0].get("etiqueta","")
                 if cur_label.strip() != prev_label.strip():
                     W.append(f"{prefix}.sec[{i}]: entidad_compartida='{ec}' pero primera columna '{cur_label}' difiere de sec[{prev_i}] '{prev_label}' — el frontend las vincula por posicion, asegurate de que son la misma entidad")
+
+# ── Contrato del motor 'pipeline' (Fase 2, piloto UCI-S1.r6, sesion 7 ago 2026 §XXV.E) ──
+# Entidad que avanza por etapas visibles (tarjetas agrupadas por etapa, ej. Bloqueada → En
+# gestion → Desbloqueada) en vez de una tabla de checklist repetida para la misma factura en
+# 3 estados de madurez distinta. Reutiliza el mismo contrato de columnas que 'nativa' via
+# _lint_columnas, pero es plano (sin 'secciones'): la etapa es la que organiza las tarjetas.
+def _lint_pipeline(sid, prefix, recurso, E, W):
+    etapas = recurso.get("etapas")
+    if not etapas or not isinstance(etapas, list) or len(etapas) < 2:
+        E.append(f"{prefix}: tipo pipeline con menos de 2 'etapas' — no hay pipeline sin progreso que mostrar")
+    if not recurso.get("entidad_nombre"):
+        W.append(f"{prefix}: tipo pipeline sin 'entidad_nombre' (ej. 'Factura') — se usara un generico en los textos")
+
+    cols = recurso.get("columnas", [])
+    fi   = recurso.get("filas_iniciales", 0)
+    if fi <= 0:
+        W.append(f"{prefix}: filas_iniciales={fi} (el usuario no vera tarjetas al abrir)")
+    _lint_columnas(sid, prefix, cols, E, W)
+
+    # ninguna columna del propio tablero deberia intentar ser la etapa (la etapa vive fuera
+    # de 'columnas', gestionada aparte por HerramientaPipeline) — evita que alguien duplique
+    # a mano una columna "Estado"/"Etapa" con las mismas opciones que ya cubre `etapas`.
+    if isinstance(etapas, list):
+        etapas_norm = {e.strip().lower() for e in etapas if isinstance(e, str)}
+        for c in cols:
+            if c.get("tipo") != "opciones": continue
+            opts_norm = {o.strip().lower() for o in (c.get("opciones") or []) if isinstance(o, str)}
+            if opts_norm and opts_norm == etapas_norm:
+                W.append(f"{prefix} col '{c.get('etiqueta','')}': sus opciones[] coinciden con 'etapas' — el pipeline ya gestiona la etapa aparte, esta columna es redundante")
+
+# ── Contrato del motor 'simulador' (Fase 2, piloto UCI-S1.r1, sesion 7 ago 2026 §XXV.E) ──
+# Galeria de tarjetas donde el cliente prueba un precio (slider + medidor de margen en vivo)
+# antes de comprometerse. Mismo contrato de columnas que 'pipeline' (plano, sin 'secciones'),
+# via _lint_columnas.
+def _lint_simulador(sid, prefix, recurso, E, W):
+    if not recurso.get("entidad_nombre"):
+        W.append(f"{prefix}: tipo simulador sin 'entidad_nombre' (ej. 'Producto') — se usara un generico en los textos")
+
+    cols = recurso.get("columnas", [])
+    fi   = recurso.get("filas_iniciales", 0)
+    if fi <= 0:
+        W.append(f"{prefix}: filas_iniciales={fi} (el usuario no vera tarjetas al abrir)")
+    _lint_columnas(sid, prefix, cols, E, W)
+
+    if not any(c.get("tipo") == "slider" for c in cols):
+        W.append(f"{prefix}: tipo simulador sin ninguna columna 'slider' — sin precio que probar no hay nada que simular")
 
 def _lint_calculadora(sid, prefix, recurso, E, W):
     campos    = recurso.get("campos", [])
@@ -203,6 +361,12 @@ def _lint_calculadora(sid, prefix, recurso, E, W):
             E.append(f"{prefix} campo '{c.get('etiqueta','')}': sin clave")
         else:
             ctx[clave] = 10.0   # valor simulado
+        # precarga_desde_c0 (SS.XV.B, sesion 5 ago 2026): solo estos 2 literales existen en
+        # session.c0.inputs — el frontend no valida esto en runtime, un valor distinto no
+        # precarga nada y falla en silencio, asi que se corta aqui.
+        pc0 = c.get("precarga_desde_c0")
+        if pc0 is not None and pc0 not in ("input_a", "input_b"):
+            E.append(f"{prefix} campo '{c.get('etiqueta','')}': precarga_desde_c0={pc0!r} invalido (solo 'input_a' o 'input_b')")
 
     # validar resultados
     for r in resultados:
@@ -302,6 +466,16 @@ def lint_contaminacion(s, W):
             partes_c3.append(campo.get("etiqueta", ""))
         for res in recurso.get("resultados", []) or []:
             partes_c3.append(res.get("etiqueta", ""))
+        # pipeline (sin 'secciones', columnas planas — ver _lint_pipeline)
+        if recurso.get("tipo") == "pipeline":
+            for col in recurso.get("columnas", []) or []:
+                partes_c3.append(col.get("etiqueta", ""))
+            for etapa in recurso.get("etapas", []) or []:
+                partes_c3.append(etapa)
+        # simulador (sin 'secciones', columnas planas — ver _lint_simulador)
+        if recurso.get("tipo") == "simulador":
+            for col in recurso.get("columnas", []) or []:
+                partes_c3.append(col.get("etiqueta", ""))
     vocab_c3 = _texto_significativo(" ".join(partes_c3))
 
     overlap = vocab_c2 & vocab_c3
@@ -313,6 +487,120 @@ def lint_contaminacion(s, W):
             f"{ratio:.0%}) — revisar si las 6 ramas de C3 responden de verdad a este sintoma "
             f"o se pegaron de otro. Palabras en comun: {sorted(overlap) or '(ninguna)'}"
         )
+
+# ── Contrato: clave duplicada entre secciones sin entidad_compartida ───────────────
+# Bug historico (5 ago 2026, reportado por cliente real con captura de pantalla): en
+# UCI-S1.r1 el producto ya estaba enlazado por entidad_compartida, pero "Coste unitario"
+# se repetia entre secciones porque el mecanismo solo cubria la columna 0 (identidad),
+# no el resto de la fila. El frontend ya hereda por 'clave' cuando SI hay
+# entidad_compartida (TreatmentPage.tsx, SeccionTablaNativa) -- este chequeo encuentra
+# los casos donde deberia haberla y no la hay. AVISO, no ERROR: 'clave' tambien se
+# reutiliza legitimamente como nombre de variable de formula en secciones sin relacion
+# real (ej. NEURO-S1.r4 reutiliza 'meta'/'valor_actual' en 3 Objetivos independientes) --
+# siempre revisar el contenido antes de enlazar, nunca aplicar en automatico.
+def lint_clave_sin_enlazar(s, W):
+    cp = s.get("capa_3_plan")
+    if not isinstance(cp, dict):
+        return
+    for rk, recurso in cp.items():
+        if not isinstance(recurso, dict) or recurso.get("tipo") != "nativa":
+            continue
+        secciones = recurso.get("secciones", []) or []
+        if len(secciones) < 2:
+            continue
+        claves_por_seccion = []
+        for sec in secciones:
+            claves_por_seccion.append({c.get("clave"): c.get("etiqueta")
+                                        for c in sec.get("columnas", []) or [] if c.get("clave")})
+        for i in range(len(secciones)):
+            for j in range(i + 1, len(secciones)):
+                comunes = set(claves_por_seccion[i]) & set(claves_por_seccion[j])
+                if not comunes:
+                    continue
+                ec_i, ec_j = secciones[i].get("entidad_compartida"), secciones[j].get("entidad_compartida")
+                if ec_i and ec_i == ec_j:
+                    continue  # ya enlazadas: el frontend hereda automaticamente por clave
+                pares = [(cl, claves_por_seccion[i][cl]) for cl in sorted(comunes)]
+                W.append(
+                    f"capa_3_plan.{rk}: sec[{i}] y sec[{j}] comparten clave(s) {pares} sin "
+                    "entidad_compartida -- revisar si es el mismo dato (retecleo real) o "
+                    "coincidencia de nombre de variable en formulas independientes"
+                )
+
+# ── Contrato: entidad candidata a enlazar, sin declarar ────────────────────────────
+# Detecta el patron que ya se corrigio a mano en UCI-S1 r1/r3/r5 (5 ago 2026): secciones
+# tituladas secuencialmente ("1. ... / 2. ... / 3. ...") con columna 0 en texto libre en
+# todas, sin entidad_compartida -- suele ser el mismo flujo sobre la misma entidad
+# (cliente/producto/proyecto) y el cliente reteclea el nombre en cada tabla. AVISO
+# heuristico: en la revision manual de la sesion 5 ago, 7 de 10 candidatos con este mismo
+# patron se DESCARTARON por representar conceptos distintos pese al titulo secuencial
+# (ej. CARDIO-S2.r3 seccion 1 define etapas del pipeline, seccion 2 rastrea oportunidades
+# -- no son la misma entidad). Nunca aplicar el enlace sin leer las columnas primero.
+def lint_entidad_candidata(s, W):
+    cp = s.get("capa_3_plan")
+    if not isinstance(cp, dict):
+        return
+    for rk, recurso in cp.items():
+        if not isinstance(recurso, dict) or recurso.get("tipo") != "nativa":
+            continue
+        secciones = recurso.get("secciones", []) or []
+        if len(secciones) < 2:
+            continue
+        secuencial = all(re.match(r"^\s*\d+\.", sec.get("titulo", "") or "") for sec in secciones)
+        if not secuencial:
+            continue
+        if any(sec.get("entidad_compartida") for sec in secciones):
+            continue
+        col0_tipos = [sec["columnas"][0].get("tipo") if sec.get("columnas") else None for sec in secciones]
+        if not all(t == "texto" for t in col0_tipos):
+            continue
+        col0_labels = [sec["columnas"][0].get("etiqueta", "") for sec in secciones]
+        W.append(
+            f"capa_3_plan.{rk}: secciones con titulo secuencial y columna 0 en texto libre "
+            f"sin entidad_compartida {col0_labels} -- candidato a enlazar SOLO si representan "
+            "la misma entidad real (leer las columnas antes de aplicar, no a ciegas)"
+        )
+
+# ── Contrato: dato de capas anteriores repreguntado en C3 ──────────────────────────
+# Estandar del propio proyecto (§XV.B del plan, escrito meses antes de este bug real):
+# "Si hay datos en C2, C3 no puede llegar vacio -- pre-rellenar todo lo disponible."
+# Nunca se habia verificado. Compara el vocabulario de cada columna/campo de
+# capa_3_plan contra los labels de C0 (input_a/input_b/inputs[].label) -- si una columna
+# comparte la MAYORIA de sus palabras de contenido con un input de C0, es candidata a
+# precargarse en vez de repreguntarse. AVISO: coincidencia parcial de vocabulario no
+# siempre implica que sea literalmente el mismo dato.
+def lint_capas_previas_repetidas(s, W):
+    vocab_c0 = set()
+    for _, lab in labels(s):
+        vocab_c0 |= _texto_significativo(lab)
+    if not vocab_c0:
+        return
+    cp = s.get("capa_3_plan")
+    if not isinstance(cp, dict):
+        return
+    for rk, recurso in cp.items():
+        if not isinstance(recurso, dict):
+            continue
+        columnas = []  # (etiqueta, ya_resuelto)
+        for sec in recurso.get("secciones", []) or []:
+            for c in sec.get("columnas", []) or []:
+                if c.get("tipo") == "calculada":
+                    continue
+                columnas.append((c.get("etiqueta", ""), False))  # tablas nativas: sin mecanismo de precarga aun
+        for c in recurso.get("campos", []) or []:
+            columnas.append((c.get("etiqueta", ""), bool(c.get("precarga_desde_c0"))))
+        for etiqueta, ya_resuelto in columnas:
+            if ya_resuelto:
+                continue  # ya tiene precarga_desde_c0 -- el hallazgo ya se resolvio, no repetir el aviso
+            vocab_col = _texto_significativo(etiqueta)
+            if len(vocab_col) < 2:
+                continue
+            comunes = vocab_col & vocab_c0
+            if len(comunes) >= 2 and len(comunes) / len(vocab_col) >= 0.66:
+                W.append(
+                    f"capa_3_plan.{rk} col '{etiqueta}': solapa fuerte con un input de C0 "
+                    f"{sorted(comunes)} -- candidato a precargar en vez de repreguntar (estandar SS.XV.B)"
+                )
 
 # ── Simulacion Paqui ──────────────────────────────────────────────────────────────
 def simular_paqui(s):
@@ -461,6 +749,10 @@ def lint(s):
     lint_capa3(s, E, W)
     # --- contaminacion de catalogo (capa_2_options <-> capa_3_plan) ──────────────
     lint_contaminacion(s, W)
+    # --- criterios sesion 5 ago 2026 (bug real "coste unitario" + estandar SS.XV.B) --
+    lint_clave_sin_enlazar(s, W)
+    lint_entidad_candidata(s, W)
+    lint_capas_previas_repetidas(s, W)
     return E, W, fam
 
 def main():
