@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R5 · Sistema de Referidos — CARDIO-S1</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B}
+header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:13px;font-weight:700;letter-spacing:2px;color:#C4A55A;text-transform:uppercase}
+header h1{font-size:22px;font-weight:800;margin:4px 0}
+.subtitle{font-size:13px;opacity:.8}
+.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.container{max-width:1200px;margin:0 auto;padding:28px 20px}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(27,43,75,.08);padding:24px;margin-bottom:24px}
+.section-title{font-size:15px;font-weight:800;color:#1B2B4B;border-left:4px solid #C4A55A;padding-left:12px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#1B2B4B;color:#C4A55A;padding:10px 8px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid #eee;vertical-align:middle}
+tr:hover td{background:#f8f7ff}
+input[type=text],input[type=number],input[type=date],select{width:100%;border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:12px;font-family:system-ui;background:#f8f7ff;color:#1B2B4B}
+input:focus,select:focus{outline:2px solid #C4A55A;background:#fff}
+.calc-cell{background:#eef2ff;font-weight:700;font-size:12px}
+.dot{width:16px;height:16px;border-radius:50%;display:inline-block}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}
+.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}
+.btn-add{background:#1B2B4B;color:#C4A55A;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn-del{background:#ef4444;color:#fff;border:none;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:11px}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.metric-card{background:#1B2B4B;border-radius:10px;padding:18px;text-align:center}
+.metric-label{color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.metric-value{color:#fff;font-size:22px;font-weight:800}
+.param-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.param-row label{font-weight:700;font-size:13px}
+.param-row input{max-width:130px;border:1px solid #ddd;border-radius:6px;padding:6px 10px;font-size:14px;background:#f8f7ff}
+.calc-box{background:#f0f4ff;border-radius:10px;padding:20px}
+.calc-box h3{font-size:14px;font-weight:800;margin-bottom:14px}
+.cbox-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.cbox-row label{font-size:13px;font-weight:600;flex:1;min-width:180px}
+.cbox-row input{max-width:120px;border:1px solid #ddd;border-radius:6px;padding:6px 9px;font-size:13px;background:#fff}
+.result-box{background:#1B2B4B;color:#C4A55A;border-radius:8px;padding:14px;text-align:center;font-size:16px;font-weight:800;margin-top:12px}
+@media print{.btn,.btn-add,.btn-del{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">MASFRAME · CARDIO-Sx</div>
+    <h1>Sistema de Referidos</h1>
+    <div class="subtitle">Atrofia Comercial · Herramienta R5</div>
+  </div>
+  <div class="badge">HERRAMIENTA OPERATIVA</div>
+</header>
+<div class="container">
+  <div class="card">
+    <div class="section-title">Clientes Fuente de Referidos</div>
+    <div class="param-row">
+      <label>Ticket medio global (€):</label>
+      <input type="number" id="ticket-global" value="1500" min="0" oninput="recalc()">
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente fuente</th><th>NPS (1-10)</th><th>Referidos generados</th><th>Convertidos</th>
+            <th>Tasa %</th><th>Ingresos por referidos (€)</th><th>Último contacto</th>
+            <th>¿Incentivo activo?</th><th>Estado</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="addRow()">+ Añadir cliente</button>
+  </div>
+  <div class="card">
+    <div class="section-title">Calculadora de Potencial de Referidos</div>
+    <div class="calc-box">
+      <h3>¿Cuánto generarías si más clientes refirieran?</h3>
+      <div class="cbox-row"><label>Total clientes actuales:</label><input type="number" id="c-total" value="25" min="0" oninput="calcPot()"></div>
+      <div class="cbox-row"><label>% de clientes que refieren:</label><input type="number" id="c-pct" value="20" min="0" max="100" oninput="calcPot()"></div>
+      <div class="cbox-row"><label>Ticket medio (€):</label><input type="number" id="c-ticket" value="1500" min="0" oninput="calcPot()"></div>
+      <div class="result-box" id="pot-result">Calculando...</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">Métricas Globales</div>
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="metric-label">Total Referidos</div><div class="metric-value" id="m1">—</div></div>
+      <div class="metric-card"><div class="metric-label">Total Convertidos</div><div class="metric-value" id="m2">—</div></div>
+      <div class="metric-card"><div class="metric-label">Tasa Global</div><div class="metric-value" id="m3">—</div></div>
+      <div class="metric-card"><div class="metric-label">Ingresos Totales</div><div class="metric-value" id="m4">—</div></div>
+    </div>
+  </div>
+  <div style="text-align:right"><button class="btn" onclick="window.print()">🖨 Imprimir / Exportar PDF</button></div>
+</div>
+<script>
+const DEFS=[
+  {c:'Ana García',nps:9,ref:5,conv:3,fecha:'2026-05-15',inc:'Sí'},
+  {c:'Carlos López',nps:7,ref:2,conv:1,fecha:'2026-04-10',inc:'No'},
+  {c:'María Torres',nps:8,ref:4,conv:2,fecha:'2026-06-01',inc:'Sí'},
+  {c:'Pedro Sánchez',nps:5,ref:1,conv:0,fecha:'2026-03-20',inc:'No'},
+];
+function sem(nps,tasa){
+  if(nps>=8&&tasa>=30)return'<span class="dot verde"></span>';
+  if(nps>=6)return'<span class="dot amarillo"></span>';
+  return'<span class="dot rojo"></span>';
+}
+function addRow(d={}){
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td><input type="text" class="f-c" value="${d.c||''}"></td>
+    <td><input type="number" class="f-nps" value="${d.nps||''}" min="1" max="10" style="width:55px" oninput="recalc()"></td>
+    <td><input type="number" class="f-ref" value="${d.ref||0}" min="0" oninput="recalc()"></td>
+    <td><input type="number" class="f-conv" value="${d.conv||0}" min="0" oninput="recalc()"></td>
+    <td class="calc-cell f-tasa">—</td>
+    <td class="calc-cell f-ing">—</td>
+    <td><input type="date" class="f-fecha" value="${d.fecha||''}"></td>
+    <td><select class="f-inc"><option>Sí</option><option>No</option></select></td>
+    <td class="f-sem">—</td>
+    <td><button class="btn-del" onclick="this.closest('tr').remove();recalc()">✕</button></td>
+  `;
+  if(d.inc)tr.querySelector('.f-inc').value=d.inc;
+  document.getElementById('tbody').appendChild(tr);
+  recalc();
+}
+function recalc(){
+  const tk=+document.getElementById('ticket-global').value||0;
+  let tR=0,tC=0,tI=0;
+  document.querySelectorAll('#tbody tr').forEach(tr=>{
+    const nps=+tr.querySelector('.f-nps').value||0;
+    const ref=+tr.querySelector('.f-ref').value||0;
+    const conv=+tr.querySelector('.f-conv').value||0;
+    const tasa=ref>0?conv/ref*100:0;
+    const ing=conv*tk;
+    tr.querySelector('.f-tasa').textContent=ref>0?tasa.toFixed(1)+'%':'—';
+    tr.querySelector('.f-ing').textContent='€'+ing.toLocaleString('es-ES');
+    tr.querySelector('.f-sem').innerHTML=sem(nps,tasa);
+    tR+=ref;tC+=conv;tI+=ing;
+  });
+  const tg=tR>0?tC/tR*100:0;
+  document.getElementById('m1').textContent=tR;
+  document.getElementById('m2').textContent=tC;
+  document.getElementById('m3').textContent=tR>0?tg.toFixed(1)+'%':'—';
+  document.getElementById('m4').textContent='€'+tI.toLocaleString('es-ES');
+}
+function calcPot(){
+  const total=+document.getElementById('c-total').value||0;
+  const pct=+document.getElementById('c-pct').value||0;
+  const tk=+document.getElementById('c-ticket').value||0;
+  const n=Math.round(total*pct/100);
+  document.getElementById('pot-result').textContent=
+    'Si el '+pct+'% de tus '+total+' clientes ('+n+' personas) refiriera 1 cliente → €'+(n*tk).toLocaleString('es-ES')+'/mes';
+}
+DEFS.forEach(addRow);calcPot();
+</script>
+<script><!--MF-BRIDGE-->
+(function(){
+  if (window.parent === window) return;
+  var itemId = new URLSearchParams(location.search).get('itemId');
+  function syncFormAttrs(){
+    try {
+      document.querySelectorAll('input').forEach(function(el){
+        if (el.type === 'checkbox' || el.type === 'radio') {
+          if (el.checked) el.setAttribute('checked',''); else el.removeAttribute('checked');
+        } else {
+          el.setAttribute('value', el.value);
+        }
+      });
+      document.querySelectorAll('textarea').forEach(function(el){ el.textContent = el.value; });
+      document.querySelectorAll('select').forEach(function(el){
+        Array.prototype.forEach.call(el.options, function(opt){
+          if (opt.selected) opt.setAttribute('selected',''); else opt.removeAttribute('selected');
+        });
+      });
+    } catch(e){}
+  }
+  function snapshot(){
+    syncFormAttrs();
+    try { window.parent.postMessage({tipo:"herramienta-valor", itemId:itemId, html: document.documentElement.outerHTML}, "*"); } catch(e){}
+  }
+  var t; function sched(){ clearTimeout(t); t=setTimeout(snapshot, 500); }
+  document.addEventListener('input', sched, true);
+  document.addEventListener('change', sched, true);
+  function addBtn(){
+    if (!document.body || document.getElementById('mf-guardar')) return;
+    var b=document.createElement('button');
+    b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
+    document.body.appendChild(b);
+  }
+  if (document.readyState!=='loading') addBtn(); else document.addEventListener('DOMContentLoaded', addBtn);
+  window.addEventListener('load', function(){ addBtn(); setTimeout(snapshot,300); });
+})();
+</script>
+
+</body>
+</html>

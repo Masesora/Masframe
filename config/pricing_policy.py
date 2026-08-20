@@ -5,34 +5,24 @@ PRICING_POLICY = {
             "facturacion_max": 15000
         },
         "high": {
-            "label": "15.000–499.999 €/mes",
+            "label": "15.000–59.999 €/mes",
             "facturacion_min": 15000,
-            "facturacion_max": 500000
+            "facturacion_max": 60000
         },
         "enterprise": {
-            "label": "≥ 500.000 €/mes",
-            "facturacion_min": 500000
+            "label": "≥ 60.000 €/mes",
+            "facturacion_min": 60000
         }
     },
 
-    # Desincronización real encontrada y corregida (sesión 8 ago 2026, auditoría de funnel):
-    # esta tabla nunca se usa para cobrar de verdad (el checkout real usa getPrecio() en
-    # ScannerReceptionPage.tsx, portado 1:1 a Python en payments_router.py) — solo alimenta
-    # el presupuesto que se enseña en el triaje y la herramienta manual de presupuestos del
-    # CC. Pero "prices" y "description" de PRE y PIE estaban CRUZADOS entre sí (PRE tenía los
-    # precios/descripción reales de PIE, y viceversa) y los umbrales de facturación no
-    # coincidían con los reales (15.000/60.000 aquí vs 15.000/500.000 en el checkout real) —
-    # un cliente podía ver una estimación con el plan equivocado y un precio que luego no
-    # coincidía con lo que de verdad se le cobraba. "code"/"name" ya estaban bien, solo se
-    # corrigen "prices"/"description" (cruzados) y los umbrales de "segments".
     "products": {
         "PIE": {
             "code": "PIE",
             "name": "Plan de Impulso Empresarial",
-            "description": "Intervención de urgencia sobre hasta 10 síntomas críticos, 3 Ciclos de Rescate Empresarial, acompañamiento prioritario del ACI y Garantía de Resultado.",
+            "description": "Diagnóstico profundo por especialidad, identificación de síntomas y hoja de ruta clínica.",
             "prices": {
-                "low": 1499,
-                "high": 4500
+                "low": 399,
+                "high": 999
             }
         },
         "PAE": {
@@ -47,10 +37,10 @@ PRICING_POLICY = {
         "PRE": {
             "code": "PRE",
             "name": "Plan de Rescate Estratégico",
-            "description": "Diagnóstico profundo por especialidad, identificación de síntomas y hoja de ruta clínica.",
+            "description": "Intervención de urgencia sobre hasta 10 síntomas críticos, 3 Ciclos de Rescate Empresarial, acompañamiento prioritario del ACI y Garantía de Resultado.",
             "prices": {
-                "low": 399,
-                "high": 999
+                "low": 1499,
+                "high": 4500
             }
         }
     },
