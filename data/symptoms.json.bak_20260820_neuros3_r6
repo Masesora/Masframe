@@ -5846,7 +5846,7 @@
           },
           {
             "clave": "tendencia_margen",
-            "etiqueta": "2. Variación del margen en los últimos 12 meses (puntos %, negativo si ha bajado)"
+            "etiqueta": "2. Tendencia de margen"
           },
           {
             "clave": "pct_ingresos_recurrentes",
@@ -5858,7 +5858,7 @@
           },
           {
             "clave": "horas_vs_ano_anterior",
-            "etiqueta": "5. Variación de horas trabajadas vs hace 1 año (%, positivo si trabajas más para ganar lo mismo)"
+            "etiqueta": "5. Horas vs hace 1 año"
           },
           {
             "clave": "satisfaccion_dueno",
@@ -5878,12 +5878,6 @@
           }
         ],
         "resultados": [
-          {
-            "clave": "indice_urgencia",
-            "etiqueta": "Índice de urgencia de rediseño (más alto = más urgente)",
-            "formula": "(100-margen_neto_pct)+(0-tendencia_margen)*2+(100-pct_ingresos_recurrentes)*0.5+concentracion_top3_pct*0.5+horas_vs_ano_anterior*0.5+(10-satisfaccion_dueno)*5",
-            "unidad": "numero"
-          },
           {
             "clave": "margen_actual_12m",
             "etiqueta": "Margen actual a 12 meses €",

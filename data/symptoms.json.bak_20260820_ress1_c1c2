@@ -5846,7 +5846,7 @@
           },
           {
             "clave": "tendencia_margen",
-            "etiqueta": "2. Variación del margen en los últimos 12 meses (puntos %, negativo si ha bajado)"
+            "etiqueta": "2. Tendencia de margen"
           },
           {
             "clave": "pct_ingresos_recurrentes",
@@ -5858,7 +5858,7 @@
           },
           {
             "clave": "horas_vs_ano_anterior",
-            "etiqueta": "5. Variación de horas trabajadas vs hace 1 año (%, positivo si trabajas más para ganar lo mismo)"
+            "etiqueta": "5. Horas vs hace 1 año"
           },
           {
             "clave": "satisfaccion_dueno",
@@ -5878,12 +5878,6 @@
           }
         ],
         "resultados": [
-          {
-            "clave": "indice_urgencia",
-            "etiqueta": "Índice de urgencia de rediseño (más alto = más urgente)",
-            "formula": "(100-margen_neto_pct)+(0-tendencia_margen)*2+(100-pct_ingresos_recurrentes)*0.5+concentracion_top3_pct*0.5+horas_vs_ano_anterior*0.5+(10-satisfaccion_dueno)*5",
-            "unidad": "numero"
-          },
           {
             "clave": "margen_actual_12m",
             "etiqueta": "Margen actual a 12 meses €",
@@ -7452,18 +7446,18 @@
     "example": "Consultora: peso del producto estrella, del 22% al 67% tras el protocolo.",
     "capa_1_priorizacion": "No tengo respuesta clara a por qué elegirme; Cambio de argumento según con quién hablo; Sueno igual que mi competencia directa; El cliente no ve por qué contratarme a mí; Mi equipo no sabe explicar qué nos hace distintos; No hay un mensaje único que el equipo repita",
     "justi_capa1": "La falta de diferenciación tiene distintas causas. Señala cuáles reconoces para saber qué atributo construir y comunicar primero.",
-    "capa_2_decision": "Impacto vs Esfuerzo",
-    "capa_2_options": "Calcular cuál es de verdad tu producto o servicio estrella, el que más margen real te deja; Calcular la rentabilidad real de cada servicio que ofreces, no solo lo que factura; Identificar y eliminar o reducir los servicios de bajo margen que mantienes por costumbre; Redirigir el esfuerzo comercial del equipo hacia tu producto estrella en vez de repartirlo en todo; Ajustar el precio de tu producto estrella al valor real que aporta; Fijar un objetivo mensual de cuánto peso quieres que tenga tu producto estrella sobre el total",
-    "justi_capa2": "Con Impacto vs Esfuerzo priorizas qué acción de concentración en tu producto estrella te da más margen con menos trabajo: calcular cuál es, podar lo que sobra o redirigir el esfuerzo comercial pesan más que ajustar precios de detalle. Empiezas por lo que más peso le da a tu producto estrella, no por lo que suena más urgente.",
-    "capa_3_comprension": "Mapa de tu cartera de servicios",
-    "justi_capa3": "El Mapa de tu cartera de servicios te muestra cuánto margen real deja cada uno de los que ofreces. Verás cuál es tu producto estrella de verdad y cuáles te ocupan tiempo sin devolverte nada a cambio.",
+    "capa_2_decision": "Fuerzas y debilidades frente al mercado (DAFO)",
+    "capa_2_options": "Definir las 3 cosas que te hacen distinto y que ningún competidor puede copiar fácilmente; Crear una frase de una línea que resuma por qué te eligen y que todo el equipo use igual; Documentar 3 casos de éxito con resultados reales y en cifras que refuercen tu argumento; Revisar cómo se comunican tus competidores directos para encontrar el hueco que puedes ocupar; Reescribir en tu web y materiales de venta la razón por la que te eligen; Preparar respuestas claras y ensayadas a las dudas y objeciones más frecuentes",
+    "justi_capa2": "El DAFO es un cuadro de cuatro casillas: tus fuerzas y tus debilidades (lo que depende de ti, dentro de tu negocio) frente a las oportunidades y las amenazas (lo que viene de fuera, del mercado). Con él priorizas qué cosas te hacen realmente distinto y cuáles no aportan, para centrar tus esfuerzos en lo que el cliente valora.",
+    "capa_3_comprension": "Mapa del mercado",
+    "justi_capa3": "El Mapa del mercado te muestra dónde estás tú y dónde están tus competidores. Verás el hueco que puedes ocupar sin competir por precio.",
     "capa_4_cambio": "Definir por qué te eligen",
     "justi_capa4": "Aquí fijas qué te hace diferente y por qué un cliente te elige a ti. El objetivo es dejar de competir por precio y sostener tu margen con lo que solo tú ofreces.",
     "capa_5_ejecucion": "Lista de comprobación de tu diferencia",
     "justi_capa5": "Porque un argumento que te diferencia solo vende si todo el equipo lo repite igual; esta lista asegura que llega intacto a cada conversación de venta, sin que cada persona improvise su propia versión.",
     "capa_6_seguimiento": "Seguimiento: Peso del producto estrella",
     "justi_capa6": "Este número mide si de verdad te diferencias: cuánto pesa tu producto de mayor margen sobre el total. Para volver a medirlo, introduce otra vez los ingresos de tu servicio estrella y el total del mes. Compáralo con el dato de partida (C0); si sube, aquello que te hace único te está dejando más dinero.",
-    "capa_1_options": "No tengo claro cuál es mi producto estrella: el que más me renta de verdad.; Vendo muchos servicios parecidos y ninguno destaca por el margen que me deja.; Mantengo servicios de bajo margen por costumbre, aunque me quitan tiempo del que sí renta.; Mi equipo vende de todo sin priorizar el producto que más valor deja al negocio.; Sé que concentrándome en lo que más me renta ganaría lo mismo trabajando menos, pero no doy el paso.; Reparto mi esfuerzo comercial entre todo un poco, en vez de concentrarlo en lo que más gana.",
+    "capa_1_options": "Vendo muchos servicios parecidos y ninguno destaca por el margen que me deja.; No tengo claro cuál es mi producto estrella: el que más me renta de verdad.; Reparto mi esfuerzo comercial entre todo un poco, en vez de concentrarlo en lo que más gana.; Mantengo servicios de bajo margen por costumbre, aunque me quitan tiempo del que sí renta.; Mi equipo vende de todo sin priorizar el producto que más valor deja al negocio.; Sé que concentrándome en lo que más me renta ganaría lo mismo trabajando menos, pero no doy el paso.",
     "kpi_recovery_mode": "estructural",
     "recovery_unit_label": "re-medir mezcla",
     "kpi_name": "Peso del producto estrella",
@@ -9366,7 +9360,7 @@
     "justi_capa5": "Porque necesitas asegurar que las acciones de retención se ejecutan de forma consistente y no se quedan en buenas intenciones que nadie llega a cumplir.",
     "capa_6_seguimiento": "Seguimiento: Rotación de talento",
     "justi_capa6": "Este indicador mide la estabilidad de tu talento: cuánta gente se va en 12 meses. Compáralo con C0; si la rotación baja, estás reteniendo a quien importa.",
-    "capa_1_options": "Tengo miedo de que se vaya alguien clave y no tengo ninguna estrategia para evitarlo.; No sé cuánto me costaría de verdad que se fuera una persona clave — sustitución, formación y meses de productividad perdida mientras alguien nuevo coge el ritmo.; Sospecho que alguien de mi equipo lleva tiempo rindiendo muy por debajo de lo normal, pero no lo he confirmado ni hablado con la persona.; No sé si pago a mis personas clave por debajo de lo que ofrece el mercado — podría estar empujándolas a irse sin darme cuenta.; Si una persona concreta se fuera, se llevaría relaciones con clientes importantes que no están documentadas en ningún sitio.; Si dos personas concretas se fueran a la vez, se pararían áreas enteras del negocio porque nadie más sabe cubrirlas.",
+    "capa_1_options": "Tengo miedo de que se vaya alguien clave y no tengo ninguna estrategia para evitarlo.; Mis mejores personas están sobrecargadas y quemadas y no sé cómo equilibrar la carga.; No sé qué es lo que retiene de verdad a las personas que más importan para el negocio.; Si una persona concreta se fuera se llevaría consigo conocimiento que no está documentado en ningún sitio.; El trabajo está mal repartido y siempre cargan los mismos aunque no sea lo más justo ni eficiente.; Me entero tarde cuando alguien está descontento, cuando el problema ya es difícil de revertir.",
     "kpi_recovery_mode": "conteo",
     "recovery_unit_label": "bajas evitadas",
     "kpi_name": "Rotación de talento",
@@ -12151,9 +12145,9 @@
     "example": "Empresa logística: su peor semana entregaba solo el 62% de las de su mejor semana; tras el protocolo de nivelación subió al 88%.",
     "capa_1_priorizacion": "Semanas de colapso y semanas muertas sin punto medio; las urgencias de última hora rompen cualquier planificación; retrasos sistemáticos en las entregas; más tiempo apagando fuegos que ejecutando lo planificado; equipo saturado en los picos e infrautilizado en los valles; no puedes prever cuándo llegará el próximo colapso ni prepararlo.",
     "justi_capa1": "La irregularidad operativa tiene distintas causas. Señala cuáles reconoces para saber qué tipo de desajuste de carga está generando los picos.",
-    "capa_2_decision": "Impacto vs Esfuerzo",
+    "capa_2_decision": "Análisis de capacidad y carga",
     "capa_2_options": "¿Cuántas horas se me van en el día a día en vez de en dirigir el negocio?; ¿Cuánto tarda un trabajo desde que me lo piden hasta que lo empiezo de verdad?; ¿Qué parte de mi tiempo se comen los imprevistos frente al trabajo planificado?; ¿Se me amontonan las entregas al final de mes en vez de repartirse?; ¿Cuánta diferencia hay entre mi semana más cargada y la más floja?; ¿Qué paso del proceso es el que más me retrasa las entregas?",
-    "justi_capa2": "Con Impacto vs Esfuerzo priorizas qué frente de irregularidad operativa te devuelve más ritmo con menos trabajo: medir la cola de entrada o el peso de las urgencias suele pesar más que nivelar el fin de mes. Empiezas por lo que más estabiliza tu operación, no por lo que más ruido hace hoy.",
+    "justi_capa2": "Con el Análisis de capacidad y carga (comparas el trabajo que entra con la capacidad real que tienes) identificas qué tipo de irregularidad domina tu operación y por dónde empezar a nivelar.",
     "capa_3_comprension": "Mapa de tu flujo de trabajo",
     "justi_capa3": "El mapa de tu flujo de trabajo te muestra, paso a paso, dónde se acumula la carga y dónde se pierde el ritmo de tus entregas. Verás el punto donde se atasca todo y rompe tu regularidad.",
     "capa_4_cambio": "Nivelación de carga",

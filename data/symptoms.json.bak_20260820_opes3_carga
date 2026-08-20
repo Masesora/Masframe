@@ -5846,7 +5846,7 @@
           },
           {
             "clave": "tendencia_margen",
-            "etiqueta": "2. Variación del margen en los últimos 12 meses (puntos %, negativo si ha bajado)"
+            "etiqueta": "2. Tendencia de margen"
           },
           {
             "clave": "pct_ingresos_recurrentes",
@@ -5858,7 +5858,7 @@
           },
           {
             "clave": "horas_vs_ano_anterior",
-            "etiqueta": "5. Variación de horas trabajadas vs hace 1 año (%, positivo si trabajas más para ganar lo mismo)"
+            "etiqueta": "5. Horas vs hace 1 año"
           },
           {
             "clave": "satisfaccion_dueno",
@@ -5878,12 +5878,6 @@
           }
         ],
         "resultados": [
-          {
-            "clave": "indice_urgencia",
-            "etiqueta": "Índice de urgencia de rediseño (más alto = más urgente)",
-            "formula": "(100-margen_neto_pct)+(0-tendencia_margen)*2+(100-pct_ingresos_recurrentes)*0.5+concentracion_top3_pct*0.5+horas_vs_ano_anterior*0.5+(10-satisfaccion_dueno)*5",
-            "unidad": "numero"
-          },
           {
             "clave": "margen_actual_12m",
             "etiqueta": "Margen actual a 12 meses €",
@@ -12151,9 +12145,9 @@
     "example": "Empresa logística: su peor semana entregaba solo el 62% de las de su mejor semana; tras el protocolo de nivelación subió al 88%.",
     "capa_1_priorizacion": "Semanas de colapso y semanas muertas sin punto medio; las urgencias de última hora rompen cualquier planificación; retrasos sistemáticos en las entregas; más tiempo apagando fuegos que ejecutando lo planificado; equipo saturado en los picos e infrautilizado en los valles; no puedes prever cuándo llegará el próximo colapso ni prepararlo.",
     "justi_capa1": "La irregularidad operativa tiene distintas causas. Señala cuáles reconoces para saber qué tipo de desajuste de carga está generando los picos.",
-    "capa_2_decision": "Impacto vs Esfuerzo",
+    "capa_2_decision": "Análisis de capacidad y carga",
     "capa_2_options": "¿Cuántas horas se me van en el día a día en vez de en dirigir el negocio?; ¿Cuánto tarda un trabajo desde que me lo piden hasta que lo empiezo de verdad?; ¿Qué parte de mi tiempo se comen los imprevistos frente al trabajo planificado?; ¿Se me amontonan las entregas al final de mes en vez de repartirse?; ¿Cuánta diferencia hay entre mi semana más cargada y la más floja?; ¿Qué paso del proceso es el que más me retrasa las entregas?",
-    "justi_capa2": "Con Impacto vs Esfuerzo priorizas qué frente de irregularidad operativa te devuelve más ritmo con menos trabajo: medir la cola de entrada o el peso de las urgencias suele pesar más que nivelar el fin de mes. Empiezas por lo que más estabiliza tu operación, no por lo que más ruido hace hoy.",
+    "justi_capa2": "Con el Análisis de capacidad y carga (comparas el trabajo que entra con la capacidad real que tienes) identificas qué tipo de irregularidad domina tu operación y por dónde empezar a nivelar.",
     "capa_3_comprension": "Mapa de tu flujo de trabajo",
     "justi_capa3": "El mapa de tu flujo de trabajo te muestra, paso a paso, dónde se acumula la carga y dónde se pierde el ritmo de tus entregas. Verás el punto donde se atasca todo y rompe tu regularidad.",
     "capa_4_cambio": "Nivelación de carga",
