@@ -10197,54 +10197,37 @@
     "capa_3_plan": {
       "r1": {
         "tipo": "nativa",
-        "titulo": "Mapa de quejas",
+        "titulo": "Diseño de momentos de sorpresa",
         "secciones": [
           {
-            "titulo": "Registro de quejas y reclamaciones",
+            "titulo": "Momentos del servicio pensados a propósito para sorprender al cliente",
             "columnas": [
               {
-                "etiqueta": "Cliente",
+                "etiqueta": "Momento del servicio",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha",
+                "etiqueta": "Sorpresa a introducir en ese momento",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Servicio afectado",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Tipo de queja",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Gravedad",
-                "tipo": "opciones",
-                "opciones": [
-                  "Alta",
-                  "Media",
-                  "Baja"
-                ]
-              },
-              {
-                "etiqueta": "Acción tomada",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Resuelto",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No",
-                  "En curso"
-                ]
-              },
-              {
-                "etiqueta": "Días resolución",
+                "etiqueta": "Coste aproximado (€)",
                 "tipo": "numero",
-                "clave": "dias_res",
-                "no_sumar": true
+                "clave": "coste"
+              },
+              {
+                "etiqueta": "Responsable",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Por diseñar",
+                  "En prueba",
+                  "Implementado"
+                ],
+                "contribuye_valor_si": "Implementado"
               }
             ],
             "filas_iniciales": 5
@@ -10253,89 +10236,35 @@
       },
       "r2": {
         "tipo": "nativa",
-        "titulo": "NPS tracker",
+        "titulo": "Elemento diferenciador de marca",
         "secciones": [
           {
-            "titulo": "Registro NPS por cliente",
+            "titulo": "Qué hace que tu servicio deje de ser intercambiable",
             "columnas": [
               {
-                "etiqueta": "Cliente",
+                "etiqueta": "Competidor directo",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha",
+                "etiqueta": "Qué ofrece igual que tú (servicio competente pero igual)",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Puntuación (0-10)",
-                "tipo": "numero",
-                "clave": "puntuacion",
-                "no_sumar": true
+                "etiqueta": "Qué podrías ofrecer tú que ellos no",
+                "tipo": "texto"
               },
               {
-                "etiqueta": "Categoría",
+                "etiqueta": "Grado de diferenciación actual",
                 "tipo": "opciones",
                 "opciones": [
-                  "Promotor (9-10)",
-                  "Pasivo (7-8)",
-                  "Detractor (0-6)"
+                  "Ninguna",
+                  "Baja",
+                  "Media",
+                  "Alta"
                 ]
               },
               {
-                "etiqueta": "Comentario",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción de seguimiento",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Resuelto",
-                "tipo": "opciones",
-                "opciones": [
-                  "Sí",
-                  "No"
-                ]
-              }
-            ],
-            "filas_iniciales": 5
-          }
-        ]
-      },
-      "r3": {
-        "tipo": "nativa",
-        "titulo": "Satisfacción por servicio",
-        "secciones": [
-          {
-            "titulo": "Índice de satisfacción por línea de servicio",
-            "columnas": [
-              {
-                "etiqueta": "Servicio",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "N° respuestas",
-                "tipo": "numero",
-                "clave": "n_resp"
-              },
-              {
-                "etiqueta": "Puntuación media (1-5)",
-                "tipo": "numero",
-                "clave": "punt_media",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "% Satisfechos (>=4)",
-                "tipo": "numero",
-                "clave": "pct_satisf",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Punto crítico principal",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Acción de mejora",
+                "etiqueta": "Acción para dejar de ser intercambiable",
                 "tipo": "texto"
               },
               {
@@ -10343,9 +10272,52 @@
                 "tipo": "opciones",
                 "opciones": [
                   "Pendiente",
-                  "En curso",
-                  "Resuelto"
+                  "En marcha",
+                  "Implementado"
+                ],
+                "contribuye_valor_si": "Implementado"
+              }
+            ],
+            "filas_iniciales": 4
+          }
+        ]
+      },
+      "r3": {
+        "tipo": "nativa",
+        "titulo": "Protocolo de inicio y cierre memorable",
+        "secciones": [
+          {
+            "titulo": "Guion de los momentos de contacto de mayor peso emocional",
+            "columnas": [
+              {
+                "etiqueta": "Momento de contacto",
+                "tipo": "opciones",
+                "opciones": [
+                  "Inicio del servicio",
+                  "Cierre del servicio"
                 ]
+              },
+              {
+                "etiqueta": "Trato especial definido para ese momento",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Gesto o detalle a aplicar",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Responsable de aplicarlo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Trato especial ya definido y en uso?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Sí",
+                  "No",
+                  "En pruebas"
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
             "filas_iniciales": 4
@@ -10354,86 +10326,90 @@
       },
       "r4": {
         "tipo": "nativa",
-        "titulo": "Expectativas vs entrega",
+        "titulo": "Guion de experiencia para el equipo",
         "secciones": [
           {
-            "titulo": "Análisis de gap expectativa–entrega",
+            "titulo": "Palabras y trato que marcan la diferencia, por situación",
             "columnas": [
               {
-                "etiqueta": "Cliente",
+                "etiqueta": "Rol o puesto",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Servicio",
+                "etiqueta": "Situación con el cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Expectativa declarada",
+                "etiqueta": "Trato funcional actual (sin diferencia)",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Entrega real",
+                "etiqueta": "Palabras y trato que marcan la diferencia",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Gap percibido",
+                "etiqueta": "¿Equipo entrenado en este trato?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Superado",
-                  "Cumplido",
-                  "No cumplido"
-                ]
-              },
-              {
-                "etiqueta": "Causa del gap",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Ajuste comprometido",
-                "tipo": "texto"
+                  "Sí",
+                  "No",
+                  "En proceso"
+                ],
+                "contribuye_valor_si": "Sí"
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 5
           }
         ]
       },
       "r5": {
         "tipo": "nativa",
-        "titulo": "Reseñas online",
+        "titulo": "Catálogo de gestos de valor añadido",
         "secciones": [
           {
-            "titulo": "Seguimiento de reseñas y reputación digital",
+            "titulo": "Detalles que el cliente no ha pagado y no esperaba recibir",
             "columnas": [
               {
-                "etiqueta": "Plataforma",
+                "etiqueta": "Gesto o detalle de valor añadido",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Puntuación (1-5)",
+                "etiqueta": "Coste por cliente (€)",
                 "tipo": "numero",
-                "clave": "puntuacion",
-                "contribuye_valor_si": "5",
-                "no_sumar": true
+                "clave": "coste_gesto"
               },
               {
-                "etiqueta": "Fecha",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Resumen de la reseña",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Respondida",
+                "etiqueta": "Para qué clientes",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
+                  "Todos",
+                  "Nuevos",
+                  "Recurrentes",
+                  "VIP"
                 ]
               },
               {
-                "etiqueta": "Acción interna",
+                "etiqueta": "Frecuencia de aplicación",
+                "tipo": "opciones",
+                "opciones": [
+                  "Siempre",
+                  "Ocasional",
+                  "Solo fechas especiales"
+                ]
+              },
+              {
+                "etiqueta": "Responsable de entregarlo",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Estado",
+                "tipo": "opciones",
+                "opciones": [
+                  "Por probar",
+                  "En prueba",
+                  "Adoptado"
+                ],
+                "contribuye_valor_si": "Adoptado"
               }
             ],
             "filas_iniciales": 5
@@ -10442,45 +10418,36 @@
       },
       "r6": {
         "tipo": "nativa",
-        "titulo": "Clientes en riesgo",
+        "titulo": "Historias memorables para recomendar",
         "secciones": [
           {
-            "titulo": "Radar de clientes en riesgo de pérdida",
+            "titulo": "Historias que los clientes satisfechos sí tienen para contar",
             "columnas": [
               {
                 "etiqueta": "Cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Señal de alerta",
+                "etiqueta": "Historia memorable (qué pasó)",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Fecha detección",
+                "etiqueta": "Momento del servicio en que ocurrió",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Prob. churn (%)",
-                "tipo": "numero",
-                "clave": "prob_churn",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Acción preventiva",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Fecha seguimiento",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Estado",
+                "etiqueta": "¿El cliente la ha contado o recomendado a partir de ella?",
                 "tipo": "opciones",
                 "opciones": [
-                  "En riesgo",
-                  "Recuperado",
-                  "Perdido"
-                ]
+                  "Sí",
+                  "No",
+                  "No lo sé"
+                ],
+                "contribuye_valor_si": "Sí"
+              },
+              {
+                "etiqueta": "Cómo repetirla con otros clientes",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 4
