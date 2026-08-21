@@ -694,7 +694,7 @@
                   "El trabajo cambió sobre la marcha y no lo recalculé"
                 ],
                 "contramedidas": {
-                  "No cerramos un presupuesto antes de empezar el trabajo": "Cierra el presupuesto con el cliente ANTES de empezar, no al entregar. Así facturas con el importe ya acordado, sin esperar a nada.",
+                  "No cerramos un presupuesto antes de empezar el trabajo": "Cierra el presupuesto con el cliente antes de empezar el trabajo, no al entregarlo. Así facturas con el importe ya acordado, sin esperar a nada.",
                   "El trabajo cambió sobre la marcha y no lo recalculé": "Factura ahora con el importe base ya acordado, y emite una factura complementaria por el extra en cuanto lo tengas. No esperes a tenerlo todo cerrado para facturar lo que ya está claro."
                 }
               },
@@ -712,7 +712,7 @@
                 ],
                 "contramedidas": {
                   "No tengo nada, ni un Excel": "Necesitas un registro mínimo de entregas antes que nada — es la base sobre la que se sostiene cualquier aviso. Si no tienes tiempo de montarlo, pídeselo a tu CC.",
-                  "Sí tengo, pero no lo miro": "El problema no es la falta de registro, es que no lo consultas. Ponlo donde lo veas sí o sí — la agenda del móvil, no una hoja aparte que nunca abres."
+                  "Sí tengo, pero no lo miro": "Tenerlo no sirve de nada si no lo ves cada día. Ponlo donde no puedas evitarlo — la agenda del móvil, no una hoja aparte."
                 }
               },
               {
@@ -729,7 +729,7 @@
                 ],
                 "contramedidas": {
                   "No tengo tiempo, estoy desbordado con la administración": "Esto ya no es un hábito que cambiar, es una persona que falta. Si tu administrativo está de baja o no da abasto, necesitas cubrir ese hueco —aunque sea temporal— antes de que se acumule más.",
-                  "Tengo hueco pero lo evito": "Bloquéate 10 minutos fijos cada tarde solo para facturar lo del día. No hace falta que te guste, solo que tenga un hueco que no compite con nada más."
+                  "Tengo hueco pero lo evito": "Bloquéate 10 minutos fijos cada tarde solo para facturar lo del día. No hace falta que te apetezca, solo que tenga su hueco fijo, uno que nadie más te quite."
                 }
               },
               {
