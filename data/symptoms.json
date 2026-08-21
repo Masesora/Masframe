@@ -1527,7 +1527,8 @@
         ]
       }
     },
-    "kpi_window_meses": 3
+    "kpi_window_meses": 3,
+    "kpi_objetivo_puntos": 10
   },
   {
     "specialty_id": "UNIDAD DE PROCESOS",
