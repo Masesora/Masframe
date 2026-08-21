@@ -898,6 +898,7 @@
                 "clave": "decision",
                 "estilo": "desplegable",
                 "opciones": [
+                  "Sustituirlo por un pack rentable",
                   "Subir el precio",
                   "Bajar materiales o subcontratas",
                   "Hacerlo en menos tiempo",
@@ -911,7 +912,8 @@
                   "Subir el precio": "¿Has actualizado ya el precio en tu tarifa y lo estás aplicando en los presupuestos nuevos?",
                   "Bajar materiales o subcontratas": "¿Tienes ya por escrito el coste nuevo del proveedor?",
                   "Hacerlo en menos tiempo": "¿Has cambiado ya la forma de hacerlo y comprobado que te sale en ese tiempo?",
-                  "Dejar de ofrecerlo": "¿Lo has retirado ya de tu oferta y avisado a quien lo tenía contratado?"
+                  "Dejar de ofrecerlo": "¿Lo has retirado ya de tu oferta y avisado a quien lo tenía contratado?",
+                  "Sustituirlo por un pack rentable": "¿Le has presentado ya el pack y está en tu tarifa?"
                 },
                 "opciones_baja": [
                   "Dejar de ofrecerlo"
@@ -960,6 +962,37 @@
                   "valor_condicion": "Dejar de ofrecerlo"
                 },
                 "placeholder": "DD/MM/AAAA"
+              },
+              {
+                "etiqueta": "¿Qué incluye el pack?",
+                "tipo": "texto",
+                "clave": "pack_incluye_r1",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Sustituirlo por un pack rentable"
+                }
+              },
+              {
+                "etiqueta": "¿A cuánto lo vendes? (€)",
+                "tipo": "numero",
+                "clave": "pack_precio_r1",
+                "no_sumar": true,
+                "hint_umbral": "precio",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Sustituirlo por un pack rentable"
+                }
+              },
+              {
+                "etiqueta": "¿Cuántas horas te llevará darlo?",
+                "tipo": "numero",
+                "clave": "pack_horas_r1",
+                "no_sumar": true,
+                "hint_umbral": "horas",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Sustituirlo por un pack rentable"
+                }
               }
             ]
           }
@@ -989,20 +1022,22 @@
                 "clave": "decision",
                 "estilo": "desplegable",
                 "opciones": [
+                  "Sustituir el descuento por un pack rentable",
                   "Bajar el descuento",
                   "Quitar el descuento a este segmento",
                   "Bajar el coste directo",
                   "Mantenerlo, pero a cambio de algo"
                 ],
                 "sugerencia_por_color": {
-                  "rojo": "Quitar el descuento a este segmento",
+                  "rojo": "Sustituir el descuento por un pack rentable",
                   "amarillo": "Bajar el descuento"
                 },
                 "confirmaciones": {
                   "Bajar el descuento": "¿Has fijado por escrito tu descuento máximo y lo estás respetando?",
                   "Quitar el descuento a este segmento": "¿Has comunicado ya que pasa a pagar precio de tarifa?",
                   "Bajar el coste directo": "¿Tienes ya por escrito el coste nuevo?",
-                  "Mantenerlo, pero a cambio de algo": "¿Has acordado ya la contrapartida y la tienes por escrito?"
+                  "Mantenerlo, pero a cambio de algo": "¿Has acordado ya la contrapartida y la tienes por escrito?",
+                  "Sustituir el descuento por un pack rentable": "¿Le has presentado el pack y lo tienes cerrado por escrito?"
                 },
                 "opciones_palanca_fija": {
                   "Quitar el descuento a este segmento": {
@@ -1071,6 +1106,37 @@
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Mantenerlo, pero a cambio de algo"
+                }
+              },
+              {
+                "etiqueta": "¿Qué incluye el pack?",
+                "tipo": "texto",
+                "clave": "pack_incluye_r2",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Sustituir el descuento por un pack rentable"
+                }
+              },
+              {
+                "etiqueta": "¿A cuánto se lo dejas? (€)",
+                "tipo": "numero",
+                "clave": "pack_precio_r2",
+                "no_sumar": true,
+                "hint_umbral": "precio",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Sustituir el descuento por un pack rentable"
+                }
+              },
+              {
+                "etiqueta": "¿Cuánto te costará darlo? (€)",
+                "tipo": "numero",
+                "clave": "pack_coste_r2",
+                "no_sumar": true,
+                "hint_umbral": "coste",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Sustituir el descuento por un pack rentable"
                 }
               }
             ]
@@ -1307,6 +1373,7 @@
                 "clave": "decision",
                 "estilo": "desplegable",
                 "opciones": [
+                  "Reconvertirla en un pack rentable",
                   "Subir el precio de la línea",
                   "Recortar el tiempo que se le va",
                   "Reestructurar qué incluye",
@@ -1320,7 +1387,8 @@
                   "Subir el precio de la línea": "¿Has actualizado ya el precio y lo estás aplicando?",
                   "Recortar el tiempo que se le va": "¿Has medido ya un mes completo con las horas nuevas?",
                   "Reestructurar qué incluye": "¿Está el cambio ya en marcha y comunicado a quien le afecta?",
-                  "Descontinuarla": "¿Has puesto fecha de cierre y avisado a quien la tenía contratada?"
+                  "Descontinuarla": "¿Has puesto fecha de cierre y avisado a quien la tenía contratada?",
+                  "Reconvertirla en un pack rentable": "¿Está el pack ya en tu oferta y avisado quien tenía la línea antigua?"
                 },
                 "opciones_baja": [
                   "Descontinuarla"
@@ -1396,6 +1464,37 @@
                   "clave_condicion": "decision",
                   "valor_condicion": "Reestructurar qué incluye"
                 }
+              },
+              {
+                "etiqueta": "¿Qué incluye el pack?",
+                "tipo": "texto",
+                "clave": "pack_incluye_r5",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Reconvertirla en un pack rentable"
+                }
+              },
+              {
+                "etiqueta": "¿A cuánto lo vendes? (€)",
+                "tipo": "numero",
+                "clave": "pack_precio_r5",
+                "no_sumar": true,
+                "hint_umbral": "precio",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Reconvertirla en un pack rentable"
+                }
+              },
+              {
+                "etiqueta": "¿Cuánto te costará darlo? (€)",
+                "tipo": "numero",
+                "clave": "pack_coste_r5",
+                "no_sumar": true,
+                "hint_umbral": "coste",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Reconvertirla en un pack rentable"
+                }
               }
             ]
           }
@@ -1419,6 +1518,7 @@
                 "clave": "decision",
                 "estilo": "desplegable",
                 "opciones": [
+                  "Convertirlo en un plan mensual rentable",
                   "Subir la tarifa",
                   "Reducir el tiempo que le dedico",
                   "Cobrar aparte lo que ahora regalo",
@@ -1434,7 +1534,8 @@
                   "Reducir el tiempo que le dedico": "¿Has medido ya un mes completo con las horas nuevas?",
                   "Cobrar aparte lo que ahora regalo": "¿Has emitido ya la primera factura con eso dentro?",
                   "Renegociar condiciones": "¿Has tenido ya la conversación y están las condiciones nuevas por escrito?",
-                  "Desvincular al cliente": "¿Se lo has comunicado y tienes fecha de última factura?"
+                  "Desvincular al cliente": "¿Se lo has comunicado y tienes fecha de última factura?",
+                  "Convertirlo en un plan mensual rentable": "¿Le has presentado el plan mensual y lo tienes cerrado?"
                 },
                 "opciones_baja": [
                   "Desvincular al cliente"
@@ -1520,6 +1621,37 @@
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Renegociar condiciones"
+                }
+              },
+              {
+                "etiqueta": "¿Qué incluye el plan cada mes?",
+                "tipo": "texto",
+                "clave": "pack_incluye_r6",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Convertirlo en un plan mensual rentable"
+                }
+              },
+              {
+                "etiqueta": "¿A cuánto al mes? (€)",
+                "tipo": "numero",
+                "clave": "pack_precio_r6",
+                "no_sumar": true,
+                "hint_umbral": "precio",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Convertirlo en un plan mensual rentable"
+                }
+              },
+              {
+                "etiqueta": "¿Cuántas horas al mes te llevará?",
+                "tipo": "numero",
+                "clave": "pack_horas_r6",
+                "no_sumar": true,
+                "hint_umbral": "horas",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Convertirlo en un plan mensual rentable"
                 }
               }
             ]
