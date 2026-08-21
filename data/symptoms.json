@@ -632,6 +632,7 @@
         "secciones": [
           {
             "titulo": "Facturas pendientes",
+            "celebrar_total": "💰 Vas a recuperar",
             "columnas": [
               {
                 "etiqueta": "Trabajo entregado",
