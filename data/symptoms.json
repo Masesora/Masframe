@@ -870,8 +870,7 @@
     "justi_capa6": "Este indicador mide la mejora real de tu margen tras ajustar precios y costes. Compáralo con C0; si sube, el rediseño está funcionando.",
     "capa_1_options": "Fijo precios sin calcular si realmente cubren todos mis costes, incluidos los que no aparecen en la factura.; Hago descuentos para fidelizar o cerrar ventas sin saber si con eso me quedo en negativo.; Los costes han subido pero todavía no he podido trasladarlos al precio del cliente.; Hay trabajo que hago y no cobro: soporte, revisiones o cambios que doy por incluidos.; Tengo varios servicios pero no sé cuál me deja margen y cuál me lo quita.; Hay clientes concretos que facturan razonablemente bien pero de los que me queda muy poco margen real.",
     "c2_herramienta": "margen",
-    "kpi_recovery_mode": "estructural",
-    "recovery_unit_label": "re-medir margen",
+    "recovery_unit_label": "€ de margen recuperado",
     "kpi_name": "Margen",
     "kpi_unit": "%",
     "capa_3_plan": {
@@ -886,6 +885,12 @@
               {
                 "etiqueta": "Servicio",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Cuántas vendes al mes?",
+                "tipo": "numero",
+                "clave": "uds_mes",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Tu decisión: ¿qué vas a hacer?",
@@ -907,7 +912,10 @@
                   "Bajar materiales o subcontratas": "¿Tienes ya por escrito el coste nuevo del proveedor?",
                   "Hacerlo en menos tiempo": "¿Has cambiado ya la forma de hacerlo y comprobado que te sale en ese tiempo?",
                   "Dejar de ofrecerlo": "¿Lo has retirado ya de tu oferta y avisado a quien lo tenía contratado?"
-                }
+                },
+                "opciones_baja": [
+                  "Dejar de ofrecerlo"
+                ]
               },
               {
                 "etiqueta": "¿A cuánto lo subes? (€)",
@@ -970,6 +978,12 @@
                 "tipo": "texto"
               },
               {
+                "etiqueta": "¿Cuántas vendes al mes con ese descuento?",
+                "tipo": "numero",
+                "clave": "uds_mes",
+                "no_sumar": true
+              },
+              {
                 "etiqueta": "Tu decisión: ¿qué vas a hacer?",
                 "tipo": "opciones",
                 "clave": "decision",
@@ -989,7 +1003,16 @@
                   "Quitar el descuento a este segmento": "¿Has comunicado ya que pasa a pagar precio de tarifa?",
                   "Bajar el coste directo": "¿Tienes ya por escrito el coste nuevo?",
                   "Mantenerlo, pero a cambio de algo": "¿Has acordado ya la contrapartida y la tienes por escrito?"
-                }
+                },
+                "opciones_palanca_fija": {
+                  "Quitar el descuento a este segmento": {
+                    "palanca": "descuento",
+                    "valor": 0
+                  }
+                },
+                "opciones_sin_mejora": [
+                  "Mantenerlo, pero a cambio de algo"
+                ]
               },
               {
                 "etiqueta": "¿Cuál es tu descuento máximo? (%)",
@@ -1067,6 +1090,12 @@
                 "tipo": "texto"
               },
               {
+                "etiqueta": "¿Cuántas vendes al mes?",
+                "tipo": "numero",
+                "clave": "uds_mes",
+                "no_sumar": true
+              },
+              {
                 "etiqueta": "Tu decisión: ¿qué vas a hacer?",
                 "tipo": "opciones",
                 "clave": "decision",
@@ -1086,7 +1115,10 @@
                   "Subirlo por tramos": "¿Tienes las fechas de cada subida puestas en el calendario?",
                   "Cambiar de proveedor": "¿Has cerrado ya con el proveedor nuevo y tienes su precio por escrito?",
                   "Absorberlo de momento": "¿Has puesto en el calendario la fecha para revisarlo?"
-                }
+                },
+                "opciones_sin_mejora": [
+                  "Absorberlo de momento"
+                ]
               },
               {
                 "etiqueta": "¿A cuánto lo pones? (€)",
@@ -1241,6 +1273,17 @@
                   "valor_condicion": "Reducir las horas que regalas"
                 },
                 "hint_umbral": "horas"
+              },
+              {
+                "etiqueta": "¿Cuántas horas al mes te seguirán sin pagar? (h)",
+                "tipo": "numero",
+                "clave": "horas_tras_acotar",
+                "no_sumar": true,
+                "hint_umbral": "horas",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Acotar por escrito qué incluye"
+                }
               }
             ]
           }
@@ -1278,7 +1321,10 @@
                   "Recortar el tiempo que se le va": "¿Has medido ya un mes completo con las horas nuevas?",
                   "Reestructurar qué incluye": "¿Está el cambio ya en marcha y comunicado a quien le afecta?",
                   "Descontinuarla": "¿Has puesto fecha de cierre y avisado a quien la tenía contratada?"
-                }
+                },
+                "opciones_baja": [
+                  "Descontinuarla"
+                ]
               },
               {
                 "etiqueta": "¿A cuánto subes el precio? (€)",
@@ -1339,6 +1385,17 @@
                   "valor_condicion": "Descontinuarla"
                 },
                 "placeholder": "DD/MM/AAAA"
+              },
+              {
+                "etiqueta": "¿A cuánto queda el precio de la línea? (€)",
+                "tipo": "numero",
+                "clave": "precio_reestructurado",
+                "no_sumar": true,
+                "hint_umbral": "precio",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Reestructurar qué incluye"
+                }
               }
             ]
           }
@@ -1378,7 +1435,10 @@
                   "Cobrar aparte lo que ahora regalo": "¿Has emitido ya la primera factura con eso dentro?",
                   "Renegociar condiciones": "¿Has tenido ya la conversación y están las condiciones nuevas por escrito?",
                   "Desvincular al cliente": "¿Se lo has comunicado y tienes fecha de última factura?"
-                }
+                },
+                "opciones_baja": [
+                  "Desvincular al cliente"
+                ]
               },
               {
                 "etiqueta": "¿A cuánto le pones la tarifa al mes? (€)",
@@ -1450,12 +1510,24 @@
                   "valor_condicion": "Desvincular al cliente"
                 },
                 "placeholder": "DD/MM/AAAA"
+              },
+              {
+                "etiqueta": "¿Cuánto pasará a pagarte al mes? (€)",
+                "tipo": "numero",
+                "clave": "tarifa_renegociada",
+                "no_sumar": true,
+                "hint_umbral": "precio",
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Renegociar condiciones"
+                }
               }
             ]
           }
         ]
       }
-    }
+    },
+    "kpi_window_meses": 3
   },
   {
     "specialty_id": "UNIDAD DE PROCESOS",
