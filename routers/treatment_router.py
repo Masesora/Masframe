@@ -27,6 +27,8 @@ class NotifyCCRequest(BaseModel):
     aci_nombre:     str = ""
     decision:       str = ""
     sintoma_nombre: str = ""
+    # Contexto libre del aviso (elemento, cifra que se le pide, por que no la ve asumible).
+    detalle:        str = ""
 
 class TreatmentSaveRequest(BaseModel):
     clientId:  str
@@ -109,12 +111,17 @@ def _build_html(titulo: str, meta: str, cuerpo: str) -> str:
     )
 
 
-# POST /treatment/notify-cc — solo usuarios internos
+# POST /treatment/notify-cc — el cliente sobre SU expediente, internos sobre cualquiera
+# 21 ago 2026: exigia require_internal, asi que ninguna notificacion disparada desde el
+# tratamiento del cliente llegaba nunca -- el frontend las lanza con .catch(() => {}) y fallaban
+# en silencio. Se alinea con el criterio de propiedad que ya usa /treatment/save: nadie gana
+# acceso a nada que no tuviera, solo puede avisar sobre su propio expediente.
 @router.post("/treatment/notify-cc")
 async def notify_cc(
     data: NotifyCCRequest,
-    _user: dict = Depends(require_internal),
+    user: dict = Depends(get_current_user),
 ):
+    check_owns_or_internal(user, data.clientId)
     if not RESEND_API_KEY:
         return {"status": "skipped", "reason": "RESEND_API_KEY not set"}
 
@@ -134,7 +141,22 @@ async def notify_cc(
         f"Sintoma: {sintoma_str} &middot; {fecha_hoy}"
     )
 
-    if data.trigger == "c3_decision":
+    if data.trigger == "umbral_inviable":
+        asunto = f"Aviso clinico | Umbral no asumible | {empresa_str} | {sintoma_str}"
+        titulo = "El cliente no ve asumible la cifra que pide el protocolo"
+        cuerpo = (
+            f"<p><strong>{empresa_str}</strong> ha llegado a la decision de C3 pero considera que"
+            " la cifra necesaria para que ese elemento deje beneficio no es realista en su caso.</p>"
+            "<div style='background:#fef2f2;border-left:4px solid #dc2626;"
+            "padding:12px 16px;margin:14px 0'>"
+            "<p style='margin:0 0 4px;font-weight:700;color:#dc2626;font-size:0.7rem;"
+            "text-transform:uppercase'>Que ha pedido revisar</p>"
+            f"<p style='margin:0;color:#1e1b4b'>{data.detalle or decision_str}</p>"
+            "</div>"
+            "<p>No es un bloqueo: el protocolo sigue abierto. Necesita criterio sobre si hay otra"
+            " palanca mejor para ese elemento, o si toca revisar el objetivo.</p>"
+        )
+    elif data.trigger == "c3_decision":
         asunto = f"Aviso clinico | Decision comprometida | {empresa_str} | {sintoma_str}"
         titulo = "ACI ha registrado su Decision Comprometida (C3)"
         cuerpo = (
