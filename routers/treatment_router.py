@@ -141,7 +141,18 @@ async def notify_cc(
         f"Sintoma: {sintoma_str} &middot; {fecha_hoy}"
     )
 
-    if data.trigger == "umbral_inviable":
+    if data.trigger == "ayuda_consultor":
+        asunto = f"Aviso clinico | Peticion de ayuda | {empresa_str} | {sintoma_str}"
+        titulo = "El cliente pide criterio en un punto del protocolo"
+        cuerpo = (
+            f"<p><strong>{empresa_str}</strong> ha pedido ayuda desde su tratamiento.</p>"
+            "<div style='background:#fffbeb;border-left:4px solid #C4A55A;"
+            "padding:12px 16px;margin:14px 0'>"
+            f"<p style='margin:0;color:#1e1b4b'>{data.detalle or decision_str}</p>"
+            "</div>"
+            "<p>El protocolo sigue abierto: no esta bloqueado, necesita criterio.</p>"
+        )
+    elif data.trigger == "umbral_inviable":
         asunto = f"Aviso clinico | Umbral no asumible | {empresa_str} | {sintoma_str}"
         titulo = "El cliente no ve asumible la cifra que pide el protocolo"
         cuerpo = (
