@@ -628,6 +628,7 @@
       "r1": {
         "tipo": "nativa",
         "titulo": "Facturar en el acto, al entregar",
+        "sin_valor_c4": true,
         "secciones": [
           {
             "columnas": [
@@ -637,37 +638,15 @@
                 "placeholder": "ej. Reforma cocina Sra. García"
               },
               {
-                "etiqueta": "Fecha entrega",
-                "tipo": "texto",
-                "placeholder": "DD/MM/AAAA"
-              },
-              {
-                "etiqueta": "¿Facturado el mismo día?",
-                "tipo": "opciones",
-                "opciones": [
-                  "No",
-                  "Sí"
-                ],
-                "clave": "facturado"
-              },
-              {
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
-                "placeholder": "ej. 450",
-                "suma_si": {
-                  "clave_condicion": "facturado",
-                  "valor_condicion": "No",
-                  "etiqueta_total": "Sin facturar todavía (€)"
-                }
+                "placeholder": "ej. 450"
               },
               {
                 "etiqueta": "¿Por qué no lo facturaste al momento?",
                 "tipo": "opciones",
                 "clave": "causa",
-                "mostrar_si": {
-                  "clave_condicion": "facturado",
-                  "valor_condicion": "No"
-                },
+                "estilo": "lista",
                 "opciones": [
                   "No tenía el programa a mano en ese momento",
                   "Quería tener el importe cerrado del todo antes de facturar",
