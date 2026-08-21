@@ -677,11 +677,59 @@
                   "Otro motivo"
                 ],
                 "contramedidas": {
-                  "No tenía el programa a mano en ese momento": "Descarga la app de tu facturación en el móvil ahora. La próxima entrega, factura antes de subir a la furgoneta.",
-                  "Quería tener el importe cerrado del todo antes de facturar": "Factura con el importe que tengas ahora, aunque no esté cerrado. Para eso existe la rectificativa: un número aproximado hoy vale más que uno perfecto dentro de un mes.",
-                  "Se me olvida sin más, no tengo ningún aviso": "Elige algo que ya hagas siempre al entregar — guardar la herramienta, cerrar la furgoneta — y factura justo antes. Que sea físicamente imposible hacer esa acción sin haber facturado.",
-                  "Es papeleo que no me apetece hacer, lo voy dejando": "Bloquéate 10 minutos fijos cada tarde solo para facturar lo del día. No hace falta que te guste, solo que tenga un hueco que no compite con nada más.",
+                  "No tenía el programa a mano en ese momento": "Pide 3 presupuestos de programas de facturación esta semana y elige uno. Con la app en el móvil, la próxima entrega la facturas antes de irte.",
                   "Prefiero juntar varias y facturarlas de una vez": "Cada una que dejas para \"juntar\" es una que se puede quedar fuera del todo. Factura cada entrega el mismo día, de una en una."
+                }
+              },
+              {
+                "etiqueta": "¿Por qué no tenías el importe cerrado?",
+                "tipo": "opciones",
+                "clave": "causa_importe",
+                "mostrar_si": {
+                  "clave_condicion": "causa",
+                  "valor_condicion": "Quería tener el importe cerrado del todo antes de facturar"
+                },
+                "opciones": [
+                  "No cerramos un presupuesto antes de empezar el trabajo",
+                  "El trabajo cambió sobre la marcha y no lo recalculé"
+                ],
+                "contramedidas": {
+                  "No cerramos un presupuesto antes de empezar el trabajo": "Cierra el presupuesto con el cliente ANTES de empezar, no al entregar. Así facturas con el importe ya acordado, sin esperar a nada.",
+                  "El trabajo cambió sobre la marcha y no lo recalculé": "Factura ahora con el importe base ya acordado, y emite una factura complementaria por el extra en cuanto lo tengas. No esperes a tenerlo todo cerrado para facturar lo que ya está claro."
+                }
+              },
+              {
+                "etiqueta": "¿Tienes algún sitio donde apuntar lo que entregas?",
+                "tipo": "opciones",
+                "clave": "causa_registro",
+                "mostrar_si": {
+                  "clave_condicion": "causa",
+                  "valor_condicion": "Se me olvida sin más, no tengo ningún aviso"
+                },
+                "opciones": [
+                  "No tengo nada, ni un Excel",
+                  "Sí tengo, pero no lo miro"
+                ],
+                "contramedidas": {
+                  "No tengo nada, ni un Excel": "Necesitas un registro mínimo de entregas antes que nada — es la base sobre la que se sostiene cualquier aviso. Si no tienes tiempo de montarlo, pídeselo a tu CC.",
+                  "Sí tengo, pero no lo miro": "El problema no es la falta de registro, es que no lo consultas. Ponlo donde lo veas sí o sí — la agenda del móvil, no una hoja aparte que nunca abres."
+                }
+              },
+              {
+                "etiqueta": "¿Es que no tienes tiempo, o que teniéndolo lo evitas?",
+                "tipo": "opciones",
+                "clave": "causa_papeleo",
+                "mostrar_si": {
+                  "clave_condicion": "causa",
+                  "valor_condicion": "Es papeleo que no me apetece hacer, lo voy dejando"
+                },
+                "opciones": [
+                  "No tengo tiempo, estoy desbordado con la administración",
+                  "Tengo hueco pero lo evito"
+                ],
+                "contramedidas": {
+                  "No tengo tiempo, estoy desbordado con la administración": "Esto ya no es un hábito que cambiar, es una persona que falta. Si tu administrativo está de baja o no da abasto, necesitas cubrir ese hueco —aunque sea temporal— antes de que se acumule más.",
+                  "Tengo hueco pero lo evito": "Bloquéate 10 minutos fijos cada tarde solo para facturar lo del día. No hace falta que te guste, solo que tenga un hueco que no compite con nada más."
                 }
               },
               {
