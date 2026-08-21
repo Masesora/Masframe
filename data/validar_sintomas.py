@@ -369,6 +369,16 @@ def _lint_simulador(sid, prefix, recurso, E, W):
     if not any(c.get("tipo") == "slider" for c in cols):
         W.append(f"{prefix}: tipo simulador sin ninguna columna 'slider' — sin precio que probar no hay nada que simular")
 
+    # genera_anuncio (UCI-S1.r1, 20 ago 2026): el generador de texto de venta en TreatmentPage.tsx
+    # busca las claves "canal" y "precio_prop" por nombre -- si falta una, el bloque de texto
+    # simplemente no aparece (config invalida silenciosa para el cliente), igual que
+    # carta_reclamacion en las secciones nativas.
+    if recurso.get("genera_anuncio"):
+        claves = {c.get("clave") for c in cols}
+        faltan = {"canal", "precio_prop"} - claves
+        if faltan:
+            E.append(f"{prefix}: genera_anuncio=true pero faltan columnas con clave {sorted(faltan)} — el texto de venta no aparecera")
+
 def _lint_calculadora(sid, prefix, recurso, E, W):
     campos    = recurso.get("campos", [])
     resultados= recurso.get("resultados", [])

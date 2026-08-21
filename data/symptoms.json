@@ -56,6 +56,7 @@
         "tipo": "simulador",
         "titulo": "Liquidar capital inmovilizado en inventario sin rotación",
         "entidad_nombre": "Producto",
+        "genera_anuncio": true,
         "columnas": [
           {
             "etiqueta": "Referencia / Producto",
@@ -114,6 +115,7 @@
             "etiqueta": "Canal de venta",
             "tipo": "opciones",
             "estilo": "botones",
+            "clave": "canal",
             "opciones": [
               "Wallapop",
               "Proveedor",
