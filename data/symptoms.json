@@ -887,12 +887,6 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Cuántas vendes al mes?",
-                "tipo": "numero",
-                "clave": "uds_mes",
-                "no_sumar": true
-              },
-              {
                 "etiqueta": "Tu decisión: ¿qué vas a hacer?",
                 "tipo": "opciones",
                 "clave": "decision",
@@ -1009,12 +1003,6 @@
               {
                 "etiqueta": "Segmento o cliente",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Cuántas vendes al mes con ese descuento?",
-                "tipo": "numero",
-                "clave": "uds_mes",
-                "no_sumar": true
               },
               {
                 "etiqueta": "Tu decisión: ¿qué vas a hacer?",
@@ -1154,12 +1142,6 @@
               {
                 "etiqueta": "Servicio o producto",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Cuántas vendes al mes?",
-                "tipo": "numero",
-                "clave": "uds_mes",
-                "no_sumar": true
               },
               {
                 "etiqueta": "Tu decisión: ¿qué vas a hacer?",
