@@ -673,6 +673,10 @@
                 "contramedidas": {
                   "No tenía el programa a mano en ese momento": "Pide 3 presupuestos de programas de facturación esta semana y elige uno. Con la app en el móvil, la próxima entrega la facturas antes de irte.",
                   "Prefiero juntar varias y facturarlas de una vez": "Cada una que dejas para \"juntar\" es una que se puede quedar fuera del todo. Factura cada entrega el mismo día, de una en una."
+                },
+                "confirmaciones": {
+                  "No tenía el programa a mano en ese momento": "¿Has elegido y comprado ya un programa de facturación?",
+                  "Prefiero juntar varias y facturarlas de una vez": "¿Has empezado a facturar cada entrega el mismo día, por separado?"
                 }
               },
               {
@@ -691,6 +695,10 @@
                 "contramedidas": {
                   "No cerramos un presupuesto antes de empezar el trabajo": "Cierra el presupuesto con el cliente antes de empezar el trabajo, no al entregarlo. Así facturas con el importe ya acordado, sin esperar a nada.",
                   "El trabajo cambió sobre la marcha y no lo recalculé": "Factura ahora con el importe base ya acordado, y emite una factura complementaria por el extra en cuanto lo tengas. No esperes a tenerlo todo cerrado para facturar lo que ya está claro."
+                },
+                "confirmaciones": {
+                  "No cerramos un presupuesto antes de empezar el trabajo": "¿Ya estás cerrando presupuesto por escrito antes de empezar cada trabajo?",
+                  "El trabajo cambió sobre la marcha y no lo recalculé": "¿Has facturado ya el importe base acordado?"
                 }
               },
               {
@@ -709,6 +717,10 @@
                 "contramedidas": {
                   "No tengo nada, ni un Excel": "Necesitas un registro mínimo de entregas antes que nada — es la base sobre la que se sostiene cualquier aviso. Si no tienes tiempo de montarlo, pídeselo a tu CC.",
                   "Sí tengo, pero no lo miro": "Tenerlo no sirve de nada si no lo ves cada día. Ponlo donde no puedas evitarlo — la agenda del móvil, no una hoja aparte."
+                },
+                "confirmaciones": {
+                  "No tengo nada, ni un Excel": "¿Tienes ya montado tu registro de entregas?",
+                  "Sí tengo, pero no lo miro": "¿Has cambiado ya dónde tienes el registro para verlo cada día?"
                 }
               },
               {
@@ -727,6 +739,10 @@
                 "contramedidas": {
                   "No tengo tiempo, estoy desbordado con la administración": "Esto ya no es un hábito que cambiar, es una persona que falta. Si tu administrativo está de baja o no da abasto, necesitas cubrir ese hueco —aunque sea temporal— antes de que se acumule más.",
                   "Tengo hueco pero lo evito": "Bloquéate 10 minutos fijos cada tarde solo para facturar lo del día. No hace falta que te apetezca, solo que tenga su hueco fijo, uno que nadie más te quite."
+                },
+                "confirmaciones": {
+                  "No tengo tiempo, estoy desbordado con la administración": "¿Has cubierto ya ese hueco de administración (contratado o delegado)?",
+                  "Tengo hueco pero lo evito": "¿Has empezado ya a bloquearte ese hueco fijo cada tarde?"
                 }
               },
               {

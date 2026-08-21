@@ -251,6 +251,19 @@ def _lint_columnas(sid, sp, cols, E, W):
                 if sobrantes:
                     E.append(f"{sp} col '{etiqueta}': contramedidas tiene claves que no son ninguna opcion real {sobrantes!r} — nunca se mostrarian")
 
+        # confirmaciones (21 ago 2026, "tiene que confirmar si ha comprado un software, etc"):
+        # pregunta de si/no especifica que se muestra en el checklist de C4 en vez de repetir la
+        # contramedida. Mismo contrato que contramedidas -- solo sobre 'opciones', claves reales.
+        cf = c.get("confirmaciones")
+        if cf is not None:
+            if ctipo != "opciones":
+                E.append(f"{sp} col '{etiqueta}': confirmaciones sobre tipo {ctipo!r} — solo tiene sentido sobre 'opciones'")
+            else:
+                opts = c.get("opciones") or []
+                sobrantes = [k for k in cf if k not in opts]
+                if sobrantes:
+                    E.append(f"{sp} col '{etiqueta}': confirmaciones tiene claves que no son ninguna opcion real {sobrantes!r} — nunca se mostrarian")
+
         if ctipo == "decision":
             dopts = c.get("decision_opciones")
             if not dopts or not isinstance(dopts, list) or len(dopts) < 2:
