@@ -1990,7 +1990,7 @@ Limpieza final: los 350 ficheros huérfanos de la raíz del duplicado borrados �
 ### LIII.E — Pendiente, anotado y no tocado hoy
 
 - **El recorrido C0→C6 de UCI-S3 no se ha hecho.** El guard de `/treatment/:codigo/:symptomId` pide email + número de expediente, y eso es autenticación. Queda el entorno montado: backend local contra Mongo local, dev server apuntado a él vía `src/.env.development.local`, código de prueba `MAS-8LPE5EKT`. **Borrar ese `.env.development.local` al terminar**, o `npm run dev` seguirá yendo al backend local indefinidamente.
-- **Calibración por decidir**: en el tipo 0, 🔴 propone "Subir precio ahora" y 🟡 "Renegociar coste directo". Para un caso de margen cero (mechas a 65€ con 65€ de coste real contando el tiempo) puede tener más sentido que el amarillo también proponga subir precio.
+- **Calibración, resuelta en la misma sesión**: en el tipo 0 el 🟡 pasa a proponer "Subir precio ahora", igual que el 🔴. Decidido probando el caso real (mechas a 65€ con 65€ de coste una vez contado el tiempo): ahí el producto es una parte pequeña del coste y renegociarlo con el proveedor no mueve la aguja, la mueve el precio. Misma dirección, distinta urgencia -- masesora-frontend@0617970.
 - **Deuda de infraestructura**: el repo del backend no tiene `.gitattributes`, y por eso el fix de `build_triaje.py` entró con 194 líneas de ruido CRLF→LF sobre un cambio real de 6 líneas. Y el clon bueno sigue sin refspec de fetch configurado.
 - Siguen abiertos los 3 puntos de §LII.E sobre UCI-S2.
 
