@@ -973,22 +973,22 @@
                 }
               },
               {
-                "etiqueta": "¿A cuánto lo vendes? (€)",
+                "etiqueta": "¿Cuántas horas te llevará darlo?",
                 "tipo": "numero",
-                "clave": "pack_precio_r1",
+                "clave": "pack_horas_r1",
                 "no_sumar": true,
-                "hint_umbral": "precio",
+                "hint_umbral": "horas",
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Sustituirlo por un pack rentable"
                 }
               },
               {
-                "etiqueta": "¿Cuántas horas te llevará darlo?",
+                "etiqueta": "¿A cuánto lo vendes? (€)",
                 "tipo": "numero",
-                "clave": "pack_horas_r1",
+                "clave": "pack_precio_r1",
                 "no_sumar": true,
-                "hint_umbral": "horas",
+                "hint_umbral": "precio",
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Sustituirlo por un pack rentable"
@@ -1118,22 +1118,22 @@
                 }
               },
               {
-                "etiqueta": "¿A cuánto se lo dejas? (€)",
+                "etiqueta": "¿Cuánto te costará darlo? (€)",
                 "tipo": "numero",
-                "clave": "pack_precio_r2",
+                "clave": "pack_coste_r2",
                 "no_sumar": true,
-                "hint_umbral": "precio",
+                "hint_umbral": "coste",
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Sustituir el descuento por un pack rentable"
                 }
               },
               {
-                "etiqueta": "¿Cuánto te costará darlo? (€)",
+                "etiqueta": "¿A cuánto se lo dejas? (€)",
                 "tipo": "numero",
-                "clave": "pack_coste_r2",
+                "clave": "pack_precio_r2",
                 "no_sumar": true,
-                "hint_umbral": "coste",
+                "hint_umbral": "precio",
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Sustituir el descuento por un pack rentable"
@@ -1475,22 +1475,22 @@
                 }
               },
               {
-                "etiqueta": "¿A cuánto lo vendes? (€)",
+                "etiqueta": "¿Cuánto te costará darlo? (€)",
                 "tipo": "numero",
-                "clave": "pack_precio_r5",
+                "clave": "pack_coste_r5",
                 "no_sumar": true,
-                "hint_umbral": "precio",
+                "hint_umbral": "coste",
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Reconvertirla en un pack rentable"
                 }
               },
               {
-                "etiqueta": "¿Cuánto te costará darlo? (€)",
+                "etiqueta": "¿A cuánto lo vendes? (€)",
                 "tipo": "numero",
-                "clave": "pack_coste_r5",
+                "clave": "pack_precio_r5",
                 "no_sumar": true,
-                "hint_umbral": "coste",
+                "hint_umbral": "precio",
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Reconvertirla en un pack rentable"
@@ -1633,22 +1633,22 @@
                 }
               },
               {
-                "etiqueta": "¿A cuánto al mes? (€)",
+                "etiqueta": "¿Cuántas horas al mes te llevará?",
                 "tipo": "numero",
-                "clave": "pack_precio_r6",
+                "clave": "pack_horas_r6",
                 "no_sumar": true,
-                "hint_umbral": "precio",
+                "hint_umbral": "horas",
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Convertirlo en un plan mensual rentable"
                 }
               },
               {
-                "etiqueta": "¿Cuántas horas al mes te llevará?",
+                "etiqueta": "¿A cuánto al mes? (€)",
                 "tipo": "numero",
-                "clave": "pack_horas_r6",
+                "clave": "pack_precio_r6",
                 "no_sumar": true,
-                "hint_umbral": "horas",
+                "hint_umbral": "precio",
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Convertirlo en un plan mensual rentable"
