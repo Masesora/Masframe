@@ -633,6 +633,10 @@
           {
             "titulo": "Facturas pendientes",
             "celebrar_total": "💰 Vas a recuperar",
+            "escalar_a": {
+              "rama": "r2",
+              "boton": "📤 Sigue sin cobrarse — pásala a reclamación"
+            },
             "columnas": [
               {
                 "etiqueta": "Trabajo entregado",
@@ -642,6 +646,7 @@
               {
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
+                "clave": "importe",
                 "placeholder": "ej. 450"
               }
             ],

@@ -111,6 +111,28 @@ def lint_capa3(s, E, W):
         elif tipo not in ("nativa","calculadora","pipeline","simulador"):
             E.append(f"{prefix}.tipo desconocido: {tipo!r} (solo 'nativa', 'calculadora', 'pipeline' o 'simulador')")
 
+        # escalar_a (puente entre ramas, 21 ago 2026, "la informacion no pasa a r2"): la rama
+        # destino debe existir de verdad en este mismo capa_3_plan, y debe compartir al menos una
+        # `clave` con la seccion origen -- si no, el boton apareceria (si la rama destino esta
+        # comprometida en esa sesion) pero no trasladaria ningun dato, engañando al cliente.
+        if tipo == "nativa":
+            for si, sec in enumerate(recurso.get("secciones", []) or []):
+                esc = sec.get("escalar_a")
+                if not esc: continue
+                rama_destino = esc.get("rama")
+                if rama_destino not in cp:
+                    E.append(f"{prefix}.sec[{si}]: escalar_a.rama={rama_destino!r} no existe en este capa_3_plan")
+                    continue
+                destino = cp[rama_destino]
+                if not isinstance(destino, dict) or destino.get("tipo") != "nativa":
+                    E.append(f"{prefix}.sec[{si}]: escalar_a.rama={rama_destino!r} no es una rama tipo 'nativa'")
+                    continue
+                cols_destino = (destino.get("secciones") or [{}])[0].get("columnas", [])
+                claves_origen = {c.get("clave") for c in sec.get("columnas", []) if c.get("clave")}
+                claves_destino = {c.get("clave") for c in cols_destino if c.get("clave")}
+                if not (claves_origen & claves_destino):
+                    W.append(f"{prefix}.sec[{si}]: escalar_a hacia {rama_destino!r} sin ninguna 'clave' en comun -- el boton no trasladaria ningun dato")
+
 # Validacion de columnas compartida entre 'nativa' (una lista de columnas por seccion) y
 # 'pipeline' (una lista de columnas plana, sin secciones — la etapa organiza las tarjetas,
 # no una seccion mas). Mismo contrato de tipos/formulas en ambos casos porque ambos usan el
