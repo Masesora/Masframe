@@ -828,8 +828,8 @@
     "logica": "Cobras lo que el mercado aguanta o lo que cobra la competencia — pero nadie ha calculado si ese precio te deja beneficio real.",
     "plan": "PIE",
     "description_symptom": "Si nunca has calculado cuánto te queda después de pagar todos tus gastos reales — incluyendo impuestos y lo que deberías cobrarte como sueldo — estás fijando precios a ciegas. Muchos autónomos facturan bien y sobreviven mal porque su precio no cubre su coste real de vida empresarial.",
-    "kpi_question": "Introduce tu facturación mensual total y el total de costes directos mensuales — materiales, subcontratas y gastos directos. Si tu margen mensual es inferior al 30%, estás trabajando para pagar gastos, no para generar beneficio real.",
-    "kpi_impact": "Un margen mensual superior al 30% sobre tu facturación garantiza que tu negocio genera valor real, no solo movimiento de caja.",
+    "kpi_question": "Introduce lo que has facturado en los últimos 3 meses y lo que te ha costado ese trabajo: material y producto, personal y subcontratas, y lo que te llevas tú como sueldo. Tomamos 3 meses para que un mes flojo o un pico puntual no te den una foto falsa. Si tu margen es inferior al 30%, tu carta de servicios no está sosteniendo el negocio.",
+    "kpi_impact": "Un margen superior al 30% sobre lo facturado, una vez pagados el material, el personal y tu propio sueldo, es lo que separa un negocio que genera beneficio de uno que solo mueve dinero.",
     "kpi_formula": "((InputA-InputB)/InputA)*100",
     "kpi_objective": ">30%",
     "threshold_critical": 70,
@@ -839,22 +839,22 @@
     "inputs": [
       {
         "id": "inputA",
-        "label": "Facturación mensual total"
+        "label": "Lo que has facturado en los últimos 3 meses"
       },
       {
         "id": "inputB",
-        "label": "Costes directos mensuales totales (materiales, subcontratas, gastos directos)"
+        "label": "Lo que te ha costado ese trabajo en esos 3 meses (material, personal, subcontratas y tu sueldo)"
       }
     ],
-    "input_a": "Facturación mensual total",
-    "input_b": "Costes directos mensuales totales (materiales, subcontratas, gastos directos)",
-    "input_revised_1": "Facturación mensual (post)",
-    "input_revised_2": "Costes directos mensuales (post)",
+    "input_a": "Lo que has facturado en los últimos 3 meses (€)",
+    "input_b": "Lo que te ha costado ese trabajo en esos 3 meses: material y producto, personal y subcontratas, y lo que te llevas tú como sueldo (€)",
+    "input_revised_1": "Facturación últimos 3 meses (post)",
+    "input_revised_2": "Costes de esos 3 meses (post)",
     "result_revised": "Δ margen bruto",
     "impact_treatment": "Recalculamos tu estructura de costes y rediseñamos el precio para que cada venta tenga margen garantizado. Vender más deja de significar trabajar más para ganar lo mismo.",
     "optimizer_impact": "El precio se fija con datos reales, no con referencia al mercado o a la competencia.",
     "optimizer_decision": "Cálculo de Precio Mínimo Viable",
-    "example": "Diseñadora autónoma: facturaba 3.200€/mes con costes reales de 2.900€. Margen: 9%. Tras recalcular su precio mínimo viable y eliminar los servicios que le daban pérdidas, el margen sube al 34%.",
+    "example": "Peluquería: 18.000€ facturados en el trimestre con 15.500€ de coste real — producto, personal y su propio sueldo. Margen: 14%. Las mechas dejaban 40€ y parecían rentables: el problema no estaba en un servicio, estaba en la carta entera. Tras recalcular precios y retirar dos servicios deficitarios, el margen sube al 32%.",
     "capa_1_priorizacion": "Precios fijados sin calcular todos los costes, incluidos los que no aparecen en la factura; descuentos sin saber si te dejan en negativo; costes que han subido sin poder trasladarlos al precio del cliente; trabajo que haces y no cobras: soporte, revisiones o cambios que das por incluidos; servicios sin saber cuál te deja margen de verdad; clientes que facturan bien pero de los que te queda muy poco margen real.",
     "justi_capa1": "El margen real se destruye por causas distintas. Señala cuáles reconoces para saber dónde está la mayor brecha entre lo que cobras y lo que realmente te queda.",
     "capa_2_decision": "Semáforo de Viabilidad",
@@ -935,7 +935,13 @@
                   "Renegociar coste directo",
                   "Descontinuar servicio",
                   "Precio ya viable"
-                ]
+                ],
+                "confirmaciones": {
+                  "Subir precio ahora": "¿Has actualizado ya este precio en tu tarifa y lo estás aplicando en los presupuestos nuevos?",
+                  "Renegociar coste directo": "¿Has hablado ya con el proveedor y tienes el coste nuevo por escrito?",
+                  "Descontinuar servicio": "¿Has retirado ya este servicio de tu oferta y avisado a quien lo tenía contratado?",
+                  "Precio ya viable": "¿Has comprobado que este precio cubre también tu tiempo, no solo el material?"
+                }
               }
             ],
             "filas_iniciales": 3,
@@ -1020,7 +1026,13 @@
                   "Eliminar descuento a este segmento",
                   "Mantener descuento (justificado)",
                   "Renegociar coste de entrega"
-                ]
+                ],
+                "confirmaciones": {
+                  "Reducir descuento habitual": "¿Has fijado por escrito el descuento máximo que puedes hacer y lo estás respetando?",
+                  "Eliminar descuento a este segmento": "¿Has comunicado ya a este segmento que pasa a pagar precio de tarifa?",
+                  "Mantener descuento (justificado)": "¿Has comprobado que, aun con el descuento, esta venta te deja margen positivo?",
+                  "Renegociar coste de entrega": "¿Has conseguido ya bajar el coste de entrega y lo tienes confirmado?"
+                }
               }
             ],
             "filas_iniciales": 3,
@@ -1092,7 +1104,13 @@
                   "Subir precio gradualmente",
                   "Buscar proveedor alternativo",
                   "Absorber el coste (justificado)"
-                ]
+                ],
+                "confirmaciones": {
+                  "Subir precio ya": "¿Has comunicado el precio nuevo a tus clientes y ya lo estás cobrando?",
+                  "Subir precio gradualmente": "¿Tienes las fechas de cada subida puestas en el calendario?",
+                  "Buscar proveedor alternativo": "¿Has pedido ya presupuesto a otro proveedor y comparado el coste?",
+                  "Absorber el coste (justificado)": "¿Has puesto fecha para revisar esta decisión antes de que el margen empeore más?"
+                }
               }
             ],
             "filas_iniciales": 3,
@@ -1106,8 +1124,7 @@
         "campos": [
           {
             "clave": "facturacion",
-            "etiqueta": "Facturación mensual (€)",
-            "precarga_desde_c0": "input_a"
+            "etiqueta": "Facturación mensual (€)"
           },
           {
             "clave": "tarifa",
@@ -1238,7 +1255,13 @@
                   "Mantener",
                   "Reestructurar o reducir",
                   "Descontinuar línea"
-                ]
+                ],
+                "confirmaciones": {
+                  "Potenciar esta línea": "¿Has decidido ya qué dejas de hacer para poder dedicarle más tiempo a esta línea?",
+                  "Mantener": "¿Has comprobado que esta línea cubre el coste del tiempo de equipo que consume?",
+                  "Reestructurar o reducir": "¿Has hecho ya el cambio concreto (precio, horas o alcance) que decidiste para esta línea?",
+                  "Descontinuar línea": "¿Has puesto fecha de cierre a esta línea y avisado a quien la tenía contratada?"
+                }
               }
             ],
             "filas_iniciales": 3,
@@ -1320,7 +1343,13 @@
                   "Renegociar condiciones",
                   "Reducir tiempo dedicado",
                   "Desvincular cliente"
-                ]
+                ],
+                "confirmaciones": {
+                  "Mantener cliente": "¿Has comprobado que lo que te paga cubre las horas reales que le dedicas?",
+                  "Renegociar condiciones": "¿Has tenido ya la conversación y tienes las condiciones nuevas por escrito?",
+                  "Reducir tiempo dedicado": "¿Has acotado por escrito qué incluye el servicio y qué pasa a cobrarse aparte?",
+                  "Desvincular cliente": "¿Has comunicado ya el fin de la relación y tienes fecha de última factura?"
+                }
               }
             ],
             "filas_iniciales": 3,
