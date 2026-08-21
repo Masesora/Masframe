@@ -877,483 +877,581 @@
     "capa_3_plan": {
       "r1": {
         "tipo": "nativa",
-        "titulo": "Calculadora de precio mínimo viable por servicio",
+        "titulo": "Qué haces con cada servicio que no cubre sus costes",
         "secciones": [
           {
+            "origen_margen": true,
+            "vista": "tarjeta",
             "columnas": [
               {
-                "etiqueta": "Servicio / Producto",
+                "etiqueta": "Servicio",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Coste Directo (€)",
-                "tipo": "numero",
-                "clave": "coste_directo"
-              },
-              {
-                "etiqueta": "Costes Indirectos Asig. (€)",
-                "tipo": "numero",
-                "clave": "costes_indirectos"
-              },
-              {
-                "etiqueta": "Coste Total (€)",
-                "tipo": "calculada",
-                "clave": "coste_total",
-                "formula": "coste_directo+costes_indirectos",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Margen Obj. %",
-                "tipo": "numero",
-                "clave": "margen_obj",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Precio Mín. Viable (€)",
-                "tipo": "calculada",
-                "clave": "precio_minimo",
-                "formula": "coste_total/(1-margen_obj/100)",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Precio Actual (€)",
-                "tipo": "numero",
-                "clave": "precio_actual"
-              },
-              {
-                "etiqueta": "Gap (€)",
-                "tipo": "calculada",
-                "clave": "gap",
-                "formula": "precio_actual-precio_minimo",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Decisión",
+                "etiqueta": "Tu decisión: ¿qué vas a hacer?",
                 "tipo": "opciones",
+                "clave": "decision",
+                "estilo": "desplegable",
                 "opciones": [
-                  "Subir precio ahora",
-                  "Renegociar coste directo",
-                  "Descontinuar servicio",
-                  "Precio ya viable"
+                  "Subir el precio",
+                  "Bajar materiales o subcontratas",
+                  "Hacerlo en menos tiempo",
+                  "Dejar de ofrecerlo"
                 ],
+                "sugerencia_por_color": {
+                  "rojo": "Subir el precio",
+                  "amarillo": "Subir el precio"
+                },
                 "confirmaciones": {
-                  "Subir precio ahora": "¿Has actualizado ya este precio en tu tarifa y lo estás aplicando en los presupuestos nuevos?",
-                  "Renegociar coste directo": "¿Has hablado ya con el proveedor y tienes el coste nuevo por escrito?",
-                  "Descontinuar servicio": "¿Has retirado ya este servicio de tu oferta y avisado a quien lo tenía contratado?",
-                  "Precio ya viable": "¿Has comprobado que este precio cubre también tu tiempo, no solo el material?"
+                  "Subir el precio": "¿Has actualizado ya el precio en tu tarifa y lo estás aplicando en los presupuestos nuevos?",
+                  "Bajar materiales o subcontratas": "¿Tienes ya por escrito el coste nuevo del proveedor?",
+                  "Hacerlo en menos tiempo": "¿Has cambiado ya la forma de hacerlo y comprobado que te sale en ese tiempo?",
+                  "Dejar de ofrecerlo": "¿Lo has retirado ya de tu oferta y avisado a quien lo tenía contratado?"
                 }
+              },
+              {
+                "etiqueta": "¿A cuánto lo subes? (€)",
+                "tipo": "numero",
+                "clave": "nuevo_precio",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Subir el precio"
+                },
+                "hint_umbral": "precio"
+              },
+              {
+                "etiqueta": "¿A cuánto dejas materiales y subcontratas? (€)",
+                "tipo": "numero",
+                "clave": "nuevo_coste",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Bajar materiales o subcontratas"
+                },
+                "hint_umbral": "coste"
+              },
+              {
+                "etiqueta": "¿En cuántas horas lo haces? (h)",
+                "tipo": "numero",
+                "clave": "nuevas_horas",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Hacerlo en menos tiempo"
+                },
+                "hint_umbral": "horas"
+              },
+              {
+                "etiqueta": "¿Desde qué fecha lo retiras?",
+                "tipo": "texto",
+                "clave": "fecha_retirada",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Dejar de ofrecerlo"
+                },
+                "placeholder": "DD/MM/AAAA"
               }
-            ],
-            "filas_iniciales": 3,
-            "vista": "tarjeta"
+            ]
           }
         ]
       },
       "r2": {
         "tipo": "nativa",
-        "titulo": "Impacto real de descuentos sobre el margen",
+        "titulo": "Qué haces con cada descuento que te deja sin margen",
         "secciones": [
           {
+            "origen_margen": true,
+            "vista": "tarjeta",
             "columnas": [
               {
-                "etiqueta": "Segmento / Cliente",
+                "etiqueta": "Segmento o cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Precio Tarifa (€)",
-                "tipo": "numero",
-                "clave": "pt"
-              },
-              {
-                "etiqueta": "Descuento Hab. %",
-                "tipo": "numero",
-                "clave": "dp",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Precio Real Cobrado (€)",
-                "tipo": "calculada",
-                "clave": "prc",
-                "formula": "pt*(1-dp/100)",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Coste de Entrega (€)",
-                "tipo": "numero",
-                "clave": "ce"
-              },
-              {
-                "etiqueta": "Uds/mes",
-                "tipo": "numero",
-                "clave": "ud"
-              },
-              {
-                "etiqueta": "Margen c/ Tarifa %",
-                "tipo": "calculada",
-                "clave": "mt",
-                "formula": "(pt-ce)/pt*100",
-                "unidad": "pct",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Margen c/ Desc. %",
-                "tipo": "calculada",
-                "clave": "md",
-                "formula": "(prc-ce)/prc*100",
-                "unidad": "pct",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Diferencia Margen (pp)",
-                "tipo": "calculada",
-                "clave": "dif",
-                "formula": "md-mt",
-                "unidad": "pct",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Margen Perdido/mes (€)",
-                "tipo": "calculada",
-                "clave": "mp",
-                "formula": "(pt-prc)*ud",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Decisión",
+                "etiqueta": "Tu decisión: ¿qué vas a hacer?",
                 "tipo": "opciones",
+                "clave": "decision",
+                "estilo": "desplegable",
                 "opciones": [
-                  "Reducir descuento habitual",
-                  "Eliminar descuento a este segmento",
-                  "Mantener descuento (justificado)",
-                  "Renegociar coste de entrega"
+                  "Bajar el descuento",
+                  "Quitar el descuento a este segmento",
+                  "Bajar el coste directo",
+                  "Mantenerlo, pero a cambio de algo"
                 ],
+                "sugerencia_por_color": {
+                  "rojo": "Quitar el descuento a este segmento",
+                  "amarillo": "Bajar el descuento"
+                },
                 "confirmaciones": {
-                  "Reducir descuento habitual": "¿Has fijado por escrito el descuento máximo que puedes hacer y lo estás respetando?",
-                  "Eliminar descuento a este segmento": "¿Has comunicado ya a este segmento que pasa a pagar precio de tarifa?",
-                  "Mantener descuento (justificado)": "¿Has comprobado que, aun con el descuento, esta venta te deja margen positivo?",
-                  "Renegociar coste de entrega": "¿Has conseguido ya bajar el coste de entrega y lo tienes confirmado?"
+                  "Bajar el descuento": "¿Has fijado por escrito tu descuento máximo y lo estás respetando?",
+                  "Quitar el descuento a este segmento": "¿Has comunicado ya que pasa a pagar precio de tarifa?",
+                  "Bajar el coste directo": "¿Tienes ya por escrito el coste nuevo?",
+                  "Mantenerlo, pero a cambio de algo": "¿Has acordado ya la contrapartida y la tienes por escrito?"
+                }
+              },
+              {
+                "etiqueta": "¿Cuál es tu descuento máximo? (%)",
+                "tipo": "numero",
+                "clave": "nuevo_dto",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Bajar el descuento"
+                },
+                "hint_umbral": "descuento"
+              },
+              {
+                "etiqueta": "¿Desde qué fecha?",
+                "tipo": "texto",
+                "clave": "fecha_quitar",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Quitar el descuento a este segmento"
+                },
+                "placeholder": "DD/MM/AAAA"
+              },
+              {
+                "etiqueta": "¿A cuánto dejas el coste directo? (€)",
+                "tipo": "numero",
+                "clave": "nuevo_coste",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Bajar el coste directo"
+                },
+                "hint_umbral": "coste"
+              },
+              {
+                "etiqueta": "¿Qué le pides a cambio?",
+                "tipo": "opciones",
+                "clave": "contrapartida",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Mantenerlo, pero a cambio de algo"
+                },
+                "opciones": [
+                  "Volumen mínimo",
+                  "Pago por adelantado",
+                  "Permanencia",
+                  "Que me traiga referidos"
+                ]
+              },
+              {
+                "etiqueta": "¿Cuánto, exactamente? (€ o unidades al mes)",
+                "tipo": "numero",
+                "clave": "contrapartida_cifra",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Mantenerlo, pero a cambio de algo"
                 }
               }
-            ],
-            "filas_iniciales": 3,
-            "vista": "tarjeta"
+            ]
           }
         ]
       },
       "r3": {
         "tipo": "nativa",
-        "titulo": "Impacto de la subida de costes y repricing",
+        "titulo": "Qué haces con cada coste que ha subido y no has trasladado",
         "secciones": [
           {
+            "origen_margen": true,
+            "vista": "tarjeta",
             "columnas": [
               {
-                "etiqueta": "Servicio / Producto",
+                "etiqueta": "Servicio o producto",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Coste Hace 12m (€)",
-                "tipo": "numero",
-                "clave": "costeold"
-              },
-              {
-                "etiqueta": "Coste Actual (€)",
-                "tipo": "numero",
-                "clave": "costenew"
-              },
-              {
-                "etiqueta": "Precio Hace 12m (€)",
-                "tipo": "numero",
-                "clave": "precioold"
-              },
-              {
-                "etiqueta": "Precio Actual (€)",
-                "tipo": "numero",
-                "clave": "precionew"
-              },
-              {
-                "etiqueta": "Uds/mes",
-                "tipo": "numero",
-                "clave": "uds"
-              },
-              {
-                "etiqueta": "Variación coste (€)",
-                "tipo": "calculada",
-                "clave": "var_coste",
-                "formula": "costenew-costeold",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Variación precio (€)",
-                "tipo": "calculada",
-                "clave": "var_precio",
-                "formula": "precionew-precioold",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Gap sin trasladar (€/mes)",
-                "tipo": "calculada",
-                "clave": "gap_mes",
-                "formula": "(var_coste-var_precio)*uds",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Decisión",
+                "etiqueta": "Tu decisión: ¿qué vas a hacer?",
                 "tipo": "opciones",
+                "clave": "decision",
+                "estilo": "desplegable",
                 "opciones": [
-                  "Subir precio ya",
-                  "Subir precio gradualmente",
-                  "Buscar proveedor alternativo",
-                  "Absorber el coste (justificado)"
+                  "Subir el precio ya",
+                  "Subirlo por tramos",
+                  "Cambiar de proveedor",
+                  "Absorberlo de momento"
                 ],
+                "sugerencia_por_color": {
+                  "rojo": "Subir el precio ya",
+                  "amarillo": "Cambiar de proveedor"
+                },
                 "confirmaciones": {
-                  "Subir precio ya": "¿Has comunicado el precio nuevo a tus clientes y ya lo estás cobrando?",
-                  "Subir precio gradualmente": "¿Tienes las fechas de cada subida puestas en el calendario?",
-                  "Buscar proveedor alternativo": "¿Has pedido ya presupuesto a otro proveedor y comparado el coste?",
-                  "Absorber el coste (justificado)": "¿Has puesto fecha para revisar esta decisión antes de que el margen empeore más?"
+                  "Subir el precio ya": "¿Has comunicado el precio nuevo y ya lo estás cobrando?",
+                  "Subirlo por tramos": "¿Tienes las fechas de cada subida puestas en el calendario?",
+                  "Cambiar de proveedor": "¿Has cerrado ya con el proveedor nuevo y tienes su precio por escrito?",
+                  "Absorberlo de momento": "¿Has puesto en el calendario la fecha para revisarlo?"
                 }
+              },
+              {
+                "etiqueta": "¿A cuánto lo pones? (€)",
+                "tipo": "numero",
+                "clave": "nuevo_precio",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Subir el precio ya"
+                },
+                "hint_umbral": "precio"
+              },
+              {
+                "etiqueta": "¿A cuánto la primera subida? (€)",
+                "tipo": "numero",
+                "clave": "primera_subida",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Subirlo por tramos"
+                },
+                "hint_umbral": "precio"
+              },
+              {
+                "etiqueta": "¿En qué fecha la aplicas?",
+                "tipo": "texto",
+                "clave": "fecha_tramo",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Subirlo por tramos"
+                },
+                "placeholder": "DD/MM/AAAA"
+              },
+              {
+                "etiqueta": "¿A cuánto te lo deja el proveedor nuevo? (€)",
+                "tipo": "numero",
+                "clave": "coste_nuevo",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Cambiar de proveedor"
+                },
+                "hint_umbral": "coste"
+              },
+              {
+                "etiqueta": "¿Cuándo lo revisas?",
+                "tipo": "texto",
+                "clave": "fecha_revision",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Absorberlo de momento"
+                },
+                "placeholder": "DD/MM/AAAA"
               }
-            ],
-            "filas_iniciales": 3,
-            "vista": "tarjeta"
+            ]
           }
         ]
       },
       "r4": {
-        "tipo": "calculadora",
-        "titulo": "Calculadora de la hora real facturada",
-        "campos": [
+        "tipo": "nativa",
+        "titulo": "Qué haces con las horas que estás regalando",
+        "secciones": [
           {
-            "clave": "facturacion",
-            "etiqueta": "Facturación mensual (€)"
-          },
-          {
-            "clave": "tarifa",
-            "etiqueta": "Tarifa declarada (€/hora)"
-          },
-          {
-            "clave": "h_facturadas",
-            "etiqueta": "Horas directamente facturadas / mes"
-          },
-          {
-            "clave": "h_soporte",
-            "etiqueta": "Horas de soporte no cobrado / mes"
-          },
-          {
-            "clave": "h_revisiones",
-            "etiqueta": "Horas de revisiones gratuitas / mes"
-          },
-          {
-            "clave": "h_reuniones",
-            "etiqueta": "Horas de reuniones no cobradas / mes"
-          },
-          {
-            "clave": "h_desplaz",
-            "etiqueta": "Horas de desplazamiento no cobrado / mes"
-          },
-          {
-            "clave": "h_otras",
-            "etiqueta": "Otras horas no cobradas / mes"
-          }
-        ],
-        "resultados": [
-          {
-            "clave": "horas_no_cobradas",
-            "etiqueta": "Total tiempo no cobrado",
-            "formula": "h_soporte + h_revisiones + h_reuniones + h_desplaz + h_otras",
-            "unidad": "numero"
-          },
-          {
-            "clave": "total_horas",
-            "etiqueta": "Total horas realmente consumidas / mes",
-            "formula": "h_facturadas + horas_no_cobradas",
-            "unidad": "numero"
-          },
-          {
-            "clave": "tarifa_real",
-            "etiqueta": "Tarifa efectiva real (€/hora)",
-            "formula": "facturacion / total_horas",
-            "unidad": "eur"
-          },
-          {
-            "clave": "gap_tarifa",
-            "etiqueta": "Gap de tarifa (€/hora)",
-            "formula": "tarifa_real - tarifa",
-            "unidad": "eur"
-          },
-          {
-            "clave": "eficiencia_facturacion",
-            "etiqueta": "Eficiencia de facturación",
-            "formula": "(h_facturadas / total_horas) * 100",
-            "unidad": "pct"
-          },
-          {
-            "clave": "valor_no_cobrado_mes",
-            "etiqueta": "Valor del tiempo no cobrado / mes",
-            "formula": "tarifa * horas_no_cobradas",
-            "unidad": "eur",
-            "alimenta_valor": true
-          },
-          {
-            "clave": "valor_no_cobrado_anual",
-            "etiqueta": "Valor no cobrado / año",
-            "formula": "valor_no_cobrado_mes * 12",
-            "unidad": "eur"
+            "origen_margen": true,
+            "vista": "tarjeta",
+            "columnas": [
+              {
+                "etiqueta": "Servicio o contrato",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Tu decisión: ¿qué vas a hacer?",
+                "tipo": "opciones",
+                "clave": "decision",
+                "estilo": "desplegable",
+                "opciones": [
+                  "Facturar aparte las horas que regalas",
+                  "Acotar por escrito qué incluye",
+                  "Subir el precio para cubrirlas",
+                  "Reducir las horas que regalas"
+                ],
+                "sugerencia_por_color": {
+                  "rojo": "Facturar aparte las horas que regalas",
+                  "amarillo": "Acotar por escrito qué incluye"
+                },
+                "confirmaciones": {
+                  "Facturar aparte las horas que regalas": "¿Has emitido ya la primera factura con esas horas dentro?",
+                  "Acotar por escrito qué incluye": "¿Se lo has comunicado al cliente y está en el presupuesto o contrato nuevo?",
+                  "Subir el precio para cubrirlas": "¿Has actualizado ya el precio y lo estás aplicando?",
+                  "Reducir las horas que regalas": "¿Has medido ya un mes completo con las horas nuevas?"
+                }
+              },
+              {
+                "etiqueta": "¿Cuánto le facturas aparte al mes? (€)",
+                "tipo": "numero",
+                "clave": "facturado_aparte",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Facturar aparte las horas que regalas"
+                },
+                "hint_umbral": "extra"
+              },
+              {
+                "etiqueta": "¿Qué deja de estar incluido?",
+                "tipo": "opciones",
+                "clave": "que_excluyes",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Acotar por escrito qué incluye"
+                },
+                "opciones": [
+                  "El soporte",
+                  "Las revisiones",
+                  "Las reuniones",
+                  "Los desplazamientos",
+                  "Todo lo que no esté en el presupuesto"
+                ]
+              },
+              {
+                "etiqueta": "¿Desde qué fecha?",
+                "tipo": "texto",
+                "clave": "fecha_acotar",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Acotar por escrito qué incluye"
+                },
+                "placeholder": "DD/MM/AAAA"
+              },
+              {
+                "etiqueta": "¿A cuánto subes el precio? (€)",
+                "tipo": "numero",
+                "clave": "nuevo_precio",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Subir el precio para cubrirlas"
+                },
+                "hint_umbral": "precio"
+              },
+              {
+                "etiqueta": "¿A cuántas horas al mes las bajas? (h)",
+                "tipo": "numero",
+                "clave": "nuevas_horas",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Reducir las horas que regalas"
+                },
+                "hint_umbral": "horas"
+              }
+            ]
           }
         ]
       },
       "r5": {
         "tipo": "nativa",
-        "titulo": "Comparativa de margen real por línea de negocio",
+        "titulo": "Qué haces con cada línea que no te deja margen",
         "secciones": [
           {
+            "origen_margen": true,
+            "vista": "tarjeta",
             "columnas": [
               {
-                "etiqueta": "Línea de Negocio",
+                "etiqueta": "Línea de negocio",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Ventas/mes (€)",
-                "tipo": "numero",
-                "clave": "ventas"
-              },
-              {
-                "etiqueta": "Margen Bruto %",
-                "tipo": "numero",
-                "clave": "margen_bruto",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Horas Equipo/mes",
-                "tipo": "numero",
-                "clave": "horas"
-              },
-              {
-                "etiqueta": "Coste Hora Eq. (€)",
-                "tipo": "numero",
-                "clave": "coste_hora",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Coste equipo (€)",
-                "tipo": "calculada",
-                "clave": "coste_equipo",
-                "formula": "horas*coste_hora",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Margen neto real (€)",
-                "tipo": "calculada",
-                "clave": "margen_neto",
-                "formula": "ventas*margen_bruto/100-coste_equipo",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Decisión",
+                "etiqueta": "Tu decisión: ¿qué vas a hacer?",
                 "tipo": "opciones",
+                "clave": "decision",
+                "estilo": "desplegable",
                 "opciones": [
-                  "Potenciar esta línea",
-                  "Mantener",
-                  "Reestructurar o reducir",
-                  "Descontinuar línea"
+                  "Subir el precio de la línea",
+                  "Recortar el tiempo que se le va",
+                  "Reestructurar qué incluye",
+                  "Descontinuarla"
                 ],
+                "sugerencia_por_color": {
+                  "rojo": "Subir el precio de la línea",
+                  "amarillo": "Recortar el tiempo que se le va"
+                },
                 "confirmaciones": {
-                  "Potenciar esta línea": "¿Has decidido ya qué dejas de hacer para poder dedicarle más tiempo a esta línea?",
-                  "Mantener": "¿Has comprobado que esta línea cubre el coste del tiempo de equipo que consume?",
-                  "Reestructurar o reducir": "¿Has hecho ya el cambio concreto (precio, horas o alcance) que decidiste para esta línea?",
-                  "Descontinuar línea": "¿Has puesto fecha de cierre a esta línea y avisado a quien la tenía contratada?"
+                  "Subir el precio de la línea": "¿Has actualizado ya el precio y lo estás aplicando?",
+                  "Recortar el tiempo que se le va": "¿Has medido ya un mes completo con las horas nuevas?",
+                  "Reestructurar qué incluye": "¿Está el cambio ya en marcha y comunicado a quien le afecta?",
+                  "Descontinuarla": "¿Has puesto fecha de cierre y avisado a quien la tenía contratada?"
                 }
+              },
+              {
+                "etiqueta": "¿A cuánto subes el precio? (€)",
+                "tipo": "numero",
+                "clave": "nuevo_precio",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Subir el precio de la línea"
+                },
+                "hint_umbral": "precio"
+              },
+              {
+                "etiqueta": "¿A cuántas horas extra al mes? (h)",
+                "tipo": "numero",
+                "clave": "nuevas_horas",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Recortar el tiempo que se le va"
+                },
+                "hint_umbral": "horas"
+              },
+              {
+                "etiqueta": "¿Qué cambias?",
+                "tipo": "opciones",
+                "clave": "que_cambias",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Reestructurar qué incluye"
+                },
+                "opciones": [
+                  "Reducir el alcance",
+                  "Estandarizar el proceso",
+                  "Subcontratar una parte",
+                  "Subir el pedido mínimo"
+                ]
+              },
+              {
+                "etiqueta": "¿Desde qué fecha?",
+                "tipo": "texto",
+                "clave": "fecha_reestructura",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Reestructurar qué incluye"
+                },
+                "placeholder": "DD/MM/AAAA"
+              },
+              {
+                "etiqueta": "¿Fecha de cierre?",
+                "tipo": "texto",
+                "clave": "fecha_cierre",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Descontinuarla"
+                },
+                "placeholder": "DD/MM/AAAA"
               }
-            ],
-            "filas_iniciales": 3,
-            "vista": "tarjeta"
+            ]
           }
         ]
       },
       "r6": {
         "tipo": "nativa",
-        "titulo": "Rentabilidad real por cliente (coste total de servicio)",
+        "titulo": "Qué haces con cada cliente que no te deja margen",
         "secciones": [
           {
+            "origen_margen": true,
+            "vista": "tarjeta",
             "columnas": [
               {
                 "etiqueta": "Cliente",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Facturación/mes (€)",
-                "tipo": "numero",
-                "clave": "facturacion"
-              },
-              {
-                "etiqueta": "Horas Directas (h)",
-                "tipo": "numero",
-                "clave": "horas_directas"
-              },
-              {
-                "etiqueta": "H. Soporte/Reuniones/Extras (h)",
-                "tipo": "numero",
-                "clave": "horas_soporte"
-              },
-              {
-                "etiqueta": "Coste Hora Propio (€)",
-                "tipo": "numero",
-                "clave": "coste_hora",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Horas totales (h)",
-                "tipo": "calculada",
-                "clave": "horas_totales",
-                "formula": "horas_directas+horas_soporte",
-                "unidad": "numero"
-              },
-              {
-                "etiqueta": "Coste total servicio (€)",
-                "tipo": "calculada",
-                "clave": "coste_total",
-                "formula": "horas_totales*coste_hora",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "Margen real (€)",
-                "tipo": "calculada",
-                "clave": "margen_real",
-                "formula": "facturacion-coste_total",
-                "unidad": "eur"
-              },
-              {
-                "etiqueta": "NPS (1-5)",
-                "tipo": "numero",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Potencial",
+                "etiqueta": "Tu decisión: ¿qué vas a hacer?",
                 "tipo": "opciones",
+                "clave": "decision",
+                "estilo": "desplegable",
                 "opciones": [
-                  "Alto",
-                  "Medio",
-                  "Bajo"
+                  "Subir la tarifa",
+                  "Reducir el tiempo que le dedico",
+                  "Cobrar aparte lo que ahora regalo",
+                  "Renegociar condiciones",
+                  "Desvincular al cliente"
+                ],
+                "sugerencia_por_color": {
+                  "rojo": "Subir la tarifa",
+                  "amarillo": "Reducir el tiempo que le dedico"
+                },
+                "confirmaciones": {
+                  "Subir la tarifa": "¿Le has comunicado ya la tarifa nueva y la tienes por escrito?",
+                  "Reducir el tiempo que le dedico": "¿Has medido ya un mes completo con las horas nuevas?",
+                  "Cobrar aparte lo que ahora regalo": "¿Has emitido ya la primera factura con eso dentro?",
+                  "Renegociar condiciones": "¿Has tenido ya la conversación y están las condiciones nuevas por escrito?",
+                  "Desvincular al cliente": "¿Se lo has comunicado y tienes fecha de última factura?"
+                }
+              },
+              {
+                "etiqueta": "¿A cuánto le pones la tarifa al mes? (€)",
+                "tipo": "numero",
+                "clave": "nueva_tarifa",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Subir la tarifa"
+                },
+                "hint_umbral": "precio"
+              },
+              {
+                "etiqueta": "¿A cuántas horas al mes? (h)",
+                "tipo": "numero",
+                "clave": "nuevas_horas",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Reducir el tiempo que le dedico"
+                },
+                "hint_umbral": "horas"
+              },
+              {
+                "etiqueta": "¿Cuánto le facturas aparte al mes? (€)",
+                "tipo": "numero",
+                "clave": "facturado_aparte",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Cobrar aparte lo que ahora regalo"
+                },
+                "hint_umbral": "extra"
+              },
+              {
+                "etiqueta": "¿Qué renegocias?",
+                "tipo": "opciones",
+                "clave": "que_renegocias",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Renegociar condiciones"
+                },
+                "opciones": [
+                  "El precio",
+                  "El alcance del servicio",
+                  "El plazo de pago",
+                  "La frecuencia"
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Mantener cliente",
-                  "Renegociar condiciones",
-                  "Reducir tiempo dedicado",
-                  "Desvincular cliente"
-                ],
-                "confirmaciones": {
-                  "Mantener cliente": "¿Has comprobado que lo que te paga cubre las horas reales que le dedicas?",
-                  "Renegociar condiciones": "¿Has tenido ya la conversación y tienes las condiciones nuevas por escrito?",
-                  "Reducir tiempo dedicado": "¿Has acotado por escrito qué incluye el servicio y qué pasa a cobrarse aparte?",
-                  "Desvincular cliente": "¿Has comunicado ya el fin de la relación y tienes fecha de última factura?"
-                }
+                "etiqueta": "¿Desde qué fecha?",
+                "tipo": "texto",
+                "clave": "fecha_renegociar",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Renegociar condiciones"
+                },
+                "placeholder": "DD/MM/AAAA"
+              },
+              {
+                "etiqueta": "¿Fecha de última factura?",
+                "tipo": "texto",
+                "clave": "fecha_baja",
+                "no_sumar": true,
+                "mostrar_si": {
+                  "clave_condicion": "decision",
+                  "valor_condicion": "Desvincular al cliente"
+                },
+                "placeholder": "DD/MM/AAAA"
               }
-            ],
-            "filas_iniciales": 3,
-            "vista": "tarjeta"
+            ]
           }
         ]
       }
