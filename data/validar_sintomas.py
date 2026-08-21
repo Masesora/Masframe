@@ -207,6 +207,28 @@ def _lint_columnas(sid, sp, cols, E, W):
             if c.get("contribuye_valor") or c.get("contribuye_valor_si") is not None or c.get("cuenta_unicos_si") is not None:
                 E.append(f"{sp} col '{etiqueta}': suma_si junto con contribuye_valor/contribuye_valor_si/cuenta_unicos_si en la misma columna — son mutuamente excluyentes")
 
+        # mostrar_si (UCI-S2.r1, 20 ago 2026, "5 Porqués" + sexta causa a mano): visibilidad
+        # condicional generica -- esta columna solo se pinta si OTRA columna de la misma fila
+        # tiene un valor concreto. clave_condicion debe existir en la tabla, igual que suma_si.
+        ms = c.get("mostrar_si")
+        if ms is not None:
+            clave_cond = ms.get("clave_condicion")
+            if not any(cc.get("clave") == clave_cond for cc in cols):
+                E.append(f"{sp} col '{etiqueta}': mostrar_si.clave_condicion={clave_cond!r} no coincide con la 'clave' de ninguna columna de esta tabla")
+
+        # contramedidas (UCI-S2.r1, "5 Porqués"): mapa causa->contramedida, solo sobre "opciones".
+        # Cada clave del mapa debe ser una de las opciones reales -- si no, esa contramedida nunca
+        # se mostraria (typo silencioso).
+        cm = c.get("contramedidas")
+        if cm is not None:
+            if ctipo != "opciones":
+                E.append(f"{sp} col '{etiqueta}': contramedidas sobre tipo {ctipo!r} — solo tiene sentido sobre 'opciones'")
+            else:
+                opts = c.get("opciones") or []
+                sobrantes = [k for k in cm if k not in opts]
+                if sobrantes:
+                    E.append(f"{sp} col '{etiqueta}': contramedidas tiene claves que no son ninguna opcion real {sobrantes!r} — nunca se mostrarian")
+
         if ctipo == "decision":
             dopts = c.get("decision_opciones")
             if not dopts or not isinstance(dopts, list) or len(dopts) < 2:

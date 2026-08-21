@@ -661,14 +661,38 @@
                 }
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Por qué no lo facturaste al momento?",
                 "tipo": "opciones",
+                "clave": "causa",
+                "mostrar_si": {
+                  "clave_condicion": "facturado",
+                  "valor_condicion": "No"
+                },
                 "opciones": [
-                  "Facturar ahora mismo",
-                  "Automatizar facturación al entregar",
-                  "Delegar a administración",
-                  "Ya se factura a tiempo"
-                ]
+                  "No tenía el programa a mano en ese momento",
+                  "Quería tener el importe cerrado del todo antes de facturar",
+                  "Se me olvida sin más, no tengo ningún aviso",
+                  "Es papeleo que no me apetece hacer, lo voy dejando",
+                  "Prefiero juntar varias y facturarlas de una vez",
+                  "Otro motivo"
+                ],
+                "contramedidas": {
+                  "No tenía el programa a mano en ese momento": "Descarga la app de tu facturación en el móvil ahora. La próxima entrega, factura antes de subir a la furgoneta.",
+                  "Quería tener el importe cerrado del todo antes de facturar": "Factura con el importe que tengas ahora, aunque no esté cerrado. Para eso existe la rectificativa: un número aproximado hoy vale más que uno perfecto dentro de un mes.",
+                  "Se me olvida sin más, no tengo ningún aviso": "Elige algo que ya hagas siempre al entregar — guardar la herramienta, cerrar la furgoneta — y factura justo antes. Que sea físicamente imposible hacer esa acción sin haber facturado.",
+                  "Es papeleo que no me apetece hacer, lo voy dejando": "Bloquéate 10 minutos fijos cada tarde solo para facturar lo del día. No hace falta que te guste, solo que tenga un hueco que no compite con nada más.",
+                  "Prefiero juntar varias y facturarlas de una vez": "Cada una que dejas para \"juntar\" es una que se puede quedar fuera del todo. Factura cada entrega el mismo día, de una en una."
+                }
+              },
+              {
+                "etiqueta": "¿Cuál?",
+                "tipo": "texto",
+                "clave": "causa_otro",
+                "mostrar_si": {
+                  "clave_condicion": "causa",
+                  "valor_condicion": "Otro motivo"
+                },
+                "placeholder": "ej. Necesito contratar a alguien que me ayude con el papeleo"
               }
             ],
             "filas_iniciales": 3,
