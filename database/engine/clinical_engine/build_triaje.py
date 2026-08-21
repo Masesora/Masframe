@@ -1,4 +1,6 @@
 import json
+from pathlib import Path
+
 from config.pricing_policy import (
     PRICING_POLICY,
     get_product_price,
@@ -17,7 +19,11 @@ def load_symptoms():
     Carga los síntomas desde symptoms.json.
     Elimina campos legacy que ya no se utilizan.
     """
-    with open("masesora_backend/data/symptoms.json", "r", encoding="utf-8") as f:
+    # Ruta relativa a ESTE fichero, no al directorio desde el que se arranca el proceso:
+    # la ruta fija "masesora_backend/data/..." solo resolvia si el proceso arrancaba desde
+    # el directorio padre del repo, y en la estructura actual ese prefijo ya no existe.
+    _symptoms_path = Path(__file__).resolve().parents[3] / "data" / "symptoms.json"
+    with open(_symptoms_path, "r", encoding="utf-8") as f:
         symptoms = json.load(f)
 
     cleaned = []
