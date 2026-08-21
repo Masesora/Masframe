@@ -631,6 +631,7 @@
         "sin_valor_c4": true,
         "secciones": [
           {
+            "titulo": "Facturas pendientes",
             "columnas": [
               {
                 "etiqueta": "Trabajo entregado",
@@ -641,12 +642,20 @@
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
                 "placeholder": "ej. 450"
-              },
+              }
+            ],
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
+          },
+          {
+            "titulo": "¿Por qué está pasando esto?",
+            "fila_unica": true,
+            "columnas": [
               {
-                "etiqueta": "¿Por qué no lo facturaste al momento?",
+                "etiqueta": "¿Por qué no facturas al momento, en general?",
                 "tipo": "opciones",
                 "clave": "causa",
-                "estilo": "lista",
+                "estilo": "desplegable",
                 "opciones": [
                   "No tenía el programa a mano en ese momento",
                   "Quería tener el importe cerrado del todo antes de facturar",
@@ -664,6 +673,7 @@
                 "etiqueta": "¿Por qué no tenías el importe cerrado?",
                 "tipo": "opciones",
                 "clave": "causa_importe",
+                "estilo": "desplegable",
                 "mostrar_si": {
                   "clave_condicion": "causa",
                   "valor_condicion": "Quería tener el importe cerrado del todo antes de facturar"
@@ -681,6 +691,7 @@
                 "etiqueta": "¿Tienes algún sitio donde apuntar lo que entregas?",
                 "tipo": "opciones",
                 "clave": "causa_registro",
+                "estilo": "desplegable",
                 "mostrar_si": {
                   "clave_condicion": "causa",
                   "valor_condicion": "Se me olvida sin más, no tengo ningún aviso"
@@ -698,6 +709,7 @@
                 "etiqueta": "¿Es que no tienes tiempo, o que teniéndolo lo evitas?",
                 "tipo": "opciones",
                 "clave": "causa_papeleo",
+                "estilo": "desplegable",
                 "mostrar_si": {
                   "clave_condicion": "causa",
                   "valor_condicion": "Es papeleo que no me apetece hacer, lo voy dejando"
@@ -722,7 +734,7 @@
                 "placeholder": "ej. Necesito contratar a alguien que me ayude con el papeleo"
               }
             ],
-            "filas_iniciales": 3,
+            "filas_iniciales": 1,
             "vista": "tarjeta"
           }
         ]
