@@ -947,17 +947,6 @@
                 "hint_umbral": "horas"
               },
               {
-                "etiqueta": "¿Desde qué fecha lo retiras?",
-                "tipo": "texto",
-                "clave": "fecha_retirada",
-                "no_sumar": true,
-                "mostrar_si": {
-                  "clave_condicion": "decision",
-                  "valor_condicion": "Dejar de ofrecerlo"
-                },
-                "placeholder": "DD/MM/AAAA"
-              },
-              {
                 "etiqueta": "¿Qué incluye el pack?",
                 "tipo": "texto",
                 "clave": "pack_incluye_r1",
@@ -1047,17 +1036,6 @@
                   "valor_condicion": "Bajar el descuento"
                 },
                 "hint_umbral": "descuento"
-              },
-              {
-                "etiqueta": "¿Desde qué fecha?",
-                "tipo": "texto",
-                "clave": "fecha_quitar",
-                "no_sumar": true,
-                "mostrar_si": {
-                  "clave_condicion": "decision",
-                  "valor_condicion": "Quitar el descuento a este segmento"
-                },
-                "placeholder": "DD/MM/AAAA"
               },
               {
                 "etiqueta": "¿A cuánto dejas el coste directo? (€)",
@@ -1191,17 +1169,6 @@
                 "hint_umbral": "precio"
               },
               {
-                "etiqueta": "¿En qué fecha la aplicas?",
-                "tipo": "texto",
-                "clave": "fecha_tramo",
-                "no_sumar": true,
-                "mostrar_si": {
-                  "clave_condicion": "decision",
-                  "valor_condicion": "Subirlo por tramos"
-                },
-                "placeholder": "DD/MM/AAAA"
-              },
-              {
                 "etiqueta": "¿A cuánto te lo deja el proveedor nuevo? (€)",
                 "tipo": "numero",
                 "clave": "coste_nuevo",
@@ -1211,17 +1178,6 @@
                   "valor_condicion": "Cambiar de proveedor"
                 },
                 "hint_umbral": "coste"
-              },
-              {
-                "etiqueta": "¿Cuándo lo revisas?",
-                "tipo": "texto",
-                "clave": "fecha_revision",
-                "no_sumar": true,
-                "mostrar_si": {
-                  "clave_condicion": "decision",
-                  "valor_condicion": "Absorberlo de momento"
-                },
-                "placeholder": "DD/MM/AAAA"
               }
             ]
           }
@@ -1288,17 +1244,6 @@
                   "Los desplazamientos",
                   "Todo lo que no esté en el presupuesto"
                 ]
-              },
-              {
-                "etiqueta": "¿Desde qué fecha?",
-                "tipo": "texto",
-                "clave": "fecha_acotar",
-                "no_sumar": true,
-                "mostrar_si": {
-                  "clave_condicion": "decision",
-                  "valor_condicion": "Acotar por escrito qué incluye"
-                },
-                "placeholder": "DD/MM/AAAA"
               },
               {
                 "etiqueta": "¿A cuánto subes el precio? (€)",
@@ -1413,28 +1358,6 @@
                   "Subcontratar una parte",
                   "Subir el pedido mínimo"
                 ]
-              },
-              {
-                "etiqueta": "¿Desde qué fecha?",
-                "tipo": "texto",
-                "clave": "fecha_reestructura",
-                "no_sumar": true,
-                "mostrar_si": {
-                  "clave_condicion": "decision",
-                  "valor_condicion": "Reestructurar qué incluye"
-                },
-                "placeholder": "DD/MM/AAAA"
-              },
-              {
-                "etiqueta": "¿Fecha de cierre?",
-                "tipo": "texto",
-                "clave": "fecha_cierre",
-                "no_sumar": true,
-                "mostrar_si": {
-                  "clave_condicion": "decision",
-                  "valor_condicion": "Descontinuarla"
-                },
-                "placeholder": "DD/MM/AAAA"
               },
               {
                 "etiqueta": "¿A cuánto queda el precio de la línea? (€)",
@@ -1571,28 +1494,6 @@
                   "El plazo de pago",
                   "La frecuencia"
                 ]
-              },
-              {
-                "etiqueta": "¿Desde qué fecha?",
-                "tipo": "texto",
-                "clave": "fecha_renegociar",
-                "no_sumar": true,
-                "mostrar_si": {
-                  "clave_condicion": "decision",
-                  "valor_condicion": "Renegociar condiciones"
-                },
-                "placeholder": "DD/MM/AAAA"
-              },
-              {
-                "etiqueta": "¿Fecha de última factura?",
-                "tipo": "texto",
-                "clave": "fecha_baja",
-                "no_sumar": true,
-                "mostrar_si": {
-                  "clave_condicion": "decision",
-                  "valor_condicion": "Desvincular al cliente"
-                },
-                "placeholder": "DD/MM/AAAA"
               },
               {
                 "etiqueta": "¿Cuánto pasará a pagarte al mes? (€)",
