@@ -2067,7 +2067,17 @@ Botón único de aviso al consultor en C3, C4 y C6 (*"ya existe en otras capas, 
 
 **Y la corrección al diagnóstico de §LIV.F**: el token dura 8 horas (`ACCESS_TOKEN_EXPIRE_MINUTES = 60*8`) y **no hay un solo sitio en todo el frontend que maneje un 401** — ni redirección al login, ni limpieza de sesión, ni aviso. Cuando caduca, cada petición falla y el cliente sigue escribiendo en el vacío hasta que recarga. Eso explica el patrón de "cada vez que actualizo se borran los datos" en una jornada larga **mejor que el 403 de permisos**, que se vio en un momento concreto. La barra roja gana un botón "Volver a entrar" que limpia el token y lleva al login: avisar no basta cuando el único arreglo posible es volver a entrar -- masesora-frontend@37af63d.
 
-### LIV.H — Pendiente, anotado y no tocado
+### LIV.H — El fallo de carga se pintaba como un expediente vacío (y podía vaciarlo)
+
+*"Sale vacío al rato de tener la sesión abierta. Y si reabro sale llena."* Los datos **nunca se perdieron**: al caducar el token el `GET /treatment` devuelve 401 y la aplicación pintaba el fallo como si fuera un tratamiento sin empezar — todas las capas a 0/7. La peor forma posible de fallar, porque parece que se ha borrado el trabajo de semanas.
+
+Lo grave no era la apariencia. Con la carga fallida, `setSession(saved)` no llegaba a ejecutarse (la sesión se quedaba en `EMPTY_SESSION`) pero `setSessionReady(true)` sí, **fuera del `try`** — y el efecto de autoguardado depende de `[session, sessionReady]`, así que se disparaba y un segundo después hacía POST de la sesión vacía. Con el token caducado el POST también falla, así que no se perdía nada **por pura suerte**; con un token válido y un GET caído (corte de red, Render despertando) habría sobrescrito el expediente bueno con uno vacío. Ese, y no la pantalla, es el motivo real del arreglo.
+
+Estado `cargaFallida` que corta el autoguardado y el guardado al desmontar; en lugar del recorrido C0-C6 en blanco, una pantalla que dice qué ha pasado, **que el trabajo está guardado**, y ofrece Reintentar y Volver a entrar. Mismo tratamiento en el panel "Mi tratamiento" de TriajePage, donde un `.catch(() => {})` dejaba `triajeDatos` en `null` y `getCapasDone` devolvía `{}`: ahora distingue "no se ha podido cargar" de "no tienes síntomas activos", que hasta hoy se veían casi igual -- masesora-frontend@87a8aa1.
+
+**Lección, la misma de tres sitios distintos en esta jornada:** un fallo que se dibuja como un estado vacío es peor que un error a la cara. Y cuando el estado vacío además se puede guardar, deja de ser un problema de UX.
+
+### LIV.I — Pendiente, anotado y no tocado
 
 - **El recorrido C0→C6 de UCI-S3 sigue sin hacerse de una sentada.** Todo lo de esta jornada se validó a trozos, con el usuario probando en vivo y Claude verificando datos y tipos, pero nadie ha recorrido el síntoma entero de principio a fin.
 - **El 403 de `MAS-PISCIS`**: hasta entrar con el usuario dueño del expediente (o con rol interno), nada se guarda. Ahora al menos se avisa.
