@@ -953,7 +953,8 @@
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Sustituirlo por un pack rentable"
-                }
+                },
+                "placeholder": "ej. dos servicios juntos, una vez al mes"
               },
               {
                 "etiqueta": "¿Cuántas horas te llevará darlo?",
@@ -999,14 +1000,14 @@
                 "clave": "decision",
                 "estilo": "desplegable",
                 "opciones": [
-                  "Sustituir el descuento por un pack rentable",
+                  "Cambiarlo por una suscripción mensual rentable",
                   "Bajar el descuento",
                   "Quitar el descuento a este segmento",
                   "Bajar el coste directo",
                   "Mantenerlo, pero a cambio de algo"
                 ],
                 "sugerencia_por_color": {
-                  "rojo": "Sustituir el descuento por un pack rentable",
+                  "rojo": "Cambiarlo por una suscripción mensual rentable",
                   "amarillo": "Bajar el descuento"
                 },
                 "confirmaciones": {
@@ -1014,7 +1015,7 @@
                   "Quitar el descuento a este segmento": "¿Has comunicado ya que pasa a pagar precio de tarifa?",
                   "Bajar el coste directo": "¿Tienes ya por escrito el coste nuevo?",
                   "Mantenerlo, pero a cambio de algo": "¿Has acordado ya la contrapartida y la tienes por escrito?",
-                  "Sustituir el descuento por un pack rentable": "¿Le has presentado el pack y lo tienes cerrado por escrito?"
+                  "Cambiarlo por una suscripción mensual rentable": "¿Le has presentado ya la suscripción y la tienes cerrada por escrito?"
                 },
                 "opciones_palanca_fija": {
                   "Quitar el descuento a este segmento": {
@@ -1075,35 +1076,38 @@
                 }
               },
               {
-                "etiqueta": "¿Qué incluye el pack?",
+                "etiqueta": "¿Qué incluye la suscripción?",
                 "tipo": "texto",
                 "clave": "pack_incluye_r2",
                 "mostrar_si": {
                   "clave_condicion": "decision",
-                  "valor_condicion": "Sustituir el descuento por un pack rentable"
-                }
+                  "valor_condicion": "Cambiarlo por una suscripción mensual rentable"
+                },
+                "placeholder": "ej. uñas + cejas, una vez al mes"
               },
               {
-                "etiqueta": "¿Cuánto te costará darlo? (€)",
+                "etiqueta": "¿Cuánto te costará darla al mes? (€)",
                 "tipo": "numero",
                 "clave": "pack_coste_r2",
                 "no_sumar": true,
                 "hint_umbral": "coste",
                 "mostrar_si": {
                   "clave_condicion": "decision",
-                  "valor_condicion": "Sustituir el descuento por un pack rentable"
-                }
+                  "valor_condicion": "Cambiarlo por una suscripción mensual rentable"
+                },
+                "placeholder": "ej. 14"
               },
               {
-                "etiqueta": "¿A cuánto se lo dejas? (€)",
+                "etiqueta": "¿A cuánto la vendes al mes? (€)",
                 "tipo": "numero",
                 "clave": "pack_precio_r2",
                 "no_sumar": true,
                 "hint_umbral": "precio",
                 "mostrar_si": {
                   "clave_condicion": "decision",
-                  "valor_condicion": "Sustituir el descuento por un pack rentable"
-                }
+                  "valor_condicion": "Cambiarlo por una suscripción mensual rentable"
+                },
+                "placeholder": "ej. 25"
               }
             ]
           }
@@ -1377,7 +1381,8 @@
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Reconvertirla en un pack rentable"
-                }
+                },
+                "placeholder": "ej. el servicio base + revisión trimestral"
               },
               {
                 "etiqueta": "¿Cuánto te costará darlo? (€)",
@@ -1513,7 +1518,8 @@
                 "mostrar_si": {
                   "clave_condicion": "decision",
                   "valor_condicion": "Convertirlo en un plan mensual rentable"
-                }
+                },
+                "placeholder": "ej. dos sesiones al mes con soporte incluido"
               },
               {
                 "etiqueta": "¿Cuántas horas al mes te llevará?",
