@@ -803,13 +803,14 @@ def lint(s):
         W.append("input_revised_1 identico a input_a — debe reflejar la medicion post-tratamiento")
     if r2 and r2==s.get("input_b",""):
         W.append("input_revised_2 identico a input_b — debe reflejar la medicion post-tratamiento")
-    # --- NEURO-S1: el KPI gameable se resolvio reanclandolo (22 ago 2026) ---
-    # Media: "facturacion actual / objetivo a 12 meses que se fija el propio cliente" era trucable
-    # por diseno (bajas el objetivo y el KPI sube) y ademas medía crecimiento, no direccion, que es
-    # lo que cura el tratamiento. Ahora mide constancia sobre una ventana fija de 4 semanas, asi que
-    # el denominador ya no es una aspiracion sino un hecho. Lo que queda por vigilar es lo contrario.
-    if sid=="NEURO-S1" and "semana" not in s.get("input_b","").lower():
-        W.append("NEURO-S1: input_b deberia ser el total de semanas del periodo (ventana fija). Si vuelve a ser un objetivo que fija el cliente, el KPI es gameable otra vez")
+    # --- NEURO-S1: el objetivo lo fija el cliente, pero la mejora ya no (22 ago 2026) ---
+    # El KPI mide avance al objetivo de BENEFICIO a un ano. InputB sigue siendo una cifra que pone
+    # el propio dueno, asi que el frontend avisa si no es retadora (< InputA*1.15). Lo que ya NO se
+    # puede ablandar es la mejora: en modo financiero C6 no tiene caja de re-medicion (§XLVII.C) y
+    # el KPI solo sube con los euros comprometidos en C3 y dados por hechos en C4. Por eso el modo
+    # es la comprobacion que importa aqui: si alguien lo devuelve a estructural, vuelve el agujero.
+    if sid=="NEURO-S1" and s.get("kpi_recovery_mode")!="financiero":
+        W.append("NEURO-S1: kpi_recovery_mode deberia ser 'financiero' -- en estructural C6 deja re-teclear el objetivo y el cliente puede aprobarse solo")
     # --- c2_herramienta ---
     ch=s.get("c2_herramienta","")
     if ch not in C2_HERR: W.append(f"c2_herramienta no reconocido por el frontend: {ch!r}")
