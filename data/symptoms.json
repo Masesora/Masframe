@@ -4510,79 +4510,95 @@
     "capa_3_plan": {
       "r1": {
         "tipo": "nativa",
-        "titulo": "Tu rumbo: de dónde sale el crecimiento",
+        "titulo": "Cómo va tu beneficio",
         "secciones": [
           {
             "vista": "tarjeta",
+            "fila_unica": true,
             "filas_iniciales": 1,
             "interpretacion": {
-              "clave": "de_mas",
+              "clave": "crecimiento",
               "reglas": [
                 {
-                  "min": 1,
+                  "min": 8,
                   "color": "verde",
-                  "texto": "Esta palanca sí mueve el rumbo. Llévala a C4 con fecha y responsable."
+                  "texto": "Vas por encima del rumbo. Aquí el trabajo es sostenerlo, no arreglarlo."
+                },
+                {
+                  "min": 3.1,
+                  "color": "naranja",
+                  "texto": "Creces, pero apenas por encima del IPC (3,1%). En dinero real ganas casi lo mismo que hace un año."
                 },
                 {
                   "color": "rojo",
-                  "texto": "Con estos dos números esta palanca no cambia nada. O el movimiento es mayor, o esta no es tu palanca."
+                  "texto": "Estás por debajo del IPC (3,1%). Aunque el número suba, este año has ganado menos que el pasado."
                 }
               ]
             },
             "columnas": [
               {
-                "etiqueta": "Qué vas a mover",
-                "tipo": "opciones",
-                "opciones": [
-                  "",
-                  "El precio de un servicio",
-                  "Las veces que me compra el mismo cliente",
-                  "El número de clientes",
-                  "Lo que me cuesta una partida de gasto"
-                ]
-              },
-              {
-                "etiqueta": "Cuál en concreto",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Hoy (€ por vez, o € al mes si es gasto)",
+                "etiqueta": "Beneficio del año anterior (€)",
                 "tipo": "numero",
-                "clave": "hoy",
+                "clave": "ant",
+                "precarga_desde_c0": "input_b",
                 "no_sumar": true
               },
               {
-                "etiqueta": "Después del cambio (€)",
+                "etiqueta": "Beneficio del último año (€)",
                 "tipo": "numero",
-                "clave": "despues",
+                "clave": "act",
+                "precarga_desde_c0": "input_a",
                 "no_sumar": true
               },
               {
-                "etiqueta": "Cuántas veces al año",
-                "tipo": "numero",
-                "clave": "veces",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "De más al año (€)",
+                "etiqueta": "Has crecido (%)",
                 "tipo": "calculada",
-                "clave": "de_mas",
-                "formula": "(despues-hoy)*veces",
+                "clave": "crecimiento",
+                "formula": "(act-ant)*100/ant",
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Para crecer un 8% tendrías que cerrar en (€)",
+                "tipo": "calculada",
+                "clave": "meta8",
+                "formula": "act*1.08",
                 "unidad": "eur",
-                "contribuye_valor": true
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Te faltan (€)",
+                "tipo": "calculada",
+                "clave": "faltan",
+                "formula": "meta8-act",
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Lo hago este mes",
-                  "Lo preparo para el trimestre que viene",
-                  "No compensa: descartado"
+                  "",
+                  "Me pongo el 8% como rumbo",
+                  "Me pongo otro rumbo y lo escribo aquí",
+                  "Este año solo aguantar"
                 ],
                 "confirmaciones": {
-                  "Lo hago este mes": "¿Está ya aplicado el cambio?",
-                  "Lo preparo para el trimestre que viene": "¿Tiene ya fecha y responsable?",
-                  "No compensa: descartado": "¿Confirmas que lo sacas del plan?"
+                  "Me pongo el 8% como rumbo": "¿Has escrito el número al que quieres llegar y dónde lo vas a ver cada mes?",
+                  "Me pongo otro rumbo y lo escribo aquí": "¿Está escrito el rumbo que te has puesto, con su número?",
+                  "Este año solo aguantar": "¿Confirmas que asumes cerrar el año por debajo del IPC?"
+                },
+                "clave": "decision_rumbo"
+              },
+              {
+                "etiqueta": "El rumbo que te pones (%)",
+                "tipo": "numero",
+                "clave": "rumbo",
+                "no_sumar": true,
+                "placeholder": "ej. 12",
+                "mostrar_si": {
+                  "clave_condicion": "decision_rumbo",
+                  "valor_condicion": "Me pongo otro rumbo y lo escribo aquí"
                 }
               }
             ]

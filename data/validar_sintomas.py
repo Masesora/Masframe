@@ -678,7 +678,10 @@ def lint_capas_previas_repetidas(s, W):
             for c in sec.get("columnas", []) or []:
                 if c.get("tipo") == "calculada":
                     continue
-                columnas.append((c.get("etiqueta", ""), False))  # tablas nativas: sin mecanismo de precarga aun
+                # 22 ago 2026: precarga_desde_c0 dejo de ser exclusivo de las calculadoras y ahora
+                # tambien vale en columnas de tabla/tarjeta nativa, asi que aqui ya se puede
+                # distinguir "repregunta el dato de C0" (aviso) de "lo precarga" (resuelto).
+                columnas.append((c.get("etiqueta", ""), bool(c.get("precarga_desde_c0"))))
         for c in recurso.get("campos", []) or []:
             columnas.append((c.get("etiqueta", ""), bool(c.get("precarga_desde_c0"))))
         for etiqueta, ya_resuelto in columnas:
