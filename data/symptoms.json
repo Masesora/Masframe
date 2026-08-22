@@ -5050,6 +5050,7 @@
                 "etiqueta": "Bloque Mañana",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Estrategico",
                   "Operativo",
                   "Comercial",
@@ -5061,6 +5062,7 @@
                 "etiqueta": "Bloque Tarde",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Estrategico",
                   "Operativo",
                   "Comercial",
@@ -5071,26 +5073,31 @@
               {
                 "etiqueta": "H. Estratégicas",
                 "tipo": "numero",
-                "clave": "h_estr"
+                "clave": "h_estr",
+                "no_sumar": true
               },
               {
                 "etiqueta": "H. Operativas",
                 "tipo": "numero",
-                "clave": "h_op"
+                "clave": "h_op",
+                "no_sumar": true
               },
               {
                 "etiqueta": "H. Comerciales",
                 "tipo": "numero",
-                "clave": "h_com"
+                "clave": "h_com",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Interrupciones",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Bloques respetados?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Si",
                   "No",
                   "Parcial"
@@ -5122,7 +5129,7 @@
                 ]
               }
             ],
-            "filas_iniciales": 20,
+            "filas_iniciales": 1,
             "vista": "tarjeta"
           }
         ]
@@ -5149,16 +5156,19 @@
               },
               {
                 "etiqueta": "H. invertidas",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "H. para terminar",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Valor al terminar €",
                 "tipo": "numero",
-                "clave": "valor"
+                "clave": "valor",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -5179,7 +5189,8 @@
                 "tipo": "calculada",
                 "clave": "valor_generado",
                 "formula": "valor*pct/100",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Valor en riesgo si se cancela (€)",
@@ -5189,7 +5200,8 @@
                 "unidad": "eur"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5207,6 +5219,7 @@
                 "etiqueta": "¿Requería al líder?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Si",
                   "No"
                 ]
@@ -5223,12 +5236,14 @@
                 "etiqueta": "¿Existe protocolo?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Si",
                   "No"
                 ]
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5251,6 +5266,7 @@
                 "etiqueta": "¿P1 completada?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ],
@@ -5264,6 +5280,7 @@
                 "etiqueta": "¿P2 completada?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ],
@@ -5277,6 +5294,7 @@
                 "etiqueta": "¿P3 completada?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ],
@@ -5315,6 +5333,7 @@
                 "etiqueta": "Impacto",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Alto",
                   "Medio",
                   "Bajo"
@@ -5324,6 +5343,7 @@
                 "etiqueta": "¿Evitable?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ]
@@ -5357,22 +5377,26 @@
               {
                 "etiqueta": "Frecuencia veces/mes",
                 "tipo": "numero",
-                "clave": "frec"
+                "clave": "frec",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Duración h",
                 "tipo": "numero",
-                "clave": "dur"
+                "clave": "dur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Participantes",
                 "tipo": "numero",
-                "clave": "participantes"
+                "clave": "participantes",
+                "no_sumar": true
               },
               {
-                "etiqueta": "¿Genera decisión?",
+                "etiqueta": "¿Sale algo en firme de ella?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ]
@@ -5381,6 +5405,7 @@
                 "etiqueta": "¿Puede eliminarse?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No",
                   "Reducir"
@@ -5398,7 +5423,8 @@
                 "unidad": "numero"
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           }
         ]
       },
@@ -5417,6 +5443,7 @@
                 "etiqueta": "Impacto",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Alto",
                   "Medio",
                   "Bajo"
@@ -5426,6 +5453,7 @@
                 "etiqueta": "Reversibilidad",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Alta",
                   "Baja"
                 ]
@@ -5434,6 +5462,7 @@
                 "etiqueta": "¿Requiere líder?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ]
@@ -5447,7 +5476,8 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 4
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           },
           {
             "titulo": "2. Registro de decisiones de la semana",
@@ -5460,6 +5490,7 @@
                 "etiqueta": "¿Llegó al líder?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ]
@@ -5468,6 +5499,7 @@
                 "etiqueta": "¿Debería haber llegado?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ]
@@ -5477,7 +5509,8 @@
                 "tipo": "numero"
               }
             ],
-            "filas_iniciales": 5
+            "filas_iniciales": 5,
+            "vista": "tarjeta"
           }
         ]
       }
@@ -5553,25 +5586,30 @@
               {
                 "etiqueta": "Facturación /mes €",
                 "tipo": "numero",
-                "clave": "fact"
+                "clave": "fact",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste directo €",
                 "tipo": "numero",
-                "clave": "costedir"
+                "clave": "costedir",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas equipo/mes",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Clientes",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Puerta entrada?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ]
@@ -5730,43 +5768,50 @@
               {
                 "etiqueta": "Precio actual €",
                 "tipo": "numero",
-                "clave": "precio_actual"
+                "clave": "precio_actual",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Clientes actuales",
                 "tipo": "numero",
-                "clave": "clientes_actuales"
+                "clave": "clientes_actuales",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Precio propuesto €",
                 "tipo": "numero",
-                "clave": "precio_propuesto"
+                "clave": "precio_propuesto",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Clientes perdidos est.",
                 "tipo": "numero",
-                "clave": "clientes_perdidos"
+                "clave": "clientes_perdidos",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ingresos actuales (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_actuales",
                 "formula": "precio_actual*clientes_actuales",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Clientes tras subida",
                 "tipo": "calculada",
                 "clave": "clientes_tras",
                 "formula": "clientes_actuales-clientes_perdidos",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ingresos con subida (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_nuevos",
                 "formula": "precio_propuesto*clientes_tras",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Impacto neto (€)",
@@ -5804,7 +5849,8 @@
               {
                 "etiqueta": "Facturación /mes €",
                 "tipo": "numero",
-                "clave": "fact"
+                "clave": "fact",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Margen %",
@@ -5815,7 +5861,8 @@
               {
                 "etiqueta": "Nº clientes",
                 "tipo": "numero",
-                "clave": "clientes"
+                "clave": "clientes",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Crecimiento 6 meses %",
@@ -5826,6 +5873,7 @@
                 "etiqueta": "¿Diferencial?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ]
@@ -5834,6 +5882,7 @@
                 "etiqueta": "¿Escalable?",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Sí",
                   "No"
                 ]
@@ -5850,7 +5899,8 @@
                 "tipo": "calculada",
                 "clave": "fact_cliente",
                 "formula": "fact/clientes",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
