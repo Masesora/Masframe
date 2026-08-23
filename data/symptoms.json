@@ -4559,10 +4559,10 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Lo que te falta para crecer un 8%",
+                "etiqueta": "Lo que te falta para llegar al 8%",
                 "tipo": "calculada",
                 "clave": "faltan",
-                "formula": "act*0.08",
+                "formula": "ant*1.08-act",
                 "unidad": "eur",
                 "no_sumar": true
               },
@@ -4573,24 +4573,13 @@
                 "opciones": [
                   "",
                   "Fijar el 8%",
-                  "Fijar otro objetivo",
+                  "Fijar otro objetivo con mi consultor",
                   "Mantener el resultado del año pasado"
                 ],
                 "confirmaciones": {
                   "Fijar el 8%": "¿Has escrito el beneficio al que quieres llegar y dónde vas a mirarlo cada mes?",
-                  "Fijar otro objetivo": "¿Está escrito el objetivo que has fijado, con su número?",
+                  "Fijar otro objetivo con mi consultor": "¿Habéis fijado ya el número y está escrito?",
                   "Mantener el resultado del año pasado": "¿Confirmas que asumes cerrar el año por debajo del IPC?"
-                }
-              },
-              {
-                "etiqueta": "El objetivo que fijas (%)",
-                "tipo": "numero",
-                "clave": "objetivo_pct",
-                "no_sumar": true,
-                "placeholder": "ej. 12",
-                "mostrar_si": {
-                  "clave_condicion": "decision_rumbo",
-                  "valor_condicion": "Fijar otro objetivo"
                 }
               }
             ]
