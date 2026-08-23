@@ -164,10 +164,13 @@ def auditar(s):
                            f"sale un numero absurdo")
 
             # 3e · veredicto
+            # Una seccion origen_margen no necesita veredicto propio: repite tal cual el que el
+            # cliente ya vio en C2 (Pilar / Optimizable / Destructor), que es justo el punto del
+            # formato -- C3 no recalcula, hereda.
             interp = sec.get("interpretacion")
-            if not interp:
+            if not interp and not sec.get("origen_margen"):
                 r.A(d, "sin `interpretacion`: el cliente ve un numero y nadie le dice que significa")
-            elif interp.get("clave") not in claves:
+            elif interp and interp.get("clave") not in claves:
                 r.B(d, f"`interpretacion` apunta a la clave '{interp.get('clave')}', que no existe")
 
             # 3f · presentacion

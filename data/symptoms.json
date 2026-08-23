@@ -4599,81 +4599,43 @@
       },
       "r2": {
         "tipo": "nativa",
-        "titulo": "Plan de ventas",
+        "titulo": "Qué te deja cada línea",
         "secciones": [
           {
             "vista": "tarjeta",
-            "filas_iniciales": 1,
-            "interpretacion": {
-              "clave": "de_mas",
-              "reglas": [
-                {
-                  "min": 1,
-                  "color": "verde",
-                  "texto": "Esto es lo que aporta esta línea si cumples el plan. Ya tienes un número que perseguir."
-                },
-                {
-                  "color": "rojo",
-                  "texto": "Sin unidades de más o sin margen por unidad, esta línea no aporta al rumbo."
-                }
-              ]
-            },
+            "origen_margen": true,
             "columnas": [
               {
-                "etiqueta": "Qué vendes",
+                "etiqueta": "Línea",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "A quién se lo vendes",
-                "tipo": "opciones",
-                "opciones": [
-                  "",
-                  "A los clientes que ya tengo",
-                  "A clientes nuevos",
-                  "A un canal o distribuidor"
-                ]
-              },
-              {
-                "etiqueta": "Unidades que vendes hoy al año",
-                "tipo": "numero",
-                "clave": "u_hoy",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Unidades que te propones vender",
-                "tipo": "numero",
-                "clave": "u_plan",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Lo que te deja cada una (€)",
-                "tipo": "numero",
-                "clave": "margen",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "De más al año (€)",
-                "tipo": "calculada",
-                "clave": "de_mas",
-                "formula": "(u_plan-u_hoy)*margen",
-                "unidad": "eur",
-                "contribuye_valor": true
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Lo asumo yo",
-                  "Lo lleva alguien del equipo",
-                  "Necesito ayuda para venderlo",
-                  "Fuera del plan de este año"
+                  "",
+                  "Subirle el precio",
+                  "Ofrecerla a los clientes que ya tengo",
+                  "Buscar clientes nuevos para esto",
+                  "Dejarla como está"
                 ],
                 "confirmaciones": {
-                  "Lo asumo yo": "¿Has empezado ya a venderlo tú?",
-                  "Lo lleva alguien del equipo": "¿Se lo has encargado ya, con su número?",
-                  "Necesito ayuda para venderlo": "¿Se lo has planteado ya a tu consultor?",
-                  "Fuera del plan de este año": "¿Confirmas que no cuenta para este año?"
+                  "Subirle el precio": "¿Has comunicado ya el precio nuevo?",
+                  "Ofrecerla a los clientes que ya tengo": "¿Se lo has ofrecido ya a tu cartera?",
+                  "Buscar clientes nuevos para esto": "¿Has dado ya el primer paso para captarlos?",
+                  "Dejarla como está": "¿Confirmas que esta línea no la tocas este año?"
+                },
+                "sugerencia_por_color": {
+                  "rojo": "Subirle el precio",
+                  "amarillo": "Ofrecerla a los clientes que ya tengo"
                 }
+              },
+              {
+                "etiqueta": "€ que te comprometes a conseguir este año",
+                "tipo": "numero",
+                "clave": "beneficio_ano",
+                "unidad": "eur",
+                "contribuye_valor": true
               }
             ]
           }
@@ -4685,75 +4647,39 @@
         "secciones": [
           {
             "vista": "tarjeta",
-            "filas_iniciales": 1,
-            "interpretacion": {
-              "clave": "ahorro",
-              "reglas": [
-                {
-                  "min": 1,
-                  "color": "verde",
-                  "texto": "Ese es el dinero que deja de irse solo, sin vender ni un euro más."
-                },
-                {
-                  "color": "rojo",
-                  "texto": "El techo que has puesto es igual o mayor que lo que ya gastas: no es un techo, es una descripción."
-                }
-              ]
-            },
+            "origen_margen": true,
             "columnas": [
               {
-                "etiqueta": "Partida de gasto",
-                "tipo": "opciones",
-                "opciones": [
-                  "",
-                  "Compras y material",
-                  "Suministros",
-                  "Subcontratas",
-                  "Software y cuotas",
-                  "Vehículos y desplazamientos",
-                  "Publicidad",
-                  "Otros"
-                ]
-              },
-              {
-                "etiqueta": "Lo que te gastaste al mes (€)",
-                "tipo": "numero",
-                "clave": "gasto_mes",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Techo que le pones al mes (€)",
-                "tipo": "numero",
-                "clave": "techo_mes",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Ahorro al año (€)",
-                "tipo": "calculada",
-                "clave": "ahorro",
-                "formula": "(gasto_mes-techo_mes)*12",
-                "unidad": "eur",
-                "contribuye_valor": true
-              },
-              {
-                "etiqueta": "Quién aprueba pasarse del techo",
+                "etiqueta": "Partida",
                 "tipo": "texto"
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Techo puesto: lo aplico ya",
-                  "Renegociar con el proveedor primero",
+                  "",
+                  "Ponerle techo y avisar a quien compra",
+                  "Renegociar con el proveedor",
                   "Cambiar de proveedor",
-                  "Esta partida no se toca"
+                  "Dejarla como está"
                 ],
                 "confirmaciones": {
-                  "Techo puesto: lo aplico ya": "¿Está el techo comunicado a quien compra?",
-                  "Renegociar con el proveedor primero": "¿Has hablado ya con el proveedor?",
+                  "Ponerle techo y avisar a quien compra": "¿Lo sabe ya quien hace las compras?",
+                  "Renegociar con el proveedor": "¿Has hablado ya con el proveedor?",
                   "Cambiar de proveedor": "¿Tienes ya el presupuesto del nuevo?",
-                  "Esta partida no se toca": "¿Confirmas que la dejas como está?"
+                  "Dejarla como está": "¿Confirmas que esta partida se queda igual?"
+                },
+                "sugerencia_por_color": {
+                  "rojo": "Ponerle techo y avisar a quien compra",
+                  "amarillo": "Renegociar con el proveedor"
                 }
+              },
+              {
+                "etiqueta": "€ que te comprometes a ahorrar este año",
+                "tipo": "numero",
+                "clave": "beneficio_ano",
+                "unidad": "eur",
+                "contribuye_valor": true
               }
             ]
           }
@@ -4819,50 +4745,15 @@
       },
       "r5": {
         "tipo": "nativa",
-        "titulo": "Tiempo de dirección",
+        "titulo": "Lo que sueltas para poder crecer",
         "secciones": [
           {
-            "titulo": "1. Lo que sueltas para poder dirigir",
             "vista": "tarjeta",
-            "filas_iniciales": 1,
-            "interpretacion": {
-              "clave": "libera",
-              "reglas": [
-                {
-                  "min": 1,
-                  "color": "verde",
-                  "texto": "Eso vale tu tiempo al año. Ahora tiene que ir a alguien con nombre, o vuelve solo."
-                },
-                {
-                  "color": "rojo",
-                  "texto": "Sin horas soltadas o sin lo que vale tu hora, el rato de dirección no sale de ningún sitio."
-                }
-              ]
-            },
+            "origen_margen": true,
             "columnas": [
               {
-                "etiqueta": "Qué sueltas",
+                "etiqueta": "Lo que te come las horas",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Horas a la semana que te lleva",
-                "tipo": "numero",
-                "clave": "h_soltar",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Lo que vale tu hora (€)",
-                "tipo": "numero",
-                "clave": "coste_h",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Lo que liberas al año (€)",
-                "tipo": "calculada",
-                "clave": "libera",
-                "formula": "h_soltar*coste_h*48",
-                "unidad": "eur",
-                "contribuye_valor": true
               },
               {
                 "etiqueta": "A quién se la pasas",
@@ -4872,22 +4763,34 @@
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Ya se la he pasado",
-                  "Se la paso este mes",
-                  "La automatizo o la dejo de hacer",
+                  "",
+                  "Pasársela a alguien del equipo",
+                  "Automatizarla",
+                  "Dejar de hacerla",
                   "No puedo soltarla todavía"
                 ],
                 "confirmaciones": {
-                  "Ya se la he pasado": "¿La está haciendo ya esa persona sin preguntarte?",
-                  "Se la paso este mes": "¿Tiene ya fecha y a quién?",
-                  "La automatizo o la dejo de hacer": "¿Has dejado de hacerla de verdad?",
+                  "Pasársela a alguien del equipo": "¿La está haciendo ya esa persona sin preguntarte?",
+                  "Automatizarla": "¿Está funcionando ya sin que tú intervengas?",
+                  "Dejar de hacerla": "¿Has dejado de hacerla de verdad?",
                   "No puedo soltarla todavía": "¿Se lo has planteado ya a tu consultor?"
+                },
+                "sugerencia_por_color": {
+                  "rojo": "Pasársela a alguien del equipo",
+                  "amarillo": "Automatizarla"
                 }
+              },
+              {
+                "etiqueta": "€ que te comprometes a recuperar este año",
+                "tipo": "numero",
+                "clave": "beneficio_ano",
+                "unidad": "eur",
+                "contribuye_valor": true
               }
             ]
           },
           {
-            "titulo": "2. Los ratos de dirección que has hecho de verdad",
+            "titulo": "Los ratos de dirección que has hecho de verdad",
             "vista": "tarjeta",
             "filas_iniciales": 1,
             "columnas": [
@@ -4985,7 +4888,146 @@
           }
         ]
       }
-    }
+    },
+    "c2_herramienta": "margen",
+    "c2_diagnostico": [
+      null,
+      {
+        "elemento": "línea",
+        "placeholder": "ej: revisiones, chapa y pintura, neumáticos…",
+        "hint": "Añade lo que vendes y calculamos cuánto recorrido le queda a cada línea si te centraras en ella.",
+        "campos": [
+          {
+            "clave": "deja_hoy",
+            "etiqueta": "Te deja al año (€)"
+          },
+          {
+            "clave": "techo",
+            "etiqueta": "Podría dejar si te centraras (€)"
+          }
+        ],
+        "lineas": [
+          {
+            "etiqueta": "Sin recoger",
+            "formula": "techo-deja_hoy",
+            "unidad": "eur",
+            "clave": "recorrido",
+            "highlight": true
+          },
+          {
+            "etiqueta": "Recorrido",
+            "formula": "(techo-deja_hoy)*100/deja_hoy",
+            "unidad": "pct",
+            "clave": "recorrido_pct"
+          }
+        ],
+        "veredicto": {
+          "clave": "recorrido_pct",
+          "verde": 15,
+          "amarillo": 40,
+          "direccion": "menor",
+          "etiquetas": {
+            "verde": "Al máximo",
+            "amarillo": "A medio gas",
+            "rojo": "Sin explotar"
+          }
+        },
+        "alerta": {
+          "clave": "recorrido",
+          "texto": "Dejas {valor} € al año sin recoger en esta línea."
+        },
+        "valor_c3": "recorrido"
+      },
+      {
+        "elemento": "partida",
+        "placeholder": "ej: recambios, suministros, publicidad…",
+        "hint": "Añade en qué se te va el dinero y calculamos cuánto te estás pasando en cada partida.",
+        "campos": [
+          {
+            "clave": "gasto_ano",
+            "etiqueta": "Te gastaste el año pasado (€)"
+          },
+          {
+            "clave": "razonable",
+            "etiqueta": "Lo que sería razonable (€)"
+          }
+        ],
+        "lineas": [
+          {
+            "etiqueta": "Exceso",
+            "formula": "gasto_ano-razonable",
+            "unidad": "eur",
+            "clave": "exceso",
+            "highlight": true
+          },
+          {
+            "etiqueta": "Cuánto te pasas",
+            "formula": "(gasto_ano-razonable)*100/razonable",
+            "unidad": "pct",
+            "clave": "exceso_pct"
+          }
+        ],
+        "veredicto": {
+          "clave": "exceso_pct",
+          "verde": 5,
+          "amarillo": 20,
+          "direccion": "menor",
+          "etiquetas": {
+            "verde": "Ajustada",
+            "amarillo": "Se puede apretar",
+            "rojo": "Se te va"
+          }
+        },
+        "alerta": {
+          "clave": "exceso",
+          "texto": "Te pasas {valor} € al año en esta partida."
+        },
+        "valor_c3": "exceso"
+      },
+      null,
+      {
+        "elemento": "tarea",
+        "placeholder": "ej: presupuestos, pedidos a proveedor, redes sociales…",
+        "hint": "Añade las tareas que te ocupan la semana y calculamos lo que te cuesta ese tiempo al año.",
+        "campos": [
+          {
+            "clave": "horas_sem",
+            "etiqueta": "Horas que te lleva a la semana",
+            "paso": 0.5
+          },
+          {
+            "clave": "factura_hora",
+            "etiqueta": "Lo que facturas tú una hora (€)"
+          }
+        ],
+        "lineas": [
+          {
+            "etiqueta": "Lo que te cuesta al año",
+            "formula": "horas_sem*factura_hora*48",
+            "unidad": "eur",
+            "clave": "coste_ano",
+            "highlight": true
+          }
+        ],
+        "veredicto": {
+          "clave": "coste_ano",
+          "verde": 500,
+          "amarillo": 2000,
+          "direccion": "menor",
+          "etiquetas": {
+            "verde": "Poca cosa",
+            "amarillo": "Empieza a pesar",
+            "rojo": "Te está costando dinero"
+          }
+        },
+        "alerta": {
+          "clave": "coste_ano",
+          "texto": "Esta tarea te cuesta {valor} € al año de tu tiempo."
+        },
+        "valor_c3": "coste_ano"
+      },
+      null
+    ]
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
