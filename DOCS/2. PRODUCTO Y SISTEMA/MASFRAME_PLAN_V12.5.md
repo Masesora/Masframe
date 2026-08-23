@@ -2444,6 +2444,45 @@ La skill instalada pasa a **v5** y lleva dentro los 17 criterios de §LVII.A, pa
 
 ---
 
+## LVIII. SESIÓN 23-24 AGO 2026 — "Estás llamando imbécil a mis clientes": la regla que faltaba
+
+NEURO-S1.r2 salió a producción pidiendo, como campo de diagnóstico, **«Podría dejar si te centraras (€)»**. Dos fallos en cinco palabras, y el segundo es el grave.
+
+**El primero:** es un número que el dueño se inventa. Todo el veredicto de la tarjeta —el 🔴 *Sin explotar*— se calculaba sobre esa cifra imaginaria. Basura dentro, veredicto fuera. Rompe el criterio 2 de la propia skill, escrito esa misma mañana.
+
+**El segundo, el que importa:** *"si te centraras"* **le echa la culpa**. Le está diciendo a Felipe que su línea de chapa va floja porque él no se centra. Nadie paga por que le insinúen eso, y un cliente que se siente juzgado no vuelve.
+
+### LVIII.A — La regla: ni una falta de respeto
+
+**El dueño no es el problema. El problema es que nadie le ha dado nunca el sistema.** Esa es la premisa de MASFRAME, y el copy tiene que sostenerla en cada campo.
+
+Prohibido: *"si te centraras"*, *"si te lo tomaras en serio"*, *"deberías"*, *"lo tienes abandonado"*, y cualquier pregunta cuya respuesta implique admitir dejadez.
+
+**La prueba:** ¿un dueño de 55 años con 20 de oficio leería esto sin sentirse tratado como un crío? Si la frase le hace justificarse, está mal.
+
+Se dice con hechos suyos, nunca con juicios: ❌ *"¿cuánto podría dejar si te centraras?"* → ✅ *"te dejó 7.500 € el año pasado y 9.000 € este"*. **Mismo diagnóstico, y quien queda retratado es el dato, no la persona.**
+
+Queda en la skill como §CRITERIOS 15 y en la regla cero, y en `data/auditar_sintoma.py` como **bloqueante** — con su lista de fórmulas de culpa y una segunda que marca cualquier campo de diagnóstico que pida una estimación (*podría, sería razonable, crees que, aproximado*), que es la firma de un dato inventado. Probado poniendo la frase vieja a propósito: bloquea.
+
+### LVIII.B — Los dos diagnósticos, rehechos con datos que ya tiene
+
+| | Antes (inventado) | Ahora (está en sus facturas) |
+|---|---|---|
+| **Líneas** | *Te deja al año* vs *Podría dejar si te centraras* | *Te dejó el año pasado* vs *Te ha dejado este año* |
+| **Gastos** | *Te gastaste* vs *Lo que sería razonable* | *Te gastaste el año pasado* vs *Llevas gastado este* |
+
+Y el veredicto mejora al hacerlo: deja de medir un potencial imaginario y pasa a **desglosar su propio rumbo**. Chapa 7.500 → 9.000 es 🟢 *Tira del negocio (+20%)*; grúa 3.400 → 3.000 es 🔴 *Te está frenando, te ha dejado 400 € menos*. El negocio crece al 3,6% y el dueño no sabía que una línea iba al 20% y otra le restaba. **Encaja mejor con el síntoma que la versión anterior**: NEURO-S1 pregunta por rumbo, y esto es el rumbo abierto por líneas. UCI-S3 sigue preguntando por margen, así que no se pisan.
+
+El diagnóstico de horas (*horas que te lleva* × *lo que facturas tú una hora*) se queda: sus dos números son reales.
+
+### LVIII.C — Por qué pasó, que es lo que hay que arreglar
+
+La regla de no pedir datos inventados estaba escrita **en la skill, ese mismo día**, y aun así se incumplió al escribir contenido tres horas después. La lección no es "acordarse mejor": es que **una regla que solo vive en un documento no protege nada**. Por eso las dos comprobaciones nuevas son código y son bloqueantes, no avisos — el mismo criterio que ya se aplicó al resto: cerrar la clase, no el caso.
+
+---
+
+---
+
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
 *Generado en sesión 8 jul 2026 — Claude Code + Maite Cabezuelos*
 *§XVII añadida en sesión de auditoría 13 jul 2026 — skill masframe-ux-validator*
@@ -2488,3 +2527,4 @@ La skill instalada pasa a **v5** y lleva dentro los 17 criterios de §LVII.A, pa
 *§LV añadida en sesión 22 ago 2026 — NEURO-S1. El usuario corta la apertura por hallazgos ("AY NO TE ENTIENDO"): una lista de averías no dice para qué sirve el síntoma. La skill `masframe-ux-validator` gana un **PASO 0 — cadena clínica** obligatorio (objetivo → KPI → C1..C6 y la frase "El tratamiento consigue ___, y lo demostramos midiendo ___") por delante del recorrido y de la taxonomía de bugs, más la regla de abrir cada sesión por "qué comprendo y qué hacemos"; de paso se descubre que la skill INSTALADA era la de julio y que el v3 de DOCS (Test de la Paqui como puerta dura, modo cartera, modo cierre) nunca llegó a instalarse. Aplicado el paso 0, NEURO-S1 sale 🔴 de cadena: C1-C4 construyen un sistema de dirección y el KPI medía crecimiento (facturación actual ÷ objetivo a 12 meses que fijaba el propio cliente) -- de ahí salían el Alta inalcanzable por diseño, el KPI auto-aprobable en C6 y los tres horizontes mezclados, que parecían tres problemas y eran uno. KPI reanclado a **Constancia de dirección** (semanas de las últimas 4 con tiempo de dirección ÷ total, >75%), mismo patrón que CIR-S3, manteniendo `estructural` porque solo r5 lleva registro semanal. En el mismo movimiento las 6 ramas: Decisión nueva en r3 y r6 (donde `ACCION_REGEX` enganchaba el descriptor de la fila y la decisión real no llegaba nunca a C4), 24 `confirmaciones` donde no había ninguna, `no_sumar` en 9 columnas, `vista:tarjeta` en 6 secciones, jerga fuera y `filas_iniciales` a la baja -- masframe@514ef56, masesora-frontend@199e1ca. Sin tocar: r2 promete una valoración que no calcula, y r6 pide revisar objetivos que solo existen si se hizo r4. §LV.F: el barrido de duplicación de causas sobre los 30 da 1/30 y NEURO-S1 sale limpio siendo que no lo está -- el linter mide vocabulario, no significado, así que los otros 29 están SIN COMPROBAR; aparcado por decisión del usuario hasta cerrar NEURO-S1. §LV.G-H: el KPI de constancia se rechaza en producción por medir un ritual y no un resultado ("qué mierda de KPI me has propuesto"), y se reancla al diseño del usuario -- beneficio del último año sobre objetivo a 1 año, en modo financiero, con las capas descontando de esa distancia (verificado: 50% → 72,5% con 13.500 € comprometidos, Alta desbloqueada a +15 puntos). La propuesta de reducir a 3 causas también se rechaza con razón: se mantienen las 6, dos intactas (equipo, tiempo) y cuatro ajustadas (1 y 4 repartidas por horizonte, 2 calculando por fin la valoración que prometía, 6 pasando a decidir qué se deja de hacer), cada una terminando en una cifra que suma al KPI -- masframe@c0aa621, masesora-frontend@287df75. §LV.J-K: ese KPI también se cae en pantalla, por dos motivos -- la casilla de compromiso dejaba contar como logro el beneficio que YA tenía (prometer seguir igual doblaba el KPI), y pedirle una meta en euros es pedirle justo lo que el síntoma dice que no sabe hacer. Diseño final, del usuario: **Rumbo del beneficio** = crecimiento en % del beneficio contra el año anterior, objetivo >8% con el IPC como suelo, sin meta que inventar; casilla para el negocio sin historial que lo mide contra beneficio+IPC y arranca en -3,0%. Regla nueva que gobierna las 6 ramas: **lo que suma al KPI es siempre un incremento y nunca se teclea, sale de un antes y un después**. Las 6 causas pasan a ser los instrumentos de dirección (rumbo, plan de ventas, techo de gasto, objetivos, tiempo, revisión); el equipo sale y se llevará a NEURO-S2, la valoración sale por ser otra moneda -- masframe@674c6e8, masesora-frontend@c969451. §LV.L destila los 15 criterios de la sesión como checklist reutilizable (con sus puertas de salida: linter, tsc, alineación 1:1 y simulación numérica de C0→C6) y §LV.M deja el encargo abierto de NEURO-S2 y NEURO-S3 con su estado medido, para retomarlo con agente propio en otra sesión*
 
 *§LVII añadida en sesión 22 ago 2026 (cont.) — cierre de NEURO-S1 y cambio de método tras el diagnóstico del usuario ("este ritmo es insufrible"): las 15 reglas de la jornada escritas como reglas y metidas en la skill; `data/auditar_sintoma.py` automatiza en un comando el diagnóstico mecánico que se hizo a mano durante horas (calibrado contra NEURO, 0 falsos positivos tras quitar las columnas que el motor ya protege y las cuatro vías de un KPI de conteo); y la unidad de trabajo pasa de un síntoma a una ESPECIALIDAD por sesión, en 4 fases con UNA sola ronda de decisiones — skill v5, masframe@6f2a8fa*
+*§LVIII añadida en sesión 23-24 ago 2026 — «Podría dejar si te centraras» sale a producción en NEURO-S1.r2: un dato que el dueño se inventa Y un texto que le culpa. Regla nueva, la más dura del copy: **ni una falta de respeto** — el dueño no es el problema, el problema es que nadie le ha dado el sistema. En la skill como §CRITERIOS 15 y en la regla cero, y en `auditar_sintoma.py` como bloqueante junto a la de datos inventados (probadas contra la frase real). Los dos diagnósticos se rehacen con año pasado contra este año, que está en sus facturas, y el veredicto mejora al hacerlo: pasa a desglosar su propio rumbo por líneas en vez de medir un potencial imaginario*

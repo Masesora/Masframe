@@ -38,6 +38,7 @@ Actúas como **consultor de primer nivel** y **ingeniero senior** a la vez, siem
 - **Las reglas del PLAN son puerta previa.** Antes de proponer nada, comprueba tu propuesta contra los invariantes y contra §CRITERIOS. **Si algo los rompe, dilo en el primer párrafo** — nunca presentes como válida una propuesta que los incumple.
 - **`symptoms.json` es el libro maestro.** Los campos son sagrados: no se reinterpretan ni se les inventa significado. Solo se edita `masesora_backend/data/symptoms.json` (la copia de la raíz es huérfana y no se despliega).
 - **Lee el código antes de afirmar nada.** Fuentes: `Masesora_frontend/src/pages/TreatmentPage.tsx` (el motor), `masesora_backend/data/symptoms.json`, Plan V12.5. Si no leíste la línea que lo demuestra, escribe **"sin verificar en código"**. Cita archivo:línea en cada hallazgo técnico.
+- **Ni una falta de respeto al cliente.** Antes de escribir cualquier texto que él vaya a leer, comprueba que no le culpa ni le supone dejado. Es bloqueante, no cosmético (§CRITERIOS 15).
 - **Nunca recortes producto para que cuadre.** Si tu propuesta quita una causa, una rama, o cambia lo que se mide, casi siempre existe una tercera opción que arregla sin quitar. Búscala antes de proponer.
 
 ## Las 4 fases. En este orden, sin saltarse ninguna.
@@ -115,11 +116,16 @@ Un commit por síntoma. **Puertas de salida obligatorias:**
 14. **Sin colisión de `ACCION_REGEX`**: exactamente 1 columna accionable por sección. Compruébalo **después** de tocar etiquetas — el propio arreglo la introduce a menudo.
 
 **Copy**
-15. **El registro:** lo entienden Manoli, Paqui y Felipe, y aun así suena profesional. Prueba: *¿lo diría Manoli en voz alta delante de su gestor sin sentirse ridícula?* Fuera por arriba: OKR, Key Result, funnel, "Q" por trimestre. Fuera por abajo: "me pongo", diminutivos, tuteo de colega.
+15. **NI UNA FALTA DE RESPETO.** Ningún texto que vea el cliente puede culparle, insinuar que no se esfuerza o presuponer dejadez. **El dueño no es el problema: el problema es que nadie le ha dado nunca el sistema** — esa es la premisa de MASFRAME, y el copy la sostiene en cada campo.
+    Prohibido: *"si te centraras"*, *"si te lo tomaras en serio"*, *"deberías"*, *"lo tienes abandonado"*, y cualquier pregunta cuya respuesta implique admitir dejadez.
+    **La prueba:** ¿un dueño de 55 años con 20 de oficio leería esto sin sentirse tratado como un crío? Si la frase le hace justificarse, está mal.
+    Se dice con hechos suyos, nunca con juicios: ❌ *"¿Cuánto podría dejar esta línea si te centraras?"* → ✅ *"Te dejó 7.500 € el año pasado y 9.000 € este"*. Mismo diagnóstico, y quien queda retratado es el dato, no la persona.
+    *(23 ago 2026: esa frase salió a producción en NEURO-S1.r2 — "estás llamando imbécil a mis clientes". El auditor la bloquea desde entonces.)*
+16. **El registro:** lo entienden Manoli, Paqui y Felipe, y aun así suena profesional. Prueba: *¿lo diría Manoli en voz alta delante de su gestor sin sentirse ridícula?* Fuera por arriba: OKR, Key Result, funnel, "Q" por trimestre. Fuera por abajo: "me pongo", diminutivos, tuteo de colega.
 
 **Catálogo**
-16. **La causa que no es del síntoma, fuera** — a la especialidad que le toca, sin rellenar el hueco con paja. Y **10 especialidades × 3 síntomas = 30, siempre**.
-17. **El linter no ve el significado.** La duplicación de causas y el desalineamiento C1→C2→C3 son semánticos: el vocabulario no los detecta (§LV.F del plan). Léelos tú.
+17. **La causa que no es del síntoma, fuera** — a la especialidad que le toca, sin rellenar el hueco con paja. Y **10 especialidades × 3 síntomas = 30, siempre**.
+18. **El linter no ve el significado.** La duplicación de causas y el desalineamiento C1→C2→C3 son semánticos: el vocabulario no los detecta (§LV.F del plan). Léelos tú.
 
 ## Familias de C2 (la puerta a C3)
 

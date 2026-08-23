@@ -24,6 +24,14 @@ ACCION = re.compile(r"acci[oó]n|mejora|plan\b|acuerdo|ajuste|paso\b|tarea|decis
 JERGA = ["okr", "key result", "kpi", "funnel", "roi", "lead", "pipeline", "stakeholder",
          "benchmark", "core", "target", "input ", "output", "dafo", "kaizen"]
 COLOQUIAL = ["me pongo", "te lo curras", "un poquito", "rollo", "chungo", "movida", "cacharro"]
+# Ni una falta de respeto. El dueno no es el problema: el problema es que nadie le ha dado el
+# sistema. Cualquier texto que le culpe, insinue dejadez o le haga justificarse esta PROHIBIDO --
+# y es bloqueante, no aviso. (23 ago 2026, NEURO-S1.r2: "Podria dejar si te centraras" salio a
+# produccion; "estas llamando imbecil a mis clientes".)
+CULPA = ["si te centraras", "si te centrases", "si te lo tomaras", "si te lo tomases",
+         "si le dedicaras", "si le dedicases", "si te esforzaras", "si te esforzases",
+         "deberias", "tendrias que haber", "no le prestas", "lo tienes abandonado",
+         "por no haber", "por dejadez", "descuidado", "no te preocupas", "te falta interes"]
 TRIMESTRE_Q = re.compile(r"\bQ[1-4]\b|pr[oó]ximo Q\b|\bQ\b")
 
 VACIAS = set("""a al algo ante antes aqui asi aun aunque bien cada como con contra cual cuales
@@ -223,12 +231,33 @@ def auditar(s):
                     for cq in COLOQUIAL:
                         if cq in n:
                             r.B(d, f"copy coloquial '{cq}' en «{t[:52]}» -- no suena profesional")
+                    for cu in CULPA:
+                        if cu in n:
+                            r.B(d, f"FALTA DE RESPETO: '{cu}' en «{t[:52]}» -- el copy culpa al "
+                                   f"dueno. El problema es que nadie le ha dado el sistema, no el")
                     if TRIMESTRE_Q.search(t):
                         r.A(d, f"«{t[:52]}» usa 'Q' -- di 'trimestre'")
 
     for rk, v in plan.items():
         if isinstance(v, dict) and v.get("tipo") == "nativa" and rk not in rama_con_accion:
             r.A(rk, "ninguna columna accionable en toda la rama: no baja nada a C4")
+
+    # El diagnostico de C2 tambien es copy que ve el cliente, y es justo donde se colo la frase.
+    for i, cfg in enumerate(s.get("c2_diagnostico") or []):
+        if not cfg:
+            continue
+        textos = [cfg.get("hint", ""), cfg.get("placeholder", "")]                + [c.get("etiqueta", "") for c in cfg.get("campos", [])]                + [l.get("etiqueta", "") for l in cfg.get("lineas", [])]                + [(cfg.get("alerta") or {}).get("texto", "")]
+        for t in textos:
+            n = norm(t)
+            for cu in CULPA:
+                if cu in n:
+                    r.B(f"c2.causa{i+1}", f"FALTA DE RESPETO: '{cu}' en «{t[:52]}»")
+            # Un campo que pide una estimacion es un dato inventado: el veredicto que salga de ahi
+            # no vale nada. Los dos numeros tienen que estar ya en su contabilidad.
+            for est in ("podria", "seria razonable", "crees que", "estimado", "aproximad", "si te "):
+                if est in n and t in [c.get("etiqueta", "") for c in cfg.get("campos", [])]:
+                    r.B(f"c2.causa{i+1}", f"dato inventado: «{t[:52]}» pide una estimacion, no un "
+                                          f"numero que el cliente tenga")
 
     # ── 4. KPI y modo ──────────────────────────────────────────────────────────
     modo = s.get("kpi_recovery_mode")

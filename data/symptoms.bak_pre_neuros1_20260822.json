@@ -4459,345 +4459,423 @@
     "symptom_id": "NEURO-S1",
     "department": "Estrategia",
     "symptom_name": "Amnesia Estratégica",
-    "logica": "Tu negocio funciona hoy — pero nadie ha puesto un rumbo: ni cuánto debería crecer, ni con qué plan, ni cómo saber a mitad de año si vas o no vas.",
+    "logica": "Tu negocio funciona hoy — pero no tienes un plan claro de hacia dónde va, cuánto quieres que valga, ni cómo salir cuando llegue el momento.",
     "plan": "PIE",
-    "description_symptom": "Si tu empresa funciona pero no sabes si este año has ido mejor o peor que el pasado, no tienes un plan de ventas ni un techo de gasto, y te enteras de cómo ha ido en diciembre — estás gestionando el presente sin diseñar el futuro. Y los negocios sin dirección consciente acaban donde el mercado los lleva, no donde el dueño quería.",
-    "kpi_question": "Introduce el beneficio del último año cerrado y el del año anterior. No te pedimos que te inventes una meta: te enseñamos hacia dónde vas ya. Si tu beneficio crece menos que el IPC, aunque el número suba estás ganando menos que hace un año — y \"me conformo con no cerrar\" es, en dinero real, ir para atrás.",
-    "kpi_impact": "Un negocio que crece por encima del 8% al año tiene rumbo: sabe cuánto quiere vender, cuánto puede gastar y quién responde de cada cosa. Por debajo del IPC, el mercado decide por ti.",
-    "kpi_formula": "((InputA-InputB)/InputB)*100",
-    "kpi_objective": ">8%",
-    "threshold_critical": 0,
-    "threshold_recommended": 4,
-    "threshold_optimizer": 8,
-    "threshold_elite": 15,
+    "description_symptom": "Si tu empresa funciona pero no tienes un plan escrito de dónde quieres estar en 3 años, cuánto quieres que valga el negocio o qué pasa si decides salir — estás gestionando el presente sin diseñar el futuro. Y los negocios sin dirección consciente acaban donde el mercado los lleva, no donde el dueño quería.",
+    "kpi_question": "Introduce tu facturación media mensual actual y la facturación mensual que quieres tener dentro de 12 meses. El resultado te dice a qué distancia estás del negocio que tienes en mente — y si esa distancia tiene nombre y fecha, ya empieza a ser un plan.",
+    "kpi_impact": "Cuando la facturación actual supera el 80% del objetivo a 12 meses, el plan está funcionando y el negocio avanza con dirección real.",
+    "kpi_formula": "(InputA/InputB)*100",
+    "kpi_objective": ">80%",
+    "threshold_critical": 70,
+    "threshold_recommended": 85,
+    "threshold_optimizer": 95,
+    "threshold_elite": 100,
     "inputs": [
       {
         "id": "inputA",
-        "label": "Beneficio del último año cerrado (€)"
+        "label": "Facturación media mensual actual (€)"
       },
       {
         "id": "inputB",
-        "label": "Beneficio del año anterior (€)"
+        "label": "Facturación mensual que quieres tener en 12 meses (€)"
       }
     ],
-    "input_a": "Beneficio del último año cerrado (€)",
-    "input_b": "Beneficio del año anterior (€)",
-    "input_revised_1": "Beneficio del último año (post)",
-    "input_revised_2": "Beneficio del año anterior (post)",
-    "result_revised": "Δ rumbo del beneficio",
+    "input_a": "Facturación media mensual actual (€)",
+    "input_b": "Facturación mensual objetivo en 12 meses (€)",
+    "input_revised_1": "Facturación media mensual (post)",
+    "input_revised_2": "Objetivo mensual (post)",
+    "result_revised": "Δ avance hacia objetivo",
     "impact_treatment": "Construimos el plan que convierte tu visión en un destino concreto con fechas y métricas. El equipo deja de improvisar y empieza a ejecutar con propósito.",
     "optimizer_impact": "Incremento inmediato de cohesión y velocidad de decisión al compartir una dirección común.",
     "optimizer_decision": "Diagnóstico de Claridad Estratégica",
-    "example": "Un taller cerró 2024 con 28.000 € de beneficio y 2025 con 29.000 €: un rumbo del +3,6% frente a un IPC del 3,1%. Ganaba lo mismo que el año anterior sin saberlo. Con el plan de ventas y el techo de gasto instalados, y cuatro decisiones con número detrás, cerró el ciclo en +24,9%.",
-    "capa_1_priorizacion": "Sin rumbo: no sé si subo o bajo; Sin plan de ventas; Sin control del gasto; Objetivos sin número, fecha ni responsable; Horas tuyas atrapadas en operativa; Sin revisión hasta el cierre del año",
-    "justi_capa1": "Un negocio sin rumbo no es un negocio con mala suerte: es un negocio al que le faltan instrumentos. Señala cuáles no tienes hoy.",
-    "capa_2_decision": "Regla de prioridades",
-    "capa_2_options": "Ver cómo ha evolucionado tu beneficio y cuánto te falta para crecer un 8%; Ver qué te deja de verdad cada servicio o línea que vendes; Ver a dónde se te va el dinero, partida por partida; Escribir los 3 objetivos del año con su número, su fecha y quién responde; Soltar horas de operativa y ponerlas a producir; Dejar de hacer lo que no te acerca al objetivo",
-    "justi_capa2": "Aquí no puntúas nada: repasas las seis y descartas las que no te cuadran o no vas a hacer. Las que dejes son las que se convierten en tu plan, así que quita sin miedo — es mejor llevarse dos y hacerlas que seis y ninguna.",
+    "example": "Una empresa de reformas facturaba 22.000 € al mes frente a un objetivo de 40.000 € a 12 meses: un 55 % de avance al objetivo. Tras el protocolo llegó a 34.000 €, es decir, un 85 % de avance.",
+    "capa_1_priorizacion": "Sin plan escrito a 3 años; Sin objetivo de cuánto quiero que valga el negocio; Equipo sin una dirección común; Objetivos en la cabeza, sin números claros; Sin tiempo reservado para la estrategia; Sin revisión de si el día a día avanza hacia la meta",
+    "justi_capa1": "La falta de dirección tiene distintas causas. Señala cuáles reconoces para saber dónde está la brecha entre el negocio que tienes y el que quieres.",
+    "capa_2_decision": "Urgente vs Importante (estratégico)",
+    "capa_2_options": "Definir en una página adónde quiero que esté el negocio en 3 años con números claros; Calcular cuánto vale el negocio hoy y qué habría que hacer para duplicarlo; Comunicar la visión al equipo y confirmar que la entienden y la comparten; Concretar los 3 objetivos anuales con indicadores que permitan saber si avanzas o no; Bloquear tiempo cada mes para trabajar la estrategia sin que lo desplace el día a día; Revisar cada trimestre si las acciones del día a día avanzan hacia el objetivo definido",
+    "justi_capa2": "Urgente vs Importante clasifica cada asunto según si corre prisa y si de verdad mueve resultados. Con ella separas lo que te acerca a tu objetivo de 12 meses de lo que solo hace ruido, y decides dónde poner el foco en vez de reaccionar al día a día.",
     "capa_3_comprension": "Mapa Estratégico",
     "justi_capa3": "El Mapa Estratégico te muestra, de un vistazo, hacia dónde va el negocio y qué brechas te separan de la meta. Sales con la dirección clara, no con una idea difusa.",
     "capa_4_cambio": "Definición de Objetivos",
-    "justi_capa4": "Aquí cada decisión se convierte en un primer paso con fecha y responsable. No vale \"mejorar las ventas\": vale \"el precio de la revisión pasa a 55 € el día 1, se lo digo yo a los clientes de la cartera\".",
+    "justi_capa4": "Aquí conviertes la dirección en objetivos concretos: pocos, medibles y con responsable. El objetivo es que todo el equipo sepa qué mueve el negocio este trimestre y qué no.",
     "capa_5_ejecucion": "Reuniones de alineación",
     "justi_capa5": "Las reuniones de alineación son encuentros breves y periódicos del equipo para revisar hacia dónde vamos y confirmar que cada área rema en la misma dirección. Las necesitas para sostener el foco en el objetivo y evitar que el día a día te desvíe del plan.",
-    "capa_6_seguimiento": "Seguimiento: Rumbo del beneficio",
-    "justi_capa6": "Este indicador mide tu rumbo real: cuánto ha crecido tu beneficio. No lo rellenas a mano — sube con los euros que han producido las decisiones que diste por hechas en C4.",
-    "capa_1_options": "No sé si este año he ido mejor o peor que el pasado, ni cuánto debería crecer.; No tengo un plan de ventas: vendo lo que entra, no lo que necesito vender.; No tengo un techo de gasto: me entero de lo que me he gastado cuando ya está gastado.; Mis objetivos están en mi cabeza: sin número, sin fecha y sin nadie que responda de ellos.; El día a día me come las horas: las que podría estar produciendo se me van en tareas que podría soltar.; Me entero de cómo ha ido el año en diciembre, cuando ya no puedo hacer nada.",
-    "kpi_recovery_mode": "financiero",
-    "recovery_unit_label": "€ de beneficio ganados",
-    "kpi_name": "Rumbo del beneficio",
+    "capa_6_seguimiento": "Seguimiento: Avance al objetivo",
+    "justi_capa6": "Este indicador mide la alineación real: cuánto has cerrado la brecha entre tu facturación actual y la que quieres en 12 meses. Compáralo con tu punto de partida; si avanza, la estrategia se está ejecutando, no solo pensando.",
+    "capa_1_options": "Mi empresa funciona hoy pero no tengo ningún plan escrito de dónde quiero estar en 3 años.; No he definido cuánto quiero que valga el negocio ni qué tendría que pasar para llegar a eso.; El equipo no comparte una dirección común y cada uno interpreta lo que hay que hacer de forma distinta.; Tengo objetivos en la cabeza pero no están escritos ni tienen números claros para medirlos.; No reservo tiempo para trabajar la estrategia: siempre lo desplaza el día a día.; No reviso si lo que hago cada semana avanza hacia el negocio que tengo en mente.",
+    "kpi_recovery_mode": "estructural",
+    "recovery_unit_label": "re-medir facturación",
+    "kpi_name": "Avance al objetivo",
     "kpi_unit": "%",
     "capa_3_plan": {
       "r1": {
         "tipo": "nativa",
-        "titulo": "Cómo va tu beneficio",
+        "titulo": "Canvas de visión a 3 años",
         "secciones": [
           {
-            "vista": "tarjeta",
-            "fila_unica": true,
-            "filas_iniciales": 1,
-            "interpretacion": {
-              "clave": "crecimiento",
-              "reglas": [
-                {
-                  "min": 8,
-                  "color": "verde",
-                  "texto": "Vas por encima del objetivo. Aquí el trabajo es sostenerlo, no arreglarlo."
-                },
-                {
-                  "min": 3.1,
-                  "color": "naranja",
-                  "texto": "El IPC del año fue del 3,1%. Aunque el número suba, en dinero real ganas lo mismo que hace un año."
-                },
-                {
-                  "color": "rojo",
-                  "texto": "El IPC del año fue del 3,1%. Estás por debajo: este año has ganado menos que el pasado."
-                }
-              ]
-            },
             "columnas": [
               {
-                "etiqueta": "Beneficio del año anterior (€)",
+                "etiqueta": "Métrica",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Hoy",
                 "tipo": "numero",
-                "clave": "ant",
-                "precarga_desde_c0": "input_b",
-                "no_sumar": true
+                "clave": "hoy"
               },
               {
-                "etiqueta": "Beneficio del último año (€)",
+                "etiqueta": "Objetivo 3 años",
                 "tipo": "numero",
-                "clave": "act",
-                "precarga_desde_c0": "input_a",
-                "no_sumar": true
+                "clave": "objetivo"
               },
               {
-                "etiqueta": "Tu rumbo",
+                "etiqueta": "Gap a cerrar",
                 "tipo": "calculada",
-                "clave": "crecimiento",
-                "formula": "(act-ant)*100/ant",
-                "unidad": "pct",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Lo que te falta para llegar al 8%",
-                "tipo": "calculada",
-                "clave": "faltan",
-                "formula": "ant*1.08-act",
-                "unidad": "eur",
-                "no_sumar": true
+                "clave": "gap",
+                "formula": "objetivo-hoy",
+                "unidad": "numero"
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
-                "clave": "decision_rumbo",
                 "opciones": [
-                  "",
-                  "Fijar el 8%",
-                  "Fijar otro objetivo con mi consultor",
-                  "Mantener el resultado del año pasado"
-                ],
-                "confirmaciones": {
-                  "Fijar el 8%": "¿Has escrito el beneficio al que quieres llegar y dónde vas a mirarlo cada mes?",
-                  "Fijar otro objetivo con mi consultor": "¿Habéis fijado ya el número y está escrito?",
-                  "Mantener el resultado del año pasado": "¿Confirmas que asumes cerrar el año por debajo del IPC?"
-                }
+                  "Definir plan de acción",
+                  "Revisar el objetivo",
+                  "Delegar el seguimiento",
+                  "Aún no es prioridad"
+                ]
               }
-            ]
+            ],
+            "filas_iniciales": 7,
+            "vista": "tarjeta"
           }
         ]
       },
       "r2": {
         "tipo": "nativa",
-        "titulo": "Qué te deja cada línea",
+        "titulo": "Palancas de valor del negocio",
         "secciones": [
           {
-            "vista": "tarjeta",
-            "origen_margen": true,
             "columnas": [
               {
-                "etiqueta": "Línea",
+                "etiqueta": "Palanca",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Impacto en valoración (€)",
+                "tipo": "numero",
+                "clave": "impacto"
+              },
+              {
+                "etiqueta": "Dificultad",
+                "tipo": "opciones",
+                "opciones": [
+                  "Alta",
+                  "Media",
+                  "Baja"
+                ]
+              },
+              {
+                "etiqueta": "Plazo (meses)",
+                "tipo": "numero",
+                "clave": "plazo",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Impacto mensualizado (€/mes)",
+                "tipo": "calculada",
+                "clave": "impacto_mes",
+                "formula": "impacto/plazo",
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
-                  "Subirle el precio",
-                  "Ofrecerla a los clientes que ya tengo",
-                  "Buscar clientes nuevos para esto",
-                  "Dejarla como está"
-                ],
-                "confirmaciones": {
-                  "Subirle el precio": "¿Has comunicado ya el precio nuevo?",
-                  "Ofrecerla a los clientes que ya tengo": "¿Se lo has ofrecido ya a tu cartera?",
-                  "Buscar clientes nuevos para esto": "¿Has dado ya el primer paso para captarlos?",
-                  "Dejarla como está": "¿Confirmas que esta línea no la tocas este año?"
-                },
-                "sugerencia_por_color": {
-                  "rojo": "Subirle el precio",
-                  "amarillo": "Ofrecerla a los clientes que ya tengo"
-                }
-              },
-              {
-                "etiqueta": "€ que te comprometes a conseguir este año",
-                "tipo": "numero",
-                "clave": "beneficio_ano",
-                "unidad": "eur",
-                "contribuye_valor": true
+                  "Activar ya",
+                  "Planificar para más adelante",
+                  "Descartar",
+                  "Delegar a alguien del equipo"
+                ]
               }
-            ]
+            ],
+            "filas_iniciales": 1,
+            "vista": "tarjeta"
           }
         ]
       },
       "r3": {
         "tipo": "nativa",
-        "titulo": "Techo de gasto por partida",
+        "titulo": "Tracker de alineación de visión",
         "secciones": [
           {
-            "vista": "tarjeta",
-            "origen_margen": true,
             "columnas": [
               {
-                "etiqueta": "Partida",
+                "etiqueta": "Persona",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "Asistió",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
-                  "Ponerle techo y avisar a quien compra",
-                  "Renegociar con el proveedor",
-                  "Cambiar de proveedor",
-                  "Dejarla como está"
-                ],
-                "confirmaciones": {
-                  "Ponerle techo y avisar a quien compra": "¿Lo sabe ya quien hace las compras?",
-                  "Renegociar con el proveedor": "¿Has hablado ya con el proveedor?",
-                  "Cambiar de proveedor": "¿Tienes ya el presupuesto del nuevo?",
-                  "Dejarla como está": "¿Confirmas que esta partida se queda igual?"
-                },
-                "sugerencia_por_color": {
-                  "rojo": "Ponerle techo y avisar a quien compra",
-                  "amarillo": "Renegociar con el proveedor"
-                }
+                  "Sí",
+                  "No"
+                ]
               },
               {
-                "etiqueta": "€ que te comprometes a ahorrar este año",
+                "etiqueta": "Comprende visión (1-5)",
                 "tipo": "numero",
-                "clave": "beneficio_ano",
-                "unidad": "eur",
-                "contribuye_valor": true
+                "clave": "comprende",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Comparte visión (1-5)",
+                "tipo": "numero",
+                "clave": "comparte",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Duda planteada",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Acción seguimiento",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Alineación media (1-5)",
+                "tipo": "calculada",
+                "clave": "alineacion",
+                "formula": "(comprende+comparte)/2",
+                "unidad": "numero",
+                "no_sumar": true
               }
-            ]
+            ],
+            "filas_iniciales": 5
           }
         ]
       },
       "r4": {
         "tipo": "nativa",
-        "titulo": "Objetivos de este año",
+        "titulo": "OKRs anuales",
         "secciones": [
           {
-            "vista": "tarjeta",
-            "filas_iniciales": 3,
+            "titulo": "Objetivo 1",
             "columnas": [
               {
-                "etiqueta": "Objetivo de este año",
+                "etiqueta": "Key Result",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "En qué número se nota",
-                "tipo": "texto",
-                "placeholder": "ej. 40 revisiones al mes, 3 clientes nuevos, 2 días menos de entrega"
-              },
-              {
-                "etiqueta": "Para cuándo",
-                "tipo": "opciones",
-                "opciones": [
-                  "",
-                  "1er trimestre",
-                  "2º trimestre",
-                  "3er trimestre",
-                  "4º trimestre"
-                ]
-              },
-              {
-                "etiqueta": "Quién responde",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "Beneficio que aporta si se cumple (€)",
+                "etiqueta": "Meta",
                 "tipo": "numero",
-                "clave": "beneficio_ano",
-                "unidad": "eur",
-                "contribuye_valor": true,
-                "placeholder": "reparte aquí lo que te falta"
+                "clave": "meta"
+              },
+              {
+                "etiqueta": "Valor actual",
+                "tipo": "numero",
+                "clave": "valor_actual"
+              },
+              {
+                "etiqueta": "% Progreso",
+                "tipo": "calculada",
+                "clave": "pct_progreso",
+                "formula": "(valor_actual/meta)*100",
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Lo llevo yo",
-                  "Lo lleva alguien del equipo",
-                  "Ajustar la meta a algo que sostengo",
-                  "Fuera de este año"
-                ],
-                "confirmaciones": {
-                  "Lo llevo yo": "¿Has dado ya el primer paso de ese objetivo?",
-                  "Lo lleva alguien del equipo": "¿Se lo has encargado ya, con su número y su fecha?",
-                  "Ajustar la meta a algo que sostengo": "¿Has escrito ya la meta nueva?",
-                  "Fuera de este año": "¿Lo has sacado ya del plan?"
-                }
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
               }
             ],
-            "interpretacion": {
-              "clave": "beneficio_ano",
-              "reglas": [
-                {
-                  "min": 1,
-                  "color": "verde",
-                  "texto": "Esto ya es un objetivo: tiene número, fecha y alguien que responde de él."
-                },
-                {
-                  "color": "rojo",
-                  "texto": "Esto todavía es un propósito, no un objetivo. Ponle cuánto beneficio te aporta si se cumple — si no lo sabes, es que no sabes para qué lo haces."
-                }
-              ]
-            }
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
+          },
+          {
+            "titulo": "Objetivo 2",
+            "columnas": [
+              {
+                "etiqueta": "Key Result",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Meta",
+                "tipo": "numero",
+                "clave": "meta"
+              },
+              {
+                "etiqueta": "Valor actual",
+                "tipo": "numero",
+                "clave": "valor_actual"
+              },
+              {
+                "etiqueta": "% Progreso",
+                "tipo": "calculada",
+                "clave": "pct_progreso",
+                "formula": "(valor_actual/meta)*100",
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
+              }
+            ],
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
+          },
+          {
+            "titulo": "Objetivo 3",
+            "columnas": [
+              {
+                "etiqueta": "Key Result",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Meta",
+                "tipo": "numero",
+                "clave": "meta"
+              },
+              {
+                "etiqueta": "Valor actual",
+                "tipo": "numero",
+                "clave": "valor_actual"
+              },
+              {
+                "etiqueta": "% Progreso",
+                "tipo": "calculada",
+                "clave": "pct_progreso",
+                "formula": "(valor_actual/meta)*100",
+                "unidad": "pct",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Seguir según lo planeado",
+                  "Acelerar acciones",
+                  "Ajustar la meta",
+                  "Bloqueado, necesito ayuda"
+                ]
+              }
+            ],
+            "filas_iniciales": 3,
+            "vista": "tarjeta"
+          },
+          {
+            "titulo": "Histórico trimestral",
+            "columnas": [
+              {
+                "etiqueta": "Trimestre",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "Obj 1 %",
+                "tipo": "numero",
+                "clave": "o1",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Obj 2 %",
+                "tipo": "numero",
+                "clave": "o2",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Obj 3 %",
+                "tipo": "numero",
+                "clave": "o3",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Cumplimiento medio (%)",
+                "tipo": "calculada",
+                "clave": "cumpl_medio",
+                "formula": "(o1+o2+o3)/3",
+                "unidad": "pct",
+                "no_sumar": true
+              }
+            ],
+            "filas_iniciales": 4
           }
         ]
       },
       "r5": {
         "tipo": "nativa",
-        "titulo": "Lo que sueltas para poder crecer",
+        "titulo": "Auditoría de tiempo estratégico",
         "secciones": [
           {
-            "vista": "tarjeta",
-            "origen_margen": true,
+            "titulo": "1. Registro semanal de tiempo",
             "columnas": [
               {
-                "etiqueta": "Lo que te come las horas",
+                "etiqueta": "Semana",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "A quién se la pasas",
-                "tipo": "texto"
+                "etiqueta": "H. Operativo",
+                "tipo": "numero",
+                "clave": "h_op"
+              },
+              {
+                "etiqueta": "H. Estratégico",
+                "tipo": "numero",
+                "clave": "h_estr"
+              },
+              {
+                "etiqueta": "H. Comercial",
+                "tipo": "numero",
+                "clave": "h_com"
+              },
+              {
+                "etiqueta": "H. Admin",
+                "tipo": "numero",
+                "clave": "h_admin"
+              },
+              {
+                "etiqueta": "Total horas registradas",
+                "tipo": "calculada",
+                "clave": "total_h",
+                "formula": "h_op+h_estr+h_com+h_admin",
+                "unidad": "numero"
+              },
+              {
+                "etiqueta": "% tiempo estratégico",
+                "tipo": "calculada",
+                "clave": "pct_estr",
+                "formula": "h_estr*100/total_h",
+                "unidad": "pct",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
-                  "Pasársela a alguien del equipo",
-                  "Automatizarla",
-                  "Dejar de hacerla",
-                  "No puedo soltarla todavía"
-                ],
-                "confirmaciones": {
-                  "Pasársela a alguien del equipo": "¿La está haciendo ya esa persona sin preguntarte?",
-                  "Automatizarla": "¿Está funcionando ya sin que tú intervengas?",
-                  "Dejar de hacerla": "¿Has dejado de hacerla de verdad?",
-                  "No puedo soltarla todavía": "¿Se lo has planteado ya a tu consultor?"
-                },
-                "sugerencia_por_color": {
-                  "rojo": "Pasársela a alguien del equipo",
-                  "amarillo": "Automatizarla"
-                }
-              },
-              {
-                "etiqueta": "€ que te comprometes a recuperar este año",
-                "tipo": "numero",
-                "clave": "beneficio_ano",
-                "unidad": "eur",
-                "contribuye_valor": true
+                  "Bloquear más tiempo la próxima semana",
+                  "Delegar tareas operativas",
+                  "Mantener el ritmo actual",
+                  "Necesito ayuda para reorganizar"
+                ]
               }
-            ]
+            ],
+            "filas_iniciales": 4,
+            "vista": "tarjeta"
           },
           {
-            "titulo": "Los ratos de dirección que has hecho de verdad",
-            "vista": "tarjeta",
-            "filas_iniciales": 1,
+            "titulo": "2. Registro de sesiones estratégicas",
             "columnas": [
               {
                 "etiqueta": "Fecha",
@@ -4805,270 +4883,138 @@
               },
               {
                 "etiqueta": "Duración (h)",
-                "tipo": "numero",
-                "clave": "dur",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
-                "etiqueta": "Qué decidiste",
+                "etiqueta": "Temas tratados",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Se respetó el bloque?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
               }
-            ]
+            ],
+            "filas_iniciales": 1
           }
         ]
       },
       "r6": {
         "tipo": "nativa",
-        "titulo": "Revisión: ¿voy o no voy?",
+        "titulo": "Revisión trimestral de alineamiento",
         "secciones": [
           {
-            "titulo": "Tu próxima revisión",
-            "vista": "tarjeta",
-            "fila_unica": true,
-            "filas_iniciales": 1,
+            "titulo": "Objetivo 1",
             "columnas": [
               {
-                "etiqueta": "Fecha de la próxima revisión",
-                "tipo": "texto",
-                "placeholder": "ej. 5 de abril"
+                "etiqueta": "Acción",
+                "tipo": "texto"
               },
               {
-                "etiqueta": "Cada cuánto la repites",
+                "etiqueta": "¿Contribuye?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
-                  "Cada mes",
-                  "Cada trimestre",
-                  "Cada seis meses"
+                  "Si",
+                  "No",
+                  "Parcial"
                 ]
               },
               {
-                "etiqueta": "El primer número que miras ese día",
-                "tipo": "texto",
-                "placeholder": "ej. el beneficio del trimestre"
+                "etiqueta": "Horas invertidas",
+                "tipo": "numero"
               },
               {
-                "etiqueta": "El segundo",
+                "etiqueta": "Resultado obtenido",
                 "tipo": "texto"
               },
               {
-                "etiqueta": "El tercero",
-                "tipo": "texto"
-              }
-            ]
-          },
-          {
-            "vista": "tarjeta",
-            "filas_iniciales": 1,
-            "interpretacion": {
-              "clave": "ahorro_ano",
-              "reglas": [
-                {
-                  "min": 1,
-                  "color": "verde",
-                  "texto": "Eso es lo que te devuelve soltarlo. Sacarlo del calendario es la decisión."
-                },
-                {
-                  "color": "rojo",
-                  "texto": "Si no sabes lo que te cuesta, no puedes decidir si sueltas. Pon las horas y lo que vale la tuya."
-                }
-              ]
-            },
-            "columnas": [
-              {
-                "etiqueta": "Qué hiciste este trimestre",
-                "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Te acercó al rumbo?",
+                "etiqueta": "¿Repetir próximo Q?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
-                  "Sí, claramente",
-                  "A medias",
+                  "Si",
                   "No"
                 ]
+              }
+            ],
+            "filas_iniciales": 2
+          },
+          {
+            "titulo": "Objetivo 2",
+            "columnas": [
+              {
+                "etiqueta": "Acción",
+                "tipo": "texto"
               },
               {
-                "etiqueta": "Horas al trimestre que se lleva",
-                "tipo": "numero",
-                "clave": "horas_q",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Lo que vale esa hora (€)",
-                "tipo": "numero",
-                "clave": "coste_h",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Lo que te ahorras al año si lo sueltas (€)",
-                "tipo": "calculada",
-                "clave": "ahorro_ano",
-                "formula": "horas_q*coste_h*4",
-                "unidad": "eur",
-                "contribuye_valor": true
-              },
-              {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Contribuye?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Dejar de hacerlo",
-                  "Repetirlo tal cual",
-                  "Repetirlo cambiando cómo se hace",
-                  "Pasarlo a alguien del equipo"
-                ],
-                "confirmaciones": {
-                  "Dejar de hacerlo": "¿Lo has sacado ya del calendario del trimestre que viene?",
-                  "Repetirlo tal cual": "¿Está ya programado?",
-                  "Repetirlo cambiando cómo se hace": "¿Has escrito ya qué cambias?",
-                  "Pasarlo a alguien del equipo": "¿Se lo has encargado ya a alguien con nombre?"
-                }
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Horas invertidas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Resultado obtenido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Repetir próximo Q?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
               }
-            ]
+            ],
+            "filas_iniciales": 2
+          },
+          {
+            "titulo": "Objetivo 3",
+            "columnas": [
+              {
+                "etiqueta": "Acción",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Contribuye?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No",
+                  "Parcial"
+                ]
+              },
+              {
+                "etiqueta": "Horas invertidas",
+                "tipo": "numero"
+              },
+              {
+                "etiqueta": "Resultado obtenido",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "¿Repetir próximo Q?",
+                "tipo": "opciones",
+                "opciones": [
+                  "Si",
+                  "No"
+                ]
+              }
+            ],
+            "filas_iniciales": 2
           }
         ]
       }
-    },
-    "c2_herramienta": "margen",
-    "c2_diagnostico": [
-      null,
-      {
-        "elemento": "línea",
-        "placeholder": "ej: revisiones, chapa y pintura, neumáticos…",
-        "hint": "Añade lo que vendes con lo que te dejó cada cosa el año pasado y lo que te ha dejado este. Te enseñamos cuál tira del negocio y cuál lo frena.",
-        "campos": [
-          {
-            "clave": "dejo_ant",
-            "etiqueta": "Te dejó el año pasado (€)"
-          },
-          {
-            "clave": "dejo_act",
-            "etiqueta": "Te ha dejado este año (€)"
-          }
-        ],
-        "lineas": [
-          {
-            "etiqueta": "Diferencia",
-            "formula": "dejo_act-dejo_ant",
-            "unidad": "eur",
-            "clave": "dif",
-            "highlight": true
-          },
-          {
-            "etiqueta": "Crece",
-            "formula": "(dejo_act-dejo_ant)*100/dejo_ant",
-            "unidad": "pct",
-            "clave": "crece"
-          }
-        ],
-        "veredicto": {
-          "clave": "crece",
-          "verde": 8,
-          "amarillo": 0,
-          "direccion": "mayor",
-          "etiquetas": {
-            "verde": "Tira del negocio",
-            "amarillo": "Se mantiene",
-            "rojo": "Te está frenando"
-          }
-        },
-        "alerta": {
-          "clave": "dif",
-          "texto": "Esta línea te ha dejado {valor} € menos que el año pasado."
-        },
-        "valor_c3": "dif"
-      },
-      {
-        "elemento": "partida",
-        "placeholder": "ej: recambios, suministros, publicidad…",
-        "hint": "Añade en qué se te va el dinero, con lo del año pasado y lo de este. Te enseñamos qué partida está subiendo más rápido que tu negocio.",
-        "campos": [
-          {
-            "clave": "gasto_ant",
-            "etiqueta": "Te gastaste el año pasado (€)"
-          },
-          {
-            "clave": "gasto_act",
-            "etiqueta": "Llevas gastado este año (€)"
-          }
-        ],
-        "lineas": [
-          {
-            "etiqueta": "Diferencia",
-            "formula": "gasto_act-gasto_ant",
-            "unidad": "eur",
-            "clave": "dif",
-            "highlight": true
-          },
-          {
-            "etiqueta": "Sube un",
-            "formula": "(gasto_act-gasto_ant)*100/gasto_ant",
-            "unidad": "pct",
-            "clave": "sube"
-          }
-        ],
-        "veredicto": {
-          "clave": "sube",
-          "verde": 3,
-          "amarillo": 10,
-          "direccion": "menor",
-          "etiquetas": {
-            "verde": "Bajo control",
-            "amarillo": "Sube más de la cuenta",
-            "rojo": "Se te está disparando"
-          }
-        },
-        "alerta": {
-          "clave": "dif",
-          "texto": "Esta partida te cuesta {valor} € más que el año pasado."
-        },
-        "valor_c3": "dif"
-      },
-      null,
-      {
-        "elemento": "tarea",
-        "placeholder": "ej: presupuestos, pedidos a proveedor, redes sociales…",
-        "hint": "Añade las tareas que te ocupan la semana y calculamos lo que te cuesta ese tiempo al año.",
-        "campos": [
-          {
-            "clave": "horas_sem",
-            "etiqueta": "Horas que te lleva a la semana",
-            "paso": 0.5
-          },
-          {
-            "clave": "factura_hora",
-            "etiqueta": "Lo que facturas tú una hora (€)"
-          }
-        ],
-        "lineas": [
-          {
-            "etiqueta": "Lo que te cuesta al año",
-            "formula": "horas_sem*factura_hora*48",
-            "unidad": "eur",
-            "clave": "coste_ano",
-            "highlight": true
-          }
-        ],
-        "veredicto": {
-          "clave": "coste_ano",
-          "verde": 500,
-          "amarillo": 2000,
-          "direccion": "menor",
-          "etiquetas": {
-            "verde": "Poca cosa",
-            "amarillo": "Empieza a pesar",
-            "rojo": "Te está costando dinero"
-          }
-        },
-        "alerta": {
-          "clave": "coste_ano",
-          "texto": "Esta tarea te cuesta {valor} € al año de tu tiempo."
-        },
-        "valor_c3": "coste_ano"
-      },
-      null
-    ]
+    }
   },
   {
     "specialty_id": "NEUROLOGIA ESTRATEGICA",
@@ -5141,7 +5087,6 @@
                 "etiqueta": "Bloque Mañana",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Estrategico",
                   "Operativo",
                   "Comercial",
@@ -5153,7 +5098,6 @@
                 "etiqueta": "Bloque Tarde",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Estrategico",
                   "Operativo",
                   "Comercial",
@@ -5164,31 +5108,26 @@
               {
                 "etiqueta": "H. Estratégicas",
                 "tipo": "numero",
-                "clave": "h_estr",
-                "no_sumar": true
+                "clave": "h_estr"
               },
               {
                 "etiqueta": "H. Operativas",
                 "tipo": "numero",
-                "clave": "h_op",
-                "no_sumar": true
+                "clave": "h_op"
               },
               {
                 "etiqueta": "H. Comerciales",
                 "tipo": "numero",
-                "clave": "h_com",
-                "no_sumar": true
+                "clave": "h_com"
               },
               {
                 "etiqueta": "Interrupciones",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "¿Bloques respetados?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Si",
                   "No",
                   "Parcial"
@@ -5220,7 +5159,7 @@
                 ]
               }
             ],
-            "filas_iniciales": 1,
+            "filas_iniciales": 20,
             "vista": "tarjeta"
           }
         ]
@@ -5247,19 +5186,16 @@
               },
               {
                 "etiqueta": "H. invertidas",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "H. para terminar",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Valor al terminar €",
                 "tipo": "numero",
-                "clave": "valor",
-                "no_sumar": true
+                "clave": "valor"
               },
               {
                 "etiqueta": "Decisión",
@@ -5280,8 +5216,7 @@
                 "tipo": "calculada",
                 "clave": "valor_generado",
                 "formula": "valor*pct/100",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Valor en riesgo si se cancela (€)",
@@ -5291,8 +5226,7 @@
                 "unidad": "eur"
               }
             ],
-            "filas_iniciales": 3,
-            "vista": "tarjeta"
+            "filas_iniciales": 3
           }
         ]
       },
@@ -5310,7 +5244,6 @@
                 "etiqueta": "¿Requería al líder?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Si",
                   "No"
                 ]
@@ -5327,14 +5260,12 @@
                 "etiqueta": "¿Existe protocolo?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Si",
                   "No"
                 ]
               }
             ],
-            "filas_iniciales": 5,
-            "vista": "tarjeta"
+            "filas_iniciales": 5
           }
         ]
       },
@@ -5357,7 +5288,6 @@
                 "etiqueta": "¿P1 completada?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ],
@@ -5371,7 +5301,6 @@
                 "etiqueta": "¿P2 completada?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ],
@@ -5385,7 +5314,6 @@
                 "etiqueta": "¿P3 completada?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ],
@@ -5424,7 +5352,6 @@
                 "etiqueta": "Impacto",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Alto",
                   "Medio",
                   "Bajo"
@@ -5434,7 +5361,6 @@
                 "etiqueta": "¿Evitable?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ]
@@ -5468,26 +5394,22 @@
               {
                 "etiqueta": "Frecuencia veces/mes",
                 "tipo": "numero",
-                "clave": "frec",
-                "no_sumar": true
+                "clave": "frec"
               },
               {
                 "etiqueta": "Duración h",
                 "tipo": "numero",
-                "clave": "dur",
-                "no_sumar": true
+                "clave": "dur"
               },
               {
                 "etiqueta": "Participantes",
                 "tipo": "numero",
-                "clave": "participantes",
-                "no_sumar": true
+                "clave": "participantes"
               },
               {
-                "etiqueta": "¿Sale algo en firme de ella?",
+                "etiqueta": "¿Genera decisión?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ]
@@ -5496,7 +5418,6 @@
                 "etiqueta": "¿Puede eliminarse?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No",
                   "Reducir"
@@ -5514,8 +5435,7 @@
                 "unidad": "numero"
               }
             ],
-            "filas_iniciales": 4,
-            "vista": "tarjeta"
+            "filas_iniciales": 4
           }
         ]
       },
@@ -5534,7 +5454,6 @@
                 "etiqueta": "Impacto",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Alto",
                   "Medio",
                   "Bajo"
@@ -5544,7 +5463,6 @@
                 "etiqueta": "Reversibilidad",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Alta",
                   "Baja"
                 ]
@@ -5553,7 +5471,6 @@
                 "etiqueta": "¿Requiere líder?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ]
@@ -5567,8 +5484,7 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 4,
-            "vista": "tarjeta"
+            "filas_iniciales": 4
           },
           {
             "titulo": "2. Registro de decisiones de la semana",
@@ -5581,7 +5497,6 @@
                 "etiqueta": "¿Llegó al líder?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ]
@@ -5590,7 +5505,6 @@
                 "etiqueta": "¿Debería haber llegado?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ]
@@ -5600,8 +5514,7 @@
                 "tipo": "numero"
               }
             ],
-            "filas_iniciales": 5,
-            "vista": "tarjeta"
+            "filas_iniciales": 5
           }
         ]
       }
@@ -5677,30 +5590,25 @@
               {
                 "etiqueta": "Facturación /mes €",
                 "tipo": "numero",
-                "clave": "fact",
-                "no_sumar": true
+                "clave": "fact"
               },
               {
                 "etiqueta": "Coste directo €",
                 "tipo": "numero",
-                "clave": "costedir",
-                "no_sumar": true
+                "clave": "costedir"
               },
               {
                 "etiqueta": "Horas equipo/mes",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Clientes",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "¿Puerta entrada?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ]
@@ -5859,50 +5767,43 @@
               {
                 "etiqueta": "Precio actual €",
                 "tipo": "numero",
-                "clave": "precio_actual",
-                "no_sumar": true
+                "clave": "precio_actual"
               },
               {
                 "etiqueta": "Clientes actuales",
                 "tipo": "numero",
-                "clave": "clientes_actuales",
-                "no_sumar": true
+                "clave": "clientes_actuales"
               },
               {
                 "etiqueta": "Precio propuesto €",
                 "tipo": "numero",
-                "clave": "precio_propuesto",
-                "no_sumar": true
+                "clave": "precio_propuesto"
               },
               {
                 "etiqueta": "Clientes perdidos est.",
                 "tipo": "numero",
-                "clave": "clientes_perdidos",
-                "no_sumar": true
+                "clave": "clientes_perdidos"
               },
               {
                 "etiqueta": "Ingresos actuales (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_actuales",
                 "formula": "precio_actual*clientes_actuales",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Clientes tras subida",
                 "tipo": "calculada",
                 "clave": "clientes_tras",
                 "formula": "clientes_actuales-clientes_perdidos",
-                "unidad": "numero",
-                "no_sumar": true
+                "unidad": "numero"
               },
               {
                 "etiqueta": "Ingresos con subida (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_nuevos",
                 "formula": "precio_propuesto*clientes_tras",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Impacto neto (€)",
@@ -5940,8 +5841,7 @@
               {
                 "etiqueta": "Facturación /mes €",
                 "tipo": "numero",
-                "clave": "fact",
-                "no_sumar": true
+                "clave": "fact"
               },
               {
                 "etiqueta": "Margen %",
@@ -5952,8 +5852,7 @@
               {
                 "etiqueta": "Nº clientes",
                 "tipo": "numero",
-                "clave": "clientes",
-                "no_sumar": true
+                "clave": "clientes"
               },
               {
                 "etiqueta": "Crecimiento 6 meses %",
@@ -5964,7 +5863,6 @@
                 "etiqueta": "¿Diferencial?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ]
@@ -5973,7 +5871,6 @@
                 "etiqueta": "¿Escalable?",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Sí",
                   "No"
                 ]
@@ -5990,8 +5887,7 @@
                 "tipo": "calculada",
                 "clave": "fact_cliente",
                 "formula": "fact/clientes",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Decisión",
