@@ -4489,7 +4489,7 @@
     "optimizer_impact": "Incremento inmediato de cohesión y velocidad de decisión al compartir una dirección común.",
     "optimizer_decision": "Diagnóstico de Claridad Estratégica",
     "example": "Un taller cerró 2024 con 28.000 € de beneficio y 2025 con 29.000 €: un rumbo del +3,6% frente a un IPC del 3,1%. Ganaba lo mismo que el año anterior sin saberlo. Con el plan de ventas y el techo de gasto instalados, y cuatro decisiones con número detrás, cerró el ciclo en +24,9%.",
-    "capa_1_priorizacion": "Sin rumbo: no sé si subo o bajo; Sin plan de ventas; Sin control del gasto; Objetivos sin número, fecha ni responsable; Sin tiempo reservado para dirigir; Sin revisión hasta el cierre del año",
+    "capa_1_priorizacion": "Sin rumbo: no sé si subo o bajo; Sin plan de ventas; Sin control del gasto; Objetivos sin número, fecha ni responsable; Horas tuyas atrapadas en operativa; Sin revisión hasta el cierre del año",
     "justi_capa1": "Un negocio sin rumbo no es un negocio con mala suerte: es un negocio al que le faltan instrumentos. Señala cuáles no tienes hoy.",
     "capa_2_decision": "Regla de prioridades",
     "capa_2_options": "Ver cómo ha evolucionado tu beneficio y cuánto te falta para crecer un 8%; Ver qué te deja de verdad cada servicio o línea que vendes; Ver a dónde se te va el dinero, partida por partida; Escribir los 3 objetivos del año con su número, su fecha y quién responde; Soltar horas de operativa y ponerlas a producir; Dejar de hacer lo que no te acerca al objetivo",
@@ -4502,7 +4502,7 @@
     "justi_capa5": "Las reuniones de alineación son encuentros breves y periódicos del equipo para revisar hacia dónde vamos y confirmar que cada área rema en la misma dirección. Las necesitas para sostener el foco en el objetivo y evitar que el día a día te desvíe del plan.",
     "capa_6_seguimiento": "Seguimiento: Rumbo del beneficio",
     "justi_capa6": "Este indicador mide tu rumbo real: cuánto ha crecido tu beneficio. No lo rellenas a mano — sube con los euros que han producido las decisiones que diste por hechas en C4.",
-    "capa_1_options": "No sé si este año he ido mejor o peor que el pasado, ni cuánto debería crecer.; No tengo un plan de ventas: vendo lo que entra, no lo que necesito vender.; No tengo un techo de gasto: me entero de lo que me he gastado cuando ya está gastado.; Mis objetivos están en mi cabeza: sin número, sin fecha y sin nadie que responda de ellos.; No reservo tiempo para dirigir: el día a día se lo come todo.; Me entero de cómo ha ido el año en diciembre, cuando ya no puedo hacer nada.",
+    "capa_1_options": "No sé si este año he ido mejor o peor que el pasado, ni cuánto debería crecer.; No tengo un plan de ventas: vendo lo que entra, no lo que necesito vender.; No tengo un techo de gasto: me entero de lo que me he gastado cuando ya está gastado.; Mis objetivos están en mi cabeza: sin número, sin fecha y sin nadie que responda de ellos.; El día a día me come las horas: las que podría estar produciendo se me van en tareas que podría soltar.; Me entero de cómo ha ido el año en diciembre, cuando ya no puedo hacer nada.",
     "kpi_recovery_mode": "financiero",
     "recovery_unit_label": "€ de beneficio ganados",
     "kpi_name": "Rumbo del beneficio",
@@ -4687,8 +4687,9 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Cómo sabrás que se ha cumplido",
-                "tipo": "texto"
+                "etiqueta": "En qué número se nota",
+                "tipo": "texto",
+                "placeholder": "ej. 40 revisiones al mes, 3 clientes nuevos, 2 días menos de entrega"
               },
               {
                 "etiqueta": "Para cuándo",
@@ -4710,7 +4711,8 @@
                 "tipo": "numero",
                 "clave": "beneficio_ano",
                 "unidad": "eur",
-                "contribuye_valor": true
+                "contribuye_valor": true,
+                "placeholder": "reparte aquí lo que te falta"
               },
               {
                 "etiqueta": "Decisión",
@@ -4728,7 +4730,21 @@
                   "Fuera de este año": "¿Lo has sacado ya del plan?"
                 }
               }
-            ]
+            ],
+            "interpretacion": {
+              "clave": "beneficio_ano",
+              "reglas": [
+                {
+                  "min": 1,
+                  "color": "verde",
+                  "texto": "Esto ya es un objetivo: tiene número, fecha y alguien que responde de él."
+                },
+                {
+                  "color": "rojo",
+                  "texto": "Esto todavía es un propósito, no un objetivo. Ponle cuánto beneficio te aporta si se cumple — si no lo sabes, es que no sabes para qué lo haces."
+                }
+              ]
+            }
           }
         ]
       },
@@ -4805,6 +4821,42 @@
         "tipo": "nativa",
         "titulo": "Revisión: ¿voy o no voy?",
         "secciones": [
+          {
+            "titulo": "Tu próxima revisión",
+            "vista": "tarjeta",
+            "fila_unica": true,
+            "filas_iniciales": 1,
+            "columnas": [
+              {
+                "etiqueta": "Fecha de la próxima revisión",
+                "tipo": "texto",
+                "placeholder": "ej. 5 de abril"
+              },
+              {
+                "etiqueta": "Cada cuánto la repites",
+                "tipo": "opciones",
+                "opciones": [
+                  "",
+                  "Cada mes",
+                  "Cada trimestre",
+                  "Cada seis meses"
+                ]
+              },
+              {
+                "etiqueta": "El primer número que miras ese día",
+                "tipo": "texto",
+                "placeholder": "ej. el beneficio del trimestre"
+              },
+              {
+                "etiqueta": "El segundo",
+                "tipo": "texto"
+              },
+              {
+                "etiqueta": "El tercero",
+                "tipo": "texto"
+              }
+            ]
+          },
           {
             "vista": "tarjeta",
             "filas_iniciales": 1,

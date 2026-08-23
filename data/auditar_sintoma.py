@@ -102,6 +102,7 @@ def auditar(s):
                             f"vocabulario en ningun salto -- LEELOS, puede que no hablen de lo mismo")
 
     # ── 3. Por rama y seccion ──────────────────────────────────────────────────
+    rama_con_accion = set()
     for rk in sorted(plan, key=lambda k: (len(k), k)):
         v = plan[rk]
         if not isinstance(v, dict):
@@ -120,8 +121,8 @@ def auditar(s):
                    if c.get("tipo") != "calculada" and ACCION.search(c.get("etiqueta", ""))]
             if len(acc) > 1:
                 r.B(d, f"colision ACCION_REGEX: {acc} -- C4 recibira la columna equivocada")
-            elif len(acc) == 0 and si == 1:
-                r.A(d, "ninguna columna accionable: esta rama no baja nada a C4")
+            if acc:
+                rama_con_accion.add(rk)
 
             # 3b · el TOTAL tiene que significar UNA cosa
             suman = [c["etiqueta"] for c in cols
@@ -158,7 +159,8 @@ def auditar(s):
                 malas = [t for t in re.findall(r"[a-z_][a-z0-9_]*", f) if t not in claves]
                 if malas:
                     r.B(d, f"'{c['etiqueta']}': la formula '{f}' usa claves inexistentes {malas}")
-                div = re.findall(r"/\s*([a-z_][a-z0-9_]*)", f)
+                precargadas = {c2.get("clave") for c2 in cols if c2.get("precarga_desde_c0")}
+                div = [x for x in re.findall(r"/\s*([a-z_][a-z0-9_]*)", f) if x not in precargadas]
                 if div:
                     r.A(d, f"'{c['etiqueta']}': divide por {div} -- si el cliente deja ese campo a 0, "
                            f"sale un numero absurdo")
@@ -167,8 +169,9 @@ def auditar(s):
             # Una seccion origen_margen no necesita veredicto propio: repite tal cual el que el
             # cliente ya vio en C2 (Pilar / Optimizable / Destructor), que es justo el punto del
             # formato -- C3 no recalcula, hereda.
+            hay_numeros = any(c.get("tipo") in ("numero", "calculada") for c in cols)
             interp = sec.get("interpretacion")
-            if not interp and not sec.get("origen_margen"):
+            if not interp and not sec.get("origen_margen") and hay_numeros:
                 r.A(d, "sin `interpretacion`: el cliente ve un numero y nadie le dice que significa")
             elif interp and interp.get("clave") not in claves:
                 r.B(d, f"`interpretacion` apunta a la clave '{interp.get('clave')}', que no existe")
@@ -222,6 +225,10 @@ def auditar(s):
                             r.B(d, f"copy coloquial '{cq}' en «{t[:52]}» -- no suena profesional")
                     if TRIMESTRE_Q.search(t):
                         r.A(d, f"«{t[:52]}» usa 'Q' -- di 'trimestre'")
+
+    for rk, v in plan.items():
+        if isinstance(v, dict) and v.get("tipo") == "nativa" and rk not in rama_con_accion:
+            r.A(rk, "ninguna columna accionable en toda la rama: no baja nada a C4")
 
     # ── 4. KPI y modo ──────────────────────────────────────────────────────────
     modo = s.get("kpi_recovery_mode")
