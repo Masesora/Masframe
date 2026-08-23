@@ -4522,16 +4522,16 @@
                 {
                   "min": 8,
                   "color": "verde",
-                  "texto": "Vas por encima del rumbo. Aquí el trabajo es sostenerlo, no arreglarlo."
+                  "texto": "Vas por encima del objetivo. Aquí el trabajo es sostenerlo, no arreglarlo."
                 },
                 {
                   "min": 3.1,
                   "color": "naranja",
-                  "texto": "Creces, pero apenas por encima del IPC (3,1%). En dinero real ganas casi lo mismo que hace un año."
+                  "texto": "El IPC del año fue del 3,1%. Aunque el número suba, en dinero real ganas lo mismo que hace un año."
                 },
                 {
                   "color": "rojo",
-                  "texto": "Estás por debajo del IPC (3,1%). Aunque el número suba, este año has ganado menos que el pasado."
+                  "texto": "El IPC del año fue del 3,1%. Estás por debajo: este año has ganado menos que el pasado."
                 }
               ]
             },
@@ -4551,7 +4551,7 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Has crecido (%)",
+                "etiqueta": "Tu rumbo",
                 "tipo": "calculada",
                 "clave": "crecimiento",
                 "formula": "(act-ant)*100/ant",
@@ -4559,46 +4559,38 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Para crecer un 8% tendrías que cerrar en (€)",
-                "tipo": "calculada",
-                "clave": "meta8",
-                "formula": "act*1.08",
-                "unidad": "eur",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Te faltan (€)",
+                "etiqueta": "Lo que te falta para crecer un 8%",
                 "tipo": "calculada",
                 "clave": "faltan",
-                "formula": "meta8-act",
+                "formula": "act*0.08",
                 "unidad": "eur",
                 "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
                 "tipo": "opciones",
+                "clave": "decision_rumbo",
                 "opciones": [
                   "",
-                  "Me pongo el 8% como rumbo",
-                  "Me pongo otro rumbo y lo escribo aquí",
-                  "Este año solo aguantar"
+                  "Fijar el 8%",
+                  "Fijar otro objetivo",
+                  "Mantener el resultado del año pasado"
                 ],
                 "confirmaciones": {
-                  "Me pongo el 8% como rumbo": "¿Has escrito el número al que quieres llegar y dónde lo vas a ver cada mes?",
-                  "Me pongo otro rumbo y lo escribo aquí": "¿Está escrito el rumbo que te has puesto, con su número?",
-                  "Este año solo aguantar": "¿Confirmas que asumes cerrar el año por debajo del IPC?"
-                },
-                "clave": "decision_rumbo"
+                  "Fijar el 8%": "¿Has escrito el beneficio al que quieres llegar y dónde vas a mirarlo cada mes?",
+                  "Fijar otro objetivo": "¿Está escrito el objetivo que has fijado, con su número?",
+                  "Mantener el resultado del año pasado": "¿Confirmas que asumes cerrar el año por debajo del IPC?"
+                }
               },
               {
-                "etiqueta": "El rumbo que te pones (%)",
+                "etiqueta": "El objetivo que fijas (%)",
                 "tipo": "numero",
-                "clave": "rumbo",
+                "clave": "objetivo_pct",
                 "no_sumar": true,
                 "placeholder": "ej. 12",
                 "mostrar_si": {
                   "clave_condicion": "decision_rumbo",
-                  "valor_condicion": "Me pongo otro rumbo y lo escribo aquí"
+                  "valor_condicion": "Fijar otro objetivo"
                 }
               }
             ]
