@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Árbol de Objeciones · MAS@FRAME®</title>
+<style>
+:root{--navy:#0F1A35;--navy2:#1A2D55;--gold:#C9A227;--gold2:#E8C96A;--white:#fff;--off:#F9F7F2;--text:#1A1A1A;--sub:#6B7280;--mid:#E5E7EB;--red:#B91C1C;--green:#15803D;--amber:#B45309}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--off);color:var(--text)}
+.header{background:var(--navy);border-bottom:3px solid var(--gold);padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.hbrand{color:var(--gold);font-weight:800;font-size:17px}.hsub{color:rgba(255,255,255,.45);font-size:11px;margin-top:1px}
+.htag{color:rgba(255,255,255,.35);font-size:10px;text-align:right}
+
+.search-bar{background:var(--navy2);padding:12px 24px}
+.search-bar input{width:100%;max-width:560px;padding:10px 16px;border-radius:8px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:white;font-size:14px;outline:none}
+.search-bar input::placeholder{color:rgba(255,255,255,.35)}
+.search-bar input:focus{border-color:var(--gold)}
+
+.intro{max-width:920px;margin:0 auto;padding:24px 24px 8px}
+.intro h1{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:6px}
+.intro p{font-size:13.5px;color:var(--sub);line-height:1.6;max-width:680px}
+.counter{font-size:12px;color:var(--sub);margin-top:6px}
+
+.list{max-width:920px;margin:0 auto;padding:12px 24px 60px}
+.obj-card{background:var(--white);border:1px solid var(--mid);border-radius:12px;margin-bottom:14px;overflow:hidden;transition:box-shadow .2s}
+.obj-card:hover{box-shadow:0 3px 16px rgba(0,0,0,.07)}
+.obj-head{padding:16px 20px;cursor:pointer;display:flex;align-items:flex-start;gap:14px}
+.obj-num{min-width:28px;height:28px;background:var(--navy);color:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px}
+.obj-question{flex:1}
+.obj-q-text{font-size:15px;font-weight:700;color:var(--navy);line-height:1.35}
+.obj-q-sub{font-size:12px;color:var(--sub);margin-top:3px;font-style:italic}
+.obj-tag{font-size:10px;font-weight:700;letter-spacing:.8px;padding:3px 9px;border-radius:99px;color:white;white-space:nowrap;margin-top:2px;align-self:flex-start}
+.obj-arrow{color:var(--sub);font-size:14px;margin-left:8px;margin-top:3px;transition:transform .25s}
+.obj-card.open .obj-arrow{transform:rotate(180deg)}
+
+.obj-body{display:none;border-top:1px solid var(--mid);padding:0}
+.obj-card.open .obj-body{display:block}
+.obj-section{padding:16px 20px;border-bottom:1px solid var(--mid)}
+.obj-section:last-child{border-bottom:none}
+.obj-section-label{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--sub);margin-bottom:8px}
+.diag-pill{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 12px;border-radius:99px;color:white;margin-right:6px;margin-bottom:4px}
+.diag-text{font-size:13.5px;color:var(--text);line-height:1.65;font-style:italic;border-left:3px solid var(--gold);padding-left:12px;margin-top:8px}
+.resp-text{font-size:14px;color:var(--text);line-height:1.75}
+.resp-text .highlight{font-weight:700;color:var(--navy)}
+.resp-text .clinical{font-weight:700;color:var(--gold);background:#FEFCF0;padding:0 2px;border-radius:3px}
+.next-step{background:var(--off);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--text);line-height:1.6}
+.next-step strong{color:var(--navy)}
+
+.no-results{text-align:center;padding:40px;color:var(--sub);font-size:14px;display:none}
+
+.copy-resp{float:right;font-size:11px;font-weight:700;padding:4px 10px;border:1px solid var(--mid);border-radius:6px;background:white;color:var(--sub);cursor:pointer;transition:all .2s;margin-top:-2px}
+.copy-resp:hover{border-color:var(--gold);color:var(--gold)}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:var(--gold);padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+@media print{.header,.search-bar,.obj-arrow,.copy-resp,.toast{display:none!important}body{background:white}.obj-body{display:block!important}.obj-card{break-inside:avoid;margin-bottom:16px;border:1px solid #ccc}}
+@media(max-width:480px){.obj-tag{display:none}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div><div class="hbrand">MASESORA.COM</div><div class="hsub">La Clínica de Empresas · MAS@FRAME®</div></div>
+  <div class="htag">Árbol de Objeciones<br>Herramienta Comercial</div>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="search" placeholder="Buscar objeción... (ej: no tengo tiempo, es caro, ya tengo asesor...)" oninput="filterObjs()">
+</div>
+
+<div class="intro">
+  <h1>Árbol de Objeciones Clínicas</h1>
+  <p>Cada objeción del cliente es en sí misma un síntoma. El comercial que sabe diagnosticar una objeción nunca se queda sin respuesta. Para cada objeción: el diagnóstico clínico, la respuesta exacta palabra a palabra y el siguiente paso.</p>
+  <div class="counter" id="counter"></div>
+</div>
+
+<div class="list" id="objList"></div>
+<div class="no-results" id="noResults">No se encontraron objeciones que coincidan con tu búsqueda.</div>
+<div class="toast" id="toast">Copiado ✓</div>
+
+<script>
+const OBJECIONES = [
+  {
+    q: "No tengo tiempo",
+    sub: "La objeción más frecuente — y el síntoma más obvio",
+    tag: "OPE-S3 · CLI-S3",
+    tagColor: "#F57F17",
+    diag: ["OPE-S3","CLI-S3"],
+    diagText: "Decir que no tienes tiempo es exactamente el síntoma OPE-S3 (Ritmo Operativo Irregular) y CLI-S3 (Fragilidad de Roles). Tu empresa consume todo tu tiempo porque nadie más puede tomar decisiones ni asumir responsabilidades.",
+    resp: `Entiendo perfectamente. Y precisamente por eso estoy aquí. Lo que describes — no tener tiempo — es en sí mismo uno de los síntomas que tratamos. Se llama Ritmo Operativo Irregular, y aparece cuando la operación depende demasiado de una sola persona: tú.
+
+Pregunta clínica: ¿Cuántas horas a la semana dedicas a tareas que debería hacer alguien de tu equipo o un proceso automatizado? El diagnóstico completo son 30 minutos. Y lo que aprendas en esos 30 minutos puede devolverte horas cada semana.`,
+    next: "Ofrece el diagnóstico de 30 minutos. Si rechaza, pregunta: '¿A qué hora de la semana sueles tener 30 minutos más tranquilos?' — anclado en su agenda, no en la tuya."
+  },
+  {
+    q: "No es el momento",
+    sub: "Variante: 'ahora no', 'en el verano', 'cuando acabe esta temporada'",
+    tag: "NEURO-S3",
+    tagColor: "#1565C0",
+    diag: ["NEURO-S3"],
+    diagText: "Síndrome de Decisión Reactiva: las decisiones importantes siempre se posponen porque siempre hay algo más urgente. El 'nunca es el momento' es en sí mismo el problema.",
+    resp: `Eso es exactamente lo que nos dicen el 90% de los empresarios que luego vienen con una urgencia mayor. 'No es el momento' es una decisión que también tiene consecuencias.
+
+Déjame hacerte una pregunta: ¿cuándo sería el momento? ¿Qué tendría que ocurrir para que dijeras que ahora sí? Porque en nuestra experiencia, el momento ideal nunca llega solo — llega cuando alguien decide que es el momento.
+
+No te estoy pidiendo que empieces hoy. Te estoy pidiendo 30 minutos para saber qué está pasando realmente y qué coste tiene esperar.`,
+    next: "Busca anclar la conversación en el coste de no actuar. '¿Qué te costará cada mes que pase sin resolver esto?' Si sigue sin compromiso, acuerda una fecha concreta: 'Quedamos en hablar el 15 de septiembre — ¿te va bien?'"
+  },
+  {
+    q: "Es demasiado caro",
+    sub: "O: 'No tengo presupuesto', 'está fuera de mi rango'",
+    tag: "CIR-S2 · TER-S3",
+    tagColor: "#E65100",
+    diag: ["CIR-S2","TER-S3"],
+    diagText: "Bajo Valor Percibido (TER-S3) y Propuesta Única Difusa (CIR-S2). Cuando un cliente dice 'es caro', en realidad está diciendo 'no veo suficientemente claro qué obtengo a cambio'. El problema no es el precio, es la percepción de valor.",
+    resp: `Entendido. Antes de hablar de precio, déjame preguntarte algo: ¿cuánto te está costando el problema que tenemos encima de la mesa cada mes? No el precio de resolverlo — el coste de no resolverlo.
+
+Si el síntoma que hemos identificado te está costando 1.000€ al mes en ineficiencias, tiempo perdido o clientes que no vuelven, entonces la inversión se amortiza en el primer mes.
+
+No vendemos horas de consultoría. Vendemos un protocolo que produce un resultado medible. Si al final del ciclo el KPI no ha mejorado, revisamos juntos por qué. Eso es lo que hace diferente a MAS@FRAME®.`,
+    next: "No bajes el precio. Sube la percepción de valor. Pregunta: '¿Cuánto vale para ti resolver este problema de una vez?' Si el cliente no puede cuantificar el problema, vuelve al diagnóstico antes de hablar de inversión."
+  },
+  {
+    q: "Ya tengo un asesor / consultor / gestor",
+    sub: "O: 'ya trabajo con alguien'",
+    tag: "Posicionamiento",
+    tagColor: "#424242",
+    diag: [],
+    diagText: "No es una objeción sobre MAS@FRAME®, es una objeción sobre la necesidad. El cliente no diferencia aún entre gestoría/asesoría tradicional y un sistema operativo clínico.",
+    resp: `Perfecto. MAS@FRAME® no reemplaza a tu asesor — trabaja en una capa diferente. Tu gestor gestiona lo legal, fiscal y contable. Nosotros intervenimos en lo operativo, comercial y estratégico: en cómo funciona tu empresa por dentro, no en los papeles.
+
+Una pregunta concreta: ¿tu asesor te dice qué KPI medir en cada área de tu negocio, te acompaña en el proceso de cambio y te emite un certificado de alta cuando el problema está resuelto? Eso es lo que hacemos nosotros. Son cosas distintas.`,
+    next: "El objetivo es diferenciar claramente el rol. Si el cliente sigue confundiendo los servicios, pregúntale cuándo fue la última vez que su asesor le ayudó a resolver un problema operativo o comercial concreto."
+  },
+  {
+    q: "Mi equipo está quemado",
+    sub: "O: 'hay mucha tensión', 'el ambiente está mal'",
+    tag: "PSI-S1 · RES-S1",
+    tagColor: "#6A1B9A",
+    diag: ["PSI-S1","RES-S1"],
+    diagText: "Sobrecarga Emocional Operativa (PSI-S1) y Riesgo de Fuga de Talento (RES-S1). El equipo quemado es el síntoma — la causa es la acumulación de roles mal definidos, decisiones que no se delegan y objetivos que no se comunican.",
+    resp: `Eso es una señal clínica muy clara. El equipo quemado no es el problema — es el síntoma de que algo más profundo no está funcionando: roles que no encajan, carga mal distribuida o una falta de dirección que genera frustración.
+
+Lo que me preocupa es que si no se trata ahora, en 2-3 meses puede convertirse en rotación. Y perder a alguien clave en ese momento de tensión es uno de los costes más altos que puede tener una pyme.
+
+¿Cuándo fue la última vez que alguien del equipo te dijo abiertamente lo que estaba pensando?`,
+    next: "Este cliente necesita Psiquiatría Organizacional + Rescate de Personas. Propón el diagnóstico específico de esas dos unidades. No generalices — sé clínico: nombra los síntomas exactos que estás viendo."
+  },
+  {
+    q: "Los clientes no valoran lo que hacemos",
+    sub: "O: 'siempre comparan por precio', 'nos cuesta cobrar lo que valemos'",
+    tag: "TER-S3 · CIR-S1",
+    tagColor: "#AD1457",
+    diag: ["TER-S3","CIR-S1"],
+    diagText: "Bajo Valor Percibido (TER-S3) e Identidad Competitiva Débil (CIR-S1). El cliente no está diciendo que tu trabajo no vale — está diciendo que no has conseguido que lo perciba.",
+    resp: `Eso es exactamente lo que llamamos Bajo Valor Percibido. Y lo importante es que el problema no está en lo que haces — está en cómo lo comunicas y en qué momento del proceso el cliente lo siente.
+
+Cuando el cliente compara por precio, es porque aún no ha entendido por qué eres diferente. Eso es un problema de marca y de experiencia, no de calidad.
+
+Pregunta clínica: ¿Cuántos de tus clientes actuales te recomendarían activamente a otro empresario sin que tú se lo pidas? Ese número te dice exactamente cuánto valor están percibiendo.`,
+    next: "Este cliente necesita Cirugía de Marca + Terapia de Experiencia. El diagnóstico debería medirse con NPS o con una pregunta directa de recomendación."
+  },
+  {
+    q: "Todo depende de mí",
+    sub: "O: 'si yo no estoy, nada funciona', 'soy el único que sabe cómo hacerlo'",
+    tag: "OPE-S2 · CLI-S3",
+    tagColor: "#F57F17",
+    diag: ["OPE-S2","CLI-S3"],
+    diagText: "Dependencia Crítica del Líder (OPE-S2) y Fragilidad de Roles (CLI-S3). Esta objeción no es una queja — es la descripción exacta de un síntoma clínico que hace que la empresa no tenga valor sin su dueño.",
+    resp: `Lo que describes tiene nombre clínico: Dependencia Crítica del Líder. Y es uno de los síntomas más costosos que existe, porque limita tu crecimiento, te roba vacaciones y convierte tu empresa en un trabajo que no puedes vender ni escalar.
+
+Una empresa que no funciona sin su dueño no tiene valor de mercado. No puede crecer más allá de lo que tú aguantas. No puede venderse.
+
+La buena noticia es que esto tiene tratamiento clínico: documentar procesos, definir roles con responsabilidades reales y construir sistemas que funcionen sin que tú estés presente. En Excelencia Operativa trabajamos exactamente esto.`,
+    next: "Ancla en el coste personal: '¿Cuándo fue la última vez que te desconectaste completamente del negocio durante una semana entera?' Si la respuesta es 'nunca' o 'hace años', el síntoma está confirmado."
+  },
+  {
+    q: "La gente nueva tarda mucho en funcionar",
+    sub: "O: 'formar a alguien me cuesta más que tenerlos ya formados', 'el onboarding es eterno'",
+    tag: "OPE-S1 · RES-S2",
+    tagColor: "#F57F17",
+    diag: ["OPE-S1","RES-S2"],
+    diagText: "Lentitud de Integración (OPE-S1) e Hipoproductividad Sistémica (RES-S2). Una incorporación que tarda 3 meses en rendir cuesta 3 meses de salario sin retorno. Multiplicado por cada contratación, es un coste invisible enorme.",
+    resp: `Eso es un síntoma clínico muy preciso que llamamos Lentitud de Integración. Y el problema casi nunca es la persona nueva — es que la empresa no tiene un sistema de integración real: no hay procesos documentados, no hay guías, no hay forma de que alguien aprenda sin depender de alguien que ya sabe.
+
+¿Cuánto tiempo dedicas tú o tu equipo a formar a cada persona nueva? Multiplica ese tiempo por su coste hora. Eso es lo que te cuesta cada incorporación antes de que empiece a producir.
+
+El tratamiento es construir un sistema de integración que funcione sin que tú tengas que enseñar personalmente cada vez.`,
+    next: "Cuantifica con ellos el coste por incorporación. Si tienen 2-3 incorporaciones al año y cada una cuesta 3 meses de productividad, el número suele ser lo suficientemente grande para justificar la intervención."
+  },
+  {
+    q: "Nunca tengo liquidez aunque vendo bien",
+    sub: "O: 'el banco siempre está justo', 'facturo pero no veo el dinero'",
+    tag: "UCI-S1 · UCI-S3",
+    tagColor: "#C9A227",
+    diag: ["UCI-S1","UCI-S3"],
+    diagText: "Hemorragia de Liquidez (UCI-S1) e Hipertrofia de Cobro (UCI-S3). Cuando la facturación es buena pero la caja está siempre justa, el dinero existe pero está atrapado: en facturas sin cobrar, en stock parado o en ciclos de cobro demasiado largos.",
+    resp: `Eso es exactamente lo que llamamos Hemorragia de Liquidez. Y la paradoja es que muchas empresas están en esta situación precisamente porque venden bien — pero el dinero llega tarde o está bloqueado en sitios que no ves.
+
+Hay tres lugares donde suele estar ese dinero: facturas emitidas que nadie ha cobrado aún, productos comprados o fabricados que llevan meses sin salir, y anticipos pagados a proveedores que aún no han llegado a producto.
+
+Con solo dos datos que tienes ahora mismo, puedo decirte cuántos meses de operación tienes bloqueados. ¿Lo calculamos?`,
+    next: "Este es el momento ideal para el diagnóstico KPI de UCI-S1. Pide los dos datos (dinero bloqueado + gastos fijos mensuales) y calcula delante del cliente. El impacto visual del resultado suele cerrar la conversación."
+  },
+  {
+    q: "Trabajo mucho pero gano poco",
+    sub: "O: 'el margen es bajo', 'no sé por qué no me queda más'",
+    tag: "UCI-S2 · CLI-S3",
+    tagColor: "#C9A227",
+    diag: ["UCI-S2","CLI-S3"],
+    diagText: "Infección de Rentabilidad (UCI-S2) y Fragilidad de Roles (CLI-S3). Cuando el trabajo es mucho y el resultado económico es bajo, hay una infección en el margen: clientes que cuestan más de lo que aportan, tarifas mal calculadas o tiempo que se va en tareas de bajo valor.",
+    resp: `Lo que describes tiene un diagnóstico muy preciso: Infección de Rentabilidad. Tu negocio trabaja, pero parte de ese trabajo está infectando el margen porque hay clientes que cuestan más de lo que pagan, servicios mal tarifados o tiempo que se va en tareas que no generan valor real.
+
+Pregunta clínica: ¿Sabes exactamente cuánto ganas por hora real trabajada en cada tipo de cliente o servicio? No la tarifa teórica — el margen real. En la mayoría de pymes, cuando hacemos ese cálculo, aparecen 2-3 clientes que en realidad son un coste disfrazado de ingreso.`,
+    next: "Propón el cálculo de margen por cliente. Si lo hacen contigo en la sesión, suele haber un momento 'eureka' que abre la conversación hacia el plan de intervención."
+  },
+  {
+    q: "No sé si esto funciona para mi tipo de negocio",
+    sub: "O: 'mi sector es muy específico', 'somos muy diferentes'",
+    tag: "Posicionamiento",
+    tagColor: "#424242",
+    diag: [],
+    diagText: "Objeción de posicionamiento, no de síntoma. El cliente cree que MAS@FRAME® es una solución genérica. El objetivo es demostrar que los síntomas clínicos son universales, aunque cada negocio sea diferente.",
+    resp: `Entiendo esa duda. Y la respuesta es que los síntomas clínicos no dependen del sector — dependen del estado del negocio.
+
+Una hemorragia de liquidez es igual de dolorosa en un taller mecánico que en una agencia de marketing. La dependencia crítica del líder existe igual en una clínica dental que en una empresa de transportes. El síntoma es universal. Lo que cambia es el tratamiento, que siempre es personalizado y medido con los KPIs reales de tu negocio.
+
+¿Puedo hacerte dos preguntas sobre cómo funciona tu empresa ahora mismo? Solo para ver qué síntomas están presentes.`,
+    next: "Deriva inmediatamente al diagnóstico de síntomas. Cuando el cliente ve que las preguntas hablan exactamente de su realidad, la objeción de 'mi negocio es diferente' suele desaparecer sola."
+  },
+  {
+    q: "Ya he probado cosas y no han funcionado",
+    sub: "O: 'ya contraté a alguien', 'ya lo intenté', 'ya gasté dinero en consultores'",
+    tag: "Confianza",
+    tagColor: "#424242",
+    diag: ["NEURO-S3"],
+    diagText: "Esta objeción habla de desconfianza basada en experiencia previa. Suele ir acompañada de Síndrome de Decisión Reactiva (NEURO-S3): se tomaron decisiones sin diagnóstico, sin protocolo y sin medir el resultado.",
+    resp: `Lo escucho. Y es completamente válido. Tengo curiosidad: ¿qué probaste exactamente? ¿Qué síntoma intentabas resolver y cómo medisteis si había resultado?
+
+Porque en la mayoría de casos que nos llegan con esa experiencia, el problema no fue la intervención en sí — fue que se aplicó sin diagnóstico previo. Se aplicó una solución genérica sin medir qué KPI tenía que mejorar y sin saber cuándo el problema estaba realmente resuelto.
+
+En MAS@FRAME® no empezamos a hacer nada sin medir primero. Cada síntoma tiene un KPI inicial y un KPI objetivo. Si al final del protocolo ese número no ha mejorado, no emitimos el alta. Esa es la diferencia.`,
+    next: "Escucha con atención qué intentaron antes. Eso te da información diagnóstica sobre qué síntomas tienen activos y qué frustraciones hay que no repetir. No compares con el anterior — explica el protocolo."
+  },
+  {
+    q: "Mis ventas han bajado y no sé por qué",
+    sub: "O: 'antes iba mejor', 'algo ha cambiado pero no sé qué'",
+    tag: "CARDIO-S1 · NEURO-S1",
+    tagColor: "#C62828",
+    diag: ["CARDIO-S1","NEURO-S1"],
+    diagText: "Déficit de Demanda (CARDIO-S1) y Amnesia Estratégica (NEURO-S1). La bajada de ventas sin explicación clara es la señal de que el sistema comercial no tiene indicadores — y sin indicadores, no hay diagnóstico posible.",
+    resp: `Eso es Déficit de Demanda combinado con Amnesia Estratégica. Y la frase 'no sé por qué' es exactamente el síntoma: si no tienes datos, no puedes diagnosticar.
+
+Hay tres causas habituales de bajada de ventas en pymes: el mercado ha cambiado y la propuesta no se ha adaptado, el pipeline estaba vacío desde hace meses y ahora se nota, o la marca ha perdido presencia y los clientes nuevos no llegan.
+
+¿Cuántos clientes nuevos entraron el mes pasado? ¿Cuántos clientes activos tienes ahora comparado con hace 12 meses? Con esos dos datos empezamos a diagnosticar.`,
+    next: "Pide los datos concretos. La incapacidad de responder con números confirma el síntoma de Ceguera de Control (CLI-S1). Usa eso para ampliar el diagnóstico."
+  },
+  {
+    q: "No tengo equipo, soy yo solo / somos dos personas",
+    sub: "O: 'soy autónomo', 'somos microempresa'",
+    tag: "Tamaño",
+    tagColor: "#2E7D32",
+    diag: ["CLI-S3","OPE-S2"],
+    diagText: "Esta no es una objeción real — es una descripción del estado actual. Una empresa de una o dos personas tiene exactamente los mismos síntomas clínicos que una empresa de 20, solo que más concentrados y con menos margen de error.",
+    resp: `Eso no es una limitación para MAS@FRAME® — es exactamente el perfil para el que está diseñado el plan PRE y PAE.
+
+Una empresa de dos personas con síntomas no tratados tiene menos margen de error que una grande. Si hay una hemorragia de liquidez o una dependencia crítica del líder en una estructura de dos personas, el impacto es proporcionalmente mayor.
+
+Y la realidad es que muchas pymes pequeñas que vienen a nosotros lo hacen precisamente porque quieren crecer y necesitan construir los sistemas correctos antes de escalar, no después. ¿Qué es lo que más te está frenando ahora mismo?`,
+    next: "Redirige hacia el diagnóstico. El plan PRE (399€/mes para <15k€/mes de facturación) es accesible para autónomos y microempresas. Pero antes de hablar de plan, asegura el diagnóstico."
+  },
+  {
+    q: "Tengo que pensarlo / consultarlo",
+    sub: "O: 'déjame tiempo', 'necesito hablar con mi socio/pareja'",
+    tag: "NEURO-S3",
+    tagColor: "#1565C0",
+    diag: ["NEURO-S3"],
+    diagText: "Síndrome de Decisión Reactiva (NEURO-S3). 'Tengo que pensarlo' es con frecuencia una señal de que el valor no está suficientemente claro, o de que hay una preocupación no expresada que no hemos abordado.",
+    resp: `Por supuesto, tiene todo el sentido. Antes de que lo hagas, ¿puedo preguntarte qué es exactamente lo que necesitas terminar de ver claro? Porque si hay algo que no he explicado bien o una duda concreta, prefiero resolverla ahora contigo.
+
+Lo que sí te pido es que cuando lo pienses, te hagas esta pregunta: ¿cuánto me cuesta cada mes que este problema siga sin resolverse? Eso pone el precio de la intervención en perspectiva.
+
+Y si quieres consultarlo con alguien, con mucho gusto hago una llamada corta con esa persona también para resolver cualquier duda.`,
+    next: "Si dice que necesita consultar con alguien, ofrece incluir a esa persona. No dejes la decisión sola — busca un siguiente paso concreto: '¿Cuándo crees que podrás tener una respuesta? Te llamo el jueves.'"
+  },
+  {
+    q: "Mi problema es que no tengo clientes",
+    sub: "O: 'necesito más ventas', 'el problema es el marketing'",
+    tag: "CARDIO-S1 · NEURO-S1",
+    tagColor: "#C62828",
+    diag: ["CARDIO-S1","NEURO-S1"],
+    diagText: "Déficit de Demanda (CARDIO-S1). La frase 'necesito más clientes' casi siempre tapa síntomas más profundos: no hay sistema comercial, la propuesta no está clara, o el perfil de cliente ideal no está definido.",
+    resp: `Eso es el síntoma más visible, pero raramente es el único. Antes de hablar de marketing o de traer más clientes, necesito hacerte una pregunta: ¿qué pasa con los clientes que ya entran? ¿Cuántos vuelven? ¿Cuántos recomiendan? ¿Cuántos convierten desde la primera conversación?
+
+Porque si el sistema comercial está roto, traer más tráfico solo amplifica el problema. Lo que necesitas primero es diagnosticar exactamente qué parte del proceso falla — si es la generación de demanda, la conversión, la retención o la propuesta de valor.
+
+Eso es exactamente lo que diagnostica Cardiología Comercial de MAS@FRAME®.`,
+    next: "Usa el diagnóstico de la herramienta de síntomas para medir exactamente dónde está el fallo comercial. No vendas marketing — vende diagnóstico clínico del sistema comercial."
+  },
+  {
+    q: "No tengo tiempo para reunirme / para seguir un proceso",
+    sub: "O: 'no puedo comprometerme a reuniones regulares'",
+    tag: "OPE-S2 · CLI-S3",
+    tagColor: "#F57F17",
+    diag: ["OPE-S2","CLI-S3"],
+    diagText: "Nuevamente OPE-S2 y CLI-S3. La imposibilidad de comprometerse a un proceso de mejora es la confirmación del síntoma: la empresa lo consume todo.",
+    resp: `Entendido. Y lo que acabas de decir confirma el diagnóstico: si no tienes tiempo ni para dedicar a resolver los problemas de tu empresa, la empresa te tiene atrapado.
+
+El protocolo MAS@FRAME® está diseñado para personas con exactamente ese problema. Los ciclos no requieren reuniones diarias — requieren compromiso en momentos concretos y medibles. No es una consultoría que te roba horas. Es un protocolo que te devuelve horas.
+
+Lo que sí te pido es que pienses en esto: si sigues sin tiempo dentro de 6 meses, ¿habrá cambiado algo? ¿O la única forma de recuperar tiempo es intervenir el sistema ahora?`,
+    next: "Explica la estructura de ciclos: qué implica realmente en términos de tiempo. Si el cliente conoce el compromiso exacto (no genérico), la objeción suele reducirse considerablemente."
+  },
+  {
+    q: "Estamos bien, no hay problemas graves",
+    sub: "O: 'funcionamos bien', 'no veo ningún problema urgente'",
+    tag: "CLI-S1 · NEURO-S2",
+    tagColor: "#424242",
+    diag: ["CLI-S1","NEURO-S2"],
+    diagText: "Ceguera de Control (CLI-S1) y Dispersión Directiva (NEURO-S2). 'No veo ningún problema' puede significar que realmente no hay problemas — o que no hay indicadores para verlos. En pymes, suele ser lo segundo.",
+    resp: `Me alegra escucharlo. Tengo una pregunta genuina: ¿cómo lo mides? ¿Qué indicadores tienes ahora mismo que te dicen que estás bien en liquidez, en procesos, en equipo y en clientes?
+
+Porque en nuestra experiencia, las empresas que dicen estar bien y tienen datos que lo demuestran, realmente están bien. Pero las que dicen estar bien sin datos... suelen tener síntomas que aún no han hecho ruido.
+
+No te digo que estés mal. Te pregunto: ¿qué te dice tu sistema que estás bien?`,
+    next: "Si no tiene datos, el síntoma está confirmado. Ofrece el diagnóstico como una 'revisión preventiva' — sin urgencia clínica, para confirmar que realmente está todo bien. Muchos clientes aceptan mejor el diagnóstico cuando se plantea como confirmación, no como descubrimiento de problemas."
+  },
+  {
+    q: "Mi equipo no me sigue / hay resistencia al cambio",
+    sub: "O: 'intento cambiar cosas y nadie se mueve', 'siempre hay excusas'",
+    tag: "PSI-S3 · PSI-S2",
+    tagColor: "#6A1B9A",
+    diag: ["PSI-S3","PSI-S2"],
+    diagText: "Desconexión Emocional del Equipo (PSI-S3) y Desalineación de Perfiles (PSI-S2). La resistencia al cambio en un equipo es casi siempre un síntoma de desconexión emocional — el equipo no entiende el porqué, no confía en el proceso, o no está en el rol adecuado.",
+    resp: `Lo que describes es Desconexión Emocional del Equipo. Y es uno de los síntomas más agotadores para un líder, porque sientes que empujas solo.
+
+La resistencia al cambio casi nunca es mala voluntad — es falta de comprensión del porqué, falta de confianza en el proceso, o personas en roles que no les motivan. Cualquiera de las tres tiene tratamiento.
+
+Pregunta: ¿cuándo fue la última vez que le preguntaste al equipo qué necesitaría para comprometerse con el cambio? No lo que tú crees que necesitan — lo que ellos dicen.`,
+    next: "Este cliente necesita Psiquiatría Organizacional. El síntoma de resistencia al cambio es uno de los más cargantes emocionalmente para el empresario. Conéctalo con ese agotamiento — esa es la razón para intervenir ahora."
+  },
+  {
+    q: "No necesito un consultor, necesito un comercial / marketero / técnico",
+    sub: "O: 'mi problema es de ventas / marketing / personas / tecnología'",
+    tag: "Diagnóstico",
+    tagColor: "#1565C0",
+    diag: ["NEURO-S1"],
+    diagText: "Amnesia Estratégica (NEURO-S1). Cuando un empresario cree que necesita una contratación específica antes de hacer un diagnóstico, suele estar tratando el síntoma sin haber diagnosticado el órgano.",
+    resp: `Puede que tengas razón. Pero déjame preguntarte: ¿cómo sabes que contratar un comercial es lo que necesitas y no, por ejemplo, tener un sistema comercial que funcione antes de escalar con más personas?
+
+Porque el 60% de los empresarios que dicen necesitar un comercial, cuando hacemos el diagnóstico, descubrimos que el problema real es que no hay un proceso de venta definido. Y un comercial nuevo sin proceso es un comercial que en 3 meses está frustrado y se va.
+
+El diagnóstico clínico primero no te cuesta nada. Y si después confirmas que lo que necesitas es un comercial, tendrás mucha más claridad sobre qué perfil, qué objetivos y qué proceso debe seguir.`,
+    next: "Ofrece el diagnóstico como primera inversión de 30 minutos, no como venta de un plan. El objetivo es que el cliente entienda el problema antes de decidir la solución."
+  },
+];
+
+const list = document.getElementById('objList');
+
+function renderObjs(filter){
+  list.innerHTML='';
+  let count = 0;
+  OBJECIONES.forEach((o,i)=>{
+    const match = !filter ||
+      o.q.toLowerCase().includes(filter) ||
+      o.sub.toLowerCase().includes(filter) ||
+      o.resp.toLowerCase().includes(filter) ||
+      o.tag.toLowerCase().includes(filter);
+    if(!match) return;
+    count++;
+    const card = document.createElement('div');
+    card.className='obj-card';
+    card.innerHTML=`
+      <div class="obj-head" onclick="toggle(this.parentElement)">
+        <div class="obj-num">${i+1}</div>
+        <div class="obj-question">
+          <div class="obj-q-text">"${o.q}"</div>
+          <div class="obj-q-sub">${o.sub}</div>
+        </div>
+        <div class="obj-tag" style="background:${o.tagColor}">${o.tag}</div>
+        <div class="obj-arrow">▼</div>
+      </div>
+      <div class="obj-body">
+        <div class="obj-section">
+          <div class="obj-section-label">DIAGNÓSTICO CLÍNICO</div>
+          ${o.diag.map(d=>`<span class="diag-pill" style="background:${o.tagColor}">${d}</span>`).join('')}
+          <div class="diag-text">${o.diagText}</div>
+        </div>
+        <div class="obj-section">
+          <div class="obj-section-label">RESPUESTA EXACTA
+            <button class="copy-resp" onclick="copyResp(${i},this)">Copiar</button>
+          </div>
+          <div class="resp-text">${o.resp.replace(/\n/g,'<br>')}</div>
+        </div>
+        <div class="obj-section">
+          <div class="obj-section-label">SIGUIENTE PASO</div>
+          <div class="next-step">➜ ${o.next}</div>
+        </div>
+      </div>`;
+    list.appendChild(card);
+  });
+  document.getElementById('counter').textContent = `${count} objeciones`;
+  document.getElementById('noResults').style.display = count===0?'block':'none';
+}
+
+function toggle(card){
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.obj-card.open').forEach(c=>c.classList.remove('open'));
+  if(!isOpen) card.classList.add('open');
+}
+
+function filterObjs(){
+  renderObjs(document.getElementById('search').value.toLowerCase().trim());
+}
+
+function copyResp(i, btn){
+  const o = OBJECIONES[i];
+  navigator.clipboard.writeText(o.resp).then(()=>{
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2000);
+    btn.textContent='✓';
+    setTimeout(()=>btn.textContent='Copiar',2000);
+  });
+}
+
+renderObjs('');
+</script>
+</body>
+</html>

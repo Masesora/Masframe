@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Círculo de Innovación Empresarial · MASESORA®</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{
+    background:linear-gradient(135deg,#C9A84C 0%,#E8C96A 40%,#F0D97A 60%,#C9A84C 100%);
+    color:#0A1228;font-family:'DM Sans',sans-serif;overflow-x:hidden;
+  }
+  .stage{
+    min-height:100vh;display:flex;flex-direction:column;
+    align-items:center;padding:64px 40px 80px;
+    position:relative;overflow:hidden;
+  }
+  .stage::before{
+    content:'';position:fixed;inset:0;
+    background:
+      radial-gradient(ellipse 700px 350px at 50% 0%,rgba(255,255,255,0.14) 0%,transparent 70%),
+      radial-gradient(ellipse 400px 400px at 90% 90%,rgba(10,18,40,0.07) 0%,transparent 70%);
+    pointer-events:none;z-index:0;
+  }
+  .stage::after{
+    content:'';position:fixed;inset:0;
+    background-image:radial-gradient(circle,rgba(10,18,40,0.05) 1px,transparent 1px);
+    background-size:24px 24px;pointer-events:none;z-index:0;
+  }
+  .stage > *{position:relative;z-index:1;}
+
+  @keyframes fadeRotate{from{opacity:0;transform:rotate(-8deg) scale(0.92);}to{opacity:1;transform:rotate(0deg) scale(1);}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes expandLine{from{width:0;opacity:0;}to{width:520px;opacity:1;}}
+  @keyframes spinSlow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  @keyframes sweep{0%{transform:translateX(-100%);}40%{transform:translateX(100%);}100%{transform:translateX(100%);}}
+  @keyframes shimmer{0%,100%{box-shadow:0 6px 30px rgba(10,18,40,0.25);}50%{box-shadow:0 10px 50px rgba(10,18,40,0.4);}}
+
+  .cie-logo-svg{
+    opacity:0;animation:fadeUp 1s ease-out 0.3s forwards;
+    margin-bottom:36px;text-align:center;
+  }
+  .cie-sello{opacity:0;animation:fadeRotate 2s ease-out 0.8s forwards;margin-bottom:52px;}
+  .cie-empresa{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(26pt,5vw,46pt);font-weight:700;
+    color:#0A1228;text-align:center;letter-spacing:0.04em;
+    opacity:0;animation:fadeUp 1.2s ease-out 2s forwards;margin-bottom:6px;
+  }
+  .cie-representante{
+    font-family:'DM Sans',sans-serif;font-size:10.5pt;font-weight:400;
+    color:rgba(10,18,40,0.6);text-align:center;letter-spacing:0.06em;
+    opacity:0;animation:fadeUp 1s ease-out 2.5s forwards;margin-bottom:48px;
+  }
+  .cie-divider{
+    width:0;height:2px;
+    background:linear-gradient(90deg,transparent,rgba(10,18,40,0.4),rgba(10,18,40,0.4),transparent);
+    animation:expandLine 1.2s ease-out 3.1s forwards;margin-bottom:48px;border-radius:999px;
+  }
+  .cie-lema{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(15pt,3vw,21pt);font-weight:400;font-style:italic;
+    color:#0A1228;text-align:center;letter-spacing:0.04em;line-height:1.4;
+    opacity:0;animation:fadeUp 1.2s ease-out 3.8s forwards;
+    margin-bottom:48px;max-width:620px;
+  }
+  .cie-carta{
+    max-width:600px;text-align:center;
+    opacity:0;animation:fadeUp 1.4s ease-out 4.6s forwards;margin-bottom:12px;
+  }
+  .cie-carta p{
+    font-family:'Cormorant Garamond',serif;font-size:12.5pt;
+    color:rgba(10,18,40,0.78);line-height:1.9;margin-bottom:16px;
+  }
+  .cie-carta p.destacado{font-size:14pt;color:#0A1228;font-weight:600;}
+  .cie-carta p.cierre{font-size:13pt;color:#0A1228;font-weight:600;}
+  .cie-carta strong{color:#0A1228;font-weight:700;}
+  .cie-carta-extra{
+    max-width:600px;text-align:center;
+    max-height:0;overflow:hidden;
+    transition:max-height 0.9s ease,opacity 0.7s ease;opacity:0;margin-bottom:0;
+  }
+  .cie-carta-extra.open{max-height:700px;opacity:1;margin-bottom:16px;}
+  .cie-carta-extra p{
+    font-family:'Cormorant Garamond',serif;font-size:12.5pt;
+    color:rgba(10,18,40,0.78);line-height:1.9;margin-bottom:16px;
+  }
+  .cie-carta-extra strong{color:#0A1228;font-weight:700;}
+  .cie-leer-mas{
+    font-family:'IBM Plex Mono',monospace;font-size:7.5pt;
+    color:rgba(10,18,40,0.45);letter-spacing:0.18em;text-transform:uppercase;
+    background:none;border:none;cursor:pointer;
+    opacity:0;animation:fadeUp 1s ease-out 5.2s forwards;
+    margin-bottom:40px;padding:4px 0;
+    border-bottom:1px solid rgba(10,18,40,0.25);
+    transition:color 0.2s,border-color 0.2s;
+  }
+  .cie-leer-mas:hover{color:rgba(10,18,40,0.75);border-color:rgba(10,18,40,0.55);}
+  .cie-firma{
+    font-family:'Cormorant Garamond',serif;font-size:14pt;font-style:italic;
+    color:rgba(10,18,40,0.55);letter-spacing:0.06em;
+    opacity:0;animation:fadeUp 1s ease-out 5.7s forwards;margin-bottom:40px;
+  }
+  .cie-lema2{
+    font-family:'IBM Plex Mono',monospace;font-size:7.5pt;
+    color:rgba(10,18,40,0.42);text-align:center;letter-spacing:0.18em;
+    text-transform:uppercase;opacity:0;
+    animation:fadeUp 1s ease-out 6.2s forwards;
+    margin-bottom:44px;max-width:500px;line-height:1.9;
+  }
+  .cie-btn{
+    display:inline-flex;align-items:center;gap:12px;
+    padding:18px 52px;background:#0F1A35;color:#E8C96A;
+    font-family:'Cormorant Garamond',serif;
+    font-size:14pt;font-weight:600;letter-spacing:0.06em;
+    text-decoration:none;border-radius:999px;
+    opacity:0;animation:fadeUp 1.2s ease-out 6.8s forwards,shimmer 3s ease-in-out 8s infinite;
+    box-shadow:0 6px 30px rgba(10,18,40,0.25);
+    transition:transform 0.2s ease,box-shadow 0.2s ease;
+    position:relative;overflow:hidden;margin-bottom:60px;
+  }
+  .cie-btn::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,rgba(232,201,106,0.12),transparent);
+    transform:translateX(-100%);animation:sweep 3s ease-in-out 8.5s infinite;
+  }
+  .cie-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(10,18,40,0.35);}
+  .cie-pie{
+    text-align:center;font-family:'IBM Plex Mono',monospace;font-size:6.5pt;
+    color:rgba(10,18,40,0.25);letter-spacing:0.14em;
+    opacity:0;animation:fadeUp 1s ease-out 7.2s forwards;
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- LOGO SVG GENERADO — centrado, sin recortes -->
+  <div class="cie-logo-svg">
+    <svg viewBox="0 0 320 60" width="320" height="60" xmlns="http://www.w3.org/2000/svg">
+      <text x="160" y="38"
+        text-anchor="middle"
+        font-family="Cormorant Garamond, Georgia, serif"
+        font-size="38" font-weight="700"
+        fill="#0A1228"
+        letter-spacing="6">MASESORA</text>
+      <text x="160" y="54"
+        text-anchor="middle"
+        font-family="IBM Plex Mono, monospace"
+        font-size="9" font-weight="400"
+        fill="rgba(10,18,40,0.55)"
+        letter-spacing="5">DINAMISMO EMPRESARIAL</text>
+    </svg>
+  </div>
+
+  <!-- SELLO CIE -->
+  <div class="cie-sello">
+    <svg viewBox="0 0 300 300" width="220" height="220" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="150" cy="150" r="138" fill="none" stroke="rgba(10,18,40,0.5)" stroke-width="2.5"/>
+      <circle cx="150" cy="150" r="127" fill="none" stroke="rgba(10,18,40,0.18)" stroke-width="0.8" stroke-dasharray="3 2.5"/>
+      <circle cx="150" cy="150" r="115" fill="rgba(180,140,60,0.18)" stroke="rgba(10,18,40,0.35)" stroke-width="1.5"/>
+      <g style="animation:spinSlow 40s linear infinite;transform-origin:150px 150px;">
+        <path id="cietc" d="M150,150 m-101,0 a101,101 0 1,1 202,0 a101,101 0 1,1 -202,0" fill="none"/>
+        <text font-family="IBM Plex Mono,monospace" font-size="10.5" font-weight="700"
+          fill="rgba(10,18,40,0.7)" letter-spacing="5.5">
+          <textPath href="#cietc" startOffset="0%">CÍRCULO DE INNOVACIÓN EMPRESARIAL · CÍRCULO DE INNOVACIÓN EMPRESARIAL · </textPath>
+        </text>
+      </g>
+      <text x="150" y="36" text-anchor="middle" font-size="11" fill="rgba(10,18,40,0.55)">✦</text>
+      <text x="150" y="270" text-anchor="middle" font-size="11" fill="rgba(10,18,40,0.55)">✦</text>
+      <text x="32" y="154" text-anchor="middle" font-size="11" fill="rgba(10,18,40,0.55)">✦</text>
+      <text x="268" y="154" text-anchor="middle" font-size="11" fill="rgba(10,18,40,0.55)">✦</text>
+      <text x="150" y="138" text-anchor="middle"
+        font-family="Cormorant Garamond,serif" font-size="56" font-weight="700"
+        fill="rgba(10,18,40,0.88)" letter-spacing="4">CIE</text>
+      <text x="150" y="168" text-anchor="middle"
+        font-family="IBM Plex Mono,monospace" font-size="8" font-weight="700"
+        fill="rgba(10,18,40,0.42)" letter-spacing="6">CÍRCULO</text>
+    </svg>
+  </div>
+
+  <div class="cie-empresa">ARIES SL</div>
+  <div class="cie-representante">Ana García López</div>
+  <div class="cie-divider"></div>
+  <div class="cie-lema">"El conocimiento que se comparte, multiplica."</div>
+
+  <div class="cie-carta">
+    <p class="destacado">Bienvenido/a a algo que acaba de empezar.</p>
+    <p>Es un orgullo para mí que hayas confiado en <strong>MASESORA</strong> y en el sistema <strong>MAS@FRAME®</strong> para transformar tu empresa. Llegaste a La Clínica de Empresas porque algo necesitaba cambiar en tu negocio. Confiaste, te esforzaste, y el método funcionó.</p>
+  </div>
+
+  <div class="cie-carta-extra" id="cartaExtra">
+    <p>Tras años construyendo esta metodología, nació una certeza: los resultados no pueden quedarse en silencio. El conocimiento tiene que circular. Tiene que crecer.</p>
+    <p>El <strong>Círculo de Innovación Empresarial</strong> es el espacio que siempre quise crear — una comunidad donde empresarios que ya han demostrado su capacidad de transformación se encuentran, se reconocen y se impulsan mutuamente. Un lugar para el emprendimiento, el desarrollo económico y el talento. Donde compartir multiplicará tus ventajas empresariales.</p>
+    <p>El CIE nació para que ese conocimiento no se pierda. Para que los que ya saben — porque lo han vivido — encuentren un espacio donde crecer juntos e impulsar la siguiente generación de empresas y empresarios.</p>
+  </div>
+
+  <div class="cie-carta" style="opacity:0;animation:fadeUp 1s ease-out 4.6s forwards;">
+    <p class="cierre">Una comunidad con propósito. <strong>Y tú ya formas parte de ella.</strong></p>
+  </div>
+
+  <button class="cie-leer-mas" id="leerMasBtn" onclick="toggleCarta()">Leer carta completa ↓</button>
+
+  <div class="cie-firma">— Maite Camor</div>
+
+  <div class="cie-lema2">
+    Los que han transformado su empresa,<br/>transforman todo lo que tocan.
+  </div>
+
+  <a href="https://chat.whatsapp.com/Lp45yaCR8UQ3zCgKOzJEs2" target="_blank" class="cie-btn">
+    Aquí empieza tu legado &nbsp;→
+  </a>
+
+  <div class="cie-pie">
+    www.masesora.com · @laclinicadeempresas · info@masesora.com · 609 987 436
+  </div>
+
+</div>
+
+<script>
+  function toggleCarta() {
+    const extra = document.getElementById('cartaExtra');
+    const btn   = document.getElementById('leerMasBtn');
+    if (extra.classList.contains('open')) {
+      extra.classList.remove('open');
+      btn.textContent = 'Leer carta completa ↓';
+    } else {
+      extra.classList.add('open');
+      btn.textContent = 'Cerrar ↑';
+    }
+  }
+</script>
+</body>
+</html>

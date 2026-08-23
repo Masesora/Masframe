@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Clínico · MASESORA.COM</title>
+<style>
+:root {
+  --navy:    #0F1A35;
+  --navy2:   #1A2D55;
+  --gold:    #C9A227;
+  --gold2:   #E8C96A;
+  --gold3:   #F5E098;
+  --offwhite:#F9F7F2;
+  --white:   #FFFFFF;
+  --text:    #1A1A1A;
+  --subtle:  #6B7280;
+  --mid:     #E5E7EB;
+  --red:     #B91C1C;
+  --orange:  #C2410C;
+  --amber:   #D97706;
+  --green:   #15803D;
+  --red-bg:  #FEF2F2;
+  --ora-bg:  #FFF7ED;
+  --amb-bg:  #FFFBEB;
+  --grn-bg:  #F0FDF4;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--offwhite);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ───────────────────────────────────────────────── */
+.header {
+  background: var(--navy);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--gold);
+}
+.header-brand { color: var(--gold); font-weight: 700; font-size: 18px; letter-spacing: .5px; }
+.header-sub   { color: rgba(255,255,255,.55); font-size: 11px; margin-top: 1px; }
+.header-tag   { color: rgba(255,255,255,.4); font-size: 10px; text-align: right; }
+
+/* ── PROGRESS BAR ─────────────────────────────────────────── */
+.progress-wrap {
+  background: var(--navy);
+  padding: 0 24px 12px;
+  display: none;
+}
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  margin-bottom: 5px;
+}
+.progress-bar {
+  height: 4px;
+  background: rgba(255,255,255,.12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+  border-radius: 99px;
+  transition: width .4s ease;
+}
+
+/* ── SCREENS ──────────────────────────────────────────────── */
+.screen { display: none; animation: fadeIn .35s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ── WELCOME ──────────────────────────────────────────────── */
+.welcome {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+.welcome-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  margin-bottom: 20px;
+}
+.welcome h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+.welcome h1 em {
+  color: var(--gold);
+  font-style: normal;
+}
+.welcome-desc {
+  font-size: 15px;
+  color: var(--subtle);
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+.welcome-steps {
+  background: var(--white);
+  border: 1px solid var(--mid);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 28px;
+}
+.welcome-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.welcome-step:last-child { margin-bottom: 0; }
+.step-num {
+  width: 26px; height: 26px;
+  min-width: 26px;
+  background: var(--navy);
+  color: var(--gold);
+  font-size: 12px; font-weight: 700;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-text { font-size: 13.5px; color: var(--text); line-height: 1.5; padding-top: 3px; }
+.step-text strong { color: var(--navy); }
+
+.input-group { margin-bottom: 16px; }
+.input-group label {
+  display: block;
+  font-size: 12px; font-weight: 600;
+  color: var(--subtle);
+  letter-spacing: .5px;
+  margin-bottom: 6px;
+}
+.input-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--mid);
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color .2s;
+  outline: none;
+}
+.input-group input:focus { border-color: var(--gold); }
+
+.btn-start {
+  width: 100%;
+  padding: 15px;
+  background: var(--navy);
+  color: var(--gold);
+  font-size: 15px; font-weight: 700;
+  border: none; border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: .4px;
+  transition: background .2s, transform .1s;
+}
+.btn-start:hover { background: var(--navy2); }
+.btn-start:active { transform: scale(.99); }
+.start-note {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--subtle);
+  margin-top: 10px;
+}
+
+/* ── QUESTION ─────────────────────────────────────────────── */
+.question-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 28px 24px 60px;
+}
+.q-specialty {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  margin-bottom: 18px;
+  color: white;
+}
+.q-number {
+  font-size: 12px;
+  color: var(--subtle);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.q-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.35;
+  margin-bottom: 28px;
+}
+.q-options { display: flex; flex-direction: column; gap: 10px; }
+.q-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--white);
+  border: 1.5px solid var(--mid);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+  overflow: hidden;
+}
+.q-option:hover { border-color: var(--gold); background: #FEFCF5; }
+.q-option.selected {
+  border-color: var(--gold);
+  background: #FEFCF5;
+}
+.q-option.selected::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--gold);
+  border-radius: 10px 0 0 10px;
+}
+.opt-score {
+  width: 32px; height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+}
+.opt-score.s1 { background: #DCFCE7; color: #15803D; }
+.opt-score.s2 { background: #FEF9C3; color: #854D0E; }
+.opt-score.s3 { background: #FED7AA; color: #C2410C; }
+.opt-score.s4 { background: #FEE2E2; color: #B91C1C; }
+.opt-label { font-size: 14px; color: var(--text); line-height: 1.4; }
+.opt-sublabel { font-size: 11.5px; color: var(--subtle); margin-top: 1px; }
+
+.q-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  gap: 12px;
+}
+.btn-prev {
+  padding: 11px 22px;
+  background: transparent;
+  border: 1.5px solid var(--mid);
+  border-radius: 8px;
+  font-size: 13px; color: var(--subtle);
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-prev:hover { border-color: var(--navy); color: var(--navy); }
+.btn-next {
+  flex: 1;
+  padding: 13px;
+  background: var(--navy);
+  color: var(--gold);
+  font-size: 14px; font-weight: 700;
+  border: none; border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s;
+  opacity: .4;
+  pointer-events: none;
+}
+.btn-next.enabled { opacity: 1; pointer-events: all; }
+.btn-next.enabled:hover { background: var(--navy2); }
+
+/* ── RESULTS ──────────────────────────────────────────────── */
+.results-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+.results-header {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.results-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold));
+}
+.res-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.res-client-name {
+  font-size: 22px; font-weight: 800;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.res-date { font-size: 11px; color: rgba(255,255,255,.4); margin-bottom: 20px; }
+.res-stats {
+  display: flex; gap: 14px; flex-wrap: wrap;
+}
+.res-stat {
+  background: rgba(255,255,255,.07);
+  border-radius: 8px;
+  padding: 10px 16px;
+  text-align: center;
+  min-width: 90px;
+}
+.res-stat-num { font-size: 26px; font-weight: 800; color: var(--gold); line-height: 1; }
+.res-stat-lbl { font-size: 10px; color: rgba(255,255,255,.5); margin-top: 3px; }
+
+/* Plan recommendation */
+.plan-card {
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 24px;
+  border: 2px solid transparent;
+}
+.plan-card.pie { background: #FEF2F2; border-color: var(--red); }
+.plan-card.pae { background: #FFF7ED; border-color: var(--orange); }
+.plan-card.pre { background: #EFF6FF; border-color: #2563EB; }
+.plan-pill {
+  display: inline-block;
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+  padding: 4px 14px;
+  border-radius: 99px;
+  margin-bottom: 10px;
+}
+.plan-card.pie .plan-pill { background: var(--red); color: white; }
+.plan-card.pae .plan-pill { background: var(--orange); color: white; }
+.plan-card.pre .plan-pill { background: #2563EB; color: white; }
+.plan-title { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+.plan-desc  { font-size: 13.5px; color: var(--subtle); line-height: 1.6; margin-bottom: 14px; }
+.plan-details {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.plan-detail {
+  background: white;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: var(--text);
+}
+.plan-detail strong { color: var(--navy); display: block; font-size: 11px; margin-bottom: 1px; }
+.plan-prices {
+  margin-top: 12px;
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.plan-price {
+  background: white;
+  border-radius: 8px;
+  padding: 8px 14px;
+  flex: 1; min-width: 140px;
+}
+.plan-price-amount { font-size: 20px; font-weight: 800; color: var(--gold); }
+.plan-price-label  { font-size: 10.5px; color: var(--subtle); margin-top: 1px; }
+
+/* Symptom sections */
+.section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--subtle);
+  margin: 24px 0 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: var(--mid);
+}
+.sym-card {
+  background: var(--white);
+  border: 1px solid var(--mid);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: box-shadow .2s;
+}
+.sym-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.sym-card.critico  { border-left: 4px solid var(--red);    background: var(--red-bg); }
+.sym-card.importante { border-left: 4px solid var(--orange); background: var(--ora-bg); }
+.sym-card.alerta   { border-left: 4px solid var(--amber);  background: var(--amb-bg); }
+.sym-card.saludable{ border-left: 4px solid var(--green);  background: var(--grn-bg); }
+.sym-severity {
+  width: 40px; min-width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+}
+.sym-card.critico   .sym-severity { background: var(--red);    color: white; }
+.sym-card.importante .sym-severity { background: var(--orange); color: white; }
+.sym-card.alerta    .sym-severity { background: var(--amber);   color: white; }
+.sym-card.saludable .sym-severity { background: var(--green);   color: white; }
+.sym-info { flex: 1; }
+.sym-id    { font-size: 10px; font-weight: 700; letter-spacing: .5px; color: var(--subtle); }
+.sym-name  { font-size: 15px; font-weight: 700; color: var(--navy); margin: 2px 0 3px; }
+.sym-specialty { font-size: 11px; color: var(--subtle); margin-bottom: 4px; }
+.sym-lema  { font-size: 12px; font-style: italic; color: var(--subtle); }
+.sym-score-bar {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 8px;
+}
+.score-track {
+  flex: 1; height: 4px;
+  background: var(--mid);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.score-fill { height: 100%; border-radius: 99px; }
+.sym-card.critico   .score-fill { background: var(--red);    }
+.sym-card.importante .score-fill { background: var(--orange); }
+.sym-card.alerta    .score-fill { background: var(--amber);   }
+.sym-card.saludable .score-fill { background: var(--green);   }
+.score-pct { font-size: 10px; font-weight: 700; color: var(--subtle); min-width: 30px; }
+
+/* Actions */
+.res-actions {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-top: 28px;
+}
+.btn-action {
+  flex: 1; min-width: 160px;
+  padding: 13px 20px;
+  border-radius: 9px;
+  font-size: 13.5px; font-weight: 700;
+  cursor: pointer; border: none;
+  transition: all .2s;
+}
+.btn-print {
+  background: var(--offwhite);
+  border: 1.5px solid var(--mid);
+  color: var(--navy);
+}
+.btn-print:hover { border-color: var(--navy); }
+.btn-new {
+  background: var(--navy);
+  color: var(--gold);
+}
+.btn-new:hover { background: var(--navy2); }
+.btn-cta {
+  background: var(--gold);
+  color: var(--navy);
+}
+.btn-cta:hover { background: var(--gold2); }
+
+/* Footer */
+.footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--subtle);
+  line-height: 1.8;
+}
+.footer strong { color: var(--navy); }
+
+/* Print */
+@media print {
+  .header, .progress-wrap, .res-actions, .btn-prev, .btn-next { display: none !important; }
+  body { background: white; }
+  .results-wrap { padding: 0; }
+  .sym-card { break-inside: avoid; }
+}
+
+@media (max-width: 480px) {
+  .q-text { font-size: 17px; }
+  .res-client-name { font-size: 18px; }
+  .plan-prices { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="header-brand">MASESORA.COM</div>
+    <div class="header-sub">La Clínica de Empresas · MAS@FRAME®</div>
+  </div>
+  <div class="header-tag">Diagnóstico Clínico<br>Herramienta Comercial</div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-info">
+    <span id="progressLabel">Pregunta 1 de 20</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 0 — BIENVENIDA ══════════════════════════════════ -->
+<div class="screen active" id="screen-welcome">
+  <div class="welcome">
+    <div class="welcome-badge">DIAGNÓSTICO CLÍNICO · 15 MIN</div>
+    <h1>¿Qué le está<br>pasando a tu <em>empresa</em>?</h1>
+    <p class="welcome-desc">
+      20 preguntas directas te revelan qué órganos de tu negocio están fallando
+      y qué síntomas clínicos requieren intervención prioritaria.
+    </p>
+    <div class="welcome-steps">
+      <div class="welcome-step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Responde con honestidad.</strong> No hay respuestas correctas ni incorrectas. Solo la realidad de tu empresa.</div>
+      </div>
+      <div class="welcome-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>4 opciones por pregunta.</strong> Elige la que mejor describe lo que ocurre en tu empresa ahora mismo.</div>
+      </div>
+      <div class="welcome-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Resultado inmediato.</strong> Verás todos los síntomas detectados, su nivel de criticidad y el plan de intervención recomendado.</div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>NOMBRE DE LA EMPRESA O PROPIETARIO</label>
+      <input type="text" id="clientName" placeholder="Ej: Taller Mecánico García, Ana López..." />
+    </div>
+    <div class="input-group">
+      <label>CONSULTOR / COMERCIAL (opcional)</label>
+      <input type="text" id="comercialName" placeholder="Ej: María Sánchez — MASESORA" />
+    </div>
+    <button class="btn-start" onclick="startDiagnosis()">Iniciar diagnóstico clínico →</button>
+    <p class="start-note">Confidencial · Solo para uso interno MAS@FRAME® · www.masesora.com</p>
+  </div>
+</div>
+
+<!-- ══ SCREEN 1–20 — PREGUNTAS ════════════════════════════════ -->
+<div class="screen" id="screen-question">
+  <div class="question-wrap">
+    <div class="q-specialty" id="qSpecialty"></div>
+    <div class="q-number" id="qNumber"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-options" id="qOptions"></div>
+    <div class="q-nav">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">← Anterior</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN RESULTS ══════════════════════════════════════════ -->
+<div class="screen" id="screen-results">
+  <div class="results-wrap" id="resultsContent"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DATOS: SÍNTOMAS DEL CATÁLOGO MAS@FRAME®
+// ═══════════════════════════════════════════════════════════════
+const SYMPTOMS = {
+  "UCI-S1": { name:"Hemorragia de Liquidez",              specialty:"UCI FINANCIERA",             color:"#C9A227", lema:"Si el flujo de caja no es el adecuado, todo falla." },
+  "UCI-S2": { name:"Infección de Rentabilidad",           specialty:"UCI FINANCIERA",             color:"#C9A227", lema:"Si el margen no acompaña aunque trabajes más horas, hay infección." },
+  "UCI-S3": { name:"Hipertrofia de Cobro",                specialty:"UCI FINANCIERA",             color:"#C9A227", lema:"Si cobras tarde aunque vendas bien, tu caja se asfixia." },
+  "UNI-S1": { name:"Esclerosis Operativa",                specialty:"UNIDAD DE PROCESOS",         color:"#00897B", lema:"Si tu respuesta es lenta, estás perdiendo dinero sin notarlo." },
+  "UNI-S2": { name:"Colapso de Capacidad",                specialty:"UNIDAD DE PROCESOS",         color:"#00897B", lema:"Si todo tarda, estás perdiendo dinero sin notarlo." },
+  "UNI-S3": { name:"Fuga de Calidad Crónica",             specialty:"UNIDAD DE PROCESOS",         color:"#00897B", lema:"Si hay retrabajo constante, la calidad está sangrando." },
+  "CARDIO-S1":{ name:"Déficit de Demanda",                specialty:"CARDIOLOGÍA COMERCIAL",      color:"#C62828", lema:"Si no conviertes, no creces." },
+  "CARDIO-S2":{ name:"Pipeline Anémico",                  specialty:"CARDIOLOGÍA COMERCIAL",      color:"#C62828", lema:"Un pipeline vacío es una empresa sin futuro a 90 días." },
+  "CARDIO-S3":{ name:"Arritmia Comercial",                specialty:"CARDIOLOGÍA COMERCIAL",      color:"#C62828", lema:"Sin sistema comercial, las ventas dependen de la suerte." },
+  "CARDIO-S4":{ name:"Dependencia Crítica de Clientes",   specialty:"CARDIOLOGÍA COMERCIAL",      color:"#C62828", lema:"Un cliente que se va puede colapsar tu empresa." },
+  "CARDIO-S5":{ name:"Síndrome de Oferta Difusa",         specialty:"CARDIOLOGÍA COMERCIAL",      color:"#C62828", lema:"Si no sabes qué vendes mejor, vendes menos de todo." },
+  "NEURO-S1": { name:"Amnesia Estratégica",               specialty:"NEUROLOGÍA ESTRATÉGICA",     color:"#1565C0", lema:"Sin dirección clara, cualquier esfuerzo se diluye." },
+  "NEURO-S2": { name:"Dispersión Directiva",              specialty:"NEUROLOGÍA ESTRATÉGICA",     color:"#1565C0", lema:"Si todo es urgente, nada es estratégico." },
+  "NEURO-S3": { name:"Síndrome de Decisión Reactiva",     specialty:"NEUROLOGÍA ESTRATÉGICA",     color:"#1565C0", lema:"Decidir por urgencia es el síntoma más costoso del liderazgo." },
+  "CLI-S1":   { name:"Ceguera de Control",                specialty:"GESTIÓN CLÍNICA",            color:"#424242", lema:"Funcionar no es lo mismo que sostenerse." },
+  "CLI-S2":   { name:"Riesgo de Cumplimiento",            specialty:"GESTIÓN CLÍNICA",            color:"#424242", lema:"Una multa o sanción puede salir más cara que el problema." },
+  "CLI-S3":   { name:"Fragilidad de Roles y Responsabilidades", specialty:"GESTIÓN CLÍNICA",      color:"#424242", lema:"Si todo pasa por ti, el negocio tiene un solo punto de fallo." },
+  "CIR-S1":   { name:"Identidad Competitiva Débil",       specialty:"CIRUGÍA DE MARCA",           color:"#E65100", lema:"Si no destacas, te comparan por precio." },
+  "CIR-S2":   { name:"Propuesta Única Difusa",            specialty:"CIRUGÍA DE MARCA",           color:"#E65100", lema:"Una marca que no sabe qué la diferencia no puede cobrar lo que vale." },
+  "CIR-S3":   { name:"Comunicación de Marca Inconsistente",specialty:"CIRUGÍA DE MARCA",          color:"#E65100", lema:"Un mensaje distinto en cada canal destruye la confianza." },
+  "PSI-S1":   { name:"Sobrecarga Emocional Operativa",    specialty:"PSIQUIATRÍA ORGANIZACIONAL", color:"#6A1B9A", lema:"La tensión interna siempre termina saliendo." },
+  "PSI-S2":   { name:"Desalineación de Perfiles",         specialty:"PSIQUIATRÍA ORGANIZACIONAL", color:"#6A1B9A", lema:"Una persona en el rol equivocado cuesta el doble de lo que produce." },
+  "PSI-S3":   { name:"Desconexión Emocional del Equipo",  specialty:"PSIQUIATRÍA ORGANIZACIONAL", color:"#6A1B9A", lema:"Un equipo desconectado no da el extra cuando más falta hace." },
+  "RES-S1":   { name:"Riesgo de Fuga de Talento",         specialty:"RESCATE DE PERSONAS",        color:"#2E7D32", lema:"El talento no avisa cuando se va." },
+  "RES-S2":   { name:"Hipoproductividad Sistémica",       specialty:"RESCATE DE PERSONAS",        color:"#2E7D32", lema:"Una persona nueva que tarda 3 meses en rendir cuesta 3 meses de salario." },
+  "RES-S3":   { name:"Tensión de Equipo",                 specialty:"RESCATE DE PERSONAS",        color:"#2E7D32", lema:"La dependencia de una persona es el riesgo más silencioso." },
+  "TER-S1":   { name:"Inconsistencia Experiencial",       specialty:"TERAPIA DE EXPERIENCIA",     color:"#AD1457", lema:"Si no te recuerdan, te reemplazan." },
+  "TER-S2":   { name:"Recuperación en Caliente Fallida",  specialty:"TERAPIA DE EXPERIENCIA",     color:"#AD1457", lema:"Un cliente que se queja bien gestionado vale más que diez nuevos." },
+  "TER-S3":   { name:"Bajo Valor Percibido",              specialty:"TERAPIA DE EXPERIENCIA",     color:"#AD1457", lema:"Si el cliente no siente que vale lo que paga, busca otra opción." },
+  "OPE-S1":   { name:"Lentitud de Integración",           specialty:"EXCELENCIA OPERATIVA",       color:"#F57F17", lema:"Si incorporar a alguien tarda meses, el crecimiento tiene un techo." },
+  "OPE-S2":   { name:"Dependencia Crítica del Líder",     specialty:"EXCELENCIA OPERATIVA",       color:"#F57F17", lema:"Una empresa que no funciona sin su dueño no tiene valor de mercado." },
+  "OPE-S3":   { name:"Ritmo Operativo Irregular",         specialty:"EXCELENCIA OPERATIVA",       color:"#F57F17", lema:"Sin consistencia en la entrega, la calidad es una casualidad." },
+};
+
+// ═══════════════════════════════════════════════════════════════
+// LAS 20 PREGUNTAS — 2 por especialidad, cubren los 30 síntomas
+// ═══════════════════════════════════════════════════════════════
+const QUESTIONS = [
+  {
+    id: 1,
+    specialty: "UCI FINANCIERA",
+    color: "#C9A227",
+    text: "¿Llegas a final de mes con tensión de caja aunque hayas tenido ventas durante ese mes?",
+    options: [
+      { score:1, label:"Nunca",         sub:"La caja siempre está saneada" },
+      { score:2, label:"Alguna vez",    sub:"Puntualmente, pero se resuelve rápido" },
+      { score:3, label:"Con frecuencia",sub:"Es una preocupación habitual" },
+      { score:4, label:"Siempre",       sub:"Es la realidad cada mes" },
+    ],
+    maps: { "UCI-S1": 1.0 }
+  },
+  {
+    id: 2,
+    specialty: "UCI FINANCIERA",
+    color: "#C9A227",
+    text: "¿Cuando calculas cuánto ganas realmente por hora trabajada, el resultado te decepciona? ¿Y el ciclo de cobro supera los 30 días desde que entregas?",
+    options: [
+      { score:1, label:"No, el margen es bueno y cobro rápido", sub:"" },
+      { score:2, label:"El margen es justo o tardo algo en cobrar", sub:"" },
+      { score:3, label:"El margen es bajo y/o cobro tarde con frecuencia", sub:"" },
+      { score:4, label:"Ambas cosas me preocupan seriamente", sub:"" },
+    ],
+    maps: { "UCI-S2": 0.6, "UCI-S3": 0.4 }
+  },
+  {
+    id: 3,
+    specialty: "UNIDAD DE PROCESOS",
+    color: "#00897B",
+    text: "¿Hay tareas, pedidos o proyectos que se quedan parados esperando aprobación, información o recursos antes de poder avanzar?",
+    options: [
+      { score:1, label:"Raramente",     sub:"Los flujos funcionan bien" },
+      { score:2, label:"A veces",       sub:"Hay algún cuello de botella puntual" },
+      { score:3, label:"Con frecuencia",sub:"Hay cuellos de botella habituales" },
+      { score:4, label:"Constantemente",sub:"Es el modo normal de operar" },
+    ],
+    maps: { "UNI-S1": 0.7, "UNI-S2": 0.3 }
+  },
+  {
+    id: 4,
+    specialty: "UNIDAD DE PROCESOS",
+    color: "#00897B",
+    text: "¿Con qué frecuencia hay que repetir o corregir un trabajo que ya se había dado por terminado?",
+    options: [
+      { score:1, label:"Casi nunca",    sub:"La calidad es consistente" },
+      { score:2, label:"De vez en cuando", sub:"Errores puntuales y aislados" },
+      { score:3, label:"Bastante seguido",sub:"El retrabajo consume horas" },
+      { score:4, label:"Es lo habitual", sub:"Corregir es parte del proceso" },
+    ],
+    maps: { "UNI-S3": 0.7, "UNI-S2": 0.3 }
+  },
+  {
+    id: 5,
+    specialty: "CARDIOLOGÍA COMERCIAL",
+    color: "#C62828",
+    text: "¿Tu cartera de oportunidades de venta (pipeline) es suficiente para cumplir el objetivo de facturación del próximo mes sin depender de golpes de suerte?",
+    options: [
+      { score:1, label:"Sí, tengo pipeline de sobra",   sub:"" },
+      { score:2, label:"Justo, pero hay que trabajarlo", sub:"" },
+      { score:3, label:"No, el pipeline es escaso",      sub:"" },
+      { score:4, label:"No tengo pipeline estructurado", sub:"Vendo lo que entra por contactos" },
+    ],
+    maps: { "CARDIO-S1": 0.5, "CARDIO-S2": 0.5 }
+  },
+  {
+    id: 6,
+    specialty: "CARDIOLOGÍA COMERCIAL",
+    color: "#C62828",
+    text: "¿Más de la mitad de tu facturación depende de 1 o 2 clientes, o de que tú estés presente en la venta?",
+    options: [
+      { score:1, label:"No, la cartera está diversificada",  sub:"" },
+      { score:2, label:"Hay alguna concentración, pero controlada", sub:"" },
+      { score:3, label:"Sí, dependemos demasiado de pocos",  sub:"" },
+      { score:4, label:"Si se va ese cliente/si yo falto, hay crisis", sub:"" },
+    ],
+    maps: { "CARDIO-S4": 0.5, "CARDIO-S3": 0.3, "CARDIO-S5": 0.2 }
+  },
+  {
+    id: 7,
+    specialty: "NEUROLOGÍA ESTRATÉGICA",
+    color: "#1565C0",
+    text: "¿Tu equipo sabe exactamente cuáles son los 2 o 3 objetivos más importantes de la empresa este trimestre?",
+    options: [
+      { score:1, label:"Sí, están definidos y comunicados", sub:"" },
+      { score:2, label:"Más o menos, pero no están escritos", sub:"" },
+      { score:3, label:"No, cada uno tiene su propia visión", sub:"" },
+      { score:4, label:"No existe ningún objetivo claro definido", sub:"" },
+    ],
+    maps: { "NEURO-S1": 0.7, "NEURO-S2": 0.3 }
+  },
+  {
+    id: 8,
+    specialty: "NEUROLOGÍA ESTRATÉGICA",
+    color: "#1565C0",
+    text: "¿Las decisiones importantes en tu empresa se toman con datos concretos o más por urgencia e intuición?",
+    options: [
+      { score:1, label:"Con datos y criterios definidos",    sub:"" },
+      { score:2, label:"Mezcla de datos e intuición",        sub:"" },
+      { score:3, label:"Mayoritariamente por intuición",     sub:"" },
+      { score:4, label:"Siempre por urgencia o reacción",    sub:"La mayoría son decisiones apagafuegos" },
+    ],
+    maps: { "NEURO-S3": 1.0 }
+  },
+  {
+    id: 9,
+    specialty: "GESTIÓN CLÍNICA",
+    color: "#424242",
+    text: "¿Tardas más de 7 días en cerrar el mes y conocer con exactitud qué pasó económicamente en tu negocio?",
+    options: [
+      { score:1, label:"No, cierro en menos de 3 días",     sub:"" },
+      { score:2, label:"Entre 3 y 7 días",                  sub:"" },
+      { score:3, label:"Más de 7 días o con datos incompletos", sub:"" },
+      { score:4, label:"No tengo cierre mensual estructurado", sub:"" },
+    ],
+    maps: { "CLI-S1": 0.7, "CLI-S2": 0.3 }
+  },
+  {
+    id: 10,
+    specialty: "GESTIÓN CLÍNICA",
+    color: "#424242",
+    text: "¿Cuántas tareas que deberían resolver otras personas de tu equipo acaban sobre tu mesa porque nadie más las resuelve?",
+    options: [
+      { score:1, label:"Muy pocas, la delegación funciona",   sub:"" },
+      { score:2, label:"Algunas, pero es asumible",           sub:"" },
+      { score:3, label:"Bastantes, soy el cuello de botella", sub:"" },
+      { score:4, label:"Todo pasa por mí, no puedo delegar nada", sub:"" },
+    ],
+    maps: { "CLI-S3": 1.0 }
+  },
+  {
+    id: 11,
+    specialty: "CIRUGÍA DE MARCA",
+    color: "#E65100",
+    text: "¿Cuando un cliente potencial te compara con la competencia, tienes argumentos claros y únicos para diferenciarte sin bajar el precio?",
+    options: [
+      { score:1, label:"Sí, nuestra diferenciación es clara y nos la creen", sub:"" },
+      { score:2, label:"La tenemos, pero no siempre convence",               sub:"" },
+      { score:3, label:"Nos cuesta diferenciarnos, solemos competir por precio", sub:"" },
+      { score:4, label:"No tenemos diferenciación definida",                 sub:"" },
+    ],
+    maps: { "CIR-S1": 0.5, "CIR-S2": 0.5 }
+  },
+  {
+    id: 12,
+    specialty: "CIRUGÍA DE MARCA",
+    color: "#E65100",
+    text: "¿Tu comunicación en los diferentes canales (web, redes sociales, propuestas, atención) transmite el mismo mensaje y la misma imagen?",
+    options: [
+      { score:1, label:"Sí, hay coherencia total de marca",       sub:"" },
+      { score:2, label:"Bastante, aunque hay alguna inconsistencia", sub:"" },
+      { score:3, label:"No, cada canal va un poco por su cuenta", sub:"" },
+      { score:4, label:"No tenemos una comunicación de marca definida", sub:"" },
+    ],
+    maps: { "CIR-S3": 1.0 }
+  },
+  {
+    id: 13,
+    specialty: "PSIQUIATRÍA ORGANIZACIONAL",
+    color: "#6A1B9A",
+    text: "¿Hay tensión, conflictos o fricciones en el equipo que nadie resuelve abiertamente y que afectan al rendimiento o al ambiente?",
+    options: [
+      { score:1, label:"No, el clima es bueno y los conflictos se hablan", sub:"" },
+      { score:2, label:"Hay alguna tensión puntual pero se gestiona",       sub:"" },
+      { score:3, label:"Hay tensión latente que todos notan pero nadie dice", sub:"" },
+      { score:4, label:"El clima es malo y afecta claramente al trabajo",   sub:"" },
+    ],
+    maps: { "PSI-S1": 0.5, "PSI-S3": 0.5 }
+  },
+  {
+    id: 14,
+    specialty: "PSIQUIATRÍA ORGANIZACIONAL",
+    color: "#6A1B9A",
+    text: "¿Tienes personas en roles donde claramente no están rindiendo lo que deberían, y nadie actúa sobre eso?",
+    options: [
+      { score:1, label:"No, cada persona está en el rol adecuado",           sub:"" },
+      { score:2, label:"Hay algún caso puntual en revisión",                  sub:"" },
+      { score:3, label:"Sí, hay personas mal ubicadas y es un coste oculto", sub:"" },
+      { score:4, label:"El problema está extendido y frena al equipo",        sub:"" },
+    ],
+    maps: { "PSI-S2": 1.0 }
+  },
+  {
+    id: 15,
+    specialty: "RESCATE DE PERSONAS",
+    color: "#2E7D32",
+    text: "¿En los últimos 12 meses has perdido alguna persona clave, o sientes que estás en riesgo de perder talento importante para el negocio?",
+    options: [
+      { score:1, label:"No, el equipo clave está estable y comprometido",   sub:"" },
+      { score:2, label:"Ha habido alguna salida pero sin impacto grave",     sub:"" },
+      { score:3, label:"Hemos perdido talento y ha costado mucho recuperarlo", sub:"" },
+      { score:4, label:"Es un riesgo real y activo ahora mismo",             sub:"" },
+    ],
+    maps: { "RES-S1": 1.0 }
+  },
+  {
+    id: 16,
+    specialty: "RESCATE DE PERSONAS",
+    color: "#2E7D32",
+    text: "¿Cuánto tiempo tarda una persona nueva en ser completamente autónoma y productiva en su puesto?",
+    options: [
+      { score:1, label:"Menos de 2 semanas",              sub:"El proceso de integración es eficiente" },
+      { score:2, label:"Entre 2 semanas y 30 días",       sub:"" },
+      { score:3, label:"Entre 1 y 3 meses",               sub:"" },
+      { score:4, label:"Más de 3 meses o no tenemos proceso de integración", sub:"" },
+    ],
+    maps: { "RES-S2": 0.5, "OPE-S1": 0.5 }
+  },
+  {
+    id: 17,
+    specialty: "TERAPIA DE EXPERIENCIA",
+    color: "#AD1457",
+    text: "¿La experiencia que vive tu cliente es consistente independientemente de quién le atienda, el canal que use o el día que sea?",
+    options: [
+      { score:1, label:"Sí, la experiencia es siempre consistente",          sub:"" },
+      { score:2, label:"Mayoritariamente sí, con alguna variación menor",    sub:"" },
+      { score:3, label:"Varía bastante según quién atiende o el canal",      sub:"" },
+      { score:4, label:"No hay estándar, cada interacción es diferente",     sub:"" },
+    ],
+    maps: { "TER-S1": 1.0 }
+  },
+  {
+    id: 18,
+    specialty: "TERAPIA DE EXPERIENCIA",
+    color: "#AD1457",
+    text: "¿Cuando un cliente se queja o expresa insatisfacción, tienes un protocolo claro para recuperarle? ¿Y el cliente siente que lo que paga vale lo que recibe?",
+    options: [
+      { score:1, label:"Sí, hay protocolo y el valor percibido es alto",    sub:"" },
+      { score:2, label:"Gestionamos las quejas, pero el valor percibido es mejorable", sub:"" },
+      { score:3, label:"Las quejas se gestionan mal y/o los clientes no perciben el valor", sub:"" },
+      { score:4, label:"No tenemos protocolo y el cliente a veces siente que paga de más", sub:"" },
+    ],
+    maps: { "TER-S2": 0.5, "TER-S3": 0.5 }
+  },
+  {
+    id: 19,
+    specialty: "EXCELENCIA OPERATIVA",
+    color: "#F57F17",
+    text: "¿Si tuvieras que ausentarte una semana completa, la operación seguiría funcionando sin problemas graves sin tu presencia directa?",
+    options: [
+      { score:1, label:"Sí, el equipo lo lleva sin problemas",               sub:"" },
+      { score:2, label:"Habría algún problema pero nada crítico",            sub:"" },
+      { score:3, label:"Habría problemas importantes que nadie resolvería",  sub:"" },
+      { score:4, label:"La operación se frenaría o colapsaría sin mí",       sub:"" },
+    ],
+    maps: { "OPE-S2": 0.7, "RES-S3": 0.3 }
+  },
+  {
+    id: 20,
+    specialty: "EXCELENCIA OPERATIVA",
+    color: "#F57F17",
+    text: "¿Tus procesos y procedimientos clave están documentados de forma que cualquier persona del equipo pueda seguirlos sin depender de la memoria o experiencia de alguien concreto?",
+    options: [
+      { score:1, label:"Sí, todo está documentado y actualizado",            sub:"" },
+      { score:2, label:"Algunos procesos sí, otros no",                     sub:"" },
+      { score:3, label:"Muy poco está documentado, funciona por costumbre", sub:"" },
+      { score:4, label:"Nada está documentado, dependemos del conocimiento de personas concretas", sub:"" },
+    ],
+    maps: { "OPE-S3": 0.6, "OPE-S1": 0.4 }
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// ESTADO
+// ═══════════════════════════════════════════════════════════════
+let current = 0;
+let answers  = {};   // { questionIndex: score }
+let clientName = '';
+let comercialName = '';
+
+// ═══════════════════════════════════════════════════════════════
+// NAVEGACIÓN
+// ═══════════════════════════════════════════════════════════════
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+}
+
+function startDiagnosis() {
+  clientName    = document.getElementById('clientName').value.trim() || 'Empresa';
+  comercialName = document.getElementById('comercialName').value.trim();
+  current = 0;
+  answers = {};
+  document.getElementById('progressWrap').style.display = 'block';
+  show('question');
+  renderQ();
+}
+
+function renderQ() {
+  const q = QUESTIONS[current];
+  const pct = Math.round((current / QUESTIONS.length) * 100);
+
+  document.getElementById('progressLabel').textContent = `Pregunta ${current + 1} de ${QUESTIONS.length}`;
+  document.getElementById('progressPct').textContent   = pct + '%';
+  document.getElementById('progressFill').style.width  = pct + '%';
+
+  document.getElementById('qSpecialty').textContent = q.specialty;
+  document.getElementById('qSpecialty').style.background = q.color;
+
+  document.getElementById('qNumber').textContent = `Pregunta ${q.id} de ${QUESTIONS.length}`;
+  document.getElementById('qText').textContent   = q.text;
+
+  const sel = answers[current];
+  const opts = q.options.map((o, i) => `
+    <div class="q-option ${sel === o.score ? 'selected' : ''}" onclick="selectOpt(${o.score})">
+      <div class="opt-score s${o.score}">${o.score}</div>
+      <div>
+        <div class="opt-label">${o.label}</div>
+        ${o.sub ? `<div class="opt-sublabel">${o.sub}</div>` : ''}
+      </div>
+    </div>`).join('');
+  document.getElementById('qOptions').innerHTML = opts;
+
+  document.getElementById('btnPrev').style.visibility = current === 0 ? 'hidden' : 'visible';
+  const next = document.getElementById('btnNext');
+  if (sel !== undefined) {
+    next.classList.add('enabled');
+    next.textContent = current === QUESTIONS.length - 1 ? 'Ver diagnóstico →' : 'Siguiente →';
+  } else {
+    next.classList.remove('enabled');
+    next.textContent = 'Siguiente →';
+  }
+}
+
+function selectOpt(score) {
+  answers[current] = score;
+  renderQ();
+}
+
+function nextQ() {
+  if (answers[current] === undefined) return;
+  if (current === QUESTIONS.length - 1) {
+    showResults();
+  } else {
+    current++;
+    renderQ();
+  }
+}
+
+function prevQ() {
+  if (current > 0) { current--; renderQ(); }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CÁLCULO DE RESULTADOS
+// ═══════════════════════════════════════════════════════════════
+function calcScores() {
+  const raw  = {};  // { symptom_id: [weighted_scores] }
+  const totW = {};  // { symptom_id: total_weight }
+
+  QUESTIONS.forEach((q, i) => {
+    const score = answers[i] || 1;
+    Object.entries(q.maps).forEach(([sid, weight]) => {
+      if (!raw[sid])  raw[sid]  = 0;
+      if (!totW[sid]) totW[sid] = 0;
+      raw[sid]  += score * weight;
+      totW[sid] += weight;
+    });
+  });
+
+  const result = {};
+  Object.keys(SYMPTOMS).forEach(sid => {
+    const weighted = raw[sid]  ? raw[sid] / totW[sid]  : 1;
+    const pct      = ((weighted - 1) / 3) * 100;  // 1→0%, 4→100%
+    result[sid]    = { score: weighted, pct: Math.round(pct) };
+  });
+  return result;
+}
+
+function severity(score) {
+  if (score >= 3.0) return { level:'critico',    label:'CRÍTICO',    rank:0 };
+  if (score >= 2.25) return { level:'importante', label:'IMPORTANTE', rank:1 };
+  if (score >= 1.5)  return { level:'alerta',     label:'ALERTA',     rank:2 };
+  return                    { level:'saludable',  label:'SALUDABLE',  rank:3 };
+}
+
+function recommendPlan(scores) {
+  const critical   = Object.values(scores).filter(s => s.score >= 3.0).length;
+  const important  = Object.values(scores).filter(s => s.score >= 2.25).length;
+  if (critical >= 3 || important >= 7) return 'pie';
+  if (critical >= 1 || important >= 4) return 'pae';
+  return 'pre';
+}
+
+const PLANS = {
+  pie: {
+    label:'PIE',
+    title:'Impulso Empresarial',
+    desc:'Tu empresa presenta múltiples síntomas críticos que requieren intervención clínica urgente. El plan PIE activa los 3 ciclos completos del protocolo MAS@FRAME® con consultor asignado de forma permanente y garantía total de resultado.',
+    ciclos:'3 ciclos clínicos', sintomas:'7 a 10 síntomas', consultor:'Presente siempre', garantia:'Total',
+    p1:'1.499 €/mes', p1l:'Facturación < 15.000 €/mes',
+    p2:'4.500 €/mes', p2l:'Facturación 15.000–60.000 €/mes',
+    p3:'Consultar',   p3l:'Facturación ≥ 60.000 €/mes',
+  },
+  pae: {
+    label:'PAE',
+    title:'Actuación Estratégica',
+    desc:'Tu empresa muestra síntomas importantes que, si no se tratan, se volverán críticos. El plan PAE trabaja los 4–6 síntomas prioritarios en 2 ciclos clínicos con consultor activo.',
+    ciclos:'2 ciclos clínicos', sintomas:'4 a 6 síntomas', consultor:'Activo en 2 ciclos', garantia:'No',
+    p1:'999 €/mes',  p1l:'Facturación < 15.000 €/mes',
+    p2:'2.900 €/mes',p2l:'Facturación 15.000–60.000 €/mes',
+    p3:'Consultar',  p3l:'Facturación ≥ 60.000 €/mes',
+  },
+  pre: {
+    label:'PRE',
+    title:'Rescate Estructural',
+    desc:'Tu empresa muestra señales de alerta temprana. El plan PRE actúa como protocolo preventivo para tratar hasta 3 síntomas antes de que se conviertan en críticos. Sin ciclos clínicos físicos — intervención digital.',
+    ciclos:'0 (intervención digital)', sintomas:'Hasta 3 síntomas', consultor:'Sin asignar', garantia:'No',
+    p1:'399 €/mes', p1l:'Facturación < 15.000 €/mes',
+    p2:'999 €/mes', p2l:'Facturación 15.000–60.000 €/mes',
+    p3:'Consultar', p3l:'Facturación ≥ 60.000 €/mes',
+  },
+};
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER RESULTS
+// ═══════════════════════════════════════════════════════════════
+function showResults() {
+  const scores  = calcScores();
+  const planKey = recommendPlan(scores);
+  const plan    = PLANS[planKey];
+
+  const critical  = Object.entries(scores).filter(([,v]) => v.score >= 3.0);
+  const important = Object.entries(scores).filter(([,v]) => v.score >= 2.25 && v.score < 3.0);
+  const alert     = Object.entries(scores).filter(([,v]) => v.score >= 1.5  && v.score < 2.25);
+  const healthy   = Object.entries(scores).filter(([,v]) => v.score <  1.5);
+  const detected  = critical.length + important.length + alert.length;
+
+  const now = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'long',year:'numeric'});
+
+  function symCards(list, cls) {
+    if (!list.length) return '<p style="font-size:13px;color:#9CA3AF;padding:8px 0;">Ningún síntoma detectado en este nivel</p>';
+    return list.sort((a,b)=>b[1].score-a[1].score).map(([sid,{score,pct}]) => {
+      const s = SYMPTOMS[sid];
+      const sv = severity(score);
+      return `
+        <div class="sym-card ${sv.level}">
+          <div class="sym-severity">${sv.label.slice(0,3)}</div>
+          <div class="sym-info">
+            <div class="sym-id">${sid}</div>
+            <div class="sym-name">${s.name}</div>
+            <div class="sym-specialty">${s.specialty}</div>
+            <div class="sym-lema">"${s.lema}"</div>
+            <div class="sym-score-bar">
+              <div class="score-track"><div class="score-fill" style="width:${pct}%"></div></div>
+              <div class="score-pct">${pct}%</div>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  document.getElementById('resultsContent').innerHTML = `
+    <div class="results-header">
+      <div class="res-label">DIAGNÓSTICO CLÍNICO MAS@FRAME®</div>
+      <div class="res-client-name">${clientName}</div>
+      <div class="res-date">${now}${comercialName ? ' · Consultor: ' + comercialName : ''}</div>
+      <div class="res-stats">
+        <div class="res-stat"><div class="res-stat-num">${detected}</div><div class="res-stat-lbl">Síntomas detectados</div></div>
+        <div class="res-stat"><div class="res-stat-num" style="color:#EF4444">${critical.length}</div><div class="res-stat-lbl">Críticos</div></div>
+        <div class="res-stat"><div class="res-stat-num" style="color:#F97316">${important.length}</div><div class="res-stat-lbl">Importantes</div></div>
+        <div class="res-stat"><div class="res-stat-num" style="color:#F59E0B">${alert.length}</div><div class="res-stat-lbl">En alerta</div></div>
+        <div class="res-stat"><div class="res-stat-num" style="color:#22C55E">${healthy.length}</div><div class="res-stat-lbl">Saludables</div></div>
+      </div>
+    </div>
+
+    <div class="plan-card ${planKey}">
+      <div class="plan-pill">${plan.label} — RECOMENDADO</div>
+      <div class="plan-title">${plan.title}</div>
+      <div class="plan-desc">${plan.desc}</div>
+      <div class="plan-details">
+        <div class="plan-detail"><strong>CICLOS</strong>${plan.ciclos}</div>
+        <div class="plan-detail"><strong>SÍNTOMAS</strong>${plan.sintomas}</div>
+        <div class="plan-detail"><strong>CONSULTOR</strong>${plan.consultor}</div>
+        <div class="plan-detail"><strong>GARANTÍA</strong>${plan.garantia}</div>
+      </div>
+      <div class="plan-prices">
+        <div class="plan-price">
+          <div class="plan-price-amount">${plan.p1}</div>
+          <div class="plan-price-label">${plan.p1l}</div>
+        </div>
+        <div class="plan-price">
+          <div class="plan-price-amount">${plan.p2}</div>
+          <div class="plan-price-label">${plan.p2l}</div>
+        </div>
+        <div class="plan-price">
+          <div class="plan-price-amount">${plan.p3}</div>
+          <div class="plan-price-label">${plan.p3l}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">CRÍTICOS — INTERVENCIÓN URGENTE</div>
+    ${symCards(critical, 'critico')}
+
+    <div class="section-title">IMPORTANTES — PRIORIDAD ALTA</div>
+    ${symCards(important, 'importante')}
+
+    <div class="section-title">EN ALERTA — VIGILANCIA ACTIVA</div>
+    ${symCards(alert, 'alerta')}
+
+    <div class="section-title">SALUDABLES — NIVEL BAJO DE RIESGO</div>
+    ${symCards(healthy, 'saludable')}
+
+    <div class="res-actions">
+      <button class="btn-action btn-print" onclick="window.print()">🖨 Imprimir diagnóstico</button>
+      <button class="btn-action btn-new" onclick="resetDiagnosis()">↩ Nuevo diagnóstico</button>
+      <button class="btn-action btn-cta" onclick="window.open('https://www.masesora.com','_blank')">Hablar con la clínica →</button>
+    </div>
+
+    <div class="footer">
+      <strong>MASESORA.COM — La Clínica de Empresas · MAS@FRAME®</strong><br>
+      info@masesora.com · 609 987 436 · @laclinicadeempresas<br>
+      <span style="font-size:10px">Este diagnóstico es orientativo. El diagnóstico clínico completo se realiza en sesión con consultor certificado.</span>
+    </div>
+  `;
+
+  document.getElementById('progressWrap').style.display = 'none';
+  show('results');
+  window.scrollTo(0, 0);
+}
+
+function resetDiagnosis() {
+  document.getElementById('progressWrap').style.display = 'none';
+  show('welcome');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,2213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>MASFRAME — Revisión Clínica v2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#1a1918;color:#f0ede8;display:flex;min-height:100vh}
+#sidebar{width:230px;min-width:230px;background:#111;position:sticky;top:0;height:100vh;overflow-y:auto;padding:12px 0;border-right:1px solid #2a2a2a}
+#sidebar h2{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;padding:8px 14px 4px}
+.sid-group{margin-bottom:8px}
+.sid-group h3{font-size:10px;color:#888;text-transform:uppercase;padding:4px 14px;letter-spacing:.06em}
+.sid-item{display:flex;align-items:center;gap:6px;padding:3px 14px;font-size:11px;color:#ccc;cursor:pointer;text-decoration:none}
+.sid-item:hover{background:#1e1d1c;color:#fff}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-uci{background:#1e88e5}.dot-ok{background:#4caf50}.dot-corr{background:#e53935}.dot-pend{background:#666}
+main{flex:1;padding:20px 28px;max-width:calc(100% - 230px)}
+h1{font-size:20px;font-weight:700;color:#f0ede8;margin-bottom:4px}
+.subtitle{font-size:13px;color:#888;margin-bottom:20px}
+.summary{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.sum-card{background:#222;border-radius:8px;padding:12px 18px;min-width:120px}
+.sum-card .num{font-size:28px;font-weight:700;line-height:1}
+.sum-card .lbl{font-size:11px;color:#888;margin-top:2px}
+.sum-card.uci .num{color:#1e88e5}
+.sum-card.ok .num{color:#4caf50}
+.sum-card.corr .num{color:#e53935}
+.sum-card.pend .num{color:#888}
+.specialty-group{margin-bottom:32px}
+.spec-title{font-size:12px;color:#666;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid #2a2a2a;padding-bottom:6px;margin-bottom:12px}
+.card{border-radius:8px;margin-bottom:10px;background:#222;border-left:4px solid #444;overflow:hidden}
+.card.corr{border-left-color:#e53935}.card.ok{border-left-color:#4caf50}.card.uci{border-left-color:#1e88e5}.card.pend{border-left-color:#444}
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;user-select:none}
+.card-head:hover{background:#2a2928}
+.card-id{font-size:11px;color:#888;font-family:monospace}
+.card-name{font-size:14px;font-weight:600;margin-left:8px}
+.card-badge{font-size:11px;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.badge-uci{background:#1e3a5f;color:#90caf9}.badge-ok{background:#1b3a1e;color:#a5d6a7}.badge-corr{background:#3a1818;color:#ef9a9a}.badge-pend{background:#2a2a2a;color:#888}
+.card-body{padding:0 14px 14px;display:none}
+.card-body.open{display:block}
+.logica{font-size:12px;color:#aaa;font-style:italic;padding:6px 0 10px;border-bottom:1px solid #2a2a2a;margin-bottom:10px}
+.section{margin-bottom:10px}
+.sec-title{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin-bottom:4px}
+.kpi-row{display:flex;gap:16px;flex-wrap:wrap}
+.kpi-item{font-size:12px;color:#e0ddd8}
+.kpi-label{color:#777;margin-right:4px}
+.alert{color:#ffa726;font-size:11px}
+.cauce-box{background:#1e2a30;border-radius:6px;padding:10px 12px;border-left:3px solid #4fc3f7}
+.cauce-box.warn{background:#2a2415;border-left-color:#ff9800}
+.cauce-step{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;font-size:12px}
+.cauce-step:last-child{margin-bottom:0}
+.step-tag{background:#1e88e5;color:#fff;font-size:10px;padding:1px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.step-tag.c3{background:#7b1fa2}.step-tag.c4{background:#2e7d32}.step-tag.c5{background:#555}.step-tag.c6{background:#555}
+.step-content{line-height:1.4}
+.step-name{font-weight:600;color:#e0ddd8}
+.step-why{color:#999;font-size:11px}
+.cauce-verdict{font-size:11px;margin-top:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,.08);color:#aaa}
+.cauce-flag-ok{color:#4caf50}.cauce-flag-warn{color:#ff9800}
+.corr-box{background:#3a1818;border-radius:6px;padding:10px 12px;border-left:3px solid #e53935;margin-top:10px}
+.corr-title{font-size:11px;color:#e53935;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:700}
+.corr-item{margin-bottom:8px;font-size:12px}
+.corr-field{color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.corr-old{color:#777;text-decoration:line-through;margin-bottom:2px}
+.corr-new{color:#ef9a9a;font-weight:500}
+.mark-btn{margin-top:10px;font-size:11px;padding:4px 12px;background:#2a2a2a;color:#aaa;border:1px solid #444;border-radius:4px;cursor:pointer}
+.mark-btn:hover{background:#333;color:#fff}
+.mark-btn.done{background:#1b3a1e;color:#a5d6a7;border-color:#4caf50}
+.note-label{font-size:10px;color:#666;margin-top:8px;display:block}
+textarea.note{width:100%;background:#1a1918;border:1px solid #333;color:#ccc;font-size:12px;padding:6px;border-radius:4px;resize:vertical;margin-top:4px;min-height:48px}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <h2>MASFRAME — 30 síntomas</h2>
+
+  <div class="sid-group"><h3>UCI FINANCIERA</h3>
+    <a class="sid-item" href="#UCI-S1"><span class="dot dot-uci"></span>UCI-S1</a>
+    <a class="sid-item" href="#UCI-S2"><span class="dot dot-uci"></span>UCI-S2</a>
+    <a class="sid-item" href="#UCI-S3"><span class="dot dot-uci"></span>UCI-S3</a>
+  </div>
+  <div class="sid-group"><h3>UNIDAD DE PROCESOS</h3>
+    <a class="sid-item" href="#UNI-S1"><span class="dot dot-ok"></span>UNI-S1</a>
+    <a class="sid-item" href="#UNI-S2"><span class="dot dot-pend"></span>UNI-S2</a>
+    <a class="sid-item" href="#UNI-S3"><span class="dot dot-pend"></span>UNI-S3</a>
+  </div>
+  <div class="sid-group"><h3>CARDIOLOGIA COMERCIAL</h3>
+    <a class="sid-item" href="#CARDIO-S1"><span class="dot dot-pend"></span>CARDIO-S1</a>
+    <a class="sid-item" href="#CARDIO-S2"><span class="dot dot-pend"></span>CARDIO-S2</a>
+    <a class="sid-item" href="#CARDIO-S3"><span class="dot dot-corr"></span>CARDIO-S3</a>
+  </div>
+  <div class="sid-group"><h3>NEUROLOGIA ESTRATEGICA</h3>
+    <a class="sid-item" href="#NEURO-S1"><span class="dot dot-pend"></span>NEURO-S1</a>
+    <a class="sid-item" href="#NEURO-S2"><span class="dot dot-pend"></span>NEURO-S2</a>
+    <a class="sid-item" href="#NEURO-S3"><span class="dot dot-pend"></span>NEURO-S3</a>
+  </div>
+  <div class="sid-group"><h3>GESTION CLINICA</h3>
+    <a class="sid-item" href="#CLI-S1"><span class="dot dot-pend"></span>CLI-S1</a>
+    <a class="sid-item" href="#CLI-S2"><span class="dot dot-pend"></span>CLI-S2</a>
+    <a class="sid-item" href="#CLI-S3"><span class="dot dot-corr"></span>CLI-S3</a>
+  </div>
+  <div class="sid-group"><h3>CIRUGIA DE MARCA</h3>
+    <a class="sid-item" href="#CIR-S1"><span class="dot dot-pend"></span>CIR-S1</a>
+    <a class="sid-item" href="#CIR-S2"><span class="dot dot-pend"></span>CIR-S2</a>
+    <a class="sid-item" href="#CIR-S3"><span class="dot dot-pend"></span>CIR-S3</a>
+  </div>
+  <div class="sid-group"><h3>PSIQUIATRIA ORGANIZACIONAL</h3>
+    <a class="sid-item" href="#PSI-S1"><span class="dot dot-corr"></span>PSI-S1</a>
+    <a class="sid-item" href="#PSI-S2"><span class="dot dot-pend"></span>PSI-S2</a>
+    <a class="sid-item" href="#PSI-S3"><span class="dot dot-pend"></span>PSI-S3</a>
+  </div>
+  <div class="sid-group"><h3>RESCATE DE PERSONAS</h3>
+    <a class="sid-item" href="#RES-S1"><span class="dot dot-pend"></span>RES-S1</a>
+    <a class="sid-item" href="#RES-S2"><span class="dot dot-pend"></span>RES-S2</a>
+    <a class="sid-item" href="#RES-S3"><span class="dot dot-corr"></span>RES-S3</a>
+  </div>
+  <div class="sid-group"><h3>TERAPIA DE EXPERIENCIA</h3>
+    <a class="sid-item" href="#TER-S1"><span class="dot dot-pend"></span>TER-S1</a>
+    <a class="sid-item" href="#TER-S2"><span class="dot dot-pend"></span>TER-S2</a>
+    <a class="sid-item" href="#TER-S3"><span class="dot dot-pend"></span>TER-S3</a>
+  </div>
+  <div class="sid-group"><h3>EXCELENCIA OPERATIVA</h3>
+    <a class="sid-item" href="#OPE-S1"><span class="dot dot-corr"></span>OPE-S1</a>
+    <a class="sid-item" href="#OPE-S2"><span class="dot dot-corr"></span>OPE-S2</a>
+    <a class="sid-item" href="#OPE-S3"><span class="dot dot-ok"></span>OPE-S3</a>
+  </div>
+</nav>
+<main>
+<h1>Revisión Clínica MASFRAME</h1>
+<p class="subtitle">27 síntomas + 3 UCI | Análisis C0→C6 + Cauce clínico C2→C3→C4 | 2026-06-27</p>
+<div class="summary">
+  <div class="sum-card uci"><div class="num">3</div><div class="lbl">UCI completados</div></div>
+  <div class="sum-card corr"><div class="num">6</div><div class="lbl">Correcciones necesarias</div></div>
+  <div class="sum-card ok"><div class="num">2</div><div class="lbl">Aprobados</div></div>
+  <div class="sum-card pend"><div class="num">19</div><div class="lbl">Pendientes revisión</div></div>
+</div>
+<div class="specialty-group"><div class="spec-title">UCI FINANCIERA</div>
+<div class="card uci" id="UCI-S1">
+  <div class="card-head" onclick="toggle('UCI-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">UCI-S1</span>
+      <span class="card-name">Obstrucción de Caja</span>
+    </div>
+    <span class="card-badge badge-uci">✅ UCI Completado</span>
+  </div>
+  <div class="card-body open" id="body-UCI-S1">
+    <p class="logica">El dinero existe, pero está bloqueado dentro de tu propio negocio.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>InputA/InputB</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;15 días</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>6/6</span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Caja disponible actual</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Gastos fijos mensuales</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Impacto vs Esfuerzo</span><br>
+            <span class="step-why">Necesitas priorizar qué libera liquidez más rápido.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">VSM (mapa de flujo de cobro)</span><br>
+            <span class="step-why">Estos son los elementos priorizados en el paso anterior. Añade observaciones, indica el responsable, estima qué valor se recuperaría al resolver cada uno y marca los que más bloquean el avance.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Kaizen de liquidez</span><br>
+            <span class="step-why">Ahora empieza el trabajo en sí. Ejecuta estas acciones con precisión y los resultados serán inmediatos. El CC está pendiente de que los confirmes en la siguiente capa.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de cobros</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Esta es la valoración de las acciones ejecutadas.</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Prioriza qué dinero liberar primero → mapea el flujo de cobro completo → acelera la recuperación de liquidez.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-UCI-S1" onclick="markDone('UCI-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card uci" id="UCI-S2">
+  <div class="card-head" onclick="toggle('UCI-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">UCI-S2</span>
+      <span class="card-name">Fuga Invisible</span>
+    </div>
+    <span class="card-badge badge-uci">✅ UCI Completado</span>
+  </div>
+  <div class="card-body open" id="body-UCI-S2">
+    <p class="logica">Facturas, cobras, pagas — y a final de mes el beneficio no aparece por ningún lado.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputB/InputA)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;35%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>6/6</span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Ingresos totales del mes</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Dinero real que quedó en cuenta (saldo final − saldo inicial del mes)</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Radiografía de retención</span><br>
+            <span class="step-why">necesitas saber exactamente qué actividad, cliente o proveedor está vaciando tu caja — y cuánto dinero real recuperarías si lo corriges.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Análisis causa–efecto</span><br>
+            <span class="step-why">Porque necesitas entender qué factores concretos erosionan el margen en cada elemento clasificado.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Rediseño de portafolio</span><br>
+            <span class="step-why">Porque necesitas ajustar oferta, precios o dedicación basándote en la clasificación real.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de rentabilidad</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir la mejora del margen por cliente o servicio tras aplicar el rediseño.</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Identifica qué cliente/servicio vacía la caja → analiza las causas de la fuga → rediseña el portafolio hacia lo rentable.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-UCI-S2" onclick="markDone('UCI-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card uci" id="UCI-S3">
+  <div class="card-head" onclick="toggle('UCI-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">UCI-S3</span>
+      <span class="card-name">Anemia de Margen</span>
+    </div>
+    <span class="card-badge badge-uci">✅ UCI Completado</span>
+  </div>
+  <div class="card-body open" id="body-UCI-S3">
+    <p class="logica">Cobras lo que el mercado aguanta o lo que cobra la competencia — pero nadie ha calculado si ese precio te deja beneficio real.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>((InputA-InputB)/InputA)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;30%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>6/6</span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Facturación mensual total</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Costes directos mensuales totales (materiales, subcontratas, gastos directos)</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-warn">⚠️ Revisar cauce</span></div>
+      <div class="cauce-box warn">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Semáforo de Viabilidad</span><br>
+            <span class="step-why">Para cada problema que has marcado, calcula el margen real de tus servicios — incluyendo los costes que normalmente no aparecen en la factura.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Análisis de estructura de costes</span><br>
+            <span class="step-why">Porque necesitas identificar qué coste concreto destruye tu margen en cada línea o servicio.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Rediseño de pricing y costes</span><br>
+            <span class="step-why">Porque necesitas ajustar precios y cortar los costes que erosionan el margen real.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de revisión de margen</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir la reducción del ciclo de cobro.</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">El camino es coherente (viabilidad → estructura de costes → pricing). Pero justi_capa6 dice &quot;reducción del ciclo de cobro&quot; — texto copiado de UCI-S1. Debe decir &quot;mejora del margen mensual&quot;.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-UCI-S3" onclick="markDone('UCI-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+<div class="specialty-group"><div class="spec-title">UNIDAD DE PROCESOS</div>
+<div class="card ok" id="UNI-S1">
+  <div class="card-head" onclick="toggle('UNI-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">UNI-S1</span>
+      <span class="card-name">Esclerosis Operativa</span>
+    </div>
+    <span class="card-badge badge-ok">✅ Aprobado</span>
+  </div>
+  <div class="card-body" id="body-UNI-S1">
+    <p class="logica">Tu operación avanza por inercia, sin diseño — y cada día que pasa ese desorden te cuesta más de lo que crees.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;20%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>6/6</span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Interrupciones no planificadas que pararon el flujo esta semana</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total procesos o entregas completadas esa semana</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Impacto vs Esfuerzo</span><br>
+            <span class="step-why">Porque necesitas priorizar qué esperas eliminar primero.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">VSM (flujo operativo)</span><br>
+            <span class="step-why">Porque necesitas ver dónde se acumulan las esperas.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Kaizen operativo</span><br>
+            <span class="step-why">Porque necesitas reducir tiempos muertos de forma continua.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Kanban</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir la reducción de tiempos de espera.</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Prioriza qué esperas eliminar → mapea dónde se pierde tiempo en el flujo → reduce tiempos muertos de forma continua.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-UNI-S1" onclick="markDone('UNI-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="UNI-S2">
+  <div class="card-head" onclick="toggle('UNI-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">UNI-S2</span>
+      <span class="card-name">Colapso de Capacidad</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-UNI-S2">
+    <p class="logica">Trabajas al límite y siempre hay algo sin hacer — porque el problema no es tu esfuerzo, es cómo está organizado el trabajo.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;85%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Clientes o proyectos activos en este momento</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Número máximo que puedes gestionar con calidad sin colapsar</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Análisis de Carga</span><br>
+            <span class="step-why">Porque necesitas entender causas internas y externas del colapso</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Ishikawa</span><br>
+            <span class="step-why">Porque necesitas mapear todas las causas de errores de entrada</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Rediseño de intake</span><br>
+            <span class="step-why">Porque necesitas transformar cómo entra la información</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de entrada de tareas</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir la reducción de errores de entrada</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Analiza el origen del colapso de carga → mapea causas de errores de entrada → rediseña cómo entra la información.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-UNI-S2" onclick="markDone('UNI-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="UNI-S3">
+  <div class="card-head" onclick="toggle('UNI-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">UNI-S3</span>
+      <span class="card-name">Fuga de Calidad Crónica</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-UNI-S3">
+    <p class="logica">Los mismos errores, las mismas quejas, el mismo retrabajo — porque nadie ha cerrado todavía las brechas que los generan.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;5%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Entregas que requirieron corrección o generaron queja este mes</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total entregas realizadas este mes</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Análisis de riesgos</span><br>
+            <span class="step-why">Porque necesitas identificar qué fallos generan más retrabajo</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">5 Porqués</span><br>
+            <span class="step-why">Porque necesitas llegar a la causa raíz de los defectos</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Plan de calidad continua</span><br>
+            <span class="step-why">Porque necesitas estabilizar la calidad y reducir retrabajo</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de control de calidad</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir la reducción del retrabajo</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Prioriza qué fallos generan más retrabajo → llega a la causa raíz de los defectos → implementa calidad continua.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-UNI-S3" onclick="markDone('UNI-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+<div class="specialty-group"><div class="spec-title">CARDIOLOGIA COMERCIAL</div>
+<div class="card pend" id="CARDIO-S1">
+  <div class="card-head" onclick="toggle('CARDIO-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">CARDIO-S1</span>
+      <span class="card-name">Atrofia Comercial</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-CARDIO-S1">
+    <p class="logica">Tu negocio no genera clientes por sí solo — dependes del boca a boca y de que llegue el momento oportuno.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>InputA/InputB</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>+20% en 6 semanas</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Ventas totales del mes (€)</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Clientes nuevos ese mes</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Análisis de Riesgos</span><br>
+            <span class="step-why">Porque necesitas priorizar qué canal activar primero</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Auditoría Comercial</span><br>
+            <span class="step-why">Porque necesitas ver qué canal genera oportunidades reales</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Arquitectura Comercial</span><br>
+            <span class="step-why">Porque necesitas encender el motor de demanda</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist Comercial</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir oportunidades generadas</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Identifica qué riesgos frenan la demanda → audita qué canal genera oportunidades reales → construye el motor comercial.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-CARDIO-S1" onclick="markDone('CARDIO-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="CARDIO-S2">
+  <div class="card-head" onclick="toggle('CARDIO-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">CARDIO-S2</span>
+      <span class="card-name">Arritmia Comercial</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-CARDIO-S2">
+    <p class="logica">Un mes bien, el siguiente mal — sin entender por qué cambia ni cómo controlarlo.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;60%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Ventas del mes más bajo (últimos 6 meses)</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Ventas del mes más alto (últimos 6 meses)</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Regla 5/25</span><br>
+            <span class="step-why">Porque necesitas priorizar qué etapa corregir primero</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de Canales</span><br>
+            <span class="step-why">Porque necesitas ver dónde se estanca la venta</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Plan de Activación</span><br>
+            <span class="step-why">Porque necesitas mejorar avance comercial</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de Activación</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir fuerza del pipeline</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Enfoca el 80% del esfuerzo en los 5 canales más productivos → mapea dónde se estancan las ventas → activa con cadencia.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-CARDIO-S2" onclick="markDone('CARDIO-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card corr" id="CARDIO-S3">
+  <div class="card-head" onclick="toggle('CARDIO-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">CARDIO-S3</span>
+      <span class="card-name">Síndrome del Origen</span>
+    </div>
+    <span class="card-badge badge-corr">🔴 Corrección necesaria</span>
+  </div>
+  <div class="card-body open" id="body-CARDIO-S3">
+    <p class="logica">Un mes bien, el siguiente mal — sin entender por qué cambia ni cómo controlarlo.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;0.30</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Contactos totales</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Oportunidades calificadas</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-warn">⚠️ Revisar cauce</span></div>
+      <div class="cauce-box warn">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Árbol de Decisiones</span><br>
+            <span class="step-why">Porque necesitas eliminar ruido</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de Credibilidad</span><br>
+            <span class="step-why">Porque necesitas entender origen del lead</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Plan de Prueba de Valor</span><br>
+            <span class="step-why">Porque necesitas mejorar conversión</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de Lanzamiento</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir leads calificados</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">La secuencia C2(Árbol)→C3(Credibilidad)→C4(Prueba de Valor) tiene lógica interna. El problema no es el cauce sino la fórmula KPI invertida y la lógica copiada de CARDIO-S2.</div>
+      </div>
+    </div>
+    <div class="corr-box"><div class="corr-title">Correcciones necesarias</div><div class="corr-item">
+          <div class="corr-field">Fórmula KPI</div>
+          <div class="corr-old">(InputA/InputB) — invertida</div>
+          <div class="corr-new">→ (InputB/InputA)×100 = oportunidades/contactos</div>
+        </div><div class="corr-item">
+          <div class="corr-field">Objetivo KPI</div>
+          <div class="corr-old">&gt;0.30 (no escalado)</div>
+          <div class="corr-new">→ &gt;30%</div>
+        </div><div class="corr-item">
+          <div class="corr-field">Lógica</div>
+          <div class="corr-old">Copiada de CARDIO-S2 (&quot;Un mes bien, el siguiente mal&quot;)</div>
+          <div class="corr-new">→ &quot;La mayoría de tus contactos no son oportunidades reales — y eso consume tiempo sin avanzar.&quot;</div>
+        </div></div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-CARDIO-S3" onclick="markDone('CARDIO-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+<div class="specialty-group"><div class="spec-title">NEUROLOGIA ESTRATEGICA</div>
+<div class="card pend" id="NEURO-S1">
+  <div class="card-head" onclick="toggle('NEURO-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">NEURO-S1</span>
+      <span class="card-name">Amnesia Estratégica</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-NEURO-S1">
+    <p class="logica">Tu negocio funciona hoy — pero no tienes un plan claro de hacia dónde va, cuánto quieres que valga, ni cómo salir cuando llegue el momento.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;80%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Facturación media mensual actual (€)</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Facturación mensual objetivo en 12 meses (€)</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Urgente vs Importante (estratégico)</span><br>
+            <span class="step-why">Porque necesitas priorizar qué brechas cerrar</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa Estratégico</span><br>
+            <span class="step-why">Porque necesitas visualizar dirección</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Definición de Objetivos</span><br>
+            <span class="step-why">Porque necesitas claridad operativa</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Rituales de Alineación</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir alineación real</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Separa decisiones urgentes de estratégicas → visualiza la dirección del negocio → fija objetivos concretos con fecha.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-NEURO-S1" onclick="markDone('NEURO-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="NEURO-S2">
+  <div class="card-head" onclick="toggle('NEURO-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">NEURO-S2</span>
+      <span class="card-name">Dispersión Directiva</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-NEURO-S2">
+    <p class="logica">Tienes demasiados frentes abiertos y ninguno termina — porque cuando todo es prioridad, nada lo es.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;70%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Mejoras completadas este mes</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Mejoras propuestas este mes</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Urgente vs Importante</span><br>
+            <span class="step-why">Porque necesitas separar urgente de importante</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de Prioridades</span><br>
+            <span class="step-why">Porque necesitas ver qué mueve resultados</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Definición de Agenda Estratégica</span><br>
+            <span class="step-why">Porque necesitas sostener foco</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Rituales de Revisión</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir tiempo estratégico real</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Distingue lo urgente de lo importante → mapea prioridades reales → define la agenda estratégica con tiempo protegido.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-NEURO-S2" onclick="markDone('NEURO-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="NEURO-S3">
+  <div class="card-head" onclick="toggle('NEURO-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">NEURO-S3</span>
+      <span class="card-name">Ilusión de Crecimiento</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-NEURO-S3">
+    <p class="logica">Facturas más cada año pero no ganas más — porque el modelo no está diseñado para ser rentable, solo para ser grande.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;15%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Beneficio neto del último año (€)</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Facturación total del último año (€)</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-warn">⚠️ Revisar cauce</span></div>
+      <div class="cauce-box warn">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Árbol de Decisiones</span><br>
+            <span class="step-why">Porque necesitas comparar escenarios</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Análisis causa efecto</span><br>
+            <span class="step-why">Porque necesitas entender origen de errores</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Rediseño de Criterios</span><br>
+            <span class="step-why">Porque necesitas decidir sin improvisar</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de Decisión</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir decisiones con criterio</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">C2=Árbol de Decisiones (estratégico) → C3=Análisis causa-efecto. Problema: el Árbol decide &quot;¿qué modelo elegir?&quot; y el Análisis causa-efecto analiza &quot;¿por qué falló algo?&quot;. No hay conexión lógica. C3 debería ser &quot;Análisis de Portafolio&quot; o &quot;Mapa Estratégico de Rentabilidad&quot;.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-NEURO-S3" onclick="markDone('NEURO-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+<div class="specialty-group"><div class="spec-title">GESTION CLINICA</div>
+<div class="card pend" id="CLI-S1">
+  <div class="card-head" onclick="toggle('CLI-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">CLI-S1</span>
+      <span class="card-name">Ceguera de Control</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-CLI-S1">
+    <p class="logica">Tomas decisiones con números que ya no son de fiar — y dirigir por intuición en una empresa real no es estrategia.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>((InputA-InputB)/InputA)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;15%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Ingresos brutos del mes</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Gastos totales reales del mes</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Regla 5/25</span><br>
+            <span class="step-why">Porque necesitas priorizar bloqueos del cierre</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">VSM financiero</span><br>
+            <span class="step-why">Porque necesitas ver el flujo completo</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Kaizen administrativo</span><br>
+            <span class="step-why">Porque necesitas reducir tiempos muertos</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de cierre</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir velocidad de cierre</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Identifica los 5 indicadores de salud financiera más críticos → mapea el flujo financiero completo → reduce cuellos de botella administrativos.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-CLI-S1" onclick="markDone('CLI-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="CLI-S2">
+  <div class="card-head" onclick="toggle('CLI-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">CLI-S2</span>
+      <span class="card-name">Sangría Fiscal</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-CLI-S2">
+    <p class="logica">Pagas más impuestos de los que te corresponden — y llevas años sin saberlo.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;32%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>6/6</span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Impuestos totales pagados el último año (IRPF o IS + Seguridad Social) (€)</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Beneficio bruto del último año — ingresos menos gastos del negocio — (€)</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Impacto vs Esfuerzo</span><br>
+            <span class="step-why">Porque necesitas priorizar qué cambios fiscales tienen mayor impacto con menor complejidad de implementación.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de carga fiscal</span><br>
+            <span class="step-why">Porque necesitas ver exactamente qué parte de tu facturación se va en cada tipo de impuesto y dónde está la mayor ineficiencia.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Rediseño de estructura fiscal</span><br>
+            <span class="step-why">Porque necesitas implementar los cambios que reducen tu carga fiscal real de forma legal y sostenible.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de optimización fiscal</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir la reducción real del tipo impositivo efectivo año a año.</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Prioriza qué cambios fiscales tienen mayor impacto → mapea la carga fiscal real por tipo → implementa la estructura fiscal óptima.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-CLI-S2" onclick="markDone('CLI-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card corr" id="CLI-S3">
+  <div class="card-head" onclick="toggle('CLI-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">CLI-S3</span>
+      <span class="card-name">Atrofia de Roles</span>
+    </div>
+    <span class="card-badge badge-corr">🔴 Corrección necesaria</span>
+  </div>
+  <div class="card-body open" id="body-CLI-S3">
+    <p class="logica">Todo acaba en el mismo despacho porque nadie sabe exactamente qué le corresponde a quién.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;80%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Personas evaluadas formalmente</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total personas del equipo</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-warn">⚠️ Revisar cauce</span></div>
+      <div class="cauce-box warn">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Árbol de Decisiones</span><br>
+            <span class="step-why">Porque necesitas priorizar huecos de responsabilidad</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de Responsabilidades</span><br>
+            <span class="step-why">Porque necesitas visualizar quien hace que</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Definición de Roles</span><br>
+            <span class="step-why">Porque necesitas claridad interna</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de Roles</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir dependencia real</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">El camino C2(Árbol)→C3(Mapa Responsabilidades)→C4(Definición Roles) es coherente. Pero el KPI de C0 (&quot;personas evaluadas formalmente&quot;) no mide el problema que C1 identifica (&quot;todo acaba en mi mesa&quot;). El KPI no conecta con el dolor.</div>
+      </div>
+    </div>
+    <div class="corr-box"><div class="corr-title">Correcciones necesarias</div><div class="corr-item">
+          <div class="corr-field">KPI C0</div>
+          <div class="corr-old">&quot;% personas evaluadas formalmente&quot; — demasiado corporativo para pymes de 3 personas</div>
+          <div class="corr-new">→ % del tiempo laboral en tareas no-core (contabilidad, RRSS, gestiones). InputA=horas/semana no-core, InputB=horas totales. Objetivo &lt;25%</div>
+        </div></div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-CLI-S3" onclick="markDone('CLI-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+<div class="specialty-group"><div class="spec-title">CIRUGIA DE MARCA</div>
+<div class="card pend" id="CIR-S1">
+  <div class="card-head" onclick="toggle('CIR-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">CIR-S1</span>
+      <span class="card-name">Déficit de Imagen Competitiva</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-CIR-S1">
+    <p class="logica">Tu empresa vale más de lo que parece — el problema es que tu marca todavía no lo transmite.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;80%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Materiales de imagen actualizados y profesionales</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total materiales de imagen en uso</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Impacto vs Esfuerzo</span><br>
+            <span class="step-why">Porque necesitas priorizar elementos criticos</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de Identidad</span><br>
+            <span class="step-why">Porque necesitas visualizar tu esencia</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Definición de Narrativa</span><br>
+            <span class="step-why">Porque necesitas fijar tu mensaje</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de identidad</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir identidad real</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Prioriza qué elementos de imagen actualizar primero → mapea la identidad actual completa → define la narrativa de marca.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-CIR-S1" onclick="markDone('CIR-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="CIR-S2">
+  <div class="card-head" onclick="toggle('CIR-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">CIR-S2</span>
+      <span class="card-name">Miopía Diferencial</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-CIR-S2">
+    <p class="logica">Tu cliente no sabe por qué elegirte a ti — y si no lo sabe él, tampoco lo sabe tu equipo comercial.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;30%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Ingresos del producto estrella</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Ingresos totales del mes</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">DAFO de Diferenciación</span><br>
+            <span class="step-why">Porque necesitas priorizar atributos diferenciales</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de Territorio</span><br>
+            <span class="step-why">Porque necesitas visualizar tu espacio competitivo</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Definición de Propuesta Única</span><br>
+            <span class="step-why">Porque necesitas fijar tu diferencia</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de diferenciacion</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir diferenciacion real</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Analiza fortalezas/debilidades diferenciales → mapea el espacio competitivo → cristaliza la propuesta única.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-CIR-S2" onclick="markDone('CIR-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="CIR-S3">
+  <div class="card-head" onclick="toggle('CIR-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">CIR-S3</span>
+      <span class="card-name">Comunicación Inconsistente</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-CIR-S3">
+    <p class="logica">No hay un plan de comunicación — tu marca habla cuando puede, como puede, y nadie ha medido si funciona.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;10%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Reseñas o recomendaciones digitales este mes</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total clientes atendidos este mes</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Regla 5/25</span><br>
+            <span class="step-why">Porque necesitas priorizar mensajes criticos</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de Mensajes</span><br>
+            <span class="step-why">Porque necesitas visualizar como hablas</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Definición de Tono</span><br>
+            <span class="step-why">Porque necesitas fijar expresion</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de comunicacion</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir coherencia comunicativa</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Identifica los 5 mensajes más críticos → mapea cómo habla la marca hoy → fija el tono y voz para todo el equipo.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-CIR-S3" onclick="markDone('CIR-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+<div class="specialty-group"><div class="spec-title">PSIQUIATRIA ORGANIZACIONAL</div>
+<div class="card corr" id="PSI-S1">
+  <div class="card-head" onclick="toggle('PSI-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">PSI-S1</span>
+      <span class="card-name">Sobrecarga Emocional Operativa</span>
+    </div>
+    <span class="card-badge badge-corr">🔴 Corrección necesaria</span>
+  </div>
+  <div class="card-body open" id="body-PSI-S1">
+    <p class="logica">Tu equipo vive en modo emergencia permanente — y esa tensión tiene un coste en productividad que no aparece en ninguna cuenta.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;30%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Días con tensión alta</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total días laborables</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-warn">⚠️ Revisar cauce</span></div>
+      <div class="cauce-box warn">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Urgente vs Importante</span><br>
+            <span class="step-why">Porque necesitas identificar detonantes de tension</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de Tension</span><br>
+            <span class="step-why">Porque necesitas visualizar picos emocionales</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Kaizen emocional</span><br>
+            <span class="step-why">Porque necesitas bajar hiperactivacion</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist emocional</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir reduccion de tension</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">C2 se llama &quot;Urgente vs Importante&quot; pero las 6 opciones son PATRONES de comportamiento organizacional (escalado, urgencia cultural, desbordamiento...). El nombre de la herramienta no encaja con el contenido. C3→C4 (Mapa de Tensión → Kaizen emocional) son coherentes entre sí. El problema está en C2.</div>
+      </div>
+    </div>
+    <div class="corr-box"><div class="corr-title">Correcciones necesarias</div><div class="corr-item">
+          <div class="corr-field">Nombre</div>
+          <div class="corr-old">Sobrecarga Emocional Operativa — ridículo para consultoría profesional</div>
+          <div class="corr-new">→ &quot;Síndrome del Líder Embotellado&quot;</div>
+        </div><div class="corr-item">
+          <div class="corr-field">KPI C0</div>
+          <div class="corr-old">&quot;Días con tensión alta&quot; — nadie lo cuenta, completamente subjetivo</div>
+          <div class="corr-new">→ % áreas del negocio bajo control exclusivo del dueño. InputA=áreas exclusivas, InputB=total áreas clave. Objetivo &lt;30%</div>
+        </div><div class="corr-item">
+          <div class="corr-field">C2 herramienta</div>
+          <div class="corr-old">&quot;Urgente vs Importante&quot; no encaja — las 6 opciones son PATRONES de tensión, no decisiones urgente/importante</div>
+          <div class="corr-new">→ Revisar herramienta C2 para que coincida con el contenido de las opciones</div>
+        </div></div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-PSI-S1" onclick="markDone('PSI-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="PSI-S2">
+  <div class="card-head" onclick="toggle('PSI-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">PSI-S2</span>
+      <span class="card-name">Dislocación de Perfiles</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-PSI-S2">
+    <p class="logica">Tienes personas válidas en los puestos equivocados — y eso genera fricción, desgaste y dependencia del que siempre resuelve todo.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;20%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Personas habitualmente saturadas</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total personas del equipo</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Árbol de Decisiones</span><br>
+            <span class="step-why">Porque necesitas definir quien decide que</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">SIPOC de roles</span><br>
+            <span class="step-why">Porque necesitas entender flujo de responsabilidad</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Redistribución de autoridad</span><br>
+            <span class="step-why">Porque necesitas mover decisiones al nivel correcto</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de delegacion</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir reduccion de escalamiento</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Decide qué hacer con los perfiles mal ubicados → mapea el flujo de responsabilidad real (SIPOC) → redistribuye autoridad al nivel correcto.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-PSI-S2" onclick="markDone('PSI-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="PSI-S3">
+  <div class="card-head" onclick="toggle('PSI-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">PSI-S3</span>
+      <span class="card-name">Anestesia de Equipo</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-PSI-S3">
+    <p class="logica">Tu equipo cumple, pero sin energía — y la motivación que se apaga en silencio es la más cara de recuperar.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;50%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Personas que propusieron mejoras este mes</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total personas del equipo</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Regla 5/25</span><br>
+            <span class="step-why">Porque necesitas saber donde se pierde energia</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de Energia</span><br>
+            <span class="step-why">Porque necesitas visualizar picos y valles</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Plan de reactivación de equipo</span><br>
+            <span class="step-why">Porque necesitas mejorar micro momentos</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de conexion</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir implicacion real</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Identifica el 20% de factores que más apagan la energía → mapea picos/valles de motivación → reactiva con intervenciones dirigidas.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-PSI-S3" onclick="markDone('PSI-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+<div class="specialty-group"><div class="spec-title">RESCATE DE PERSONAS</div>
+<div class="card pend" id="RES-S1">
+  <div class="card-head" onclick="toggle('RES-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">RES-S1</span>
+      <span class="card-name">Hemorragia de Talento</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-RES-S1">
+    <p class="logica">Tus mejores personas están en modo desconexión — y cuando se vayan, el coste será mucho mayor que el de haberlo evitado.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;15%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Personas que se fueron en 12 meses</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total personas hace 12 meses</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Analisis de riesgos</span><br>
+            <span class="step-why">Porque necesitas identificar perfiles vulnerables</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">5 Porqués</span><br>
+            <span class="step-why">Porque necesitas entender por que estan en riesgo</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Plan de retencion</span><br>
+            <span class="step-why">Porque necesitas intervenir antes de perder talento</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de gestion de talento</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir estabilidad del talento</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Identifica los perfiles en mayor riesgo de fuga → llega a la causa raíz de su desconexión → implementa el plan de retención.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-RES-S1" onclick="markDone('RES-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="RES-S2">
+  <div class="card-head" onclick="toggle('RES-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">RES-S2</span>
+      <span class="card-name">Atrofia de Potencial</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-RES-S2">
+    <p class="logica">Tu equipo sabe más, puede más y tiene más que ofrecer de lo que el negocio le está pidiendo — y ese talento lo estás pagando sin aprovecharlo.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;50%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Personas con formación este trimestre</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total personas del equipo</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Impacto vs Esfuerzo</span><br>
+            <span class="step-why">Porque necesitas priorizar mejoras criticas</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de competencias vs tareas reales</span><br>
+            <span class="step-why">Porque necesitas ver exactamente qué hace cada persona vs qué podría estar haciendo con su nivel real.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Rediseño de asignaciones</span><br>
+            <span class="step-why">Porque necesitas mover a cada persona al trabajo donde su nivel genera más valor.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de revisión de roles y tareas</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir reduccion del tiempo de productividad</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Prioriza qué reasignaciones liberan más valor → mapea competencias vs tareas reales → rediseña las asignaciones.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-RES-S2" onclick="markDone('RES-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card corr" id="RES-S3">
+  <div class="card-head" onclick="toggle('RES-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">RES-S3</span>
+      <span class="card-name">Inflamación Interna</span>
+    </div>
+    <span class="card-badge badge-corr">🔴 Corrección necesaria</span>
+  </div>
+  <div class="card-body open" id="body-RES-S3">
+    <p class="logica">Hay tensiones silenciosas que contaminan el ambiente cada día — y lo que no se nombra no se puede resolver.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputB/InputA)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;60%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Tensiones identificadas este mes</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Conflictos resueltos explícitamente</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-warn">⚠️ Revisar cauce</span></div>
+      <div class="cauce-box warn">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Árbol de Decisiones</span><br>
+            <span class="step-why">Porque necesitas evaluar escenarios</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de clima y fricciones</span><br>
+            <span class="step-why">Porque necesitas ver exactamente dónde se concentran las tensiones y qué las alimenta.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Plan de resolución de conflicto</span><br>
+            <span class="step-why">Porque necesitas intervenir con criterio antes de que el conflicto cueste más de lo que cuesta resolverlo.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de seguimiento de clima</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir reduccion de dependencia</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">El camino C2(Árbol)→C3(Mapa clima)→C4(Plan resolución conflicto) es coherente para CONFLICTOS. Pero justi_capa6 dice &quot;medir reducción de dependencia&quot; (OPE-S2), justi_capa1 dice &quot;Tu empresa depende demasiado de una persona&quot; (OPE-S2), y C1 mezcla ítems de conflicto con ítems de dependencia. El cauce está contaminado por contenido de OPE-S2.</div>
+      </div>
+    </div>
+    <div class="corr-box"><div class="corr-title">Correcciones necesarias</div><div class="corr-item">
+          <div class="corr-field">KPI C0</div>
+          <div class="corr-old">&quot;Conflictos resueltos explícitamente&quot; — incontable en la práctica</div>
+          <div class="corr-new">→ Mediaciones personales del dueño en el último mes. InputA=intervenciones mediación, InputB=4 semanas. Objetivo &lt;2/mes (máx 30 días)</div>
+        </div><div class="corr-item">
+          <div class="corr-field">justi_capa6</div>
+          <div class="corr-old">&quot;Medir reducción de dependencia&quot; — el síntoma es de CONFLICTOS, no de dependencia</div>
+          <div class="corr-new">→ &quot;Medir resolución de conflictos internos del equipo&quot;</div>
+        </div><div class="corr-item">
+          <div class="corr-field">C1 opciones</div>
+          <div class="corr-old">Mezcla conflictos con dependencia (&quot;Demasiadas cosas dependen de una sola persona; Si esa persona falta nos paramos&quot;) — esos pertenecen a OPE-S2</div>
+          <div class="corr-new">→ Depurar C1 eliminando ítems de dependencia</div>
+        </div><div class="corr-item">
+          <div class="corr-field">justi_capa1</div>
+          <div class="corr-old">&quot;Tu empresa depende demasiado de una persona&quot; — copiado de OPE-S2</div>
+          <div class="corr-new">→ &quot;Hay tensiones silenciosas que contaminan el equipo sin que nadie las nombre&quot;</div>
+        </div></div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-RES-S3" onclick="markDone('RES-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+<div class="specialty-group"><div class="spec-title">TERAPIA DE EXPERIENCIA</div>
+<div class="card pend" id="TER-S1">
+  <div class="card-head" onclick="toggle('TER-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">TER-S1</span>
+      <span class="card-name">Efecto NO-WOW</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-TER-S1">
+    <p class="logica">La experiencia que vive tu cliente depende del día o de quién le atiende — y esa variabilidad destruye la reputación que tardaste años en construir.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;5%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Atenciones con queja o incidencia</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total atenciones del mes</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Regla 5/25</span><br>
+            <span class="step-why">Porque necesitas identificar micro momentos clave</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Customer Journey Map</span><br>
+            <span class="step-why">Porque necesitas ver experiencia completa</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Kaizen de experiencia</span><br>
+            <span class="step-why">Porque necesitas mejorar puntos criticos</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de experiencia</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir coherencia real</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Identifica los 5 micro-momentos de mayor impacto emocional → mapea el customer journey completo → mejora los puntos críticos de forma continua.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-TER-S1" onclick="markDone('TER-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="TER-S2">
+  <div class="card-head" onclick="toggle('TER-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">TER-S2</span>
+      <span class="card-name">Necrosis de Cliente</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-TER-S2">
+    <p class="logica">Tienes clientes insatisfechos que se van sin decir nada — y cada uno destruye reputación en silencio mientras tú no lo ves.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputB/InputA)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;60%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Clientes molestos detectados</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Clientes recuperados</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Análisis de Riesgos</span><br>
+            <span class="step-why">Porque necesitas priorizar puntos de recuperacion</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Mapa de emociones</span><br>
+            <span class="step-why">Porque necesitas identificar senales de molestia</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Plan de reconducción</span><br>
+            <span class="step-why">Porque necesitas intervenir en caliente</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de recuperacion</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir recuperacion real</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Prioriza qué riesgos de pérdida de cliente atacar → mapea las emociones del cliente en cada punto → interviene con plan de reconducción.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-TER-S2" onclick="markDone('TER-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card pend" id="TER-S3">
+  <div class="card-head" onclick="toggle('TER-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">TER-S3</span>
+      <span class="card-name">Bajo Valor Percibido</span>
+    </div>
+    <span class="card-badge badge-pend">⚪ Pendiente revisión</span>
+  </div>
+  <div class="card-body" id="body-TER-S3">
+    <p class="logica">Tu cliente paga pero no siente que vale lo que cuesta — y ese gap impide que te recomienden.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;40%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Clientes nuevos por recomendación</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total clientes nuevos del mes</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">DAFO de valor</span><br>
+            <span class="step-why">Porque necesitas entender debilidades de valor</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">Ishikawa</span><br>
+            <span class="step-why">Porque necesitas mapear causas de bajo valor</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Rediseño de valor</span><br>
+            <span class="step-why">Porque necesitas crear momentos que transmitan valor</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de valor</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir aumento de valor percibido</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Analiza debilidades en la percepción de valor (DAFO) → mapea las causas de bajo valor percibido → rediseña la experiencia para hacerlo visible.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-TER-S3" onclick="markDone('TER-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+<div class="specialty-group"><div class="spec-title">EXCELENCIA OPERATIVA</div>
+<div class="card corr" id="OPE-S1">
+  <div class="card-head" onclick="toggle('OPE-S1')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">OPE-S1</span>
+      <span class="card-name">Parálisis de Integración</span>
+    </div>
+    <span class="card-badge badge-corr">🔴 Corrección necesaria</span>
+  </div>
+  <div class="card-body open" id="body-OPE-S1">
+    <p class="logica">Cada persona nueva tarda meses en rendir de verdad — y ese tiempo de adaptación lo pagas tú, en dinero y en calidad.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&lt;10%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Errores de nuevas incorporaciones</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total errores del mes</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-warn">⚠️ Revisar cauce</span></div>
+      <div class="cauce-box warn">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Analisis de riesgos</span><br>
+            <span class="step-why">Porque necesitas identificar errores iniciales</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">5 Porqués</span><br>
+            <span class="step-why">Porque necesitas llegar a la causa raiz</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Kaizen operativo</span><br>
+            <span class="step-why">Porque necesitas eliminar errores de forma continua</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de integracion</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir reduccion de errores iniciales</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">El camino C2(Riesgos)→C3(5 Porqués)→C4(Kaizen operativo) es coherente para detectar errores de integración. Pero el KPI de C0 mide errores (requiere registro sistemático que nadie tiene). Además el diagnóstico asume que ya existe un sistema de integración cuando en realidad C2 debe CREARLO.</div>
+      </div>
+    </div>
+    <div class="corr-box"><div class="corr-title">Correcciones necesarias</div><div class="corr-item">
+          <div class="corr-field">Nombre</div>
+          <div class="corr-old">Parálisis de Integración</div>
+          <div class="corr-new">→ &quot;Hemorragia de Talento&quot;</div>
+        </div><div class="corr-item">
+          <div class="corr-field">KPI C0</div>
+          <div class="corr-old">&quot;Errores de nuevas incorporaciones / total errores&quot; — nadie registra errores sistemáticamente. Además mide la SOLUCIÓN, no el PROBLEMA</div>
+          <div class="corr-new">→ Retención primer año. InputA=incorporaciones que superaron 12 meses, InputB=total incorporaciones. Objetivo &gt;80%. (La evaluación se CREA en C2, no existe en C0)</div>
+        </div></div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-OPE-S1" onclick="markDone('OPE-S1')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card corr" id="OPE-S2">
+  <div class="card-head" onclick="toggle('OPE-S2')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">OPE-S2</span>
+      <span class="card-name">Dependencia Crítica</span>
+    </div>
+    <span class="card-badge badge-corr">🔴 Corrección necesaria</span>
+  </div>
+  <div class="card-body open" id="body-OPE-S2">
+    <p class="logica">Si tú no estás, la empresa se para — y eso no es liderazgo, es una trampa.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;30%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Días sin intervención del líder</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total días laborables</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-warn">⚠️ Revisar cauce</span></div>
+      <div class="cauce-box warn">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Árbol de Decisiones</span><br>
+            <span class="step-why">Porque necesitas definir que decisiones delegar</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">SIPOC de roles</span><br>
+            <span class="step-why">Porque necesitas entender flujo de responsabilidad</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Redistribución de autoridad</span><br>
+            <span class="step-why">Porque necesitas mover decisiones al nivel correcto</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de delegacion</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Porque necesitas medir reduccion de dependencia</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">C3=SIPOC de roles → C4=Redistribución de autoridad es el MISMO camino que PSI-S2. Los síntomas son conceptualmente distintos (OPE-S2=continuidad operativa, PSI-S2=persona en rol equivocado) pero el cauce es idéntico. Riesgo de tratamientos que parecen iguales al cliente.</div>
+      </div>
+    </div>
+    <div class="corr-box"><div class="corr-title">Correcciones necesarias</div><div class="corr-item">
+          <div class="corr-field">KPI C0</div>
+          <div class="corr-old">&quot;Días sin intervención del líder / total días&quot; — mide ausencia del líder, confunde con PSI-S1</div>
+          <div class="corr-new">→ Días que aguanta la operativa sin la persona clave. InputA=días de cobertura real estimados. Objetivo &gt;15 días. (Diferencia clave: PSI-S1=liderazgo/psicología, OPE-S2=continuidad/riesgo operativo)</div>
+        </div><div class="corr-item">
+          <div class="corr-field">C3→C4 solapamiento</div>
+          <div class="corr-old">Mismo camino que PSI-S2 (SIPOC de roles → Redistribución de autoridad)</div>
+          <div class="corr-new">→ Diferenciar el camino: OPE-S2 debe enfocarse en DOCUMENTACIÓN y BACKUP de procesos, no en redistribución de personas</div>
+        </div></div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-OPE-S2" onclick="markDone('OPE-S2')">Marcar revisado</button>
+  </div>
+</div>
+<div class="card ok" id="OPE-S3">
+  <div class="card-head" onclick="toggle('OPE-S3')">
+    <div style="display:flex;align-items:center">
+      <span class="card-id">OPE-S3</span>
+      <span class="card-name">Ritmo Operativo Irregular</span>
+    </div>
+    <span class="card-badge badge-ok">✅ Aprobado</span>
+  </div>
+  <div class="card-body" id="body-OPE-S3">
+    <p class="logica">Tu operación va a golpes: picos, parones, urgencias — y esa irregularidad te impide crecer de forma sostenida.</p>
+    <div class="section">
+      <div class="sec-title">C0 — KPI</div>
+      <div class="kpi-row">
+        <span class="kpi-item"><span class="kpi-label">Fórmula:</span>(InputA/InputB)*100</span>
+        <span class="kpi-item"><span class="kpi-label">Objetivo:</span>&gt;85%</span>
+        <span class="kpi-item"><span class="kpi-label">C1 opciones:</span>7/6 <span class="alert">⚠️ no son 6</span></span>
+        <span class="kpi-item"><span class="kpi-label">C2 opciones:</span>6/6</span>
+      </div>
+      <div class="kpi-row" style="margin-top:4px">
+        <span class="kpi-item"><span class="kpi-label">InputA:</span>Entregas completadas en plazo</span>
+        <span class="kpi-item"><span class="kpi-label">InputB:</span>Total entregas o servicios realizados en el periodo</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">🛤️ El Camino Clínico — <span class="cauce-flag-ok">✓ Cauce coherente</span></div>
+      <div class="cauce-box">
+        <div class="cauce-step">
+          <span class="step-tag">C2</span>
+          <div class="step-content">
+            <span class="step-name">Análisis de capacidad y carga</span><br>
+            <span class="step-why">Necesitas identificar qué tipo de irregularidad tiene tu operación.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c3">C3</span>
+          <div class="step-content">
+            <span class="step-name">VSM de flujo operativo</span><br>
+            <span class="step-why">Para mapear dónde se acumula carga y dónde se pierde ritmo.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c4">C4</span>
+          <div class="step-content">
+            <span class="step-name">Nivelación de carga (Heijunka)</span><br>
+            <span class="step-why">Para distribuir la carga de trabajo de forma sostenida y predecible.</span>
+          </div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c5">C5</span>
+          <div class="step-content"><span class="step-name">Checklist de cadencia diaria</span></div>
+        </div>
+        <div class="cauce-step">
+          <span class="step-tag c6">C6</span>
+          <div class="step-content">
+            <span class="step-name">OKR tracking</span><br>
+            <span class="step-why">Para medir el porcentaje de entregas a tiempo semana a semana.</span>
+          </div>
+        </div>
+        <div class="cauce-verdict">Analiza el tipo de irregularidad de carga → mapea el flujo operativo con VSM → nivela la carga con Heijunka.</div>
+      </div>
+    </div>
+    <label class="note-label">Notas de revisión:</label>
+    <textarea class="note" placeholder="Escribe aquí tus observaciones..."></textarea>
+    <button class="mark-btn" id="btn-OPE-S3" onclick="markDone('OPE-S3')">Marcar revisado</button>
+  </div>
+</div>
+</div>
+</main>
+<script>
+function toggle(id){
+  var b=document.getElementById('body-'+id);
+  b.classList.toggle('open');
+}
+function markDone(id){
+  var btn=document.getElementById('btn-'+id);
+  btn.classList.toggle('done');
+  btn.textContent=btn.classList.contains('done')?'✓ Revisado':'Marcar revisado';
+}
+</script>
+</body></html>

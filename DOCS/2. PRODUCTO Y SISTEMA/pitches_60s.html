@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitches 60s · MAS@FRAME®</title>
+<style>
+:root{--navy:#0F1A35;--gold:#C9A227;--gold2:#E8C96A;--white:#fff;--off:#F9F7F2;--text:#1A1A1A;--sub:#6B7280;--mid:#E5E7EB}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--off);color:var(--text);min-height:100vh}
+.header{background:var(--navy);border-bottom:3px solid var(--gold);padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.hbrand{color:var(--gold);font-weight:800;font-size:17px}.hsub{color:rgba(255,255,255,.45);font-size:11px;margin-top:1px}
+.htag{color:rgba(255,255,255,.35);font-size:10px;text-align:right}
+.intro{max-width:860px;margin:0 auto;padding:28px 24px 8px}
+.intro h1{font-size:24px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.intro p{font-size:14px;color:var(--sub);line-height:1.6}
+.grid{max-width:860px;margin:0 auto;padding:16px 24px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:18px}
+.card{background:var(--white);border-radius:14px;border:1px solid var(--mid);overflow:hidden;transition:box-shadow .2s;cursor:pointer}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.card-top{padding:16px 18px 14px;display:flex;align-items:flex-start;gap:12px}
+.card-dot{width:10px;height:10px;min-width:10px;border-radius:50%;margin-top:5px}
+.card-title{font-size:15px;font-weight:800;color:var(--navy);line-height:1.3}
+.card-spec{font-size:10.5px;font-weight:700;letter-spacing:.8px;margin-top:3px;opacity:.7}
+.card-body{padding:0 18px 16px;font-size:13.5px;color:var(--text);line-height:1.7;border-top:1px solid var(--mid);padding-top:14px}
+.card-body mark{background:none;font-weight:700;color:inherit}
+.card-pain{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 10px;border-radius:99px;color:white;margin-bottom:12px}
+.card-cta{margin-top:14px;padding-top:12px;border-top:1px solid var(--mid);font-size:12.5px;font-style:italic;color:var(--sub)}
+.card-cta strong{color:var(--navy);font-style:normal}
+.card-footer{padding:10px 18px;background:var(--off);border-top:1px solid var(--mid);display:flex;justify-content:space-between;align-items:center}
+.card-words{font-size:10.5px;color:var(--sub)}
+.card-copy{font-size:11px;font-weight:700;color:var(--sub);cursor:pointer;border:1px solid var(--mid);border-radius:6px;padding:4px 10px;background:white;transition:all .2s}
+.card-copy:hover{border-color:var(--gold);color:var(--gold)}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:var(--gold);padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.card-body{font-size:13px}}
+@media print{.header,.card-footer,.card-copy,.toast{display:none!important}body{background:white}.grid{display:block}.card{break-inside:avoid;margin-bottom:20px;box-shadow:none;border:1px solid #ccc}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div><div class="hbrand">MASESORA.COM</div><div class="hsub">La Clínica de Empresas · MAS@FRAME®</div></div>
+  <div class="htag">Pitches 60 segundos<br>Herramienta Comercial</div>
+</div>
+
+<div class="intro">
+  <h1>Pitches de 60 segundos — Por especialidad clínica</h1>
+  <p>Un pitch por cada unidad clínica. Directo al dolor de la pyme. Sin tecnicismos. Para llamadas en frío, WhatsApp, networking o primeras reuniones. Léelo, apréndetelo, hazlo tuyo.</p>
+</div>
+
+<div class="grid" id="pitchGrid"></div>
+<div class="toast" id="toast">Copiado al portapapeles ✓</div>
+
+<script>
+const PITCHES = [
+  {
+    spec: "UCI FINANCIERA",
+    color: "#C9A227",
+    title: "Hemorragia de Liquidez",
+    pain: "Tensión de caja",
+    pitch: `¿Llegas a final de mes con el banco justo aunque hayas vendido bien ese mes? Eso tiene nombre clínico: <mark>Hemorragia de Liquidez</mark>. Tu empresa genera dinero pero no lo ves — está atrapado en facturas sin cobrar, stock parado o anticipos que nunca llegaron.
+
+En la UCI Financiera de MASESORA diagnosticamos exactamente dónde se está yendo el dinero y aplicamos un protocolo para recuperarlo sin pedir un crédito. En 30 días, con dos datos que ya tienes, te decimos cuánto puedes rescatar.`,
+    cta: "¿Tienes 30 minutos para el diagnóstico?"
+  },
+  {
+    spec: "UNIDAD DE PROCESOS",
+    color: "#00897B",
+    title: "Esclerosis Operativa",
+    pain: "Cuellos de botella crónicos",
+    pitch: `¿Cuántas veces a la semana algo urgente para lo que tenías planificado? ¿Con qué frecuencia hay que repetir trabajos que ya estaban terminados? Eso es <mark>Esclerosis Operativa</mark>.
+
+Tu negocio funciona, pero a un coste invisible: horas perdidas en esperas, reprocesos y urgencias que nadie ha eliminado porque "siempre ha sido así". En la Unidad de Procesos de MASESORA mapeamos esos cuellos de botella y aplicamos protocolo para que cada proceso fluya sin urgencias y sin retrabajo.`,
+    cta: "¿Cuánto te está costando operar así cada mes?"
+  },
+  {
+    spec: "CARDIOLOGÍA COMERCIAL",
+    color: "#C62828",
+    title: "Pipeline Anémico",
+    pain: "Sin clientes en cartera",
+    pitch: `¿Cierras el mes sin saber de dónde va a venir el siguiente cliente? ¿El pipeline está vacío y dependes de que te llamen o de relaciones personales? Eso es <mark>Pipeline Anémico</mark>.
+
+El corazón comercial de tu empresa late, pero débil. En Cardiología Comercial de MASESORA identificamos el síntoma exacto que frena tu crecimiento — si es déficit de demanda, arritmia en el proceso de venta, o dependencia crítica de unos pocos clientes — y trabajamos el músculo comercial con metodología y KPIs medibles.`,
+    cta: "¿Cuánto llevas sin hacer crecer tu cartera de forma consistente?"
+  },
+  {
+    spec: "NEUROLOGÍA ESTRATÉGICA",
+    color: "#1565C0",
+    title: "Amnesia Estratégica",
+    pain: "Sin dirección ni foco",
+    pitch: `¿Tu empresa opera bien pero sin saber muy bien hacia dónde va? ¿Las decisiones se toman más por urgencia que por criterio? ¿El equipo trabaja duro pero no en la misma dirección? Eso es <mark>Amnesia Estratégica</mark>.
+
+El cerebro directivo de tu negocio está nublado. En Neurología Estratégica de MASESORA construimos el mapa de dirección que le falta a tu empresa: qué priorizar, cómo decidir con datos y cómo alinear al equipo con los objetivos que realmente importan. Sin visión clara, el esfuerzo no se convierte en crecimiento.`,
+    cta: "¿Cuándo fue la última vez que dedicaste una hora solo a pensar en estrategia?"
+  },
+  {
+    spec: "GESTIÓN CLÍNICA",
+    color: "#424242",
+    title: "Ceguera de Control",
+    pain: "Sin datos ni delegación",
+    pitch: `¿Tardas más de una semana en saber cómo fue el mes? ¿Todo acaba en tu mesa aunque tienes personas para resolverlo? ¿Sientes que aguantas el peso de la empresa tú solo? Eso es <mark>Ceguera de Control</mark> y <mark>Fragilidad de Roles</mark>.
+
+El sistema nervioso de tu empresa no funciona: no hay cuadro de mando, no hay delegación real, y tú eres el cuello de botella. En Gestión Clínica de MASESORA instalamos los sistemas de control y la estructura de responsabilidades que convierten a un gerente agotado en un CEO operativo.`,
+    cta: "¿Cuánto tiempo llevas siendo el cuello de botella de tu propia empresa?"
+  },
+  {
+    spec: "CIRUGÍA DE MARCA",
+    color: "#E65100",
+    title: "Identidad Competitiva Débil",
+    pain: "Compiten por precio",
+    pitch: `¿Cuando un cliente potencial te compara con la competencia, lo primero que haces es bajar el precio? ¿Tu web, tus redes y tus propuestas no cuentan exactamente lo mismo? Eso es <mark>Identidad Competitiva Débil</mark>.
+
+Tu marca existe, pero no diferencia. Y una marca que no diferencia compite siempre hacia abajo. En Cirugía de Marca de MASESORA intervenimos la identidad, la propuesta única de valor y la comunicación para que el mercado te elija a ti, no al más barato.`,
+    cta: "¿Qué te hace diferente de los 5 competidores más cercanos? Si tardas en responder, ahí está el síntoma."
+  },
+  {
+    spec: "PSIQUIATRÍA ORGANIZACIONAL",
+    color: "#6A1B9A",
+    title: "Sobrecarga Emocional Operativa",
+    pain: "Tensión silenciosa en el equipo",
+    pitch: `¿Hay tensión en tu equipo que todos notan pero nadie dice en voz alta? ¿Personas en roles que claramente no les corresponden? ¿Resistencia al cambio cada vez que propones algo nuevo? Eso es <mark>Sobrecarga Emocional Operativa</mark>.
+
+El inconsciente colectivo de tu empresa está enfermo y no sale en el balance — pero destruye la productividad. En Psiquiatría Organizacional de MASESORA diagnosticamos y tratamos los conflictos silenciosos, las desalineaciones de perfil y la desconexión emocional que impide al equipo dar el extra cuando más falta hace.`,
+    cta: "¿Cuánto te está costando ese silencio cada mes?"
+  },
+  {
+    spec: "RESCATE DE PERSONAS",
+    color: "#2E7D32",
+    title: "Riesgo de Fuga de Talento",
+    pain: "Talento clave en riesgo",
+    pitch: `¿Has perdido a alguien clave este año? ¿Una persona nueva tarda meses en rendir de forma autónoma? ¿El negocio no funciona bien si tú no estás presente? Eso es <mark>Riesgo de Fuga de Talento</mark> y <mark>Dependencia Crítica del Líder</mark>.
+
+El tejido humano de tu empresa está en riesgo. En Rescate de Personas de MASESORA identificamos quién es crítico, quién está en riesgo de marcharse y qué hace falta para que el equipo funcione sin depender de ti. El talento no avisa cuando se va. Cuando te enteras, ya está en otro sitio.`,
+    cta: "¿Tienes un plan para retener a las personas que hacen posible que todo lo demás funcione?"
+  },
+  {
+    spec: "TERAPIA DE EXPERIENCIA",
+    color: "#AD1457",
+    title: "Inconsistencia Experiencial",
+    pain: "Clientes que no vuelven",
+    pitch: `¿La experiencia que vive tu cliente varía según quién le atienda? ¿Cuando hay una queja no sabes muy bien cómo gestionarla? ¿Sientes que los clientes no perciben del todo el valor de lo que ofreces? Eso es <mark>Inconsistencia Experiencial</mark>.
+
+Cada interacción con tu cliente construye o destruye tu reputación. En Terapia de Experiencia de MASESORA rediseñamos cada punto de contacto para que el cliente no solo compre, sino que vuelva y recomiende. Un cliente bien recuperado en una queja vale más que diez clientes nuevos.`,
+    cta: "¿Cuántos clientes has perdido en el último año sin saber exactamente por qué?"
+  },
+  {
+    spec: "EXCELENCIA OPERATIVA",
+    color: "#F57F17",
+    title: "Dependencia Crítica del Líder",
+    pain: "Sin sistemas, todo depende de personas",
+    pitch: `¿Si te ausentaras una semana, habría problemas graves en la operación? ¿Los procesos clave no están documentados y dependen de que ciertas personas estén presentes? ¿Cada nueva incorporación tarda meses en funcionar sola? Eso es <mark>Dependencia Crítica del Líder</mark>.
+
+Tu empresa ha crecido hasta aquí — ahora necesita consolidar esa excelencia con sistemas reales. En Excelencia Operativa de MASESORA instalamos los estándares, controles y sistemas de mejora continua para que tu empresa funcione con precisión sin depender de ti ni de nadie concreto.`,
+    cta: "¿Tu empresa tiene valor si tú no estás? Si la respuesta no es sí rotundo, hay trabajo que hacer."
+  },
+];
+
+function wordCount(text){ return text.replace(/<[^>]+>/g,'').split(/\s+/).filter(Boolean).length }
+function stripHtml(t){ return t.replace(/<mark>/g,'').replace(/<\/mark>/g,'') }
+
+const grid = document.getElementById('pitchGrid');
+
+PITCHES.forEach((p,i)=>{
+  const wc = wordCount(p.pitch + ' ' + p.cta);
+  const secs = Math.round(wc / 2.2);
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-top">
+      <div class="card-dot" style="background:${p.color}"></div>
+      <div>
+        <div class="card-title">${p.title}</div>
+        <div class="card-spec" style="color:${p.color}">${p.spec}</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-pain" style="background:${p.color}">${p.pain}</div>
+      <p style="white-space:pre-line">${p.pitch}</p>
+      <div class="card-cta"><strong>Cierre clínico:</strong> ${p.cta}</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-words">~${secs}s · ${wc} palabras</span>
+      <button class="card-copy" onclick="copyPitch(${i},this)">Copiar texto</button>
+    </div>`;
+  grid.appendChild(card);
+});
+
+function copyPitch(i, btn){
+  const p = PITCHES[i];
+  const text = stripHtml(p.pitch) + '\n\n' + p.cta;
+  navigator.clipboard.writeText(text).then(()=>{
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2000);
+    btn.textContent = '✓ Copiado';
+    setTimeout(()=>btn.textContent='Copiar texto',2000);
+  });
+}
+</script>
+</body>
+</html>
