@@ -6,54 +6,54 @@
 <title>CARDIO-S2 R6 — Revenue Forecast 90 días</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 14px; }
-  .header { background: #1B2B4B; color: #fff; display: flex; align-items: center; gap: 20px; padding: 16px 28px; }
-  .logo { font-size: 22px; font-weight: 800; color: #C4A55A; letter-spacing: 2px; white-space: nowrap; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #FAF7F2; color: #0F1A35; font-size: 14px; }
+  .header { background: #0F1A35; color: #fff; display: flex; align-items: center; gap: 20px; padding: 16px 28px; }
+  .logo { font-size: 22px; font-weight: 800; color: #B89D52; letter-spacing: 2px; white-space: nowrap; }
   .header-text { flex: 1; }
   .header-text h1 { font-size: 18px; font-weight: 700; }
-  .header-text h2 { font-size: 13px; font-weight: 400; color: #C4A55A; margin-top: 2px; }
-  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; white-space: nowrap; letter-spacing: 1px; }
+  .header-text h2 { font-size: 13px; font-weight: 400; color: #B89D52; margin-top: 2px; }
+  .badge { background: #B89D52; color: #0F1A35; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; white-space: nowrap; letter-spacing: 1px; }
   .container { padding: 24px 28px; max-width: 1400px; margin: 0 auto; }
-  .section-title { font-size: 13px; font-weight: 700; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .section-title { font-size: 13px; font-weight: 700; color: #B89D52; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
   .table-wrap { overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(27,43,75,.10); background: #fff; margin-bottom: 24px; }
   table { width: 100%; border-collapse: collapse; }
-  thead th { background: #1B2B4B; color: #C4A55A; padding: 10px 10px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .5px; white-space: nowrap; }
+  thead th { background: #0F1A35; color: #B89D52; padding: 10px 10px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .5px; white-space: nowrap; }
   tbody tr { border-bottom: 1px solid #eee; }
   tbody tr:last-child { border-bottom: none; }
   tbody td { padding: 8px 8px; vertical-align: middle; }
-  tfoot td { background: #f0efff; font-weight: 700; padding: 8px 8px; font-size: 12px; color: #1B2B4B; }
-  td input, td select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 13px; color: #1B2B4B; background: #fafafa; }
-  td input:focus, td select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; background: #fff; }
-  .calc-cell { background: #f0efff; font-weight: 600; text-align: right; white-space: nowrap; padding-right: 12px; }
-  .btn-add { background: #1B2B4B; color: #C4A55A; border: none; padding: 9px 20px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; margin-bottom: 20px; }
-  .btn-add:hover { background: #243a62; }
-  .btn-del { background: none; border: none; color: #dc2626; font-size: 16px; cursor: pointer; padding: 0 4px; }
+  tfoot td { background: #FAF7F2; font-weight: 700; padding: 8px 8px; font-size: 12px; color: #0F1A35; }
+  td input, td select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 13px; color: #0F1A35; background: #FFFFFF; }
+  td input:focus, td select:focus { outline: 2px solid #B89D52; border-color: #B89D52; background: #fff; }
+  .calc-cell { background: #FAF7F2; font-weight: 600; text-align: right; white-space: nowrap; padding-right: 12px; }
+  .btn-add { background: #0F1A35; color: #B89D52; border: none; padding: 9px 20px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; margin-bottom: 20px; }
+  .btn-add:hover { background: #0F1A35; }
+  .btn-del { background: none; border: none; color: #B8471F; font-size: 16px; cursor: pointer; padding: 0 4px; }
   .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
-  .metric-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(27,43,75,.09); border-left: 4px solid #C4A55A; }
+  .metric-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(27,43,75,.09); border-left: 4px solid #B89D52; }
   .metric-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
   .metric-sub { font-size: 10px; color: #bbb; margin-bottom: 4px; }
-  .metric-value { font-size: 24px; font-weight: 800; color: #1B2B4B; }
-  .metric-value.ok { color: #16a34a; }
-  .metric-value.warning { color: #d97706; }
-  .metric-value.danger { color: #dc2626; }
+  .metric-value { font-size: 24px; font-weight: 800; color: #0F1A35; }
+  .metric-value.ok { color: #2E7D4F; }
+  .metric-value.warning { color: #C69749; }
+  .metric-value.danger { color: #B8471F; }
   .objetivo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; background: #fff; border-radius: 8px; padding: 14px 20px; box-shadow: 0 2px 8px rgba(27,43,75,.08); }
   .objetivo-row label { font-size: 13px; font-weight: 600; white-space: nowrap; }
-  .objetivo-row input { border: 1px solid #ddd; border-radius: 4px; padding: 6px 10px; font-family: inherit; font-size: 14px; font-weight: 700; color: #1B2B4B; width: 160px; }
+  .objetivo-row input { border: 1px solid #ddd; border-radius: 4px; padding: 6px 10px; font-family: inherit; font-size: 14px; font-weight: 700; color: #0F1A35; width: 160px; }
   .semaforo { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 24px; }
-  .semaforo.verde { background: #dcfce7; color: #16a34a; }
-  .semaforo.amarillo { background: #fef9c3; color: #a16207; }
-  .semaforo.rojo { background: #fee2e2; color: #dc2626; }
+  .semaforo.verde { background: #EDF5F0; color: #2E7D4F; }
+  .semaforo.amarillo { background: #FBF4E8; color: #C69749; }
+  .semaforo.rojo { background: #F8EDE9; color: #B8471F; }
   .semaforo-dot { width: 12px; height: 12px; border-radius: 50%; }
-  .semaforo.verde .semaforo-dot { background: #16a34a; }
-  .semaforo.amarillo .semaforo-dot { background: #ca8a04; }
-  .semaforo.rojo .semaforo-dot { background: #dc2626; }
-  .progress-bar-wrap { background: #e5e5f0; border-radius: 8px; height: 14px; margin-top: 8px; overflow: hidden; }
-  .progress-bar { height: 100%; border-radius: 8px; transition: width .4s; background: #16a34a; }
+  .semaforo.verde .semaforo-dot { background: #2E7D4F; }
+  .semaforo.amarillo .semaforo-dot { background: #C69749; }
+  .semaforo.rojo .semaforo-dot { background: #B8471F; }
+  .progress-bar-wrap { background: #E5E5E5; border-radius: 8px; height: 14px; margin-top: 8px; overflow: hidden; }
+  .progress-bar { height: 100%; border-radius: 8px; transition: width .4s; background: #2E7D4F; }
   .confirmar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; background: #fff; border-radius: 8px; padding: 14px 20px; box-shadow: 0 2px 8px rgba(27,43,75,.08); }
   .confirmar-row label { font-size: 13px; font-weight: 600; white-space: nowrap; }
-  .confirmar-row input { border: 1px solid #ddd; border-radius: 4px; padding: 6px 10px; font-family: inherit; font-size: 14px; font-weight: 700; color: #1B2B4B; width: 160px; }
-  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 11px 28px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; }
-  .btn-print:hover { background: #b8943e; }
+  .confirmar-row input { border: 1px solid #ddd; border-radius: 4px; padding: 6px 10px; font-family: inherit; font-size: 14px; font-weight: 700; color: #0F1A35; width: 160px; }
+  .btn-print { background: #B89D52; color: #0F1A35; border: none; padding: 11px 28px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+  .btn-print:hover { background: #B89D52; }
   @media print {
     .btn-add, .btn-del, .btn-print { display: none; }
     body { background: #fff; }
@@ -144,7 +144,7 @@
       <div class="metric-sub" id="m3-label">—</div>
       <div class="metric-value" id="m-m3">0 €</div>
     </div>
-    <div class="metric-card" style="border-left-color:#1B2B4B">
+    <div class="metric-card" style="border-left-color:#0F1A35">
       <div class="metric-label">Total proyectado 90 días</div>
       <div class="metric-value" id="m-total90">0 €</div>
     </div>
@@ -260,7 +260,7 @@ function recalc() {
   const pct = objetivo > 0 ? Math.min(Math.round(total90 / objetivo * 100), 100) : 0;
   const bar = document.getElementById('progress-bar');
   bar.style.width = pct + '%';
-  bar.style.background = pct >= 80 ? '#16a34a' : pct >= 50 ? '#ca8a04' : '#dc2626';
+  bar.style.background = pct >= 80 ? '#2E7D4F' : pct >= 50 ? '#C69749' : '#B8471F';
 
   const sDiv = document.getElementById('semaforo-obj');
   const sTxt = document.getElementById('semaforo-texto');
@@ -308,7 +308,7 @@ addRow({cliente:'Empresa Ejemplo B', prob:40, valor:8000, mes:mesKey(2), servici
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }

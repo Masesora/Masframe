@@ -7,23 +7,23 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --navy: #1B2B4B;
-    --navy-dark: #111E35;
-    --navy-mid: #243659;
-    --gold: #C4A55A;
-    --gold-light: #D4BA7A;
-    --gold-pale: #F5EDD8;
+    --navy: #0F1A35;
+    --navy-dark: #0F1A35;
+    --navy-mid: #0F1A35;
+    --gold: #B89D52;
+    --gold-light: #D4B96A;
+    --gold-pale: #FBF4E8;
     --white: #FFFFFF;
-    --gray-100: #F7F8FA;
-    --gray-200: #EAECF0;
-    --gray-400: #9AA3B2;
-    --gray-600: #5A6478;
-    --gray-800: #2D3748;
-    --green: #2E7D52;
-    --green-light: #E8F5EE;
-    --red: #B91C1C;
-    --red-light: #FEE2E2;
-    --yellow-light: #FFFBEB;
+    --gray-100: #FAF7F2;
+    --gray-200: #E5E5E5;
+    --gray-400: #8B8B8B;
+    --gray-600: #1E3060;
+    --gray-800: #0F1A35;
+    --green: #2E7D4F;
+    --green-light: #EDF5F0;
+    --red: #B8471F;
+    --red-light: #F8EDE9;
+    --yellow-light: #FBF4E8;
     --radius: 8px;
     --shadow: 0 2px 8px rgba(27,43,75,0.10);
     --shadow-md: 0 4px 16px rgba(27,43,75,0.14);
@@ -182,12 +182,12 @@
     text-align: center;
   }
   .badge-dev.ok { background: var(--green-light); color: var(--green); }
-  .badge-dev.warn { background: var(--yellow-light); color: #92620A; }
+  .badge-dev.warn { background: var(--yellow-light); color: #7C5E24; }
   .badge-dev.bad { background: var(--red-light); color: var(--red); }
   .badge-dev.neutral { background: var(--gray-200); color: var(--gray-600); }
   /* ROW COBRADO */
-  tr.cobrado-row td { background: #F0FAF4 !important; }
-  tr.cobrado-row td input { background: #F0FAF4 !important; color: var(--gray-600); }
+  tr.cobrado-row td { background: #EDF5F0 !important; }
+  tr.cobrado-row td input { background: #EDF5F0 !important; color: var(--gray-600); }
   /* BOTÓN ELIMINAR */
   .btn-del {
     background: none;
@@ -546,16 +546,16 @@ window.__mfSyncFormAttrs = function(){
     btn.id = 'mf-save-btn';
     btn.type = 'button';
     btn.textContent = '\ud83d\udcbe Guardar mi trabajo';
-    btn.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:99999;background:#C4A55A;color:#1B2B4B;border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:\"Segoe UI\",Arial,sans-serif;box-shadow:0 2px 10px rgba(27,43,75,0.25);';
+    btn.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:99999;background:#B89D52;color:#0F1A35;border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:\"Segoe UI\",Arial,sans-serif;box-shadow:0 2px 10px rgba(27,43,75,0.25);';
     btn.onclick = function(){
       try { window.parent.postMessage({ tipo: 'solicitar-guardar', itemId: itemId }, '*'); } catch(e){}
       btn.textContent = '\u2713 Guardado';
-      btn.style.background = '#059669';
+      btn.style.background = '#2E7D4F';
       btn.style.color = '#fff';
       setTimeout(function(){
         btn.textContent = '\ud83d\udcbe Guardar mi trabajo';
-        btn.style.background = '#C4A55A';
-        btn.style.color = '#1B2B4B';
+        btn.style.background = '#B89D52';
+        btn.style.color = '#0F1A35';
       }, 3000);
     };
     document.body.appendChild(btn);

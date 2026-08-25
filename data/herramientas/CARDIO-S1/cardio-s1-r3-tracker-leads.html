@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CARDIO-S1 · Tracker de Seguimiento de Leads</title>
 <style>
-:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--white:#fff;--red:#e74c3c;--yellow:#f39c12;--green:#27ae60;}
+:root{--navy:#0F1A35;--gold:#B89D52;--bg:#FAF7F2;--white:#fff;--red:#B8471F;--yellow:#C69749;--green:#2E7D4F;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:system-ui,sans-serif;background:var(--bg);color:#222;}
 header{background:var(--navy);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
@@ -20,11 +20,11 @@ h2{color:var(--navy);font-size:1.1rem;margin-bottom:14px;}
 table{width:100%;border-collapse:collapse;background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);}
 thead{background:var(--navy);}
 thead th{color:var(--gold);font-size:.74rem;font-weight:700;padding:10px 8px;text-align:left;white-space:nowrap;}
-tbody tr:nth-child(even){background:#f4f3fc;}
+tbody tr:nth-child(even){background:#FAF7F2;}
 tbody td{padding:8px 6px;font-size:.82rem;vertical-align:middle;}
 input,select{border:1px solid #ccc;border-radius:4px;padding:5px 6px;font-size:.82rem;font-family:inherit;width:100%;background:#fff;}
 input[type=date]{min-width:130px;}
-.auto{background:#f0eeff;color:var(--navy);font-weight:600;text-align:center;white-space:nowrap;padding:8px 6px;}
+.auto{background:#FAF7F2;color:var(--navy);font-weight:600;text-align:center;white-space:nowrap;padding:8px 6px;}
 .tl-wrap{display:flex;justify-content:center;}
 .tl{width:14px;height:14px;border-radius:50%;display:inline-block;}
 .tl-green{background:var(--green);}
@@ -34,7 +34,7 @@ input[type=date]{min-width:130px;}
 .stage-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
 .pill{background:var(--navy);color:#fff;border-radius:20px;padding:4px 12px;font-size:.75rem;font-weight:600;}
 .pill span{background:var(--gold);color:var(--navy);border-radius:10px;padding:1px 7px;margin-left:5px;font-weight:700;}
-.alert-box{background:#fff3cd;border:1px solid var(--yellow);border-left:4px solid var(--red);border-radius:8px;padding:14px 18px;margin-bottom:24px;}
+.alert-box{background:#FBF4E8;border:1px solid var(--yellow);border-left:4px solid var(--red);border-radius:8px;padding:14px 18px;margin-bottom:24px;}
 .alert-box h3{color:var(--red);font-size:.9rem;margin-bottom:8px;}
 .alert-box ul{padding-left:18px;font-size:.83rem;color:#333;}
 .alert-box ul li{margin-bottom:3px;}
@@ -231,7 +231,7 @@ INIT.forEach(function(r){addRow(r);});
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }
@@ -278,7 +278,7 @@ INIT.forEach(function(r){addRow(r);});
         btn.className = 'mf-del-btn';
         btn.textContent = '✕';
         btn.title = 'Eliminar fila';
-        btn.style.cssText = 'background:#fee2e2;color:#dc2626;border:1px solid #fecaca;border-radius:4px;cursor:pointer;padding:2px 8px;font-size:12px;line-height:1.2;';
+        btn.style.cssText = 'background:#F8EDE9;color:#B8471F;border:1px solid #F8EDE9;border-radius:4px;cursor:pointer;padding:2px 8px;font-size:12px;line-height:1.2;';
         btn.onclick = function(){ tr.remove(); mfBestEffortRecalc(); };
         td.appendChild(btn);
         tr.appendChild(td);

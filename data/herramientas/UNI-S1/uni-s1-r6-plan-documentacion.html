@@ -6,55 +6,55 @@
 <title>UNI-S1-R6 · Plan de Documentación de Procesos Críticos</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
-header{background:#1B2B4B;color:#f8f7ff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+body{font-family:system-ui,-apple-system,sans-serif;background:#FAF7F2;color:#0F1A35;font-size:14px}
+header{background:#0F1A35;color:#FAF7F2;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 header h1{font-size:17px;font-weight:700}
 header p{font-size:12px;opacity:.75;margin-top:2px}
-.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.badge{background:#B89D52;color:#0F1A35;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
 .container{padding:20px 24px;max-width:1400px;margin:0 auto}
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
-.metric{background:#fff;border:1px solid #e0dff5;border-radius:10px;padding:16px 18px}
-.metric label{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
-.metric span{font-size:26px;font-weight:700;color:#1B2B4B}
-.metric .sub{font-size:11px;color:#9ca3af;margin-top:2px}
+.metric{background:#fff;border:1px solid #E5E5E5;border-radius:10px;padding:16px 18px}
+.metric label{font-size:11px;color:#4A4A4A;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
+.metric span{font-size:26px;font-weight:700;color:#0F1A35}
+.metric .sub{font-size:11px;color:#8B8B8B;margin-top:2px}
 .actions{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
 button{cursor:pointer;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;font-family:inherit}
-.btn-add{background:#C4A55A;color:#1B2B4B}
-.btn-add:hover{background:#b8964e}
-.btn-print{background:#1B2B4B;color:#fff}
-.btn-print:hover{background:#253d6b}
-.btn-del{background:#fee2e2;color:#dc2626;padding:4px 10px;font-size:12px}
-.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #e0dff5;background:#fff;margin-bottom:20px}
+.btn-add{background:#B89D52;color:#0F1A35}
+.btn-add:hover{background:#B89D52}
+.btn-print{background:#0F1A35;color:#fff}
+.btn-print:hover{background:#0F1A35}
+.btn-del{background:#F8EDE9;color:#B8471F;padding:4px 10px;font-size:12px}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #E5E5E5;background:#fff;margin-bottom:20px}
 table{width:100%;border-collapse:collapse;min-width:1100px}
-th{background:#1B2B4B;color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;white-space:nowrap;text-align:left}
-td{padding:8px 12px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+th{background:#0F1A35;color:#B89D52;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;white-space:nowrap;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid #FAF7F2;vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:#f8f7ff}
-td input,td select{border:1px solid #d1d5db;border-radius:5px;padding:5px 8px;font-size:13px;font-family:inherit;color:#1B2B4B;width:100%;background:#fff}
+tr:hover td{background:#FAF7F2}
+td input,td select{border:1px solid #E5E5E5;border-radius:5px;padding:5px 8px;font-size:13px;font-family:inherit;color:#0F1A35;width:100%;background:#fff}
 td input[type=number]{min-width:70px}
-td input:focus,td select:focus{outline:2px solid #C4A55A;border-color:transparent}
-.calc{background:#f8f7ff;font-weight:600;color:#1B2B4B;text-align:right}
-.prio-1{color:#dc2626;font-weight:700}
-.prio-2{color:#ea580c;font-weight:700}
-.prio-3{color:#ca8a04;font-weight:700}
-.prio-4{color:#16a34a}
-.prio-5{color:#6b7280}
-.urgente td{background:#fef2f2}
-.gantt-section{background:#fff;border:1px solid #e0dff5;border-radius:10px;padding:20px;margin-bottom:20px}
-.gantt-section h2{font-size:14px;font-weight:700;color:#1B2B4B;margin-bottom:14px;border-bottom:2px solid #C4A55A;padding-bottom:6px}
+td input:focus,td select:focus{outline:2px solid #B89D52;border-color:transparent}
+.calc{background:#FAF7F2;font-weight:600;color:#0F1A35;text-align:right}
+.prio-1{color:#B8471F;font-weight:700}
+.prio-2{color:#C69749;font-weight:700}
+.prio-3{color:#C69749;font-weight:700}
+.prio-4{color:#2E7D4F}
+.prio-5{color:#4A4A4A}
+.urgente td{background:#F8EDE9}
+.gantt-section{background:#fff;border:1px solid #E5E5E5;border-radius:10px;padding:20px;margin-bottom:20px}
+.gantt-section h2{font-size:14px;font-weight:700;color:#0F1A35;margin-bottom:14px;border-bottom:2px solid #B89D52;padding-bottom:6px}
 .gantt-row{display:flex;align-items:center;margin-bottom:8px;gap:10px;font-size:12px}
-.gantt-label{width:200px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#1B2B4B;font-weight:500}
-.gantt-bar-wrap{flex:1;background:#f0eff8;border-radius:4px;height:18px;position:relative;min-width:100px}
-.gantt-bar{height:100%;border-radius:4px;background:#C4A55A;position:absolute;left:0;top:0;transition:width .3s}
-.gantt-pct{position:absolute;right:6px;top:0;line-height:18px;font-size:11px;font-weight:700;color:#1B2B4B}
-.gantt-date{width:90px;flex-shrink:0;text-align:right;color:#6b7280;font-size:11px}
-.progreso-bar-wrap{background:#f0eff8;border-radius:4px;height:10px;min-width:80px;position:relative;display:inline-block;width:90%}
+.gantt-label{width:200px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#0F1A35;font-weight:500}
+.gantt-bar-wrap{flex:1;background:#FAF7F2;border-radius:4px;height:18px;position:relative;min-width:100px}
+.gantt-bar{height:100%;border-radius:4px;background:#B89D52;position:absolute;left:0;top:0;transition:width .3s}
+.gantt-pct{position:absolute;right:6px;top:0;line-height:18px;font-size:11px;font-weight:700;color:#0F1A35}
+.gantt-date{width:90px;flex-shrink:0;text-align:right;color:#4A4A4A;font-size:11px}
+.progreso-bar-wrap{background:#FAF7F2;border-radius:4px;height:10px;min-width:80px;position:relative;display:inline-block;width:90%}
 .progreso-bar{height:100%;border-radius:4px;position:absolute;left:0;top:0}
-.footer-note{font-size:12px;color:#9ca3af;margin-top:8px}
+.footer-note{font-size:12px;color:#8B8B8B;margin-top:8px}
 @media print{
   .actions{display:none}
   body{background:#fff}
-  th{background:#1B2B4B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th{background:#0F1A35!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 </head>
@@ -91,7 +91,7 @@ td input:focus,td select:focus{outline:2px solid #C4A55A;border-color:transparen
     </div>
     <div class="metric">
       <label>Vencidos / urgentes</label>
-      <span id="v-vencidos" style="color:#dc2626">0</span>
+      <span id="v-vencidos" style="color:#B8471F">0</span>
       <div class="sub">días restantes ≤ 0</div>
     </div>
   </div>
@@ -122,7 +122,7 @@ td input:focus,td select:focus{outline:2px solid #C4A55A;border-color:transparen
 
   <div class="gantt-section" id="gantt-section">
     <h2>Gantt simplificado por fecha límite</h2>
-    <div id="gantt-rows"><em style="color:#9ca3af;font-size:12px">Añade procesos con fecha límite para ver el Gantt.</em></div>
+    <div id="gantt-rows"><em style="color:#8B8B8B;font-size:12px">Añade procesos con fecha límite para ver el Gantt.</em></div>
   </div>
 
   <p class="footer-note">Prioridad 1 = máxima urgencia. Estado "Documentado/Validado" cuenta como completado. Días restantes = fecha límite − hoy.</p>
@@ -189,7 +189,7 @@ function recalc(){
 
     if(dias !== null){
       diasCell.textContent = dias;
-      diasCell.style.color = dias<0?'#dc2626':dias<=7?'#ca8a04':'#16a34a';
+      diasCell.style.color = dias<0?'#B8471F':dias<=7?'#C69749':'#2E7D4F';
     } else {
       diasCell.textContent = '—';
       diasCell.style.color = '';
@@ -218,10 +218,10 @@ function recalc(){
 
 function renderGantt(data){
   const container = document.getElementById('gantt-rows');
-  if(!data.length){ container.innerHTML='<em style="color:#9ca3af;font-size:12px">Añade procesos con fecha límite para ver el Gantt.</em>'; return; }
+  if(!data.length){ container.innerHTML='<em style="color:#8B8B8B;font-size:12px">Añade procesos con fecha límite para ver el Gantt.</em>'; return; }
   data.sort((a,b)=> new Date(a.fecha)-new Date(b.fecha));
   container.innerHTML = data.map(d=>{
-    const color = d.dias<0?'#dc2626':d.dias<=7?'#ca8a04':'#C4A55A';
+    const color = d.dias<0?'#B8471F':d.dias<=7?'#C69749':'#B89D52';
     return `<div class="gantt-row">
       <div class="gantt-label" title="${d.proceso}">${d.proceso}</div>
       <div class="gantt-bar-wrap">
@@ -276,7 +276,7 @@ function futureDate(days){
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }

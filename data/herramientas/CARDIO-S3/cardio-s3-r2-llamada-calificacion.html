@@ -6,13 +6,13 @@
 <title>Script de Llamada de Calificación — CARDIO-S3</title>
 <style>
   :root {
-    --navy: #1B2B4B;
-    --gold: #C4A55A;
-    --bg: #f8f7ff;
+    --navy: #0F1A35;
+    --gold: #B89D52;
+    --bg: #FAF7F2;
     --white: #fff;
-    --red: #e74c3c;
-    --yellow: #f39c12;
-    --green: #27ae60;
+    --red: #B8471F;
+    --yellow: #C69749;
+    --green: #2E7D4F;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: system-ui, sans-serif; background: var(--bg); color: #222; }
@@ -57,7 +57,7 @@
   table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
   th { background: var(--navy); color: #fff; padding: 10px 10px; text-align: left; font-size: 0.8rem; white-space: nowrap; }
   td { padding: 8px 8px; border-bottom: 1px solid #eee; vertical-align: middle; }
-  tr:hover td { background: #faf9ff; }
+  tr:hover td { background: #FAF7F2; }
 
   td input[type=text], td input[type=date], td select, td input[type=number] {
     border: 1px solid #ddd;
@@ -111,9 +111,9 @@
     background: #eee;
     color: #555;
   }
-  .decision-badge.green { background: #e8f8ef; color: var(--green); border: 2px solid var(--green); }
-  .decision-badge.yellow { background: #fef9e7; color: var(--yellow); border: 2px solid var(--yellow); }
-  .decision-badge.red { background: #fdf0ef; color: var(--red); border: 2px solid var(--red); }
+  .decision-badge.green { background: #EDF5F0; color: var(--green); border: 2px solid var(--green); }
+  .decision-badge.yellow { background: #FBF4E8; color: var(--yellow); border: 2px solid var(--yellow); }
+  .decision-badge.red { background: #F8EDE9; color: var(--red); border: 2px solid var(--red); }
 
   .tl { width: 14px; height: 14px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
   .tl-green { background: var(--green); }
@@ -131,9 +131,9 @@
     font-weight: 700;
     white-space: nowrap;
   }
-  .hist-badge.green { background: #e8f8ef; color: var(--green); }
-  .hist-badge.yellow { background: #fef9e7; color: #c87f00; }
-  .hist-badge.red { background: #fdf0ef; color: var(--red); }
+  .hist-badge.green { background: #EDF5F0; color: var(--green); }
+  .hist-badge.yellow { background: #FBF4E8; color: #C69749; }
+  .hist-badge.red { background: #F8EDE9; color: var(--red); }
 
   /* SUMMARY */
   .summary-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px; }
@@ -170,7 +170,7 @@
     padding: 3px 8px;
     font-size: 0.8rem;
   }
-  .btn-del:hover { background: #fff0f0; }
+  .btn-del:hover { background: #F8EDE9; }
   .btn-print {
     position: fixed;
     bottom: 24px;
@@ -442,7 +442,7 @@
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }

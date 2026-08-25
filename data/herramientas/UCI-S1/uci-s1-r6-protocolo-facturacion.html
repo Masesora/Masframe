@@ -7,20 +7,20 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --navy: #1B2B4B;
-    --navy-light: #243660;
-    --gold: #C4A55A;
-    --gold-light: #d4b86a;
-    --bg: #f4f6fa;
-    --white: #ffffff;
-    --text: #1a1a2e;
-    --text-muted: #5a6a8a;
-    --border: #dce3f0;
-    --success: #2e7d52;
-    --success-bg: #e8f5ee;
-    --danger: #b94a3a;
-    --danger-bg: #fdf0ee;
-    --row-alt: #f9fafd;
+    --navy: #0F1A35;
+    --navy-light: #0F1A35;
+    --gold: #B89D52;
+    --gold-light: #D4B96A;
+    --bg: #FAF7F2;
+    --white: #FFFFFF;
+    --text: #0F1A35;
+    --text-muted: #1E3060;
+    --border: #E5E5E5;
+    --success: #2E7D4F;
+    --success-bg: #EDF5F0;
+    --danger: #B8471F;
+    --danger-bg: #F8EDE9;
+    --row-alt: #FAF7F2;
     --radius: 8px;
     --shadow: 0 2px 12px rgba(27,43,75,0.10);
   }
@@ -186,7 +186,7 @@
   tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:nth-child(even) { background: var(--row-alt); }
-  tbody tr:hover { background: #eef1f8; }
+  tbody tr:hover { background: #FAF7F2; }
   tbody tr.done-row { background: var(--success-bg) !important; }
   tbody tr.done-row td { color: var(--success); }
   td { padding: 8px 10px; vertical-align: middle; }
@@ -212,7 +212,7 @@
   td input[type="number"]:focus {
     outline: none;
     border-color: var(--gold);
-    background: #fffdf4;
+    background: #FBF4E8;
   }
   td input[type="number"] { min-width: 90px; text-align: right; }
 
@@ -249,7 +249,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #c0c8d8;
+    color: #8B8B8B;
     font-size: 16px;
     padding: 2px 4px;
     border-radius: 4px;
@@ -560,16 +560,16 @@ window.__mfSyncFormAttrs = function(){
     btn.id = 'mf-save-btn';
     btn.type = 'button';
     btn.textContent = '\ud83d\udcbe Guardar mi trabajo';
-    btn.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:99999;background:#C4A55A;color:#1B2B4B;border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:\"Segoe UI\",Arial,sans-serif;box-shadow:0 2px 10px rgba(27,43,75,0.25);';
+    btn.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:99999;background:#B89D52;color:#0F1A35;border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:\"Segoe UI\",Arial,sans-serif;box-shadow:0 2px 10px rgba(27,43,75,0.25);';
     btn.onclick = function(){
       try { window.parent.postMessage({ tipo: 'solicitar-guardar', itemId: itemId }, '*'); } catch(e){}
       btn.textContent = '\u2713 Guardado';
-      btn.style.background = '#059669';
+      btn.style.background = '#2E7D4F';
       btn.style.color = '#fff';
       setTimeout(function(){
         btn.textContent = '\ud83d\udcbe Guardar mi trabajo';
-        btn.style.background = '#C4A55A';
-        btn.style.color = '#1B2B4B';
+        btn.style.background = '#B89D52';
+        btn.style.color = '#0F1A35';
       }, 3000);
     };
     document.body.appendChild(btn);

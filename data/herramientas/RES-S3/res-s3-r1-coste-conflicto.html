@@ -1,37 +1,37 @@
 <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>RES-S3 — R1 · Cuantificar el coste mensual del conflicto</title><style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:13px}
-.header{background:#1B2B4B;color:#fff;padding:18px 28px;display:flex;align-items:center;gap:20px}
-.logo{font-size:22px;font-weight:800;letter-spacing:2px;color:#C4A55A;font-family:Georgia,serif}
-.header-text h1{font-size:15px;font-weight:700;color:#C4A55A;margin-bottom:2px}
-.header-text h2{font-size:12px;color:#c8d4e8;font-weight:400}
-.badge{background:#C4A55A;color:#1B2B4B;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;margin-left:auto;white-space:nowrap}
+body{font-family:system-ui,-apple-system,sans-serif;background:#FAF7F2;color:#0F1A35;font-size:13px}
+.header{background:#0F1A35;color:#fff;padding:18px 28px;display:flex;align-items:center;gap:20px}
+.logo{font-size:22px;font-weight:800;letter-spacing:2px;color:#B89D52;font-family:Georgia,serif}
+.header-text h1{font-size:15px;font-weight:700;color:#B89D52;margin-bottom:2px}
+.header-text h2{font-size:12px;color:#E5E5E5;font-weight:400}
+.badge{background:#B89D52;color:#0F1A35;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;margin-left:auto;white-space:nowrap}
 .container{max-width:1100px;margin:0 auto;padding:20px}
-.intro{font-size:12px;color:#5a6a85;background:#eef2fb;border-left:3px solid #C4A55A;padding:10px 14px;border-radius:4px;margin-bottom:16px}
-.section{background:#fff;border:1px solid #dde3ef;border-radius:6px;padding:18px;margin-bottom:16px}
-.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:12px;border-bottom:1px solid #eee;padding-bottom:6px}
+.intro{font-size:12px;color:#1E3060;background:#FAF7F2;border-left:3px solid #B89D52;padding:10px 14px;border-radius:4px;margin-bottom:16px}
+.section{background:#fff;border:1px solid #E5E5E5;border-radius:6px;padding:18px;margin-bottom:16px}
+.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#B89D52;margin-bottom:12px;border-bottom:1px solid #eee;padding-bottom:6px}
 table{width:100%;border-collapse:collapse}
-th{background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 6px;text-align:left}
-td{border-bottom:1px solid #eef0f5;padding:5px 4px;vertical-align:middle}
-tr:hover td{background:#f5f4ff}
+th{background:#0F1A35;color:#B89D52;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 6px;text-align:left}
+td{border-bottom:1px solid #FAF7F2;padding:5px 4px;vertical-align:middle}
+tr:hover td{background:#FAF7F2}
 .field-row{display:flex;gap:14px;flex-wrap:wrap}
 .field{flex:1;min-width:180px;margin-bottom:6px}
-.field label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#5a6a85;margin-bottom:4px}
-input[type=text],input[type=number]{border:1px solid #ddd;border-radius:3px;padding:6px 8px;width:100%;font-size:13px;font-family:inherit;color:#1B2B4B;background:#fdfdff}
-select{border:1px solid #ddd;border-radius:3px;padding:5px;font-family:inherit;font-size:12px;color:#1B2B4B;background:#fdfdff}
-input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
-.calc{background:#f0f4fc;font-weight:700;text-align:right;color:#1B2B4B;padding:5px 6px}
-.best td{background:#eafaf0!important}
-.add-row-btn{background:#C4A55A;color:#1B2B4B;border:none;border-radius:4px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin-top:10px}
-.add-row-btn:hover{background:#b8923e}
-.del{color:#b91c1c;cursor:pointer;font-weight:700;text-align:center}
+.field label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#1E3060;margin-bottom:4px}
+input[type=text],input[type=number]{border:1px solid #ddd;border-radius:3px;padding:6px 8px;width:100%;font-size:13px;font-family:inherit;color:#0F1A35;background:#FFFFFF}
+select{border:1px solid #ddd;border-radius:3px;padding:5px;font-family:inherit;font-size:12px;color:#0F1A35;background:#FFFFFF}
+input:focus{outline:2px solid #B89D52;border-color:#B89D52}
+.calc{background:#FAF7F2;font-weight:700;text-align:right;color:#0F1A35;padding:5px 6px}
+.best td{background:#EDF5F0!important}
+.add-row-btn{background:#B89D52;color:#0F1A35;border:none;border-radius:4px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin-top:10px}
+.add-row-btn:hover{background:#B89D52}
+.del{color:#B8471F;cursor:pointer;font-weight:700;text-align:center}
 .result-summary{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
-.result-card{background:#1B2B4B;color:#fff;border-radius:6px;padding:12px 18px;flex:1;min-width:150px;text-align:center}
-.result-card .label{font-size:10px;color:#C4A55A;text-transform:uppercase;font-weight:700}
+.result-card{background:#0F1A35;color:#fff;border-radius:6px;padding:12px 18px;flex:1;min-width:150px;text-align:center}
+.result-card .label{font-size:10px;color:#B89D52;text-transform:uppercase;font-weight:700}
 .result-card .value{font-size:24px;font-weight:800;color:#fff;margin-top:4px}
 .sem{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:800}
-.sem-ok{background:#d4edda;color:#155724}.sem-warn{background:#fff3cd;color:#856404}.sem-alert{background:#f8d7da;color:#721c24}
-.hint{font-size:11px;color:#8a94a8;margin-top:8px;font-style:italic}
-.print-btn{background:#1B2B4B;color:#C4A55A;border:none;border-radius:4px;padding:8px 18px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
+.sem-ok{background:#EDF5F0;color:#1F5637}.sem-warn{background:#FBF4E8;color:#7C5E24}.sem-alert{background:#F8EDE9;color:#7A2F14}
+.hint{font-size:11px;color:#8B8B8B;margin-top:8px;font-style:italic}
+.print-btn{background:#0F1A35;color:#B89D52;border:none;border-radius:4px;padding:8px 18px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
 @media print{.add-row-btn,.print-btn,.del{display:none}body{background:#fff}}</style></head><body>
 <div class="header"><div class="logo">MASFRAME</div><div class="header-text"><h1>RES-S3 — Inflamación Interna</h1><h2>R1 · Cuantificar el coste mensual del conflicto</h2></div><div class="badge">HERRAMIENTA OPERATIVA</div></div>
 <div class="container"><div class="intro">Antes de decidir si actúas, ponle precio a NO actuar. El conflicto no es solo incómodo: cuesta en productividad, errores y ausencias. Este número te dice cuánto te ahorras al resolverlo.</div><div class="section"><div class="section-title">Coste mensual del conflicto</div>
@@ -70,7 +70,7 @@ input:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }

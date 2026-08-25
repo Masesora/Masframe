@@ -6,63 +6,63 @@
 <title>R6 — Rentabilidad Real por Cliente | UCI-S3 MASFRAME</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:13px}
-  .header{background:#1B2B4B;color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-  .logo{font-size:22px;font-weight:900;color:#C4A55A;letter-spacing:2px}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#FAF7F2;color:#0F1A35;font-size:13px}
+  .header{background:#0F1A35;color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{font-size:22px;font-weight:900;color:#B89D52;letter-spacing:2px}
   .header-titles{flex:1}
-  .header-sub{font-size:11px;color:#C4A55A;letter-spacing:1px;text-transform:uppercase}
+  .header-sub{font-size:11px;color:#B89D52;letter-spacing:1px;text-transform:uppercase}
   .header-tool{font-size:15px;font-weight:700;margin-top:2px}
-  .badge{background:#C4A55A;color:#1B2B4B;font-size:9px;font-weight:800;padding:3px 8px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+  .badge{background:#B89D52;color:#0F1A35;font-size:9px;font-weight:800;padding:3px 8px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
   .main{padding:16px 20px;max-width:1400px;margin:0 auto}
-  h2{font-size:13px;font-weight:700;color:#1B2B4B;margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px;border-left:3px solid #C4A55A;padding-left:8px}
+  h2{font-size:13px;font-weight:700;color:#0F1A35;margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px;border-left:3px solid #B89D52;padding-left:8px}
   .table-wrap{overflow-x:auto}
   table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);border-radius:4px;overflow:hidden;min-width:1100px}
-  th{background:#1B2B4B;color:#C4A55A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 5px;text-align:center;white-space:nowrap}
+  th{background:#0F1A35;color:#B89D52;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 5px;text-align:center;white-space:nowrap}
   td{padding:5px 4px;border-bottom:1px solid #eee;text-align:center;vertical-align:middle}
   tr:last-child td{border-bottom:none}
-  tr:hover td{background:#f8f7ff}
-  input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 5px;font-size:12px;color:#1B2B4B;background:#fff;text-align:right}
+  tr:hover td{background:#FAF7F2}
+  input[type=text],input[type=number]{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 5px;font-size:12px;color:#0F1A35;background:#fff;text-align:right}
   input[type=text]{text-align:left}
-  select{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 3px;font-size:11px;color:#1B2B4B;background:#fff}
-  input:focus,select:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
-  .calc-cell{background:#f8f7ff;font-weight:700;font-size:12px}
+  select{width:100%;border:1px solid #ddd;border-radius:3px;padding:4px 3px;font-size:11px;color:#0F1A35;background:#fff}
+  input:focus,select:focus{outline:2px solid #B89D52;border-color:#B89D52}
+  .calc-cell{background:#FAF7F2;font-weight:700;font-size:12px}
   .semaforo{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle}
-  .btn-add{background:#C4A55A;color:#1B2B4B;border:none;border-radius:3px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin:8px 0;letter-spacing:.5px}
-  .btn-add:hover{background:#b8943e}
-  .btn-del{background:#e74c3c;color:#fff;border:none;border-radius:2px;padding:2px 7px;font-size:11px;cursor:pointer}
+  .btn-add{background:#B89D52;color:#0F1A35;border:none;border-radius:3px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;margin:8px 0;letter-spacing:.5px}
+  .btn-add:hover{background:#B89D52}
+  .btn-del{background:#B8471F;color:#fff;border:none;border-radius:2px;padding:2px 7px;font-size:11px;cursor:pointer}
   .tag{display:inline-block;padding:2px 6px;border-radius:10px;font-size:9px;font-weight:800;letter-spacing:.3px;white-space:nowrap}
-  .tag-est{background:#1B2B4B;color:#C4A55A}
-  .tag-ren{background:#2ecc71;color:#fff}
-  .tag-opt{background:#f39c12;color:#fff}
-  .tag-des{background:#e74c3c;color:#fff}
+  .tag-est{background:#0F1A35;color:#B89D52}
+  .tag-ren{background:#2E7D4F;color:#fff}
+  .tag-opt{background:#C69749;color:#fff}
+  .tag-des{background:#B8471F;color:#fff}
   .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
-  .metric-card{background:#1B2B4B;color:#fff;border-radius:6px;padding:12px 14px}
-  .metric-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:4px}
+  .metric-card{background:#0F1A35;color:#fff;border-radius:6px;padding:12px 14px}
+  .metric-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#B89D52;margin-bottom:4px}
   .metric-value{font-size:18px;font-weight:900;color:#fff}
   .metric-sub{font-size:10px;color:#aaa;margin-top:2px}
   .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:12px 0}
   .sum-card{border-radius:6px;padding:12px 14px}
-  .sum-est{background:#1B2B4B;border:1.5px solid #C4A55A}
-  .sum-ren{background:#eafaf1;border:1.5px solid #2ecc71}
-  .sum-opt{background:#fff8e1;border:1.5px solid #f39c12}
-  .sum-des{background:#ffeaea;border:1.5px solid #e74c3c}
+  .sum-est{background:#0F1A35;border:1.5px solid #B89D52}
+  .sum-ren{background:#EDF5F0;border:1.5px solid #2E7D4F}
+  .sum-opt{background:#FBF4E8;border:1.5px solid #C69749}
+  .sum-des{background:#F8EDE9;border:1.5px solid #B8471F}
   .sum-card h4{font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:800;margin-bottom:6px}
-  .sum-est h4{color:#C4A55A}
-  .sum-ren h4{color:#1e8449}
-  .sum-opt h4{color:#7d5a00}
-  .sum-des h4{color:#c0392b}
+  .sum-est h4{color:#B89D52}
+  .sum-ren h4{color:#2E7D4F}
+  .sum-opt h4{color:#7C5E24}
+  .sum-des h4{color:#B8471F}
   .sum-card ul{list-style:none;padding:0;font-size:11px}
   .sum-est ul{color:#fff}
   .sum-card li{padding:2px 0;border-bottom:1px solid rgba(0,0,0,.06)}
-  .alert-box{background:#ffeaea;border:1.5px solid #e74c3c;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:12px;color:#c0392b}
-  .decision-block{background:#fff;border:1.5px solid #C4A55A;border-radius:6px;padding:14px;margin:14px 0}
-  .decision-block h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#C4A55A;margin-bottom:8px;font-weight:800}
+  .alert-box{background:#F8EDE9;border:1.5px solid #B8471F;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:12px;color:#B8471F}
+  .decision-block{background:#fff;border:1.5px solid #B89D52;border-radius:6px;padding:14px;margin:14px 0}
+  .decision-block h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#B89D52;margin-bottom:8px;font-weight:800}
   .dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   @media(max-width:700px){.dec-grid{grid-template-columns:1fr}}
-  textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:6px;font-size:12px;color:#1B2B4B;resize:vertical;min-height:52px;font-family:inherit}
-  textarea:focus{outline:2px solid #C4A55A;border-color:#C4A55A}
-  .btn-print{background:#1B2B4B;color:#C4A55A;border:none;border-radius:3px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:10px}
-  .nps-stars{color:#C4A55A;font-size:13px;letter-spacing:1px}
+  textarea{width:100%;border:1px solid #ddd;border-radius:3px;padding:6px;font-size:12px;color:#0F1A35;resize:vertical;min-height:52px;font-family:inherit}
+  textarea:focus{outline:2px solid #B89D52;border-color:#B89D52}
+  .btn-print{background:#0F1A35;color:#B89D52;border:none;border-radius:3px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:10px}
+  .nps-stars{color:#B89D52;font-size:13px;letter-spacing:1px}
   @media print{.btn-print,.btn-add,.btn-del{display:none!important}body{background:#fff}.table-wrap{overflow:visible}table{min-width:auto}th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.metric-card,.sum-est{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
@@ -108,18 +108,18 @@
   <div class="metric-card"><div class="metric-label">Facturación total / mes</div><div class="metric-value" id="m-fac">0€</div></div>
   <div class="metric-card"><div class="metric-label">Margen real total / mes</div><div class="metric-value" id="m-mar">0€</div></div>
   <div class="metric-card"><div class="metric-label">Margen real medio %</div><div class="metric-value" id="m-pct">—</div></div>
-  <div class="metric-card"><div class="metric-label">Estratégicos</div><div class="metric-value" id="m-est" style="color:#C4A55A">0</div></div>
-  <div class="metric-card"><div class="metric-label">A desvincular</div><div class="metric-value" id="m-des" style="color:#e74c3c">0</div></div>
+  <div class="metric-card"><div class="metric-label">Estratégicos</div><div class="metric-value" id="m-est" style="color:#B89D52">0</div></div>
+  <div class="metric-card"><div class="metric-label">A desvincular</div><div class="metric-value" id="m-des" style="color:#B8471F">0</div></div>
 </div>
 
 <div id="alert-zone"></div>
 
 <h2>Resumen Ejecutivo por Clasificación</h2>
 <div class="summary-grid">
-  <div class="sum-card sum-est"><h4>Estratégicos — proteger y crecer</h4><ul id="lista-est"><li style="color:#aaa;font-style:italic">Sin datos</li></ul><div id="val-est" style="color:#C4A55A;font-size:11px;font-weight:700;margin-top:6px"></div></div>
-  <div class="sum-card sum-ren"><h4>Rentables — mantener y optimizar</h4><ul id="lista-ren"><li style="color:#999;font-style:italic">Sin datos</li></ul><div id="val-ren" style="color:#1e8449;font-size:11px;font-weight:700;margin-top:6px"></div></div>
-  <div class="sum-card sum-opt"><h4>Optimizar — precio o condiciones</h4><ul id="lista-opt"><li style="color:#999;font-style:italic">Sin datos</li></ul><div id="val-opt" style="color:#7d5a00;font-size:11px;font-weight:700;margin-top:6px"></div></div>
-  <div class="sum-card sum-des"><h4>Desvincular — revisar urgente</h4><ul id="lista-des"><li style="color:#999;font-style:italic">Sin datos</li></ul><div id="val-des" style="color:#c0392b;font-size:11px;font-weight:700;margin-top:6px"></div></div>
+  <div class="sum-card sum-est"><h4>Estratégicos — proteger y crecer</h4><ul id="lista-est"><li style="color:#aaa;font-style:italic">Sin datos</li></ul><div id="val-est" style="color:#B89D52;font-size:11px;font-weight:700;margin-top:6px"></div></div>
+  <div class="sum-card sum-ren"><h4>Rentables — mantener y optimizar</h4><ul id="lista-ren"><li style="color:#999;font-style:italic">Sin datos</li></ul><div id="val-ren" style="color:#2E7D4F;font-size:11px;font-weight:700;margin-top:6px"></div></div>
+  <div class="sum-card sum-opt"><h4>Optimizar — precio o condiciones</h4><ul id="lista-opt"><li style="color:#999;font-style:italic">Sin datos</li></ul><div id="val-opt" style="color:#7C5E24;font-size:11px;font-weight:700;margin-top:6px"></div></div>
+  <div class="sum-card sum-des"><h4>Desvincular — revisar urgente</h4><ul id="lista-des"><li style="color:#999;font-style:italic">Sin datos</li></ul><div id="val-des" style="color:#B8471F;font-size:11px;font-weight:700;margin-top:6px"></div></div>
 </div>
 
 <button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
@@ -179,12 +179,12 @@ function calcRow(id){
   const cls=fac>0?clasificar(mrp,nps,pot):'—';
   if(el('ht'+id)) el('ht'+id).textContent=ht>0?ht.toFixed(1)+' h':'—';
   if(el('ct'+id)) el('ct'+id).textContent=ct>0?fmt(ct)+'€':'—';
-  if(el('mr'+id)){el('mr'+id).textContent=fac>0?(mr>=0?'':'-')+fmt(Math.abs(mr))+'€':'—';el('mr'+id).style.color=mr>=0?'#2ecc71':'#e74c3c';}
-  if(el('mrp'+id)){el('mrp'+id).textContent=fac>0?fmt1(mrp)+'%':'—';el('mrp'+id).style.color=mrp>=20?'#2ecc71':mrp>=0?'#f39c12':'#e74c3c';}
+  if(el('mr'+id)){el('mr'+id).textContent=fac>0?(mr>=0?'':'-')+fmt(Math.abs(mr))+'€':'—';el('mr'+id).style.color=mr>=0?'#2E7D4F':'#B8471F';}
+  if(el('mrp'+id)){el('mrp'+id).textContent=fac>0?fmt1(mrp)+'%':'—';el('mrp'+id).style.color=mrp>=20?'#2E7D4F':mrp>=0?'#C69749':'#B8471F';}
   const tagMap={Estratégico:'est',Rentable:'ren',Optimizar:'opt',Desvincular:'des'};
   if(el('cl'+id)) el('cl'+id).innerHTML=fac>0?`<span class="tag tag-${tagMap[cls]||''}">${cls}</span>`:'—';
   if(el('sem'+id)){
-    const s=mrp>=20?'#2ecc71':mrp>=0?'#f39c12':'#e74c3c';
+    const s=mrp>=20?'#2E7D4F':mrp>=0?'#C69749':'#B8471F';
     el('sem'+id).innerHTML=`<span class="semaforo" style="background:${fac>0?s:'#ccc'}"></span>`;
   }
   calcAll();
@@ -264,7 +264,7 @@ addRow();addRow();addRow();
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }

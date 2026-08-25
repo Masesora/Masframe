@@ -6,38 +6,38 @@
 <title>R4 · Rendimiento Histórico de Canales — CARDIO-S1</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B}
-header{background:#1B2B4B;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.brand{font-size:13px;font-weight:700;letter-spacing:2px;color:#C4A55A;text-transform:uppercase}
+body{font-family:system-ui,sans-serif;background:#FAF7F2;color:#0F1A35}
+header{background:#0F1A35;color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:13px;font-weight:700;letter-spacing:2px;color:#B89D52;text-transform:uppercase}
 header h1{font-size:22px;font-weight:800;margin:4px 0}
 .subtitle{font-size:13px;opacity:.8}
-.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.badge{background:#B89D52;color:#0F1A35;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
 .container{max-width:1280px;margin:0 auto;padding:28px 20px}
 .card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(27,43,75,.08);padding:24px;margin-bottom:24px}
-.section-title{font-size:15px;font-weight:800;color:#1B2B4B;border-left:4px solid #C4A55A;padding-left:12px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+.section-title{font-size:15px;font-weight:800;color:#0F1A35;border-left:4px solid #B89D52;padding-left:12px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:#1B2B4B;color:#C4A55A;padding:10px 8px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+th{background:#0F1A35;color:#B89D52;padding:10px 8px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
 td{padding:7px 8px;border-bottom:1px solid #eee;vertical-align:middle}
-tr:hover td{background:#f8f7ff}
-input[type=text],input[type=number],select{width:100%;border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:12px;font-family:system-ui;background:#f8f7ff;color:#1B2B4B}
-input:focus,select:focus{outline:2px solid #C4A55A;background:#fff}
-.calc-cell{background:#eef2ff;font-weight:700;font-size:12px;white-space:nowrap}
+tr:hover td{background:#FAF7F2}
+input[type=text],input[type=number],select{width:100%;border:1px solid #ddd;border-radius:5px;padding:5px 7px;font-size:12px;font-family:system-ui;background:#FAF7F2;color:#0F1A35}
+input:focus,select:focus{outline:2px solid #B89D52;background:#fff}
+.calc-cell{background:#FAF7F2;font-weight:700;font-size:12px;white-space:nowrap}
 .dot{width:16px;height:16px;border-radius:50%;display:inline-block}
-.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}.gris{background:#9ca3af}
-.btn{background:#C4A55A;color:#1B2B4B;border:none;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}
-.btn:hover{background:#b8943f}
-.btn-add{background:#1B2B4B;color:#C4A55A;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px}
-.btn-del{background:#ef4444;color:#fff;border:none;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:11px}
+.verde{background:#2E7D4F}.amarillo{background:#C69749}.rojo{background:#B8471F}.gris{background:#8B8B8B}
+.btn{background:#B89D52;color:#0F1A35;border:none;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}
+.btn:hover{background:#B89D52}
+.btn-add{background:#0F1A35;color:#B89D52;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn-del{background:#B8471F;color:#fff;border:none;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:11px}
 .metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
-.metric-card{background:#1B2B4B;border-radius:10px;padding:18px;text-align:center}
-.metric-label{color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.metric-card{background:#0F1A35;border-radius:10px;padding:18px;text-align:center}
+.metric-label{color:#B89D52;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
 .metric-value{color:#fff;font-size:22px;font-weight:800}
 .ranking-list{list-style:none}
-.ranking-list li{display:flex;align-items:center;gap:12px;padding:8px 14px;border-radius:8px;margin-bottom:6px;background:#f8f7ff;font-size:13px}
-.rank-pos{background:#1B2B4B;color:#C4A55A;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
+.ranking-list li{display:flex;align-items:center;gap:12px;padding:8px 14px;border-radius:8px;margin-bottom:6px;background:#FAF7F2;font-size:13px}
+.rank-pos{background:#0F1A35;color:#B89D52;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
 .rank-name{flex:1;font-weight:600}
 .rank-roi{font-weight:800}
-.neg{color:#ef4444}.pos{color:#22c55e}
+.neg{color:#B8471F}.pos{color:#2E7D4F}
 @media print{.btn,.btn-add,.btn-del{display:none}body{background:#fff}}
 </style>
 </head>
@@ -143,7 +143,7 @@ function recalc(){
     tr.querySelector('.f-ing').textContent='€'+ing.toLocaleString('es-ES');
     if(isNaN(roi)) tr.querySelector('.f-roi').textContent='—';
     else if(!isFinite(roi)) tr.querySelector('.f-roi').textContent='∞';
-    else { tr.querySelector('.f-roi').textContent=roi.toFixed(1)+'%'; tr.querySelector('.f-roi').style.color=roi<0?'#ef4444':roi>=100?'#22c55e':'#f59e0b'; }
+    else { tr.querySelector('.f-roi').textContent=roi.toFixed(1)+'%'; tr.querySelector('.f-roi').style.color=roi<0?'#B8471F':roi>=100?'#2E7D4F':'#C69749'; }
     tr.querySelector('.f-sem').innerHTML=sem(isNaN(roi)?0:roi, inv);
     totIng+=ing; totInv+=inv;
     const roiNum=isNaN(roi)?-Infinity:!isFinite(roi)?999999:roi;
@@ -201,7 +201,7 @@ DEFAULTS.forEach(addRow);
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }

@@ -6,48 +6,48 @@
 <title>UNI-S1-R5 · Panel de Indicadores de Rendimiento por Proceso</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
-header{background:#1B2B4B;color:#f8f7ff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+body{font-family:system-ui,-apple-system,sans-serif;background:#FAF7F2;color:#0F1A35;font-size:14px}
+header{background:#0F1A35;color:#FAF7F2;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 header h1{font-size:17px;font-weight:700;letter-spacing:.3px}
 header p{font-size:12px;opacity:.75;margin-top:2px}
-.badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.badge{background:#B89D52;color:#0F1A35;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
 .container{padding:20px 24px;max-width:1400px;margin:0 auto}
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
-.metric{background:#fff;border:1px solid #e0dff5;border-radius:10px;padding:16px 18px}
-.metric label{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
-.metric span{font-size:26px;font-weight:700;color:#1B2B4B}
-.metric .sub{font-size:11px;color:#9ca3af;margin-top:2px}
-.metric.alerta span{color:#dc2626}
-.metric.ok span{color:#16a34a}
+.metric{background:#fff;border:1px solid #E5E5E5;border-radius:10px;padding:16px 18px}
+.metric label{font-size:11px;color:#4A4A4A;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
+.metric span{font-size:26px;font-weight:700;color:#0F1A35}
+.metric .sub{font-size:11px;color:#8B8B8B;margin-top:2px}
+.metric.alerta span{color:#B8471F}
+.metric.ok span{color:#2E7D4F}
 .actions{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
 button{cursor:pointer;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;font-family:inherit}
-.btn-add{background:#C4A55A;color:#1B2B4B}
-.btn-add:hover{background:#b8964e}
-.btn-print{background:#1B2B4B;color:#fff}
-.btn-print:hover{background:#253d6b}
-.btn-del{background:#fee2e2;color:#dc2626;padding:4px 10px;font-size:12px}
-.btn-del:hover{background:#fecaca}
-.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #e0dff5;background:#fff}
+.btn-add{background:#B89D52;color:#0F1A35}
+.btn-add:hover{background:#B89D52}
+.btn-print{background:#0F1A35;color:#fff}
+.btn-print:hover{background:#0F1A35}
+.btn-del{background:#F8EDE9;color:#B8471F;padding:4px 10px;font-size:12px}
+.btn-del:hover{background:#F8EDE9}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #E5E5E5;background:#fff}
 table{width:100%;border-collapse:collapse;min-width:1100px}
-th{background:#1B2B4B;color:#C4A55A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;white-space:nowrap;text-align:left}
-td{padding:8px 12px;border-bottom:1px solid #f0eff8;vertical-align:middle}
+th{background:#0F1A35;color:#B89D52;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;white-space:nowrap;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid #FAF7F2;vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:#f8f7ff}
-td input,td select{border:1px solid #d1d5db;border-radius:5px;padding:5px 8px;font-size:13px;font-family:inherit;color:#1B2B4B;width:100%;min-width:80px;background:#fff}
-td input:focus,td select:focus{outline:2px solid #C4A55A;border-color:transparent}
-.calc{background:#f8f7ff;font-weight:600;color:#1B2B4B;text-align:right}
+tr:hover td{background:#FAF7F2}
+td input,td select{border:1px solid #E5E5E5;border-radius:5px;padding:5px 8px;font-size:13px;font-family:inherit;color:#0F1A35;width:100%;min-width:80px;background:#fff}
+td input:focus,td select:focus{outline:2px solid #B89D52;border-color:transparent}
+.calc{background:#FAF7F2;font-weight:600;color:#0F1A35;text-align:right}
 .sem{width:22px;height:22px;border-radius:50%;display:inline-block;vertical-align:middle}
-.sem-verde{background:#16a34a}
-.sem-amarillo{background:#ca8a04}
-.sem-rojo{background:#dc2626}
-.sem-gris{background:#9ca3af}
-.alerta-row td{background:#fef2f2}
-.footer-note{margin-top:14px;font-size:12px;color:#9ca3af}
+.sem-verde{background:#2E7D4F}
+.sem-amarillo{background:#C69749}
+.sem-rojo{background:#B8471F}
+.sem-gris{background:#8B8B8B}
+.alerta-row td{background:#F8EDE9}
+.footer-note{margin-top:14px;font-size:12px;color:#8B8B8B}
 @media print{
   .actions,.btn-print{display:none}
   body{background:#fff}
   .table-wrap{border:1px solid #ccc}
-  th{background:#1B2B4B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th{background:#0F1A35!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 </head>
@@ -208,7 +208,7 @@ function recalc(){
 
   const scoreEl = document.getElementById('v-score');
   const score = semCount ? totSem/semCount : -1;
-  scoreEl.style.color = score<0?'#1B2B4B':score>=80?'#16a34a':score>=50?'#ca8a04':'#dc2626';
+  scoreEl.style.color = score<0?'#0F1A35':score>=80?'#2E7D4F':score>=50?'#C69749':'#B8471F';
 }
 
 // Datos de ejemplo
@@ -250,7 +250,7 @@ addRow({proceso:'Reuniones internas',kpi:'',unidad:'',meta:'',actual:'',freq:'Se
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }

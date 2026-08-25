@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Definicion de Criterios de Pipeline - CARDIO-S2</title>
 <style>
-:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--white:#fff;--red:#e74c3c;--yellow:#f39c12;--green:#27ae60;}
+:root{--navy:#0F1A35;--gold:#B89D52;--bg:#FAF7F2;--white:#fff;--red:#B8471F;--yellow:#C69749;--green:#2E7D4F;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:system-ui,sans-serif;background:var(--bg);color:#333;}
 .header{background:var(--navy);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
@@ -27,8 +27,8 @@ h2{font-size:1.05rem;color:var(--navy);margin:28px 0 12px;}
 table{width:100%;border-collapse:collapse;background:var(--white);font-size:0.82rem;}
 thead tr{background:var(--navy);color:#fff;}
 thead th{padding:10px 8px;text-align:left;font-weight:600;white-space:nowrap;font-size:0.76rem;}
-tbody tr:nth-child(even){background:#f4f3fb;}
-tbody tr:hover{background:#ede9fb;}
+tbody tr:nth-child(even){background:#FAF7F2;}
+tbody tr:hover{background:#FAF7F2;}
 td{padding:5px 6px;vertical-align:middle;}
 td input,td select{width:100%;border:1px solid #ddd;border-radius:4px;padding:4px 6px;font-size:0.81rem;background:transparent;color:#333;}
 td input:focus,td select:focus{outline:2px solid var(--gold);border-color:var(--gold);}
@@ -282,7 +282,7 @@ calcOpps();
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }

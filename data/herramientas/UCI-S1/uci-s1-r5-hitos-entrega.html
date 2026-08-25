@@ -6,69 +6,69 @@
 <title>UCI-S1 R5 — Plan de hitos para liberar anticipos</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6fa; color: #1B2B4B; min-height: 100vh; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #FAF7F2; color: #0F1A35; min-height: 100vh; }
 
   /* HEADER */
-  .header { background: #1B2B4B; color: #fff; padding: 18px 28px 14px; display: flex; align-items: flex-start; gap: 18px; }
-  .header-badge { background: #C4A55A; color: #1B2B4B; font-weight: 800; font-size: 1.05rem; border-radius: 6px; padding: 6px 14px; white-space: nowrap; margin-top: 2px; letter-spacing: .03em; }
+  .header { background: #0F1A35; color: #fff; padding: 18px 28px 14px; display: flex; align-items: flex-start; gap: 18px; }
+  .header-badge { background: #B89D52; color: #0F1A35; font-weight: 800; font-size: 1.05rem; border-radius: 6px; padding: 6px 14px; white-space: nowrap; margin-top: 2px; letter-spacing: .03em; }
   .header-text h1 { font-size: 1.18rem; font-weight: 700; letter-spacing: .01em; line-height: 1.2; }
-  .header-text h2 { font-size: .85rem; font-weight: 400; color: #C4A55A; margin-top: 4px; letter-spacing: .02em; }
+  .header-text h2 { font-size: .85rem; font-weight: 400; color: #B89D52; margin-top: 4px; letter-spacing: .02em; }
 
   /* MAIN */
   .main { padding: 22px 24px 40px; max-width: 1400px; margin: 0 auto; }
-  .section-title { font-size: 1rem; font-weight: 700; color: #1B2B4B; border-left: 4px solid #C4A55A; padding-left: 12px; margin-bottom: 16px; margin-top: 24px; }
+  .section-title { font-size: 1rem; font-weight: 700; color: #0F1A35; border-left: 4px solid #B89D52; padding-left: 12px; margin-bottom: 16px; margin-top: 24px; }
 
   /* SUMMARY CARDS */
   .summary { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
-  .card { background: #fff; border: 1.5px solid #e0e6f0; border-radius: 10px; padding: 14px 22px; flex: 1 1 180px; min-width: 160px; }
-  .card-label { font-size: .76rem; color: #6b7a99; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
-  .card-value { font-size: 1.55rem; font-weight: 800; color: #1B2B4B; }
-  .card-value.gold { color: #C4A55A; }
-  .card-value.green { color: #2e7d32; }
-  .card-value.red { color: #c62828; }
+  .card { background: #fff; border: 1.5px solid #E5E5E5; border-radius: 10px; padding: 14px 22px; flex: 1 1 180px; min-width: 160px; }
+  .card-label { font-size: .76rem; color: #1E3060; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+  .card-value { font-size: 1.55rem; font-weight: 800; color: #0F1A35; }
+  .card-value.gold { color: #B89D52; }
+  .card-value.green { color: #2E7D4F; }
+  .card-value.red { color: #B8471F; }
 
   /* TABLE WRAPPER */
-  .table-wrap { overflow-x: auto; background: #fff; border-radius: 10px; border: 1.5px solid #e0e6f0; }
+  .table-wrap { overflow-x: auto; background: #fff; border-radius: 10px; border: 1.5px solid #E5E5E5; }
   table { width: 100%; border-collapse: collapse; font-size: .83rem; min-width: 1100px; }
-  thead tr { background: #1B2B4B; color: #fff; }
+  thead tr { background: #0F1A35; color: #fff; }
   thead th { padding: 10px 8px; font-weight: 600; text-align: left; white-space: nowrap; font-size: .78rem; letter-spacing: .03em; }
   thead th.center { text-align: center; }
-  tbody tr { border-bottom: 1px solid #e8edf5; transition: background .15s; }
-  tbody tr:hover { background: #f7f9fc; }
+  tbody tr { border-bottom: 1px solid #FAF7F2; transition: background .15s; }
+  tbody tr:hover { background: #FAF7F2; }
   tbody td { padding: 7px 6px; vertical-align: middle; }
   tbody td.center { text-align: center; }
 
   input[type="text"], input[type="number"], input[type="date"] {
-    border: 1px solid #d0d8e8; border-radius: 5px; padding: 5px 8px;
-    font-size: .82rem; color: #1B2B4B; background: #f9fafc; width: 100%;
+    border: 1px solid #E5E5E5; border-radius: 5px; padding: 5px 8px;
+    font-size: .82rem; color: #0F1A35; background: #FAF7F2; width: 100%;
     transition: border-color .2s;
   }
   input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus {
-    outline: none; border-color: #C4A55A; background: #fff;
+    outline: none; border-color: #B89D52; background: #fff;
   }
-  input[type="checkbox"] { width: 17px; height: 17px; accent-color: #C4A55A; cursor: pointer; }
+  input[type="checkbox"] { width: 17px; height: 17px; accent-color: #B89D52; cursor: pointer; }
 
-  .computed { background: #f0f4f0; border-radius: 5px; padding: 5px 8px; font-weight: 700; color: #2e7d32; font-size: .84rem; text-align: right; min-width: 80px; display: block; }
-  .pct-cell { text-align: right; font-weight: 600; color: #1B2B4B; }
+  .computed { background: #EDF5F0; border-radius: 5px; padding: 5px 8px; font-weight: 700; color: #2E7D4F; font-size: .84rem; text-align: right; min-width: 80px; display: block; }
+  .pct-cell { text-align: right; font-weight: 600; color: #0F1A35; }
 
   /* ROW ACTIONS */
-  .btn-del { background: none; border: none; cursor: pointer; color: #c62828; font-size: 1.05rem; padding: 2px 6px; border-radius: 4px; transition: background .15s; }
-  .btn-del:hover { background: #fdecea; }
+  .btn-del { background: none; border: none; cursor: pointer; color: #B8471F; font-size: 1.05rem; padding: 2px 6px; border-radius: 4px; transition: background .15s; }
+  .btn-del:hover { background: #F8EDE9; }
 
   /* BUTTONS */
   .actions { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
   .btn { padding: 9px 22px; border-radius: 7px; border: none; font-size: .88rem; font-weight: 700; cursor: pointer; transition: opacity .2s, transform .1s; letter-spacing: .02em; }
   .btn:active { transform: scale(.97); }
-  .btn-primary { background: #1B2B4B; color: #fff; }
+  .btn-primary { background: #0F1A35; color: #fff; }
   .btn-primary:hover { opacity: .88; }
-  .btn-gold { background: #C4A55A; color: #1B2B4B; }
+  .btn-gold { background: #B89D52; color: #0F1A35; }
   .btn-gold:hover { opacity: .88; }
 
   /* STATUS BADGE */
   .badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: .72rem; font-weight: 700; letter-spacing: .04em; }
-  .badge-ok { background: #e8f5e9; color: #2e7d32; }
-  .badge-pend { background: #fff3e0; color: #e65100; }
-  .badge-none { background: #f3f4f6; color: #6b7a99; }
+  .badge-ok { background: #EDF5F0; color: #2E7D4F; }
+  .badge-pend { background: #FBF4E8; color: #C69749; }
+  .badge-none { background: #FAF7F2; color: #1E3060; }
 
   @media (max-width: 700px) {
     .header { flex-direction: column; gap: 8px; padding: 14px 14px 10px; }
@@ -267,16 +267,16 @@ addRow({ cliente: 'Cliente A', anticipo: 30000, pct: 34, hito: 'Entrega final y 
     btn.id = 'mf-save-btn';
     btn.type = 'button';
     btn.textContent = '\ud83d\udcbe Guardar mi trabajo';
-    btn.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:99999;background:#C4A55A;color:#1B2B4B;border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:\"Segoe UI\",Arial,sans-serif;box-shadow:0 2px 10px rgba(27,43,75,0.25);';
+    btn.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:99999;background:#B89D52;color:#0F1A35;border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:\"Segoe UI\",Arial,sans-serif;box-shadow:0 2px 10px rgba(27,43,75,0.25);';
     btn.onclick = function(){
       try { window.parent.postMessage({ tipo: 'solicitar-guardar', itemId: itemId }, '*'); } catch(e){}
       btn.textContent = '\u2713 Guardado';
-      btn.style.background = '#059669';
+      btn.style.background = '#2E7D4F';
       btn.style.color = '#fff';
       setTimeout(function(){
         btn.textContent = '\ud83d\udcbe Guardar mi trabajo';
-        btn.style.background = '#C4A55A';
-        btn.style.color = '#1B2B4B';
+        btn.style.background = '#B89D52';
+        btn.style.color = '#0F1A35';
       }, 3000);
     };
     document.body.appendChild(btn);

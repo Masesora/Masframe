@@ -6,42 +6,42 @@
 <title>UCI-S1 R1 — Inventario sin rotación FIFO</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 13px; }
-  .header { background: #1B2B4B; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
-  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #C4A55A; font-family: Georgia, serif; }
-  .header-text h1 { font-size: 15px; font-weight: 700; color: #C4A55A; margin-bottom: 2px; }
-  .header-text h2 { font-size: 12px; color: #c8d4e8; font-weight: 400; }
-  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #FAF7F2; color: #0F1A35; font-size: 13px; }
+  .header { background: #0F1A35; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #B89D52; font-family: Georgia, serif; }
+  .header-text h1 { font-size: 15px; font-weight: 700; color: #B89D52; margin-bottom: 2px; }
+  .header-text h2 { font-size: 12px; color: #E5E5E5; font-weight: 400; }
+  .badge { background: #B89D52; color: #0F1A35; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
   .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-  .section { background: #fff; border: 1px solid #dde3ef; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
-  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #C4A55A; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+  .section { background: #fff; border: 1px solid #E5E5E5; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #B89D52; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
   table { width: 100%; border-collapse: collapse; }
-  th { background: #1B2B4B; color: #C4A55A; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 6px; text-align: left; }
-  td { border-bottom: 1px solid #eef0f5; padding: 5px 4px; vertical-align: middle; }
-  tr:hover td { background: #f5f4ff; }
-  input[type="text"], input[type="number"], input[type="date"] { border: 1px solid #ddd; border-radius: 3px; padding: 4px 6px; width: 100%; font-size: 12px; font-family: inherit; color: #1B2B4B; background: #fdfdff; }
-  input:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
-  .calc { background: #f0f4fc; font-weight: 600; text-align: right; color: #1B2B4B; padding: 5px 6px; }
-  .total-row td { background: #1B2B4B; color: #C4A55A; font-weight: 700; font-size: 12px; }
-  .total-row .calc { background: #1B2B4B; color: #fff; }
-  .add-row-btn { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 10px; }
-  .add-row-btn:hover { background: #b8923e; }
-  .decision-box { border: 2px solid #C4A55A; border-radius: 6px; padding: 16px; background: #fffdf5; }
-  .decision-box label { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px; color: #1B2B4B; }
-  .decision-box input, .decision-box textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 8px; font-family: inherit; font-size: 13px; color: #1B2B4B; }
+  th { background: #0F1A35; color: #B89D52; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 6px; text-align: left; }
+  td { border-bottom: 1px solid #FAF7F2; padding: 5px 4px; vertical-align: middle; }
+  tr:hover td { background: #FAF7F2; }
+  input[type="text"], input[type="number"], input[type="date"] { border: 1px solid #ddd; border-radius: 3px; padding: 4px 6px; width: 100%; font-size: 12px; font-family: inherit; color: #0F1A35; background: #FFFFFF; }
+  input:focus { outline: 2px solid #B89D52; border-color: #B89D52; }
+  .calc { background: #FAF7F2; font-weight: 600; text-align: right; color: #0F1A35; padding: 5px 6px; }
+  .total-row td { background: #0F1A35; color: #B89D52; font-weight: 700; font-size: 12px; }
+  .total-row .calc { background: #0F1A35; color: #fff; }
+  .add-row-btn { background: #B89D52; color: #0F1A35; border: none; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+  .add-row-btn:hover { background: #B89D52; }
+  .decision-box { border: 2px solid #B89D52; border-radius: 6px; padding: 16px; background: #FBF4E8; }
+  .decision-box label { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px; color: #0F1A35; }
+  .decision-box input, .decision-box textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 8px; font-family: inherit; font-size: 13px; color: #0F1A35; }
   .decision-box textarea { height: 70px; resize: vertical; }
   .result-summary { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
-  .result-card { background: #1B2B4B; color: #fff; border-radius: 6px; padding: 12px 18px; flex: 1; min-width: 160px; text-align: center; }
-  .result-card .label { font-size: 10px; color: #C4A55A; text-transform: uppercase; font-weight: 700; }
+  .result-card { background: #0F1A35; color: #fff; border-radius: 6px; padding: 12px 18px; flex: 1; min-width: 160px; text-align: center; }
+  .result-card .label { font-size: 10px; color: #B89D52; text-transform: uppercase; font-weight: 700; }
   .result-card .value { font-size: 22px; font-weight: 800; color: #fff; margin-top: 4px; }
-  .save-btn { background: #C4A55A; color: #1B2B4B; border: none; border-radius: 4px; padding: 8px 20px; font-size: 12px; font-weight: 800; cursor: pointer; float: right; font-family: inherit; }
-  .save-btn:hover { background: #b8923e; }
-  .save-btn.saved { background: #059669; color: #fff; }
+  .save-btn { background: #B89D52; color: #0F1A35; border: none; border-radius: 4px; padding: 8px 20px; font-size: 12px; font-weight: 800; cursor: pointer; float: right; font-family: inherit; }
+  .save-btn:hover { background: #B89D52; }
+  .save-btn.saved { background: #2E7D4F; color: #fff; }
   @media print { .add-row-btn, .save-btn { display: none; } body { background: #fff; } }
   .dias-badge { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 700; }
-  .dias-ok { background: #d4edda; color: #155724; }
-  .dias-warn { background: #fff3cd; color: #856404; }
-  .dias-alert { background: #f8d7da; color: #721c24; }
+  .dias-ok { background: #EDF5F0; color: #1F5637; }
+  .dias-warn { background: #FBF4E8; color: #7C5E24; }
+  .dias-alert { background: #F8EDE9; color: #7A2F14; }
 </style>
 </head>
 <body>
@@ -152,7 +152,7 @@ function addRow(){
     <td><input type="number" min="0" step="0.01" value="0" class="prliq" onchange="recalcRow(${rowCount})" oninput="recalcRow(${rowCount})"></td>
     <td class="calc recup">0,00 €</td>
     <td><input type="date" oninput="recalcTotals()"></td>
-    <td><button onclick="removeRow(${rowCount})" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:15px;">✕</button></td>`;
+    <td><button onclick="removeRow(${rowCount})" style="background:none;border:none;color:#B8471F;cursor:pointer;font-size:15px;">✕</button></td>`;
   tbody.appendChild(tr);
   recalc();
 }

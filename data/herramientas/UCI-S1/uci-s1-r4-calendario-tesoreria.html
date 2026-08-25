@@ -6,35 +6,35 @@
 <title>UCI-S1 R4 — Calendario de tesorería 90 días</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; font-size: 13px; }
-  .header { background: #1B2B4B; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
-  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #C4A55A; font-family: Georgia, serif; }
-  .header-text h1 { font-size: 15px; font-weight: 700; color: #C4A55A; margin-bottom: 2px; }
-  .header-text h2 { font-size: 12px; color: #c8d4e8; font-weight: 400; }
-  .badge { background: #C4A55A; color: #1B2B4B; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #FAF7F2; color: #0F1A35; font-size: 13px; }
+  .header { background: #0F1A35; color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #B89D52; font-family: Georgia, serif; }
+  .header-text h1 { font-size: 15px; font-weight: 700; color: #B89D52; margin-bottom: 2px; }
+  .header-text h2 { font-size: 12px; color: #E5E5E5; font-weight: 400; }
+  .badge { background: #B89D52; color: #0F1A35; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap; }
   .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-  .section { background: #fff; border: 1px solid #dde3ef; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
-  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #C4A55A; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+  .section { background: #fff; border: 1px solid #E5E5E5; border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #B89D52; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
   table { width: 100%; border-collapse: collapse; }
-  th { background: #1B2B4B; color: #C4A55A; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 9px 8px; text-align: left; }
-  td { border-bottom: 1px solid #eef0f5; padding: 6px 6px; vertical-align: middle; }
-  input[type="text"], input[type="number"] { border: 1px solid #ddd; border-radius: 3px; padding: 5px 7px; width: 100%; font-size: 12px; font-family: inherit; color: #1B2B4B; background: #fdfdff; }
-  input:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
+  th { background: #0F1A35; color: #B89D52; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 9px 8px; text-align: left; }
+  td { border-bottom: 1px solid #FAF7F2; padding: 6px 6px; vertical-align: middle; }
+  input[type="text"], input[type="number"] { border: 1px solid #ddd; border-radius: 3px; padding: 5px 7px; width: 100%; font-size: 12px; font-family: inherit; color: #0F1A35; background: #FFFFFF; }
+  input:focus { outline: 2px solid #B89D52; border-color: #B89D52; }
   .calc { font-weight: 700; text-align: right; padding: 6px 8px; }
   .semaforo { display: inline-block; width: 16px; height: 16px; border-radius: 50%; vertical-align: middle; margin-right: 5px; }
-  .verde { background: #28a745; }
-  .amarillo { background: #ffc107; }
-  .rojo { background: #dc3545; }
-  .month-header td { background: #243655; color: #C4A55A; font-weight: 700; font-size: 11px; padding: 7px 8px; }
+  .verde { background: #2E7D4F; }
+  .amarillo { background: #C69749; }
+  .rojo { background: #B8471F; }
+  .month-header td { background: #0F1A35; color: #B89D52; font-weight: 700; font-size: 11px; padding: 7px 8px; }
   .config-row { display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 0; }
-  .config-row label { font-size: 11px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px; color: #1B2B4B; }
-  .config-row input { width: 160px; border: 1px solid #C4A55A; border-radius: 4px; padding: 7px 10px; font-size: 14px; font-weight: 700; }
+  .config-row label { font-size: 11px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px; color: #0F1A35; }
+  .config-row input { width: 160px; border: 1px solid #B89D52; border-radius: 4px; padding: 7px 10px; font-size: 14px; font-weight: 700; }
   .result-summary { display: flex; gap: 14px; flex-wrap: wrap; }
-  .result-card { background: #1B2B4B; color: #fff; border-radius: 6px; padding: 12px 18px; flex: 1; min-width: 140px; text-align: center; }
-  .result-card .label { font-size: 10px; color: #C4A55A; text-transform: uppercase; font-weight: 700; }
+  .result-card { background: #0F1A35; color: #fff; border-radius: 6px; padding: 12px 18px; flex: 1; min-width: 140px; text-align: center; }
+  .result-card .label { font-size: 10px; color: #B89D52; text-transform: uppercase; font-weight: 700; }
   .result-card .value { font-size: 18px; font-weight: 800; margin-top: 4px; }
-  .print-btn { background: #1B2B4B; color: #C4A55A; border: none; border-radius: 4px; padding: 8px 20px; font-size: 12px; font-weight: 700; cursor: pointer; float: right; }
-  .decision-box { border: 2px solid #C4A55A; border-radius: 6px; padding: 16px; background: #fffdf5; }
+  .print-btn { background: #0F1A35; color: #B89D52; border: none; border-radius: 4px; padding: 8px 20px; font-size: 12px; font-weight: 700; cursor: pointer; float: right; }
+  .decision-box { border: 2px solid #B89D52; border-radius: 6px; padding: 16px; background: #FBF4E8; }
   textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 8px; font-family: inherit; font-size: 13px; resize: vertical; }
   @media print { .print-btn { display: none; } body { background: #fff; } }
 </style>
@@ -64,7 +64,7 @@
       </div>
       <div style="font-size:11px; color:#666; line-height:1.6; max-width:340px;">
         Introduce cobros y pagos semana a semana durante 13 semanas (~90 días).<br>
-        El semáforo refleja el saldo acumulado: <span style="color:#28a745;">●</span> positivo &nbsp;<span style="color:#ffc107;">●</span> bajo (0–10% saldo inicial) &nbsp;<span style="color:#dc3545;">●</span> negativo
+        El semáforo refleja el saldo acumulado: <span style="color:#2E7D4F;">●</span> positivo &nbsp;<span style="color:#C69749;">●</span> bajo (0–10% saldo inicial) &nbsp;<span style="color:#B8471F;">●</span> negativo
       </div>
     </div>
   </div>
@@ -108,7 +108,7 @@
       </div>
       <div class="result-card">
         <div class="label">Semanas en rojo</div>
-        <div class="value" id="s-rojas" style="color:#C4A55A;">0</div>
+        <div class="value" id="s-rojas" style="color:#B89D52;">0</div>
       </div>
     </div>
   </div>
@@ -214,7 +214,7 @@ recalcAll();
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }

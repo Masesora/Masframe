@@ -6,32 +6,32 @@
 <title>Análisis de Frecuencia de Errores — MASFRAME</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, -apple-system, sans-serif; background: #f8f7ff; color: #1B2B4B; }
-  .header { background: #1B2B4B; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
-  .header-logo { font-weight: 800; font-size: 1.4rem; color: #C4A55A; letter-spacing: 2px; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #FAF7F2; color: #0F1A35; }
+  .header { background: #0F1A35; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 20px; }
+  .header-logo { font-weight: 800; font-size: 1.4rem; color: #B89D52; letter-spacing: 2px; }
   .header-info { flex: 1; }
-  .header-symptom { font-size: 0.8rem; color: #C4A55A; text-transform: uppercase; letter-spacing: 1px; }
+  .header-symptom { font-size: 0.8rem; color: #B89D52; text-transform: uppercase; letter-spacing: 1px; }
   .header-title { font-size: 1.2rem; font-weight: 700; margin: 2px 0; }
   .header-sub { font-size: 0.85rem; opacity: 0.8; }
-  .badge { background: #C4A55A; color: #1B2B4B; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .badge { background: #B89D52; color: #0F1A35; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
   .main { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
-  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0dff5; }
-  .section-title { font-size: 0.9rem; font-weight: 700; color: #1B2B4B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #C4A55A; padding-bottom: 8px; }
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #E5E5E5; }
+  .section-title { font-size: 0.9rem; font-weight: 700; color: #0F1A35; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; border-bottom: 2px solid #B89D52; padding-bottom: 8px; }
   table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  th { background: #1B2B4B; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
-  td { padding: 8px; border-bottom: 1px solid #e0dff5; vertical-align: middle; }
-  tr:hover td { background: #f8f7ff; }
-  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #1B2B4B; }
-  input:focus, select:focus { outline: 2px solid #C4A55A; border-color: #C4A55A; }
-  .calc { background: #f0effa; color: #1B2B4B; font-weight: 600; border: none; cursor: default; }
-  .btn-add { background: #1B2B4B; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
-  .btn-add:hover { background: #C4A55A; color: #1B2B4B; }
-  .btn-print { background: #C4A55A; color: #1B2B4B; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
-  .btn-print:hover { background: #1B2B4B; color: #C4A55A; }
+  th { background: #0F1A35; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 0.8rem; }
+  td { padding: 8px; border-bottom: 1px solid #E5E5E5; vertical-align: middle; }
+  tr:hover td { background: #FAF7F2; }
+  input, select { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; background: #fff; color: #0F1A35; }
+  input:focus, select:focus { outline: 2px solid #B89D52; border-color: #B89D52; }
+  .calc { background: #FAF7F2; color: #0F1A35; font-weight: 600; border: none; cursor: default; }
+  .btn-add { background: #0F1A35; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+  .btn-add:hover { background: #B89D52; color: #0F1A35; }
+  .btn-print { background: #B89D52; color: #0F1A35; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; margin-top: 8px; }
+  .btn-print:hover { background: #0F1A35; color: #B89D52; }
   .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
-  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e0dff5; text-align: center; }
+  .metric-card { background: white; border-radius: 8px; padding: 16px; border: 1px solid #E5E5E5; text-align: center; }
   .metric-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-  .metric-value { font-size: 1.6rem; font-weight: 800; color: #1B2B4B; }
+  .metric-value { font-size: 1.6rem; font-weight: 800; color: #0F1A35; }
   .metric-unit { font-size: 0.75rem; color: #888; margin-top: 2px; }
   .ejemplo td { opacity: 0.6; font-style: italic; }
   .footer-note { text-align: center; color: #999; font-size: 0.72rem; margin-top: 32px; padding-bottom: 24px; }
@@ -226,9 +226,9 @@ function renderPareto(items) {
     const x = PAD.left + i * (chartW / items.length) + (chartW / items.length - barW) / 2;
     const bh = (it.ocurrencias / maxOcurr) * chartH;
     const by = PAD.top + chartH - bh;
-    const fill = i < 3 ? '#C4A55A' : '#1B2B4B';
+    const fill = i < 3 ? '#B89D52' : '#0F1A35';
     bars += `<rect x="${x}" y="${by}" width="${barW}" height="${bh}" fill="${fill}" rx="3"/>`;
-    bars += `<text x="${x + barW/2}" y="${by - 5}" text-anchor="middle" font-size="11" fill="#1B2B4B" font-weight="700">${it.ocurrencias}</text>`;
+    bars += `<text x="${x + barW/2}" y="${by - 5}" text-anchor="middle" font-size="11" fill="#0F1A35" font-weight="700">${it.ocurrencias}</text>`;
 
     const labelX = x + barW / 2;
     const labelY = PAD.top + chartH + 14;
@@ -242,8 +242,8 @@ function renderPareto(items) {
   });
 
   if (points.length > 1) {
-    lines = `<polyline points="${points.map(p => p.join(',')).join(' ')}" fill="none" stroke="#e53e3e" stroke-width="2"/>`;
-    dots = points.map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="#e53e3e"/>`).join('');
+    lines = `<polyline points="${points.map(p => p.join(',')).join(' ')}" fill="none" stroke="#B8471F" stroke-width="2"/>`;
+    dots = points.map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="#B8471F"/>`).join('');
   }
 
   container.innerHTML = `
@@ -252,8 +252,8 @@ function renderPareto(items) {
       <line x1="${PAD.left}" y1="${PAD.top+chartH}" x2="${PAD.left+chartW}" y2="${PAD.top+chartH}" stroke="#ccc" stroke-width="1"/>
       ${bars}${lines}${dots}${labels}
       <text x="${PAD.left-8}" y="${PAD.top+chartH/2}" text-anchor="middle" font-size="10" fill="#888" transform="rotate(-90 ${PAD.left-8} ${PAD.top+chartH/2})">Ocurrencias</text>
-      <text x="${W-10}" y="${PAD.top+chartH/2}" text-anchor="middle" font-size="10" fill="#e53e3e" transform="rotate(90 ${W-10} ${PAD.top+chartH/2})">% Acumulado</text>
-      <text x="${W/2}" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2B4B">Pareto — Errores por frecuencia</text>
+      <text x="${W-10}" y="${PAD.top+chartH/2}" text-anchor="middle" font-size="10" fill="#B8471F" transform="rotate(90 ${W-10} ${PAD.top+chartH/2})">% Acumulado</text>
+      <text x="${W/2}" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#0F1A35">Pareto — Errores por frecuencia</text>
     </svg>
     <p style="font-size:0.75rem;color:#888;text-align:center;margin-top:4px">Barras doradas = top 3 errores. Línea roja = % acumulado.</p>`;
 }
@@ -292,7 +292,7 @@ updateAll();
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }
@@ -339,7 +339,7 @@ updateAll();
         btn.className = 'mf-del-btn';
         btn.textContent = '✕';
         btn.title = 'Eliminar fila';
-        btn.style.cssText = 'background:#fee2e2;color:#dc2626;border:1px solid #fecaca;border-radius:4px;cursor:pointer;padding:2px 8px;font-size:12px;line-height:1.2;';
+        btn.style.cssText = 'background:#F8EDE9;color:#B8471F;border:1px solid #F8EDE9;border-radius:4px;cursor:pointer;padding:2px 8px;font-size:12px;line-height:1.2;';
         btn.onclick = function(){ tr.remove(); mfBestEffortRecalc(); };
         td.appendChild(btn);
         tr.appendChild(td);

@@ -6,33 +6,33 @@
 <title>NEURO-S2 R4 — Tres Prioridades Semanales</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:system-ui,sans-serif;background:#f8f7ff;color:#1B2B4B;font-size:14px}
-  .header{background:#1B2B4B;color:#fff;padding:16px 24px;display:flex;flex-direction:column;gap:6px}
+  body{font-family:system-ui,sans-serif;background:#FAF7F2;color:#0F1A35;font-size:14px}
+  .header{background:#0F1A35;color:#fff;padding:16px 24px;display:flex;flex-direction:column;gap:6px}
   .header-top{display:flex;align-items:center;gap:12px}
-  .logo{font-size:20px;font-weight:800;color:#C4A55A;letter-spacing:2px}
-  .badge{background:#C4A55A;color:#1B2B4B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+  .logo{font-size:20px;font-weight:800;color:#B89D52;letter-spacing:2px}
+  .badge{background:#B89D52;color:#0F1A35;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:1px}
   .symptom{font-size:12px;color:#aab;letter-spacing:1px}
   .tool-name{font-size:18px;font-weight:700;color:#fff;margin-top:2px}
   .container{max-width:1200px;margin:0 auto;padding:20px}
   .section{background:#fff;border-radius:8px;padding:20px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,0.07)}
-  .section-title{font-size:15px;font-weight:700;color:#1B2B4B;margin-bottom:14px;border-bottom:2px solid #C4A55A;padding-bottom:6px}
+  .section-title{font-size:15px;font-weight:700;color:#0F1A35;margin-bottom:14px;border-bottom:2px solid #B89D52;padding-bottom:6px}
   .table-wrap{overflow-x:auto}
   table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
-  th{background:#1B2B4B;color:#fff;padding:8px 8px;text-align:left;font-weight:600;white-space:nowrap}
+  th{background:#0F1A35;color:#fff;padding:8px 8px;text-align:left;font-weight:600;white-space:nowrap}
   td{padding:5px 6px;border-bottom:1px solid #eee;vertical-align:middle}
-  tr:nth-child(even) td{background:#f8f7ff}
-  td input,td select{width:100%;border:1px solid #d0d0e0;border-radius:4px;padding:4px 6px;font-size:13px;background:#fff}
+  tr:nth-child(even) td{background:#FAF7F2}
+  td input,td select{width:100%;border:1px solid #E5E5E5;border-radius:4px;padding:4px 6px;font-size:13px;background:#fff}
   .t2-table{min-width:500px}
   .btn{padding:8px 18px;border:none;border-radius:5px;cursor:pointer;font-size:13px;font-weight:600}
-  .btn-navy{background:#1B2B4B;color:#fff}
-  .btn-navy:hover{background:#243a63}
-  .result-box{background:#f0eeff;border-left:4px solid #C4A55A;border-radius:6px;padding:16px 20px;margin-top:16px}
+  .btn-navy{background:#0F1A35;color:#fff}
+  .btn-navy:hover{background:#0F1A35}
+  .result-box{background:#FAF7F2;border-left:4px solid #B89D52;border-radius:6px;padding:16px 20px;margin-top:16px}
   .result-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:14px;flex-wrap:wrap}
   .result-row:last-child{margin-bottom:0}
   .cards{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px}
-  .card{background:#fff;border-left:4px solid #C4A55A;border-radius:6px;padding:14px 18px;min-width:170px;flex:1;box-shadow:0 1px 4px rgba(0,0,0,0.07)}
+  .card{background:#fff;border-left:4px solid #B89D52;border-radius:6px;padding:14px 18px;min-width:170px;flex:1;box-shadow:0 1px 4px rgba(0,0,0,0.07)}
   .card-label{font-size:11px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-  .card-value{font-size:20px;font-weight:700;color:#1B2B4B}
+  .card-value{font-size:20px;font-weight:700;color:#0F1A35}
   .actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
   @media print{
     .btn,.actions{display:none!important}
@@ -296,7 +296,7 @@ calcAll();
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }
@@ -343,7 +343,7 @@ calcAll();
         btn.className = 'mf-del-btn';
         btn.textContent = '✕';
         btn.title = 'Eliminar fila';
-        btn.style.cssText = 'background:#fee2e2;color:#dc2626;border:1px solid #fecaca;border-radius:4px;cursor:pointer;padding:2px 8px;font-size:12px;line-height:1.2;';
+        btn.style.cssText = 'background:#F8EDE9;color:#B8471F;border:1px solid #F8EDE9;border-radius:4px;cursor:pointer;padding:2px 8px;font-size:12px;line-height:1.2;';
         btn.onclick = function(){ tr.remove(); mfBestEffortRecalc(); };
         td.appendChild(btn);
         tr.appendChild(td);

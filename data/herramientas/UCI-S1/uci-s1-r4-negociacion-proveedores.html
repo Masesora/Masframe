@@ -8,22 +8,22 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f4f6fa;
-    color: #1B2B4B;
+    background: #FAF7F2;
+    color: #0F1A35;
     min-height: 100vh;
   }
   header {
-    background: #1B2B4B;
+    background: #0F1A35;
     color: #fff;
     padding: 18px 28px 14px;
     display: flex;
     align-items: flex-end;
     gap: 18px;
-    border-bottom: 3px solid #C4A55A;
+    border-bottom: 3px solid #B89D52;
   }
   header .badge {
-    background: #C4A55A;
-    color: #1B2B4B;
+    background: #B89D52;
+    color: #0F1A35;
     font-weight: 700;
     font-size: 0.78rem;
     border-radius: 4px;
@@ -40,7 +40,7 @@
   }
   header p.sub {
     font-size: 0.82rem;
-    color: #C4A55A;
+    color: #B89D52;
     margin-top: 2px;
     font-weight: 400;
   }
@@ -52,14 +52,14 @@
   h2 {
     font-size: 1.05rem;
     font-weight: 700;
-    color: #1B2B4B;
+    color: #0F1A35;
     margin-bottom: 6px;
-    border-left: 4px solid #C4A55A;
+    border-left: 4px solid #B89D52;
     padding-left: 10px;
   }
   .section-desc {
     font-size: 0.85rem;
-    color: #4a5568;
+    color: #1E3060;
     margin-bottom: 18px;
     padding-left: 14px;
   }
@@ -78,7 +78,7 @@
     min-width: 860px;
   }
   thead tr {
-    background: #1B2B4B;
+    background: #0F1A35;
     color: #fff;
   }
   thead th {
@@ -90,15 +90,15 @@
     white-space: nowrap;
   }
   thead th.center { text-align: center; }
-  tbody tr:nth-child(even) { background: #f7f9fc; }
-  tbody tr:hover { background: #eef1f7; }
+  tbody tr:nth-child(even) { background: #FAF7F2; }
+  tbody tr:hover { background: #FAF7F2; }
   tbody td {
     padding: 6px 6px;
     vertical-align: middle;
-    border-bottom: 1px solid #e8ecf2;
+    border-bottom: 1px solid #E5E5E5;
   }
   tbody td.calc {
-    color: #1B2B4B;
+    color: #0F1A35;
     font-weight: 600;
     text-align: right;
     padding-right: 10px;
@@ -107,35 +107,35 @@
   tbody td.center { text-align: center; }
   input[type="text"], input[type="number"], input[type="date"] {
     width: 100%;
-    border: 1px solid #d0d7e3;
+    border: 1px solid #E5E5E5;
     border-radius: 4px;
     padding: 5px 7px;
     font-size: 0.83rem;
-    color: #1B2B4B;
+    color: #0F1A35;
     background: #fff;
     transition: border 0.15s;
     outline: none;
   }
   input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus {
-    border-color: #C4A55A;
+    border-color: #B89D52;
     box-shadow: 0 0 0 2px rgba(196,165,90,0.15);
   }
   select {
     width: 100%;
-    border: 1px solid #d0d7e3;
+    border: 1px solid #E5E5E5;
     border-radius: 4px;
     padding: 5px 6px;
     font-size: 0.82rem;
-    color: #1B2B4B;
+    color: #0F1A35;
     background: #fff;
     outline: none;
     cursor: pointer;
   }
-  select:focus { border-color: #C4A55A; }
-  select.acordado { color: #1a7a4a; font-weight: 600; }
-  select.en-negociacion { color: #b07d00; font-weight: 600; }
-  select.rechazado { color: #b03a2e; font-weight: 600; }
-  select.pendiente { color: #4a5568; }
+  select:focus { border-color: #B89D52; }
+  select.acordado { color: #1F5637; font-weight: 600; }
+  select.en-negociacion { color: #C69749; font-weight: 600; }
+  select.rechazado { color: #B8471F; font-weight: 600; }
+  select.pendiente { color: #1E3060; }
   .btn {
     display: inline-flex;
     align-items: center;
@@ -149,19 +149,19 @@
     transition: background 0.15s, opacity 0.15s;
   }
   .btn-primary {
-    background: #1B2B4B;
+    background: #0F1A35;
     color: #fff;
   }
-  .btn-primary:hover { background: #243d6b; }
+  .btn-primary:hover { background: #0F1A35; }
   .btn-danger {
     background: transparent;
-    color: #b03a2e;
-    border: 1px solid #e0c4c1;
+    color: #B8471F;
+    border: 1px solid #B8471F;
     padding: 4px 9px;
     font-size: 0.78rem;
     border-radius: 4px;
   }
-  .btn-danger:hover { background: #fdf0ef; }
+  .btn-danger:hover { background: #F8EDE9; }
   .actions { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
   .summary-grid {
     display: grid;
@@ -170,18 +170,18 @@
     margin-top: 4px;
   }
   .kpi {
-    background: #f7f9fc;
-    border: 1px solid #dde3ee;
+    background: #FAF7F2;
+    border: 1px solid #E5E5E5;
     border-radius: 7px;
     padding: 14px 16px 12px;
     display: flex;
     flex-direction: column;
     gap: 4px;
   }
-  .kpi.gold { border-left: 4px solid #C4A55A; }
+  .kpi.gold { border-left: 4px solid #B89D52; }
   .kpi-label {
     font-size: 0.74rem;
-    color: #5a6a85;
+    color: #1E3060;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -189,21 +189,21 @@
   .kpi-value {
     font-size: 1.45rem;
     font-weight: 700;
-    color: #1B2B4B;
+    color: #0F1A35;
     line-height: 1.1;
   }
-  .kpi-value.gold { color: #9a7a30; }
+  .kpi-value.gold { color: #B89D52; }
   .kpi-sub {
     font-size: 0.75rem;
-    color: #8a99b3;
+    color: #8B8B8B;
   }
   .info-bar {
-    background: #eef3fb;
-    border-left: 3px solid #1B2B4B;
+    background: #FAF7F2;
+    border-left: 3px solid #0F1A35;
     border-radius: 4px;
     padding: 8px 12px;
     font-size: 0.8rem;
-    color: #1B2B4B;
+    color: #0F1A35;
     margin-bottom: 16px;
   }
   .td-del { width: 38px; text-align: center; }
@@ -435,16 +435,16 @@ window.__mfSyncFormAttrs = function(){
     btn.id = 'mf-save-btn';
     btn.type = 'button';
     btn.textContent = '\ud83d\udcbe Guardar mi trabajo';
-    btn.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:99999;background:#C4A55A;color:#1B2B4B;border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:\"Segoe UI\",Arial,sans-serif;box-shadow:0 2px 10px rgba(27,43,75,0.25);';
+    btn.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:99999;background:#B89D52;color:#0F1A35;border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:\"Segoe UI\",Arial,sans-serif;box-shadow:0 2px 10px rgba(27,43,75,0.25);';
     btn.onclick = function(){
       try { window.parent.postMessage({ tipo: 'solicitar-guardar', itemId: itemId }, '*'); } catch(e){}
       btn.textContent = '\u2713 Guardado';
-      btn.style.background = '#059669';
+      btn.style.background = '#2E7D4F';
       btn.style.color = '#fff';
       setTimeout(function(){
         btn.textContent = '\ud83d\udcbe Guardar mi trabajo';
-        btn.style.background = '#C4A55A';
-        btn.style.color = '#1B2B4B';
+        btn.style.background = '#B89D52';
+        btn.style.color = '#0F1A35';
       }, 3000);
     };
     document.body.appendChild(btn);

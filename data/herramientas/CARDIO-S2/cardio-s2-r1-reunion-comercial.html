@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tracker de Reuniones Comerciales Semanales - CARDIO-S2</title>
 <style>
-:root{--navy:#1B2B4B;--gold:#C4A55A;--bg:#f8f7ff;--white:#fff;--red:#e74c3c;--yellow:#f39c12;--green:#27ae60;}
+:root{--navy:#0F1A35;--gold:#B89D52;--bg:#FAF7F2;--white:#fff;--red:#B8471F;--yellow:#C69749;--green:#2E7D4F;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:system-ui,sans-serif;background:var(--bg);color:#333;}
 .header{background:var(--navy);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
@@ -20,9 +20,9 @@ h1{font-size:1.25rem;color:var(--navy);margin-bottom:6px;}
 .trend-wrapper{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
 .trend-label{font-size:0.9rem;color:#555;font-weight:600;}
 .trend-badge{font-size:0.95rem;font-weight:700;padding:6px 18px;border-radius:20px;}
-.trend-green{background:#d4edda;color:var(--green);border:1.5px solid var(--green);}
-.trend-yellow{background:#fff3cd;color:#856404;border:1.5px solid var(--yellow);}
-.trend-red{background:#f8d7da;color:var(--red);border:1.5px solid var(--red);}
+.trend-green{background:#EDF5F0;color:var(--green);border:1.5px solid var(--green);}
+.trend-yellow{background:#FBF4E8;color:#7C5E24;border:1.5px solid var(--yellow);}
+.trend-red{background:#F8EDE9;color:var(--red);border:1.5px solid var(--red);}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px;}
 .card{background:var(--white);border-left:4px solid var(--gold);padding:16px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
 .card-label{font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
@@ -32,8 +32,8 @@ h1{font-size:1.25rem;color:var(--navy);margin-bottom:6px;}
 table{width:100%;border-collapse:collapse;background:var(--white);font-size:0.84rem;}
 thead tr{background:var(--navy);color:#fff;}
 thead th{padding:10px 8px;text-align:left;font-weight:600;white-space:nowrap;font-size:0.78rem;}
-tbody tr:nth-child(even){background:#f4f3fb;}
-tbody tr:hover{background:#ede9fb;}
+tbody tr:nth-child(even){background:#FAF7F2;}
+tbody tr:hover{background:#FAF7F2;}
 td{padding:6px;vertical-align:middle;}
 td input{width:100%;border:1px solid #ddd;border-radius:4px;padding:5px 6px;font-size:0.82rem;background:transparent;color:#333;}
 td input:focus{outline:2px solid var(--gold);border-color:var(--gold);}
@@ -183,7 +183,7 @@ tb.addEventListener("input",calc);calc();
     if (!document.body || document.getElementById('mf-guardar')) return;
     var b=document.createElement('button');
     b.id='mf-guardar'; b.type='button'; b.textContent='\uD83D\uDCBE Guardar mi trabajo';
-    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#1B2B4B;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
+    b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:99999;background:#0F1A35;color:#fff;border:none;border-radius:10px;padding:12px 18px;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer';
     b.onclick=function(){ snapshot(); try{window.parent.postMessage({tipo:"solicitar-guardar", itemId:itemId},"*");}catch(e){} b.textContent='\u2713 Guardado'; setTimeout(function(){b.textContent='\uD83D\uDCBE Guardar mi trabajo';},2000); };
     document.body.appendChild(b);
   }
