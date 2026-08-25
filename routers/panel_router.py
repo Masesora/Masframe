@@ -10,6 +10,7 @@ from routers.auth_deps import (
     require_internal,
     check_owns_or_internal,
 )
+from routers.auth_service import REGEX_ROL_CC, REGEX_ROL_ACI, normalizar_rol
 
 router = APIRouter(tags=["panel"])
 
@@ -44,14 +45,22 @@ async def get_ese_list(
     return clientes
 
 
+def _con_rol_canonico(docs: list) -> list:
+    """El panel recibe siempre el rol canonico, sea cual sea la grafia guardada."""
+    for d in docs:
+        if "role" in d:
+            d["role"] = normalizar_rol(d["role"])
+    return docs
+
+
 @router.get("/acis")
 async def get_acis(_user: dict = Depends(require_cc_or_admin)):
     col = _get_col("internal_users")
     cursor = col.find(
-        {"role": "aci"},
+        {"role": {"$regex": REGEX_ROL_ACI, "$options": "i"}},
         {"_id": 0, "password": 0, "password_hash": 0, "hashed_password": 0}
     )
-    return await cursor.to_list(length=100)
+    return _con_rol_canonico(await cursor.to_list(length=100))
 
 
 @router.get("/internal-users-debug")
@@ -65,11 +74,13 @@ async def debug_internal_users(_user: dict = Depends(require_admin)):
 @router.get("/consultores")
 async def get_consultores(_user: dict = Depends(require_cc_or_admin)):
     col = _get_col("internal_users")
+    # Un CC dado de alta a mano puede tener el rol escrito de otra forma:
+    # se busca por patron, no por lista cerrada de grafias
     cursor = col.find(
-        {"role": {"$in": ["cc", "CC", "consultor", "Consultor"]}},
+        {"role": {"$regex": REGEX_ROL_CC, "$options": "i"}},
         {"_id": 0, "password": 0, "password_hash": 0, "hashed_password": 0}
     )
-    return await cursor.to_list(length=100)
+    return _con_rol_canonico(await cursor.to_list(length=100))
 
 
 @router.post("/consultores")

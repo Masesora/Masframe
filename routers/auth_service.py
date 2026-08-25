@@ -16,6 +16,46 @@ ALGORITHM  = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 8  # 8 horas
 
 
+# ============================================================
+# ROLES — una sola definicion para todo el sistema
+# ============================================================
+
+# Grafias que se han usado a mano en internal_users y que significan lo mismo.
+# La forma canonica (la de la derecha) es la unica que comparan los guards.
+_ALIAS_ROLES = {
+    "admin":              "admin",
+    "administrador":      "admin",
+    "administradora":     "admin",
+    "cc":                 "cc",
+    "consultor":          "cc",
+    "consultora":         "cc",
+    "consultor clinico":  "cc",
+    "consultor clínico":  "cc",
+    "consultora clinica": "cc",
+    "consultora clínica": "cc",
+    "aci":                "aci",
+    "client":             "client",
+    "cliente":            "client",
+}
+
+# Para las consultas a Mongo: cualquier grafia de CC guardada en la coleccion.
+# Se usa con $regex + opcion "i", asi que cubre mayusculas y minusculas.
+REGEX_ROL_CC    = r"^\s*(cc|consultor[ao]?( cl[ií]nic[ao])?)\s*$"
+REGEX_ROL_ACI   = r"^\s*aci\s*$"
+
+
+def normalizar_rol(role) -> str:
+    """
+    Devuelve el rol canonico: admin | cc | aci | client.
+    Un rol desconocido se devuelve en minusculas y sin espacios, nunca se inventa
+    un rol valido: si no esta en la tabla, ningun guard lo dejara pasar.
+    """
+    if not isinstance(role, str):
+        return ""
+    limpio = role.strip().lower()
+    return _ALIAS_ROLES.get(limpio, limpio)
+
+
 def create_jwt_token(data: dict) -> str:
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -103,7 +143,9 @@ class AuthService:
                 detail="Usuario desactivado. Contacta con el administrador."
             )
 
-        role        = user.get("role", "aci")
+        # El rol viaja canonico en el token y en la respuesta: el resto del sistema
+        # (guards, panel, frontend) no tiene que conocer las grafias antiguas.
+        role        = normalizar_rol(user.get("role", "aci")) or "aci"
         permissions = user.get("permissions", [])
         nombre      = user.get("nombre", user.get("name", ""))
 
