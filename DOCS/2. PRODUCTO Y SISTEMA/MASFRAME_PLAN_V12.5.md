@@ -1,14 +1,132 @@
 # MASFRAME — PLAN DE PRODUCTO v12.5
-*Documento maestro · Versión 12.5 · Julio 2026*
-*Última actualización: sesión 2-3 ago 2026 — consolidación de las 197 herramientas en componentes nativos (§XX), 180/180 migradas*
+*Documento maestro y único · Versión 12.5 · consolidado el 26 agosto 2026*
+*Última actualización: pasada de consolidación — reglas y lecciones destiladas al frente, §VII remedido contra el código, §XVI realineado con lo que de verdad queda abierto*
 
+> **Cómo se lee este documento.** El bloque de arriba, **ESTADO Y REGLAS VIGENTES**, es normativo: reglas, invariantes, método y puertas de salida. Las secciones §I–§XVI describen el producto y el sistema. Las secciones §XVII–§LVIII son el registro cronológico de sesiones: se consultan para saber **por qué** se decidió algo, no para saber qué manda hoy.
+>
+> Si una sección de sesión contradice el bloque normativo, manda el bloque normativo.
 ---
 
-> Este documento extiende el Plan V12 con dos incorporaciones de esta sesión:
-> **§XIV — Catálogo de Herramientas Operativas** (197 archivos HTML para sesiones clínicas)
-> **§XV — Base de Conocimiento del Proyecto** (contenido íntegro del sistema de memoria Claude+Maite)
->
-> Todo el contenido anterior del Plan V12 permanece vigente. Este archivo es la fuente de verdad única.
+# ESTADO Y REGLAS VIGENTES — LEER ANTES DE TOCAR NADA
+
+*Bloque normativo. Destila las sesiones §XVII–§LVIII en lo que sigue mandando. Si algo de una sección de sesión contradice este bloque, manda este bloque.*
+
+### A. Estado del sistema — 26 ago 2026
+
+| Frente | Estado |
+|---|---|
+| **Catálogo clínico** | 30 síntomas declarados. Auditoría símbolo a símbolo **cerrada 30/30** (§XXXVII–§XLVI). Pasada de criterio con el método nuevo (§LVII.C): **solo NEURO-S1 cerrado** |
+| **Protocolo C0–C6** | Implementado. Linter de contratos `data/validar_sintomas.py` + diagnóstico mecánico `data/auditar_sintoma.py` |
+| **Herramientas operativas** | 197 generadas · **180/180 migradas a componentes nativos** · integración en plataforma **COMPLETADA** (§XX, §XXI) |
+| **Auditor clínico** | v4 (`gen_auditor.py`) operativo |
+| **Plataforma** | En producción y cobrando por Stripe. Volumetría en §VII |
+| **Skill validator** | v6 instalada — unidad de trabajo = especialidad, con modo estratégico |
+
+### B. Invariantes de código — NUNCA tocar
+
+| # | Invariante | Consecuencia de romperlo |
+|---|-----------|-------------------------|
+| **I-1** | `capa_2_options` siempre 6 ítems. 1-3 diagnóstico, 4-6 prescriptivo → C4 | C4 llega vacío o con datos erróneos |
+| **I-2** | C1→C2 indestructible. `parseChecklistItems` nunca se elimina | El cliente elige en C1 y C2 no lo refleja |
+| **I-3** | `rawDone.c6 = false` siempre | Alta prematura sin cumplir KPI |
+
+Única excepción viva a I-1: `CAUSAS_REDUCIDAS = {"UCI-S2": 2}` en el linter (§L). Reducir causas obliga además a reescribir `capa_3_plan` — el motor empareja opción `i` → rama `r{i+1}` **por posición**.
+
+**Ley MASFRAME sobre el KPI, no negociable:** se mide en C0 y se revisa en C6 con los datos recogidos en C5. **C6 no puede tener input manual del KPI real.**
+
+**C1–C2 consonancia:** cada opción de C1 mapea a exactamente un tipo de diagnóstico de C2, por índice. Seis opciones en C1, seis cálculos distintos en C2.
+
+**C0 en síntomas multi-servicio:** se mide a nivel de portfolio (totales mensuales), nunca por unidad individual.
+
+### C. Las 16 reglas
+
+**Método**
+
+1. **La cadena clínica primero.** Objetivo → KPI → C1..C6 y la frase de cierre, antes de mirar un solo bug.
+2. **Las reglas del PLAN son puerta previa.** Comprobar invariantes *antes* de proponer y, si algo los rompe, decirlo en el primer párrafo.
+3. **`symptoms.json` es el libro maestro.** Los campos son sagrados: no se reinterpretan ni se les inventa significado.
+4. **No recortar producto para que cuadre.** Si la propuesta quita algo o cambia lo que se mide, buscar antes la tercera opción.
+
+**KPI y euros**
+
+5. El KPI mide **el resultado del tratamiento**, no una consecuencia que llega años después.
+6. **Nunca pedirle al cliente una meta que se inventa.** Medir contra una referencia que no controla: el año anterior, el IPC, el total del periodo o su punto de partida.
+7. **Lo que suma al KPI es siempre un incremento sobre InputA, y nunca se teclea:** sale de un antes y un después. Campo abierto en euros = promesa; una resta = decisión.
+8. **La decisión lleva instrumento:** verbo + objeto + número.
+9. **Cada rama en su moneda.** La que no comparte moneda con el KPI no lo alimenta, y eso está bien.
+10. **El euro va en las prescriptivas (4-6), no en las diagnósticas (1-3)** — patrón CLI-S1.
+
+**Tarjetas**
+
+11. Una sola columna que suma por sección, con su `unidad`. **El TOTAL significa una cosa.**
+12. **Veredicto en cada sección.** En `fila_unica`, el resultado es el titular, no el pie.
+13. **Cero información duplicada.** Si un dato sale de otro con una suma, sobra.
+14. Ninguna opción pre-marcada · la repetición se gana (`filas_iniciales: 1`) · precargar de C0 en vez de repreguntar · una sola columna accionable por sección.
+
+**Copy**
+
+15. **El registro Manoli-Paqui-Felipe:** que lo entiendan los tres y aun así suene profesional. Prueba: *¿lo diría Manoli delante de su gestor sin sentirse ridícula?* Ni jerga por arriba (OKR, funnel, "Q") ni coloquial por abajo ("me pongo").
+16. **Ni una falta de respeto.** El dueño no es el problema: el problema es que nadie le ha dado nunca el sistema. Nada que presuponga dejadez, desidia o falta de foco (§LVIII).
+
+### D. Método de trabajo — la especialidad es la unidad
+
+| Fase | Qué | Cómo |
+|---|---|---|
+| **1** | Cadena clínica de los 3 síntomas | Juicio. No se automatiza. Media página cada uno |
+| **2** | Diagnóstico mecánico | `python data/auditar_sintoma.py <ESPECIALIDAD>` + linter de contratos |
+| **3** | **UNA sola ronda de decisiones** | Todas las preguntas de criterio de los 3 juntas, cada una con recomendación, alternativa y ejemplo con nombre y números |
+| **4** | Aplicar y verificar | Un commit por síntoma, con las puertas de salida |
+
+**Prohibido volver a preguntar hasta haber aplicado lo confirmado.** Si aparece una duda a mitad, se anota y se sigue.
+
+**Antes de tocar código en un síntoma:** leer su bloque completo en `symptoms.json`, verificar que `capa_2_decision` tiene el string exacto que espera `getFamily()`, proponer la arquitectura C1→C2→C3→C4 con un ejemplo concreto (persona real, empresa real, decisión real), esperar confirmación y codificar una sola vez.
+
+**Estándar de respuesta:** la fix obvia más 2-3 mejoras que el dato disponible ya permite · si hay datos en C2, C3 no llega vacío · ordenar por impacto económico, no por orden de entrada · marcar criticidad automáticamente · generar el texto contextual en vez de dejar el campo vacío.
+
+**Señal PARA:** si Maite dice «PARA», parar del todo. No añadir un último fix. Proponer en texto, codificar después.
+
+**En branding:** actuar como diseñador con criterio propio, no como ejecutor. Si algo empeora el diseño, decirlo antes de implementarlo.
+
+### E. Puertas de salida obligatorias
+
+`auditar_sintoma.py` sin bloqueantes · `validar_sintomas.py` sin errores nuevos · `tsc --noEmit` limpio · round-trip idéntico del JSON · **una simulación numérica de C0→C6 que demuestre que el alta se alcanza con trabajo real** · sección en el plan.
+
+### F. Mecanismos de motor ya construidos — no rehacerlos
+
+| Mecanismo | Qué hace | Origen |
+|---|---|---|
+| `vista:"tarjeta"` | Renderer de tarjeta para C3, opt-in por sección | §XLII |
+| `tipo:"opciones"` | Restringe la columna 0 a valores cerrados | §XLV |
+| `no_sumar` | Columna numérica que no entra en el TOTAL | §XLVII |
+| `interpretacion` | Banner rojo/verde por umbral en secciones nativa | §XLIX |
+| `contramedidas` / `mostrar_si` | Embudo de causa raíz con contramedida por causa | §LI |
+| `carta_reclamacion` | Carta de cobro en PDF + enlace de WhatsApp | §L |
+| `genera_anuncio` | Texto de venta por canal | §LI |
+| `fila_unica` + `estilo:"desplegable"` | Una sola pregunta, sin repetirla por fila | §LII |
+| `confirmaciones` | Pregunta sí/no en C4 sobre la decisión tomada | §LII |
+| `escalar_a` | Puente de datos entre ramas por `clave` compartida | §LII |
+| `origen_margen` | C3 derivada en vivo de los rojos y amarillos de C2 | §LIV |
+| `precarga_desde_c0` | Hereda el dato de C0 en vez de repreguntarlo | §LIII |
+
+### G. Lecciones de infraestructura — no repetir
+
+- **Un `tsc` que no falla nunca no es buena señal, es que no está mirando.** El `include` apuntaba a `src/src`, inexistente: no comprobaba ni un fichero y tapaba 9 identificadores que no existían en ejecución (§LIV).
+- **Lo que solo vive en el toggle de un dashboard se pierde.** El rewrite SPA de Render se perdió una vez; ahora está versionado en `render.yaml` (§LI).
+- **Nunca operar sobre un clon anidado.** `masesora_backend` llegó a ser un repositorio dentro de otro clon del mismo remoto, y un `reset --hard` sobre el duplicado borró 340 ficheros del bueno (§LIII).
+- **Un fallo de carga no se pinta como expediente vacío.** Además disparaba el autoguardado: con token válido y GET caído habría sobrescrito el expediente bueno (§LIV).
+- **El token dura 8 horas y el 401 hay que manejarlo.** Sin eso, el patrón parece un borrado de datos (§LIV).
+- **Una regla que solo vive en un documento no protege nada.** Toda regla nueva se codifica en `auditar_sintoma.py` o en la skill. Y cuando aparezca una comprobación que el script no hace, **se le añade al script**: se cierra la clase, no el caso (§LVII.B, §LVIII).
+
+### H. Dónde está cada cosa
+
+| Busco | Voy a |
+|---|---|
+| Qué es MASFRAME y para quién | §I, §II, §III |
+| Reglas, invariantes y método | **este bloque** |
+| Stack, volumetría y endpoints | §VII |
+| Marca, copy y entregables | §IX |
+| Lo que falta por hacer | §XVI |
+| Por qué se tomó una decisión concreta | La sección de sesión correspondiente, §XVII–§LVIII |
 
 ---
 
@@ -80,22 +198,13 @@ C6  Seguimiento — KPI Inicio → Actual → Objetivo.
     LEY: "EL KPI SE MIDE EN C0 Y SE REVISA EN C6 CON LOS DATOS DE C5"
 ```
 
-### Invariantes de Código — NUNCA Tocar
+### Invariantes de Código
 
-| # | Invariante | Consecuencia de romperlo |
-|---|-----------|-------------------------|
-| I-1 | `capa_2_options` siempre 6 ítems. 1-3 = diagnóstico. 4-6 = prescriptivo → C4. | C4 llega vacío o con datos erróneos |
-| I-2 | C1→C2 conexión indestructible. `parseChecklistItems` nunca se elimina. | El cliente selecciona en C1 pero C2 no refleja sus respuestas |
-| I-3 | `rawDone.c6 = false` siempre | Alta prematura sin cumplir KPI |
+Los tres invariantes (I-1, I-2, I-3), la ley del KPI, la consonancia C1–C2 y la regla de C0 multi-servicio viven en **ESTADO Y REGLAS VIGENTES §B**, al principio del documento. Esa es la copia normativa; aquí no se duplica para que no puedan divergir.
 
-### Typos en symptoms.json (verificar antes de tratar esos síntomas)
+### Typos en symptoms.json — CORREGIDOS
 
-| Síntoma | Valor incorrecto | Valor correcto |
-|---------|-----------------|----------------|
-| PSI-S3 Anestesia de Equipo | "Regla 5 25" | "Regla 5/25" |
-| TER-S1 Efecto NO-WOW | "Regla 5 25" | "Regla 5/25" |
-| RES-S3 Inflamación Interna | "Arbol de decisiones" | "Árbol de Decisiones" |
-| OPE-S2 Dependencia Crítica | "Arbol de decisiones" | "Árbol de Decisiones" |
+Los cuatro typos que bloqueaban PSI-S3, TER-S1, RES-S3 y OPE-S2 ("Regla 5 25" y "Arbol de decisiones") están corregidos. Verificado el 26 ago 2026: cero ocurrencias en `data/symptoms.json`. **No volver a abrir esta comprobación.**
 
 ### Discrepancias JSON vs Plan
 
@@ -231,12 +340,31 @@ Ruta: `src/data/protocolos_catalogo.json`
 
 ## VII. STACK TÉCNICO
 
-**Backend:** FastAPI + Python · MongoDB · Render · `C:\Masframe\masesora_backend\`
-**Frontend:** React TSX · `C:\MasFront\Masesora_frontend\`
-**Repo backend:** Masesora/Masframe (GitHub)
-**Síntomas:** `masesora_backend/data/symptoms.json` — fuente de verdad única
+*Volumetría medida el 26 ago 2026 sobre el código en producción.*
+
+| Pieza | Tecnología | Volumen |
+|---|---|---|
+| Backend clínico | FastAPI sobre Python 3.10 | 86 módulos · ~16.400 líneas · **89 endpoints REST en 13 módulos de rutas** |
+| Frontend clínico | React + TypeScript sobre Vite | ~24.000 líneas · `TreatmentPage.tsx` concentra 11.628, casi la mitad |
+| Base de datos | MongoDB con driver asíncrono Motor | **13 colecciones** |
+| Infraestructura | Render, **región Frankfurt (UE)**, plan starter | Monitorización, logs y alertas |
+| Cobro | Stripe | Autoservicio de extremo a extremo |
+| Correo | Resend | Informe ESE y avisos transaccionales |
+| Sincronización ESE | Google Sheets API | `onboarding/ese_sync_service.py` |
+| Documentos | Generación de PDF en servidor (fpdf) | Contrato, factura y certificado de alta |
+
+**Rutas:** backend `C:\Masframe\masesora_backend\` · frontend `C:\MasFront\Masesora_frontend\` · repo backend `Masesora/Masframe` (GitHub).
+
+**Fuente de verdad de los síntomas:** `masesora_backend/data/symptoms.json`, y **solo esa**. La copia huérfana de la raíz que causaba despliegues fantasma está eliminada (verificado 26 ago 2026). `symptoms_remoto.json` y `symptoms_FIXED.json` son ficheros de comparación puntual, no fuentes.
+
+**Seguridad:** testigo JWT firmado HS256 con caducidad de 8 horas · credenciales internas con bcrypt · CORS con lista blanca de orígenes · documentos generados en servidor, nunca en el navegador.
+
+**Módulos de rutas** — cubren el recorrido completo del cliente: `auth`, `ese`, `treatment`, `contracts`, `documentos`, `payments`, `discharge`, `panel`, `mensajes`, `ciclos`, `beta_codes`, `leads`, `symptoms`.
+
+**Colecciones MongoDB:** `clients`, `triaje`, `client_symptom_states`, `contracts`, `certificados`, `documentos`, `mensajes`, `ese_registros`, `beta_codes`, `internal_users`, `diagnostic_leads`, `ese_dropoff`, `symptom_master`.
 
 **Endpoints críticos:**
+
 - `POST /ese/submit` — ESE Scanner
 - `POST /auth/login/cliente` — autenticación
 - `GET /treatment/{codigo}/{symptomId}` — datos de sesión
@@ -245,11 +373,14 @@ Ruta: `src/data/protocolos_catalogo.json`
 - `GET /discharge` — página de alta
 
 **Documentos oficiales:**
+
 | Documento | Generador |
 |-----------|-----------|
 | Contrato Maestro | `contracts/contrato_template.py` — 18 cláusulas, firma canvas |
 | Factura | `contracts/factura_template.py` — FAC-{año}-{n:04d}, IVA 21% |
 | Certificado de Alta | DischargePage → colección `certificados` |
+
+**Sin cobertura de tests automatizados**, ni en backend ni en frontend. La verificación es manual más las puertas de salida del bloque de reglas. Primera partida del plan de calidad: cubrir autenticación, cobro, cierre de capa y emisión de alta.
 
 ---
 
@@ -280,6 +411,25 @@ En copy orientado al cliente final (dossiers, landings, cartelería de Tu Soluci
 
 **Por qué:** Hay reticencia real entre micropymes y autónomos hacia la IA. La marca como sujeto activo genera más confianza.
 
+### Manual de identidad — la fuente y sus dos trampas
+
+*Hallazgo del 26 ago 2026, maquetando el Plan de Empresa.*
+
+La fuente normativa es `BRANDING/01_BRANDING_BASE/manual_identidad/manual-identidad-masesora.md` (v2.0, 28 abr 2026). Paleta primaria: **Azul Marino `#0F1A35`** y **Dorado `#B89D52`**. Secundarios de uso corriente: Gris Texto `#4A4A4A`, Gris Suave `#8B8B8B`, Línea `#E5E5E5`, Cream `#FAF7F2`. Tipografía: **Montserrat, sin excepciones**, con H1/H2 en versalitas y H3 en SemiBold caja mixta.
+
+Dos trampas verificadas, y las dos muerden:
+
+1. **El propio manual se contradice en el dorado.** El `.md` prohíbe expresamente usar dorados distintos del `#B89D52`, y el `masesora-brand-manual.html` de la misma carpeta usa `#C8A84B` veinte veces (junto a `#9A7E3A` y `#E8C96A`, que parecen el degradado metálico del PMS 872 C). **Manda el `.md`.** Pendiente: unificar los dos ficheros antes de que un impresor lea el que no toca.
+2. **Los SVG oficiales del logo no llevan el texto trazado.** `masesora-logo-light.svg` y `masesora-wordmark-transparent.svg` son `<text>` dependiendo de un `@import` de Google Fonts: en cualquier equipo o RIP sin Montserrat, el logo sale con otra tipografía. Pendiente: generar versiones con el texto convertido a curvas para imprenta.
+
+Recordatorio del manual que se incumplía en documentos previos: el **wordmark y el icono nunca se combinan**, y el tagline del wordmark es **DINAMISMO EMPRESARIAL** (no "La Clínica de Empresas", que es la marca del servicio).
+
+### Plan de Empresa 2026–2029 — entregable vivo
+
+`BRANDING/08_COMERCIAL/dossier/PLAN_DE_EMPRESA_MASESORA_FINAL3.docx` (+ PDF), commit `c1f70fd`.
+
+27 páginas, conforme al manual. Su §7 documenta la volumetría técnica que también está en §VII de este plan: **si una cambia, la otra también.** Tres decisiones de negocio quedaron abiertas y declaradas dentro del propio documento: el producto de 500 € que sostiene el Año 1 y no existe en el catálogo de precios, el desglose de costes fijos de los Años 2 y 3, y la ausencia de SaaS en la proyección.
+
 ### Dossier Tu Solución — Arte Final Aprobado
 
 `BRANDING/05_IMPRENTA/dossier/dossier_tusolucion.html`
@@ -294,60 +444,23 @@ URL QR a verificar antes de imprimir: `tusolucion.masesora.com`
 
 ## X. PROTOCOLOS DE TRABAJO CLAUDE+MAITE
 
-### Antes de tocar código en cualquier síntoma
+Consolidados en **ESTADO Y REGLAS VIGENTES §C y §D**, al principio del documento: las 16 reglas, el método por especialidad, el protocolo previo a tocar código, el estándar de respuesta, la señal PARA y la conducta en branding.
 
-1. Leer el bloque completo en `symptoms.json`
-2. Leer §II (capas) + §IV (roles) del plan
-3. Verificar que `capa_2_decision` tiene el string EXACTO que `getFamily()` espera
-4. Si `c2_herramienta = "retencion"` → Cluster A (solo UCI-S2)
-5. Cualquier otro → Cluster B, CERO código nuevo, solo BD
-6. Proponer arquitectura C1→C2→C3→C4 con ejemplo concreto
-7. Esperar confirmación → codificar UNA sola vez
-
-**Por qué:** La jornada del 18-19 junio 2026 se perdió en 6+ commits de parches por no haber entendido el protocolo antes de codificar.
-
-### Estándar de respuesta — Nivel Consultor Top
-
-Antes de proponer una solución, pensar como consultor de primer nivel.
-
-- No proponer solo "la fix obvia" — proponer la fix + 2-3 mejoras de alto impacto
-- Si hay datos en C2, C3 no puede llegar vacío — pre-rellenar todo lo disponible
-- Ordenar siempre por impacto económico, no por orden de entrada
-- Marcar criticidad automáticamente cuando los datos lo dicen
-- Generar texto contextual desde datos existentes, no dejar campos vacíos
-
-### En hilos de branding
-
-Actuar como diseñador gráfico experto con criterio propio — no como ejecutor de cambios a ciegas. Usar vocabulario de diseño real. Si algo empeora el diseño, decirlo antes de implementarlo.
-
-### Señal PARA
-
-Si Maite dice "PARA": parar completamente. No añadir un último fix. Proponer en texto primero, codificar después.
-
----
+**Por qué existe el protocolo:** la jornada del 18-19 junio 2026 se perdió en más de seis commits de parches por codificar antes de entender la arquitectura del síntoma.
 
 ## XI. UCI-S3 — LECCIONES ARQUITECTÓNICAS
 
 *(Aplicables a cualquier síntoma financiero con C2 multi-item)*
 
-**Ley MASFRAME sobre KPI — no negociable:**
-> "El KPI SE MIDE EN C0 Y SE REVISA EN C6 CON LOS DATOS RECOGIDOS EN C5."
-> C6 NO puede tener input manual del KPI real. Es ILEGAL en MASESORA.
+Las tres leyes que salieron de aquí — **la ley del KPI** (se mide en C0 y se revisa en C6 con datos de C5; C6 nunca lleva input manual del KPI real), **el C0 a nivel portfolio** en síntomas multi-servicio, y **la consonancia C1–C2 obligatoria** — son normativas y viven en **ESTADO Y REGLAS VIGENTES §B**.
 
-**Regla de diseño C0 para síntomas multi-servicio:**
-Cuando el C2 trabaja con múltiples servicios/productos, C0 debe medir a nivel PORTFOLIO (totales mensuales), no a nivel de unidad individual.
-
-```
 Patrón correcto para síntomas financieros multi-item:
-  InputA = total mensual de ingresos/facturación
-  InputB = total mensual de costes
-  totalRecuperado de C5 → reducción de costes: max(0, InputB - recuperado)
+
 ```
-
-**C1-C2 consonancia — obligatorio:**
-Cada C1_option debe mapear a exactamente UN tipo de diagnóstico C2 (por índice 0-5). Si C1 tiene 6 opciones, C2 debe tener exactamente 6 tipos de cálculo distintos.
-
----
+InputA = total mensual de ingresos/facturación
+InputB = total mensual de costes
+totalRecuperado de C5 → reducción de costes: max(0, InputB - recuperado)
+```
 
 ## XII. ESTADO TÉCNICO — RESPONSIVE Y PÁGINAS TSX
 
@@ -443,7 +556,7 @@ Donde `r{n}` es la referencia al ítem de C2 (1-6 por síntoma).
 | CIR | Auditoría de marca, análisis diferencial, planes de comunicación |
 | UNI | VSM (Value Stream Maps), matrices de calidad, stacks de proceso |
 
-### Uso previsto — Integración Plataforma (Fase Futura) — ✅ COMPLETADA, ver §XX
+### Uso previsto — Integración en plataforma: COMPLETADA (ver §XX)
 
 Esta sección describe el diseño original (descarga manual del HTML, fase futura de integración vía iframe). **Superseded**: en sesión 2-3 ago 2026 se consolidaron las 180 opciones (10 especialidades × 18) en componentes nativos dentro de `TreatmentPage.tsx` — sin iframe, con autoguardado campo a campo. Los 197 archivos HTML de esta sección quedan como referencia histórica de contenido, no como mecanismo de entrega. Ver §XX para la arquitectura final y el detalle por especialidad.
 
@@ -457,34 +570,11 @@ Esta sección describe el diseño original (descarga manual del HTML, fase futur
 
 ---
 
-### XV.A — Protocolo de Sesión Claude+Maite
+### XV.A / XV.B — Protocolo de sesión y estándar de respuesta
 
-**Origen:** Sesión 18-19 junio 2026 (jornada perdida en parches)
+**Origen:** sesión 18-19 junio 2026 (la jornada perdida en parches) y 24 junio 2026 (discusión de C3 auto-import).
 
-Antes de tocar código en cualquier síntoma: leer el bloque completo en `symptoms.json`, leer el plan (§II capas), proponer la arquitectura C1→C2→C3→C4 con ejemplo concreto al estilo "la Paqui" (persona real, empresa real, decisión real), esperar confirmación, codificar UNA sola vez.
-
-**Reglas:**
-1. `capa_2_options` es el eje C2→C3→C4. Siempre 6 ítems. NUNCA reducir sin entender el impacto aguas abajo.
-2. Consecutividad C1→C2 es no negociable. Las selecciones de C1 SIEMPRE crean estructura en C2.
-3. Si Maite dice "PARA": parar completamente. Proponer en texto, codificar después.
-4. Señal de que vas bien: puedes describir la arquitectura del síntoma con tus propias palabras. Si no puedes, preguntar antes de codificar.
-
----
-
-### XV.B — Estándar de Respuesta — Nivel Consultor Top
-
-**Origen:** 24 junio 2026, discusión C3 auto-import
-
-El listón es: priorización por impacto, pre-relleno de datos ya disponibles, marcado automático de criticidad, textos de logro generados, placeholders inteligentes por categoría.
-
-**Reglas:**
-- No proponer solo "la fix obvia" — la fix + 2-3 mejoras de alto impacto que el dato disponible permite
-- Si hay datos en C2, C3 no puede llegar vacío — pre-rellenar todo lo que puede
-- Ordenar siempre por impacto económico, no por orden de entrada
-- Marcar criticidad automáticamente cuando los datos lo dicen
-- Generar texto contextual (logro_esperado, notas) a partir de datos existentes
-
----
+Ambos están consolidados en **ESTADO Y REGLAS VIGENTES §C y §D**. Aquí no se duplican: eran la fuente de la divergencia entre §X y §XV.
 
 ### XV.C — Producto Síntoma Suelto 99€
 
@@ -577,24 +667,39 @@ Fase futura: herramientas embebidas en plataforma. Ruta base: `data/herramientas
 
 ## XVI. PRÓXIMAS FASES
 
-### Pendiente — Alta Prioridad
+*Realineado el 26 ago 2026 contra el estado real del código. Lo cerrado está abajo con su verificación, para que no se reabra.*
+
+### Alta prioridad
 
 | Tarea | Descripción |
 |-------|-------------|
-| C6 específico por síntoma | Todos los síntomas tienen `capa_6_seguimiento = "OKR tracking"` genérico. Necesita métricas específicas por síntoma. |
-| BI Dashboard | Backend `/bi-stats` + campo `origen` (7 valores) + `plan_historia` + frontend SectionDashboard |
-| Typos symptoms.json | Corregir los 4 typos documentados en §II antes de tratar esos síntomas |
-| ~~Auditoría símbolo a símbolo — resto del catálogo~~ | **COMPLETA (§XLVI.A, 18 ago 2026).** `masframe-ux-validator` en vivo, las 10 especialidades / 30 síntomas certificados end-to-end. ~130 columnas Decisión + `vista:"tarjeta"` añadidas, 5 bugs estructurales reales encontrados y cerrados, todas las familias de C2 verificadas en vivo al menos una vez. |
-| ~~C3: tablas tipo Excel sin guía — bug de UX real, no cosmético~~ | **RESUELTO.** Renderer `vista:"tarjeta"` construido y activado en las ~130 columnas de la auditoría completa (§XLII-XLVI). |
-| Colisiones de `ACCION_REGEX` — acciones fantasma en C4 | Detectado repetidas veces durante la auditoría completa (PSI-S3.r3 corregido; ≥10 columnas más en 7 síntomas documentadas sin corregir — UCI-S1.r3, UNI-S1.r1/r4, NEURO-S2.r5, CIR-S1.r2, CLI-S1.r6, PSI-S1.r1/r3, PSI-S3.r6, RES-S1.r2, RES-S2.r1, §XLVI). Cuando una fila tiene dos columnas que matchean el regex (la Decisión real + una de diagnóstico que contiene "plan"/"tarea"/etc.), `derivarAccionesConcretas` genera 2 entradas en el checklist de C4 en vez de 1. Fix candidato: o renombrar cada columna colisionante caso a caso, o endurecer `derivarAccionesConcretas` para que solo la columna `"opciones"`/`"decision"` cuente como acción primaria cuando hay varias en la misma fila. |
-| Seguimiento post-Alta | Fuera de las 7 capas: relación proactiva de MASESORA con un cliente ya dado de Alta en un síntoma, para que la mejora se sostenga y siga habiendo motivo para seguir siendo cliente. Boceto (sesión 10 ago 2026): conversación corta por el canal que ya usa el negocio (no requiere WhatsApp Business API), reutilizando la misma gramática qué/quién/cuándo/cómo/cuánto ya validada en C3, pero entregada como mensajes cortos en vez de página. Sin diseño de datos aún. |
+| **Pasada de criterio por especialidad** | El método de §LVII.C aplicado a las especialidades que aún no han pasado por él: **UNI, CARDIO, CLI, CIR, PSI, RES, TER, OPE**. NEURO queda a medias: S1 cerrado, S2 y S3 con el trabajo mecánico aplicado (§LVI) pero sin la ronda de criterio. |
+| **Los 4 críticos con bug estructural** | Detectados en §XLVIII y sin tocar: **RES-S1** (la puerta C1→C2→C3 lleva a la herramienta equivocada en 5 de 6 caminos, invisible al linter), **CIR-S2** (las 6 ramas de C3 no responden a ninguna opción de C2: dos narrativas mezcladas en el JSON), **OPE-S3** (la familia "carga" montada sobre preguntas abiertas que no tiene sentido puntuar), **NEURO-S3.r6** (el "coste de esperar" se reduce al número que el cliente se inventó). |
+| **Colisiones de `ACCION_REGEX`** | Acciones fantasma en C4 cuando una fila tiene dos columnas que matchean el regex. PSI-S3.r3 corregido; **≥10 columnas más en 7 síntomas documentadas sin corregir** (UCI-S1.r3, UNI-S1.r1/r4, NEURO-S2.r5, CIR-S1.r2, CLI-S1.r6, PSI-S1.r1/r3, PSI-S3.r6, RES-S1.r2, RES-S2.r1 — §XLVI). Fix candidato: renombrar caso a caso, o endurecer `derivarAccionesConcretas` para que solo `opciones`/`decision` cuente como acción primaria cuando hay varias en la misma fila. |
+| **Duplicación por significado** | El linter mide vocabulario, no significado: el barrido sobre los 30 da 1/30 y NEURO-S1 salía limpio sin estarlo (§LV.F). **Los otros 29 están sin comprobar.** Decisión pendiente: enseñar al linter a detectar duplicación semántica, o lectura por especialidad con agentes como en §XLV/§XLVI. |
+| **La causa del equipo a NEURO-S2** | NEURO-S1 tiene 6 instrumentos de dirección y el equipo salió de ahí para mudarse a NEURO-S2, que sigue sin esa causa. El catálogo está a medias hasta que se haga (§LV.K). |
+| **C6 específico por síntoma** | Todos los síntomas llevan `capa_6_seguimiento = "OKR tracking"` genérico. Necesita métricas propias por síntoma. |
+| **BI Dashboard** | Backend `/bi-stats` + campo `origen` (7 valores) + `plan_historia` + frontend SectionDashboard. |
+| **Tests de los caminos críticos** | No hay cobertura automatizada (§VII). Autenticación, cobro, cierre de capa y emisión de alta, antes de subir volumen de clientes. |
 
-### Pendiente — Fase Futura
+### Fase futura
 
 | Tarea | Descripción |
 |-------|-------------|
-| Integración herramientas en plataforma | Embeber los 197 HTML dentro de TreatmentPage. Detector automático C2 → herramienta. Guardar datos en MongoDB como evidencia. |
-| C6 generic → específico | Reemplazar el OKR tracking genérico por métricas reales por síntoma |
+| Seguimiento post-Alta | Fuera de las 7 capas: relación proactiva con un cliente ya dado de alta. Boceto en §XVI previo (10 ago): conversación corta por el canal que ya usa el negocio, reutilizando la gramática qué/quién/cuándo/cómo/cuánto de C3 pero como mensajes, no como página. Sin diseño de datos. |
+| Panel de Diagnóstico Vivo | Diseñado en §XXV.E, sin hueco asignado en ningún orden de build. Decisión de producto pendiente. |
+| Sala de Control a los 29 restantes | Pospuesto a propósito en §XXVII.D hasta validar el piloto de UCI-S1. |
+| Reescritura de copy de `justi_capaN` | Pasada señalada en §XXVIII.A, nunca ejecutada. |
+
+### Cerrado — no reabrir
+
+| Tarea | Verificación |
+|-------|--------------|
+| ~~Integración de herramientas en plataforma~~ | **COMPLETADA** (§XX, §XXI). 180/180 migradas a componentes nativos. §XIV.446 y esta tabla decían cosas distintas hasta el 26 ago 2026. |
+| ~~Auditoría símbolo a símbolo del catálogo~~ | **COMPLETA** (§XLVI, 18 ago 2026). 30/30 síntomas certificados end-to-end, ~130 columnas Decisión, 5 bugs estructurales cerrados, las 7 familias de C2 verificadas en vivo. |
+| ~~C3: tablas tipo Excel sin guía~~ | **RESUELTO.** Renderer `vista:"tarjeta"` construido y activado (§XLII–§XLVI). |
+| ~~Los 4 typos de `symptoms.json`~~ | **CORREGIDOS.** Verificado el 26 ago 2026: cero ocurrencias de "Regla 5 25" y "Arbol de decisiones" en `data/symptoms.json`. |
+| ~~Copia huérfana de `symptoms.json` en la raíz~~ | **ELIMINADA.** Verificado el 26 ago 2026: la única fuente es `data/symptoms.json`. |
 
 ---
 
@@ -822,7 +927,7 @@ Aclarado definitivamente:
 - `masesora_backend/data/symptoms.json` → **archivo desplegado**, servido por Render, trackeado en git. **EDITAR AQUÍ para producción.**
 - `data/symptoms.json` (raíz) → **archivo huérfano**, NO desplegado, NO trackeado en git. Contiene el trabajo de Fase 6.
 
-**Pendiente de resolución**: sincronizar la raíz con el deployed, o eliminar la copia raíz. Los commits de Fase 6 (`fdc20f9`, `2b1be10`) van al archivo raíz — aún no están en producción.
+**RESUELTO** (verificado 26 ago 2026): la copia huérfana de la raíz ya no existe. La única fuente es `masesora_backend/data/symptoms.json`. Los commits de Fase 6 (`fdc20f9`, `2b1be10`) van al archivo raíz — aún no están en producción.
 
 ---
 
