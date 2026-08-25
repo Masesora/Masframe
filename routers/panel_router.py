@@ -389,3 +389,113 @@ async def reasignar_cc(
         raise HTTPException(status_code=404, detail=f"Cliente '{codigo}' no encontrado")
 
     return {"ok": True, "codigo": codigo, "cc_asignado": nuevo_cc}
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CC — edicion manual de UCC y baja del equipo
+# El panel ya llamaba a estas dos rutas; no existian y fallaban en silencio.
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _filtro_email(email: str) -> dict:
+    """Mismo criterio que el login: el email no distingue mayusculas."""
+    return {"email": {"$regex": f"^{_re.escape(email.strip())}$", "$options": "i"}}
+
+
+def _referencias_cc(cc: dict) -> list:
+    """
+    Con que valor se apunta a este CC desde un cliente.
+    cc_asignado guarda unas veces el nombre y otras el email, asi que se miran los dos.
+    """
+    return [v for v in (cc.get("nombre"), cc.get("name"), cc.get("email")) if v]
+
+
+async def _clientes_de_cc(cc: dict) -> list:
+    refs = _referencias_cc(cc)
+    if not refs:
+        return []
+    cursor = _get_col("clients").find(
+        {"cc_asignado": {"$in": refs}},
+        {"_id": 0, "codigo": 1, "empresa": 1},
+    )
+    return await cursor.to_list(length=500)
+
+
+async def _cc_por_email(email: str) -> dict:
+    doc = await _get_col("internal_users").find_one(_filtro_email(email))
+    if not doc:
+        raise HTTPException(status_code=404, detail="Ese consultor/a no esta en el equipo")
+    if normalizar_rol(doc.get("role")) != "cc":
+        raise HTTPException(
+            status_code=400,
+            detail="Ese usuario no es un Consultor/a Clinico/a",
+        )
+    return doc
+
+
+@router.patch("/consultores/{email}/ucc")
+async def actualizar_ucc_consultor(
+    email: str,
+    payload: dict,
+    _user: dict = Depends(require_admin),
+):
+    """Ajuste manual de las UCC consumidas por un CC."""
+    valor = payload.get("ucc_usadas")
+    if isinstance(valor, bool) or not isinstance(valor, (int, float)) or valor != int(valor):
+        raise HTTPException(status_code=422, detail="ucc_usadas tiene que ser un numero entero")
+    valor = int(valor)
+    if not 0 <= valor <= 1000:
+        raise HTTPException(status_code=422, detail="ucc_usadas fuera de rango (0-1000)")
+
+    doc = await _cc_por_email(email)
+    await _get_col("internal_users").update_one(
+        {"_id": doc["_id"]},
+        {"$set": {"ucc_usadas": valor, "updated_at": datetime.utcnow()}},
+    )
+    return {"status": "ok", "email": doc.get("email", ""), "ucc_usadas": valor}
+
+
+@router.delete("/consultores/{email}")
+async def eliminar_consultor(
+    email: str,
+    forzar: bool = Query(False, description="Da de baja aunque tenga clientes; esos clientes se quedan sin CC"),
+    user: dict = Depends(require_admin),
+):
+    """
+    Baja de un CC del equipo.
+    Si todavia tiene clientes asignados no se borra: primero hay que reasignarlos,
+    o repetir la baja con forzar=true asumiendo que esos clientes se quedan sin CC.
+    """
+    doc = await _cc_por_email(email)
+
+    propio = (user.get("email") or "").strip().lower()
+    if propio and propio == (doc.get("email") or "").strip().lower():
+        raise HTTPException(status_code=400, detail="No puedes darte de baja a ti misma")
+
+    clientes = await _clientes_de_cc(doc)
+    nombre   = doc.get("nombre") or doc.get("email") or email
+
+    if clientes and not forzar:
+        listado = ", ".join(c.get("empresa") or c.get("codigo", "") for c in clientes[:5])
+        if len(clientes) > 5:
+            listado += f" y {len(clientes) - 5} mas"
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                f"{nombre} tiene {len(clientes)} cliente(s) asignado(s): {listado}. "
+                f"Reasignalos a otro CC antes de darle de baja."
+            ),
+        )
+
+    if clientes:
+        await _get_col("clients").update_many(
+            {"cc_asignado": {"$in": _referencias_cc(doc)}},
+            {"$set": {"cc_asignado": "", "updated_at": datetime.utcnow()}},
+        )
+
+    await _get_col("internal_users").delete_one({"_id": doc["_id"]})
+    return {
+        "status": "ok",
+        "email": doc.get("email", ""),
+        "nombre": nombre,
+        "clientes_liberados": [c.get("codigo", "") for c in clientes],
+    }
