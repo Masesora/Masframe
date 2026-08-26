@@ -30,9 +30,9 @@
     ],
     "input_a": "Caja disponible actual (€ en cuenta)",
     "input_b": "Media gastos fijos mensuales últimos 3 meses (€)",
-    "input_revised_1": "Total dinero rescatado post",
-    "input_revised_2": "Gastos fijos mensuales",
-    "result_revised": "Meses liberados",
+    "input_revised_1": "Caja disponible actual (post) (€ en cuenta)",
+    "input_revised_2": "Media gastos fijos mensuales (post) (€)",
+    "result_revised": "Δ días de caja",
     "impact_treatment": "En menos de 30 días localizamos y liberamos el dinero que ya está en tu negocio pero no puedes usar. Tu caja respira sin necesidad de nuevas ventas.",
     "optimizer_impact": "Liberación inmediata de liquidez sin necesidad de endeudarte.",
     "optimizer_decision": "Localizar el Dinero Invisible",
@@ -67,19 +67,22 @@
             "etiqueta": "Unidades",
             "tipo": "numero",
             "clave": "uds",
-            "placeholder": "40"
+            "placeholder": "40",
+            "no_sumar": true
           },
           {
             "etiqueta": "Coste unitario (€)",
             "tipo": "numero",
             "clave": "coste",
-            "placeholder": "25"
+            "placeholder": "25",
+            "no_sumar": true
           },
           {
             "etiqueta": "Margen mínimo aceptable (%)",
             "tipo": "numero",
             "clave": "margen_obj",
-            "placeholder": "20"
+            "placeholder": "20",
+            "no_sumar": true
           },
           {
             "etiqueta": "Precio propuesto (€)",
@@ -94,14 +97,16 @@
             "tipo": "calculada",
             "clave": "precio_min",
             "formula": "coste/(1-margen_obj/100)",
-            "unidad": "eur"
+            "unidad": "eur",
+            "no_sumar": true
           },
           {
             "etiqueta": "Margen resultante (%)",
             "tipo": "calculada",
             "clave": "margen_pct",
             "formula": "(precio_prop-coste)/precio_prop*100",
-            "unidad": "pct"
+            "unidad": "pct",
+            "no_sumar": true
           },
           {
             "etiqueta": "Valor estimado (€)",
@@ -143,20 +148,23 @@
                 "etiqueta": "Importe total (€)",
                 "tipo": "numero",
                 "clave": "importe_total",
-                "placeholder": "15000"
+                "placeholder": "15000",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Cobrado (€)",
                 "tipo": "numero",
                 "clave": "cobrado",
-                "placeholder": "6000"
+                "placeholder": "6000",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Pendiente de cobrar (€)",
                 "tipo": "calculada",
                 "clave": "pendiente",
                 "formula": "importe_total-cobrado",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Estado",
@@ -215,18 +223,27 @@
               {
                 "etiqueta": "Cliente",
                 "tipo": "texto",
-                "placeholder": "Nombre del cliente"
+                "placeholder": "Nombre del cliente",
+                "clave": "cliente"
+              },
+              {
+                "etiqueta": "Nº factura",
+                "tipo": "texto",
+                "clave": "factura",
+                "placeholder": "ej. 2026/114",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Importe pendiente (€)",
                 "tipo": "numero",
                 "clave": "importe",
-                "placeholder": "3000"
+                "placeholder": "3000",
+                "no_sumar": true
               },
               {
-                "etiqueta": "Días de mora",
+                "etiqueta": "Días de retraso desde el vencimiento",
                 "tipo": "numero",
-                "clave": "dias",
+                "clave": "dias_retraso",
                 "placeholder": "ej. 45",
                 "no_sumar": true
               },
@@ -234,8 +251,9 @@
                 "etiqueta": "Coste financiero de la demora (€)",
                 "tipo": "calculada",
                 "clave": "coste_fin",
-                "formula": "importe*dias*0.1/365",
-                "unidad": "eur"
+                "formula": "importe*dias_retraso*0.1/365",
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Estado",
@@ -284,13 +302,14 @@
                 "contribuye_valor": true
               },
               {
-                "etiqueta": "Fecha próx. acción",
+                "etiqueta": "Fecha compromiso",
                 "tipo": "texto",
                 "placeholder": "ej. 20/09/2026"
               }
             ],
             "filas_iniciales": 2,
-            "entidad_compartida": "Cliente"
+            "entidad_compartida": "Cliente",
+            "carta_reclamacion": true
           }
         ]
       },
@@ -350,7 +369,8 @@
               {
                 "etiqueta": "Volumen compra/mes (€)",
                 "tipo": "numero",
-                "clave": "volumen"
+                "clave": "volumen",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Plazo actual (días)",
@@ -448,7 +468,8 @@
                 "etiqueta": "Importe anticipado (€)",
                 "tipo": "numero",
                 "clave": "importe_ant",
-                "placeholder": "8000"
+                "placeholder": "8000",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Motivo por el que no avanza",
@@ -647,7 +668,8 @@
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
                 "clave": "importe",
-                "placeholder": "ej. 450"
+                "placeholder": "ej. 450",
+                "contribuye_valor": true
               }
             ],
             "filas_iniciales": 3,
@@ -783,7 +805,8 @@
                 "etiqueta": "Importe (€)",
                 "tipo": "numero",
                 "clave": "importe",
-                "placeholder": "ej. 850"
+                "placeholder": "ej. 850",
+                "contribuye_valor": true
               },
               {
                 "etiqueta": "Días de retraso desde el vencimiento",
