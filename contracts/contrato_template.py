@@ -933,7 +933,7 @@ def generar_contrato_html(datos: dict) -> str:
           <button onclick="limpiarFirma()" style="background:none;border:1px solid #CBD5E1;
             border-radius:6px;padding:5px 12px;font-size:0.75rem;cursor:pointer;color:#666;">
             Limpiar</button>
-          <button onclick="guardarFirma()" style="background:#0F1A35;border:none;
+          <button id="btnFirmar" onclick="guardarFirma()" style="background:#0F1A35;border:none;
             border-radius:6px;padding:5px 14px;font-size:0.75rem;cursor:pointer;
             color:#F9F7F2;font-weight:600;">✓ Firmar contrato</button>
         </div>
@@ -988,32 +988,34 @@ function limpiarFirma() {{
   document.getElementById('fechaFirma').textContent='Pendiente de firma';
 }}
 
+// La firma la guarda el panel, que es quien tiene la sesión iniciada.
+// Antes esto llamaba a una URL relativa sin credenciales y avisaba de "firmado
+// correctamente" pasara lo que pasara: el contrato no se guardaba en ningún sitio.
 function guardarFirma() {{
   if(!hasFirma) {{ alert('Por favor, dibuja tu firma antes de confirmar.'); return; }}
-  const firmaBase64 = canvas.toDataURL('image/png');
-  const fecha = new Date().toLocaleDateString('es-ES',{{day:'2-digit',month:'2-digit',year:'numeric'}});
-  document.getElementById('fechaFirma').textContent = fecha;
-
-  const params = new URLSearchParams(window.location.search);
-  const codigo = params.get('codigo') || '';
-
-  if (codigo) {{
-    fetch('/contracts/firmar/' + codigo, {{
-      method: 'POST',
-      headers: {{'Content-Type':'application/json'}},
-      body: JSON.stringify({{ firma_base64: firmaBase64, fecha_firma: fecha }})
-    }})
-    .then(r => r.json())
-    .then(() => {{
-      if (window.parent !== window) {{
-        window.parent.postMessage({{ tipo:'contrato_firmado', codigo, fecha }}, '*');
-      }}
-    }})
-    .catch(console.error);
+  if (window.parent === window) {{
+    alert('Para firmar entra en tu panel MASFRAME, apartado Archivo clínico. Desde esta pestaña solo puedes leer el contrato.');
+    return;
   }}
-
-  alert('✓ Contrato firmado correctamente. Puedes descargarlo en PDF con el botón inferior.');
+  const btn = document.getElementById('btnFirmar');
+  if (btn) {{ btn.disabled = true; btn.textContent = 'Firmando…'; }}
+  window.parent.postMessage({{ tipo:'firmar_contrato', firma_base64: canvas.toDataURL('image/png') }}, '*');
 }}
+
+// El panel contesta cuando el servidor ha respondido de verdad
+window.addEventListener('message', function (e) {{
+  if (!e.data || e.data.tipo !== 'firma_resultado') return;
+  const btn = document.getElementById('btnFirmar');
+  if (btn) {{ btn.disabled = false; btn.textContent = '✓ Confirmar firma'; }}
+  if (e.data.ok) {{
+    document.getElementById('fechaFirma').textContent =
+      new Date().toLocaleDateString('es-ES',{{day:'2-digit',month:'2-digit',year:'numeric'}});
+    alert('✓ Contrato firmado correctamente. Puedes descargarlo en PDF con el botón inferior.');
+  }} else {{
+    document.getElementById('fechaFirma').textContent = 'Pendiente de firma';
+    alert('No se ha podido firmar. ' + (e.data.mensaje || 'Inténtalo de nuevo en unos segundos.'));
+  }}
+}});
 </script>
 </body>
 </html>"""

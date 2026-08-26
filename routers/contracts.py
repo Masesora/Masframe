@@ -14,6 +14,7 @@ from routers.auth_deps import (
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from contracts.contrato_template import generar_contrato_html
+from routers.panel_router import tiene_aci
 from contracts.factura_template  import generar_factura_html
 
 router = APIRouter(prefix="/contracts", tags=["contracts"])
@@ -185,6 +186,17 @@ async def firmar_contrato(
     firma = payload.get("firma_base64", "")
     if not firma:
         raise HTTPException(status_code=400, detail="firma_base64 es requerida")
+
+    # El ACI es parte del contrato: quien ejecuta el tratamiento y con que telefono.
+    # Sin ese dato no hay nada que firmar, asi que la firma se bloquea aqui y no solo
+    # en la pantalla -- antes se podia firmar con el expediente a medias.
+    cliente = await _get_client(codigo)
+    if not tiene_aci(cliente):
+        raise HTTPException(
+            status_code=409,
+            detail="Antes de firmar hay que registrar al Agente de Cambio Interno "
+                   "(nombre, apellidos y teléfono directo) en Mi expediente.",
+        )
 
     ahora = datetime.utcnow()
 

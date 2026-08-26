@@ -9,6 +9,7 @@ from routers.auth_deps import (
     require_admin,
     require_internal,
     check_owns_or_internal,
+    ROLES_CC_ADMIN,
 )
 from routers.auth_service import REGEX_ROL_CC, REGEX_ROL_ACI, normalizar_rol
 
@@ -498,4 +499,81 @@ async def eliminar_consultor(
         "email": doc.get("email", ""),
         "nombre": nombre,
         "clientes_liberados": [c.get("codigo", "") for c in clientes],
+    }
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ACI — lo registra el propio cliente
+# Es la persona de la empresa que se compromete a ejecutar el tratamiento, y su
+# nombre va dentro del contrato: sin ACI no hay contrato que firmar.
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _solo_digitos(texto: str) -> str:
+    return "".join(c for c in (texto or "") if c.isdigit())
+
+
+def _validar_aci(nombre: str, telefono: str) -> tuple:
+    """Nombre y apellidos + un telefono al que se pueda llamar de verdad."""
+    nombre   = " ".join((nombre or "").split())
+    telefono = " ".join((telefono or "").split())
+    if len(nombre) < 5 or len(nombre.split(" ")) < 2:
+        raise HTTPException(
+            status_code=422,
+            detail="Escribe el nombre y los apellidos de la persona responsable",
+        )
+    if len(_solo_digitos(telefono)) < 9:
+        raise HTTPException(
+            status_code=422,
+            detail="El teléfono directo tiene que tener al menos 9 dígitos",
+        )
+    return nombre, telefono
+
+
+def tiene_aci(cliente: dict) -> bool:
+    return bool((cliente.get("aci_nombre") or "").strip()
+                and (cliente.get("aci_telefono") or "").strip())
+
+
+@router.patch("/clients/{codigo}/aci")
+async def registrar_aci(
+    codigo: str,
+    payload: dict,
+    user: dict = Depends(get_current_user),
+):
+    """El cliente (o un interno) registra a su Agente de Cambio Interno."""
+    check_owns_or_internal(user, codigo)
+
+    col = _get_col("clients")
+    doc = await col.find_one({"codigo": codigo})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+
+    # El ACI figura en el contrato firmado: cambiarlo despues seria cambiar el contrato
+    if doc.get("contrato_firmado") and normalizar_rol(user.get("role")) not in ROLES_CC_ADMIN:
+        raise HTTPException(
+            status_code=409,
+            detail="El contrato ya está firmado y el ACI forma parte de él. "
+                   "Habla con tu Consultor/a Clínico/a para cambiarlo.",
+        )
+
+    nombre, telefono = _validar_aci(payload.get("aci_nombre"), payload.get("aci_telefono"))
+    ahora = datetime.utcnow()
+
+    await col.update_one(
+        {"codigo": codigo},
+        {"$set": {
+            "aci_nombre":          nombre,
+            "aci_telefono":        telefono,
+            "aci_asignado":        nombre,   # campo historico que ya lee el panel
+            "aci_es_representante": bool(payload.get("aci_es_representante", False)),
+            "aci_registrado_en":   ahora,
+            "aci_registrado_por":  normalizar_rol(user.get("role")) or "client",
+            "updated_at":          ahora,
+        }},
+    )
+    return {
+        "status": "ok",
+        "codigo": codigo,
+        "aci_nombre": nombre,
+        "aci_telefono": telefono,
     }
