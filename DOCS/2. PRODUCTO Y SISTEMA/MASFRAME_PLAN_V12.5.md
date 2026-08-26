@@ -2655,6 +2655,104 @@ Cada contacto sin conversación era una pastilla suelta en pantalla. Con doce oc
 
 **Lo que esta sesión no arregló:** `cc_asignado` sigue guardando nombre o email según quién asigne, y las lecturas del panel del cliente (`triaje`, documentos, mensajes) todavía tienen `.catch()` mudos — el barrido se hizo sobre el panel interno y el expediente, no sobre todas las pestañas del cliente.
 
+
+## LX. SESIÓN 26-27 AGO 2026 — El recorrido de capas medido en clics: seis puertas que no comprobaban nada y una garantía que cerraba la puerta
+
+Sesión que empieza montando un banco de casos de prueba y acaba siendo de motor y de UX. El banco destapa que **el flujo de capas no se puede recorrer como estaba diseñado**, y a partir de ahí todo lo demás.
+
+### LX.A — El caso de prueba no cabía por la primera puerta
+
+Se construye un banco de 176 casos, uno por cada `capa_1_options` de los 30 síntomas, con su C0 verificado como enfermo (`casos_180.json`). Al probarlo en pantalla: **C1 exige marcar 2 causas y todos los casos tenían una**. Los 176 se quedaban clavados en la primera capa.
+
+No es un defecto del banco, es la lección: **un caso es una pareja de problemas, no uno**. Y seis opciones dan **tres** parejas, no seis — emparejar O0 con O2 y además O2 con O5 cuenta el mismo problema dos veces. Criterio de emparejamiento, que sale del propio síntoma: el dinero se atasca en tres estaciones —*comprado y no vendido*, *hecho y no facturado*, *facturado y no cobrado*— y **las dos causas de un caso tienen que ser de estaciones distintas**; dos de la misma estación son el mismo problema contado dos veces y tratarlas juntas no libera nada nuevo. El banco pasa de 176 casos a 88.
+
+### LX.B — Lo que C3 calculaba se tiraba a la basura
+
+El arreglo de motor de la sesión. `contribuye_valor` calcula el importe en C3, pero el arrastre a C5/C6 estaba tras `planSiNoHayReal` / `esMargenKpi`, **cierto solo en modo margen**. En el resto, si el cliente daba la tarea por hecha *antes* de que la herramienta hubiera calculado, `!ei.done` bloqueaba la precarga y su KPI salía plano habiendo hecho el trabajo.
+
+Verificado con la ferretería de UCI-S1-O0: C3 calcula 2.700 + 1.800 y antes C5 contaba 0, con el KPI clavado en 19,3 días; ahora suma 4.500 y sube a 28,9. UCI-S3, el único que ya funcionaba, no cambia.
+
+### LX.C — Las seis puertas que no comprobaban nada
+
+**C3.** Con dos frentes comprometidos en C2, «Confirmo datos» pasaba con una de las dos tarjetas intacta. `decisionesPendientes` devuelve 0 salvo en secciones `origen_margen`, y el otro control salta los items con herramienta: para una tarjeta con herramienta, la puerta **no comprobaba absolutamente nada**. La Sala de Control ya lo sabía —pintaba «2/2 completados» con `itemCompletado`— pero esa función vivía dentro de `Capa3` y la puerta no la veía.
+
+`itemCompletadoC3` sube a nivel de módulo y se añade `tarjetaListaParaC4`, que es lo que la puerta exige. **Distinción que importa:** para la Sala, un pipeline está «completo» cuando todas sus filas llegan a la última etapa — eso ya es ejecución, no planificación, y exigirlo para pasar a C4 sería pedirle que cobre antes de planificar cómo cobrar. El mensaje nombra la tarjeta que falta y ofrece la salida honesta: volver a C2 y soltar ese frente.
+
+**C4.** El botón «Marcar como ejecutada» llamaba a `toggleDone` sin mirar el checklist: la tarjeta se cerraba con 0/2 acciones hechas y su importe subía el KPI.
+
+### LX.D — C4 no era un plan de cambio, era un formulario coloreado
+
+Veinte arreglos sobre la misma capa, en cuatro pasadas con la pantalla delante. Los estructurales:
+
+- **El título era un contador.** Con dos decisiones la tarjeta se llamaba *«2 decisiones tomadas»* y la de al lado por el título de su herramienta: dos reglas de nombre en la misma pantalla. Una tarjeta ES un frente y se llama por el frente.
+- **Las acciones no decían sobre qué.** *«Entregar completo y cobrar todo — A»*: el verbo delante y el objeto colgando de un guion, así que dos filas con la misma decisión salían idénticas.
+- **La tarjeta del stock no decía qué hacer.** El simulador no genera acciones (`derivarAccionesConcretas` exige `nativa`), así que solo sabía preguntar *«¿se vendió?»* sin haberle dicho nunca que vendiera. Nuevo `derivarAccionesSimulador`, y con él **baja el anuncio ya redactado que `genera_anuncio` producía en C3 y se quedaba allí**: la herramienta que le hace el trabajo estaba una capa más atrás que el trabajo.
+- **Faltaban las fechas.** C3 las recoge **por fila** y C4 solo tenía el plazo global de la tarjeta.
+- **C4 hablaba en euros y el tratamiento va de días de caja.** Cada importe lleva al lado lo que mueve el KPI (`enUnidadKpi`).
+- **Faltaba el precio de no hacerlo.** El coste financiero de la demora se quedaba en C3; se reconoce por forma —calculada en euros excluida del total— y baja a la línea.
+- **C4 perdía el objetivo que C3 sí da.** El marcador decía «PLANIFICADO 1.712 €» sin contra qué, y el cliente cerraba su plan al 100 %, en verde y con «Plan completado», midiendo lo hecho **contra lo que él mismo se comprometió a hacer**. Baja el mismo `incrementoParaObjetivo`, y cumplir el plan sin alcanzar el objetivo deja de pintarse como éxito.
+- **El contador contaba tarjetas.** «0 de 2 tareas» con cuatro cosas dentro: el círculo no se movía mientras trabajaba y saltaba al 50 % de golpe.
+- **`valor_real` nacía con el importe PREVISTO escrito dentro**, bajo una etiqueta que dice «VALOR REAL»: el expediente quedaba diciendo *real* sobre una estimación.
+- **Un dato, dos sitios.** Al cerrarse la tarjeta aparecía otro bloque entero pidiendo importe, fecha y logro — los mismos datos que la fila acababa de capturar. Ese bloque solo tiene sentido en tarjetas sin filas dentro.
+
+### LX.E — Reglas de fricción para el recorrido de capas
+
+Destiladas de esta sesión. Se aplican a las siete capas, no solo a C4.
+
+| # | Regla | De dónde sale |
+|---|---|---|
+| F-1 | **Nada que ya esté calculado se vuelve a pedir.** Si una capa anterior produjo el dato, baja solo. | El importe de C3 que había que reteclear en C5 |
+| F-2 | **Un dato, un sitio.** Ningún número editable en dos controles distintos de la misma pantalla. | `valor_real` global compitiendo con el importe por producto |
+| F-3 | **No se pide nada antes de tiempo.** Las preguntas de después de ejecutar no se pintan antes de ejecutar. | «Lo que ha entrado de verdad» con 0/2 acciones hechas |
+| F-4 | **Lo que se puede deducir se ofrece en un clic, no se deja en blanco.** Y siempre corregible. | «Entró lo previsto, 1.280 €» · fecha = hoy al confirmar |
+| F-5 | **Cero campos por defecto para lo excepcional.** Lo que solo aplica a unas pocas filas no ocupa una columna para todas. | La dependencia de terceros, primero como columna en `capa_3_plan` y retirada por fricción |
+| F-6 | **Si dentro no queda nada, la capa se cierra sola.** Confirmar lo que se acaba de confirmar es un clic de más. | «100 % · 3 de 3 cosas hechas · 0 cerrados» |
+| F-7 | **Sin desplegables para ver el trabajo.** Con dos o tres frentes no hay nada que ahorrar plegando. | «Hay que clicar igualmente para desplegar la tarjeta» |
+| F-8 | **Un solo gesto de confirmación por capa.** Nunca casilla en una tarjeta y botón en la de al lado. | Vendido/No vendido contra el checklist |
+| F-9 | **Una puerta comprueba lo que dice comprobar**, y si bloquea, nombra qué falta y da la salida. | C3 pasando con dos tarjetas vacías |
+| F-10 | **El número que motiva manda en la jerarquía.** Nunca al mismo tamaño que un enlace de escape. | Los euros en gris a 0,8 rem |
+
+Y una que es de contraste, no de clics: **ningún texto por debajo de 4,5:1**. `S.muted` era `#9a9590` —2,9:1 sobre blanco— y pasa a `#6f6a64`.
+
+### LX.F — La garantía no depende del objetivo: §XLI se revierte
+
+Decisión de producto del usuario: **la garantía de MASESORA se cumple con que el KPI de partida mejore**. Atar el alta al objetivo dejaba encerrado al que ya ha hecho todo lo que podía — *«si no tengo más nada que liquidar, ¿qué ocurre?»* — sin alta, sin cierre y sin salida, y encima diciéndole *«sigue trabajando»*.
+
+```
+readyForAlta = c4Complete && mejoro        (antes: && alcanzoObjetivo)
+```
+
+§XLI había atado el alta al objetivo para evitar dos mensajes contradictorios a la vez. **El diagnóstico era correcto y el remedio no**: la contradicción se resuelve en el copy, no cerrándole la puerta. No llegar al objetivo deja de figurar como algo que «falta» y pasa a decirse con todas las letras, con la salida al lado:
+
+> *«No has llegado al objetivo que te proponemos, que es una referencia clínica, no la condición para cerrar. ¿Quieres que un consultor mire contigo qué más se puede hacer?»* → **[ Sí, que me ayude un consultor ]**
+
+### LX.G — Barrido de catálogo sobre los 30
+
+Lo encontrado en UCI se buscó en todo el catálogo y se corrigió de una pasada.
+
+| Defecto | Alcance | Aplicado |
+|---|---|---|
+| El TOTAL sumaba columnas incompatibles | **49 secciones** | `no_sumar` en 125 columnas; cada tabla acumula una sola cifra y es la que alimenta el KPI |
+| Colisión `ACCION_REGEX` | **18 secciones** | Renombrado el objeto, nunca la decisión: *Tarea → Trabajo*, *Paso / Actividad → Etapa del proceso*, *CTA (llamada a la acción) → Llamada final (CTA)*… |
+| Modo sin declarar | UCI-S3 | `kpi_recovery_mode: financiero` |
+| Sin columna que alimente el KPI | UCI-S2 | `contribuye_valor` en la columna Importe de r1 y r2 |
+| `input_revised_*` fuera de patrón | UCI-S1 | Alineado a (A_post, B_post) → Δ del KPI |
+
+**Resultado: 178 → 114 bloqueantes** en `auditar_sintoma.py --todos`, y **0 ERRORES** en `validar_sintomas.py` (antes 2).
+
+Dos aprendizajes del barrido:
+
+- **Un escaneo propio no sustituye al auditor de la casa.** El mío marcó CIR-S3 y OPE-S2 como «sin columna de valor»: falso positivo, ya usaban `cuenta_unicos_si` y `suma_si`, que es exactamente el mecanismo que les toca. Solo miraba `contribuye_valor`.
+- **La colisión no se arregla con un regex.** En cada una de las 18 hay que decidir cuál es la decisión y cuál el objeto; renombrar la equivocada rompe el puente a C4.
+
+### LX.H — Lo que queda abierto
+
+- **110 de los 114 bloqueantes que quedan son desplegables premarcados**, y no son un solo problema: **68 son preguntas que llegan contestadas «Sí»** —*¿Hay backup?* **Sí**, *¿Se cobró al cliente?* **Sí**, en un síntoma que se llama Fuga de Calidad Crónica—, **28 son escalas clavadas en el extremo alto** (*Impacto: Alto*, *Prioridad: 1*) y **20 son estados donde el valor por defecto es correcto** (una fila nueva de morosidad está *Pendiente*). Tratarlos igual empeora los 20 buenos. Aparcado a la espera de decidir cómo se declara la diferencia.
+- **UCI-S2 sigue con 2 opciones** de las 6, así que C1 —que exige marcar dos— no filtra nada en ese síntoma.
+- **El KPI de UCI-S1 se pinta sin unidad.** `enDias` mira `/día/i` sobre `kpi_objective`, que vale `">45"`, así que el cliente ve `19.3` pelado. Y el arreglo obvio revienta: escribir `">45 días"` activaría `scoreEnUnidadObjetivo`, que multiplica por 30 una fórmula que ya devuelve días — **579 días de caja**. Mina puesta justo donde alguien iría a tocar.
+- **Tres puertas de C2 que no cruza nadie:** `semáforo`, `abc` y `retencion` tienen lógica y mensaje de error escritos y cero síntomas que lleguen a ellas.
+- **El recorrido en pantalla sigue sin hacerse contra un backend local.** `VITE_API_URL` apunta a Render, así que todo lo verificado en la sesión se comprobó ejecutando el código real de C6 con Node contra los 14 casos de UCI, no pulsando.
+
 ---
 
 ---
@@ -2705,3 +2803,5 @@ Cada contacto sin conversación era una pastilla suelta en pantalla. Con doce oc
 *§LVII añadida en sesión 22 ago 2026 (cont.) — cierre de NEURO-S1 y cambio de método tras el diagnóstico del usuario ("este ritmo es insufrible"): las 15 reglas de la jornada escritas como reglas y metidas en la skill; `data/auditar_sintoma.py` automatiza en un comando el diagnóstico mecánico que se hizo a mano durante horas (calibrado contra NEURO, 0 falsos positivos tras quitar las columnas que el motor ya protege y las cuatro vías de un KPI de conteo); y la unidad de trabajo pasa de un síntoma a una ESPECIALIDAD por sesión, en 4 fases con UNA sola ronda de decisiones — skill v5, masframe@6f2a8fa*
 *§LVIII añadida en sesión 23-24 ago 2026 — «Podría dejar si te centraras» sale a producción en NEURO-S1.r2: un dato que el dueño se inventa Y un texto que le culpa. Regla nueva, la más dura del copy: **ni una falta de respeto** — el dueño no es el problema, el problema es que nadie le ha dado el sistema. En la skill como §CRITERIOS 15 y en la regla cero, y en `auditar_sintoma.py` como bloqueante junto a la de datos inventados (probadas contra la frase real). Los dos diagnósticos se rehacen con año pasado contra este año, que está en sus facturas, y el veredicto mejora al hacerlo: pasa a desglosar su propio rumbo por líneas en vez de medir un potencial imaginario*
 *§LIX añadida en sesión 26 ago 2026 — sesión de plataforma: el panel dejaba de distinguir entre "no hay nada" y "no he podido leerlo" (sesión caducada invisible, 0 CC falsos), dos definiciones de "consultor" que dejaban a un CC existiendo sin poder trabajar, dos rutas que el panel llamaba y no existían (baja de CC y UCC manual), la firma del contrato que nunca se guardaba y aun así se anunciaba como firmada, el ACI como paso del cliente que bloquea la firma y salta a urgencias de admin y CC, y la mensajería reordenada*
+
+*§LX añadida en sesión 26-27 ago 2026 — el banco de 176 casos destapa que el flujo no se podia recorrer: C1 exige 2 causas y todos los casos tenian una, asi que un caso es una PAREJA y seis opciones dan tres, no seis. De ahi al motor: lo que `contribuye_valor` calcula en C3 se tiraba salvo en modo margen (la ferreteria hacia el trabajo y su KPI salia plano en 19,3 dias; ahora 28,9); la puerta de C3 no comprobaba NADA en tarjetas con herramienta y dejaba pasar dos frentes vacios, teniendo la Sala de Control el dato al lado; y el boton de C4 cerraba una tarjeta con 0/2 acciones hechas. Veinte arreglos en C4 en cuatro pasadas con la pantalla delante -- la tarjeta del simulador no decia que hacer, solo preguntaba si habia vendido, y el anuncio de `genera_anuncio` se quedaba una capa atras; las fechas por fila no bajaban; el marcador media lo hecho contra lo que el cliente se comprometio y no contra lo que necesita; y `valor_real` nacia con el previsto escrito bajo una etiqueta que dice "real". §LX.E deja 10 reglas de friccion para las siete capas, mas la de contraste (S.muted era 2,9:1). §LX.F revierte §XLI por decision de producto: la garantia se cumple con que el KPI mejore, no con alcanzar el objetivo. Barrido sobre los 30: 49 secciones con el TOTAL sumando columnas incompatibles y 18 colisiones de ACCION_REGEX corregidas, 178 -> 114 bloqueantes y 0 ERRORES en el validador*

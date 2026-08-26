@@ -820,7 +820,8 @@
                 "tipo": "calculada",
                 "clave": "coste_fin",
                 "formula": "importe*dias_retraso*0.1/365",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -1535,7 +1536,7 @@
                 }
               },
               {
-                "etiqueta": "¿Qué incluye el plan cada mes?",
+                "etiqueta": "¿Qué incluye cada mes?",
                 "tipo": "texto",
                 "clave": "pack_incluye_r6",
                 "mostrar_si": {
@@ -1572,7 +1573,8 @@
       }
     },
     "kpi_window_meses": 3,
-    "kpi_objetivo_puntos": 10
+    "kpi_objetivo_puntos": 10,
+    "kpi_recovery_mode": "financiero"
   },
   {
     "specialty_id": "UNIDAD DE PROCESOS",
@@ -1639,7 +1641,7 @@
             "titulo": "Tus pasos con más tiempo perdido — empieza por los 2-3 que más tiempo te cuestan, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
-                "etiqueta": "Paso / Actividad",
+                "etiqueta": "Etapa del proceso",
                 "tipo": "texto",
                 "placeholder": "ej. Revisar pedido antes de enviar"
               },
@@ -1647,13 +1649,15 @@
                 "etiqueta": "T. Estimado (min)",
                 "tipo": "numero",
                 "clave": "t_estimado",
-                "placeholder": "10"
+                "placeholder": "10",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. Real Prom. (min)",
                 "tipo": "numero",
                 "clave": "t_real",
-                "placeholder": "25"
+                "placeholder": "25",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Gap (min)",
@@ -1711,7 +1715,8 @@
               {
                 "etiqueta": "Frec./semana",
                 "tipo": "numero",
-                "clave": "frec"
+                "clave": "frec",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Duración media (h)",
@@ -1739,7 +1744,8 @@
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste mensual (€)",
@@ -1780,13 +1786,15 @@
                 "etiqueta": "T. Máx comprometido (h)",
                 "tipo": "numero",
                 "clave": "tmax",
-                "placeholder": "24"
+                "placeholder": "24",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. Real Prom. (h)",
                 "tipo": "numero",
                 "clave": "treal",
-                "placeholder": "48"
+                "placeholder": "48",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Desviación sobre el compromiso (h)",
@@ -1829,7 +1837,7 @@
             "titulo": "Tus tareas con más ahorro potencial — empieza por las 2-3 con más ahorro, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
-                "etiqueta": "Tarea",
+                "etiqueta": "Trabajo",
                 "tipo": "texto",
                 "placeholder": "ej. Preparar el pedido semanal a proveedor"
               },
@@ -1837,25 +1845,29 @@
                 "etiqueta": "Ocurrencias/mes",
                 "tipo": "numero",
                 "clave": "ocurrencias",
-                "placeholder": "8"
+                "placeholder": "8",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. sin estándar (min)",
                 "tipo": "numero",
                 "clave": "t_sin",
-                "placeholder": "30"
+                "placeholder": "30",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. con estándar (min)",
                 "tipo": "numero",
                 "clave": "t_con",
-                "placeholder": "15"
+                "placeholder": "15",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Personas (nº)",
                 "tipo": "numero",
                 "clave": "personas",
-                "placeholder": "2"
+                "placeholder": "2",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ahorro/mes (min)",
@@ -1906,7 +1918,8 @@
               {
                 "etiqueta": "Meta",
                 "tipo": "numero",
-                "clave": "meta"
+                "clave": "meta",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Valor actual",
@@ -1973,12 +1986,14 @@
               {
                 "etiqueta": "Tiempo/mes (h)",
                 "tipo": "numero",
-                "clave": "tiempo"
+                "clave": "tiempo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Puede eliminarse?",
@@ -2040,11 +2055,13 @@
               {
                 "etiqueta": "Coste dep./mes (€)",
                 "tipo": "numero",
-                "clave": "costedep"
+                "clave": "costedep",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. formar backup (h)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste resolver (€)",
@@ -2103,7 +2120,8 @@
               {
                 "etiqueta": "Horas estimadas",
                 "tipo": "numero",
-                "clave": "horas_est"
+                "clave": "horas_est",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Fecha límite",
@@ -2282,12 +2300,14 @@
               {
                 "etiqueta": "Frec./semana",
                 "tipo": "numero",
-                "clave": "frec"
+                "clave": "frec",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. espera (h)",
                 "tipo": "numero",
-                "clave": "espera"
+                "clave": "espera",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Protocolo?",
@@ -2481,7 +2501,8 @@
               },
               {
                 "etiqueta": "T. revisión (min)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Errores (nº)",
@@ -2528,12 +2549,14 @@
               {
                 "etiqueta": "Nº contactos/sem",
                 "tipo": "numero",
-                "clave": "contactos"
+                "clave": "contactos",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. medio/contacto (min)",
                 "tipo": "numero",
-                "clave": "tiempo_medio"
+                "clave": "tiempo_medio",
+                "no_sumar": true
               },
               {
                 "etiqueta": "% iniciados cliente",
@@ -2643,7 +2666,8 @@
               {
                 "etiqueta": "Nº ocurrencias",
                 "tipo": "numero",
-                "clave": "ocurr"
+                "clave": "ocurr",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Detectado por",
@@ -2657,12 +2681,14 @@
               {
                 "etiqueta": "T. retrabajo (h)",
                 "tipo": "numero",
-                "clave": "retrabajo"
+                "clave": "retrabajo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Protocolo prev.?",
@@ -2712,12 +2738,14 @@
               {
                 "etiqueta": "Horas retrabajo",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Se cobró al cliente?",
@@ -2767,7 +2795,8 @@
               {
                 "etiqueta": "Nº fallos/mes",
                 "tipo": "numero",
-                "clave": "fallos"
+                "clave": "fallos",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Tipo de fallo más común",
@@ -2784,7 +2813,8 @@
               {
                 "etiqueta": "T. invertido/sem (h)",
                 "tipo": "numero",
-                "clave": "tiempo"
+                "clave": "tiempo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Tiempo por fallo (h)",
@@ -2834,12 +2864,14 @@
               {
                 "etiqueta": "T. resolución (h)",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Se repitió?",
@@ -2894,16 +2926,19 @@
               {
                 "etiqueta": "Entregas/mes",
                 "tipo": "numero",
-                "clave": "entregas"
+                "clave": "entregas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Errores detectados",
                 "tipo": "numero",
-                "clave": "errores"
+                "clave": "errores",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Revisiones necesarias",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "T. retrabajo (h)",
@@ -3000,12 +3035,14 @@
               {
                 "etiqueta": "Errores ANTES de entregar",
                 "tipo": "numero",
-                "clave": "antes"
+                "clave": "antes",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Errores DESPUÉS (cliente)",
                 "tipo": "numero",
-                "clave": "despues"
+                "clave": "despues",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Reducción (%)",
@@ -3120,7 +3157,8 @@
               {
                 "etiqueta": "Personas que preguntan/mes",
                 "tipo": "numero",
-                "clave": "leads"
+                "clave": "leads",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Clientes cerrados/mes",
@@ -3131,11 +3169,13 @@
               {
                 "etiqueta": "Cuánto te cuesta cada pregunta (€)",
                 "tipo": "numero",
-                "clave": "costelead"
+                "clave": "costelead",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Te compensa? (€ ganado por cada € gastado)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Conversión (%)",
@@ -3150,7 +3190,8 @@
                 "tipo": "calculada",
                 "clave": "cac",
                 "formula": "costelead*leads/clientes",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Decisión",
@@ -3197,7 +3238,8 @@
               {
                 "etiqueta": "Seguidores/visitas/mes",
                 "tipo": "numero",
-                "clave": "seguidores"
+                "clave": "seguidores",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Leads/mes",
@@ -3303,12 +3345,14 @@
               {
                 "etiqueta": "Inversión (€)",
                 "tipo": "numero",
-                "clave": "inversion"
+                "clave": "inversion",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Leads",
                 "tipo": "numero",
-                "clave": "leads"
+                "clave": "leads",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Clientes",
@@ -3319,7 +3363,8 @@
               {
                 "etiqueta": "Ticket medio (€)",
                 "tipo": "numero",
-                "clave": "ticket"
+                "clave": "ticket",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Constante y medido?",
@@ -3334,14 +3379,16 @@
                 "tipo": "calculada",
                 "clave": "cac",
                 "formula": "inversion/clientes",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ingresos generados (€)",
                 "tipo": "calculada",
                 "clave": "ingresos",
                 "formula": "clientes*ticket",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "ROI (%)",
@@ -3590,24 +3637,29 @@
               },
               {
                 "etiqueta": "Nuevos leads",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Avances pipeline",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Propuestas enviadas",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Cierres",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ingresos cerrados (€)",
                 "tipo": "numero",
-                "clave": "ingresos"
+                "clave": "ingresos",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Objetivo semana (€)",
@@ -3644,37 +3696,44 @@
               {
                 "etiqueta": "Llamadas",
                 "tipo": "numero",
-                "clave": "llamadas"
+                "clave": "llamadas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Emails",
                 "tipo": "numero",
-                "clave": "emails"
+                "clave": "emails",
+                "no_sumar": true
               },
               {
                 "etiqueta": "LinkedIn",
                 "tipo": "numero",
-                "clave": "linkedin"
+                "clave": "linkedin",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Reuniones",
                 "tipo": "numero",
-                "clave": "reuniones"
+                "clave": "reuniones",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Propuestas",
                 "tipo": "numero",
-                "clave": "propuestas"
+                "clave": "propuestas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Seguimientos",
                 "tipo": "numero",
-                "clave": "seguim"
+                "clave": "seguim",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Objetivo",
                 "tipo": "numero",
-                "clave": "objetivo"
+                "clave": "objetivo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Total actividad",
@@ -3803,12 +3862,14 @@
               {
                 "etiqueta": "Horas reales/semana",
                 "tipo": "numero",
-                "clave": "horas_reales"
+                "clave": "horas_reales",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas objetivo/semana",
                 "tipo": "numero",
-                "clave": "horas_objetivo"
+                "clave": "horas_objetivo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Gap (h)",
@@ -3938,7 +3999,8 @@
             "columnas": [
               {
                 "etiqueta": "Objetivo mensual (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Mes actual",
@@ -3965,7 +4027,8 @@
               {
                 "etiqueta": "Valor (€)",
                 "tipo": "numero",
-                "clave": "valor"
+                "clave": "valor",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Probabilidad %",
@@ -4010,12 +4073,14 @@
             "columnas": [
               {
                 "etiqueta": "Objetivo trimestral (€)",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ingresos confirmados mes actual (€)",
                 "tipo": "numero",
-                "clave": "ingresos_conf"
+                "clave": "ingresos_conf",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Cliente",
@@ -4030,7 +4095,8 @@
               {
                 "etiqueta": "Valor (€)",
                 "tipo": "numero",
-                "clave": "valor"
+                "clave": "valor",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Mes previsto cierre",
@@ -4055,7 +4121,8 @@
                 "tipo": "calculada",
                 "clave": "valor_pond",
                 "formula": "valor*prob/100",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Total proyectado (€)",
@@ -4411,7 +4478,8 @@
               {
                 "etiqueta": "Leads totales/mes",
                 "tipo": "numero",
-                "clave": "totales"
+                "clave": "totales",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Leads calificados/mes",
@@ -4422,17 +4490,20 @@
               {
                 "etiqueta": "Clientes cerrados",
                 "tipo": "numero",
-                "clave": "clientes"
+                "clave": "clientes",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ticket medio (€)",
                 "tipo": "numero",
-                "clave": "ticket"
+                "clave": "ticket",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste canal (€/mes)",
                 "tipo": "numero",
-                "clave": "costecanal"
+                "clave": "costecanal",
+                "no_sumar": true
               },
               {
                 "etiqueta": "% calificación",
@@ -4447,7 +4518,8 @@
                 "tipo": "calculada",
                 "clave": "ingresos",
                 "formula": "clientes*ticket",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "ROI canal (%)",
@@ -6372,17 +6444,20 @@
               {
                 "etiqueta": "Sem 1",
                 "tipo": "numero",
-                "clave": "s1"
+                "clave": "s1",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Sem 2",
                 "tipo": "numero",
-                "clave": "s2"
+                "clave": "s2",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Sem 3",
                 "tipo": "numero",
-                "clave": "s3"
+                "clave": "s3",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Sem 4",
@@ -6426,7 +6501,8 @@
               {
                 "etiqueta": "Horas/mes",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste hora (€)",
@@ -6466,13 +6542,14 @@
           {
             "columnas": [
               {
-                "etiqueta": "Tarea",
+                "etiqueta": "Trabajo",
                 "tipo": "texto"
               },
               {
                 "etiqueta": "Horas/mes",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste hora propio (€)",
@@ -6501,7 +6578,8 @@
               {
                 "etiqueta": "Coste externo (€)",
                 "tipo": "numero",
-                "clave": "coste_externo"
+                "clave": "coste_externo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste/hora implícito (€)",
@@ -7052,7 +7130,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Cuándo escala al siguiente nivel",
+                "etiqueta": "Cuándo escala al nivel superior",
                 "tipo": "texto"
               },
               {
@@ -7244,7 +7322,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Coste estimado de mejora (EUR)",
+                "etiqueta": "Coste estimado (€)",
                 "tipo": "numero",
                 "clave": "coste_mejora"
               },
@@ -7299,7 +7377,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Texto mejorado",
+                "etiqueta": "Texto nuevo",
                 "tipo": "texto"
               },
               {
@@ -7337,7 +7415,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Reaccion al mensaje mejorado",
+                "etiqueta": "Cómo respondió al mensaje nuevo",
                 "tipo": "opciones",
                 "opciones": [
                   "Positiva",
@@ -7760,24 +7838,28 @@
               {
                 "etiqueta": "Unidades vendidas/mes",
                 "tipo": "numero",
-                "clave": "uds"
+                "clave": "uds",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Precio medio (€)",
                 "tipo": "numero",
-                "clave": "precio"
+                "clave": "precio",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste directo (€)",
                 "tipo": "numero",
-                "clave": "coste"
+                "clave": "coste",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Margen unitario (€)",
                 "tipo": "calculada",
                 "clave": "margen_u",
                 "formula": "precio-coste",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Margen total mes (€)",
@@ -7833,24 +7915,28 @@
               {
                 "etiqueta": "Ingresos mes (€)",
                 "tipo": "numero",
-                "clave": "ingresos"
+                "clave": "ingresos",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Costes directos (€)",
                 "tipo": "numero",
-                "clave": "costes_d"
+                "clave": "costes_d",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Costes indirectos asignados (€)",
                 "tipo": "numero",
-                "clave": "costes_i"
+                "clave": "costes_i",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Margen bruto (€)",
                 "tipo": "calculada",
                 "clave": "margen_b",
                 "formula": "ingresos-costes_d",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Margen neto (€)",
@@ -7902,12 +7988,14 @@
               {
                 "etiqueta": "Horas dedicadas/mes",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Clientes que lo contratan",
                 "tipo": "numero",
-                "clave": "clientes"
+                "clave": "clientes",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Arrastra otros servicios?",
@@ -8047,31 +8135,36 @@
               {
                 "etiqueta": "Unidades objetivo/mes",
                 "tipo": "numero",
-                "clave": "uds_obj"
+                "clave": "uds_obj",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Precio medio (€)",
                 "tipo": "numero",
-                "clave": "precio"
+                "clave": "precio",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ingresos objetivo (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_obj",
                 "formula": "uds_obj*precio",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Unidades reales",
                 "tipo": "numero",
-                "clave": "uds_real"
+                "clave": "uds_real",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ingresos reales (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_real",
                 "formula": "uds_real*precio",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Desviación (€)",
@@ -8205,7 +8298,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "CTA (llamada a la acción)",
+                "etiqueta": "Llamada final (CTA)",
                 "tipo": "texto"
               },
               {
@@ -8309,7 +8402,8 @@
               {
                 "etiqueta": "Meta mensual",
                 "tipo": "numero",
-                "clave": "meta"
+                "clave": "meta",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Valor actual",
@@ -8576,7 +8670,7 @@
             "titulo": "Mapa de decisiones y su dueño real",
             "columnas": [
               {
-                "etiqueta": "Tipo de decisión / tarea",
+                "etiqueta": "Tipo de asunto",
                 "tipo": "texto"
               },
               {
@@ -8635,12 +8729,14 @@
               {
                 "etiqueta": "Frecuencia/semana",
                 "tipo": "numero",
-                "clave": "frec"
+                "clave": "frec",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Tiempo consumido (h)",
                 "tipo": "numero",
-                "clave": "tiempo"
+                "clave": "tiempo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Era realmente urgente?",
@@ -8694,25 +8790,28 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Área o tipo de tareas",
+                "etiqueta": "Área o tipo de trabajo",
                 "tipo": "texto"
               },
               {
                 "etiqueta": "Horas/semana reales",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Capacidad máxima (h)",
                 "tipo": "numero",
-                "clave": "cap"
+                "clave": "cap",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Sobrecarga (h)",
                 "tipo": "calculada",
                 "clave": "sobrecarga",
                 "formula": "horas-cap",
-                "unidad": "numero"
+                "unidad": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Causa de la sobrecarga",
@@ -8759,12 +8858,14 @@
               {
                 "etiqueta": "Frecuencia/día",
                 "tipo": "numero",
-                "clave": "freq"
+                "clave": "freq",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Tiempo perdido/interrupción (min)",
                 "tipo": "numero",
-                "clave": "tiempo"
+                "clave": "tiempo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Tiempo total perdido/día (min)",
@@ -8811,12 +8912,14 @@
               {
                 "etiqueta": "Frecuencia/mes",
                 "tipo": "numero",
-                "clave": "frec"
+                "clave": "frec",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas dedicadas/incidente",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Era prevenible?",
@@ -9291,7 +9394,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Tarea o responsabilidad",
+                "etiqueta": "Trabajo o responsabilidad",
                 "tipo": "texto"
               },
               {
@@ -9546,7 +9649,7 @@
             "titulo": "Qué decisiones puede tomar el equipo sin pasar por ti",
             "columnas": [
               {
-                "etiqueta": "Tarea o decisión",
+                "etiqueta": "Trabajo o asunto",
                 "tipo": "texto"
               },
               {
@@ -9714,12 +9817,14 @@
               {
                 "etiqueta": "Salario anual bruto (€)",
                 "tipo": "numero",
-                "clave": "salario"
+                "clave": "salario",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste de reclutamiento y selección (€)",
                 "tipo": "numero",
-                "clave": "reclutamiento"
+                "clave": "reclutamiento",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Meses hasta rendir al 100%",
@@ -9738,7 +9843,8 @@
                 "tipo": "calculada",
                 "clave": "coste_rampa",
                 "formula": "(salario/12)*meses_rampa*(pct_perdida/100)",
-                "unidad": "eur"
+                "unidad": "eur",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste total estimado de la salida (€)",
@@ -9748,7 +9854,7 @@
                 "unidad": "eur"
               },
               {
-                "etiqueta": "¿Cubierto por plan de sucesión?",
+                "etiqueta": "¿Cubierto por un relevo previsto?",
                 "tipo": "opciones",
                 "opciones": [
                   "Sí",
@@ -9835,17 +9941,20 @@
               {
                 "etiqueta": "Salario actual (€/año)",
                 "tipo": "numero",
-                "clave": "actual"
+                "clave": "actual",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Banda de mercado — mínimo (€/año)",
                 "tipo": "numero",
-                "clave": "mercado_min"
+                "clave": "mercado_min",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Banda de mercado — máximo (€/año)",
                 "tipo": "numero",
-                "clave": "mercado_max"
+                "clave": "mercado_max",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Gap vs mínimo de mercado (€)",
@@ -10059,16 +10168,19 @@
               {
                 "etiqueta": "Su nivel (coste/hora €)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
-                "etiqueta": "Horas/sem en tareas por debajo",
+                "etiqueta": "Horas/sem por debajo de su nivel",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Total horas/sem",
-                "tipo": "numero"
+                "tipo": "numero",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste mensual desperdiciado (€)",
@@ -10106,12 +10218,14 @@
               {
                 "etiqueta": "Coste/hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora"
+                "clave": "coste_hora",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas/mes en bajo valor",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Coste mensual (€)",
@@ -10190,7 +10304,8 @@
               {
                 "etiqueta": "Coste/hora actual (€)",
                 "tipo": "numero",
-                "clave": "actual"
+                "clave": "actual",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Reasignar a",
@@ -10199,7 +10314,8 @@
               {
                 "etiqueta": "Coste/hora nuevo (€)",
                 "tipo": "numero",
-                "clave": "nuevo"
+                "clave": "nuevo",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Ahorro por hora (€)",
@@ -11670,7 +11786,7 @@
             "titulo": "Qué solo sabe hacer una persona hoy",
             "columnas": [
               {
-                "etiqueta": "Tarea o proceso crítico",
+                "etiqueta": "Trabajo o proceso crítico",
                 "tipo": "texto"
               },
               {
@@ -11830,12 +11946,14 @@
               {
                 "etiqueta": "Horas/semana dedicadas",
                 "tipo": "numero",
-                "clave": "horas"
+                "clave": "horas",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Duración del acompañamiento (semanas)",
                 "tipo": "numero",
-                "clave": "duracion"
+                "clave": "duracion",
+                "no_sumar": true
               },
               {
                 "etiqueta": "¿Activo?",
@@ -12062,7 +12180,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Tarea / Conocimiento",
+                "etiqueta": "Trabajo / Conocimiento",
                 "tipo": "texto"
               },
               {
@@ -12118,7 +12236,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Tarea",
+                "etiqueta": "Trabajo",
                 "tipo": "texto"
               },
               {
@@ -12437,12 +12555,14 @@
               {
                 "etiqueta": "Horas/semana estimadas",
                 "tipo": "numero",
-                "clave": "h_est"
+                "clave": "h_est",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas/semana reales",
                 "tipo": "numero",
-                "clave": "h_real"
+                "clave": "h_real",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Gap (h)",
@@ -12523,12 +12643,14 @@
               {
                 "etiqueta": "N° urgencias",
                 "tipo": "numero",
-                "clave": "n_urg"
+                "clave": "n_urg",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas consumidas en urgencias",
                 "tipo": "numero",
-                "clave": "h_urg"
+                "clave": "h_urg",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas totales semana",
@@ -12574,12 +12696,14 @@
               {
                 "etiqueta": "Horas reales",
                 "tipo": "numero",
-                "clave": "h_reales"
+                "clave": "h_reales",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Capacidad disponible (h)",
                 "tipo": "numero",
-                "clave": "h_cap"
+                "clave": "h_cap",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Gap (h)",
@@ -12620,12 +12744,14 @@
               {
                 "etiqueta": "Horas semana intensa",
                 "tipo": "numero",
-                "clave": "h_intensa"
+                "clave": "h_intensa",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Horas semana normal",
                 "tipo": "numero",
-                "clave": "h_normal"
+                "clave": "h_normal",
+                "no_sumar": true
               },
               {
                 "etiqueta": "Diferencia (h)",
