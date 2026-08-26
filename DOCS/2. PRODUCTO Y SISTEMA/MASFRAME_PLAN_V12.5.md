@@ -1,15 +1,15 @@
 # MASFRAME — PLAN DE PRODUCTO v12.5
 *Documento maestro y único · Versión 12.5 · consolidado el 26 agosto 2026*
-*Última actualización: pasada de consolidación — reglas y lecciones destiladas al frente, §VII remedido contra el código, §XVI realineado con lo que de verdad queda abierto*
+*Última actualización: 26 ago 2026 — §LIX, sesión de plataforma (fallos silenciosos, rol único, firma real del contrato, el ACI como puerta de la firma)*
 
-> **Cómo se lee este documento.** El bloque de arriba, **ESTADO Y REGLAS VIGENTES**, es normativo: reglas, invariantes, método y puertas de salida. Las secciones §I–§XVI describen el producto y el sistema. Las secciones §XVII–§LVIII son el registro cronológico de sesiones: se consultan para saber **por qué** se decidió algo, no para saber qué manda hoy.
+> **Cómo se lee este documento.** El bloque de arriba, **ESTADO Y REGLAS VIGENTES**, es normativo: reglas, invariantes, método y puertas de salida. Las secciones §I–§XVI describen el producto y el sistema. Las secciones §XVII–§LIX son el registro cronológico de sesiones: se consultan para saber **por qué** se decidió algo, no para saber qué manda hoy.
 >
 > Si una sección de sesión contradice el bloque normativo, manda el bloque normativo.
 ---
 
 # ESTADO Y REGLAS VIGENTES — LEER ANTES DE TOCAR NADA
 
-*Bloque normativo. Destila las sesiones §XVII–§LVIII en lo que sigue mandando. Si algo de una sección de sesión contradice este bloque, manda este bloque.*
+*Bloque normativo. Destila las sesiones §XVII–§LIX en lo que sigue mandando. Si algo de una sección de sesión contradice este bloque, manda este bloque.*
 
 ### A. Estado del sistema — 26 ago 2026
 
@@ -19,7 +19,7 @@
 | **Protocolo C0–C6** | Implementado. Linter de contratos `data/validar_sintomas.py` + diagnóstico mecánico `data/auditar_sintoma.py` |
 | **Herramientas operativas** | 197 generadas · **180/180 migradas a componentes nativos** · integración en plataforma **COMPLETADA** (§XX, §XXI) |
 | **Auditor clínico** | v4 (`gen_auditor.py`) operativo |
-| **Plataforma** | En producción y cobrando por Stripe. Volumetría en §VII |
+| **Plataforma** | En producción y cobrando por Stripe. Volumetría en §VII. Panel interno y panel del cliente repasados el 26 ago: los fallos ya no se tragan en silencio, el rol tiene una sola definición y la firma del contrato se guarda de verdad (§LIX) |
 | **Skill validator** | v6 instalada — unidad de trabajo = especialidad, con modo estratégico |
 
 ### B. Invariantes de código — NUNCA tocar
@@ -116,6 +116,10 @@
 - **Un fallo de carga no se pinta como expediente vacío.** Además disparaba el autoguardado: con token válido y GET caído habría sobrescrito el expediente bueno (§LIV).
 - **El token dura 8 horas y el 401 hay que manejarlo.** Sin eso, el patrón parece un borrado de datos (§LIV).
 - **Una regla que solo vive en un documento no protege nada.** Toda regla nueva se codifica en `auditar_sintoma.py` o en la skill. Y cuando aparezca una comprobación que el script no hace, **se le añade al script**: se cierra la clase, no el caso (§LVII.B, §LVIII).
+- **Un estado vacío nunca puede ser el disfraz de una petición fallida.** "Sin CC dados de alta", "0 clientes" o un expediente a cero tienen que significar eso y solo eso. Si la petición falló, se dice qué falló y se ofrece reintentar. La lección de §LIV ya lo decía para el expediente y en agosto seguía repetida en seis sitios más del panel: `Promise.allSettled` sin rama de error y `.catch(() => [])` (§LIX.A).
+- **Ninguna pantalla confirma lo que no ha confirmado el servidor.** El contrato decía "✓ firmado correctamente" sin que saliera la petición. Un `alert` de éxito fuera del `then` de la respuesta es una mentira al cliente (§LIX.D).
+- **Una sola definición por concepto, y en un solo sitio.** "Consultor" se escribía de cuatro formas: el listado aceptaba cuatro y los guards dos, así que un CC existía y no podía trabajar. El rol se normaliza al decodificar el JWT, y de ahí en adelante todo compara lo mismo (§LIX.B).
+- **Si el panel llama a una ruta, la ruta existe o el panel no la llama.** `DELETE /consultores/{email}` y `PATCH /consultores/{email}/ucc` llevaban tiempo devolviendo 404 y el frontend se lo tragaba: borrar un CC y ajustar sus UCC parecían funcionar (§LIX.C).
 
 ### H. Dónde está cada cosa
 
@@ -126,7 +130,7 @@
 | Stack, volumetría y endpoints | §VII |
 | Marca, copy y entregables | §IX |
 | Lo que falta por hacer | §XVI |
-| Por qué se tomó una decisión concreta | La sección de sesión correspondiente, §XVII–§LVIII |
+| Por qué se tomó una decisión concreta | La sección de sesión correspondiente, §XVII–§LIX |
 
 ---
 
@@ -681,6 +685,8 @@ Fase futura: herramientas embebidas en plataforma. Ruta base: `data/herramientas
 | **C6 específico por síntoma** | Todos los síntomas llevan `capa_6_seguimiento = "OKR tracking"` genérico. Necesita métricas propias por síntoma. |
 | **BI Dashboard** | Backend `/bi-stats` + campo `origen` (7 valores) + `plan_historia` + frontend SectionDashboard. |
 | **Tests de los caminos críticos** | No hay cobertura automatizada (§VII). Autenticación, cobro, cierre de capa y emisión de alta, antes de subir volumen de clientes. |
+| **Despliegue del backend en Render** | El push del 26 ago no llegó a producción: 20 minutos después, `/openapi.json` seguía sin las rutas nuevas. O el auto-deploy del servicio está desactivado o el build falla. Todo lo de §LIX depende de que ese despliegue exista. |
+| **`cc_asignado` guarda nombre o email, según quién asigne** | La ficha del cliente guarda el email y el módulo de equipo cuenta por nombre, así que un CC puede aparecer con 0 clientes teniéndolos. El backend ya mira los dos valores al dar de baja (§LIX.C), pero el dato sigue sin normalizar. |
 
 ### Fase futura
 
@@ -2586,6 +2592,72 @@ La regla de no pedir datos inventados estaba escrita **en la skill, ese mismo d�
 
 ---
 
+## LIX. SESIÓN 26 AGO 2026 — El panel mentía: lo que falla en silencio y lo que dice que ha pasado sin que pase
+
+Sesión de plataforma, no de catálogo. Empieza con un bug pequeño —asignar síntomas a un cliente daba "✗ Error"— y acaba destapando que **el panel no sabía distinguir entre "no hay nada" y "no he podido leerlo"**, y que el contrato decía estar firmado sin estarlo.
+
+### LIX.A — El fallo que se repetía: tragarse el error
+
+El síntoma que se ve: asignar síntomas devolvía `✗ Error`, a secas. El motivo real era la sesión caducada — el token dura 8 horas y el panel se queda abierto más tiempo. Pero **eso no se podía saber desde la pantalla**, porque:
+
+- `apiFetch` lanzaba `new Error("401 /clients/…")` y la interfaz solo pintaba "Error".
+- Las lecturas usaban `Promise.allSettled` sin rama de fallo y `.catch(() => [])`, así que un 401 dejaba los datos viejos en pantalla como si estuvieran vivos.
+- La sesión se restauraba de `localStorage` sin comprobar la caducidad del token: el panel decía "Administrador/a" con la sesión muerta.
+
+Por eso el mismo día apareció el segundo caso: **"Equipo clínico · 0 CC · Sin CC dados de alta"** con cuatro consultoras en Mongo. No faltaban datos: falló la petición y la pantalla lo contó como un hecho del negocio.
+
+**Lo aplicado:** el error conserva el código HTTP y el `detail` del backend y se traduce a una frase accionable (sesión caducada / sin permiso / servidor caído / sin conexión); los 4xx dejan de reintentarse tres veces; un 401 en cualquier punto levanta un aviso con botón de volver a entrar; y un estado vacío que viene de un fallo se pinta como fallo con su reintento, nunca como "no hay nada". La lección de §LIV —*"un fallo de carga no se pinta como expediente vacío"*— ya estaba escrita: **estaba escrita para una pantalla y el resto del panel seguía haciéndolo**.
+
+### LIX.B — Dos definiciones de "consultor" en el mismo sistema
+
+`GET /consultores` aceptaba `cc`, `CC`, `consultor` y `Consultor`. Los guards de la API aceptaban `cc` y `admin`. Un CC dado de alta a mano con la grafía larga **salía en la lista del equipo y recibía 403 en todo el panel**: existía y no podía trabajar.
+
+Ahora hay una tabla única de roles canónicos (`admin | cc | aci | client`) y la normalización ocurre **en un solo punto**, al decodificar el JWT, así que los guards, el panel y el frontend comparan lo mismo. Los tokens ya emitidos siguen valiendo y no hay que migrar la base de datos: se normaliza en lectura. Un rol desconocido no se convierte en nada válido — `recepcion` sigue siendo `recepcion` y no pasa ningún guard.
+
+| rol guardado | canónico | panel | interno | admin |
+|---|---|---|---|---|
+| `admin` | admin | ✅ | ✅ | ✅ |
+| `cc` · `consultor` · `Consultor Clínico` | cc | ✅ | ✅ | 403 |
+| `aci` | aci | 403 | ✅ | 403 |
+| `cliente` | client | 403 | 403 | 403 |
+| desconocido | *sin tocar* | 403 | 403 | 403 |
+
+### LIX.C — Dos rutas que el panel llamaba y no existían
+
+`DELETE /consultores/{email}` y `PATCH /consultores/{email}/ucc` devolvían 404 desde hacía tiempo. Con el frontend tragándose los errores, **"Eliminar CC" y "Editar UCC manualmente" parecían funcionar y no hacían nada**.
+
+Creadas las dos, con un criterio de producto en la baja: **un CC con clientes asignados no se borra a la brava**. Devuelve 409 diciendo cuántos son y quiénes, para reasignarlos antes; si aun así se quiere dar de baja, el panel pregunta una segunda vez con ese dato delante y entonces libera a esos clientes en la misma operación, para que ninguno apunte a alguien que ya no existe. No deja darse de baja a una misma ni tocar por ahí a un usuario que no sea CC.
+
+Aquí salió que **`cc_asignado` guarda unas veces el nombre y otras el email** — la ficha asigna por email, el módulo de equipo cuenta por nombre. El backend mira los dos, pero el dato sigue sin normalizar (§XVI).
+
+### LIX.D — La firma del contrato no se guardaba en ninguna parte
+
+El HTML del contrato llamaba a una URL **relativa** (`/contracts/firmar/…`), sin token, y cogía el código de la barra de direcciones — que dentro del iframe del panel está vacía. La petición no salía. Y el `alert` de éxito estaba **fuera** de la respuesta: el cliente leía *"✓ Contrato firmado correctamente"* pasara lo que pasara. Al recargar volvía a poner "pendiente de firma".
+
+Ahora el contrato le pasa la firma al panel por `postMessage`, el panel la manda con la sesión iniciada, y **solo se dice que está firmado cuando el servidor lo confirma**; si lo rechaza, se ve el motivo. Desde la pestaña suelta, sin panel detrás, avisa de que hay que firmar desde el panel en vez de mentir.
+
+### LIX.E — El ACI lo registra el cliente, y sin ACI no hay contrato
+
+Decisión de producto de esta sesión. El ACI es quien ejecuta el tratamiento dentro de la empresa y **su nombre va dentro del contrato**, pero el expediente se podía firmar con ese dato en blanco, y la pantalla del cliente decía que ya se lo registraría su consultor en la primera sesión.
+
+- **Lo registra el cliente**, no el CC: nombre y apellidos + teléfono directo, validados en el servidor. Casilla *"Soy yo"* que copia el representante legal y el teléfono de la empresa — y si esos datos faltan, lo dice en vez de copiar el hueco.
+- **Aviso fijo** en su panel, fuera de las pestañas, mientras falte: tras pagar se entra directo al primer síntoma y nadie le decía que tenía un paso suyo pendiente.
+- **Sin ACI no se firma**, bloqueado en la pantalla *y* en el servidor (409). Una vez firmado, el ACI solo lo puede cambiar un interno: forma parte de lo firmado.
+- **Paso pendiente en rojo** en Archivo clínico mientras el contrato no esté firmado.
+- **Urgencias**: cada cliente pagado con el contrato sin firmar sale como crítico para admin y para su CC, distinguiendo lo accionable — *"le falta registrar al ACI"* vs *"ACI registrado (nombre) — solo falta que firme"*. La ficha muestra el teléfono del ACI para poder llamarle.
+
+### LIX.F — Mensajería: las prioridades estaban invertidas
+
+Cada contacto sin conversación era una pastilla suelta en pantalla. Con doce ocupaban más que las conversaciones reales; con cien clientes la pantalla no se puede usar. Los contactos pasan detrás de un botón con buscador y agrupados en equipo clínico / clientes, y las conversaciones se quedan con la pantalla: buscador y filtro de no leídas cuando hacen falta, distintivo `CC` / `CLIENTE` en vez de repetir el prefijo en cada fila, y `Tú:` en el último mensaje propio.
+
+### LIX.G — Qué queda abierto
+
+**El despliegue.** El push no llegó a producción: 20 minutos después las rutas nuevas seguían sin aparecer en el OpenAPI del backend. Hasta que ese despliegue exista, nada de esta sesión está vivo para el cliente.
+
+**Lo que esta sesión no arregló:** `cc_asignado` sigue guardando nombre o email según quién asigne, y las lecturas del panel del cliente (`triaje`, documentos, mensajes) todavía tienen `.catch()` mudos — el barrido se hizo sobre el panel interno y el expediente, no sobre todas las pestañas del cliente.
+
+---
+
 ---
 
 *MASFRAME_PLAN_V12.5 · Documento maestro · Julio 2026*
@@ -2633,3 +2705,4 @@ La regla de no pedir datos inventados estaba escrita **en la skill, ese mismo d�
 
 *§LVII añadida en sesión 22 ago 2026 (cont.) — cierre de NEURO-S1 y cambio de método tras el diagnóstico del usuario ("este ritmo es insufrible"): las 15 reglas de la jornada escritas como reglas y metidas en la skill; `data/auditar_sintoma.py` automatiza en un comando el diagnóstico mecánico que se hizo a mano durante horas (calibrado contra NEURO, 0 falsos positivos tras quitar las columnas que el motor ya protege y las cuatro vías de un KPI de conteo); y la unidad de trabajo pasa de un síntoma a una ESPECIALIDAD por sesión, en 4 fases con UNA sola ronda de decisiones — skill v5, masframe@6f2a8fa*
 *§LVIII añadida en sesión 23-24 ago 2026 — «Podría dejar si te centraras» sale a producción en NEURO-S1.r2: un dato que el dueño se inventa Y un texto que le culpa. Regla nueva, la más dura del copy: **ni una falta de respeto** — el dueño no es el problema, el problema es que nadie le ha dado el sistema. En la skill como §CRITERIOS 15 y en la regla cero, y en `auditar_sintoma.py` como bloqueante junto a la de datos inventados (probadas contra la frase real). Los dos diagnósticos se rehacen con año pasado contra este año, que está en sus facturas, y el veredicto mejora al hacerlo: pasa a desglosar su propio rumbo por líneas en vez de medir un potencial imaginario*
+*§LIX añadida en sesión 26 ago 2026 — sesión de plataforma: el panel dejaba de distinguir entre "no hay nada" y "no he podido leerlo" (sesión caducada invisible, 0 CC falsos), dos definiciones de "consultor" que dejaban a un CC existiendo sin poder trabajar, dos rutas que el panel llamaba y no existían (baja de CC y UCC manual), la firma del contrato que nunca se guardaba y aun así se anunciaba como firmada, el ACI como paso del cliente que bloquea la firma y salta a urgencias de admin y CC, y la mensajería reordenada*
