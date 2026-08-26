@@ -685,7 +685,6 @@ Fase futura: herramientas embebidas en plataforma. Ruta base: `data/herramientas
 | **C6 específico por síntoma** | Todos los síntomas llevan `capa_6_seguimiento = "OKR tracking"` genérico. Necesita métricas propias por síntoma. |
 | **BI Dashboard** | Backend `/bi-stats` + campo `origen` (7 valores) + `plan_historia` + frontend SectionDashboard. |
 | **Tests de los caminos críticos** | No hay cobertura automatizada (§VII). Autenticación, cobro, cierre de capa y emisión de alta, antes de subir volumen de clientes. |
-| **Despliegue del backend en Render** | El push del 26 ago no llegó a producción: 20 minutos después, `/openapi.json` seguía sin las rutas nuevas. O el auto-deploy del servicio está desactivado o el build falla. Todo lo de §LIX depende de que ese despliegue exista. |
 | **`cc_asignado` guarda nombre o email, según quién asigne** | La ficha del cliente guarda el email y el módulo de equipo cuenta por nombre, así que un CC puede aparecer con 0 clientes teniéndolos. El backend ya mira los dos valores al dar de baja (§LIX.C), pero el dato sigue sin normalizar. |
 
 ### Fase futura
@@ -2652,7 +2651,7 @@ Cada contacto sin conversación era una pastilla suelta en pantalla. Con doce oc
 
 ### LIX.G — Qué queda abierto
 
-**El despliegue.** El push no llegó a producción: 20 minutos después las rutas nuevas seguían sin aparecer en el OpenAPI del backend. Hasta que ese despliegue exista, nada de esta sesión está vivo para el cliente.
+**El despliegue, aclarado.** Un push tardó más de 20 minutos en aparecer en el OpenAPI del backend y se dio por roto el auto-deploy; el siguiente estuvo vivo en 2 minutos. El auto-deploy funciona: lo que no se puede es dar por desplegado nada sin comprobarlo contra `/openapi.json`.
 
 **Lo que esta sesión no arregló:** `cc_asignado` sigue guardando nombre o email según quién asigne, y las lecturas del panel del cliente (`triaje`, documentos, mensajes) todavía tienen `.catch()` mudos — el barrido se hizo sobre el panel interno y el expediente, no sobre todas las pestañas del cliente.
 
