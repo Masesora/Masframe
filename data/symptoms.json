@@ -206,13 +206,6 @@
                 "etiqueta": "Fecha compromiso",
                 "tipo": "texto",
                 "placeholder": "ej. 30/09/2026"
-              },
-              {
-                "etiqueta": "¿Depende de alguien? ¿De quién?",
-                "tipo": "texto",
-                "clave": "depende_de",
-                "placeholder": "ej. Juan, el oficial — si no puede, lo hace Marta",
-                "no_sumar": true
               }
             ],
             "filas_iniciales": 2,
@@ -312,13 +305,6 @@
                 "etiqueta": "Fecha compromiso",
                 "tipo": "texto",
                 "placeholder": "ej. 20/09/2026"
-              },
-              {
-                "etiqueta": "¿Depende de alguien? ¿De quién?",
-                "tipo": "texto",
-                "clave": "depende_de",
-                "placeholder": "ej. Juan, el oficial — si no puede, lo hace Marta",
-                "no_sumar": true
               }
             ],
             "filas_iniciales": 2,
@@ -427,13 +413,6 @@
               {
                 "etiqueta": "Fecha acuerdo",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "¿Depende de alguien? ¿De quién?",
-                "tipo": "texto",
-                "clave": "depende_de",
-                "placeholder": "ej. Juan, el oficial — si no puede, lo hace Marta",
-                "no_sumar": true
               }
             ],
             "filas_iniciales": 3
@@ -466,13 +445,6 @@
                   "Esperar y ver cómo evoluciona el mes",
                   "Descartado por ahora"
                 ]
-              },
-              {
-                "etiqueta": "¿Depende de alguien? ¿De quién?",
-                "tipo": "texto",
-                "clave": "depende_de",
-                "placeholder": "ej. Juan, el oficial — si no puede, lo hace Marta",
-                "no_sumar": true
               }
             ],
             "filas_iniciales": 1,
@@ -544,13 +516,6 @@
                 "etiqueta": "Fecha compromiso",
                 "tipo": "texto",
                 "placeholder": "ej. 30/09/2026"
-              },
-              {
-                "etiqueta": "¿Depende de alguien? ¿De quién?",
-                "tipo": "texto",
-                "clave": "depende_de",
-                "placeholder": "ej. Juan, el oficial — si no puede, lo hace Marta",
-                "no_sumar": true
               }
             ],
             "filas_iniciales": 2
@@ -613,13 +578,6 @@
               }
             ],
             "clave": "decision"
-          },
-          {
-            "etiqueta": "¿Depende de alguien? ¿De quién?",
-            "tipo": "texto",
-            "clave": "depende_de",
-            "placeholder": "ej. Juan, el oficial — si no puede, lo hace Marta",
-            "no_sumar": true
           }
         ],
         "filas_iniciales": 2
