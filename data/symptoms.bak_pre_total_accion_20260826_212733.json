@@ -67,22 +67,19 @@
             "etiqueta": "Unidades",
             "tipo": "numero",
             "clave": "uds",
-            "placeholder": "40",
-            "no_sumar": true
+            "placeholder": "40"
           },
           {
             "etiqueta": "Coste unitario (€)",
             "tipo": "numero",
             "clave": "coste",
-            "placeholder": "25",
-            "no_sumar": true
+            "placeholder": "25"
           },
           {
             "etiqueta": "Margen mínimo aceptable (%)",
             "tipo": "numero",
             "clave": "margen_obj",
-            "placeholder": "20",
-            "no_sumar": true
+            "placeholder": "20"
           },
           {
             "etiqueta": "Precio propuesto (€)",
@@ -97,16 +94,14 @@
             "tipo": "calculada",
             "clave": "precio_min",
             "formula": "coste/(1-margen_obj/100)",
-            "unidad": "eur",
-            "no_sumar": true
+            "unidad": "eur"
           },
           {
             "etiqueta": "Margen resultante (%)",
             "tipo": "calculada",
             "clave": "margen_pct",
             "formula": "(precio_prop-coste)/precio_prop*100",
-            "unidad": "pct",
-            "no_sumar": true
+            "unidad": "pct"
           },
           {
             "etiqueta": "Valor estimado (€)",
@@ -148,23 +143,20 @@
                 "etiqueta": "Importe total (€)",
                 "tipo": "numero",
                 "clave": "importe_total",
-                "placeholder": "15000",
-                "no_sumar": true
+                "placeholder": "15000"
               },
               {
                 "etiqueta": "Cobrado (€)",
                 "tipo": "numero",
                 "clave": "cobrado",
-                "placeholder": "6000",
-                "no_sumar": true
+                "placeholder": "6000"
               },
               {
                 "etiqueta": "Pendiente de cobrar (€)",
                 "tipo": "calculada",
                 "clave": "pendiente",
                 "formula": "importe_total-cobrado",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Estado",
@@ -177,7 +169,7 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "opciones",
+                "tipo": "decision",
                 "clave": "pct_recuperable",
                 "decision_opciones": [
                   {
@@ -192,14 +184,7 @@
                     "label": "Cerrar parcial y cobrar ya",
                     "valor": 60
                   }
-                ],
-                "opciones": [
-                  "Facturar la parte ya entregada",
-                  "Cerrar el proyecto y facturarlo entero",
-                  "Pactar un pago parcial ahora",
-                  "Parar el trabajo hasta que pague"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "Recuperación estimada (€)",
@@ -244,8 +229,7 @@
                 "etiqueta": "Importe pendiente (€)",
                 "tipo": "numero",
                 "clave": "importe",
-                "placeholder": "3000",
-                "no_sumar": true
+                "placeholder": "3000"
               },
               {
                 "etiqueta": "Días de retraso desde el vencimiento",
@@ -259,8 +243,7 @@
                 "tipo": "calculada",
                 "clave": "coste_fin",
                 "formula": "importe*dias_retraso*0.1/365",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Estado",
@@ -275,7 +258,7 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "opciones",
+                "tipo": "decision",
                 "clave": "prob_cobro",
                 "decision_opciones": [
                   {
@@ -298,15 +281,7 @@
                     "label": "Vía legal",
                     "valor": 90
                   }
-                ],
-                "opciones": [
-                  "Llamarle esta semana",
-                  "Mandarle la carta de reclamación",
-                  "Pactar un calendario de pagos",
-                  "Pasarlo a un abogado",
-                  "Darlo por perdido"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "Recuperación estimada (€)",
@@ -317,30 +292,14 @@
                 "contribuye_valor": true
               },
               {
-                "etiqueta": "Fecha compromiso",
+                "etiqueta": "Fecha próx. acción",
                 "tipo": "texto",
-                "placeholder": "ej. 20/09/2026",
-                "clave": "fecha_compromiso",
-                "no_sumar": true
+                "placeholder": "ej. 20/09/2026"
               }
             ],
             "filas_iniciales": 2,
             "entidad_compartida": "Cliente",
-            "carta_reclamacion": true,
-            "interpretacion": {
-              "clave": "recuperacion",
-              "reglas": [
-                {
-                  "min": 1,
-                  "color": "verde",
-                  "texto": "Esto es lo que esperas recuperar con las gestiones que has elegido. Lo que falta hasta el total pendiente depende de apretar más en alguna de ellas o de darlo por perdido."
-                },
-                {
-                  "color": "rojo",
-                  "texto": "Todavía no has elegido qué vas a hacer con ninguna factura. Marca una decisión en cada una y verás lo que puedes recuperar."
-                }
-              ]
-            }
+            "carta_reclamacion": true
           }
         ]
       },
@@ -349,7 +308,49 @@
         "titulo": "Corregir el desfase entre el ciclo de cobros y el de pagos",
         "secciones": [
           {
-            "titulo": "Pide más plazo a tus proveedores — empieza por el que más le compras: cada día que te concedan es dinero que no adelantas",
+            "titulo": "1. Tu desfase real",
+            "columnas": [
+              {
+                "etiqueta": "Días que tardas en cobrar de media",
+                "tipo": "numero",
+                "clave": "dias_cobro",
+                "placeholder": "ej. 60",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Días que tardas en pagar de media",
+                "tipo": "numero",
+                "clave": "dias_pago",
+                "placeholder": "ej. 30",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Desfase (días)",
+                "tipo": "calculada",
+                "clave": "desfase_dias",
+                "formula": "dias_cobro-dias_pago",
+                "unidad": "numero",
+                "no_sumar": true
+              }
+            ],
+            "filas_iniciales": 1,
+            "interpretacion": {
+              "clave": "desfase_dias",
+              "reglas": [
+                {
+                  "min": 1,
+                  "color": "rojo",
+                  "texto": "Cobras de media más tarde de lo que tienes que pagar: tienes un hueco de caja real. Dos palancas para cerrarlo -- pide más días a tus proveedores (sección 2) o busca financiación puente para cubrirlo mientras tanto (sección 3)."
+                },
+                {
+                  "color": "verde",
+                  "texto": "Cobras antes de tener que pagar -- no tienes un hueco de caja por este motivo. Puedes revisar igualmente las secciones 2 y 3 si quieres más colchón, pero no es urgente."
+                }
+              ]
+            }
+          },
+          {
+            "titulo": "2. Negociación de plazos con proveedores",
             "columnas": [
               {
                 "etiqueta": "Proveedor",
@@ -358,8 +359,7 @@
               {
                 "etiqueta": "Volumen compra/mes (€)",
                 "tipo": "numero",
-                "clave": "volumen",
-                "no_sumar": true
+                "clave": "volumen"
               },
               {
                 "etiqueta": "Plazo actual (días)",
@@ -368,64 +368,57 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Plazo que le pides (días)",
+                "etiqueta": "Plazo solicitado (días)",
                 "tipo": "numero",
                 "clave": "plazo_solicitado",
                 "no_sumar": true
               },
               {
-                "etiqueta": "Lo que dejas de adelantar al mes (€)",
+                "etiqueta": "Días ganados",
+                "tipo": "calculada",
+                "clave": "dias_ganados",
+                "formula": "plazo_solicitado-plazo_actual",
+                "unidad": "numero",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Liquidez liberada/mes (€)",
                 "tipo": "calculada",
                 "clave": "liquidez",
-                "formula": "(volumen/30)*(plazo_solicitado-plazo_actual)",
+                "formula": "(volumen/30)*dias_ganados",
                 "unidad": "eur",
                 "contribuye_valor": true
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "Estado negociación",
                 "tipo": "opciones",
                 "opciones": [
-                  "Pedírselo esta semana",
-                  "Ya se lo he pedido, esperando",
+                  "Pendiente",
+                  "En negociación",
                   "Acordado",
-                  "No se lo voy a pedir"
-                ],
-                "confirmaciones": {
-                  "Pedírselo esta semana": "¿Se lo has pedido ya?",
-                  "Ya se lo he pedido, esperando": "¿Te ha contestado?",
-                  "Acordado": "¿Está ya aplicado en tus facturas?",
-                  "No se lo voy a pedir": "¿Sigues sin pedírselo?"
-                },
-                "es_decision": true
+                  "Rechazado"
+                ]
+              },
+              {
+                "etiqueta": "Fecha acuerdo",
+                "tipo": "texto"
               }
             ],
-            "filas_iniciales": 3,
-            "interpretacion": {
-              "clave": "liquidez",
-              "reglas": [
-                {
-                  "min": 1,
-                  "color": "verde",
-                  "texto": "Eso es lo que dejas de adelantar cada mes si te conceden esos días. Se queda en tu cuenta y puedes usarlo."
-                }
-              ]
-            }
+            "filas_iniciales": 3
           },
           {
-            "titulo": "Si aún te falta, cúbrelo mientras tanto",
+            "titulo": "3. Financiación puente",
             "columnas": [
               {
                 "etiqueta": "Vía de financiación a explorar",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
                   "Línea de crédito con tu banco",
                   "Factoring / adelanto de facturas",
                   "Préstamo a corto plazo",
                   "Buscar un socio o inversor",
                   "Ninguna, prefiero ajustar sin financiación externa"
-                ],
-                "estilo": "desplegable"
+                ]
               },
               {
                 "etiqueta": "Con quién vas a hablar",
@@ -440,14 +433,7 @@
                   "Reunir la documentación primero",
                   "Esperar y ver cómo evoluciona el mes",
                   "Descartado por ahora"
-                ],
-                "confirmaciones": {
-                  "Pedir cita esta semana": "¿Has pedido ya la cita?",
-                  "Reunir la documentación primero": "¿Tienes ya la documentación reunida?",
-                  "Esperar y ver cómo evoluciona el mes": "¿Has revisado cómo ha ido el mes?",
-                  "Descartado por ahora": "¿Sigues descartándolo?"
-                },
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 1,
@@ -471,8 +457,7 @@
                 "etiqueta": "Importe anticipado (€)",
                 "tipo": "numero",
                 "clave": "importe_ant",
-                "placeholder": "8000",
-                "no_sumar": true
+                "placeholder": "8000"
               },
               {
                 "etiqueta": "Motivo por el que no avanza",
@@ -486,7 +471,7 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "opciones",
+                "tipo": "decision",
                 "clave": "pct_recuperable",
                 "decision_opciones": [
                   {
@@ -505,14 +490,7 @@
                     "label": "Facturar ahora",
                     "valor": 100
                   }
-                ],
-                "opciones": [
-                  "Terminar el trabajo esta semana",
-                  "Entregar una parte y facturarla",
-                  "Ponerle fecha con el cliente",
-                  "Devolver el anticipo"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "Recuperación estimada (€)",
@@ -830,8 +808,7 @@
                 "tipo": "calculada",
                 "clave": "coste_fin",
                 "formula": "importe*dias_retraso*0.1/365",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Decisión",
@@ -840,8 +817,7 @@
                   "Reclamar ya",
                   "Aún no vencida, esperar",
                   "Cobrada"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -946,8 +922,7 @@
                 },
                 "opciones_baja": [
                   "Dejar de ofrecerlo"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "¿A cuánto lo subes? (€)",
@@ -1061,8 +1036,7 @@
                 },
                 "opciones_sin_mejora": [
                   "Mantenerlo, pero a cambio de algo"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "¿Cuál es tu descuento máximo? (%)",
@@ -1185,8 +1159,7 @@
                 },
                 "opciones_sin_mejora": [
                   "Absorberlo de momento"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "¿A cuánto lo pones? (€)",
@@ -1257,8 +1230,7 @@
                   "Acotar por escrito qué incluye": "¿Se lo has comunicado al cliente y está en el presupuesto o contrato nuevo?",
                   "Subir el precio para cubrirlas": "¿Has actualizado ya el precio y lo estás aplicando?",
                   "Reducir las horas que regalas": "¿Has medido ya un mes completo con las horas nuevas?"
-                },
-                "es_decision": true
+                }
               },
               {
                 "etiqueta": "¿Cuánto le facturas aparte al mes? (€)",
@@ -1362,8 +1334,7 @@
                 },
                 "opciones_baja": [
                   "Descontinuarla"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "¿A cuánto subes el precio? (€)",
@@ -1489,8 +1460,7 @@
                 },
                 "opciones_baja": [
                   "Desvincular al cliente"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "¿A cuánto le pones la tarifa al mes? (€)",
@@ -1553,7 +1523,7 @@
                 }
               },
               {
-                "etiqueta": "¿Qué incluye cada mes?",
+                "etiqueta": "¿Qué incluye el plan cada mes?",
                 "tipo": "texto",
                 "clave": "pack_incluye_r6",
                 "mostrar_si": {
@@ -1590,8 +1560,7 @@
       }
     },
     "kpi_window_meses": 3,
-    "kpi_objetivo_puntos": 10,
-    "kpi_recovery_mode": "financiero"
+    "kpi_objetivo_puntos": 10
   },
   {
     "specialty_id": "UNIDAD DE PROCESOS",
@@ -1658,7 +1627,7 @@
             "titulo": "Tus pasos con más tiempo perdido — empieza por los 2-3 que más tiempo te cuestan, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
-                "etiqueta": "Etapa del proceso",
+                "etiqueta": "Paso / Actividad",
                 "tipo": "texto",
                 "placeholder": "ej. Revisar pedido antes de enviar"
               },
@@ -1666,15 +1635,13 @@
                 "etiqueta": "T. Estimado (min)",
                 "tipo": "numero",
                 "clave": "t_estimado",
-                "placeholder": "10",
-                "no_sumar": true
+                "placeholder": "10"
               },
               {
                 "etiqueta": "T. Real Prom. (min)",
                 "tipo": "numero",
                 "clave": "t_real",
-                "placeholder": "25",
-                "no_sumar": true
+                "placeholder": "25"
               },
               {
                 "etiqueta": "Gap (min)",
@@ -1696,15 +1663,8 @@
               },
               {
                 "etiqueta": "Acción de mejora",
-                "tipo": "opciones",
-                "opciones": [
-                  "Quitar la espera",
-                  "Juntarlo con el paso anterior",
-                  "Que lo haga otra persona",
-                  "Ponerle un plazo máximo",
-                  "Se queda como está"
-                ],
-                "es_decision": true
+                "tipo": "texto",
+                "placeholder": "ej. Automatizar la revisión con una checklist"
               },
               {
                 "etiqueta": "Estado",
@@ -1739,8 +1699,7 @@
               {
                 "etiqueta": "Frec./semana",
                 "tipo": "numero",
-                "clave": "frec",
-                "no_sumar": true
+                "clave": "frec"
               },
               {
                 "etiqueta": "Duración media (h)",
@@ -1768,8 +1727,7 @@
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora",
-                "no_sumar": true
+                "clave": "coste_hora"
               },
               {
                 "etiqueta": "Coste mensual (€)",
@@ -1786,8 +1744,7 @@
                   "Añadir recursos",
                   "Delegar a otra persona/sistema",
                   "Aceptar el coste por ahora"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -1811,15 +1768,13 @@
                 "etiqueta": "T. Máx comprometido (h)",
                 "tipo": "numero",
                 "clave": "tmax",
-                "placeholder": "24",
-                "no_sumar": true
+                "placeholder": "24"
               },
               {
                 "etiqueta": "T. Real Prom. (h)",
                 "tipo": "numero",
                 "clave": "treal",
-                "placeholder": "48",
-                "no_sumar": true
+                "placeholder": "48"
               },
               {
                 "etiqueta": "Desviación sobre el compromiso (h)",
@@ -1840,14 +1795,8 @@
               },
               {
                 "etiqueta": "Acción de mejora",
-                "tipo": "opciones",
-                "opciones": [
-                  "Bajar el plazo comprometido",
-                  "Poner un aviso cuando se pase",
-                  "Repartirlo entre más gente",
-                  "Subir el plazo a lo que de verdad tardas"
-                ],
-                "es_decision": true
+                "tipo": "texto",
+                "placeholder": "ej. Definir protocolo de escalado para picos de demanda"
               },
               {
                 "etiqueta": "Responsable",
@@ -1868,7 +1817,7 @@
             "titulo": "Tus tareas con más ahorro potencial — empieza por las 2-3 con más ahorro, sigue añadiendo el resto mientras trabajas el plan",
             "columnas": [
               {
-                "etiqueta": "Trabajo",
+                "etiqueta": "Tarea",
                 "tipo": "texto",
                 "placeholder": "ej. Preparar el pedido semanal a proveedor"
               },
@@ -1876,29 +1825,25 @@
                 "etiqueta": "Ocurrencias/mes",
                 "tipo": "numero",
                 "clave": "ocurrencias",
-                "placeholder": "8",
-                "no_sumar": true
+                "placeholder": "8"
               },
               {
                 "etiqueta": "T. sin estándar (min)",
                 "tipo": "numero",
                 "clave": "t_sin",
-                "placeholder": "30",
-                "no_sumar": true
+                "placeholder": "30"
               },
               {
                 "etiqueta": "T. con estándar (min)",
                 "tipo": "numero",
                 "clave": "t_con",
-                "placeholder": "15",
-                "no_sumar": true
+                "placeholder": "15"
               },
               {
                 "etiqueta": "Personas (nº)",
                 "tipo": "numero",
                 "clave": "personas",
-                "placeholder": "2",
-                "no_sumar": true
+                "placeholder": "2"
               },
               {
                 "etiqueta": "Ahorro/mes (min)",
@@ -1918,14 +1863,8 @@
               },
               {
                 "etiqueta": "Acción de estandarización",
-                "tipo": "opciones",
-                "opciones": [
-                  "Escribir el paso a paso",
-                  "Grabar un vídeo corto",
-                  "Hacer una plantilla",
-                  "Que lo haga siempre la misma persona"
-                ],
-                "es_decision": true
+                "tipo": "texto",
+                "placeholder": "ej. Escribir guía de 3 pasos y subirla a la carpeta compartida"
               }
             ],
             "filas_iniciales": 2,
@@ -1955,8 +1894,7 @@
               {
                 "etiqueta": "Meta",
                 "tipo": "numero",
-                "clave": "meta",
-                "no_sumar": true
+                "clave": "meta"
               },
               {
                 "etiqueta": "Valor actual",
@@ -1996,8 +1934,7 @@
                   "Ajustar la meta a algo realista",
                   "Crear un plan para cerrar la brecha",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -2024,28 +1961,24 @@
               {
                 "etiqueta": "Tiempo/mes (h)",
                 "tipo": "numero",
-                "clave": "tiempo",
-                "no_sumar": true
+                "clave": "tiempo"
               },
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora",
-                "no_sumar": true
+                "clave": "coste_hora"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Puede eliminarse?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Quitarlo del proceso",
-                  "Quitar solo la parte que sobra",
-                  "Automatizarlo",
-                  "Se queda como está"
-                ],
-                "es_decision": true
+                  "Sí",
+                  "Parcial",
+                  "No"
+                ]
               },
               {
-                "etiqueta": "Quién lo decide",
+                "etiqueta": "Responsable decisión",
                 "tipo": "texto"
               },
               {
@@ -2068,7 +2001,7 @@
             "titulo": "1. Dependencias humanas críticas",
             "columnas": [
               {
-                "etiqueta": "Trabajo crítico",
+                "etiqueta": "Tarea crítica",
                 "tipo": "texto"
               },
               {
@@ -2076,16 +2009,12 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Hay backup?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Ya hay quien sabe hacerlo",
-                  "Formar a un sustituto este mes",
-                  "Escribir el paso a paso",
-                  "Repartirlo entre dos personas",
-                  "Lo dejo como está"
-                ],
-                "es_decision": true
+                  "Sí",
+                  "No"
+                ]
               },
               {
                 "etiqueta": "Impacto si falta",
@@ -2099,13 +2028,11 @@
               {
                 "etiqueta": "Coste dep./mes (€)",
                 "tipo": "numero",
-                "clave": "costedep",
-                "no_sumar": true
+                "clave": "costedep"
               },
               {
                 "etiqueta": "T. formar backup (h)",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Coste resolver (€)",
@@ -2164,8 +2091,7 @@
               {
                 "etiqueta": "Horas estimadas",
                 "tipo": "numero",
-                "clave": "horas_est",
-                "no_sumar": true
+                "clave": "horas_est"
               },
               {
                 "etiqueta": "Fecha límite",
@@ -2186,8 +2112,7 @@
                   "Reasignar a otra persona",
                   "Posponer a la siguiente revisión",
                   "Ya está documentado"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -2316,8 +2241,7 @@
                   "Exigir info completa antes de aceptar",
                   "Delegar el filtro a otra persona",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -2346,14 +2270,12 @@
               {
                 "etiqueta": "Frec./semana",
                 "tipo": "numero",
-                "clave": "frec",
-                "no_sumar": true
+                "clave": "frec"
               },
               {
                 "etiqueta": "T. espera (h)",
                 "tipo": "numero",
-                "clave": "espera",
-                "no_sumar": true
+                "clave": "espera"
               },
               {
                 "etiqueta": "¿Protocolo?",
@@ -2387,8 +2309,7 @@
                   "Reducir tiempo de espera acordado",
                   "Escalar a dirección",
                   "Ya funciona bien"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -2403,7 +2324,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Trabajo",
+                "etiqueta": "Tarea",
                 "tipo": "texto"
               },
               {
@@ -2441,16 +2362,12 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Bloqueada?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sigue su curso",
-                  "Reclamar al solicitante lo que falta",
-                  "Liberar a quien la ejecuta",
-                  "Cambiarle la prioridad",
-                  "Se cancela"
-                ],
-                "es_decision": true
+                  "Sí",
+                  "No"
+                ]
               },
               {
                 "etiqueta": "Motivo bloqueo",
@@ -2487,7 +2404,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Qué tiene que aprender",
+                "etiqueta": "Tarea de onboarding",
                 "tipo": "texto"
               },
               {
@@ -2512,15 +2429,12 @@
                 "tipo": "numero"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Documentada?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Ya está escrito",
-                  "Escribirlo esta semana",
-                  "Se enseña al lado, sin papel",
-                  "Grabar un vídeo corto"
-                ],
-                "es_decision": true
+                  "Sí",
+                  "No"
+                ]
               },
               {
                 "etiqueta": "¿Completada?",
@@ -2555,8 +2469,7 @@
               },
               {
                 "etiqueta": "T. revisión (min)",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Errores (nº)",
@@ -2582,8 +2495,7 @@
                   "Simplificar el proceso",
                   "Formar al responsable",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -2604,14 +2516,12 @@
               {
                 "etiqueta": "Nº contactos/sem",
                 "tipo": "numero",
-                "clave": "contactos",
-                "no_sumar": true
+                "clave": "contactos"
               },
               {
                 "etiqueta": "T. medio/contacto (min)",
                 "tipo": "numero",
-                "clave": "tiempo_medio",
-                "no_sumar": true
+                "clave": "tiempo_medio"
               },
               {
                 "etiqueta": "% iniciados cliente",
@@ -2637,8 +2547,7 @@
                   "Cambiar de canal",
                   "Automatizar respuestas frecuentes",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -2722,8 +2631,7 @@
               {
                 "etiqueta": "Nº ocurrencias",
                 "tipo": "numero",
-                "clave": "ocurr",
-                "no_sumar": true
+                "clave": "ocurr"
               },
               {
                 "etiqueta": "Detectado por",
@@ -2737,14 +2645,12 @@
               {
                 "etiqueta": "T. retrabajo (h)",
                 "tipo": "numero",
-                "clave": "retrabajo",
-                "no_sumar": true
+                "clave": "retrabajo"
               },
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora",
-                "no_sumar": true
+                "clave": "coste_hora"
               },
               {
                 "etiqueta": "¿Protocolo prev.?",
@@ -2769,8 +2675,7 @@
                   "Crear checklist de verificación en esa fase",
                   "Formar al equipo en ese error",
                   "Ya está controlado"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -2795,14 +2700,12 @@
               {
                 "etiqueta": "Horas retrabajo",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora",
-                "no_sumar": true
+                "clave": "coste_hora"
               },
               {
                 "etiqueta": "¿Se cobró al cliente?",
@@ -2831,8 +2734,7 @@
                   "Atacar la causa raíz de fondo",
                   "Aceptar el coste como parte del servicio",
                   "Ya está resuelto"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -2853,8 +2755,7 @@
               {
                 "etiqueta": "Nº fallos/mes",
                 "tipo": "numero",
-                "clave": "fallos",
-                "no_sumar": true
+                "clave": "fallos"
               },
               {
                 "etiqueta": "Tipo de fallo más común",
@@ -2871,8 +2772,7 @@
               {
                 "etiqueta": "T. invertido/sem (h)",
                 "tipo": "numero",
-                "clave": "tiempo",
-                "no_sumar": true
+                "clave": "tiempo"
               },
               {
                 "etiqueta": "Tiempo por fallo (h)",
@@ -2889,8 +2789,7 @@
                   "Rediseñar esa fase del proceso",
                   "Reforzar la revisión en esa fase",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -2923,14 +2822,12 @@
               {
                 "etiqueta": "T. resolución (h)",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "Coste hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora",
-                "no_sumar": true
+                "clave": "coste_hora"
               },
               {
                 "etiqueta": "¿Se repitió?",
@@ -2964,8 +2861,7 @@
                   "Cerrar el origen para que no se repita",
                   "Compensar al cliente",
                   "Ya está resuelto"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -2986,19 +2882,16 @@
               {
                 "etiqueta": "Entregas/mes",
                 "tipo": "numero",
-                "clave": "entregas",
-                "no_sumar": true
+                "clave": "entregas"
               },
               {
                 "etiqueta": "Errores detectados",
                 "tipo": "numero",
-                "clave": "errores",
-                "no_sumar": true
+                "clave": "errores"
               },
               {
                 "etiqueta": "Revisiones necesarias",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "T. retrabajo (h)",
@@ -3029,8 +2922,7 @@
                   "Ajustar su carga de trabajo",
                   "Revisar si el protocolo es claro",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -3046,7 +2938,7 @@
             "titulo": "1. Constructor de checklist de verificación",
             "columnas": [
               {
-                "etiqueta": "Etapa del proceso",
+                "etiqueta": "Paso del proceso",
                 "tipo": "texto"
               },
               {
@@ -3058,14 +2950,12 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Crítico?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Entra en el checklist",
-                  "Entra y además se firma",
-                  "Se queda fuera del checklist"
-                ],
-                "es_decision": true
+                  "Sí",
+                  "No"
+                ]
               },
               {
                 "etiqueta": "Evidencia requerida",
@@ -3098,14 +2988,12 @@
               {
                 "etiqueta": "Errores ANTES de entregar",
                 "tipo": "numero",
-                "clave": "antes",
-                "no_sumar": true
+                "clave": "antes"
               },
               {
                 "etiqueta": "Errores DESPUÉS (cliente)",
                 "tipo": "numero",
-                "clave": "despues",
-                "no_sumar": true
+                "clave": "despues"
               },
               {
                 "etiqueta": "Reducción (%)",
@@ -3131,8 +3019,7 @@
                   "Reforzar el checklist en este punto",
                   "Investigar por qué no se aplicó",
                   "Ya está funcionando bien"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -3221,8 +3108,7 @@
               {
                 "etiqueta": "Personas que preguntan/mes",
                 "tipo": "numero",
-                "clave": "leads",
-                "no_sumar": true
+                "clave": "leads"
               },
               {
                 "etiqueta": "Clientes cerrados/mes",
@@ -3233,13 +3119,11 @@
               {
                 "etiqueta": "Cuánto te cuesta cada pregunta (€)",
                 "tipo": "numero",
-                "clave": "costelead",
-                "no_sumar": true
+                "clave": "costelead"
               },
               {
                 "etiqueta": "¿Te compensa? (€ ganado por cada € gastado)",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Conversión (%)",
@@ -3254,8 +3138,7 @@
                 "tipo": "calculada",
                 "clave": "cac",
                 "formula": "costelead*leads/clientes",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Decisión",
@@ -3265,8 +3148,7 @@
                   "Mantener",
                   "Optimizar antes de escalar",
                   "Abandonar canal"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -3303,8 +3185,7 @@
               {
                 "etiqueta": "Seguidores/visitas/mes",
                 "tipo": "numero",
-                "clave": "seguidores",
-                "no_sumar": true
+                "clave": "seguidores"
               },
               {
                 "etiqueta": "Leads/mes",
@@ -3336,8 +3217,7 @@
                   "Actualizar y relanzar",
                   "Mantener como está",
                   "Descartar canal"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 6,
@@ -3378,15 +3258,7 @@
               },
               {
                 "etiqueta": "Próxima acción",
-                "tipo": "opciones",
-                "opciones": [
-                  "Llamarle esta semana",
-                  "Mandarle el presupuesto",
-                  "Quedar para verle",
-                  "Volver a intentarlo en un mes",
-                  "Descartarlo"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Fecha próximo contacto",
@@ -3419,14 +3291,12 @@
               {
                 "etiqueta": "Inversión (€)",
                 "tipo": "numero",
-                "clave": "inversion",
-                "no_sumar": true
+                "clave": "inversion"
               },
               {
                 "etiqueta": "Leads",
                 "tipo": "numero",
-                "clave": "leads",
-                "no_sumar": true
+                "clave": "leads"
               },
               {
                 "etiqueta": "Clientes",
@@ -3437,8 +3307,7 @@
               {
                 "etiqueta": "Ticket medio (€)",
                 "tipo": "numero",
-                "clave": "ticket",
-                "no_sumar": true
+                "clave": "ticket"
               },
               {
                 "etiqueta": "¿Constante y medido?",
@@ -3453,16 +3322,14 @@
                 "tipo": "calculada",
                 "clave": "cac",
                 "formula": "inversion/clientes",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Ingresos generados (€)",
                 "tipo": "calculada",
                 "clave": "ingresos",
                 "formula": "clientes*ticket",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "ROI (%)",
@@ -3480,8 +3347,7 @@
                   "Mantener inversión actual",
                   "Reducir inversión",
                   "Cerrar canal"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -3712,29 +3578,24 @@
               },
               {
                 "etiqueta": "Nuevos leads",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Avances pipeline",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Propuestas enviadas",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Cierres",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Ingresos cerrados (€)",
                 "tipo": "numero",
-                "clave": "ingresos",
-                "no_sumar": true
+                "clave": "ingresos"
               },
               {
                 "etiqueta": "Objetivo semana (€)",
@@ -3743,15 +3604,7 @@
               },
               {
                 "etiqueta": "Acción correctora",
-                "tipo": "opciones",
-                "opciones": [
-                  "Salir a buscar más contactos",
-                  "Sacar las propuestas pendientes",
-                  "Llamar a los que no contestan",
-                  "Bajar el objetivo de la semana",
-                  "Vamos bien, seguir igual"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "% objetivo cumplido",
@@ -3779,61 +3632,54 @@
               {
                 "etiqueta": "Llamadas",
                 "tipo": "numero",
-                "clave": "llamadas",
-                "no_sumar": true
+                "clave": "llamadas"
               },
               {
                 "etiqueta": "Emails",
                 "tipo": "numero",
-                "clave": "emails",
-                "no_sumar": true
+                "clave": "emails"
               },
               {
                 "etiqueta": "LinkedIn",
                 "tipo": "numero",
-                "clave": "linkedin",
-                "no_sumar": true
+                "clave": "linkedin"
               },
               {
                 "etiqueta": "Reuniones",
                 "tipo": "numero",
-                "clave": "reuniones",
-                "no_sumar": true
+                "clave": "reuniones"
               },
               {
                 "etiqueta": "Propuestas",
                 "tipo": "numero",
-                "clave": "propuestas",
-                "no_sumar": true
+                "clave": "propuestas"
               },
               {
                 "etiqueta": "Seguimientos",
                 "tipo": "numero",
-                "clave": "seguim",
-                "no_sumar": true
+                "clave": "seguim"
               },
               {
                 "etiqueta": "Objetivo",
                 "tipo": "numero",
-                "clave": "objetivo",
-                "no_sumar": true
+                "clave": "objetivo"
+              },
+              {
+                "etiqueta": "Total actividad",
+                "tipo": "calculada",
+                "clave": "total",
+                "formula": "llamadas+emails+linkedin+reuniones+propuestas+seguim",
+                "unidad": "numero"
               },
               {
                 "etiqueta": "Acción correctora",
-                "tipo": "opciones",
-                "opciones": [
-                  "Subir las llamadas de la semana",
-                  "Cambiar el canal que no funciona",
-                  "Reservar dos horas fijas para contactar",
-                  "Vamos bien, seguir igual"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "% objetivo",
                 "tipo": "calculada",
                 "clave": "pct_objetivo",
-                "formula": "(llamadas+emails+linkedin+reuniones+propuestas+seguim)*100/objetivo",
+                "formula": "total*100/objetivo",
                 "unidad": "pct",
                 "no_sumar": true
               }
@@ -3878,14 +3724,7 @@
               },
               {
                 "etiqueta": "Acción si supera",
-                "tipo": "opciones",
-                "opciones": [
-                  "Llamar para desatascarlo",
-                  "Bajarle la probabilidad",
-                  "Sacarlo del embudo",
-                  "Pasarlo a la etapa siguiente"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Probabilidad %",
@@ -3920,14 +3759,7 @@
               },
               {
                 "etiqueta": "Próxima acción",
-                "tipo": "opciones",
-                "opciones": [
-                  "Llamarle esta semana",
-                  "Mandarle la propuesta",
-                  "Ponerle fecha de cierre",
-                  "Sacarlo del embudo"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 2
@@ -3959,14 +3791,12 @@
               {
                 "etiqueta": "Horas reales/semana",
                 "tipo": "numero",
-                "clave": "horas_reales",
-                "no_sumar": true
+                "clave": "horas_reales"
               },
               {
                 "etiqueta": "Horas objetivo/semana",
                 "tipo": "numero",
-                "clave": "horas_objetivo",
-                "no_sumar": true
+                "clave": "horas_objetivo"
               },
               {
                 "etiqueta": "Gap (h)",
@@ -4020,14 +3850,7 @@
               },
               {
                 "etiqueta": "Próximo paso",
-                "tipo": "opciones",
-                "opciones": [
-                  "Llamarle para saber en qué está",
-                  "Mandarle una versión ajustada",
-                  "Ponerle fecha límite",
-                  "Darla por perdida"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Fecha follow-up",
@@ -4103,8 +3926,7 @@
             "columnas": [
               {
                 "etiqueta": "Objetivo mensual (€)",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Mes actual",
@@ -4131,8 +3953,7 @@
               {
                 "etiqueta": "Valor (€)",
                 "tipo": "numero",
-                "clave": "valor",
-                "no_sumar": true
+                "clave": "valor"
               },
               {
                 "etiqueta": "Probabilidad %",
@@ -4177,14 +3998,12 @@
             "columnas": [
               {
                 "etiqueta": "Objetivo trimestral (€)",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Ingresos confirmados mes actual (€)",
                 "tipo": "numero",
-                "clave": "ingresos_conf",
-                "no_sumar": true
+                "clave": "ingresos_conf"
               },
               {
                 "etiqueta": "Cliente",
@@ -4199,8 +4018,7 @@
               {
                 "etiqueta": "Valor (€)",
                 "tipo": "numero",
-                "clave": "valor",
-                "no_sumar": true
+                "clave": "valor"
               },
               {
                 "etiqueta": "Mes previsto cierre",
@@ -4221,10 +4039,17 @@
                 "tipo": "texto"
               },
               {
+                "etiqueta": "Valor ponderado (€)",
+                "tipo": "calculada",
+                "clave": "valor_pond",
+                "formula": "valor*prob/100",
+                "unidad": "eur"
+              },
+              {
                 "etiqueta": "Total proyectado (€)",
                 "tipo": "calculada",
                 "clave": "total_proy",
-                "formula": "ingresos_conf+(valor*prob/100)",
+                "formula": "ingresos_conf+valor_pond",
                 "unidad": "eur"
               }
             ],
@@ -4456,14 +4281,7 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Dedicarle tiempo, es de los buenos",
-                  "Atenderle sin prioridad",
-                  "Pasárselo a otra persona",
-                  "Descartarlo"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 2
@@ -4581,8 +4399,7 @@
               {
                 "etiqueta": "Leads totales/mes",
                 "tipo": "numero",
-                "clave": "totales",
-                "no_sumar": true
+                "clave": "totales"
               },
               {
                 "etiqueta": "Leads calificados/mes",
@@ -4593,20 +4410,17 @@
               {
                 "etiqueta": "Clientes cerrados",
                 "tipo": "numero",
-                "clave": "clientes",
-                "no_sumar": true
+                "clave": "clientes"
               },
               {
                 "etiqueta": "Ticket medio (€)",
                 "tipo": "numero",
-                "clave": "ticket",
-                "no_sumar": true
+                "clave": "ticket"
               },
               {
                 "etiqueta": "Coste canal (€/mes)",
                 "tipo": "numero",
-                "clave": "costecanal",
-                "no_sumar": true
+                "clave": "costecanal"
               },
               {
                 "etiqueta": "% calificación",
@@ -4621,8 +4435,7 @@
                 "tipo": "calculada",
                 "clave": "ingresos",
                 "formula": "clientes*ticket",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "ROI canal (%)",
@@ -4640,8 +4453,7 @@
                   "Mantener",
                   "Optimizar antes de escalar",
                   "Abandonar canal"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3
@@ -4779,8 +4591,7 @@
                   "Fijar el 8%": "¿Has escrito el beneficio al que quieres llegar y dónde vas a mirarlo cada mes?",
                   "Fijar otro objetivo con mi consultor": "¿Habéis fijado ya el número y está escrito?",
                   "Mantener el resultado del año pasado": "¿Confirmas que asumes cerrar el año por debajo del IPC?"
-                },
-                "es_decision": true
+                }
               }
             ]
           }
@@ -4817,8 +4628,7 @@
                 "sugerencia_por_color": {
                   "rojo": "Subirle el precio",
                   "amarillo": "Ofrecerla a los clientes que ya tengo"
-                },
-                "es_decision": true
+                }
               },
               {
                 "etiqueta": "€ que te comprometes a conseguir este año",
@@ -4862,8 +4672,7 @@
                 "sugerencia_por_color": {
                   "rojo": "Ponerle techo y avisar a quien compra",
                   "amarillo": "Renegociar con el proveedor"
-                },
-                "es_decision": true
+                }
               },
               {
                 "etiqueta": "€ que te comprometes a ahorrar este año",
@@ -4930,8 +4739,7 @@
                   "Lo lleva alguien del equipo": "¿Se lo has encargado ya, con su número y su fecha?",
                   "Ajustar la meta a algo que sostengo": "¿Has escrito ya la meta nueva?",
                   "Fuera de este año": "¿Lo has sacado ya del plan?"
-                },
-                "es_decision": true
+                }
               }
             ],
             "interpretacion": {
@@ -4986,8 +4794,7 @@
                 "sugerencia_por_color": {
                   "rojo": "Pasársela a alguien del equipo",
                   "amarillo": "Automatizarla"
-                },
-                "es_decision": true
+                }
               },
               {
                 "etiqueta": "€ que te comprometes a recuperar este año",
@@ -5127,8 +4934,7 @@
                   "Repetirlo tal cual": "¿Está ya programado?",
                   "Repetirlo cambiando cómo se hace": "¿Has escrito ya qué cambias?",
                   "Pasarlo a alguien del equipo": "¿Se lo has encargado ya a alguien con nombre?"
-                },
-                "es_decision": true
+                }
               }
             ]
           }
@@ -5400,10 +5206,17 @@
                 ]
               },
               {
+                "etiqueta": "Total horas planificadas",
+                "tipo": "calculada",
+                "clave": "total_h",
+                "formula": "h_estr+h_op+h_com",
+                "unidad": "numero"
+              },
+              {
                 "etiqueta": "% tiempo estratégico",
                 "tipo": "calculada",
                 "clave": "pct_estr",
-                "formula": "h_estr*100/(h_estr+h_op+h_com)",
+                "formula": "h_estr*100/total_h",
                 "unidad": "pct",
                 "no_sumar": true
               },
@@ -5415,8 +5228,7 @@
                   "Delegar interrupciones recurrentes",
                   "Mantener el plan actual",
                   "Ajustar el bloque"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 1,
@@ -5468,18 +5280,25 @@
                   "Pausar",
                   "Cancelar"
                 ],
-                "contribuye_valor_si": "Terminar",
-                "es_decision": true
+                "contribuye_valor_si": "Terminar"
               },
               {
                 "etiqueta": "Fecha compromiso",
                 "tipo": "texto"
               },
               {
+                "etiqueta": "Valor generado hasta ahora (€)",
+                "tipo": "calculada",
+                "clave": "valor_generado",
+                "formula": "valor*pct/100",
+                "unidad": "eur",
+                "no_sumar": true
+              },
+              {
                 "etiqueta": "Valor en riesgo si se cancela (€)",
                 "tipo": "calculada",
                 "clave": "valor_riesgo",
-                "formula": "valor-(valor*pct/100)",
+                "formula": "valor-valor_generado",
                 "unidad": "eur"
               }
             ],
@@ -5495,7 +5314,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Trabajo o petición",
+                "etiqueta": "Tarea / Solicitud",
                 "tipo": "texto"
               },
               {
@@ -5516,15 +5335,13 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Existe protocolo?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Ya está escrito, lo suelto",
-                  "Escribir el paso a paso",
-                  "Enseñarlo una vez y soltarlo",
-                  "Esto lo sigo llevando yo"
-                ],
-                "es_decision": true
+                  "",
+                  "Si",
+                  "No"
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -5597,8 +5414,7 @@
                   "Reformular la prioridad",
                   "Proteger mejor el tiempo",
                   "Ya completada, sin cambios"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -5642,8 +5458,7 @@
                   "Delegar esta interrupción",
                   "Aceptarla (no evitable)",
                   "Crear un filtro para bloquearla"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -5699,16 +5514,8 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Se elimina",
-                  "Se acorta a la mitad",
-                  "Se pasa a mensual",
-                  "Va menos gente",
-                  "Se queda igual"
-                ],
-                "es_decision": true
+                "etiqueta": "Decisión final",
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Horas-persona/mes",
@@ -5731,7 +5538,7 @@
             "titulo": "1. Matriz de delegación",
             "columnas": [
               {
-                "etiqueta": "Qué se decide",
+                "etiqueta": "Tipo decisión",
                 "tipo": "texto"
               },
               {
@@ -5754,14 +5561,13 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Requiere líder?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Se la paso entera",
-                  "Se la paso con un límite",
-                  "Me la quedo por ahora"
-                ],
-                "es_decision": true
+                  "",
+                  "Sí",
+                  "No"
+                ]
               },
               {
                 "etiqueta": "Quién decide",
@@ -5780,13 +5586,7 @@
             "columnas": [
               {
                 "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "A partir de ahora la decide el equipo",
-                  "La decide el equipo hasta un límite",
-                  "La sigo decidiendo yo"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "¿Llegó al líder?",
@@ -5939,8 +5739,7 @@
                   "Subir precio",
                   "Reducir coste",
                   "Eliminar del catálogo"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -6093,10 +5892,26 @@
                 "no_sumar": true
               },
               {
+                "etiqueta": "Ingresos actuales (€)",
+                "tipo": "calculada",
+                "clave": "ingresos_actuales",
+                "formula": "precio_actual*clientes_actuales",
+                "unidad": "eur",
+                "no_sumar": true
+              },
+              {
+                "etiqueta": "Clientes tras subida",
+                "tipo": "calculada",
+                "clave": "clientes_tras",
+                "formula": "clientes_actuales-clientes_perdidos",
+                "unidad": "numero",
+                "no_sumar": true
+              },
+              {
                 "etiqueta": "Ingresos con subida (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_nuevos",
-                "formula": "precio_propuesto*(clientes_actuales-clientes_perdidos)",
+                "formula": "precio_propuesto*clientes_tras",
                 "unidad": "eur",
                 "no_sumar": true
               },
@@ -6104,7 +5919,7 @@
                 "etiqueta": "Impacto neto (€)",
                 "tipo": "calculada",
                 "clave": "impacto_neto",
-                "formula": "ingresos_nuevos-(precio_actual*clientes_actuales)",
+                "formula": "ingresos_nuevos-ingresos_actuales",
                 "unidad": "eur"
               },
               {
@@ -6115,8 +5930,7 @@
                   "Mantener el precio actual",
                   "Subir menos de lo simulado",
                   "Necesito más datos"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -6198,8 +6012,7 @@
                   "Mantener en el catálogo",
                   "Reducir inversión",
                   "Retirar del catálogo"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -6440,8 +6253,7 @@
                   "Necesita definir mejor cómo medirlo",
                   "Descartarlo, no es representativo",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -6511,7 +6323,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Etapa del cierre",
+                "etiqueta": "Paso",
                 "tipo": "texto"
               },
               {
@@ -6523,15 +6335,12 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Hecho?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Lo hago yo ese día",
-                  "Lo hace el responsable",
-                  "Se lo pido a la gestoría",
-                  "Se automatiza"
-                ],
-                "es_decision": true
+                  "Sí",
+                  "No"
+                ]
               }
             ],
             "filas_iniciales": 5
@@ -6551,20 +6360,17 @@
               {
                 "etiqueta": "Sem 1",
                 "tipo": "numero",
-                "clave": "s1",
-                "no_sumar": true
+                "clave": "s1"
               },
               {
                 "etiqueta": "Sem 2",
                 "tipo": "numero",
-                "clave": "s2",
-                "no_sumar": true
+                "clave": "s2"
               },
               {
                 "etiqueta": "Sem 3",
                 "tipo": "numero",
-                "clave": "s3",
-                "no_sumar": true
+                "clave": "s3"
               },
               {
                 "etiqueta": "Sem 4",
@@ -6587,8 +6393,7 @@
                   "Ajustar el objetivo de esta métrica",
                   "Sustituir por otra métrica",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -6603,14 +6408,13 @@
           {
             "columnas": [
               {
-                "etiqueta": "Trabajo manual",
+                "etiqueta": "Tarea manual",
                 "tipo": "texto"
               },
               {
                 "etiqueta": "Horas/mes",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "Coste hora (€)",
@@ -6619,15 +6423,12 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Automatizable?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Automatizarlo con la herramienta de al lado",
-                  "Simplificarlo sin automatizar",
-                  "Pasárselo a otra persona",
-                  "Se queda manual"
-                ],
-                "es_decision": true
+                  "Sí",
+                  "No"
+                ]
               },
               {
                 "etiqueta": "Con qué (herramienta)",
@@ -6653,14 +6454,13 @@
           {
             "columnas": [
               {
-                "etiqueta": "Trabajo",
+                "etiqueta": "Tarea",
                 "tipo": "texto"
               },
               {
                 "etiqueta": "Horas/mes",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "Coste hora propio (€)",
@@ -6684,14 +6484,12 @@
                   "Subcontratar",
                   "Mantener",
                   "Eliminar"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "Coste externo (€)",
                 "tipo": "numero",
-                "clave": "coste_externo",
-                "no_sumar": true
+                "clave": "coste_externo"
               },
               {
                 "etiqueta": "Coste/hora implícito (€)",
@@ -6856,8 +6654,7 @@
                   "Consultarlo con el asesor antes",
                   "No aplica a mi actividad",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 10,
@@ -7034,8 +6831,7 @@
                   "Solicitar justificante que falta",
                   "Descartar el gasto de la deducción",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 1,
@@ -7051,14 +6847,7 @@
             "columnas": [
               {
                 "etiqueta": "Acción",
-                "tipo": "opciones",
-                "opciones": [
-                  "Hablarlo con el asesor este mes",
-                  "Pedirle un cálculo por escrito",
-                  "Aplicarlo ya",
-                  "Descartado, no compensa"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Responsable",
@@ -7143,7 +6932,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Qué se resuelve",
+                "etiqueta": "Tarea / Decisión",
                 "tipo": "texto"
               },
               {
@@ -7161,17 +6950,6 @@
               {
                 "etiqueta": "Informado (I)",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "La sigo aprobando yo",
-                  "La aprueba el responsable y me informa",
-                  "La resuelve él sin consultarme",
-                  "Sin repartir todavía"
-                ],
-                "es_decision": true
               }
             ],
             "filas_iniciales": 2
@@ -7185,7 +6963,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Qué se decide",
+                "etiqueta": "Decisión habitual",
                 "tipo": "texto"
               },
               {
@@ -7197,15 +6975,13 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Necesita pasar por ti?",
                 "tipo": "opciones",
                 "opciones": [
-                  "A partir de ahora no pasa por mí",
-                  "Pasa por mí solo si supera el límite de al lado",
-                  "Sigue pasando por mí"
+                  "Sí",
+                  "No"
                 ],
-                "contribuye_valor_si": "A partir de ahora no pasa por mí",
-                "es_decision": true
+                "contribuye_valor_si": "No"
               }
             ],
             "filas_iniciales": 3
@@ -7219,7 +6995,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Trabajo sin dueño",
+                "etiqueta": "Tarea huérfana",
                 "tipo": "texto"
               },
               {
@@ -7231,16 +7007,14 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Asignada a esa persona",
-                  "La asumo yo",
-                  "Se deja de hacer",
-                  "Sin asignar todavía"
+                  "Sin asignar",
+                  "Asignada",
+                  "En marcha"
                 ],
-                "contribuye_valor_si": "Asignada a esa persona",
-                "es_decision": true
+                "contribuye_valor_si": "Asignada"
               }
             ],
             "filas_iniciales": 2
@@ -7266,7 +7040,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Cuándo escala al nivel superior",
+                "etiqueta": "Cuándo escala al siguiente nivel",
                 "tipo": "texto"
               },
               {
@@ -7277,8 +7051,7 @@
                   "Redefinir quién lo resuelve",
                   "Ajustar el tiempo de escalado",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -7316,8 +7089,7 @@
                   "Necesita revisión con la persona",
                   "Redefinir límites del rol",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 2,
@@ -7355,8 +7127,7 @@
                   "Aplazar a otra sesión",
                   "Resolver fuera de la sesión (1:1)",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -7461,7 +7232,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Coste estimado (€)",
+                "etiqueta": "Coste estimado de mejora (EUR)",
                 "tipo": "numero",
                 "clave": "coste_mejora"
               },
@@ -7492,8 +7263,7 @@
                   "Programar para más adelante",
                   "Delegar a diseñador externo",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 6,
@@ -7517,7 +7287,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Texto nuevo",
+                "etiqueta": "Texto mejorado",
                 "tipo": "texto"
               },
               {
@@ -7541,8 +7311,7 @@
                   "Seguir puliendo antes de aplicar",
                   "Mantener el texto actual",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -7556,7 +7325,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Cómo respondió al mensaje nuevo",
+                "etiqueta": "Reaccion al mensaje mejorado",
                 "tipo": "opciones",
                 "opciones": [
                   "Positiva",
@@ -7569,15 +7338,8 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "El mensaje se queda como está",
-                  "Cambiar cómo lo cuento",
-                  "Probarlo con otro perfil",
-                  "Volver a la versión anterior"
-                ],
-                "es_decision": true
+                "etiqueta": "Ajuste aplicado",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 3
@@ -7622,15 +7384,8 @@
                 ]
               },
               {
-                "etiqueta": "Acción de mejora",
-                "tipo": "opciones",
-                "opciones": [
-                  "Añadir el logo y los colores",
-                  "Rehacer el diseño entero",
-                  "Quitar lo que sobra",
-                  "Está bien como está"
-                ],
-                "es_decision": true
+                "etiqueta": "Accion de mejora",
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Responsable",
@@ -7703,8 +7458,7 @@
                   "Delegar a diseñador",
                   "Posponer al próximo trimestre",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -7747,8 +7501,7 @@
                   "Reprogramar",
                   "Delegar a otra persona",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -7800,15 +7553,8 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Arreglarlo este mes",
-                  "Arreglarlo cuando haya presupuesto",
-                  "Sustituirlo por completo",
-                  "Está bien como está"
-                ],
-                "es_decision": true
+                "etiqueta": "Mejora prioritaria",
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Coste estimado (EUR)",
@@ -7879,8 +7625,7 @@
                   "Revisar con el equipo antes de publicar",
                   "Delegar a responsable de marca",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 7,
@@ -7922,8 +7667,7 @@
                   "Reenviar el manual",
                   "Aclarar dudas en próxima reunión",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -8004,28 +7748,24 @@
               {
                 "etiqueta": "Unidades vendidas/mes",
                 "tipo": "numero",
-                "clave": "uds",
-                "no_sumar": true
+                "clave": "uds"
               },
               {
                 "etiqueta": "Precio medio (€)",
                 "tipo": "numero",
-                "clave": "precio",
-                "no_sumar": true
+                "clave": "precio"
               },
               {
                 "etiqueta": "Coste directo (€)",
                 "tipo": "numero",
-                "clave": "coste",
-                "no_sumar": true
+                "clave": "coste"
               },
               {
                 "etiqueta": "Margen unitario (€)",
                 "tipo": "calculada",
                 "clave": "margen_u",
                 "formula": "precio-coste",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Margen total mes (€)",
@@ -8059,8 +7799,7 @@
                   "Seguir observando este trimestre",
                   "Descartar como candidato",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 6,
@@ -8082,28 +7821,24 @@
               {
                 "etiqueta": "Ingresos mes (€)",
                 "tipo": "numero",
-                "clave": "ingresos",
-                "no_sumar": true
+                "clave": "ingresos"
               },
               {
                 "etiqueta": "Costes directos (€)",
                 "tipo": "numero",
-                "clave": "costes_d",
-                "no_sumar": true
+                "clave": "costes_d"
               },
               {
                 "etiqueta": "Costes indirectos asignados (€)",
                 "tipo": "numero",
-                "clave": "costes_i",
-                "no_sumar": true
+                "clave": "costes_i"
               },
               {
                 "etiqueta": "Margen bruto (€)",
                 "tipo": "calculada",
                 "clave": "margen_b",
                 "formula": "ingresos-costes_d",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Margen neto (€)",
@@ -8128,8 +7863,7 @@
                   "Mantener",
                   "Reducir",
                   "Eliminar"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5
@@ -8156,14 +7890,12 @@
               {
                 "etiqueta": "Horas dedicadas/mes",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "Clientes que lo contratan",
                 "tipo": "numero",
-                "clave": "clientes",
-                "no_sumar": true
+                "clave": "clientes"
               },
               {
                 "etiqueta": "¿Arrastra otros servicios?",
@@ -8181,8 +7913,7 @@
                   "Subir precio",
                   "Automatizar",
                   "Mantener"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "Fecha de revisión",
@@ -8209,14 +7940,7 @@
             "columnas": [
               {
                 "etiqueta": "Acción comercial",
-                "tipo": "opciones",
-                "opciones": [
-                  "Ofrecerlo en cada visita",
-                  "Ponerlo primero en la web",
-                  "Hacer una oferta de lanzamiento",
-                  "Formar al equipo para venderlo"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Canal",
@@ -8311,36 +8035,31 @@
               {
                 "etiqueta": "Unidades objetivo/mes",
                 "tipo": "numero",
-                "clave": "uds_obj",
-                "no_sumar": true
+                "clave": "uds_obj"
               },
               {
                 "etiqueta": "Precio medio (€)",
                 "tipo": "numero",
-                "clave": "precio",
-                "no_sumar": true
+                "clave": "precio"
               },
               {
                 "etiqueta": "Ingresos objetivo (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_obj",
                 "formula": "uds_obj*precio",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Unidades reales",
                 "tipo": "numero",
-                "clave": "uds_real",
-                "no_sumar": true
+                "clave": "uds_real"
               },
               {
                 "etiqueta": "Ingresos reales (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_real",
                 "formula": "uds_real*precio",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Desviación (€)",
@@ -8357,8 +8076,7 @@
                   "Ajustar objetivo al alza",
                   "Reforzar comercialmente este servicio",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -8475,7 +8193,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Llamada final (CTA)",
+                "etiqueta": "CTA (llamada a la acción)",
                 "tipo": "texto"
               },
               {
@@ -8501,8 +8219,7 @@
                   "Reprogramar para otra semana",
                   "Delegar a otra persona del equipo",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 8,
@@ -8550,8 +8267,7 @@
                   "Formar al equipo en este parámetro",
                   "Revisar definición antes de aplicar",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 6,
@@ -8581,8 +8297,7 @@
               {
                 "etiqueta": "Meta mensual",
                 "tipo": "numero",
-                "clave": "meta",
-                "no_sumar": true
+                "clave": "meta"
               },
               {
                 "etiqueta": "Valor actual",
@@ -8608,14 +8323,7 @@
               },
               {
                 "etiqueta": "Acción",
-                "tipo": "opciones",
-                "opciones": [
-                  "Publicar más en este canal",
-                  "Cambiar lo que publico",
-                  "Dejar este canal",
-                  "Vamos bien, seguir igual"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 5
@@ -8675,8 +8383,7 @@
                   "Validar con más clientes antes de usar",
                   "Reescribir el mensaje",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 6,
@@ -8732,15 +8439,7 @@
               },
               {
                 "etiqueta": "Acción de mejora",
-                "tipo": "opciones",
-                "opciones": [
-                  "Cambiar la foto",
-                  "Reescribir la descripción",
-                  "Actualizar el enlace",
-                  "Cerrar este perfil",
-                  "Está bien como está"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
@@ -8764,7 +8463,7 @@
             "titulo": "Reparto de responsabilidades de comunicación",
             "columnas": [
               {
-                "etiqueta": "Trabajo de comunicación",
+                "etiqueta": "Tarea de comunicación",
                 "tipo": "texto"
               },
               {
@@ -8785,15 +8484,13 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "Estado",
                 "tipo": "opciones",
                 "opciones": [
-                  "Se la asigno a alguien esta semana",
-                  "La llevo yo",
-                  "La externalizo",
-                  "Se deja de hacer"
-                ],
-                "es_decision": true
+                  "Asignado",
+                  "Pendiente asignar",
+                  "Sin responsable"
+                ]
               }
             ],
             "filas_iniciales": 5
@@ -8867,7 +8564,7 @@
             "titulo": "Mapa de decisiones y su dueño real",
             "columnas": [
               {
-                "etiqueta": "Tipo de asunto",
+                "etiqueta": "Tipo de decisión / tarea",
                 "tipo": "texto"
               },
               {
@@ -8900,15 +8597,8 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Se la paso a esa persona",
-                  "Se la paso con un límite",
-                  "Escribir cómo se decide",
-                  "Me la quedo por ahora"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción concreta",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 6
@@ -8933,14 +8623,12 @@
               {
                 "etiqueta": "Frecuencia/semana",
                 "tipo": "numero",
-                "clave": "frec",
-                "no_sumar": true
+                "clave": "frec"
               },
               {
                 "etiqueta": "Tiempo consumido (h)",
                 "tipo": "numero",
-                "clave": "tiempo",
-                "no_sumar": true
+                "clave": "tiempo"
               },
               {
                 "etiqueta": "¿Era realmente urgente?",
@@ -8974,8 +8662,7 @@
                   "Formar al equipo para filtrar peticiones",
                   "Hablar con el origen de la urgencia",
                   "Ya está controlado"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -8995,28 +8682,25 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Área o tipo de trabajo",
+                "etiqueta": "Área o tipo de tareas",
                 "tipo": "texto"
               },
               {
                 "etiqueta": "Horas/semana reales",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "Capacidad máxima (h)",
                 "tipo": "numero",
-                "clave": "cap",
-                "no_sumar": true
+                "clave": "cap"
               },
               {
                 "etiqueta": "Sobrecarga (h)",
                 "tipo": "calculada",
                 "clave": "sobrecarga",
                 "formula": "horas-cap",
-                "unidad": "numero",
-                "no_sumar": true
+                "unidad": "numero"
               },
               {
                 "etiqueta": "Causa de la sobrecarga",
@@ -9024,15 +8708,7 @@
               },
               {
                 "etiqueta": "Acción de redistribución",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pasar parte del trabajo a otra persona",
-                  "Contratar apoyo",
-                  "Quitar trabajo de la lista",
-                  "Repartir mejor los plazos",
-                  "Se queda como está"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Días de baja evitados (seguimiento trimestral)",
@@ -9071,14 +8747,12 @@
               {
                 "etiqueta": "Frecuencia/día",
                 "tipo": "numero",
-                "clave": "freq",
-                "no_sumar": true
+                "clave": "freq"
               },
               {
                 "etiqueta": "Tiempo perdido/interrupción (min)",
                 "tipo": "numero",
-                "clave": "tiempo",
-                "no_sumar": true
+                "clave": "tiempo"
               },
               {
                 "etiqueta": "Tiempo total perdido/día (min)",
@@ -9103,8 +8777,7 @@
                   "Filtrar/redirigir ese tipo de interrupción",
                   "Formar al equipo para no generarlas",
                   "Ya está controlado"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -9126,14 +8799,12 @@
               {
                 "etiqueta": "Frecuencia/mes",
                 "tipo": "numero",
-                "clave": "frec",
-                "no_sumar": true
+                "clave": "frec"
               },
               {
                 "etiqueta": "Horas dedicadas/incidente",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "¿Era prevenible?",
@@ -9176,8 +8847,7 @@
                   "Delegar la gestión de este tipo de crisis",
                   "Documentar el protocolo para la próxima vez",
                   "Ya está controlado"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -9235,8 +8905,7 @@
                   "Planificarlo para el próximo mes",
                   "Asignar quién lo lidera",
                   "Aún no es prioridad"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -9344,8 +9013,7 @@
                   "Adaptar el rol actual a su perfil",
                   "Mantener y observar",
                   "Encaja bien, sin cambios"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -9387,8 +9055,7 @@
                   "Reasignar en el próximo trimestre",
                   "Mantener por ahora",
                   "Ya está bien asignada"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -9403,7 +9070,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Etapa",
+                "etiqueta": "Paso",
                 "tipo": "texto"
               },
               {
@@ -9413,16 +9080,6 @@
               {
                 "etiqueta": "Cómo bajar la incomodidad",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Lo hago en la próxima reunión",
-                  "Lo hablo uno a uno antes",
-                  "Lo dejo para más adelante"
-                ],
-                "es_decision": true
               }
             ],
             "filas_iniciales": 3
@@ -9459,8 +9116,7 @@
                   "Reasignar",
                   "Mantener"
                 ],
-                "contribuye_valor_si": "Reasignar",
-                "es_decision": true
+                "contribuye_valor_si": "Reasignar"
               }
             ],
             "filas_iniciales": 2
@@ -9493,8 +9149,7 @@
                   "Contratar el perfil que hace falta",
                   "Combinar ambas",
                   "Aún no es prioridad"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -9545,8 +9200,7 @@
                   "Formar/contratar perfil interno",
                   "Posponer la decisión",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 2,
@@ -9625,7 +9279,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Trabajo o responsabilidad",
+                "etiqueta": "Tarea o responsabilidad",
                 "tipo": "texto"
               },
               {
@@ -9643,14 +9297,7 @@
               },
               {
                 "etiqueta": "Acción para hacerlo visible",
-                "tipo": "opciones",
-                "opciones": [
-                  "Decírselo en la próxima reunión",
-                  "Decírselo a solas esta semana",
-                  "Contarlo delante del equipo",
-                  "Enseñarle el número que ha movido"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Responsable",
@@ -9687,8 +9334,7 @@
                   "Aceptada",
                   "Rechazada",
                   "Pendiente"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "¿Se comunicó el motivo a quien la hizo?",
@@ -9758,8 +9404,7 @@
                   "Probarla un mes",
                   "Descartar por ahora",
                   "Ya aporta suficiente reto"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -9822,8 +9467,7 @@
                   "Programar el reconocimiento",
                   "Delegar el reconocimiento al responsable directo",
                   "No requiere reconocimiento adicional"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -9874,8 +9518,7 @@
                   "Comunicarlo en la próxima reunión de equipo",
                   "Delegar la comunicación al mando directo",
                   "Ya está comunicado"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -9891,7 +9534,7 @@
             "titulo": "Qué decisiones puede tomar el equipo sin pasar por ti",
             "columnas": [
               {
-                "etiqueta": "Trabajo o asunto",
+                "etiqueta": "Tarea o decisión",
                 "tipo": "texto"
               },
               {
@@ -9928,8 +9571,7 @@
                   "Delegar ya",
                   "Delegar con seguimiento",
                   "Mantener por ahora"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5
@@ -10025,15 +9667,7 @@
               },
               {
                 "etiqueta": "Acción de retención",
-                "tipo": "opciones",
-                "opciones": [
-                  "Hablar con ella esta semana",
-                  "Revisar su sueldo",
-                  "Darle más responsabilidad",
-                  "Cambiarle las tareas que la queman",
-                  "Preparar el relevo"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Fecha próxima conversación",
@@ -10068,14 +9702,12 @@
               {
                 "etiqueta": "Salario anual bruto (€)",
                 "tipo": "numero",
-                "clave": "salario",
-                "no_sumar": true
+                "clave": "salario"
               },
               {
                 "etiqueta": "Coste de reclutamiento y selección (€)",
                 "tipo": "numero",
-                "clave": "reclutamiento",
-                "no_sumar": true
+                "clave": "reclutamiento"
               },
               {
                 "etiqueta": "Meses hasta rendir al 100%",
@@ -10094,8 +9726,7 @@
                 "tipo": "calculada",
                 "clave": "coste_rampa",
                 "formula": "(salario/12)*meses_rampa*(pct_perdida/100)",
-                "unidad": "eur",
-                "no_sumar": true
+                "unidad": "eur"
               },
               {
                 "etiqueta": "Coste total estimado de la salida (€)",
@@ -10105,7 +9736,7 @@
                 "unidad": "eur"
               },
               {
-                "etiqueta": "¿Cubierto por un relevo previsto?",
+                "etiqueta": "¿Cubierto por plan de sucesión?",
                 "tipo": "opciones",
                 "opciones": [
                   "Sí",
@@ -10121,8 +9752,7 @@
                   "Reforzar el plan existente",
                   "Delegar preparación a RRHH",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -10168,14 +9798,7 @@
               },
               {
                 "etiqueta": "Acción",
-                "tipo": "opciones",
-                "opciones": [
-                  "Hablar con ella esta semana",
-                  "Preguntar antes a quien trabaja con ella",
-                  "Cambiarle las tareas",
-                  "Volver a mirarlo dentro de un mes"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 5
@@ -10200,20 +9823,17 @@
               {
                 "etiqueta": "Salario actual (€/año)",
                 "tipo": "numero",
-                "clave": "actual",
-                "no_sumar": true
+                "clave": "actual"
               },
               {
                 "etiqueta": "Banda de mercado — mínimo (€/año)",
                 "tipo": "numero",
-                "clave": "mercado_min",
-                "no_sumar": true
+                "clave": "mercado_min"
               },
               {
                 "etiqueta": "Banda de mercado — máximo (€/año)",
                 "tipo": "numero",
-                "clave": "mercado_max",
-                "no_sumar": true
+                "clave": "mercado_max"
               },
               {
                 "etiqueta": "Gap vs mínimo de mercado (€)",
@@ -10232,15 +9852,8 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Subirle el sueldo hasta el mínimo de mercado",
-                  "Subirle una parte ahora y el resto en 6 meses",
-                  "Compensarlo sin subir sueldo",
-                  "Se queda como está"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción propuesta",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 5
@@ -10297,8 +9910,7 @@
                   "Formar/transferir a la persona indicada",
                   "Grabar procedimiento en vídeo",
                   "Aún no es prioridad"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 6,
@@ -10355,8 +9967,7 @@
                   "Buscar backup externo",
                   "Redistribuir funciones entre el equipo",
                   "Aceptar el riesgo por ahora"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -10436,19 +10047,16 @@
               {
                 "etiqueta": "Su nivel (coste/hora €)",
                 "tipo": "numero",
-                "clave": "coste_hora",
-                "no_sumar": true
+                "clave": "coste_hora"
               },
               {
-                "etiqueta": "Horas/sem por debajo de su nivel",
+                "etiqueta": "Horas/sem en tareas por debajo",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "Total horas/sem",
-                "tipo": "numero",
-                "no_sumar": true
+                "tipo": "numero"
               },
               {
                 "etiqueta": "Coste mensual desperdiciado (€)",
@@ -10465,8 +10073,7 @@
                   "Automatizar o eliminar la tarea",
                   "Formar para poder delegarla",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -10487,14 +10094,12 @@
               {
                 "etiqueta": "Coste/hora (€)",
                 "tipo": "numero",
-                "clave": "coste_hora",
-                "no_sumar": true
+                "clave": "coste_hora"
               },
               {
                 "etiqueta": "Horas/mes en bajo valor",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "Coste mensual (€)",
@@ -10511,8 +10116,7 @@
                   "Automatizar la tarea",
                   "Eliminarla del todo",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -10549,15 +10153,8 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Darle un proyecto donde la use",
-                  "Formarla para completarla",
-                  "Contratar a alguien que la tenga",
-                  "No hace falta ahora"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción en 6 meses",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 3
@@ -10571,7 +10168,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Trabajo de bajo valor",
+                "etiqueta": "Tarea de bajo valor",
                 "tipo": "texto"
               },
               {
@@ -10581,8 +10178,7 @@
               {
                 "etiqueta": "Coste/hora actual (€)",
                 "tipo": "numero",
-                "clave": "actual",
-                "no_sumar": true
+                "clave": "actual"
               },
               {
                 "etiqueta": "Reasignar a",
@@ -10591,8 +10187,7 @@
               {
                 "etiqueta": "Coste/hora nuevo (€)",
                 "tipo": "numero",
-                "clave": "nuevo",
-                "no_sumar": true
+                "clave": "nuevo"
               },
               {
                 "etiqueta": "Ahorro por hora (€)",
@@ -10600,17 +10195,6 @@
                 "clave": "ahorro_hora",
                 "formula": "actual-nuevo",
                 "unidad": "eur"
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Se lo paso a esa persona este mes",
-                  "Lo automatizo",
-                  "Se deja de hacer",
-                  "Se queda donde está"
-                ],
-                "es_decision": true
               }
             ],
             "filas_iniciales": 3
@@ -10628,7 +10212,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Trabajo a soltar",
+                "etiqueta": "Tarea a soltar",
                 "tipo": "texto"
               },
               {
@@ -10638,17 +10222,6 @@
               {
                 "etiqueta": "Para dedicar a",
                 "tipo": "texto"
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Se lo paso a otra persona",
-                  "Se deja de hacer",
-                  "Se automatiza",
-                  "Lo sigue haciendo, con menos horas"
-                ],
-                "es_decision": true
               }
             ],
             "filas_iniciales": 3
@@ -10689,8 +10262,7 @@
                   "Planificarlo para el próximo trimestre",
                   "Necesita más preparación antes",
                   "Aún no es prioridad"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -10783,8 +10355,7 @@
                   "Seguir midiendo un mes más",
                   "Delegar el seguimiento a RRHH",
                   "No requiere acción inmediata"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -10819,8 +10390,7 @@
                   "Mantener",
                   "Mediar antes"
                 ],
-                "contribuye_valor_si": "Separar",
-                "es_decision": true
+                "contribuye_valor_si": "Separar"
               }
             ],
             "filas_iniciales": 2
@@ -10860,8 +10430,7 @@
                   "Por decidir",
                   "Dar oportunidad clara",
                   "Salida ordenada"
-                ],
-                "es_decision": true
+                ]
               },
               {
                 "etiqueta": "Balance de la decisión",
@@ -10905,8 +10474,7 @@
                   "Mediar antes con ambas partes por separado",
                   "Escalar a dirección o RRHH",
                   "Aún no es el momento"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 2,
@@ -10947,8 +10515,7 @@
                   "Gestionar internamente",
                   "Buscar ayuda externa (coach/mediador)",
                   "Aún evaluando"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -10991,8 +10558,7 @@
                   "Conversaciones individuales",
                   "Combinar ambas",
                   "Aún sin decidir"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 2,
@@ -11128,15 +10694,8 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Añadirlo al servicio ya",
-                  "Probarlo con un cliente",
-                  "Contarlo en la propuesta",
-                  "Descartado, no compensa"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción para dejar de ser intercambiable",
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
@@ -11425,15 +10984,8 @@
                 "contribuye_valor_si": "Si"
               },
               {
-                "etiqueta": "Acción de fidelización",
-                "tipo": "opciones",
-                "opciones": [
-                  "Llamarle para que vuelva",
-                  "Mandarle una oferta",
-                  "Preguntarle por qué no ha vuelto",
-                  "Darlo por perdido"
-                ],
-                "es_decision": true
+                "etiqueta": "Accion de fidelizacion aplicada",
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
@@ -11493,8 +11045,7 @@
                   "Ajustar el incentivo ofrecido",
                   "Descartar este elemento",
                   "Ya está activo y funcionando"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -11531,15 +11082,8 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Hacerlo siempre, no solo a veces",
-                  "Pedirle al cliente que lo cuente",
-                  "Ponerle a alguien al cargo",
-                  "Descartado"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción para potenciarlo",
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Responsable",
@@ -11612,8 +11156,7 @@
                   "Pedir permiso al cliente",
                   "Descartar este caso",
                   "Ya está publicado"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -11675,8 +11218,7 @@
                   "Programar seguimiento personal",
                   "Investigar la insatisfacción",
                   "Sin acción necesaria"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -11729,8 +11271,7 @@
                   "Relanzar con más difusión",
                   "Pausar iniciativa",
                   "Mantener como está"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 4,
@@ -11816,7 +11357,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Resultado que puedes enseñar",
+                "etiqueta": "Mejora demostrable",
                 "tipo": "texto"
               },
               {
@@ -11828,17 +11369,6 @@
                   "Aún no"
                 ],
                 "contribuye_valor_si": "Sí"
-              },
-              {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pedirle que lo cuente por escrito",
-                  "Pedirle que me recomiende a alguien",
-                  "Usarlo como caso de ejemplo",
-                  "Todavía no toca pedírselo"
-                ],
-                "es_decision": true
               }
             ],
             "filas_iniciales": 3
@@ -11875,8 +11405,7 @@
                   "Crear documento o informe que lo muestre",
                   "Mostrarlo en una reunión de cierre",
                   "Ya se muestra bien"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -11914,8 +11443,7 @@
                   "Comunicar expectativas realistas desde el inicio",
                   "Reforzar el resultado ya entregado",
                   "La promesa ya está alineada"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -11958,8 +11486,7 @@
                   "Preparar un informe para esa persona",
                   "Delegar la comunicación a otro miembro del equipo",
                   "Ya lo percibe correctamente"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 3,
@@ -11986,15 +11513,8 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Cambiar cómo lo cuento en la web",
-                  "Cambiar cómo lo cuento en la visita",
-                  "Enseñar el dato en la propuesta",
-                  "Se queda como está"
-                ],
-                "es_decision": true
+                "etiqueta": "Mejora en TU presentación",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 3
@@ -12021,15 +11541,8 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Enseñarle el avance a mitad",
-                  "Mandarle un resumen de lo hecho",
-                  "Contárselo en la primera reunión",
-                  "Ya lo siente aquí"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción para que lo sienta antes/durante",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 3
@@ -12113,7 +11626,7 @@
                 ]
               },
               {
-                "etiqueta": "Qué tiene que pasar",
+                "etiqueta": "Tarea de incorporación",
                 "tipo": "texto"
               },
               {
@@ -12121,15 +11634,12 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
+                "etiqueta": "¿Completada?",
                 "tipo": "opciones",
                 "opciones": [
-                  "Lo hago yo esa semana",
-                  "Lo hace el responsable",
-                  "Se le da por escrito",
-                  "Se quita del plan"
-                ],
-                "es_decision": true
+                  "Sí",
+                  "No"
+                ]
               },
               {
                 "etiqueta": "Fecha",
@@ -12148,7 +11658,7 @@
             "titulo": "Qué solo sabe hacer una persona hoy",
             "columnas": [
               {
-                "etiqueta": "Trabajo o proceso crítico",
+                "etiqueta": "Tarea o proceso crítico",
                 "tipo": "texto"
               },
               {
@@ -12191,8 +11701,7 @@
                   "Formar a un segundo responsable en paralelo",
                   "Aceptar el riesgo por ahora",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 6,
@@ -12238,15 +11747,8 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Escribir la respuesta en el manual",
-                  "Grabar un vídeo corto",
-                  "Meterlo en la formación del primer día",
-                  "Es un caso suelto, no hace falta"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción para no repetirla",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 6
@@ -12291,14 +11793,7 @@
               },
               {
                 "etiqueta": "Acción correctora",
-                "tipo": "opciones",
-                "opciones": [
-                  "Darle más horas de acompañamiento",
-                  "Cambiar cómo se le enseña",
-                  "Alargar el plazo previsto",
-                  "Va bien, seguir igual"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 6
@@ -12323,14 +11818,12 @@
               {
                 "etiqueta": "Horas/semana dedicadas",
                 "tipo": "numero",
-                "clave": "horas",
-                "no_sumar": true
+                "clave": "horas"
               },
               {
                 "etiqueta": "Duración del acompañamiento (semanas)",
                 "tipo": "numero",
-                "clave": "duracion",
-                "no_sumar": true
+                "clave": "duracion"
               },
               {
                 "etiqueta": "¿Activo?",
@@ -12356,8 +11849,7 @@
                   "Aumentar horas de mentoría",
                   "Cerrar el acompañamiento (ya es autónomo)",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -12389,15 +11881,8 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Escribir el paso a paso",
-                  "Enseñárselo a esa persona",
-                  "Hacerlo juntos una vez",
-                  "Lo sigo haciendo yo"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción para poder delegarlo",
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
@@ -12546,15 +12031,8 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Se lo paso entero a esa persona",
-                  "Se lo paso con un límite",
-                  "Escribir cómo se hace y luego pasarlo",
-                  "Me lo quedo por ahora"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción de delegación",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 5
@@ -12572,7 +12050,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Trabajo / Conocimiento",
+                "etiqueta": "Tarea / Conocimiento",
                 "tipo": "texto"
               },
               {
@@ -12613,8 +12091,7 @@
                   "Probarlo con otra persona ahora",
                   "Aceptar el riesgo por ahora",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -12629,7 +12106,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Trabajo",
+                "etiqueta": "Tarea",
                 "tipo": "texto"
               },
               {
@@ -12682,8 +12159,7 @@
                   "Mantener supervisión actual",
                   "Revertir la delegación",
                   "Ya está bien así"
-                ],
-                "es_decision": true
+                ]
               }
             ],
             "filas_iniciales": 5,
@@ -12703,13 +12179,7 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "A partir de ahora la decide el equipo",
-                  "La decide el equipo hasta un límite",
-                  "Me la quedo, es mía"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Área",
@@ -12795,16 +12265,8 @@
                 ]
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Formarle este mes",
-                  "Darle los accesos",
-                  "Escribir el protocolo",
-                  "Buscar otra persona que cubra",
-                  "Ya está cubierto"
-                ],
-                "es_decision": true
+                "etiqueta": "Gap y acción para cerrarlo",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 6
@@ -12871,15 +12333,8 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Darle una responsabilidad propia este mes",
-                  "Dejarle dirigir una reunión",
-                  "Apuntarle a la formación",
-                  "Todavía no está listo"
-                ],
-                "es_decision": true
+                "etiqueta": "Siguiente hito",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 4
@@ -12970,14 +12425,12 @@
               {
                 "etiqueta": "Horas/semana estimadas",
                 "tipo": "numero",
-                "clave": "h_est",
-                "no_sumar": true
+                "clave": "h_est"
               },
               {
                 "etiqueta": "Horas/semana reales",
                 "tipo": "numero",
-                "clave": "h_real",
-                "no_sumar": true
+                "clave": "h_real"
               },
               {
                 "etiqueta": "Gap (h)",
@@ -12987,15 +12440,8 @@
                 "unidad": "numero"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Bloquear esas horas en la agenda",
-                  "Pasar parte a otra persona",
-                  "Quitar la actividad",
-                  "Se queda como está"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción de ajuste",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 6
@@ -13044,14 +12490,7 @@
               },
               {
                 "etiqueta": "Acción",
-                "tipo": "opciones",
-                "opciones": [
-                  "Quitar el cuello de botella",
-                  "Poner a alguien más en esa etapa",
-                  "Bajar el plazo que prometes",
-                  "Va bien, seguir igual"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 4
@@ -13072,14 +12511,12 @@
               {
                 "etiqueta": "N° urgencias",
                 "tipo": "numero",
-                "clave": "n_urg",
-                "no_sumar": true
+                "clave": "n_urg"
               },
               {
                 "etiqueta": "Horas consumidas en urgencias",
                 "tipo": "numero",
-                "clave": "h_urg",
-                "no_sumar": true
+                "clave": "h_urg"
               },
               {
                 "etiqueta": "Horas totales semana",
@@ -13099,15 +12536,8 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Reservar horas para imprevistos",
-                  "Cortar el origen de las urgencias",
-                  "Cobrar aparte las urgencias",
-                  "Va bien, seguir igual"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción preventiva",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 5
@@ -13132,14 +12562,12 @@
               {
                 "etiqueta": "Horas reales",
                 "tipo": "numero",
-                "clave": "h_reales",
-                "no_sumar": true
+                "clave": "h_reales"
               },
               {
                 "etiqueta": "Capacidad disponible (h)",
                 "tipo": "numero",
-                "clave": "h_cap",
-                "no_sumar": true
+                "clave": "h_cap"
               },
               {
                 "etiqueta": "Gap (h)",
@@ -13149,15 +12577,8 @@
                 "unidad": "numero"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Adelantar trabajo a la semana anterior",
-                  "Repartirlo entre más gente",
-                  "Mover fechas de entrega",
-                  "Reforzar solo esos días"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción de nivelación",
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
@@ -13187,14 +12608,12 @@
               {
                 "etiqueta": "Horas semana intensa",
                 "tipo": "numero",
-                "clave": "h_intensa",
-                "no_sumar": true
+                "clave": "h_intensa"
               },
               {
                 "etiqueta": "Horas semana normal",
                 "tipo": "numero",
-                "clave": "h_normal",
-                "no_sumar": true
+                "clave": "h_normal"
               },
               {
                 "etiqueta": "Diferencia (h)",
@@ -13208,15 +12627,8 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Decisión",
-                "tipo": "opciones",
-                "opciones": [
-                  "Adelantar parte a la semana floja",
-                  "Repartirlo entre más gente",
-                  "Rechazar trabajo en el pico",
-                  "Se queda como está"
-                ],
-                "es_decision": true
+                "etiqueta": "Acción niveladora",
+                "tipo": "texto"
               }
             ],
             "filas_iniciales": 5
@@ -13260,14 +12672,7 @@
               },
               {
                 "etiqueta": "Acción de mejora",
-                "tipo": "opciones",
-                "opciones": [
-                  "Poner más capacidad en esa etapa",
-                  "Quitarle trabajo a esa etapa",
-                  "Cambiar el orden del proceso",
-                  "Es el límite, no se toca"
-                ],
-                "es_decision": true
+                "tipo": "texto"
               },
               {
                 "etiqueta": "Estado",
