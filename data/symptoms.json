@@ -334,7 +334,7 @@
         "titulo": "Corregir el desfase entre el ciclo de cobros y el de pagos",
         "secciones": [
           {
-            "titulo": "1. Tu desfase real",
+            "titulo": "Cuánto hueco tienes",
             "columnas": [
               {
                 "etiqueta": "¿A cuántos días te pagan tus clientes?",
@@ -366,18 +366,19 @@
                 {
                   "min": 1,
                   "color": "rojo",
-                  "texto": "Cobras más tarde de lo que tienes que pagar: ese hueco lo estás financiando tú. Tienes dos palancas debajo — pedir más días a tus proveedores, o buscar financiación que cubra el hueco mientras lo corriges."
+                  "texto": "Cobras más tarde de lo que tienes que pagar, y ese hueco lo estás adelantando tú todos los meses. Debajo tienes las dos salidas: pedir más días a quien te vende, y cubrir con financiación lo que no consigas cerrar así."
                 },
                 {
                   "color": "verde",
-                  "texto": "Cobras antes de tener que pagar, así que por este motivo no tienes hueco de caja. Puedes mirar las palancas de debajo si quieres más colchón, pero no corre prisa."
+                  "texto": "Cobras antes de tener que pagar, así que por aquí no se te va la caja. Puedes mirar lo de debajo si quieres más colchón, pero no corre prisa."
                 }
               ]
             },
-            "fila_unica": true
+            "fila_unica": true,
+            "vista": "tarjeta"
           },
           {
-            "titulo": "2. Negociación de plazos con proveedores",
+            "titulo": "Cerrarlo pidiendo más plazo a tus proveedores",
             "columnas": [
               {
                 "etiqueta": "Proveedor",
@@ -439,17 +440,18 @@
                 {
                   "min": 1,
                   "color": "verde",
-                  "texto": "Eso es lo que dejas de tener adelantado cada mes si tus proveedores te conceden esos días. Es dinero tuyo que se queda en tu cuenta, no financiación: por eso sí cuenta como recuperado."
+                  "texto": "Eso es lo que dejas de adelantar cada mes si te conceden esos días. Se queda en tu cuenta y puedes usarlo."
                 },
                 {
-                  "color": "rojo",
+                  "color": "amarillo",
                   "texto": "Todavía no has pedido más plazo a nadie. Empieza por el proveedor al que más le compras: cada día que te concedan es dinero que no tienes que adelantar."
                 }
               ]
-            }
+            },
+            "vista": "tarjeta"
           },
           {
-            "titulo": "3. Financiación puente — cubre el hueco mientras lo corriges. No cuenta como dinero recuperado: es prestado, no rescatado",
+            "titulo": "Y si aún queda hueco, cubrirlo mientras lo corriges",
             "columnas": [
               {
                 "etiqueta": "Vía de financiación a explorar",
