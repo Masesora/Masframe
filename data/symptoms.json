@@ -334,51 +334,7 @@
         "titulo": "Corregir el desfase entre el ciclo de cobros y el de pagos",
         "secciones": [
           {
-            "titulo": "Cuántos días pagas antes de cobrar",
-            "columnas": [
-              {
-                "etiqueta": "¿A cuántos días te pagan tus clientes?",
-                "tipo": "numero",
-                "clave": "dias_cobro",
-                "placeholder": "ej. 60",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "¿A cuántos días pagas tú a tus proveedores?",
-                "tipo": "numero",
-                "clave": "dias_pago",
-                "placeholder": "ej. 30",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Días que pagas antes de cobrar",
-                "tipo": "calculada",
-                "clave": "desfase_dias",
-                "formula": "dias_cobro-dias_pago",
-                "unidad": "numero",
-                "no_sumar": true
-              }
-            ],
-            "filas_iniciales": 1,
-            "interpretacion": {
-              "clave": "desfase_dias",
-              "reglas": [
-                {
-                  "min": 1,
-                  "color": "rojo",
-                  "texto": "Pagas a tus proveedores antes de que te paguen a ti, y esos días los adelantas de tu bolsillo todos los meses. Debajo tienes las dos salidas: pedir más plazo a quien te vende, y financiar lo que no consigas ganar así."
-                },
-                {
-                  "color": "verde",
-                  "texto": "Cobras antes de tener que pagar, así que por aquí no se te va la caja. Puedes mirar lo de debajo si quieres más colchón, pero no corre prisa."
-                }
-              ]
-            },
-            "fila_unica": true,
-            "vista": "tarjeta"
-          },
-          {
-            "titulo": "Pide más plazo a tus proveedores",
+            "titulo": "Pide más plazo a tus proveedores — empieza por el que más le compras: cada día que te concedan es dinero que no adelantas",
             "columnas": [
               {
                 "etiqueta": "Proveedor",
@@ -435,10 +391,6 @@
                   "min": 1,
                   "color": "verde",
                   "texto": "Eso es lo que dejas de adelantar cada mes si te conceden esos días. Se queda en tu cuenta y puedes usarlo."
-                },
-                {
-                  "color": "amarillo",
-                  "texto": "Empieza por el proveedor al que más le compras: cada día que te concedan es dinero que no tienes que adelantar."
                 }
               ]
             }
