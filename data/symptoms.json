@@ -167,37 +167,22 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "En curso",
-                  "Hito entregado, pendiente cobro",
-                  "Cobrado"
-                ]
-              },
-              {
                 "etiqueta": "Decisión",
-                "tipo": "opciones",
+                "tipo": "decision",
                 "clave": "pct_recuperable",
                 "decision_opciones": [
                   {
-                    "label": "Entregar completo y cobrar todo",
+                    "label": "Terminarlo y facturarlo entero",
                     "valor": 100
                   },
                   {
-                    "label": "Renegociar alcance",
+                    "label": "Renegociar lo que queda",
                     "valor": 80
                   },
                   {
-                    "label": "Cerrar parcial y cobrar ya",
+                    "label": "Cerrar la parte hecha y facturarla",
                     "valor": 60
                   }
-                ],
-                "opciones": [
-                  "Facturar la parte ya entregada",
-                  "Cerrar el proyecto y facturarlo entero",
-                  "Pactar un pago parcial ahora",
-                  "Parar el trabajo hasta que pague"
                 ],
                 "es_decision": true
               },
@@ -263,48 +248,30 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Estado",
-                "tipo": "opciones",
-                "opciones": [
-                  "Pendiente",
-                  "En gestión",
-                  "Acuerdo de pago",
-                  "Cobrado",
-                  "Incobrable"
-                ]
-              },
-              {
                 "etiqueta": "Decisión",
-                "tipo": "opciones",
+                "tipo": "decision",
                 "clave": "prob_cobro",
                 "decision_opciones": [
                   {
-                    "label": "Recordatorio amistoso",
+                    "label": "Mandarle un recordatorio",
                     "valor": 30
                   },
                   {
-                    "label": "Llamada",
+                    "label": "Llamarle esta semana",
                     "valor": 45
                   },
                   {
-                    "label": "Carta formal",
+                    "label": "Mandarle la carta de reclamación",
                     "valor": 60
                   },
                   {
-                    "label": "Gestor de cobros",
+                    "label": "Pasarlo a un gestor de cobros",
                     "valor": 75
                   },
                   {
-                    "label": "Vía legal",
+                    "label": "Pasarlo a un abogado",
                     "valor": 90
                   }
-                ],
-                "opciones": [
-                  "Llamarle esta semana",
-                  "Mandarle la carta de reclamación",
-                  "Pactar un calendario de pagos",
-                  "Pasarlo a un abogado",
-                  "Darlo por perdido"
                 ],
                 "es_decision": true
               },
@@ -478,6 +445,7 @@
                 "etiqueta": "Motivo por el que no avanza",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Trabajo sin arrancar",
                   "Cliente sin dar luz verde",
                   "Falta un hito intermedio sin programar",
@@ -486,31 +454,25 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "opciones",
+                "tipo": "decision",
                 "clave": "pct_recuperable",
                 "decision_opciones": [
                   {
-                    "label": "Arrancar el trabajo ya",
-                    "valor": 60
-                  },
-                  {
-                    "label": "Contactar al cliente para luz verde",
-                    "valor": 50
+                    "label": "Facturarlo ahora",
+                    "valor": 100
                   },
                   {
                     "label": "Programar el hito que falta",
                     "valor": 70
                   },
                   {
-                    "label": "Facturar ahora",
-                    "valor": 100
+                    "label": "Arrancar el trabajo esta semana",
+                    "valor": 60
+                  },
+                  {
+                    "label": "Pedirle luz verde al cliente",
+                    "valor": 50
                   }
-                ],
-                "opciones": [
-                  "Terminar el trabajo esta semana",
-                  "Entregar una parte y facturarla",
-                  "Ponerle fecha con el cliente",
-                  "Devolver el anticipo"
                 ],
                 "es_decision": true
               },
