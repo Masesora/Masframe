@@ -304,12 +304,28 @@
               {
                 "etiqueta": "Fecha compromiso",
                 "tipo": "texto",
-                "placeholder": "ej. 20/09/2026"
+                "placeholder": "ej. 20/09/2026",
+                "clave": "fecha_compromiso",
+                "no_sumar": true
               }
             ],
             "filas_iniciales": 2,
             "entidad_compartida": "Cliente",
-            "carta_reclamacion": true
+            "carta_reclamacion": true,
+            "interpretacion": {
+              "clave": "recuperacion",
+              "reglas": [
+                {
+                  "min": 1,
+                  "color": "verde",
+                  "texto": "Esto es lo que esperas recuperar con las gestiones que has elegido. Lo que falta hasta el total pendiente depende de apretar más en alguna de ellas o de darlo por perdido."
+                },
+                {
+                  "color": "rojo",
+                  "texto": "Todavía no has elegido qué vas a hacer con ninguna factura. Marca una decisión en cada una y verás lo que puedes recuperar."
+                }
+              ]
+            }
           }
         ]
       },
@@ -321,21 +337,21 @@
             "titulo": "1. Tu desfase real",
             "columnas": [
               {
-                "etiqueta": "Días que tardas en cobrar de media",
+                "etiqueta": "¿A cuántos días te pagan tus clientes?",
                 "tipo": "numero",
                 "clave": "dias_cobro",
                 "placeholder": "ej. 60",
                 "no_sumar": true
               },
               {
-                "etiqueta": "Días que tardas en pagar de media",
+                "etiqueta": "¿A cuántos días pagas tú a tus proveedores?",
                 "tipo": "numero",
                 "clave": "dias_pago",
                 "placeholder": "ej. 30",
                 "no_sumar": true
               },
               {
-                "etiqueta": "Desfase (días)",
+                "etiqueta": "Tu desfase (días)",
                 "tipo": "calculada",
                 "clave": "desfase_dias",
                 "formula": "dias_cobro-dias_pago",
@@ -350,14 +366,15 @@
                 {
                   "min": 1,
                   "color": "rojo",
-                  "texto": "Cobras de media más tarde de lo que tienes que pagar: tienes un hueco de caja real. Dos palancas para cerrarlo -- pide más días a tus proveedores (sección 2) o busca financiación puente para cubrirlo mientras tanto (sección 3)."
+                  "texto": "Cobras más tarde de lo que tienes que pagar: ese hueco lo estás financiando tú. Tienes dos palancas debajo — pedir más días a tus proveedores, o buscar financiación que cubra el hueco mientras lo corriges."
                 },
                 {
                   "color": "verde",
-                  "texto": "Cobras antes de tener que pagar -- no tienes un hueco de caja por este motivo. Puedes revisar igualmente las secciones 2 y 3 si quieres más colchón, pero no es urgente."
+                  "texto": "Cobras antes de tener que pagar, así que por este motivo no tienes hueco de caja. Puedes mirar las palancas de debajo si quieres más colchón, pero no corre prisa."
                 }
               ]
-            }
+            },
+            "fila_unica": true
           },
           {
             "titulo": "2. Negociación de plazos con proveedores",
@@ -424,12 +441,14 @@
                 "etiqueta": "Vía de financiación a explorar",
                 "tipo": "opciones",
                 "opciones": [
+                  "",
                   "Línea de crédito con tu banco",
                   "Factoring / adelanto de facturas",
                   "Préstamo a corto plazo",
                   "Buscar un socio o inversor",
                   "Ninguna, prefiero ajustar sin financiación externa"
-                ]
+                ],
+                "estilo": "desplegable"
               },
               {
                 "etiqueta": "Con quién vas a hablar",
@@ -444,7 +463,13 @@
                   "Reunir la documentación primero",
                   "Esperar y ver cómo evoluciona el mes",
                   "Descartado por ahora"
-                ]
+                ],
+                "confirmaciones": {
+                  "Pedir cita esta semana": "¿Has pedido ya la cita?",
+                  "Reunir la documentación primero": "¿Tienes ya la documentación reunida?",
+                  "Esperar y ver cómo evoluciona el mes": "¿Has revisado cómo ha ido el mes?",
+                  "Descartado por ahora": "¿Sigues descartándolo?"
+                }
               }
             ],
             "filas_iniciales": 1,
