@@ -177,7 +177,7 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "decision",
+                "tipo": "opciones",
                 "clave": "pct_recuperable",
                 "decision_opciones": [
                   {
@@ -192,7 +192,19 @@
                     "label": "Cerrar parcial y cobrar ya",
                     "valor": 60
                   }
-                ]
+                ],
+                "opciones": [
+                  "Facturar la parte ya entregada",
+                  "Cerrar el proyecto y facturarlo entero",
+                  "Pactar un pago parcial ahora",
+                  "Parar el trabajo hasta que pague"
+                ],
+                "confirmaciones": {
+                  "Facturar la parte ya entregada": "¿Facturar la parte ya entregada?",
+                  "Cerrar el proyecto y facturarlo entero": "¿Cerrar el proyecto y facturarlo entero?",
+                  "Pactar un pago parcial ahora": "¿Pactar un pago parcial ahora?",
+                  "Parar el trabajo hasta que pague": "¿Parar el trabajo hasta que pague?"
+                }
               },
               {
                 "etiqueta": "Recuperación estimada (€)",
@@ -268,7 +280,7 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "decision",
+                "tipo": "opciones",
                 "clave": "prob_cobro",
                 "decision_opciones": [
                   {
@@ -291,7 +303,21 @@
                     "label": "Vía legal",
                     "valor": 90
                   }
-                ]
+                ],
+                "opciones": [
+                  "Llamarle esta semana",
+                  "Mandarle la carta de reclamación",
+                  "Pactar un calendario de pagos",
+                  "Pasarlo a un abogado",
+                  "Darlo por perdido"
+                ],
+                "confirmaciones": {
+                  "Llamarle esta semana": "¿Llamarle esta semana?",
+                  "Mandarle la carta de reclamación": "¿Mandarle la carta de reclamación?",
+                  "Pactar un calendario de pagos": "¿Pactar un calendario de pagos?",
+                  "Pasarlo a un abogado": "¿Pasarlo a un abogado?",
+                  "Darlo por perdido": "¿Darlo por perdido?"
+                }
               },
               {
                 "etiqueta": "Recuperación estimada (€)",
@@ -469,7 +495,7 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "decision",
+                "tipo": "opciones",
                 "clave": "pct_recuperable",
                 "decision_opciones": [
                   {
@@ -488,7 +514,19 @@
                     "label": "Facturar ahora",
                     "valor": 100
                   }
-                ]
+                ],
+                "opciones": [
+                  "Terminar el trabajo esta semana",
+                  "Entregar una parte y facturarla",
+                  "Ponerle fecha con el cliente",
+                  "Devolver el anticipo"
+                ],
+                "confirmaciones": {
+                  "Terminar el trabajo esta semana": "¿Terminar el trabajo esta semana?",
+                  "Entregar una parte y facturarla": "¿Entregar una parte y facturarla?",
+                  "Ponerle fecha con el cliente": "¿Ponerle fecha con el cliente?",
+                  "Devolver el anticipo": "¿Devolver el anticipo?"
+                }
               },
               {
                 "etiqueta": "Recuperación estimada (€)",
@@ -1665,8 +1703,21 @@
               },
               {
                 "etiqueta": "Acción de mejora",
-                "tipo": "texto",
-                "placeholder": "ej. Automatizar la revisión con una checklist"
+                "tipo": "opciones",
+                "opciones": [
+                  "Quitar la espera",
+                  "Juntarlo con el paso anterior",
+                  "Que lo haga otra persona",
+                  "Ponerle un plazo máximo",
+                  "Se queda como está"
+                ],
+                "confirmaciones": {
+                  "Quitar la espera": "¿Quitar la espera?",
+                  "Juntarlo con el paso anterior": "¿Juntarlo con el paso anterior?",
+                  "Que lo haga otra persona": "¿Que lo haga otra persona?",
+                  "Ponerle un plazo máximo": "¿Ponerle un plazo máximo?",
+                  "Se queda como está": "¿Se queda como está?"
+                }
               },
               {
                 "etiqueta": "Estado",
@@ -1801,8 +1852,19 @@
               },
               {
                 "etiqueta": "Acción de mejora",
-                "tipo": "texto",
-                "placeholder": "ej. Definir protocolo de escalado para picos de demanda"
+                "tipo": "opciones",
+                "opciones": [
+                  "Bajar el plazo comprometido",
+                  "Poner un aviso cuando se pase",
+                  "Repartirlo entre más gente",
+                  "Subir el plazo a lo que de verdad tardas"
+                ],
+                "confirmaciones": {
+                  "Bajar el plazo comprometido": "¿Bajar el plazo comprometido?",
+                  "Poner un aviso cuando se pase": "¿Poner un aviso cuando se pase?",
+                  "Repartirlo entre más gente": "¿Repartirlo entre más gente?",
+                  "Subir el plazo a lo que de verdad tardas": "¿Subir el plazo a lo que de verdad tardas?"
+                }
               },
               {
                 "etiqueta": "Responsable",
@@ -1873,8 +1935,19 @@
               },
               {
                 "etiqueta": "Acción de estandarización",
-                "tipo": "texto",
-                "placeholder": "ej. Escribir guía de 3 pasos y subirla a la carpeta compartida"
+                "tipo": "opciones",
+                "opciones": [
+                  "Escribir el paso a paso",
+                  "Grabar un vídeo corto",
+                  "Hacer una plantilla",
+                  "Que lo haga siempre la misma persona"
+                ],
+                "confirmaciones": {
+                  "Escribir el paso a paso": "¿Escribir el paso a paso?",
+                  "Grabar un vídeo corto": "¿Grabar un vídeo corto?",
+                  "Hacer una plantilla": "¿Hacer una plantilla?",
+                  "Que lo haga siempre la misma persona": "¿Que lo haga siempre la misma persona?"
+                }
               }
             ],
             "filas_iniciales": 2,
@@ -1982,16 +2055,23 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "¿Puede eliminarse?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "Parcial",
-                  "No"
-                ]
+                  "Quitarlo del proceso",
+                  "Quitar solo la parte que sobra",
+                  "Automatizarlo",
+                  "Se queda como está"
+                ],
+                "confirmaciones": {
+                  "Quitarlo del proceso": "¿Quitarlo del proceso?",
+                  "Quitar solo la parte que sobra": "¿Quitar solo la parte que sobra?",
+                  "Automatizarlo": "¿Automatizarlo?",
+                  "Se queda como está": "¿Se queda como está?"
+                }
               },
               {
-                "etiqueta": "Responsable decisión",
+                "etiqueta": "Quién lo decide",
                 "tipo": "texto"
               },
               {
@@ -2014,7 +2094,7 @@
             "titulo": "1. Dependencias humanas críticas",
             "columnas": [
               {
-                "etiqueta": "Tarea crítica",
+                "etiqueta": "Trabajo crítico",
                 "tipo": "texto"
               },
               {
@@ -2022,12 +2102,22 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Hay backup?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                  "Ya hay quien sabe hacerlo",
+                  "Formar a un sustituto este mes",
+                  "Escribir el paso a paso",
+                  "Repartirlo entre dos personas",
+                  "Lo dejo como está"
+                ],
+                "confirmaciones": {
+                  "Ya hay quien sabe hacerlo": "¿Ya hay quien sabe hacerlo?",
+                  "Formar a un sustituto este mes": "¿Formar a un sustituto este mes?",
+                  "Escribir el paso a paso": "¿Escribir el paso a paso?",
+                  "Repartirlo entre dos personas": "¿Repartirlo entre dos personas?",
+                  "Lo dejo como está": "¿Lo dejo como está?"
+                }
               },
               {
                 "etiqueta": "Impacto si falta",
@@ -2342,7 +2432,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Tarea",
+                "etiqueta": "Trabajo",
                 "tipo": "texto"
               },
               {
@@ -2380,12 +2470,22 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Bloqueada?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                  "Sigue su curso",
+                  "Reclamar al solicitante lo que falta",
+                  "Liberar a quien la ejecuta",
+                  "Cambiarle la prioridad",
+                  "Se cancela"
+                ],
+                "confirmaciones": {
+                  "Sigue su curso": "¿Sigue su curso?",
+                  "Reclamar al solicitante lo que falta": "¿Reclamar al solicitante lo que falta?",
+                  "Liberar a quien la ejecuta": "¿Liberar a quien la ejecuta?",
+                  "Cambiarle la prioridad": "¿Cambiarle la prioridad?",
+                  "Se cancela": "¿Se cancela?"
+                }
               },
               {
                 "etiqueta": "Motivo bloqueo",
@@ -2422,7 +2522,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Tarea de onboarding",
+                "etiqueta": "Qué tiene que aprender",
                 "tipo": "texto"
               },
               {
@@ -2447,12 +2547,20 @@
                 "tipo": "numero"
               },
               {
-                "etiqueta": "¿Documentada?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                  "Ya está escrito",
+                  "Escribirlo esta semana",
+                  "Se enseña al lado, sin papel",
+                  "Grabar un vídeo corto"
+                ],
+                "confirmaciones": {
+                  "Ya está escrito": "¿Ya está escrito?",
+                  "Escribirlo esta semana": "¿Escribirlo esta semana?",
+                  "Se enseña al lado, sin papel": "¿Se enseña al lado, sin papel?",
+                  "Grabar un vídeo corto": "¿Grabar un vídeo corto?"
+                }
               },
               {
                 "etiqueta": "¿Completada?",
@@ -2971,7 +3079,7 @@
             "titulo": "1. Constructor de checklist de verificación",
             "columnas": [
               {
-                "etiqueta": "Paso del proceso",
+                "etiqueta": "Etapa del proceso",
                 "tipo": "texto"
               },
               {
@@ -2983,12 +3091,18 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Crítico?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                  "Entra en el checklist",
+                  "Entra y además se firma",
+                  "Se queda fuera del checklist"
+                ],
+                "confirmaciones": {
+                  "Entra en el checklist": "¿Entra en el checklist?",
+                  "Entra y además se firma": "¿Entra y además se firma?",
+                  "Se queda fuera del checklist": "¿Se queda fuera del checklist?"
+                }
               },
               {
                 "etiqueta": "Evidencia requerida",
@@ -3298,7 +3412,21 @@
               },
               {
                 "etiqueta": "Próxima acción",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Llamarle esta semana",
+                  "Mandarle el presupuesto",
+                  "Quedar para verle",
+                  "Volver a intentarlo en un mes",
+                  "Descartarlo"
+                ],
+                "confirmaciones": {
+                  "Llamarle esta semana": "¿Llamarle esta semana?",
+                  "Mandarle el presupuesto": "¿Mandarle el presupuesto?",
+                  "Quedar para verle": "¿Quedar para verle?",
+                  "Volver a intentarlo en un mes": "¿Volver a intentarlo en un mes?",
+                  "Descartarlo": "¿Descartarlo?"
+                }
               },
               {
                 "etiqueta": "Fecha próximo contacto",
@@ -3654,7 +3782,21 @@
               },
               {
                 "etiqueta": "Acción correctora",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Salir a buscar más contactos",
+                  "Sacar las propuestas pendientes",
+                  "Llamar a los que no contestan",
+                  "Bajar el objetivo de la semana",
+                  "Vamos bien, seguir igual"
+                ],
+                "confirmaciones": {
+                  "Salir a buscar más contactos": "¿Salir a buscar más contactos?",
+                  "Sacar las propuestas pendientes": "¿Sacar las propuestas pendientes?",
+                  "Llamar a los que no contestan": "¿Llamar a los que no contestan?",
+                  "Bajar el objetivo de la semana": "¿Bajar el objetivo de la semana?",
+                  "Vamos bien, seguir igual": "¿Vamos bien, seguir igual?"
+                }
               },
               {
                 "etiqueta": "% objetivo cumplido",
@@ -3722,21 +3864,26 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Total actividad",
-                "tipo": "calculada",
-                "clave": "total",
-                "formula": "llamadas+emails+linkedin+reuniones+propuestas+seguim",
-                "unidad": "numero"
-              },
-              {
                 "etiqueta": "Acción correctora",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Subir las llamadas de la semana",
+                  "Cambiar el canal que no funciona",
+                  "Reservar dos horas fijas para contactar",
+                  "Vamos bien, seguir igual"
+                ],
+                "confirmaciones": {
+                  "Subir las llamadas de la semana": "¿Subir las llamadas de la semana?",
+                  "Cambiar el canal que no funciona": "¿Cambiar el canal que no funciona?",
+                  "Reservar dos horas fijas para contactar": "¿Reservar dos horas fijas para contactar?",
+                  "Vamos bien, seguir igual": "¿Vamos bien, seguir igual?"
+                }
               },
               {
                 "etiqueta": "% objetivo",
                 "tipo": "calculada",
                 "clave": "pct_objetivo",
-                "formula": "total*100/objetivo",
+                "formula": "(llamadas+emails+linkedin+reuniones+propuestas+seguim)*100/objetivo",
                 "unidad": "pct",
                 "no_sumar": true
               }
@@ -3781,7 +3928,19 @@
               },
               {
                 "etiqueta": "Acción si supera",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Llamar para desatascarlo",
+                  "Bajarle la probabilidad",
+                  "Sacarlo del embudo",
+                  "Pasarlo a la etapa siguiente"
+                ],
+                "confirmaciones": {
+                  "Llamar para desatascarlo": "¿Llamar para desatascarlo?",
+                  "Bajarle la probabilidad": "¿Bajarle la probabilidad?",
+                  "Sacarlo del embudo": "¿Sacarlo del embudo?",
+                  "Pasarlo a la etapa siguiente": "¿Pasarlo a la etapa siguiente?"
+                }
               },
               {
                 "etiqueta": "Probabilidad %",
@@ -3816,7 +3975,19 @@
               },
               {
                 "etiqueta": "Próxima acción",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Llamarle esta semana",
+                  "Mandarle la propuesta",
+                  "Ponerle fecha de cierre",
+                  "Sacarlo del embudo"
+                ],
+                "confirmaciones": {
+                  "Llamarle esta semana": "¿Llamarle esta semana?",
+                  "Mandarle la propuesta": "¿Mandarle la propuesta?",
+                  "Ponerle fecha de cierre": "¿Ponerle fecha de cierre?",
+                  "Sacarlo del embudo": "¿Sacarlo del embudo?"
+                }
               }
             ],
             "filas_iniciales": 2
@@ -3909,7 +4080,19 @@
               },
               {
                 "etiqueta": "Próximo paso",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Llamarle para saber en qué está",
+                  "Mandarle una versión ajustada",
+                  "Ponerle fecha límite",
+                  "Darla por perdida"
+                ],
+                "confirmaciones": {
+                  "Llamarle para saber en qué está": "¿Llamarle para saber en qué está?",
+                  "Mandarle una versión ajustada": "¿Mandarle una versión ajustada?",
+                  "Ponerle fecha límite": "¿Ponerle fecha límite?",
+                  "Darla por perdida": "¿Darla por perdida?"
+                }
               },
               {
                 "etiqueta": "Fecha follow-up",
@@ -4103,18 +4286,10 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Valor ponderado (€)",
-                "tipo": "calculada",
-                "clave": "valor_pond",
-                "formula": "valor*prob/100",
-                "unidad": "eur",
-                "no_sumar": true
-              },
-              {
                 "etiqueta": "Total proyectado (€)",
                 "tipo": "calculada",
                 "clave": "total_proy",
-                "formula": "ingresos_conf+valor_pond",
+                "formula": "ingresos_conf+(valor*prob/100)",
                 "unidad": "eur"
               }
             ],
@@ -4346,7 +4521,19 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Dedicarle tiempo, es de los buenos",
+                  "Atenderle sin prioridad",
+                  "Pasárselo a otra persona",
+                  "Descartarlo"
+                ],
+                "confirmaciones": {
+                  "Dedicarle tiempo, es de los buenos": "¿Dedicarle tiempo, es de los buenos?",
+                  "Atenderle sin prioridad": "¿Atenderle sin prioridad?",
+                  "Pasárselo a otra persona": "¿Pasárselo a otra persona?",
+                  "Descartarlo": "¿Descartarlo?"
+                }
               }
             ],
             "filas_iniciales": 2
@@ -5276,17 +5463,10 @@
                 ]
               },
               {
-                "etiqueta": "Total horas planificadas",
-                "tipo": "calculada",
-                "clave": "total_h",
-                "formula": "h_estr+h_op+h_com",
-                "unidad": "numero"
-              },
-              {
                 "etiqueta": "% tiempo estratégico",
                 "tipo": "calculada",
                 "clave": "pct_estr",
-                "formula": "h_estr*100/total_h",
+                "formula": "h_estr*100/(h_estr+h_op+h_com)",
                 "unidad": "pct",
                 "no_sumar": true
               },
@@ -5357,18 +5537,10 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Valor generado hasta ahora (€)",
-                "tipo": "calculada",
-                "clave": "valor_generado",
-                "formula": "valor*pct/100",
-                "unidad": "eur",
-                "no_sumar": true
-              },
-              {
                 "etiqueta": "Valor en riesgo si se cancela (€)",
                 "tipo": "calculada",
                 "clave": "valor_riesgo",
-                "formula": "valor-valor_generado",
+                "formula": "valor-(valor*pct/100)",
                 "unidad": "eur"
               }
             ],
@@ -5384,7 +5556,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Tarea / Solicitud",
+                "etiqueta": "Trabajo o petición",
                 "tipo": "texto"
               },
               {
@@ -5405,13 +5577,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Existe protocolo?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
-                  "Si",
-                  "No"
-                ]
+                  "Ya está escrito, lo suelto",
+                  "Escribir el paso a paso",
+                  "Enseñarlo una vez y soltarlo",
+                  "Esto lo sigo llevando yo"
+                ],
+                "confirmaciones": {
+                  "Ya está escrito, lo suelto": "¿Ya está escrito, lo suelto?",
+                  "Escribir el paso a paso": "¿Escribir el paso a paso?",
+                  "Enseñarlo una vez y soltarlo": "¿Enseñarlo una vez y soltarlo?",
+                  "Esto lo sigo llevando yo": "¿Esto lo sigo llevando yo?"
+                }
               }
             ],
             "filas_iniciales": 5,
@@ -5584,8 +5763,22 @@
                 ]
               },
               {
-                "etiqueta": "Decisión final",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Se elimina",
+                  "Se acorta a la mitad",
+                  "Se pasa a mensual",
+                  "Va menos gente",
+                  "Se queda igual"
+                ],
+                "confirmaciones": {
+                  "Se elimina": "¿Se elimina?",
+                  "Se acorta a la mitad": "¿Se acorta a la mitad?",
+                  "Se pasa a mensual": "¿Se pasa a mensual?",
+                  "Va menos gente": "¿Va menos gente?",
+                  "Se queda igual": "¿Se queda igual?"
+                }
               },
               {
                 "etiqueta": "Horas-persona/mes",
@@ -5608,7 +5801,7 @@
             "titulo": "1. Matriz de delegación",
             "columnas": [
               {
-                "etiqueta": "Tipo decisión",
+                "etiqueta": "Qué se decide",
                 "tipo": "texto"
               },
               {
@@ -5631,13 +5824,18 @@
                 ]
               },
               {
-                "etiqueta": "¿Requiere líder?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "",
-                  "Sí",
-                  "No"
-                ]
+                  "Se la paso entera",
+                  "Se la paso con un límite",
+                  "Me la quedo por ahora"
+                ],
+                "confirmaciones": {
+                  "Se la paso entera": "¿Se la paso entera?",
+                  "Se la paso con un límite": "¿Se la paso con un límite?",
+                  "Me la quedo por ahora": "¿Me la quedo por ahora?"
+                }
               },
               {
                 "etiqueta": "Quién decide",
@@ -5656,7 +5854,17 @@
             "columnas": [
               {
                 "etiqueta": "Decisión",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "A partir de ahora la decide el equipo",
+                  "La decide el equipo hasta un límite",
+                  "La sigo decidiendo yo"
+                ],
+                "confirmaciones": {
+                  "A partir de ahora la decide el equipo": "¿A partir de ahora la decide el equipo?",
+                  "La decide el equipo hasta un límite": "¿La decide el equipo hasta un límite?",
+                  "La sigo decidiendo yo": "¿La sigo decidiendo yo?"
+                }
               },
               {
                 "etiqueta": "¿Llegó al líder?",
@@ -5962,26 +6170,10 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Ingresos actuales (€)",
-                "tipo": "calculada",
-                "clave": "ingresos_actuales",
-                "formula": "precio_actual*clientes_actuales",
-                "unidad": "eur",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Clientes tras subida",
-                "tipo": "calculada",
-                "clave": "clientes_tras",
-                "formula": "clientes_actuales-clientes_perdidos",
-                "unidad": "numero",
-                "no_sumar": true
-              },
-              {
                 "etiqueta": "Ingresos con subida (€)",
                 "tipo": "calculada",
                 "clave": "ingresos_nuevos",
-                "formula": "precio_propuesto*clientes_tras",
+                "formula": "precio_propuesto*(clientes_actuales-clientes_perdidos)",
                 "unidad": "eur",
                 "no_sumar": true
               },
@@ -5989,7 +6181,7 @@
                 "etiqueta": "Impacto neto (€)",
                 "tipo": "calculada",
                 "clave": "impacto_neto",
-                "formula": "ingresos_nuevos-ingresos_actuales",
+                "formula": "ingresos_nuevos-(precio_actual*clientes_actuales)",
                 "unidad": "eur"
               },
               {
@@ -6393,7 +6585,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Paso",
+                "etiqueta": "Etapa del cierre",
                 "tipo": "texto"
               },
               {
@@ -6405,12 +6597,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Hecho?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                  "Lo hago yo ese día",
+                  "Lo hace el responsable",
+                  "Se lo pido a la gestoría",
+                  "Se automatiza"
+                ],
+                "confirmaciones": {
+                  "Lo hago yo ese día": "¿Lo hago yo ese día?",
+                  "Lo hace el responsable": "¿Lo hace el responsable?",
+                  "Se lo pido a la gestoría": "¿Se lo pido a la gestoría?",
+                  "Se automatiza": "¿Se automatiza?"
+                }
               }
             ],
             "filas_iniciales": 5
@@ -6481,7 +6681,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Tarea manual",
+                "etiqueta": "Trabajo manual",
                 "tipo": "texto"
               },
               {
@@ -6497,12 +6697,20 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "¿Automatizable?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                  "Automatizarlo con la herramienta de al lado",
+                  "Simplificarlo sin automatizar",
+                  "Pasárselo a otra persona",
+                  "Se queda manual"
+                ],
+                "confirmaciones": {
+                  "Automatizarlo con la herramienta de al lado": "¿Automatizarlo con la herramienta de al lado?",
+                  "Simplificarlo sin automatizar": "¿Simplificarlo sin automatizar?",
+                  "Pasárselo a otra persona": "¿Pasárselo a otra persona?",
+                  "Se queda manual": "¿Se queda manual?"
+                }
               },
               {
                 "etiqueta": "Con qué (herramienta)",
@@ -6923,7 +7131,19 @@
             "columnas": [
               {
                 "etiqueta": "Acción",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Hablarlo con el asesor este mes",
+                  "Pedirle un cálculo por escrito",
+                  "Aplicarlo ya",
+                  "Descartado, no compensa"
+                ],
+                "confirmaciones": {
+                  "Hablarlo con el asesor este mes": "¿Hablarlo con el asesor este mes?",
+                  "Pedirle un cálculo por escrito": "¿Pedirle un cálculo por escrito?",
+                  "Aplicarlo ya": "¿Aplicarlo ya?",
+                  "Descartado, no compensa": "¿Descartado, no compensa?"
+                }
               },
               {
                 "etiqueta": "Responsable",
@@ -7008,7 +7228,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Tarea / Decisión",
+                "etiqueta": "Qué se resuelve",
                 "tipo": "texto"
               },
               {
@@ -7026,6 +7246,22 @@
               {
                 "etiqueta": "Informado (I)",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "La sigo aprobando yo",
+                  "La aprueba el responsable y me informa",
+                  "La resuelve él sin consultarme",
+                  "Sin repartir todavía"
+                ],
+                "confirmaciones": {
+                  "La sigo aprobando yo": "¿La sigo aprobando yo?",
+                  "La aprueba el responsable y me informa": "¿La aprueba el responsable y me informa?",
+                  "La resuelve él sin consultarme": "¿La resuelve él sin consultarme?",
+                  "Sin repartir todavía": "¿Sin repartir todavía?"
+                }
               }
             ],
             "filas_iniciales": 2
@@ -7039,7 +7275,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Decisión habitual",
+                "etiqueta": "Qué se decide",
                 "tipo": "texto"
               },
               {
@@ -7051,13 +7287,19 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Necesita pasar por ti?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
+                  "A partir de ahora no pasa por mí",
+                  "Pasa por mí solo si supera el límite de al lado",
+                  "Sigue pasando por mí"
                 ],
-                "contribuye_valor_si": "No"
+                "contribuye_valor_si": "A partir de ahora no pasa por mí",
+                "confirmaciones": {
+                  "A partir de ahora no pasa por mí": "¿A partir de ahora no pasa por mí?",
+                  "Pasa por mí solo si supera el límite de al lado": "¿Pasa por mí solo si supera el límite de al lado?",
+                  "Sigue pasando por mí": "¿Sigue pasando por mí?"
+                }
               }
             ],
             "filas_iniciales": 3
@@ -7071,7 +7313,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Tarea huérfana",
+                "etiqueta": "Trabajo sin dueño",
                 "tipo": "texto"
               },
               {
@@ -7083,14 +7325,21 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Estado",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sin asignar",
-                  "Asignada",
-                  "En marcha"
+                  "Asignada a esa persona",
+                  "La asumo yo",
+                  "Se deja de hacer",
+                  "Sin asignar todavía"
                 ],
-                "contribuye_valor_si": "Asignada"
+                "contribuye_valor_si": "Asignada a esa persona",
+                "confirmaciones": {
+                  "Asignada a esa persona": "¿Asignada a esa persona?",
+                  "La asumo yo": "¿La asumo yo?",
+                  "Se deja de hacer": "¿Se deja de hacer?",
+                  "Sin asignar todavía": "¿Sin asignar todavía?"
+                }
               }
             ],
             "filas_iniciales": 2
@@ -7414,8 +7663,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Ajuste aplicado",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "El mensaje se queda como está",
+                  "Cambiar cómo lo cuento",
+                  "Probarlo con otro perfil",
+                  "Volver a la versión anterior"
+                ],
+                "confirmaciones": {
+                  "El mensaje se queda como está": "¿El mensaje se queda como está?",
+                  "Cambiar cómo lo cuento": "¿Cambiar cómo lo cuento?",
+                  "Probarlo con otro perfil": "¿Probarlo con otro perfil?",
+                  "Volver a la versión anterior": "¿Volver a la versión anterior?"
+                }
               }
             ],
             "filas_iniciales": 3
@@ -7460,8 +7721,20 @@
                 ]
               },
               {
-                "etiqueta": "Accion de mejora",
-                "tipo": "texto"
+                "etiqueta": "Acción de mejora",
+                "tipo": "opciones",
+                "opciones": [
+                  "Añadir el logo y los colores",
+                  "Rehacer el diseño entero",
+                  "Quitar lo que sobra",
+                  "Está bien como está"
+                ],
+                "confirmaciones": {
+                  "Añadir el logo y los colores": "¿Añadir el logo y los colores?",
+                  "Rehacer el diseño entero": "¿Rehacer el diseño entero?",
+                  "Quitar lo que sobra": "¿Quitar lo que sobra?",
+                  "Está bien como está": "¿Está bien como está?"
+                }
               },
               {
                 "etiqueta": "Responsable",
@@ -7629,8 +7902,20 @@
                 ]
               },
               {
-                "etiqueta": "Mejora prioritaria",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Arreglarlo este mes",
+                  "Arreglarlo cuando haya presupuesto",
+                  "Sustituirlo por completo",
+                  "Está bien como está"
+                ],
+                "confirmaciones": {
+                  "Arreglarlo este mes": "¿Arreglarlo este mes?",
+                  "Arreglarlo cuando haya presupuesto": "¿Arreglarlo cuando haya presupuesto?",
+                  "Sustituirlo por completo": "¿Sustituirlo por completo?",
+                  "Está bien como está": "¿Está bien como está?"
+                }
               },
               {
                 "etiqueta": "Coste estimado (EUR)",
@@ -8026,7 +8311,19 @@
             "columnas": [
               {
                 "etiqueta": "Acción comercial",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Ofrecerlo en cada visita",
+                  "Ponerlo primero en la web",
+                  "Hacer una oferta de lanzamiento",
+                  "Formar al equipo para venderlo"
+                ],
+                "confirmaciones": {
+                  "Ofrecerlo en cada visita": "¿Ofrecerlo en cada visita?",
+                  "Ponerlo primero en la web": "¿Ponerlo primero en la web?",
+                  "Hacer una oferta de lanzamiento": "¿Hacer una oferta de lanzamiento?",
+                  "Formar al equipo para venderlo": "¿Formar al equipo para venderlo?"
+                }
               },
               {
                 "etiqueta": "Canal",
@@ -8415,7 +8712,19 @@
               },
               {
                 "etiqueta": "Acción",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Publicar más en este canal",
+                  "Cambiar lo que publico",
+                  "Dejar este canal",
+                  "Vamos bien, seguir igual"
+                ],
+                "confirmaciones": {
+                  "Publicar más en este canal": "¿Publicar más en este canal?",
+                  "Cambiar lo que publico": "¿Cambiar lo que publico?",
+                  "Dejar este canal": "¿Dejar este canal?",
+                  "Vamos bien, seguir igual": "¿Vamos bien, seguir igual?"
+                }
               }
             ],
             "filas_iniciales": 5
@@ -8531,7 +8840,21 @@
               },
               {
                 "etiqueta": "Acción de mejora",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Cambiar la foto",
+                  "Reescribir la descripción",
+                  "Actualizar el enlace",
+                  "Cerrar este perfil",
+                  "Está bien como está"
+                ],
+                "confirmaciones": {
+                  "Cambiar la foto": "¿Cambiar la foto?",
+                  "Reescribir la descripción": "¿Reescribir la descripción?",
+                  "Actualizar el enlace": "¿Actualizar el enlace?",
+                  "Cerrar este perfil": "¿Cerrar este perfil?",
+                  "Está bien como está": "¿Está bien como está?"
+                }
               },
               {
                 "etiqueta": "Estado",
@@ -8555,7 +8878,7 @@
             "titulo": "Reparto de responsabilidades de comunicación",
             "columnas": [
               {
-                "etiqueta": "Tarea de comunicación",
+                "etiqueta": "Trabajo de comunicación",
                 "tipo": "texto"
               },
               {
@@ -8576,13 +8899,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Estado",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Asignado",
-                  "Pendiente asignar",
-                  "Sin responsable"
-                ]
+                  "Se la asigno a alguien esta semana",
+                  "La llevo yo",
+                  "La externalizo",
+                  "Se deja de hacer"
+                ],
+                "confirmaciones": {
+                  "Se la asigno a alguien esta semana": "¿Se la asigno a alguien esta semana?",
+                  "La llevo yo": "¿La llevo yo?",
+                  "La externalizo": "¿La externalizo?",
+                  "Se deja de hacer": "¿Se deja de hacer?"
+                }
               }
             ],
             "filas_iniciales": 5
@@ -8689,8 +9019,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Acción concreta",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Se la paso a esa persona",
+                  "Se la paso con un límite",
+                  "Escribir cómo se decide",
+                  "Me la quedo por ahora"
+                ],
+                "confirmaciones": {
+                  "Se la paso a esa persona": "¿Se la paso a esa persona?",
+                  "Se la paso con un límite": "¿Se la paso con un límite?",
+                  "Escribir cómo se decide": "¿Escribir cómo se decide?",
+                  "Me la quedo por ahora": "¿Me la quedo por ahora?"
+                }
               }
             ],
             "filas_iniciales": 6
@@ -8805,7 +9147,21 @@
               },
               {
                 "etiqueta": "Acción de redistribución",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Pasar parte del trabajo a otra persona",
+                  "Contratar apoyo",
+                  "Quitar trabajo de la lista",
+                  "Repartir mejor los plazos",
+                  "Se queda como está"
+                ],
+                "confirmaciones": {
+                  "Pasar parte del trabajo a otra persona": "¿Pasar parte del trabajo a otra persona?",
+                  "Contratar apoyo": "¿Contratar apoyo?",
+                  "Quitar trabajo de la lista": "¿Quitar trabajo de la lista?",
+                  "Repartir mejor los plazos": "¿Repartir mejor los plazos?",
+                  "Se queda como está": "¿Se queda como está?"
+                }
               },
               {
                 "etiqueta": "Días de baja evitados (seguimiento trimestral)",
@@ -9171,7 +9527,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Paso",
+                "etiqueta": "Etapa",
                 "tipo": "texto"
               },
               {
@@ -9181,6 +9537,20 @@
               {
                 "etiqueta": "Cómo bajar la incomodidad",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Lo hago en la próxima reunión",
+                  "Lo hablo uno a uno antes",
+                  "Lo dejo para más adelante"
+                ],
+                "confirmaciones": {
+                  "Lo hago en la próxima reunión": "¿Lo hago en la próxima reunión?",
+                  "Lo hablo uno a uno antes": "¿Lo hablo uno a uno antes?",
+                  "Lo dejo para más adelante": "¿Lo dejo para más adelante?"
+                }
               }
             ],
             "filas_iniciales": 3
@@ -9398,7 +9768,19 @@
               },
               {
                 "etiqueta": "Acción para hacerlo visible",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Decírselo en la próxima reunión",
+                  "Decírselo a solas esta semana",
+                  "Contarlo delante del equipo",
+                  "Enseñarle el número que ha movido"
+                ],
+                "confirmaciones": {
+                  "Decírselo en la próxima reunión": "¿Decírselo en la próxima reunión?",
+                  "Decírselo a solas esta semana": "¿Decírselo a solas esta semana?",
+                  "Contarlo delante del equipo": "¿Contarlo delante del equipo?",
+                  "Enseñarle el número que ha movido": "¿Enseñarle el número que ha movido?"
+                }
               },
               {
                 "etiqueta": "Responsable",
@@ -9768,7 +10150,21 @@
               },
               {
                 "etiqueta": "Acción de retención",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Hablar con ella esta semana",
+                  "Revisar su sueldo",
+                  "Darle más responsabilidad",
+                  "Cambiarle las tareas que la queman",
+                  "Preparar el relevo"
+                ],
+                "confirmaciones": {
+                  "Hablar con ella esta semana": "¿Hablar con ella esta semana?",
+                  "Revisar su sueldo": "¿Revisar su sueldo?",
+                  "Darle más responsabilidad": "¿Darle más responsabilidad?",
+                  "Cambiarle las tareas que la queman": "¿Cambiarle las tareas que la queman?",
+                  "Preparar el relevo": "¿Preparar el relevo?"
+                }
               },
               {
                 "etiqueta": "Fecha próxima conversación",
@@ -9902,7 +10298,19 @@
               },
               {
                 "etiqueta": "Acción",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Hablar con ella esta semana",
+                  "Preguntar antes a quien trabaja con ella",
+                  "Cambiarle las tareas",
+                  "Volver a mirarlo dentro de un mes"
+                ],
+                "confirmaciones": {
+                  "Hablar con ella esta semana": "¿Hablar con ella esta semana?",
+                  "Preguntar antes a quien trabaja con ella": "¿Preguntar antes a quien trabaja con ella?",
+                  "Cambiarle las tareas": "¿Cambiarle las tareas?",
+                  "Volver a mirarlo dentro de un mes": "¿Volver a mirarlo dentro de un mes?"
+                }
               }
             ],
             "filas_iniciales": 5
@@ -9959,8 +10367,20 @@
                 ]
               },
               {
-                "etiqueta": "Acción propuesta",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Subirle el sueldo hasta el mínimo de mercado",
+                  "Subirle una parte ahora y el resto en 6 meses",
+                  "Compensarlo sin subir sueldo",
+                  "Se queda como está"
+                ],
+                "confirmaciones": {
+                  "Subirle el sueldo hasta el mínimo de mercado": "¿Subirle el sueldo hasta el mínimo de mercado?",
+                  "Subirle una parte ahora y el resto en 6 meses": "¿Subirle una parte ahora y el resto en 6 meses?",
+                  "Compensarlo sin subir sueldo": "¿Compensarlo sin subir sueldo?",
+                  "Se queda como está": "¿Se queda como está?"
+                }
               }
             ],
             "filas_iniciales": 5
@@ -10265,8 +10685,20 @@
                 ]
               },
               {
-                "etiqueta": "Acción en 6 meses",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Darle un proyecto donde la use",
+                  "Formarla para completarla",
+                  "Contratar a alguien que la tenga",
+                  "No hace falta ahora"
+                ],
+                "confirmaciones": {
+                  "Darle un proyecto donde la use": "¿Darle un proyecto donde la use?",
+                  "Formarla para completarla": "¿Formarla para completarla?",
+                  "Contratar a alguien que la tenga": "¿Contratar a alguien que la tenga?",
+                  "No hace falta ahora": "¿No hace falta ahora?"
+                }
               }
             ],
             "filas_iniciales": 3
@@ -10280,7 +10712,7 @@
           {
             "columnas": [
               {
-                "etiqueta": "Tarea de bajo valor",
+                "etiqueta": "Trabajo de bajo valor",
                 "tipo": "texto"
               },
               {
@@ -10309,6 +10741,22 @@
                 "clave": "ahorro_hora",
                 "formula": "actual-nuevo",
                 "unidad": "eur"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Se lo paso a esa persona este mes",
+                  "Lo automatizo",
+                  "Se deja de hacer",
+                  "Se queda donde está"
+                ],
+                "confirmaciones": {
+                  "Se lo paso a esa persona este mes": "¿Se lo paso a esa persona este mes?",
+                  "Lo automatizo": "¿Lo automatizo?",
+                  "Se deja de hacer": "¿Se deja de hacer?",
+                  "Se queda donde está": "¿Se queda donde está?"
+                }
               }
             ],
             "filas_iniciales": 3
@@ -10326,7 +10774,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Tarea a soltar",
+                "etiqueta": "Trabajo a soltar",
                 "tipo": "texto"
               },
               {
@@ -10336,6 +10784,22 @@
               {
                 "etiqueta": "Para dedicar a",
                 "tipo": "texto"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Se lo paso a otra persona",
+                  "Se deja de hacer",
+                  "Se automatiza",
+                  "Lo sigue haciendo, con menos horas"
+                ],
+                "confirmaciones": {
+                  "Se lo paso a otra persona": "¿Se lo paso a otra persona?",
+                  "Se deja de hacer": "¿Se deja de hacer?",
+                  "Se automatiza": "¿Se automatiza?",
+                  "Lo sigue haciendo, con menos horas": "¿Lo sigue haciendo, con menos horas?"
+                }
               }
             ],
             "filas_iniciales": 3
@@ -10808,8 +11272,20 @@
                 ]
               },
               {
-                "etiqueta": "Acción para dejar de ser intercambiable",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Añadirlo al servicio ya",
+                  "Probarlo con un cliente",
+                  "Contarlo en la propuesta",
+                  "Descartado, no compensa"
+                ],
+                "confirmaciones": {
+                  "Añadirlo al servicio ya": "¿Añadirlo al servicio ya?",
+                  "Probarlo con un cliente": "¿Probarlo con un cliente?",
+                  "Contarlo en la propuesta": "¿Contarlo en la propuesta?",
+                  "Descartado, no compensa": "¿Descartado, no compensa?"
+                }
               },
               {
                 "etiqueta": "Estado",
@@ -11098,8 +11574,20 @@
                 "contribuye_valor_si": "Si"
               },
               {
-                "etiqueta": "Accion de fidelizacion aplicada",
-                "tipo": "texto"
+                "etiqueta": "Acción de fidelización",
+                "tipo": "opciones",
+                "opciones": [
+                  "Llamarle para que vuelva",
+                  "Mandarle una oferta",
+                  "Preguntarle por qué no ha vuelto",
+                  "Darlo por perdido"
+                ],
+                "confirmaciones": {
+                  "Llamarle para que vuelva": "¿Llamarle para que vuelva?",
+                  "Mandarle una oferta": "¿Mandarle una oferta?",
+                  "Preguntarle por qué no ha vuelto": "¿Preguntarle por qué no ha vuelto?",
+                  "Darlo por perdido": "¿Darlo por perdido?"
+                }
               },
               {
                 "etiqueta": "Estado",
@@ -11196,8 +11684,20 @@
                 ]
               },
               {
-                "etiqueta": "Acción para potenciarlo",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Hacerlo siempre, no solo a veces",
+                  "Pedirle al cliente que lo cuente",
+                  "Ponerle a alguien al cargo",
+                  "Descartado"
+                ],
+                "confirmaciones": {
+                  "Hacerlo siempre, no solo a veces": "¿Hacerlo siempre, no solo a veces?",
+                  "Pedirle al cliente que lo cuente": "¿Pedirle al cliente que lo cuente?",
+                  "Ponerle a alguien al cargo": "¿Ponerle a alguien al cargo?",
+                  "Descartado": "¿Descartado?"
+                }
               },
               {
                 "etiqueta": "Responsable",
@@ -11471,7 +11971,7 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Mejora demostrable",
+                "etiqueta": "Resultado que puedes enseñar",
                 "tipo": "texto"
               },
               {
@@ -11483,6 +11983,22 @@
                   "Aún no"
                 ],
                 "contribuye_valor_si": "Sí"
+              },
+              {
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Pedirle que lo cuente por escrito",
+                  "Pedirle que me recomiende a alguien",
+                  "Usarlo como caso de ejemplo",
+                  "Todavía no toca pedírselo"
+                ],
+                "confirmaciones": {
+                  "Pedirle que lo cuente por escrito": "¿Pedirle que lo cuente por escrito?",
+                  "Pedirle que me recomiende a alguien": "¿Pedirle que me recomiende a alguien?",
+                  "Usarlo como caso de ejemplo": "¿Usarlo como caso de ejemplo?",
+                  "Todavía no toca pedírselo": "¿Todavía no toca pedírselo?"
+                }
               }
             ],
             "filas_iniciales": 3
@@ -11627,8 +12143,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Mejora en TU presentación",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Cambiar cómo lo cuento en la web",
+                  "Cambiar cómo lo cuento en la visita",
+                  "Enseñar el dato en la propuesta",
+                  "Se queda como está"
+                ],
+                "confirmaciones": {
+                  "Cambiar cómo lo cuento en la web": "¿Cambiar cómo lo cuento en la web?",
+                  "Cambiar cómo lo cuento en la visita": "¿Cambiar cómo lo cuento en la visita?",
+                  "Enseñar el dato en la propuesta": "¿Enseñar el dato en la propuesta?",
+                  "Se queda como está": "¿Se queda como está?"
+                }
               }
             ],
             "filas_iniciales": 3
@@ -11655,8 +12183,20 @@
                 ]
               },
               {
-                "etiqueta": "Acción para que lo sienta antes/durante",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Enseñarle el avance a mitad",
+                  "Mandarle un resumen de lo hecho",
+                  "Contárselo en la primera reunión",
+                  "Ya lo siente aquí"
+                ],
+                "confirmaciones": {
+                  "Enseñarle el avance a mitad": "¿Enseñarle el avance a mitad?",
+                  "Mandarle un resumen de lo hecho": "¿Mandarle un resumen de lo hecho?",
+                  "Contárselo en la primera reunión": "¿Contárselo en la primera reunión?",
+                  "Ya lo siente aquí": "¿Ya lo siente aquí?"
+                }
               }
             ],
             "filas_iniciales": 3
@@ -11740,7 +12280,7 @@
                 ]
               },
               {
-                "etiqueta": "Tarea de incorporación",
+                "etiqueta": "Qué tiene que pasar",
                 "tipo": "texto"
               },
               {
@@ -11748,12 +12288,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "¿Completada?",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Sí",
-                  "No"
-                ]
+                  "Lo hago yo esa semana",
+                  "Lo hace el responsable",
+                  "Se le da por escrito",
+                  "Se quita del plan"
+                ],
+                "confirmaciones": {
+                  "Lo hago yo esa semana": "¿Lo hago yo esa semana?",
+                  "Lo hace el responsable": "¿Lo hace el responsable?",
+                  "Se le da por escrito": "¿Se le da por escrito?",
+                  "Se quita del plan": "¿Se quita del plan?"
+                }
               },
               {
                 "etiqueta": "Fecha",
@@ -11861,8 +12409,20 @@
                 ]
               },
               {
-                "etiqueta": "Acción para no repetirla",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Escribir la respuesta en el manual",
+                  "Grabar un vídeo corto",
+                  "Meterlo en la formación del primer día",
+                  "Es un caso suelto, no hace falta"
+                ],
+                "confirmaciones": {
+                  "Escribir la respuesta en el manual": "¿Escribir la respuesta en el manual?",
+                  "Grabar un vídeo corto": "¿Grabar un vídeo corto?",
+                  "Meterlo en la formación del primer día": "¿Meterlo en la formación del primer día?",
+                  "Es un caso suelto, no hace falta": "¿Es un caso suelto, no hace falta?"
+                }
               }
             ],
             "filas_iniciales": 6
@@ -11907,7 +12467,19 @@
               },
               {
                 "etiqueta": "Acción correctora",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Darle más horas de acompañamiento",
+                  "Cambiar cómo se le enseña",
+                  "Alargar el plazo previsto",
+                  "Va bien, seguir igual"
+                ],
+                "confirmaciones": {
+                  "Darle más horas de acompañamiento": "¿Darle más horas de acompañamiento?",
+                  "Cambiar cómo se le enseña": "¿Cambiar cómo se le enseña?",
+                  "Alargar el plazo previsto": "¿Alargar el plazo previsto?",
+                  "Va bien, seguir igual": "¿Va bien, seguir igual?"
+                }
               }
             ],
             "filas_iniciales": 6
@@ -11997,8 +12569,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Acción para poder delegarlo",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Escribir el paso a paso",
+                  "Enseñárselo a esa persona",
+                  "Hacerlo juntos una vez",
+                  "Lo sigo haciendo yo"
+                ],
+                "confirmaciones": {
+                  "Escribir el paso a paso": "¿Escribir el paso a paso?",
+                  "Enseñárselo a esa persona": "¿Enseñárselo a esa persona?",
+                  "Hacerlo juntos una vez": "¿Hacerlo juntos una vez?",
+                  "Lo sigo haciendo yo": "¿Lo sigo haciendo yo?"
+                }
               },
               {
                 "etiqueta": "Estado",
@@ -12147,8 +12731,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Acción de delegación",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Se lo paso entero a esa persona",
+                  "Se lo paso con un límite",
+                  "Escribir cómo se hace y luego pasarlo",
+                  "Me lo quedo por ahora"
+                ],
+                "confirmaciones": {
+                  "Se lo paso entero a esa persona": "¿Se lo paso entero a esa persona?",
+                  "Se lo paso con un límite": "¿Se lo paso con un límite?",
+                  "Escribir cómo se hace y luego pasarlo": "¿Escribir cómo se hace y luego pasarlo?",
+                  "Me lo quedo por ahora": "¿Me lo quedo por ahora?"
+                }
               }
             ],
             "filas_iniciales": 5
@@ -12295,7 +12891,17 @@
               },
               {
                 "etiqueta": "Decisión",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "A partir de ahora la decide el equipo",
+                  "La decide el equipo hasta un límite",
+                  "Me la quedo, es mía"
+                ],
+                "confirmaciones": {
+                  "A partir de ahora la decide el equipo": "¿A partir de ahora la decide el equipo?",
+                  "La decide el equipo hasta un límite": "¿La decide el equipo hasta un límite?",
+                  "Me la quedo, es mía": "¿Me la quedo, es mía?"
+                }
               },
               {
                 "etiqueta": "Área",
@@ -12381,8 +12987,22 @@
                 ]
               },
               {
-                "etiqueta": "Gap y acción para cerrarlo",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Formarle este mes",
+                  "Darle los accesos",
+                  "Escribir el protocolo",
+                  "Buscar otra persona que cubra",
+                  "Ya está cubierto"
+                ],
+                "confirmaciones": {
+                  "Formarle este mes": "¿Formarle este mes?",
+                  "Darle los accesos": "¿Darle los accesos?",
+                  "Escribir el protocolo": "¿Escribir el protocolo?",
+                  "Buscar otra persona que cubra": "¿Buscar otra persona que cubra?",
+                  "Ya está cubierto": "¿Ya está cubierto?"
+                }
               }
             ],
             "filas_iniciales": 6
@@ -12449,8 +13069,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Siguiente hito",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Darle una responsabilidad propia este mes",
+                  "Dejarle dirigir una reunión",
+                  "Apuntarle a la formación",
+                  "Todavía no está listo"
+                ],
+                "confirmaciones": {
+                  "Darle una responsabilidad propia este mes": "¿Darle una responsabilidad propia este mes?",
+                  "Dejarle dirigir una reunión": "¿Dejarle dirigir una reunión?",
+                  "Apuntarle a la formación": "¿Apuntarle a la formación?",
+                  "Todavía no está listo": "¿Todavía no está listo?"
+                }
               }
             ],
             "filas_iniciales": 4
@@ -12558,8 +13190,20 @@
                 "unidad": "numero"
               },
               {
-                "etiqueta": "Acción de ajuste",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Bloquear esas horas en la agenda",
+                  "Pasar parte a otra persona",
+                  "Quitar la actividad",
+                  "Se queda como está"
+                ],
+                "confirmaciones": {
+                  "Bloquear esas horas en la agenda": "¿Bloquear esas horas en la agenda?",
+                  "Pasar parte a otra persona": "¿Pasar parte a otra persona?",
+                  "Quitar la actividad": "¿Quitar la actividad?",
+                  "Se queda como está": "¿Se queda como está?"
+                }
               }
             ],
             "filas_iniciales": 6
@@ -12608,7 +13252,19 @@
               },
               {
                 "etiqueta": "Acción",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Quitar el cuello de botella",
+                  "Poner a alguien más en esa etapa",
+                  "Bajar el plazo que prometes",
+                  "Va bien, seguir igual"
+                ],
+                "confirmaciones": {
+                  "Quitar el cuello de botella": "¿Quitar el cuello de botella?",
+                  "Poner a alguien más en esa etapa": "¿Poner a alguien más en esa etapa?",
+                  "Bajar el plazo que prometes": "¿Bajar el plazo que prometes?",
+                  "Va bien, seguir igual": "¿Va bien, seguir igual?"
+                }
               }
             ],
             "filas_iniciales": 4
@@ -12656,8 +13312,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Acción preventiva",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Reservar horas para imprevistos",
+                  "Cortar el origen de las urgencias",
+                  "Cobrar aparte las urgencias",
+                  "Va bien, seguir igual"
+                ],
+                "confirmaciones": {
+                  "Reservar horas para imprevistos": "¿Reservar horas para imprevistos?",
+                  "Cortar el origen de las urgencias": "¿Cortar el origen de las urgencias?",
+                  "Cobrar aparte las urgencias": "¿Cobrar aparte las urgencias?",
+                  "Va bien, seguir igual": "¿Va bien, seguir igual?"
+                }
               }
             ],
             "filas_iniciales": 5
@@ -12699,8 +13367,20 @@
                 "unidad": "numero"
               },
               {
-                "etiqueta": "Acción de nivelación",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Adelantar trabajo a la semana anterior",
+                  "Repartirlo entre más gente",
+                  "Mover fechas de entrega",
+                  "Reforzar solo esos días"
+                ],
+                "confirmaciones": {
+                  "Adelantar trabajo a la semana anterior": "¿Adelantar trabajo a la semana anterior?",
+                  "Repartirlo entre más gente": "¿Repartirlo entre más gente?",
+                  "Mover fechas de entrega": "¿Mover fechas de entrega?",
+                  "Reforzar solo esos días": "¿Reforzar solo esos días?"
+                }
               },
               {
                 "etiqueta": "Estado",
@@ -12751,8 +13431,20 @@
                 "tipo": "texto"
               },
               {
-                "etiqueta": "Acción niveladora",
-                "tipo": "texto"
+                "etiqueta": "Decisión",
+                "tipo": "opciones",
+                "opciones": [
+                  "Adelantar parte a la semana floja",
+                  "Repartirlo entre más gente",
+                  "Rechazar trabajo en el pico",
+                  "Se queda como está"
+                ],
+                "confirmaciones": {
+                  "Adelantar parte a la semana floja": "¿Adelantar parte a la semana floja?",
+                  "Repartirlo entre más gente": "¿Repartirlo entre más gente?",
+                  "Rechazar trabajo en el pico": "¿Rechazar trabajo en el pico?",
+                  "Se queda como está": "¿Se queda como está?"
+                }
               }
             ],
             "filas_iniciales": 5
@@ -12796,7 +13488,19 @@
               },
               {
                 "etiqueta": "Acción de mejora",
-                "tipo": "texto"
+                "tipo": "opciones",
+                "opciones": [
+                  "Poner más capacidad en esa etapa",
+                  "Quitarle trabajo a esa etapa",
+                  "Cambiar el orden del proceso",
+                  "Es el límite, no se toca"
+                ],
+                "confirmaciones": {
+                  "Poner más capacidad en esa etapa": "¿Poner más capacidad en esa etapa?",
+                  "Quitarle trabajo a esa etapa": "¿Quitarle trabajo a esa etapa?",
+                  "Cambiar el orden del proceso": "¿Cambiar el orden del proceso?",
+                  "Es el límite, no se toca": "¿Es el límite, no se toca?"
+                }
               },
               {
                 "etiqueta": "Estado",
