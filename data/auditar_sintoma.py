@@ -125,10 +125,24 @@ def auditar(s):
             claves = {c.get("clave") for c in cols if c.get("clave")}
 
             # 3a · una sola columna accionable
-            acc = [c["etiqueta"] for c in cols
-                   if c.get("tipo") != "calculada" and ACCION.search(c.get("etiqueta", ""))]
-            if len(acc) > 1:
-                r.B(d, f"colision ACCION_REGEX: {acc} -- C4 recibira la columna equivocada")
+            # Mismo orden de resolucion que columnasDecision() en TreatmentPage.tsx (27 ago 2026):
+            # es_decision manda; si no la hay, el regex; y entre varias candidatas gana la de
+            # opciones cerradas. Solo es colision cuando el motor TAMPOCO puede desempatar --
+            # avisar de las que ya resuelve seria gritar en falso.
+            usables = [c for c in cols if c.get("tipo") != "calculada"]
+            explicitas = [c["etiqueta"] for c in usables if c.get("es_decision")]
+            if explicitas:
+                acc = explicitas
+                if len(explicitas) > 1:
+                    r.B(d, f"{len(explicitas)} columnas con es_decision: C4 recibira varias -- {explicitas}")
+            else:
+                candidatas = [c for c in usables if ACCION.search(c.get("etiqueta", ""))]
+                cerradas = [c for c in candidatas if c.get("tipo") in ("opciones", "decision")]
+                acc = [c["etiqueta"] for c in (cerradas or candidatas)]
+                if len(candidatas) > 1 and len(acc) > 1:
+                    r.B(d, f"colision ACCION_REGEX sin desempate: {acc} -- C4 recibira la columna equivocada")
+                elif len(candidatas) > 1:
+                    r.A(d, f"varias casan el regex pero el motor desempata por opciones cerradas: {acc[0]} -- declara es_decision para no dejarlo al azar")
             if acc:
                 rama_con_accion.add(rk)
 
@@ -240,7 +254,14 @@ def auditar(s):
 
     for rk, v in plan.items():
         if isinstance(v, dict) and v.get("tipo") == "nativa" and rk not in rama_con_accion:
-            r.A(rk, "ninguna columna accionable en toda la rama: no baja nada a C4")
+            # Bloqueante desde el 27 ago 2026, no aviso. El cliente puede recorrer la rama entera,
+            # rellenarla y salir de C3 sin que C4 reciba una sola tarea: el tratamiento no produce
+            # plan. Y ahora ademas la puerta de C3 tiene que dejarlas pasar a proposito (no se le
+            # puede exigir una decision a quien no tiene donde tomarla, tarjetaPuedeDecidir), asi
+            # que si esto no fuera bloqueante el defecto quedaria escondido para siempre.
+            if any(c.get("contramedidas") for sec in v.get("secciones", []) for c in sec.get("columnas", []) or []):
+                continue  # baja a C4 por contramedidas, no por columna de decision
+            r.B(rk, "ninguna columna de decision en toda la rama: el cliente la completa y C4 no recibe nada")
 
     # El diagnostico de C2 tambien es copy que ve el cliente, y es justo donde se colo la frase.
     for i, cfg in enumerate(s.get("c2_diagnostico") or []):
