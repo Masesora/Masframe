@@ -432,10 +432,24 @@
                 "tipo": "texto"
               }
             ],
-            "filas_iniciales": 3
+            "filas_iniciales": 3,
+            "interpretacion": {
+              "clave": "liquidez",
+              "reglas": [
+                {
+                  "min": 1,
+                  "color": "verde",
+                  "texto": "Eso es lo que dejas de tener adelantado cada mes si tus proveedores te conceden esos días. Es dinero tuyo que se queda en tu cuenta, no financiación: por eso sí cuenta como recuperado."
+                },
+                {
+                  "color": "rojo",
+                  "texto": "Todavía no has pedido más plazo a nadie. Empieza por el proveedor al que más le compras: cada día que te concedan es dinero que no tienes que adelantar."
+                }
+              ]
+            }
           },
           {
-            "titulo": "3. Financiación puente",
+            "titulo": "3. Financiación puente — cubre el hueco mientras lo corriges. No cuenta como dinero recuperado: es prestado, no rescatado",
             "columnas": [
               {
                 "etiqueta": "Vía de financiación a explorar",
