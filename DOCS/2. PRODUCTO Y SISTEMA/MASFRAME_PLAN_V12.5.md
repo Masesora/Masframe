@@ -2753,6 +2753,107 @@ Dos aprendizajes del barrido:
 - **Tres puertas de C2 que no cruza nadie:** `semáforo`, `abc` y `retencion` tienen lógica y mensaje de error escritos y cero síntomas que lleguen a ellas.
 - **El recorrido en pantalla sigue sin hacerse contra un backend local.** `VITE_API_URL` apunta a Render, así que todo lo verificado en la sesión se comprobó ejecutando el código real de C6 con Node contra los 14 casos de UCI, no pulsando.
 
+
+## LXI. SESIÓN 27 AGO 2026 (cont.) — La pareja r3/r4 de UCI-S1, y la medida del trabajo que queda
+
+Continúa §LX con la pantalla delante. Se cierra C6, se pule la primera pareja de ramas, y al final
+se mide en el catálogo entero lo que esa pareja ha enseñado — que es el verdadero entregable de la
+sesión, porque convierte «pulir 176 casos» en cuatro decisiones.
+
+### LXI.A — C6: la conclusión estaba escrita tres veces
+
+De «Has mejorado» al banner de alta había **tres bloques verdes seguidos** dando la misma noticia:
+píldora de veredicto, botón fantasma y banner. Ahora hay **una** conclusión, con el alta como botón
+dentro de la tarjeta y la alternativa («seguir subiendo») bajo una divisoria, subordinada.
+
+Y en la hoja de ruta del KPI, dos hallazgos:
+
+- **El orden contaba la historia al revés.** Objetivo → Inicial → Actual, con flechas sugiriendo una
+  secuencia que no era la real. Pasa a Inicial → Actual → Objetivo. *Se revirtió el resto del
+  rediseño (color, tipografía, emoji) a petición del usuario: solo cambia el orden.*
+- **El `+X días` no se pintaba nunca.** Estaba condicionado a `enDias`, que mira `/día/i` sobre
+  `kpi_objective` — y el de UCI-S1 vale `">45"`, sin la palabra. El dato que más motiva era
+  invisible por el mismo bug de unidad que ya estaba anotado. Ahora sale en la unidad del KPI.
+
+Se retiró también el bloque **«Evidencias por intervención»** de C5: pintaba un tick y el importe,
+los mismos importes que el resumen ya suma y que C4 enseña tarea a tarea. C5 valora, no repite.
+
+### LXI.B — r3 y r4: seis lecciones que no son de r4
+
+La pareja se cerró en cuatro vueltas, y **cada vuelta salió de una queja del usuario mirando la
+pantalla**, no de la auditoría. Ese es el dato importante: el auditor daba 5 avisos y ninguno era
+el problema real.
+
+1. **Le pedíamos una media estadística.** *«Días que tardas en cobrar de media»* es un DSO: se
+   calcula sobre todas las facturas del periodo, y Felipe no lo tiene. Y encima ese dato ya estaba
+   en la sección de al lado, proveedor a proveedor y mejor medido.
+2. **La sección entera no aportaba nada.** No alimentaba el KPI, no bajaba acción a C4 y le
+   confirmaba lo que ya sabía — *«¿para qué quieres saberlo, qué te aporta?»*. **Se borró.** La rama
+   pasó de 3 secciones y 14 campos a 2 y 9.
+3. **C4 recibía una fecha como tarea.** La sección 2 no tenía columna de decisión, así que la única
+   que casaba con `ACCION_REGEX` era *«Fecha acuerdo»*, por la palabra *acuerdo*. Sin colisión que
+   lo delatara, el auditor no decía nada. «Estado negociación» pasó a ser esa decisión: **un campo
+   que hace de estado y de acción**, en vez de dos campos y ninguna acción útil.
+4. **La guía salía debajo de la tabla**, como veredicto de algo que aún no ha rellenado. Va en el
+   título, encima, que es donde sirve. Debajo solo queda lo que celebra una cifra que ya existe.
+5. **`vista: tarjeta` empeoró la sección.** Se aplicó siguiendo el aviso del auditor y apiló ocho
+   campos en vertical: tres proveedores, un kilómetro de scroll. **La recomendación vale para
+   tarjetas de 3-4 campos, no para listas.** Se revirtió y se adelgazó la tabla a seis.
+6. **`fila_unica` y `estilo: desplegable` solo los lee `vista: tarjeta`** (`TreatmentPage.tsx:4915`).
+   Puestos sobre una sección en tabla no hacen nada — y la opción vacía que evita el premarcado
+   pinta *una pill en blanco* si la sección sí es tarjeta. El mecanismo hay que mirarlo en el
+   renderer, no solo en el esquema.
+
+Y dos de copy, las dos por escribir desde el lado equivocado:
+
+7. **«No cuenta como dinero recuperado: es prestado, no rescatado»** era **contabilidad nuestra
+   puesta en su pantalla**. A Felipe le da igual cómo puntuamos el KPI. La financiación puente no
+   suma — decisión de producto confirmada — pero eso es una regla interna, no un mensaje.
+8. **«Cuánto hueco tienes»** no significa nada. *«¿Qué hueco, qué es eso?»*. Se llama por lo que es:
+   **«Cuántos días pagas antes de cobrar»**. Los tres títulos pasaron de `1. / 2. / 3.` a decir para
+   qué sirve cada uno, y así los tres se leen como un recorrido.
+
+### LXI.C — Lo que queda, medido: 182 secciones nativas, cuatro defectos
+
+Los defectos de r4 no eran de r4. Barridos sobre el catálogo entero:
+
+| | Secciones | Qué pasa | Decisión |
+|---|---|---|---|
+| **A** | **62** | Lo que baja a C4 es un **texto libre** que el cliente escribe («Acción de mejora»), no una decisión — el patrón que §LII ya rechazó como *tracking disfrazado de decisión* | **Pendiente.** Hay que escribir 3-5 opciones por sección |
+| **B** | **14** | Secciones que **no alimentan el KPI ni bajan acción**, como la borrada en r4 | **Pendiente.** Mecánico: se borran |
+| **C** | **90** | **Más de 6 campos por fila** | **Pendiente.** Podar lo que no decide, no mide ni identifica |
+| **D** | **16** | Calculadas que solo son un paso intermedio y se pintan igual (el *«Días ganados»* de r4) | **Pendiente.** Mecánico: se absorben en la fórmula que las usa |
+
+**Las otras 100 secciones ya bajan una decisión de verdad**: son la plantilla para arreglar las 62.
+
+Y del barrido anterior (§LX.G) siguen abiertos los **110 desplegables premarcados**, que no son un
+solo problema sino tres: 68 preguntas que llegan contestadas «Sí», 28 escalas clavadas en el extremo
+alto, y **20 estados donde el valor por defecto es correcto** — tratarlos igual empeora esos 20.
+
+### LXI.D — Cómo abrir la siguiente sesión
+
+**La unidad de trabajo es una PAREJA de `capa_1_options`, no un caso suelto.** C1 exige marcar dos
+causas, así que un caso de un problema no pasa de la primera capa (§LX.A). Seis opciones dan **tres
+parejas**, con las dos causas de estaciones distintas del ciclo del dinero. Por síntoma: 3 parejas.
+
+**Y el orden que ha funcionado hoy, que es el contrario del que traía:**
+
+1. **Medir antes de tocar.** El auditor da avisos de forma; los defectos que importan salen de
+   preguntar *«¿esto qué le aporta al dueño?»* sección por sección. Los cuatro tipos de §LXI.C ya
+   están medidos: empezar por ahí, no por la rama.
+2. **Decidir por TIPO, no por rama.** Una decisión sobre las 62 vale más que 62 conversaciones.
+3. **Aplicar en una pasada y verificar con las herramientas de la casa** — `auditar_sintoma.py`,
+   `validar_sintomas.py`, `tsc`, `vite build`, y los cálculos contra el código real ejecutado con
+   Node. Un escaneo propio no las sustituye: el de §LX.G dio 2 falsos positivos.
+4. **Enseñar el resultado, no el proceso.** El ritmo de hoy —un cambio, una captura, una queja— no
+   escala a 176 casos y agotó la sesión en una sola pareja.
+
+**Estado al cierre:** UCI-S1 con sus 6 ramas revisadas y sin bloqueantes en r3/r4; los 14 casos de
+UCI cerrados y verificados contra el código real; catálogo en **0 ERRORES** de `validar_sintomas.py`;
+`auditar_sintoma.py --todos` en **114 bloqueantes** (desde 178), de los que 110 son los desplegables
+premarcados. Las reglas de forma y palabra viven en la memoria del proyecto como patrones de
+revisión, y las 10 de fricción en §LX.E.
+
 ---
 
 ---
@@ -2805,3 +2906,4 @@ Dos aprendizajes del barrido:
 *§LIX añadida en sesión 26 ago 2026 — sesión de plataforma: el panel dejaba de distinguir entre "no hay nada" y "no he podido leerlo" (sesión caducada invisible, 0 CC falsos), dos definiciones de "consultor" que dejaban a un CC existiendo sin poder trabajar, dos rutas que el panel llamaba y no existían (baja de CC y UCC manual), la firma del contrato que nunca se guardaba y aun así se anunciaba como firmada, el ACI como paso del cliente que bloquea la firma y salta a urgencias de admin y CC, y la mensajería reordenada*
 
 *§LX añadida en sesión 26-27 ago 2026 — el banco de 176 casos destapa que el flujo no se podia recorrer: C1 exige 2 causas y todos los casos tenian una, asi que un caso es una PAREJA y seis opciones dan tres, no seis. De ahi al motor: lo que `contribuye_valor` calcula en C3 se tiraba salvo en modo margen (la ferreteria hacia el trabajo y su KPI salia plano en 19,3 dias; ahora 28,9); la puerta de C3 no comprobaba NADA en tarjetas con herramienta y dejaba pasar dos frentes vacios, teniendo la Sala de Control el dato al lado; y el boton de C4 cerraba una tarjeta con 0/2 acciones hechas. Veinte arreglos en C4 en cuatro pasadas con la pantalla delante -- la tarjeta del simulador no decia que hacer, solo preguntaba si habia vendido, y el anuncio de `genera_anuncio` se quedaba una capa atras; las fechas por fila no bajaban; el marcador media lo hecho contra lo que el cliente se comprometio y no contra lo que necesita; y `valor_real` nacia con el previsto escrito bajo una etiqueta que dice "real". §LX.E deja 10 reglas de friccion para las siete capas, mas la de contraste (S.muted era 2,9:1). §LX.F revierte §XLI por decision de producto: la garantia se cumple con que el KPI mejore, no con alcanzar el objetivo. Barrido sobre los 30: 49 secciones con el TOTAL sumando columnas incompatibles y 18 colisiones de ACCION_REGEX corregidas, 178 -> 114 bloqueantes y 0 ERRORES en el validador*
+*§LXI añadida en sesión 27 ago 2026 (cont.) — la pareja r3/r4 de UCI-S1 y la medida del trabajo que queda. C6 tenia la conclusion escrita TRES veces (pildora, boton fantasma y banner) y la hoja de ruta contaba la historia al reves; ademas el "+X dias", el dato que mas motiva, no se pintaba NUNCA por el mismo bug de unidad de `enDias`. Seis lecciones de r4 que no son de r4: le pediamos una media estadistica que el dueno no tiene y que ya estaba en la seccion de al lado; una seccion entera que no alimentaba el KPI ni bajaba accion (borrada, de 14 campos a 9); C4 recibiendo una FECHA como tarea porque la seccion no tenia columna de decision y "Fecha acuerdo" casaba con el regex; la guia saliendo DEBAJO de la tabla como veredicto de lo que aun no ha rellenado; `vista: tarjeta` empeorando una seccion de 8 campos (vale para tarjetas de 3-4, no para listas); y `fila_unica`/`estilo:desplegable` que solo se leen en vista tarjeta. Mas dos de copy por escribir desde el lado equivocado: "no cuenta como dinero recuperado: es prestado" era contabilidad NUESTRA en su pantalla, y "hueco" no significa nada. §LXI.C mide esos defectos en las 182 secciones nativas del catalogo -- 62 con texto libre bajando a C4 en vez de una decision, 90 con mas de 6 campos, 16 calculadas intermedias y 14 secciones muertas -- que es lo que convierte "pulir 176 casos" en cuatro decisiones. §LXI.D deja el metodo para la sesion siguiente: la unidad es una PAREJA de capa_1_options (tres por sintoma), se mide antes de tocar, se decide por TIPO y no por rama, y se enseña el resultado y no el proceso -- el ritmo de un cambio por captura agoto la sesion en una sola pareja*
