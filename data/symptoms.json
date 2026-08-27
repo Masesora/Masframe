@@ -334,7 +334,7 @@
         "titulo": "Corregir el desfase entre el ciclo de cobros y el de pagos",
         "secciones": [
           {
-            "titulo": "Cuánto hueco tienes",
+            "titulo": "Cuántos días pagas antes de cobrar",
             "columnas": [
               {
                 "etiqueta": "¿A cuántos días te pagan tus clientes?",
@@ -351,7 +351,7 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Tu desfase (días)",
+                "etiqueta": "Días que pagas antes de cobrar",
                 "tipo": "calculada",
                 "clave": "desfase_dias",
                 "formula": "dias_cobro-dias_pago",
@@ -366,7 +366,7 @@
                 {
                   "min": 1,
                   "color": "rojo",
-                  "texto": "Cobras más tarde de lo que tienes que pagar, y ese hueco lo estás adelantando tú todos los meses. Debajo tienes las dos salidas: pedir más días a quien te vende, y cubrir con financiación lo que no consigas cerrar así."
+                  "texto": "Pagas a tus proveedores antes de que te paguen a ti, y esos días los adelantas de tu bolsillo todos los meses. Debajo tienes las dos salidas: pedir más plazo a quien te vende, y financiar lo que no consigas ganar así."
                 },
                 {
                   "color": "verde",
@@ -378,7 +378,7 @@
             "vista": "tarjeta"
           },
           {
-            "titulo": "Cerrarlo pidiendo más plazo a tus proveedores",
+            "titulo": "Pide más plazo a tus proveedores",
             "columnas": [
               {
                 "etiqueta": "Proveedor",
@@ -397,40 +397,34 @@
                 "no_sumar": true
               },
               {
-                "etiqueta": "Plazo solicitado (días)",
+                "etiqueta": "Plazo que le pides (días)",
                 "tipo": "numero",
                 "clave": "plazo_solicitado",
                 "no_sumar": true
               },
               {
-                "etiqueta": "Días ganados",
-                "tipo": "calculada",
-                "clave": "dias_ganados",
-                "formula": "plazo_solicitado-plazo_actual",
-                "unidad": "numero",
-                "no_sumar": true
-              },
-              {
-                "etiqueta": "Liquidez liberada/mes (€)",
+                "etiqueta": "Lo que dejas de adelantar al mes (€)",
                 "tipo": "calculada",
                 "clave": "liquidez",
-                "formula": "(volumen/30)*dias_ganados",
+                "formula": "(volumen/30)*(plazo_solicitado-plazo_actual)",
                 "unidad": "eur",
                 "contribuye_valor": true
               },
               {
-                "etiqueta": "Estado negociación",
+                "etiqueta": "Decisión",
                 "tipo": "opciones",
                 "opciones": [
-                  "Pendiente",
-                  "En negociación",
+                  "Pedírselo esta semana",
+                  "Ya se lo he pedido, esperando",
                   "Acordado",
-                  "Rechazado"
-                ]
-              },
-              {
-                "etiqueta": "Fecha acuerdo",
-                "tipo": "texto"
+                  "No se lo voy a pedir"
+                ],
+                "confirmaciones": {
+                  "Pedírselo esta semana": "¿Se lo has pedido ya?",
+                  "Ya se lo he pedido, esperando": "¿Te ha contestado?",
+                  "Acordado": "¿Está ya aplicado en tus facturas?",
+                  "No se lo voy a pedir": "¿Sigues sin pedírselo?"
+                }
               }
             ],
             "filas_iniciales": 3,
@@ -444,14 +438,13 @@
                 },
                 {
                   "color": "amarillo",
-                  "texto": "Todavía no has pedido más plazo a nadie. Empieza por el proveedor al que más le compras: cada día que te concedan es dinero que no tienes que adelantar."
+                  "texto": "Empieza por el proveedor al que más le compras: cada día que te concedan es dinero que no tienes que adelantar."
                 }
               ]
-            },
-            "vista": "tarjeta"
+            }
           },
           {
-            "titulo": "Y si aún queda hueco, cubrirlo mientras lo corriges",
+            "titulo": "Si aún te falta, cúbrelo mientras tanto",
             "columnas": [
               {
                 "etiqueta": "Vía de financiación a explorar",
