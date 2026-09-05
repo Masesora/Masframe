@@ -112,6 +112,7 @@
 
 - **Un `tsc` que no falla nunca no es buena señal, es que no está mirando.** El `include` apuntaba a `src/src`, inexistente: no comprobaba ni un fichero y tapaba 9 identificadores que no existían en ejecución (§LIV).
 - **Lo que solo vive en el toggle de un dashboard se pierde.** El rewrite SPA de Render se perdió una vez; ahora está versionado en `render.yaml` (§LI).
+- **Un `push` no despliega: el auto-deploy está desactivado.** Subido el commit del dominio, el backend siguió sirviendo el build anterior — treinta comprobaciones en diez minutos, todas 400, con el código correcto ya en `origin/main`. Hace falta **Manual Deploy → Deploy latest commit**, y son **cinco servicios**: `masframe` (backend), `masfront` (app) y las tres landings (`ese-cc2u`, `masesora.com`, `masframelanding`). Y el **verde de Render es el estado del servicio, no el del despliegue**: se queda en Live con el build viejo, así que lo que hay que leer es el hash del commit en la cabecera del servicio, no el color (§LXII).
 - **Una URL de proveedor impresa o enviada por correo es deuda.** `laclinicadempresas.masesora.com` era una redirección de Nominalia, no un dominio: la app se enseñaba y se enviaba como `masfront.onrender.com`. Lo canónico es el dominio propio; el `.onrender.com` se queda solo como respaldo en el CORS. Y el enlace más usado no estaba en ninguna landing, sino en `CLINICA_URL` de `email_service.py` (§LXII).
 - **Nunca operar sobre un clon anidado.** `masesora_backend` llegó a ser un repositorio dentro de otro clon del mismo remoto, y un `reset --hard` sobre el duplicado borró 340 ficheros del bueno (§LIII).
 - **Un fallo de carga no se pinta como expediente vacío.** Además disparaba el autoguardado: con token válido y GET caído habría sobrescrito el expediente bueno (§LIV).
@@ -2909,6 +2910,7 @@ La tercera se localizó por el botón «Saber más sobre La Clínica» del panel
 
 ### LXII.D — Lo que la sesión destapó de paso
 
+- **Media sesión se fue en un despliegue que nunca ocurrió.** El auto-deploy está apagado en los cinco servicios y nadie lo sabía; se descubrió porque el preflight seguía en 400 con el código ya en GitHub. La lección vive en el bloque G.
 - **El workspace de Render está a 2/2 dominios.** `tusolucion`, `ese-cc2u` y `qrtarjetavisita`
   siguen en URLs de proveedor y marcarlas cuesta dinero, no trabajo. Decisión pendiente.
 - **El handle de Instagram no cuadra consigo mismo.** `email_service.py` y la tarjeta QR dicen
