@@ -1,7 +1,7 @@
 # TÉRMINOS Y CONDICIONES DE USO — MASFRAME®
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026 para su publicación en https://masfront.onrender.com/terminos
+> Documento generado el 25/04/2026 para su publicación en https://laclinicadempresas.masesora.com/terminos
 > Requiere revisión por asesor legal antes de publicación definitiva.
 > **Asunciones tomadas:** (1) MASFRAME® comercializa tres planes — PRE, PAE y PIE — según el material operativo existente; (2) Pagos gestionados por Stripe; (3) Servicio en modalidad SaaS con suscripción; (4) Fuero preferente Juzgados y Tribunales de Benidorm (Alicante).
 
@@ -13,7 +13,7 @@
 - **NIF:** 74860612M.
 - **Domicilio:** Carrer Gabriel Miró 27, 03530 Polop (Alicante, España).
 - **Email:** info@masesora.com.
-- **Plataforma:** MASFRAME®, accesible en https://masfront.onrender.com/.
+- **Plataforma:** MASFRAME®, accesible en https://laclinicadempresas.masesora.com/.
 
 ## 2. Objeto
 
@@ -88,7 +88,7 @@ La Titular podrá modificar los presentes términos en cualquier momento. Las mo
 
 ## 13. Protección de datos
 
-El tratamiento de datos personales se regula en la Política de Privacidad de MASFRAME®, accesible en https://masfront.onrender.com/privacidad.
+El tratamiento de datos personales se regula en la Política de Privacidad de MASFRAME®, accesible en https://laclinicadempresas.masesora.com/privacidad.
 
 ## 14. Legislación aplicable y jurisdicción
 

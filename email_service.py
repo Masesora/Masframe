@@ -7,7 +7,7 @@ from typing import List, Dict
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 FROM_EMAIL     = "info@masesora.com"
-CLINICA_URL    = "https://masfront.onrender.com"
+CLINICA_URL    = "https://laclinicadempresas.masesora.com"
 INSTAGRAM      = "@laclinicadeempresas"
 WEB            = "www.masesora.com"
 TELEFONO       = "609 987 436"

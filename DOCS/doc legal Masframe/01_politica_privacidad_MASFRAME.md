@@ -1,7 +1,7 @@
 # POLÍTICA DE PRIVACIDAD — MASFRAME®
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026 para su publicación en https://masfront.onrender.com/privacidad
+> Documento generado el 25/04/2026 para su publicación en https://laclinicadempresas.masesora.com/privacidad
 > Requiere revisión por asesor legal antes de publicación definitiva.
 > **Asunciones tomadas:** (1) Responsable = persona física autónoma; (2) Encargados actuales = Stripe, Render, Resend; (3) No se utilizan cookies de terceros; (4) El dato de síntomas autodeclarados introducido en la plataforma MASFRAME® se trata como dato sensible con consentimiento explícito.
 
@@ -13,7 +13,7 @@
 - **NIF:** 74860612M.
 - **Domicilio:** Carrer Gabriel Miró 27, 03520 Polop (Alicante, España).
 - **Email de contacto:** info@masesora.com.
-- **Plataforma:** MASFRAME®, accesible en https://masfront.onrender.com/ y servicios asociados.
+- **Plataforma:** MASFRAME®, accesible en https://laclinicadempresas.masesora.com/ y servicios asociados.
 
 ## 2. Datos personales tratados
 
@@ -74,7 +74,7 @@ La Titular aplica medidas técnicas y organizativas apropiadas para garantizar u
 
 ## 8. Cambios en la política de privacidad
 
-La presente política podrá modificarse para adaptarse a cambios normativos o en la prestación del servicio. Cualquier modificación relevante se comunicará mediante aviso en la plataforma o por correo electrónico. La versión vigente será la publicada en https://masfront.onrender.com/privacidad en cada momento.
+La presente política podrá modificarse para adaptarse a cambios normativos o en la prestación del servicio. Cualquier modificación relevante se comunicará mediante aviso en la plataforma o por correo electrónico. La versión vigente será la publicada en https://laclinicadempresas.masesora.com/privacidad en cada momento.
 
 ---
 

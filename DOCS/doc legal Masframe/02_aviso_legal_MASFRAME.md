@@ -1,7 +1,7 @@
 # AVISO LEGAL — MASFRAME®
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026 para su publicación en https://masfront.onrender.com/aviso-legal
+> Documento generado el 25/04/2026 para su publicación en https://laclinicadempresas.masesora.com/aviso-legal
 > Requiere revisión por asesor legal antes de publicación definitiva.
 
 ---
@@ -15,7 +15,7 @@ En cumplimiento de lo dispuesto en el artículo 10 de la Ley 34/2002, de 11 de j
 - **Domicilio profesional:** Carrer Gabriel Miró 27, 03530 Polop (Alicante, España).
 - **Email de contacto:** info@masesora.com.
 - **Actividad:** prestación de servicios de consultoría operativa y gestión empresarial a través de la plataforma MASFRAME®.
-- **URL del servicio:** https://masfront.onrender.com/.
+- **URL del servicio:** https://laclinicadempresas.masesora.com/.
 - **Marcas:** MASFRAME® es una marca utilizada por la Titular en el ámbito de su actividad profesional.
 
 ## 2. Objeto
@@ -56,7 +56,7 @@ La plataforma puede contener enlaces a sitios de terceros. La Titular no asume r
 
 ## 7. Protección de datos personales
 
-El tratamiento de datos personales que se realiza a través de la plataforma se rige por la Política de Privacidad de MASFRAME®, accesible en https://masfront.onrender.com/privacidad y que forma parte integrante del presente aviso legal.
+El tratamiento de datos personales que se realiza a través de la plataforma se rige por la Política de Privacidad de MASFRAME®, accesible en https://laclinicadempresas.masesora.com/privacidad y que forma parte integrante del presente aviso legal.
 
 ## 8. Modificación del aviso legal
 

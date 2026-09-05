@@ -1,7 +1,7 @@
 # POLÍTICA DE COOKIES — MASFRAME®
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026 para su publicación en https://masfront.onrender.com/cookies
+> Documento generado el 25/04/2026 para su publicación en https://laclinicadempresas.masesora.com/cookies
 > Requiere revisión por asesor legal antes de publicación definitiva.
 > **Asunción tomada:** la plataforma MASFRAME® **no utiliza cookies de analítica ni de terceros**. Utiliza exclusivamente cookies técnicas estrictamente necesarias para el funcionamiento del servicio (sesión, autenticación, preferencias de interfaz). En caso de incorporar en el futuro Google Analytics, Meta Pixel, Hotjar u otras herramientas, esta política deberá actualizarse y será obligatorio un banner de consentimiento conforme a la Guía de Cookies de la AEPD.
 

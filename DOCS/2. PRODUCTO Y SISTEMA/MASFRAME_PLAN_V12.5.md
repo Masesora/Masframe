@@ -112,6 +112,7 @@
 
 - **Un `tsc` que no falla nunca no es buena señal, es que no está mirando.** El `include` apuntaba a `src/src`, inexistente: no comprobaba ni un fichero y tapaba 9 identificadores que no existían en ejecución (§LIV).
 - **Lo que solo vive en el toggle de un dashboard se pierde.** El rewrite SPA de Render se perdió una vez; ahora está versionado en `render.yaml` (§LI).
+- **Una URL de proveedor impresa o enviada por correo es deuda.** `laclinicadempresas.masesora.com` era una redirección de Nominalia, no un dominio: la app se enseñaba y se enviaba como `masfront.onrender.com`. Lo canónico es el dominio propio; el `.onrender.com` se queda solo como respaldo en el CORS. Y el enlace más usado no estaba en ninguna landing, sino en `CLINICA_URL` de `email_service.py` (§LXII).
 - **Nunca operar sobre un clon anidado.** `masesora_backend` llegó a ser un repositorio dentro de otro clon del mismo remoto, y un `reset --hard` sobre el duplicado borró 340 ficheros del bueno (§LIII).
 - **Un fallo de carga no se pinta como expediente vacío.** Además disparaba el autoguardado: con token válido y GET caído habría sobrescrito el expediente bueno (§LIV).
 - **El token dura 8 horas y el 401 hay que manejarlo.** Sin eso, el patrón parece un borrado de datos (§LIV).
@@ -2854,6 +2855,70 @@ UCI cerrados y verificados contra el código real; catálogo en **0 ERRORES** de
 premarcados. Las reglas de forma y palabra viven en la memoria del proyecto como patrones de
 revisión, y las 10 de fricción en §LX.E.
 
+## LXII. SESIÓN 5 SEP 2026 — La Clínica deja de vivir en una URL de proveedor
+
+Sesión de infraestructura, no de síntomas. El subdominio `laclinicadempresas.masesora.com` llevaba
+meses dado de alta y **sin uso real**: no era un dominio, era una **redirección web de Nominalia**
+(CNAME a `onstatic-es.setupdns.net`, 81.88.48.71) que saltaba a `masfront.onrender.com`. La barra
+del navegador acababa siempre en la URL del proveedor, así que el subdominio no aportaba ni marca
+ni independencia. Y nadie llegaba a él, porque **todos los enlaces del ecosistema apuntaban
+directamente al `.onrender.com`**.
+
+### LXII.A — Lo que estaba mal no era la falta de uso, era la dirección
+
+El diagnóstico correcto no fue «hay que darle uso» sino «hay papel impreso y correos de cliente
+atados a la URL de un proveedor». Si mañana se cambia de hosting, esa URL muere y con ella el
+material ya distribuido. La decisión: el subdominio pasa a ser **el dominio canónico de la app**.
+
+- **Render** → servicio `masfront` → Custom Domains → `laclinicadempresas.masesora.com`.
+- **Nominalia** → eliminada la redirección web y creado el CNAME real a `masfront.onrender.com`
+  (TTL 900, propagó en minutos). Verified + Certificate Issued; responde **200 OK** por HTTPS.
+
+### LXII.B — El CORS estaba a fuego, y se probó antes de tocarlo
+
+`FRONTEND_URL` existe como variable de entorno en Render pero **no se lee en ningún `.py`**: es una
+variable huérfana. La lista de orígenes vive escrita en `main.py`. Antes de cambiar nada se probó
+el preflight desde fuera con los dos orígenes, y el resultado no dejó lugar a interpretación:
+
+| Origen | Respuesta |
+| --- | --- |
+| `https://masfront.onrender.com` | 200 OK + `access-control-allow-origin` |
+| `https://laclinicadempresas.masesora.com` | **400 Bad Request**, sin cabecera |
+
+Con el dominio ya vivo, el cliente habría visto la pantalla de login y al pulsar Entrar no habría
+pasado nada. Añadido el origen a `allow_origins` en `main.py`. **El dominio viejo se mantiene en la
+lista**: retirarlo dejaría fuera a quien tenga la URL antigua guardada.
+
+### LXII.C — El enlace que de verdad usa el cliente no estaba en ninguna landing
+
+`email_service.py` definía `CLINICA_URL = "https://masfront.onrender.com"`, y de ahí salen los dos
+botones del correo que recibe el cliente tras el ESE (uno a la raíz, otro a `/triage`). Ese es **el
+enlace más usado de todo el sistema** y no estaba en la lista de sitios a revisar. Actualizado.
+
+Además, las tres landings del frontend (`eselanding`, `masesoralanding`, `masframelanding`), donde
+vive el botón «Entra a LA CLÍNICA». Comprobado en producción a qué servicio va cada una:
+
+| Fuente en el repo | Publicada en |
+| --- | --- |
+| `src/pages/eselanding/` | `ese-cc2u.onrender.com` |
+| `src/pages/masesoralanding/` | `www.masesora.com` |
+| `src/pages/masframelanding/` | sin localizar en producción |
+
+### LXII.D — Lo que la sesión destapó de paso
+
+- **El workspace de Render está a 2/2 dominios.** `tusolucion`, `ese-cc2u` y `qrtarjetavisita`
+  siguen en URLs de proveedor y marcarlas cuesta dinero, no trabajo. Decisión pendiente.
+- **El handle de Instagram no cuadra consigo mismo.** `email_service.py` y la tarjeta QR dicen
+  `laclinicade**e**mpresas`; el tríptico dice `@laclinicadempresas`; el subdominio es
+  `laclinicadempresas`. Uno de los dos enlaces está roto. Sin resolver.
+- **Tres copias de lo mismo, otra vez.** La tarjeta QR existe en `C:/MasFront/QRtarjetavisita/`, en
+  `src/pages/QRtarjetavisita/` y en `DOCS/4. .../BRANDING/05_IMPRENTA/tarjetas/`. Los documentos
+  legales están duplicados en `DOCS/1. LEGALIZACION.../doc legal Masframe/` y `DOCS/doc legal
+  Masframe/`, y **los cuatro nombran la URL vieja** — nombrar la plataforma en un texto legal con
+  la dirección de un proveedor es el mismo defecto, con consecuencias distintas.
+
+---
+
 ---
 
 ---
@@ -2907,3 +2972,4 @@ revisión, y las 10 de fricción en §LX.E.
 
 *§LX añadida en sesión 26-27 ago 2026 — el banco de 176 casos destapa que el flujo no se podia recorrer: C1 exige 2 causas y todos los casos tenian una, asi que un caso es una PAREJA y seis opciones dan tres, no seis. De ahi al motor: lo que `contribuye_valor` calcula en C3 se tiraba salvo en modo margen (la ferreteria hacia el trabajo y su KPI salia plano en 19,3 dias; ahora 28,9); la puerta de C3 no comprobaba NADA en tarjetas con herramienta y dejaba pasar dos frentes vacios, teniendo la Sala de Control el dato al lado; y el boton de C4 cerraba una tarjeta con 0/2 acciones hechas. Veinte arreglos en C4 en cuatro pasadas con la pantalla delante -- la tarjeta del simulador no decia que hacer, solo preguntaba si habia vendido, y el anuncio de `genera_anuncio` se quedaba una capa atras; las fechas por fila no bajaban; el marcador media lo hecho contra lo que el cliente se comprometio y no contra lo que necesita; y `valor_real` nacia con el previsto escrito bajo una etiqueta que dice "real". §LX.E deja 10 reglas de friccion para las siete capas, mas la de contraste (S.muted era 2,9:1). §LX.F revierte §XLI por decision de producto: la garantia se cumple con que el KPI mejore, no con alcanzar el objetivo. Barrido sobre los 30: 49 secciones con el TOTAL sumando columnas incompatibles y 18 colisiones de ACCION_REGEX corregidas, 178 -> 114 bloqueantes y 0 ERRORES en el validador*
 *§LXI añadida en sesión 27 ago 2026 (cont.) — la pareja r3/r4 de UCI-S1 y la medida del trabajo que queda. C6 tenia la conclusion escrita TRES veces (pildora, boton fantasma y banner) y la hoja de ruta contaba la historia al reves; ademas el "+X dias", el dato que mas motiva, no se pintaba NUNCA por el mismo bug de unidad de `enDias`. Seis lecciones de r4 que no son de r4: le pediamos una media estadistica que el dueno no tiene y que ya estaba en la seccion de al lado; una seccion entera que no alimentaba el KPI ni bajaba accion (borrada, de 14 campos a 9); C4 recibiendo una FECHA como tarea porque la seccion no tenia columna de decision y "Fecha acuerdo" casaba con el regex; la guia saliendo DEBAJO de la tabla como veredicto de lo que aun no ha rellenado; `vista: tarjeta` empeorando una seccion de 8 campos (vale para tarjetas de 3-4, no para listas); y `fila_unica`/`estilo:desplegable` que solo se leen en vista tarjeta. Mas dos de copy por escribir desde el lado equivocado: "no cuenta como dinero recuperado: es prestado" era contabilidad NUESTRA en su pantalla, y "hueco" no significa nada. §LXI.C mide esos defectos en las 182 secciones nativas del catalogo -- 62 con texto libre bajando a C4 en vez de una decision, 90 con mas de 6 campos, 16 calculadas intermedias y 14 secciones muertas -- que es lo que convierte "pulir 176 casos" en cuatro decisiones. §LXI.D deja el metodo para la sesion siguiente: la unidad es una PAREJA de capa_1_options (tres por sintoma), se mide antes de tocar, se decide por TIPO y no por rama, y se enseña el resultado y no el proceso -- el ritmo de un cambio por captura agoto la sesion en una sola pareja*
+*§LXII añadida en sesión 5 sep 2026 — sesión de infraestructura: el subdominio de La Clínica pasa de redirección de Nominalia a dominio propio en Render (Verified + Certificate Issued, 200 OK). El CORS estaba a fuego en `main.py` y se probó antes de tocarlo: 400 con el origen nuevo contra 200 con el viejo, o sea que el login habría fallado en silencio. `FRONTEND_URL` en Render es una variable huérfana. El enlace más usado del sistema no vivía en ninguna landing sino en `CLINICA_URL` de `email_service.py`. Mapeadas las tres landings a su servicio en producción. Pendiente: redespliegue de landings y backend, handle de Instagram inconsistente, documentos legales nombrando la URL vieja y 2/2 dominios en Render*

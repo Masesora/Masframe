@@ -62,6 +62,8 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "https://laclinicadempresas.masesora.com",
+        "https://laclinicadempresas.masesora.com/",
         "https://masfront.onrender.com",
         "https://masfront.onrender.com/",
         "https://masframelanding.onrender.com",
