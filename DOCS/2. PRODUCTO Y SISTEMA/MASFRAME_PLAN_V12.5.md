@@ -2902,7 +2902,10 @@ vive el botón «Entra a LA CLÍNICA». Comprobado en producción a qué servici
 | --- | --- |
 | `src/pages/eselanding/` | `ese-cc2u.onrender.com` |
 | `src/pages/masesoralanding/` | `www.masesora.com` |
-| `src/pages/masframelanding/` | sin localizar en producción |
+| `src/pages/masframelanding/` | `masframelanding.onrender.com` |
+
+La tercera se localizó por el botón «Saber más sobre La Clínica» del panel izquierdo del login
+(`LoginPage.tsx`), que sale de la app hacia esa landing. Ya estaba en `allow_origins`.
 
 ### LXII.D — Lo que la sesión destapó de paso
 
