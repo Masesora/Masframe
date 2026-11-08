@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from jose import jwt
 import bcrypt
 import os
+import re
 
 from database.database import get_collection
 
@@ -83,8 +84,9 @@ class AuthService:
         collection = get_collection("clients")
 
         cliente = await collection.find_one({
-            "email":  {"$regex": f"^{email.strip()}$", "$options": "i"},
-            "codigo": {"$regex": f"^{codigo.strip()}$", "$options": "i"},
+            # re.escape: un email con "+" o "." es texto, no un patron.
+            "email":  {"$regex": f"^{re.escape(email.strip())}$", "$options": "i"},
+            "codigo": {"$regex": f"^{re.escape(codigo.strip())}$", "$options": "i"},
         })
 
         if not cliente:
