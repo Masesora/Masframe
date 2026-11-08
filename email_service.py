@@ -362,6 +362,42 @@ def generar_html_email(
 
 
 # ── Enviar email vía Resend ───────────────────────────────────────────────────
+async def _resend(client, payload: dict) -> str:
+    """Un envio a Resend. Devuelve el estado en texto, nunca lanza."""
+    try:
+        r = await client.post(
+            "https://api.resend.com/emails",
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type":  "application/json",
+            },
+            json=payload,
+            timeout=15.0,
+        )
+    except Exception as e:
+        return f"NO enviado (error de red: {type(e).__name__})"
+    if r.status_code in (200, 201):
+        return "enviado"
+    return f"NO enviado (Resend {r.status_code}: {r.text[:300]})"
+
+
+def _html_ya_registrado(empresa: str, codigo: str) -> str:
+    return (
+        '<div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;padding:28px;'
+        'color:#0d1b2e;">'
+        '<h2 style="margin:0 0 12px;">Ya tienes expediente en La Clínica de Empresas</h2>'
+        f'<p>Hemos recibido un nuevo escáner con este email{(" para " + empresa) if empresa else ""}. '
+        'Tu expediente ya existe, así que no hemos creado otro: tus datos siguen como estaban.</p>'
+        '<p style="margin:20px 0 6px;font-size:13px;color:#6b7280;">Tu código de acceso</p>'
+        f'<p style="font-size:24px;letter-spacing:3px;font-weight:700;margin:0 0 20px;">{codigo}</p>'
+        f'<p><a href="{CLINICA_URL}/login?codigo={codigo}" style="background:#c9a84c;color:#0d1b2e;'
+        'padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;">'
+        'Entrar a La Clínica de Empresas</a></p>'
+        '<p style="font-size:12px;color:#6b7280;margin-top:24px;">Si no has sido tú, no tienes que '
+        'hacer nada: tu código solo se envía a este email.</p></div>'
+    )
+
+
 async def send_ese_email(
     email:         str,
     empresa:       str,
@@ -371,11 +407,21 @@ async def send_ese_email(
     scores_areas:  Dict[str, float],
     especialidades: List[Dict],
     insights:      Dict,
-):
-    if not RESEND_API_KEY:
-        raise ValueError("RESEND_API_KEY no configurada en variables de entorno")
+    ya_registrado: bool = False,
+) -> Dict[str, str]:
+    """
+    Envia el informe ESE al cliente y una copia aparte a ESE_COPIA_EMAIL.
+    Si ya_registrado, al cliente solo le recuerda su codigo (el expediente
+    existente no se toca) y la copia lo marca como repetido.
 
-    html = generar_html_email(
+    Nunca lanza: devuelve el estado de cada envio para guardarlo en el
+    expediente y poder ver en Atlas por que un correo no llego.
+    """
+    if not RESEND_API_KEY:
+        falta = "NO enviado (falta RESEND_API_KEY en Render)"
+        return {"cliente": falta, "copia": falta}
+
+    html_informe = generar_html_email(
         empresa       = empresa,
         codigo        = codigo,
         score_global  = score_global,
@@ -384,77 +430,53 @@ async def send_ese_email(
         especialidades= especialidades,
         insights      = insights,
     )
-
     score_int = int(score_global)
-    subject   = f"Tu diagnóstico clínico · {empresa} · {codigo} · {score_int}%"
+    remitente = f"La Clínica de Empresas <{FROM_EMAIL}>"
 
-    resp      = None
-    error_red = None
+    if ya_registrado:
+        al_cliente = {
+            "from":    remitente,
+            "to":      [email],
+            "subject": f"Ya tienes expediente en La Clínica de Empresas · {codigo}",
+            "html":    _html_ya_registrado(empresa, codigo),
+        }
+    else:
+        al_cliente = {
+            "from":    remitente,
+            "to":      [email],
+            "subject": f"Tu diagnóstico clínico · {empresa} · {codigo} · {score_int}%",
+            "html":    html_informe,
+        }
+
+    resultado = {"cliente": "", "copia": "sin copia (ESE_COPIA_EMAIL vacío)"}
     async with httpx.AsyncClient() as client:
-        try:
-            resp = await client.post(
-                "https://api.resend.com/emails",
-                headers={
-                    "Authorization": f"Bearer {RESEND_API_KEY}",
-                    "Content-Type":  "application/json",
-                },
-                json={
-                    "from":    f"La Clínica de Empresas <{FROM_EMAIL}>",
-                    "to":      [email],
-                    "subject": subject,
-                    "html":    html,
-                },
-                timeout=15.0,
-            )
-        except Exception as e:
-            # Un timeout o un fallo de red con el cliente no puede llevarse
-            # por delante la copia interna: se guarda y se relanza al final.
-            error_red = e
+        resultado["cliente"] = await _resend(client, al_cliente)
 
-        # Copia interna en un envio aparte, no en BCC: si el email del cliente
-        # es invalido y Resend rechaza ese envio, el aviso del lead tiene que
-        # llegar igual -- es justo el caso que hay que revisar a mano.
+        # Copia interna en un envio aparte, no en BCC: si Resend rechaza el
+        # email del cliente, el aviso tiene que llegar igual -- es justo el
+        # caso que hay que revisar a mano.
         if ESE_COPIA_EMAIL:
-            if error_red is not None:
-                estado_cliente = f"NO enviado (error de red: {type(error_red).__name__})"
-            elif resp.status_code in (200, 201):
-                estado_cliente = "enviado"
-            else:
-                estado_cliente = f"NO enviado (Resend {resp.status_code})"
+            etiqueta = "ESE repetido · el email ya tenía expediente, no se ha tocado" \
+                if ya_registrado else "ESE nuevo"
             aviso = (
                 f'<div style="font-family:sans-serif;padding:12px 16px;margin-bottom:16px;'
                 f'background:#fff8e1;border:1px solid #e0c46c;border-radius:8px;font-size:14px;">'
-                f'<strong>Copia interna · ESE nuevo</strong><br>'
+                f'<strong>Copia interna · {etiqueta}</strong><br>'
                 f'Empresa: {empresa}<br>Email: {email}<br>Código: {codigo}<br>'
-                f'Informe al cliente: {estado_cliente}</div>'
+                f'Correo al cliente: {resultado["cliente"]}</div>'
             )
-            try:
-                copia = await client.post(
-                    "https://api.resend.com/emails",
-                    headers={
-                        "Authorization": f"Bearer {RESEND_API_KEY}",
-                        "Content-Type":  "application/json",
-                    },
-                    json={
-                        "from":     f"La Clínica de Empresas <{FROM_EMAIL}>",
-                        "to":       [ESE_COPIA_EMAIL],
-                        "reply_to": email,
-                        "subject":  f"[ESE nuevo] {empresa} · {email} · {codigo} · {score_int}%",
-                        "html":     aviso + html,
-                    },
-                    timeout=15.0,
-                )
-                if copia.status_code not in (200, 201):
-                    print(f"[ESE] Copia interna no enviada ({copia.status_code}): {copia.text}")
-            except Exception as e:
-                print(f"[ESE] Copia interna no enviada: {e}")
+            prefijo = "[ESE repetido]" if ya_registrado else "[ESE nuevo]"
+            resultado["copia"] = await _resend(client, {
+                "from":     remitente,
+                "to":       [ESE_COPIA_EMAIL],
+                "reply_to": email,
+                "subject":  f"{prefijo} {empresa} · {email} · {codigo} · {score_int}%",
+                "html":     aviso + html_informe,
+            })
 
-    if error_red is not None:
-        raise error_red
-    if resp.status_code not in (200, 201):
-        raise ValueError(f"Resend error {resp.status_code}: {resp.text}")
-
-    return resp.json()
+    if resultado["cliente"] != "enviado" or resultado["copia"] not in ("enviado",):
+        print(f"[ESE] Envios para {email}: {resultado}", flush=True)
+    return resultado
 
 
 # ── Email post-pago ───────────────────────────────────────────

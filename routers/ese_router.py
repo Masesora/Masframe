@@ -14,7 +14,7 @@ from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 from datetime import datetime
 from pymongo import MongoClient
-import random, string
+import random, string, re
 import os
 import json
 import stripe
@@ -288,67 +288,86 @@ async def get_dropoff_stats(
 
 @router.post("/submit")
 async def submit_ese(data: EseSubmitRequest):
-    col = get_collection()
+    col   = get_collection()
+    email = data.email.strip()
+    ahora = datetime.utcnow()
 
-    existente = col.find_one({"email": data.email})
+    # Mismo criterio que el login: sin distinguir mayusculas y con el email
+    # escapado (un "+" o un "." son texto, no patron).
+    existente = col.find_one({"email": {"$regex": f"^{re.escape(email)}$", "$options": "i"}})
+
+    ese_recibido = {
+        "empresa":             data.empresa,
+        "facturacion":         data.facturacion,
+        "scores_areas":        data.scores_areas.dict(),
+        "score_global":        data.score_global,
+        "estado_global":       data.estado_global,
+        "especialidades":      [e.dict() for e in data.especialidades],
+        "insights":            data.insights.dict(),
+        "sintomas_detectados": data.sintomas_detectados,
+        "ese_timestamp":       data.timestamp or ahora.isoformat(),
+    }
+
     if existente:
-        codigo = existente.get("codigo", generar_codigo())
+        # El email ya tiene expediente. NO se toca: antes se hacia $set de todo,
+        # con pago_confirmado=False y fase="ese_completado", y un cliente que
+        # repetia el escaner (o cualquiera que tecleara su email) le borraba el
+        # pago y el diagnostico. Tampoco se devuelve el codigo: es la llave de
+        # La Clinica y solo se manda al propio email. El escaner nuevo se
+        # guarda aparte, en ese_repeticiones.
+        codigo = existente.get("codigo", "")
+        email  = existente.get("email", email)  # el codigo va al email del expediente
+        col.update_one(
+            {"_id": existente["_id"]},
+            {"$push": {"ese_repeticiones": {**ese_recibido, "recibido_at": ahora}}},
+        )
     else:
         codigo = generar_codigo()
         while col.find_one({"codigo": codigo}):
             codigo = generar_codigo()
-
-    ahora = datetime.utcnow()
-
-    doc = {
-        "codigo":        codigo,
-        "email":         data.email,
-        "empresa":       data.empresa,
-        "facturacion":   data.facturacion,
-
-        "scores_areas":  data.scores_areas.dict(),
-        "score_global":  data.score_global,
-        "estado_global": data.estado_global,
-        "especialidades": [e.dict() for e in data.especialidades],
-        "insights":            data.insights.dict(),
-        "sintomas_detectados": data.sintomas_detectados,
-
-        "pago_confirmado": False,
-        "payment_active":  False,
-        "fase":            "ese_completado",
-
-        "ese_timestamp": data.timestamp or ahora.isoformat(),
-        "created_at":    ahora,
-        "updated_at":    ahora,
-    }
-
-    col.update_one(
-        {"email": data.email},
-        {"$set": doc},
-        upsert=True
-    )
+        col.insert_one({
+            "codigo":          codigo,
+            "email":           email,
+            **ese_recibido,
+            "pago_confirmado": False,
+            "payment_active":  False,
+            "fase":            "ese_completado",
+            "created_at":      ahora,
+            "updated_at":      ahora,
+        })
 
     # Marcar drop-off como convertido si existe session_id en el payload
     if hasattr(data, "session_id") and data.session_id:
         get_dropoff_collection().update_one(
             {"session_id": data.session_id},
-            {"$set": {"converted": True, "email": data.email, "updated_at": ahora}},
+            {"$set": {"converted": True, "email": email, "updated_at": ahora}},
         )
 
     try:
-        await send_ese_email(
-            email        = data.email,
-            empresa      = data.empresa,
-            codigo       = codigo,
-            score_global = data.score_global,
-            estado_global= data.estado_global,
-            scores_areas = data.scores_areas.dict(),
+        envios = await send_ese_email(
+            email         = email,
+            empresa       = data.empresa,
+            codigo        = codigo,
+            score_global  = data.score_global,
+            estado_global = data.estado_global,
+            scores_areas  = data.scores_areas.dict(),
             especialidades= [e.dict() for e in data.especialidades],
-            insights     = data.insights.dict(),
+            insights      = data.insights.dict(),
+            ya_registrado = bool(existente),
         )
     except Exception as e:
-        print(f"[ESE] Error enviando email a {data.email}: {e}")
+        envios = {"cliente": f"NO enviado (error: {e})", "copia": "NO enviado"}
+        print(f"[ESE] Error enviando email a {email}: {e}", flush=True)
 
+    # Visible en Atlas: por que un correo llego o no llego.
+    col.update_one({"codigo": codigo}, {"$set": {"ultimo_envio_email": {**envios, "at": ahora}}})
+
+    if existente:
+        return {
+            "status":  "existente",
+            "message": "Este email ya tiene expediente en La Clínica de Empresas. "
+                       "Le hemos enviado su código de acceso.",
+        }
     return {
         "status":  "ok",
         "codigo":  codigo,
