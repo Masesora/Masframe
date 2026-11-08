@@ -90,7 +90,9 @@ class Insights(BaseModel):
     palancas:  List[str]
 
 class EseSubmitRequest(BaseModel):
-    email:               EmailStr
+    # str y no EmailStr: cualquier solicitud de informe, con email valido o no,
+    # se registra y llega en copia a info@masesora.com.
+    email:               str
     empresa:             str
     facturacion:         float
     scores_areas:        AreaScores

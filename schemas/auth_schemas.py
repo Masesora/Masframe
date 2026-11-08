@@ -11,7 +11,8 @@ class ClientLoginRequest(BaseModel):
     - email
     - código MAS®
     """
-    email: EmailStr
+    # str: el ESE acepta cualquier email, y el login tiene que aceptar el mismo.
+    email: str
     codigo: str
 
 
