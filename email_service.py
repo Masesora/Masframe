@@ -7,6 +7,9 @@ from typing import List, Dict
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 FROM_EMAIL     = "info@masesora.com"
+# Buzon interno que recibe copia de cada informe ESE (aviso de lead nuevo).
+# Vacio = sin copia.
+ESE_COPIA_EMAIL = os.environ.get("ESE_COPIA_EMAIL", "info@masesora.com")
 CLINICA_URL    = "https://laclinicadempresas.masesora.com"
 INSTAGRAM      = "@laclinicadeempresas"
 WEB            = "www.masesora.com"
@@ -400,6 +403,42 @@ async def send_ese_email(
             },
             timeout=15.0,
         )
+
+        # Copia interna en un envio aparte, no en BCC: si el email del cliente
+        # es invalido y Resend rechaza ese envio, el aviso del lead tiene que
+        # llegar igual -- es justo el caso que hay que revisar a mano.
+        if ESE_COPIA_EMAIL:
+            estado_cliente = (
+                "enviado" if resp.status_code in (200, 201)
+                else f"NO enviado (Resend {resp.status_code})"
+            )
+            aviso = (
+                f'<div style="font-family:sans-serif;padding:12px 16px;margin-bottom:16px;'
+                f'background:#fff8e1;border:1px solid #e0c46c;border-radius:8px;font-size:14px;">'
+                f'<strong>Copia interna · ESE nuevo</strong><br>'
+                f'Empresa: {empresa}<br>Email: {email}<br>Código: {codigo}<br>'
+                f'Informe al cliente: {estado_cliente}</div>'
+            )
+            try:
+                copia = await client.post(
+                    "https://api.resend.com/emails",
+                    headers={
+                        "Authorization": f"Bearer {RESEND_API_KEY}",
+                        "Content-Type":  "application/json",
+                    },
+                    json={
+                        "from":     f"La Clínica de Empresas <{FROM_EMAIL}>",
+                        "to":       [ESE_COPIA_EMAIL],
+                        "reply_to": email,
+                        "subject":  f"[ESE nuevo] {empresa} · {email} · {codigo} · {score_int}%",
+                        "html":     aviso + html,
+                    },
+                    timeout=15.0,
+                )
+                if copia.status_code not in (200, 201):
+                    print(f"[ESE] Copia interna no enviada ({copia.status_code}): {copia.text}")
+            except Exception as e:
+                print(f"[ESE] Copia interna no enviada: {e}")
 
     if resp.status_code not in (200, 201):
         raise ValueError(f"Resend error {resp.status_code}: {resp.text}")
