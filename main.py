@@ -79,6 +79,8 @@ app.add_middleware(
         "http://127.0.0.1:8080",
         "https://masesora.com",
         "https://www.masesora.com",
+        "https://masesora.es",
+        "https://www.masesora.es",
     ],
     allow_credentials=True,
     allow_methods=["*"],
