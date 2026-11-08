@@ -388,30 +388,39 @@ async def send_ese_email(
     score_int = int(score_global)
     subject   = f"Tu diagnóstico clínico · {empresa} · {codigo} · {score_int}%"
 
+    resp      = None
+    error_red = None
     async with httpx.AsyncClient() as client:
-        resp = await client.post(
-            "https://api.resend.com/emails",
-            headers={
-                "Authorization": f"Bearer {RESEND_API_KEY}",
-                "Content-Type":  "application/json",
-            },
-            json={
-                "from":    f"La Clínica de Empresas <{FROM_EMAIL}>",
-                "to":      [email],
-                "subject": subject,
-                "html":    html,
-            },
-            timeout=15.0,
-        )
+        try:
+            resp = await client.post(
+                "https://api.resend.com/emails",
+                headers={
+                    "Authorization": f"Bearer {RESEND_API_KEY}",
+                    "Content-Type":  "application/json",
+                },
+                json={
+                    "from":    f"La Clínica de Empresas <{FROM_EMAIL}>",
+                    "to":      [email],
+                    "subject": subject,
+                    "html":    html,
+                },
+                timeout=15.0,
+            )
+        except Exception as e:
+            # Un timeout o un fallo de red con el cliente no puede llevarse
+            # por delante la copia interna: se guarda y se relanza al final.
+            error_red = e
 
         # Copia interna en un envio aparte, no en BCC: si el email del cliente
         # es invalido y Resend rechaza ese envio, el aviso del lead tiene que
         # llegar igual -- es justo el caso que hay que revisar a mano.
         if ESE_COPIA_EMAIL:
-            estado_cliente = (
-                "enviado" if resp.status_code in (200, 201)
-                else f"NO enviado (Resend {resp.status_code})"
-            )
+            if error_red is not None:
+                estado_cliente = f"NO enviado (error de red: {type(error_red).__name__})"
+            elif resp.status_code in (200, 201):
+                estado_cliente = "enviado"
+            else:
+                estado_cliente = f"NO enviado (Resend {resp.status_code})"
             aviso = (
                 f'<div style="font-family:sans-serif;padding:12px 16px;margin-bottom:16px;'
                 f'background:#fff8e1;border:1px solid #e0c46c;border-radius:8px;font-size:14px;">'
@@ -440,6 +449,8 @@ async def send_ese_email(
             except Exception as e:
                 print(f"[ESE] Copia interna no enviada: {e}")
 
+    if error_red is not None:
+        raise error_red
     if resp.status_code not in (200, 201):
         raise ValueError(f"Resend error {resp.status_code}: {resp.text}")
 
