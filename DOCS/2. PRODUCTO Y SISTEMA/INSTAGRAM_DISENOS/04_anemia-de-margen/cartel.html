@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Analítica del domingo Nº 4 · Anemia de margen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F1A35; --navy2:#1E3060; --gold:#B89D52; --gold2:#D4B96A;
+  --ok:#2E7D4F; --warn:#C69749; --crit:#B8471F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#05080f;font-family:'Montserrat',system-ui,sans-serif;color:#fff}
+
+.frame{
+  width:1080px;height:1350px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 700px at 100% 0%, rgba(30,48,96,.95), transparent 70%),
+    radial-gradient(700px 600px at 0% 100%, rgba(30,48,96,.7), transparent 70%),
+    var(--navy);
+}
+.frame::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;
+  background-image:linear-gradient(rgba(184,157,82,.9) 1px,transparent 1px),linear-gradient(90deg,rgba(184,157,82,.9) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.safe{position:absolute;left:90px;right:90px;top:90px;bottom:190px;z-index:2;display:flex;flex-direction:column}
+
+.tag{display:flex;align-items:center;gap:18px;margin-bottom:30px}
+.tag .pill{background:var(--gold);color:var(--navy);font-weight:800;font-size:26px;letter-spacing:.14em;padding:12px 22px;border-radius:999px}
+.tag .txt{font-weight:600;font-size:26px;letter-spacing:.22em;color:var(--gold2);text-transform:uppercase}
+
+.chip{display:inline-block;align-self:flex-start;border:2px solid var(--gold);color:var(--gold2);font-weight:700;font-size:26px;letter-spacing:.14em;padding:10px 22px;border-radius:999px;text-transform:uppercase}
+
+.big{font-weight:800;font-size:330px;line-height:.95;color:var(--gold2);letter-spacing:-.02em;margin-top:6px}
+.big small{font-size:140px;color:#fff;margin-left:6px;letter-spacing:0}
+.sub{font-weight:700;font-size:44px;line-height:1.2;margin-top:2px}
+.sub span{color:var(--gold2)}
+
+.cost{margin-top:34px;font-size:34px;line-height:1.35;color:rgba(255,255,255,.88);padding-left:26px;border-left:6px solid var(--gold)}
+.cost b{color:#fff}
+
+/* medidor margen */
+.meter{margin-top:34px}
+.track{position:relative;height:30px;border-radius:15px;background:rgba(255,255,255,.1)}
+.fill{position:absolute;left:0;top:0;bottom:0;width:35%;border-radius:15px;background:var(--crit)}
+.mark{position:absolute;left:75%;top:-12px;bottom:-12px;width:5px;background:var(--ok)}
+.lbls{position:relative;height:44px;margin-top:14px;font-weight:700;font-size:26px}
+.lbls .a{position:absolute;left:35%;transform:translateX(-50%);color:#fff;white-space:nowrap}
+.lbls .b{position:absolute;left:75%;transform:translateX(-50%);color:#7fd0a0;white-space:nowrap}
+
+.punch{margin-top:30px;font-weight:800;font-size:44px;line-height:1.2}
+.punch em{font-style:normal;color:var(--gold2)}
+
+.cta{margin-top:30px;align-self:flex-start;background:var(--gold);color:var(--navy);font-weight:800;font-size:28px;border-radius:999px;padding:16px 30px}
+.brand{position:absolute;left:90px;right:90px;bottom:70px;z-index:2;display:flex;align-items:center;justify-content:space-between}
+.brand .wm{font-weight:800;letter-spacing:.12em;font-size:34px}
+.brand .wm small{display:block;font-weight:500;font-size:13px;letter-spacing:.42em;color:var(--gold);margin-top:6px}
+.brand .hd{font-weight:500;font-size:28px;color:rgba(255,255,255,.7);letter-spacing:.04em}
+.foot{position:absolute;left:90px;right:90px;bottom:150px;z-index:2;font-weight:700;font-size:24px;letter-spacing:.16em;color:var(--gold2);text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="safe">
+    <div class="tag"><span class="pill">Nº 4</span><span class="txt">Analítica del domingo</span></div>
+    <span class="chip">Caso tipo · Peluquería</span>
+    <div class="big">14<small>%</small></div>
+    <div class="sub">de margen. <span>Sobre 18.000 € facturados.</span></div>
+    <div class="cost"><b>Coste real: 15.500 €</b> — producto, personal y su propio sueldo.</div>
+    <div class="meter">
+      <div class="track"><div class="fill"></div><div class="mark"></div></div>
+      <div class="lbls"><span class="a">Su margen · 14 %</span><span class="b">Margen sano · más del 30 %</span></div>
+    </div>
+    <div class="punch">Las mechas dejaban 40 € y parecían rentables. <em>El problema no estaba en un servicio: estaba en la carta entera.</em></div>
+    <div class="cta">Calcula el tuyo · Escáner gratuito · Enlace en la biografía</div>
+  </div>
+  <div class="foot">Anemia de margen · UCI Financiera</div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadeempresas</div></div>
+</div>
+</body>
+</html>
