@@ -2944,6 +2944,39 @@ La tercera se localizó por el botón «Saber más sobre La Clínica» del panel
 
 ---
 
+## LXIV. SESIÓN 9 NOV 2026 — Auditoría SEO de las dos webs, y la política de cookies que faltaba
+
+**Qué se hizo.** Auditoría SEO de `masesora.com` y `masesora.es`, solo lectura: HTML publicado, cabeceras, robots, sitemap y enlaces. No hay herramienta de palabras clave conectada, así que lo que dice de keywords y competidores son hipótesis hasta tener Search Console. La primera versión llevaba errores de medida y de enfoque que se corrigieron el mismo día; lo que sigue es la versión corregida. **Estado: nada de la Fase 0 está aplicado todavía.**
+
+**Hallazgos que cambian cosas.**
+1. **`masesora.es` se declara copia de otra URL.** Canonical, `og:url`, `og:image` y JSON-LD apuntan a `ese-cc2u.onrender.com`. El HTML publicado es idéntico al de `Masesora/ESE`, así que la corrección va en ese repo. Un 301 desde el dominio de Render no se puede hacer (Render no redirige por host); se resuelve con el salto dentro del propio HTML, como en `3cf054e` (Masesora_frontend), y lo que decide es el canonical correcto.
+2. **Dos copias del escáner.** `Masesora_frontend/src/pages/eselanding/` ya no coincide con `ESE/index.html` (el `z-index` de `#legalModal` y unas 36 líneas). Se edita solo en ESE, y la copia sobrante se sincroniza o se borra. Mismo patrón que los dos `symptoms.json`.
+3. **`masesora.com` carga GA4 y el Píxel de Meta al abrirse, sin consentimiento.** El aviso solo tiene «Entendido». ESE sí tiene banner (ESE#3 y ESE#4). **Esto bloquea reanudar los 100 €/mes de anuncios.**
+4. `src/pages/masesoralanding/index.html` va por delante de lo publicado (ya enlaza a `laclinicadempresas.masesora.com`). Falta comprobar que Render ha desplegado.
+5. Menores: `og-image.jpg` de .com da 404; la meta descripción de .com mide 189 caracteres y se corta hacia los 160; ninguno de los dos dominios tiene `robots.txt` ni `sitemap.xml`. FAQPage y Service ya existen en el JSON-LD de .com.
+
+**Cookies, hecho.** Política de Cookies de ESE reescrita para reflejar Píxel, GA4 y banner: commit `12172cd`, rama `feat/politica-cookies`, subida el 9 nov, **sin PR todavía**. Solo toca ese bloque de `index.html`.
+
+**Cookies, pendiente y en este orden.**
+1. Quitar `empresa` de los eventos que `fireAnalytics` manda a GA4 y a Meta. Verificado: hoy sí se envía en `ese_fase1_completa` y `generate_lead`, y la política no puede prometer lo contrario.
+2. Ligar `ese_sid` al banner (hoy se crea siempre).
+3. Alojar Google Fonts en local.
+4. Reescribir Política de Privacidad y RGPD. Dicen que no se ceden datos a terceros, y con Meta y Google aceptados no es cierto.
+5. Añadir NIF y domicilio del responsable a los textos legales (el RGPD pide identificarlo).
+6. Revisión por quien lleve lo legal.
+7. Banner de consentimiento en la landing `masesora.com`, reutilizando el de ESE.
+
+Hasta cerrar 1-7 no se reactivan los anuncios.
+
+**Plan SEO, por fases.**
+- *Fase 0, esta semana:* alta de ambos dominios en Search Console (verificación por DNS, en DonDominio); canonical, `og:*` y JSON-LD de .es; salto desde `ese-cc2u.onrender.com`; `og-image.jpg` y descripción de 160 caracteres o menos en .com; `robots.txt` y `sitemap.xml`.
+- *Fase 1, semanas 2 a 4:* ficha de Google Business Profile; título y H1 de .com con el lenguaje del cliente y no el de la marca; página de servicio con precio y garantía; una sola página local de prueba (Marina Baixa).
+- *Fase 2, con datos de Search Console a las 4-6 semanas:* guías por síntoma (decidir antes si el contenido del producto se regala), calculadora de margen, más páginas locales si la de prueba funciona.
+
+**Decisiones abiertas.** (a) Papel de cada dominio: propuesta, `.com` es la marca y `.es` el escáner, cada uno con su canonical. (b) Cuánto tiempo dedicar a SEO: un dominio nuevo y local tarda de 3 a 6 meses en dar tráfico; Instagram y los anuncios siguen siendo la vía a corto plazo.
+
+---
+
 ---
 
 ---
@@ -2999,3 +3032,4 @@ La tercera se localizó por el botón «Saber más sobre La Clínica» del panel
 *§LXI añadida en sesión 27 ago 2026 (cont.) — la pareja r3/r4 de UCI-S1 y la medida del trabajo que queda. C6 tenia la conclusion escrita TRES veces (pildora, boton fantasma y banner) y la hoja de ruta contaba la historia al reves; ademas el "+X dias", el dato que mas motiva, no se pintaba NUNCA por el mismo bug de unidad de `enDias`. Seis lecciones de r4 que no son de r4: le pediamos una media estadistica que el dueno no tiene y que ya estaba en la seccion de al lado; una seccion entera que no alimentaba el KPI ni bajaba accion (borrada, de 14 campos a 9); C4 recibiendo una FECHA como tarea porque la seccion no tenia columna de decision y "Fecha acuerdo" casaba con el regex; la guia saliendo DEBAJO de la tabla como veredicto de lo que aun no ha rellenado; `vista: tarjeta` empeorando una seccion de 8 campos (vale para tarjetas de 3-4, no para listas); y `fila_unica`/`estilo:desplegable` que solo se leen en vista tarjeta. Mas dos de copy por escribir desde el lado equivocado: "no cuenta como dinero recuperado: es prestado" era contabilidad NUESTRA en su pantalla, y "hueco" no significa nada. §LXI.C mide esos defectos en las 182 secciones nativas del catalogo -- 62 con texto libre bajando a C4 en vez de una decision, 90 con mas de 6 campos, 16 calculadas intermedias y 14 secciones muertas -- que es lo que convierte "pulir 176 casos" en cuatro decisiones. §LXI.D deja el metodo para la sesion siguiente: la unidad es una PAREJA de capa_1_options (tres por sintoma), se mide antes de tocar, se decide por TIPO y no por rama, y se enseña el resultado y no el proceso -- el ritmo de un cambio por captura agoto la sesion en una sola pareja*
 *§LXII añadida en sesión 5 sep 2026 — sesión de infraestructura: el subdominio de La Clínica pasa de redirección de Nominalia a dominio propio en Render (Verified + Certificate Issued, 200 OK). El CORS estaba a fuego en `main.py` y se probó antes de tocarlo: 400 con el origen nuevo contra 200 con el viejo, o sea que el login habría fallado en silencio. `FRONTEND_URL` en Render es una variable huérfana. El enlace más usado del sistema no vivía en ninguna landing sino en `CLINICA_URL` de `email_service.py`. Mapeadas las tres landings a su servicio en producción. Pendiente: redespliegue de landings y backend, handle de Instagram inconsistente, documentos legales nombrando la URL vieja y 2/2 dominios en Render*
 *§LXIII añadida en sesión 8 nov 2026 — el escáner en `masesora.es` no registraba nada (dominio fuera del CORS) y la landing lo tapaba con un código `MAS-` de 5 cifras inventado en el navegador: 401 seguro en La Clínica. CORS corregido (Masframe#44), landing sin código falso (ESE#1), copia interna de cada informe ESE a info@masesora.com incluso si el envío al cliente falla (Masframe#45), y el ESE y el login aceptan cualquier email con el regex del login escapado*
+*§LXIV añadida en sesión 9 nov 2026 — auditoría SEO de masesora.com y masesora.es (la .es se declara copia de ese-cc2u.onrender.com; la .com carga GA4 y Píxel sin consentimiento), política de cookies de ESE reescrita en rama sin PR, y el orden de lo pendiente antes de reanudar los anuncios. Nada de la Fase 0 aplicado.*
