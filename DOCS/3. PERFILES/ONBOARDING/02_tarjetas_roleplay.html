@@ -1,0 +1,401 @@
+<title>Tarjetas Roleplay · MASFRAME Beta 2026</title>
+<style>
+:root{
+  --navy:#0F1A35;--navy-mid:#1C2A4A;
+  --gold:#C8A84B;--gold-l:#E8C96A;--gold-d:#B89D52;
+  --cream:#F7F5EF;--white:#FFFFFF;
+  --ink:#1A1A2E;--muted:#4E5578;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:#E8E6E1;color:var(--ink);font-size:13px;line-height:1.6;
+}
+
+.page{
+  max-width:900px;margin:40px auto;
+  background:var(--white);
+  box-shadow:0 8px 60px rgba(15,26,53,.16);
+}
+
+/* HEADER */
+.hdr{
+  background:var(--navy);padding:44px 56px 36px;
+  position:relative;overflow:hidden;
+}
+.hdr::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#C8A84B,#E8C96A,#B89D52);
+}
+.hdr-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(200,168,75,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,168,75,.07) 1px,transparent 1px);
+  background-size:22px 22px;pointer-events:none;
+}
+.hdr-inner{position:relative;z-index:1;}
+.brand{display:flex;align-items:center;gap:22px;margin-bottom:28px;}
+.brand-words{display:flex;flex-direction:column;gap:5px;}
+.brand-name{font-size:30px;font-weight:900;color:var(--white);letter-spacing:7px;line-height:1;}
+.brand-rule{height:1px;background:linear-gradient(90deg,rgba(200,168,75,.65),rgba(200,168,75,0));}
+.brand-tag{font-size:8.5px;font-weight:600;color:var(--gold-d);letter-spacing:4.5px;text-transform:uppercase;}
+.hdr-sub{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding-top:20px;border-top:1px solid rgba(200,168,75,.2);
+}
+.doc-name{font-size:20px;font-weight:900;color:var(--white);letter-spacing:2px;}
+.doc-meta{font-size:9px;font-weight:600;color:rgba(184,157,82,.7);letter-spacing:3px;text-transform:uppercase;}
+
+/* INSTRUCCIONES */
+.instrucciones{
+  padding:32px 56px;
+  border-bottom:1px solid rgba(15,26,53,.08);
+}
+.intro{
+  border-left:3px solid var(--gold);
+  padding:18px 22px;background:rgba(200,168,75,.045);
+  font-size:13.5px;line-height:1.8;color:var(--ink);
+}
+.intro strong{color:var(--navy);}
+
+/* GRID DE TARJETAS */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3px;
+  background:rgba(15,26,53,.08);
+  padding:3px;
+  margin:0;
+}
+
+/* TARJETA */
+.tarjeta{
+  background:var(--white);
+  padding:28px 28px 24px;
+  position:relative;
+  break-inside:avoid;
+}
+.tarjeta::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-l));
+}
+
+.t-header{
+  display:flex;justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:16px;
+  padding-bottom:12px;
+  border-bottom:1px solid rgba(15,26,53,.08);
+}
+.t-numero{
+  font-size:32px;font-weight:900;
+  color:rgba(200,168,75,.2);
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.t-sector{
+  font-size:8px;font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold-d);
+  text-align:right;margin-top:4px;
+}
+.t-nombre{
+  font-size:16px;font-weight:900;color:var(--navy);
+  margin-bottom:3px;line-height:1.2;
+}
+
+/* Datos */
+.datos{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:8px 16px;margin-bottom:14px;
+}
+.dato{display:flex;flex-direction:column;gap:2px;}
+.dato-label{
+  font-size:7.5px;font-weight:800;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--muted);
+}
+.dato-val{
+  font-size:13px;font-weight:600;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+
+/* Separador */
+.sep{
+  height:1px;background:rgba(15,26,53,.07);
+  margin:12px 0;
+}
+
+/* Campos narrativos */
+.campo{margin-bottom:10px;}
+.campo-label{
+  font-size:7.5px;font-weight:800;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:4px;
+}
+.campo-val{font-size:12.5px;color:var(--ink);line-height:1.55;}
+.campo-val.dolor{
+  font-style:italic;color:var(--navy);
+  border-left:2px solid var(--gold);
+  padding-left:10px;
+  font-size:13px;
+}
+
+/* Síntoma */
+.sintoma{
+  margin-top:14px;padding:12px 14px;
+  background:var(--navy);
+  position:relative;
+}
+.sintoma::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--gold),var(--gold-d));
+}
+.sintoma-id{
+  font-size:8px;font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold-d);margin-bottom:4px;
+}
+.sintoma-nombre{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.sintoma-kpi{font-size:11.5px;color:rgba(249,247,242,.65);line-height:1.5;font-variant-numeric:tabular-nums;}
+
+/* FOOTER */
+.ftr{
+  background:var(--navy);padding:14px 56px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ftr-t{font-size:8.5px;font-weight:600;color:rgba(184,157,82,.55);letter-spacing:2.5px;text-transform:uppercase;}
+
+/* PRINT */
+@media print{
+  body{background:white;}
+  .page{box-shadow:none;margin:0;max-width:100%;}
+  .grid{page-break-inside:avoid;}
+  .tarjeta{page-break-inside:avoid;}
+}
+@media(max-width:700px){
+  .hdr,.instrucciones{padding-left:24px;padding-right:24px;}
+  .grid{grid-template-columns:1fr;}
+  .ftr{padding:12px 24px;flex-direction:column;gap:4px;}
+}
+</style>
+
+<div class="page">
+
+  <header class="hdr">
+    <div class="hdr-grid"></div>
+    <div class="hdr-inner">
+      <div class="brand">
+        <svg width="62" height="70" viewBox="0 0 62 70" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C8A84B"/>
+              <stop offset="50%" stop-color="#E8C96A"/>
+              <stop offset="100%" stop-color="#B89D52"/>
+            </linearGradient>
+          </defs>
+          <polygon points="31,2 58,17 58,53 31,68 4,53 4,17" fill="none" stroke="url(#hg)" stroke-width="1.5" opacity=".92"/>
+          <polygon points="31,10 52,22 52,48 31,60 10,48 10,22" fill="none" stroke="url(#hg)" stroke-width=".6" opacity=".28"/>
+          <text x="31" y="43" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#F9F7F2" text-anchor="middle">M</text>
+        </svg>
+        <div class="brand-words">
+          <div class="brand-name">MASFRAME</div>
+          <div class="brand-rule"></div>
+          <div class="brand-tag">Tarjetas de Roleplay Clínico</div>
+        </div>
+      </div>
+      <div class="hdr-sub">
+        <div class="doc-name">ROLEPLAY CC</div>
+        <div class="doc-meta">6 Perfiles · Beta 2026</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="instrucciones">
+    <div class="intro">
+      <strong>Cómo usar estas tarjetas:</strong> Reparte una a cada participante al inicio del roleplay. Ella lee el perfil y hace de dueña de ese negocio. Maite hace de CC. Las demás observan. Cada roleplay dura 5–6 minutos. El objetivo no es resolver el síntoma — es practicar la apertura, el diagnóstico y la decisión C2.
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- TARJETA 1 -->
+    <div class="tarjeta">
+      <div class="t-header">
+        <div>
+          <div class="t-nombre">Peluquería "Mechas & Co"</div>
+          <div class="t-sector">Servicios personales</div>
+        </div>
+        <div class="t-numero">01</div>
+      </div>
+      <div class="datos">
+        <div class="dato"><div class="dato-label">Años abierta</div><div class="dato-val">10 años</div></div>
+        <div class="dato"><div class="dato-label">Empleadas</div><div class="dato-val">2</div></div>
+        <div class="dato"><div class="dato-label">Facturación/mes</div><div class="dato-val">5.000€</div></div>
+        <div class="dato"><div class="dato-label">Gastos/mes</div><div class="dato-val">2.500€</div></div>
+        <div class="dato"><div class="dato-label">Ticket medio</div><div class="dato-val">45€</div></div>
+        <div class="dato"><div class="dato-label">Clientes/mes</div><div class="dato-val">110</div></div>
+      </div>
+      <div class="sep"></div>
+      <div class="campo"><div class="campo-label">Deuda / financiación</div><div class="campo-val">Sin financiación activa</div></div>
+      <div class="campo"><div class="campo-label">Captación</div><div class="campo-val">Boca a boca exclusivamente</div></div>
+      <div class="campo"><div class="campo-label">Lo que ya ha intentado</div><div class="campo-val">Subió precios una vez, perdió 20 clientas y los bajó</div></div>
+      <div class="campo"><div class="campo-label">Su dolor</div><div class="campo-val dolor">"Estoy todo el día aquí dentro y no me queda nada a fin de mes"</div></div>
+      <div class="sintoma">
+        <div class="sintoma-id">UCI-S3</div>
+        <div class="sintoma-nombre">Anemia de Margen</div>
+        <div class="sintoma-kpi">KPI entrada: Margen = 50% — costes ocultos sin mapear · Objetivo: >30% con mix de servicios optimizado</div>
+      </div>
+    </div>
+
+    <!-- TARJETA 2 -->
+    <div class="tarjeta">
+      <div class="t-header">
+        <div>
+          <div class="t-nombre">Clínica Dental "Sonría"</div>
+          <div class="t-sector">Salud</div>
+        </div>
+        <div class="t-numero">02</div>
+      </div>
+      <div class="datos">
+        <div class="dato"><div class="dato-label">Años abierta</div><div class="dato-val">6 años</div></div>
+        <div class="dato"><div class="dato-label">Empleados</div><div class="dato-val">5</div></div>
+        <div class="dato"><div class="dato-label">Facturación/mes</div><div class="dato-val">28.000€</div></div>
+        <div class="dato"><div class="dato-label">Gastos/mes</div><div class="dato-val">21.000€</div></div>
+        <div class="dato"><div class="dato-label">Ticket medio</div><div class="dato-val">380€</div></div>
+        <div class="dato"><div class="dato-label">Clientes/mes</div><div class="dato-val">74</div></div>
+      </div>
+      <div class="sep"></div>
+      <div class="campo"><div class="campo-label">Deuda / financiación</div><div class="campo-val">Préstamo equipamiento — 48.000€ restantes</div></div>
+      <div class="campo"><div class="campo-label">Captación</div><div class="campo-val">Google Ads + recomendación</div></div>
+      <div class="campo"><div class="campo-label">Lo que ya ha intentado</div><div class="campo-val">Contrató una comercial 6 meses — no funcionó</div></div>
+      <div class="campo"><div class="campo-label">Su dolor</div><div class="campo-val dolor">"Tenemos lista de espera pero los números no cuadran"</div></div>
+      <div class="sintoma">
+        <div class="sintoma-id">UCI-S1</div>
+        <div class="sintoma-nombre">Obstrucción de Caja</div>
+        <div class="sintoma-kpi">KPI entrada: Días cobro medio = 38 días · Objetivo: &lt;15 días</div>
+      </div>
+    </div>
+
+    <!-- TARJETA 3 -->
+    <div class="tarjeta">
+      <div class="t-header">
+        <div>
+          <div class="t-nombre">Agencia "Boom Digital"</div>
+          <div class="t-sector">Marketing y comunicación</div>
+        </div>
+        <div class="t-numero">03</div>
+      </div>
+      <div class="datos">
+        <div class="dato"><div class="dato-label">Años abierta</div><div class="dato-val">3 años</div></div>
+        <div class="dato"><div class="dato-label">Empleados</div><div class="dato-val">4</div></div>
+        <div class="dato"><div class="dato-label">Facturación/mes</div><div class="dato-val">18.000€</div></div>
+        <div class="dato"><div class="dato-label">Gastos/mes</div><div class="dato-val">14.500€</div></div>
+        <div class="dato"><div class="dato-label">Ticket medio</div><div class="dato-val">1.800€/cliente</div></div>
+        <div class="dato"><div class="dato-label">Clientes activos</div><div class="dato-val">10</div></div>
+      </div>
+      <div class="sep"></div>
+      <div class="campo"><div class="campo-label">Deuda / financiación</div><div class="campo-val">Sin financiación activa</div></div>
+      <div class="campo"><div class="campo-label">Captación</div><div class="campo-val">LinkedIn + referidos de clientes actuales</div></div>
+      <div class="campo"><div class="campo-label">Lo que ya ha intentado</div><div class="campo-val">Nichar en ecommerce — perdió 3 clientes al mismo tiempo</div></div>
+      <div class="campo"><div class="campo-label">Su dolor</div><div class="campo-val dolor">"Somos buenos en lo que hacemos pero siempre estamos apagando fuegos"</div></div>
+      <div class="sintoma">
+        <div class="sintoma-id">NEURO-S2</div>
+        <div class="sintoma-nombre">Dispersión Directiva</div>
+        <div class="sintoma-kpi">KPI entrada: % tiempo directivo en urgencias = 78% · Objetivo: &lt;40%</div>
+      </div>
+    </div>
+
+    <!-- TARJETA 4 -->
+    <div class="tarjeta">
+      <div class="t-header">
+        <div>
+          <div class="t-nombre">Restaurante "La Brasería de Paco"</div>
+          <div class="t-sector">Hostelería</div>
+        </div>
+        <div class="t-numero">04</div>
+      </div>
+      <div class="datos">
+        <div class="dato"><div class="dato-label">Años abierto</div><div class="dato-val">15 años</div></div>
+        <div class="dato"><div class="dato-label">Empleados</div><div class="dato-val">8</div></div>
+        <div class="dato"><div class="dato-label">Facturación/mes</div><div class="dato-val">42.000€</div></div>
+        <div class="dato"><div class="dato-label">Gastos/mes</div><div class="dato-val">36.000€</div></div>
+        <div class="dato"><div class="dato-label">Ticket medio</div><div class="dato-val">28€</div></div>
+        <div class="dato"><div class="dato-label">Clientes/mes</div><div class="dato-val">1.500</div></div>
+      </div>
+      <div class="sep"></div>
+      <div class="campo"><div class="campo-label">Deuda / financiación</div><div class="campo-val">Reforma cocina 2022 — 35.000€ restantes</div></div>
+      <div class="campo"><div class="campo-label">Captación</div><div class="campo-val">Ubicación + Google Maps + boca a boca</div></div>
+      <div class="campo"><div class="campo-label">Lo que ya ha intentado</div><div class="campo-val">Delivery con Glovo 8 meses — lo dejó por los márgenes</div></div>
+      <div class="campo"><div class="campo-label">Su dolor</div><div class="campo-val dolor">"Llenamos los fines de semana y entre semana no llega nadie"</div></div>
+      <div class="sintoma">
+        <div class="sintoma-id">CARDIO-S2</div>
+        <div class="sintoma-nombre">Arritmia Comercial</div>
+        <div class="sintoma-kpi">KPI entrada: % ventas fin de semana = 74% · Objetivo: &lt;55%</div>
+      </div>
+    </div>
+
+    <!-- TARJETA 5 -->
+    <div class="tarjeta">
+      <div class="t-header">
+        <div>
+          <div class="t-nombre">Reformas "Construye Bien"</div>
+          <div class="t-sector">Construcción y reformas</div>
+        </div>
+        <div class="t-numero">05</div>
+      </div>
+      <div class="datos">
+        <div class="dato"><div class="dato-label">Años abierta</div><div class="dato-val">8 años</div></div>
+        <div class="dato"><div class="dato-label">Empleados</div><div class="dato-val">12 (6 propios + 6 sub.)</div></div>
+        <div class="dato"><div class="dato-label">Facturación/mes</div><div class="dato-val">95.000€</div></div>
+        <div class="dato"><div class="dato-label">Gastos/mes</div><div class="dato-val">79.000€</div></div>
+        <div class="dato"><div class="dato-label">Ticket medio</div><div class="dato-val">14.000€/obra</div></div>
+        <div class="dato"><div class="dato-label">Obras activas</div><div class="dato-val">7</div></div>
+      </div>
+      <div class="sep"></div>
+      <div class="campo"><div class="campo-label">Deuda / financiación</div><div class="campo-val">Línea de crédito 80.000€ casi al límite</div></div>
+      <div class="campo"><div class="campo-label">Captación</div><div class="campo-val">Arquitectos colaboradores + recomendación</div></div>
+      <div class="campo"><div class="campo-label">Lo que ya ha intentado</div><div class="campo-val">Contrató jefe de obra hace 1 año — los retrasos siguen</div></div>
+      <div class="campo"><div class="campo-label">Su dolor</div><div class="campo-val dolor">"Cada obra es un caos distinto, nunca terminamos en plazo"</div></div>
+      <div class="sintoma">
+        <div class="sintoma-id">UNI-S1</div>
+        <div class="sintoma-nombre">Esclerosis Operativa</div>
+        <div class="sintoma-kpi">KPI entrada: % obras en plazo = 22% · Objetivo: &gt;80%</div>
+      </div>
+    </div>
+
+    <!-- TARJETA 6 -->
+    <div class="tarjeta">
+      <div class="t-header">
+        <div>
+          <div class="t-nombre">Academia "Speak Up"</div>
+          <div class="t-sector">Formación e idiomas</div>
+        </div>
+        <div class="t-numero">06</div>
+      </div>
+      <div class="datos">
+        <div class="dato"><div class="dato-label">Años abierta</div><div class="dato-val">5 años</div></div>
+        <div class="dato"><div class="dato-label">Empleados</div><div class="dato-val">6 (3 fijos + 3 parciales)</div></div>
+        <div class="dato"><div class="dato-label">Facturación/mes</div><div class="dato-val">12.000€</div></div>
+        <div class="dato"><div class="dato-label">Gastos/mes</div><div class="dato-val">9.200€</div></div>
+        <div class="dato"><div class="dato-label">Ticket medio</div><div class="dato-val">95€/mes</div></div>
+        <div class="dato"><div class="dato-label">Alumnos activos</div><div class="dato-val">126</div></div>
+      </div>
+      <div class="sep"></div>
+      <div class="campo"><div class="campo-label">Deuda / financiación</div><div class="campo-val">Sin financiación activa</div></div>
+      <div class="campo"><div class="campo-label">Captación</div><div class="campo-val">Instagram + colegios cercanos con convenio</div></div>
+      <div class="campo"><div class="campo-label">Lo que ya ha intentado</div><div class="campo-val">Clases online post-COVID — abandonó por baja asistencia</div></div>
+      <div class="campo"><div class="campo-label">Su dolor</div><div class="campo-val dolor">"En septiembre llenamos grupos, en febrero la mitad se han ido y no sé por qué"</div></div>
+      <div class="sintoma">
+        <div class="sintoma-id">UCI-S2</div>
+        <div class="sintoma-nombre">Fuga Invisible</div>
+        <div class="sintoma-kpi">KPI entrada: Tasa retención = 58% · Objetivo: &gt;35% mensual acumulado</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="ftr">
+    <div class="ftr-t">MASFRAME</div>
+    <div class="ftr-t">masesora.com</div>
+    <div class="ftr-t">La Clínica de Empresas</div>
+  </footer>
+
+</div>

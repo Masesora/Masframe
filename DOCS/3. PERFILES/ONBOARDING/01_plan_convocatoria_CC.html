@@ -1,0 +1,489 @@
+<title>Plan Convocatoria CC · MASFRAME Beta 2026</title>
+<style>
+:root{
+  --navy:#0F1A35;--navy-mid:#1C2A4A;
+  --gold:#C8A84B;--gold-l:#E8C96A;--gold-d:#B89D52;
+  --cream:#F7F5EF;--white:#FFFFFF;
+  --ink:#1A1A2E;--muted:#4E5578;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:#E8E6E1;color:var(--ink);font-size:14px;line-height:1.7;
+}
+.page{
+  max-width:880px;margin:40px auto;
+  background:var(--white);
+  box-shadow:0 8px 60px rgba(15,26,53,.16);
+}
+
+/* HEADER */
+.hdr{
+  background:var(--navy);
+  padding:44px 56px 36px;
+  position:relative;overflow:hidden;
+}
+.hdr::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#C8A84B,#E8C96A,#B89D52);
+}
+.hdr-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(200,168,75,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,168,75,.07) 1px,transparent 1px);
+  background-size:22px 22px;
+  pointer-events:none;
+}
+.hdr-inner{position:relative;z-index:1;}
+.brand{display:flex;align-items:center;gap:22px;margin-bottom:28px;}
+.brand-words{display:flex;flex-direction:column;gap:5px;}
+.brand-name{font-size:30px;font-weight:900;color:var(--white);letter-spacing:7px;line-height:1;}
+.brand-rule{height:1px;background:linear-gradient(90deg,rgba(200,168,75,.65),rgba(200,168,75,0));}
+.brand-tag{font-size:8.5px;font-weight:600;color:var(--gold-d);letter-spacing:4.5px;text-transform:uppercase;}
+.hdr-sub{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding-top:20px;border-top:1px solid rgba(200,168,75,.2);
+}
+.doc-name{font-size:20px;font-weight:900;color:var(--white);letter-spacing:2px;}
+.doc-meta{font-size:9px;font-weight:600;color:rgba(184,157,82,.7);letter-spacing:3px;text-transform:uppercase;}
+
+/* BODY */
+.body{padding:52px 56px;}
+
+.intro{
+  border-left:3px solid var(--gold);
+  padding:22px 26px;background:rgba(200,168,75,.045);
+  margin-bottom:48px;
+}
+.intro p{font-size:14.5px;line-height:1.85;color:var(--ink);}
+.intro strong{color:var(--navy);font-weight:700;}
+
+/* Sections */
+.sec{margin-bottom:48px;}
+.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.sec-label{font-size:9.5px;font-weight:800;letter-spacing:4px;color:var(--gold-d);text-transform:uppercase;white-space:nowrap;}
+.sec-rule{flex:1;height:1px;background:linear-gradient(90deg,rgba(184,157,82,.4),rgba(184,157,82,.04));}
+.lead{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:18px;}
+
+.callout{
+  border-left:3px solid var(--gold);
+  padding:14px 20px;background:rgba(200,168,75,.04);
+  font-size:13.5px;font-weight:600;color:var(--navy);
+  line-height:1.65;margin:18px 0;
+}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead tr{background:var(--navy);}
+thead th{padding:11px 16px;color:var(--gold-d);font-size:8.5px;font-weight:800;letter-spacing:3px;text-transform:uppercase;text-align:left;}
+tbody tr{border-bottom:1px solid rgba(15,26,53,.07);}
+tbody tr:nth-child(even){background:rgba(15,26,53,.025);}
+tbody td{padding:11px 16px;color:var(--ink);line-height:1.5;vertical-align:middle;}
+.time{text-align:center;font-weight:800;color:var(--gold-d);font-size:11px;background:rgba(15,26,53,.035);white-space:nowrap;font-variant-numeric:tabular-nums;}
+
+/* Role grid */
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+.rb{padding:20px 22px;background:var(--cream);}
+.rb-label{font-size:8.5px;font-weight:800;letter-spacing:3.5px;text-transform:uppercase;margin-bottom:14px;}
+.rb.does .rb-label{color:var(--gold-d);}
+.rb ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.rb li{font-size:13px;color:var(--ink);line-height:1.45;padding-left:20px;position:relative;}
+.rb.does li::before{content:'→';position:absolute;left:0;color:var(--gold);font-weight:800;}
+
+/* Whatsapp block */
+.msg-block{
+  background:var(--cream);
+  border-left:3px solid var(--gold);
+  padding:18px 22px;
+  font-size:13.5px;line-height:1.85;
+  color:var(--ink);
+  font-style:italic;
+  margin:16px 0;
+}
+.msg-label{
+  font-size:8.5px;font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;color:var(--muted);
+  font-style:normal;margin-bottom:10px;
+}
+
+/* Regalo grid */
+.regalo-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:rgba(15,26,53,.08);border:1px solid rgba(15,26,53,.08);}
+.regalo-item{background:var(--white);padding:20px 22px;}
+.regalo-icon{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold-d);margin-bottom:8px;}
+.regalo-title{font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.regalo-desc{font-size:12.5px;color:var(--muted);line-height:1.55;}
+.regalo-wow{
+  grid-column:1/-1;background:var(--navy);padding:20px 22px;
+  position:relative;
+}
+.regalo-wow::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#C8A84B,#E8C96A,#B89D52);}
+.regalo-wow .regalo-icon{color:var(--gold-l);}
+.regalo-wow .regalo-title{color:var(--white);}
+.regalo-wow .regalo-desc{color:rgba(249,247,242,.7);}
+
+/* Fases */
+.fases{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+.fase{padding:22px;position:relative;}
+.fase::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.fase-1{background:rgba(200,168,75,.06);}
+.fase-1::before{background:linear-gradient(90deg,var(--gold),var(--gold-l));}
+.fase-2{background:rgba(15,26,53,.04);}
+.fase-2::before{background:linear-gradient(90deg,var(--navy),var(--navy-mid));}
+.fase-n{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.fase-1 .fase-n{color:var(--gold-d);}
+.fase-2 .fase-n{color:var(--muted);}
+.fase-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.fase-desc{font-size:12.5px;color:var(--muted);line-height:1.6;}
+
+/* Footer */
+.ftr{background:var(--navy);padding:14px 56px;display:flex;justify-content:space-between;align-items:center;margin-top:52px;}
+.ftr-t{font-size:8.5px;font-weight:600;color:rgba(184,157,82,.55);letter-spacing:2.5px;text-transform:uppercase;}
+
+@media print{
+  body{background:white;}
+  .page{box-shadow:none;margin:0;max-width:100%;}
+}
+@media(max-width:860px){
+  .page{margin:0;box-shadow:none;}
+  .hdr{padding:32px 32px 28px;}
+  .body{padding:36px 32px;}
+  .ftr{padding:14px 32px;}
+}
+@media(max-width:560px){
+  .hdr{padding:22px 18px 20px;}
+  .body{padding:26px 18px;}
+  .brand-name{font-size:20px;letter-spacing:4px;}
+  .doc-name{font-size:15px;}
+  .role-grid,.fases,.regalo-grid{grid-template-columns:1fr;}
+  .regalo-wow{grid-column:1;}
+  .ftr{padding:12px 18px;flex-direction:column;gap:4px;text-align:center;}
+}
+</style>
+
+<div class="page">
+
+  <header class="hdr">
+    <div class="hdr-grid"></div>
+    <div class="hdr-inner">
+      <div class="brand">
+        <svg width="62" height="70" viewBox="0 0 62 70" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C8A84B"/>
+              <stop offset="50%" stop-color="#E8C96A"/>
+              <stop offset="100%" stop-color="#B89D52"/>
+            </linearGradient>
+          </defs>
+          <polygon points="31,2 58,17 58,53 31,68 4,53 4,17" fill="none" stroke="url(#hg)" stroke-width="1.5" opacity=".92"/>
+          <polygon points="31,10 52,22 52,48 31,60 10,48 10,22" fill="none" stroke="url(#hg)" stroke-width=".6" opacity=".28"/>
+          <text x="31" y="43" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#F9F7F2" text-anchor="middle">M</text>
+        </svg>
+        <div class="brand-words">
+          <div class="brand-name">MASFRAME</div>
+          <div class="brand-rule"></div>
+          <div class="brand-tag">Sistema Clínico de Intervención Empresarial</div>
+        </div>
+      </div>
+      <div class="hdr-sub">
+        <div class="doc-name">PLAN DE CONVOCATORIA</div>
+        <div class="doc-meta">CC Fase 1 · Beta 2026</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="body">
+
+    <div class="intro">
+      <p>Cuatro mujeres de confianza. Amigas, excompañeras, con disponibilidad real. No son perfiles corporativos — son personas que van a decir la verdad y que tienen tiempo para betear el sistema.<br><br><strong>El objetivo de esta reunión no es vender. Es incorporar.</strong></p>
+    </div>
+
+    <!-- CONVOCATORIA -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">La Convocatoria</div><div class="sec-rule"></div></div>
+      <p class="lead">No se convoca por WhatsApp. Se llama una a una. La llamada dura 2 minutos.</p>
+
+      <div class="msg-block">
+        <div class="msg-label">Guion de la llamada</div>
+        "Hola [nombre]. Te llamo porque llevo un año trabajando en algo que no existe todavía en el mercado y quiero que seas de las primeras cuatro personas en verlo.<br><br>
+        No te voy a contar más por teléfono — pero quiero que reserves [fecha] porque quiero enseñártelo en persona.<br><br>
+        ¿Puedes venir?"
+      </div>
+
+      <p class="lead" style="margin-top:20px;">Si pregunta de qué va → <strong style="color:var(--navy)">"De algo que creo que puede cambiar lo que haces profesionalmente. Prefiero que lo veas tú misma."</strong></p>
+
+      <div class="msg-block" style="margin-top:20px;">
+        <div class="msg-label">WhatsApp de confirmación — mismo día</div>
+        "Me alegra que puedas venir 🤍<br>
+        Te espero el [fecha] a las [hora] en [lugar].<br><br>
+        Esto es solo para cuatro personas. Tú eres una de ellas.<br><br>
+        Nos vemos pronto."
+      </div>
+
+      <div class="callout" style="margin-top:20px;">El día antes — manda el vídeo sin texto. Solo el vídeo. Si pregunta qué es → "Mañana lo descubres."</div>
+    </section>
+
+    <!-- FORMATO -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">El Formato</div><div class="sec-rule"></div></div>
+      <div class="role-grid">
+        <div class="rb does">
+          <div class="rb-label">Dónde y cuándo</div>
+          <ul>
+            <li>En casa de Maite — íntimo, de confianza</li>
+            <li>Tarde — 18:00h o 19:00h</li>
+            <li>Duración máxima: 2 horas</li>
+            <li>Copa en mano desde el primer minuto</li>
+          </ul>
+        </div>
+        <div class="rb does">
+          <div class="rb-label">Por qué en casa</div>
+          <ul>
+            <li>Un local de 150€ para 4 personas es frío</li>
+            <li>En casa es coherente con el mensaje</li>
+            <li>"Te invito a mi círculo" — no a una sala de reuniones</li>
+            <li>La confianza se construye en espacios personales</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDEN DEL DÍA -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">Orden del Día</div><div class="sec-rule"></div></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:100px;">Tiempo</th>
+              <th>Bloque</th>
+              <th>Qué ocurre</th>
+              <th>Recursos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="time">0:00 – 0:05</td>
+              <td><strong>Bienvenida</strong></td>
+              <td>Maite recibe a cada una individualmente. Copa en mano desde el primer minuto.</td>
+              <td style="font-size:11.5px;color:var(--muted);">—</td>
+            </tr>
+            <tr>
+              <td class="time">0:05 – 0:10</td>
+              <td><strong>El vídeo</strong></td>
+              <td>Se proyecta en la TV en silencio. Sin introducción previa. Que impacte solo.</td>
+              <td style="font-size:11.5px;color:var(--muted);">TV · Vídeo MASFRAME</td>
+            </tr>
+            <tr>
+              <td class="time">0:10 – 0:30</td>
+              <td><strong>Presentación MASFRAME</strong></td>
+              <td>Qué es Masesora, qué es MASFRAME, el protocolo C0–C6, las 10 especialidades, los 30 síntomas. Máximo 20 minutos. Sin improvisar.</td>
+              <td style="font-size:11.5px;color:var(--muted);">TV · Portátil · Dossier Escáner</td>
+            </tr>
+            <tr>
+              <td class="time">0:30 – 0:50</td>
+              <td><strong>Tutorial en vivo</strong></td>
+              <td>Maite abre la plataforma en el portátil conectado a la TV. Recorrido real: ESE Scanner → login → TriajePage → TreatmentPage C0–C6 → DischargePage. Lo ven funcionar con datos reales.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Portátil · TV · Simulador · QR ESE Scanner</td>
+            </tr>
+            <tr>
+              <td class="time">0:50 – 1:15</td>
+              <td><strong>Roleplay clínico</strong></td>
+              <td>Cada una recibe una tarjeta de negocio con el perfil de empresa (sector, facturación, gastos, empleados, años). Maite hace de CC con cada una durante 5–6 minutos. Las demás observan y copian el modelo. 4 roleplays consecutivos.</td>
+              <td style="font-size:11.5px;color:var(--muted);">6 tarjetas de negocio impresas · Árbol de objeciones · CODEX Clínico</td>
+            </tr>
+            <tr>
+              <td class="time">1:15 – 1:25</td>
+              <td><strong>El acuerdo</strong></td>
+              <td>Maite explica el trato con claridad y sin rodeos. Entrega el documento Bienvenida CC personalizado. Firma del NDA de confianza incluido en el documento.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Bienvenida CC impresa · Bolígrafo</td>
+            </tr>
+            <tr>
+              <td class="time">1:25 – 1:35</td>
+              <td><strong>Preguntas reales</strong></td>
+              <td>Sin guion. Que pregunten lo que quieran. Maite responde con el Árbol de Objeciones como respaldo.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Árbol de objeciones · CODEX</td>
+            </tr>
+            <tr>
+              <td class="time">1:35 – 2:00</td>
+              <td><strong>Entrega del pack + merienda</strong></td>
+              <td>Se entrega el pack personal a cada una. Informal. Que hablen entre ellas. Que lo procesen con una copa en la mano.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Pack completo · Merienda</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- EL ACUERDO -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">El Acuerdo — Cómo se Presenta</div><div class="sec-rule"></div></div>
+      <p class="lead">No se presenta como un contrato. Se presenta como un pacto entre personas de confianza.</p>
+
+      <div class="msg-block">
+        <div class="msg-label">Las palabras exactas</div>
+        "Lo que te ofrezco es esto: te formo en MASFRAME, te doy acceso a todo el sistema y cuando consigas tu primer cliente, ese ingreso es íntegramente tuyo. Yo me quedo el caso de éxito para poder demostrar que el sistema funciona. Las dos ganamos desde el primer día.<br><br>
+        No te pido que decidas hoy. Te pido que lo pienses esta semana y me digas si quieres formar parte de esto."
+      </div>
+
+      <div class="callout">Lo que se espera que respondan antes de salir — o en los días siguientes: ¿Quiero formarme? ¿Tengo disponibilidad real? ¿Conozco empresas candidatas beta?</div>
+    </section>
+
+    <!-- RECURSOS EN SALA -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">Recursos en Sala</div><div class="sec-rule"></div></div>
+
+      <div class="tbl-wrap" style="margin-bottom:24px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Recurso</th>
+              <th>Tipo</th>
+              <th>Detalle</th>
+              <th>Cuándo se usa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>TV</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Hardware</td>
+              <td>Conectada al portátil. Para proyectar vídeo, plataforma y simulador.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Todo el evento</td>
+            </tr>
+            <tr>
+              <td><strong>Portátil</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Hardware</td>
+              <td>Con sesión admin abierta en masfront.onrender.com. Simulador cargado.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Tutorial · Roleplay</td>
+            </tr>
+            <tr>
+              <td><strong>Vídeo MASFRAME</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Digital</td>
+              <td>El vídeo de convocatoria producido en Runway. Descargado en local — no depender de internet.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Min. 5</td>
+            </tr>
+            <tr>
+              <td><strong>Simulador MASFRAME</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Digital</td>
+              <td>simulador_masframe.html — recorrido por los 30 síntomas. Para mostrar la profundidad del sistema.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Tutorial</td>
+            </tr>
+            <tr>
+              <td><strong>QR ESE Scanner</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Digital</td>
+              <td>Para que lo escaneen en directo y vean el escáner desde su móvil. Impacto inmediato.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Tutorial</td>
+            </tr>
+            <tr>
+              <td><strong>CODEX Clínico</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Digital</td>
+              <td>Los 30 síntomas con nombre clínico, KPI, herramienta y protocolo C0–C6. Abierto en pantalla como referencia durante el roleplay.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Roleplay · Preguntas</td>
+            </tr>
+            <tr>
+              <td><strong>Árbol de Objeciones</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Digital · Impreso</td>
+              <td>Las objeciones más frecuentes del mercado con respuesta exacta. Impreso para Maite como guía durante preguntas.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Roleplay · Preguntas</td>
+            </tr>
+            <tr>
+              <td><strong>6 Tarjetas de Negocio Roleplay</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Impreso</td>
+              <td>Tarjetas con perfil de empresa ficticia: sector, nombre, facturación, gastos, empleados, años de actividad, síntoma visible. Se reparten una a cada participante al inicio del roleplay.</td>
+              <td style="font-size:11.5px;color:var(--muted);">Roleplay</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- EL PACK -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">El Pack — Lo que Se Llevan</div><div class="sec-rule"></div></div>
+      <p class="lead">Lo que se llevan ese día tiene que decirles sin palabras que forman parte de algo real.</p>
+
+      <div class="tbl-wrap" style="margin-bottom:20px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Elemento</th>
+              <th>Formato</th>
+              <th>Detalle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bienvenida CC</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Impreso · Color</td>
+              <td>Encuadernado con espiral negra. Su nombre escrito a mano en la portada. Incluye NDA firmado.</td>
+            </tr>
+            <tr>
+              <td><strong>Tríptico MASESORA</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Impreso · Imprenta</td>
+              <td>Tríptico v1.0 impreso en imprenta. Para que lo compartan con sus contactos cuando quieran.</td>
+            </tr>
+            <tr>
+              <td><strong>Dossier Tu Solución</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Impreso · Imprenta</td>
+              <td>Dossier A5 dúplex con la propuesta de valor de MASFRAME para el cliente final.</td>
+            </tr>
+            <tr>
+              <td><strong>Dossier Escáner</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Impreso · PDF</td>
+              <td>El dossier del ESE Scanner impreso. Su herramienta de apertura con cualquier empresa.</td>
+            </tr>
+            <tr>
+              <td><strong>QR personal</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">Impreso · Digital</td>
+              <td>QR con acceso directo al ESE Scanner y al vídeo MASFRAME. Para compartir con candidatos.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="regalo-grid">
+        <div class="regalo-wow" style="grid-column:1/-1;">
+          <div class="regalo-icon">El elemento WOW</div>
+          <div class="regalo-title">Tarjeta de Visita Personalizada</div>
+          <div class="regalo-desc">Con su nombre + cargo: <strong style="color:var(--gold-l);">"Consultora Clínica · MASFRAME"</strong> + masesora.com + @laclinicadeempresas. Impresas en imprenta antes de la reunión. Una por cada consultora. Esto no se olvida.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FASES -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">Conexión con Fase 2</div><div class="sec-rule"></div></div>
+      <div class="fases">
+        <div class="fase fase-1">
+          <div class="fase-n">Fase 1 — Ahora</div>
+          <div class="fase-title">4 Consultoras · Reunión íntima</div>
+          <div class="fase-desc">Las forma, las certifica, hacen el rodaje beta con empresas reales. Generan el primer caso de éxito documentado.</div>
+        </div>
+        <div class="fase fase-2">
+          <div class="fase-n">Fase 2 — Tras el rodaje</div>
+          <div class="fase-title">20 personas · Presentación de empresa</div>
+          <div class="fase-desc">Las consultoras ya no son público — son parte del escenario. Son la prueba viva de que MASFRAME funciona.</div>
+        </div>
+      </div>
+      <div class="callout">En la Fase 2 no vende Maite. Venden ellas siendo la evidencia.</div>
+    </section>
+
+  </main>
+
+  <div style="background:var(--navy);padding:36px 56px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,.06) 1px,transparent 1px);background-size:22px 22px;pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;max-width:600px;">
+      <div style="font-size:9px;font-weight:800;letter-spacing:4px;color:var(--gold-d);text-transform:uppercase;margin-bottom:14px;">Para terminar</div>
+      <div style="font-size:20px;font-weight:800;color:var(--white);line-height:1.3;margin-bottom:16px;">Cuatro personas de confianza.<br>El inicio de todo.</div>
+      <p style="font-size:13.5px;color:rgba(249,247,242,.75);line-height:1.9;">La reunión más importante no es la de 20. Es esta. Porque las cuatro que entren hoy son las que van a hacer real lo que todavía es un sistema en beta. Cuídalas. Sé honesta. Y deja que el sistema hable por sí solo.</p>
+    </div>
+  </div>
+
+  <footer class="ftr">
+    <div class="ftr-t">MASFRAME</div>
+    <div class="ftr-t">masesora.com</div>
+    <div class="ftr-t">La Clínica de Empresas</div>
+  </footer>
+
+</div>

@@ -1,0 +1,673 @@
+<title>Bienvenida CC · MASFRAME Beta 2026</title>
+<style>
+:root{
+  --navy:#0F1A35;--navy-mid:#1C2A4A;
+  --gold:#C8A84B;--gold-l:#E8C96A;--gold-d:#B89D52;
+  --cream:#F7F5EF;--white:#FFFFFF;
+  --ink:#1A1A2E;--muted:#4E5578;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:#E8E6E1;color:var(--ink);font-size:14px;line-height:1.7;
+}
+.page{
+  max-width:880px;margin:40px auto;
+  background:var(--white);
+  box-shadow:0 8px 60px rgba(15,26,53,.16);
+}
+
+/* HEADER */
+.hdr{
+  background:var(--navy);
+  padding:44px 56px 36px;
+  position:relative;overflow:hidden;
+}
+.hdr::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#C8A84B,#E8C96A,#B89D52);
+}
+.hdr-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(200,168,75,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,168,75,.07) 1px,transparent 1px);
+  background-size:22px 22px;
+  pointer-events:none;
+}
+.hdr-inner{position:relative;z-index:1;}
+.brand{display:flex;align-items:center;gap:22px;margin-bottom:28px;}
+.brand-words{display:flex;flex-direction:column;gap:5px;}
+.brand-name{
+  font-size:30px;font-weight:900;color:var(--white);
+  letter-spacing:7px;line-height:1;
+}
+.brand-rule{
+  height:1px;
+  background:linear-gradient(90deg,rgba(200,168,75,.65),rgba(200,168,75,0));
+}
+.brand-tag{
+  font-size:8.5px;font-weight:600;color:var(--gold-d);
+  letter-spacing:4.5px;text-transform:uppercase;
+}
+.hdr-sub{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding-top:20px;border-top:1px solid rgba(200,168,75,.2);
+}
+.doc-name{font-size:20px;font-weight:900;color:var(--white);letter-spacing:2px;}
+.doc-meta{font-size:9px;font-weight:600;color:rgba(184,157,82,.7);letter-spacing:3px;text-transform:uppercase;}
+
+/* BODY */
+.body{padding:52px 56px;}
+
+.intro{
+  border-left:3px solid var(--gold);
+  padding:22px 26px;background:rgba(200,168,75,.045);
+  margin-bottom:48px;
+}
+.intro p{font-size:14.5px;line-height:1.85;color:var(--ink);}
+.intro strong{color:var(--navy);font-weight:700;}
+
+/* Sections */
+.sec{margin-bottom:48px;}
+.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.sec-label{
+  font-size:9.5px;font-weight:800;letter-spacing:4px;
+  color:var(--gold-d);text-transform:uppercase;white-space:nowrap;
+}
+.sec-rule{
+  flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(184,157,82,.4),rgba(184,157,82,.04));
+}
+.lead{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:18px;}
+
+.callout{
+  border-left:3px solid var(--gold);
+  padding:14px 20px;background:rgba(200,168,75,.04);
+  font-size:13.5px;font-weight:600;color:var(--navy);
+  line-height:1.65;margin:18px 0;
+}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead tr{background:var(--navy);}
+thead th{
+  padding:11px 16px;color:var(--gold-d);
+  font-size:8.5px;font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;text-align:left;
+}
+tbody tr{border-bottom:1px solid rgba(15,26,53,.07);}
+tbody tr:nth-child(even){background:rgba(15,26,53,.025);}
+tbody td{padding:11px 16px;color:var(--ink);line-height:1.5;vertical-align:middle;}
+.capa{
+  text-align:center;font-weight:800;color:var(--gold-d);
+  font-size:12px;background:rgba(15,26,53,.035);
+  font-variant-numeric:tabular-nums;
+}
+.num{
+  text-align:center;font-weight:800;
+  color:rgba(184,157,82,.45);font-size:11px;
+  background:rgba(15,26,53,.018);
+  font-variant-numeric:tabular-nums;
+}
+
+/* Role grid */
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+.rb{padding:20px 22px;background:var(--cream);}
+.rb-label{
+  font-size:8.5px;font-weight:800;letter-spacing:3.5px;
+  text-transform:uppercase;margin-bottom:14px;
+}
+.rb.does .rb-label{color:var(--gold-d);}
+.rb.nope .rb-label{color:var(--muted);}
+.rb ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.rb li{
+  font-size:13px;color:var(--ink);line-height:1.45;
+  padding-left:20px;position:relative;
+}
+.rb.does li::before{content:'→';position:absolute;left:0;color:var(--gold);font-weight:800;}
+.rb.nope li::before{content:'×';position:absolute;left:0;color:rgba(78,85,120,.45);font-weight:800;}
+.ratio{
+  display:inline-block;font-size:12px;color:var(--muted);
+  padding:10px 16px;border:1px solid rgba(184,157,82,.22);margin-top:12px;
+}
+.ratio strong{color:var(--navy);}
+
+/* Beta pills */
+.pills{display:flex;flex-direction:column;gap:8px;margin:16px 0;}
+.pill{
+  display:flex;align-items:center;gap:12px;
+  font-size:13px;color:var(--ink);
+  padding:10px 14px;background:var(--cream);
+}
+.pill::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+
+/* Steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:18px 0;}
+.step{
+  background:var(--cream);padding:18px 14px;
+  position:relative;display:flex;flex-direction:column;gap:10px;
+}
+.step::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-l));
+}
+.step-n{
+  font-size:26px;font-weight:900;
+  color:rgba(200,168,75,.22);line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.step-t{font-size:11.5px;font-weight:600;color:var(--navy);line-height:1.45;}
+.contact{font-size:13px;color:var(--muted);margin-top:16px;line-height:1.7;}
+.contact strong{color:var(--navy);font-weight:700;}
+
+/* NDA band */
+.nda-band{
+  margin:48px -56px 0;
+  background:var(--navy);padding:18px 56px;
+  display:flex;align-items:center;gap:20px;
+  position:relative;
+}
+.nda-band::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#C8A84B,#E8C96A,#B89D52);
+}
+.nda-label{
+  font-size:10px;font-weight:800;letter-spacing:5px;
+  color:var(--gold-d);text-transform:uppercase;white-space:nowrap;
+}
+.nda-line{flex:1;height:1px;background:rgba(184,157,82,.2);}
+
+/* NDA content */
+.nda-sec{padding-top:40px;}
+.nda-p{font-size:13px;color:var(--muted);line-height:1.85;margin-bottom:16px;}
+.nda-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:12px 0 20px;}
+.nda-list li{
+  font-size:13px;color:var(--ink);
+  padding-left:20px;position:relative;line-height:1.5;
+}
+.nda-list li::before{content:'—';position:absolute;left:0;color:var(--gold-d);font-weight:800;}
+.nda-list strong{color:var(--navy);font-weight:700;}
+.nda-dur{font-weight:700;color:var(--navy);}
+.nda-ref{font-size:11px;color:var(--muted);font-style:italic;}
+
+/* Signature */
+.sig{
+  margin-top:32px;
+  border:1px solid rgba(15,26,53,.15);
+  padding:30px 30px 30px 33px;
+  position:relative;
+  background:rgba(247,245,239,.5);
+}
+.sig::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--gold),var(--gold-d));
+}
+.sig-decl{
+  font-size:12px;color:var(--muted);line-height:1.85;
+  font-style:italic;margin-bottom:28px;
+}
+.sig-fields{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.sf{display:flex;flex-direction:column;gap:6px;}
+.sf-label{
+  font-size:8px;font-weight:800;letter-spacing:3px;
+  color:var(--gold-d);text-transform:uppercase;
+}
+.sf-line{border-bottom:1px solid rgba(15,26,53,.3);height:38px;}
+
+/* Footer */
+.ftr{
+  background:var(--navy);padding:14px 56px;
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:52px;
+}
+.ftr-t{
+  font-size:8.5px;font-weight:600;
+  color:rgba(184,157,82,.55);letter-spacing:2.5px;text-transform:uppercase;
+}
+
+@media print{
+  body{background:white;}
+  .page{box-shadow:none;margin:0;max-width:100%;}
+  .nda-sec{page-break-before:always;}
+  .sig{page-break-inside:avoid;}
+}
+
+/* TABLET */
+@media(max-width:860px){
+  .page{margin:0;box-shadow:none;}
+  .hdr{padding:32px 32px 28px;}
+  .body{padding:36px 32px;}
+  .nda-band{margin:48px -32px 0;padding:18px 32px;}
+  .steps{grid-template-columns:repeat(3,1fr);}
+  .ftr{padding:14px 32px;}
+}
+
+/* MÓVIL */
+@media(max-width:560px){
+  .hdr{padding:22px 18px 20px;}
+  .body{padding:26px 18px;}
+  .brand{gap:14px;}
+  .brand-name{font-size:20px;letter-spacing:4px;}
+  .brand-tag{font-size:7px;letter-spacing:2.5px;}
+  .doc-name{font-size:15px;}
+  .doc-meta{font-size:7.5px;letter-spacing:1.5px;}
+  .intro p{font-size:13.5px;}
+  .role-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr 1fr;}
+  .step-n{font-size:20px;}
+  .sig-fields{grid-template-columns:1fr;}
+  .nda-band{margin:36px -18px 0;padding:15px 18px;}
+  .nda-label{font-size:8.5px;letter-spacing:3px;}
+  .ftr{padding:12px 18px;flex-direction:column;gap:4px;text-align:center;}
+  thead th{font-size:7.5px;padding:9px 10px;}
+  tbody td{padding:9px 10px;font-size:12px;}
+  .callout{font-size:13px;}
+  .sec{margin-bottom:34px;}
+  .ratio{display:block;}
+  .pills{gap:6px;}
+  .pill{font-size:12px;}
+}
+</style>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="hdr">
+    <div class="hdr-grid"></div>
+    <div class="hdr-inner">
+      <div class="brand">
+        <svg width="62" height="70" viewBox="0 0 62 70" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C8A84B"/>
+              <stop offset="50%" stop-color="#E8C96A"/>
+              <stop offset="100%" stop-color="#B89D52"/>
+            </linearGradient>
+          </defs>
+          <polygon points="31,2 58,17 58,53 31,68 4,53 4,17" fill="none" stroke="url(#hg)" stroke-width="1.5" opacity=".92"/>
+          <polygon points="31,10 52,22 52,48 31,60 10,48 10,22" fill="none" stroke="url(#hg)" stroke-width=".6" opacity=".28"/>
+          <text x="31" y="43" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#F9F7F2" text-anchor="middle">M</text>
+        </svg>
+        <div class="brand-words">
+          <div class="brand-name">MASFRAME</div>
+          <div class="brand-rule"></div>
+          <div class="brand-tag">Sistema Clínico de Intervención Empresarial</div>
+        </div>
+      </div>
+      <div class="hdr-sub">
+        <div class="doc-name">BIENVENIDA</div>
+        <div class="doc-meta">Consultora de Captación · MASFRAME</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <main class="body">
+
+    <div class="intro">
+      <p>Lo que tienes en las manos no es un manual de empresa al uso. Es el acceso a algo que todavía no existe en el mercado: un sistema operativo clínico para pymes, con metodología propia, herramientas digitales y una forma de intervenir que funciona porque mide, no porque intuye.<br><br><strong>Y tú vas a ser parte de hacerlo real.</strong></p>
+    </div>
+
+    <!-- QUÉ ES -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">Qué es MASFRAME</div><div class="sec-rule"></div></div>
+      <p class="lead">MASFRAME es el sistema con el que Masesora interviene en empresas. No consultoría tradicional. No coaching. No informes. Un sistema que mide antes y después, interviene con precisión y emite un alta cuando el resultado supera el objetivo.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Consultoría tradicional</th><th>MASFRAME</th></tr></thead>
+          <tbody>
+            <tr><td>"Vuestro problema es la comunicación"</td><td>Identifica el síntoma exacto con nombre clínico</td></tr>
+            <tr><td>Entrega un informe</td><td>Interviene en 6 fases documentadas</td></tr>
+            <tr><td>No mide resultados</td><td>Mide el KPI de entrada y salida</td></tr>
+            <tr><td>El proyecto "termina"</td><td>Se emite un <strong>Alta Clínica</strong> con dato</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">10 especialidades · 30 síntomas · 1 metodología. Cada síntoma tiene nombre clínico, KPI maestro, herramienta de diagnóstico e intervención documentada.</div>
+    </section>
+
+    <!-- TU ROL -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">Tu Rol — Consultora de Captación</div><div class="sec-rule"></div></div>
+      <p class="lead">Eres el primer contacto entre MASFRAME y el mercado real. No eres comercial al uso. Eres quien decide qué empresas califican para entrar en el primer ciclo beta — y eso te da una posición que muy poca gente tiene: ver el sistema desde dentro antes de que nadie lo conozca.</p>
+      <div class="callout">No vas a vender. Vas a seleccionar.</div>
+      <div class="role-grid">
+        <div class="rb does">
+          <div class="rb-label">Lo que haces</div>
+          <ul>
+            <li>Identificas empresas con síntomas activos visibles</li>
+            <li>Abres con el diagnóstico gratuito de 20 minutos</li>
+            <li>Cualificas si la empresa es candidata beta</li>
+            <li>Gestionas objeciones con el árbol de argumentos</li>
+            <li>Acompañas el primer contacto con el sistema</li>
+          </ul>
+        </div>
+        <div class="rb nope">
+          <div class="rb-label">Lo que no haces</div>
+          <ul>
+            <li>No cierras acuerdos en la primera visita</li>
+            <li>No improvisas fuera del argumentario</li>
+            <li>No prometes plazos o resultados sin validación</li>
+            <li>No presentas el sistema sin diagnóstico previo</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ratio" style="border-color:rgba(200,168,75,.35);padding:14px 18px;line-height:1.75;">Tienes algo que muy pocos comerciales tienen: el <strong>Árbol de Objeciones MASFRAME</strong>. Una herramienta construida a partir de los frenos reales del mercado — "no tengo tiempo", "ya tenemos consultoría", "ahora no es el momento". Cada objeción tiene su respuesta. No improvisas. Navegas.</div>
+    </section>
+
+    <!-- ACUERDO ECONÓMICO -->
+    <section class="sec" style="margin-bottom:32px;">
+      <div class="sec-hdr"><div class="sec-label">Sobre el acuerdo económico</div><div class="sec-rule"></div></div>
+      <div class="callout" style="font-weight:400;font-size:13px;line-height:1.75;">El acuerdo es claro y recíproco. No hay letra pequeña.</div>
+
+      <div class="role-grid" style="margin-top:16px;">
+        <div class="rb does">
+          <div class="rb-label">Lo que Masesora te ofrece</div>
+          <ul>
+            <li>La metodología MASFRAME completa</li>
+            <li>Formación y certificación como CC</li>
+            <li>Acceso a la plataforma y todas sus herramientas</li>
+            <li>El protocolo completo C0–C6</li>
+            <li>El 100% del ingreso de tu primer cliente</li>
+          </ul>
+        </div>
+        <div class="rb does">
+          <div class="rb-label">Lo que Masesora obtiene</div>
+          <ul>
+            <li>El caso de éxito documentado</li>
+            <li>La reputación del sistema validado en campo real</li>
+            <li>La validación del protocolo con empresas reales</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:16px;font-weight:400;font-size:13px;line-height:1.75;">Tú consigues tu primer cliente — ese ingreso es <strong>íntegramente tuyo</strong>. Masesora se queda con la evidencia de que el sistema funciona. Las dos ganamos.</div>
+    </section>
+
+    <!-- APERTURA -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">Tu Argumentario de Apertura</div><div class="sec-rule"></div></div>
+      <p class="lead">Las primeras palabras son las que abren la puerta. No improvises. Usa esto:</p>
+      <div class="callout" style="font-style:italic;font-size:14px;line-height:1.85;font-weight:400;border-left-width:4px;">
+        "Hola, soy [nombre], trabajo con Masesora. Identificamos el síntoma más urgente de una empresa en 20 minutos — sin coste, sin compromiso. ¿Qué día te viene mejor esta semana, martes o jueves?"
+      </div>
+      <p class="lead" style="margin-top:14px;margin-bottom:8px;">Si dice que no tiene tiempo o que ya tiene consultoría — ahí entra el <strong style="color:var(--navy);">Árbol de Objeciones</strong>. Por ejemplo:</p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:var(--cream);padding:14px 16px;border-left:2px solid rgba(184,157,82,.4);">
+          <div style="font-size:9px;font-weight:800;letter-spacing:2.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Objeción — "No tengo tiempo"</div>
+          <div style="font-size:13px;color:var(--ink);line-height:1.7;font-style:italic;">"Precisamente por eso tiene valor. Son 20 minutos — y lo que te digo puede ahorrarte semanas de ir en la dirección equivocada."</div>
+        </div>
+        <div style="background:var(--cream);padding:14px 16px;border-left:2px solid rgba(184,157,82,.4);">
+          <div style="font-size:9px;font-weight:800;letter-spacing:2.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Objeción — "Ya tenemos consultoría"</div>
+          <div style="font-size:13px;color:var(--ink);line-height:1.7;font-style:italic;">"Perfecto. Entonces ya sabes cuál es vuestro KPI más crítico ahora mismo, ¿verdad? Si no lo sabes, eso es exactamente lo que yo te digo en 20 minutos."</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A QUIÉN BUSCAS -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">A Quién Buscas</div><div class="sec-rule"></div></div>
+      <p class="lead">No cualquier empresa. El perfil beta es concreto:</p>
+      <div class="role-grid">
+        <div class="rb does">
+          <div class="rb-label">Candidata beta</div>
+          <ul>
+            <li>Autónomo con actividad real y facturación</li>
+            <li>Micropyme de 1 a 10 personas</li>
+            <li>Con al menos un síntoma visible desde fuera — caos operativo, falta de clientes, margen bajo</li>
+            <li>Disponible para dedicar una semana al proceso</li>
+          </ul>
+        </div>
+        <div class="rb nope">
+          <div class="rb-label">No es candidata</div>
+          <ul>
+            <li>Empresa en crisis aguda o cierre inminente</li>
+            <li>Sin tiempo ni disposición real</li>
+            <li>Que busca un informe, no un cambio</li>
+            <li>Grande o con estructura directiva compleja</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROTOCOLO -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">El Protocolo C0 → C6</div><div class="sec-rule"></div></div>
+      <p class="lead">Cada síntoma sigue estas 6 fases de intervención. Las aprenderás viviéndolas — primero como observadora, después como conductora.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="text-align:center;width:60px;">Capa</th><th>Nombre</th><th>Qué ocurre</th></tr></thead>
+          <tbody>
+            <tr><td class="capa">C0</td><td><strong>Medición inicial</strong></td><td>Se mide el KPI de entrada. Sin dato, no hay caso.</td></tr>
+            <tr><td class="capa">C1</td><td><strong>Priorización</strong></td><td>Se identifica qué duele más y libera más rápido</td></tr>
+            <tr><td class="capa">C2</td><td><strong>Decisión</strong></td><td>Se elige la acción correcta con criterio clínico</td></tr>
+            <tr><td class="capa">C3</td><td><strong>Comprensión</strong></td><td>Se mapea el flujo completo del síntoma</td></tr>
+            <tr><td class="capa">C4</td><td><strong>Cambio</strong></td><td>El CC interviene con herramientas probadas</td></tr>
+            <tr><td class="capa">C5</td><td><strong>Ejecución</strong></td><td>Se implanta la intervención con checklists y estándares</td></tr>
+            <tr><td class="capa">C6</td><td><strong>Seguimiento</strong></td><td>Se mide el KPI final. Si supera el objetivo → <strong>Alta Clínica</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">El alta no se emite por tiempo transcurrido. Se emite por resultado medido.</div>
+    </section>
+
+    <!-- 10 ESPECIALIDADES -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">Las 10 Especialidades</div><div class="sec-rule"></div></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="text-align:center;width:48px;">#</th><th>Especialidad</th><th>Órgano empresarial</th></tr></thead>
+          <tbody>
+            <tr><td class="num">01</td><td><strong>UCI Financiera</strong></td><td>El pulso — liquidez y caja</td></tr>
+            <tr><td class="num">02</td><td><strong>Unidad de Procesos</strong></td><td>El sistema circulatorio — eficiencia operativa</td></tr>
+            <tr><td class="num">03</td><td><strong>Cardiología Comercial</strong></td><td>El músculo — ventas y demanda</td></tr>
+            <tr><td class="num">04</td><td><strong>Neurología Estratégica</strong></td><td>El cerebro — dirección y decisiones</td></tr>
+            <tr><td class="num">05</td><td><strong>Gestión Clínica</strong></td><td>El sistema nervioso — control y cumplimiento</td></tr>
+            <tr><td class="num">06</td><td><strong>Cirugía de Marca</strong></td><td>La identidad — posicionamiento y diferenciación</td></tr>
+            <tr><td class="num">07</td><td><strong>Psiquiatría Organizacional</strong></td><td>El ADN cultural — clima y equipo</td></tr>
+            <tr><td class="num">08</td><td><strong>Rescate de Personas</strong></td><td>El tejido humano — talento y roles</td></tr>
+            <tr><td class="num">09</td><td><strong>Terapia de Experiencia</strong></td><td>El sistema de relación — experiencia del cliente</td></tr>
+            <tr><td class="num">10</td><td><strong>Excelencia Operativa</strong></td><td>El esqueleto — soporte al crecimiento</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout" style="margin-top:16px;font-weight:400;font-size:13px;line-height:1.75;">Tienes acceso al <strong>CODEX CLÍNICO MASFRAME</strong> — la primera documentación clínica completa de los 30 síntomas empresariales. No existe nada parecido en el mercado. Está construido para que conozcas cada síntoma mejor que el propio cliente, y para que ninguna conversación te pille sin respuesta.</div>
+    </section>
+
+    <!-- BETA -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">Cómo Funciona la Semana Beta</div><div class="sec-rule"></div></div>
+      <p class="lead">Cada empresa beta pasa por una semana de trabajo contigo. El calendario es flexible según disponibilidad, pero la estructura es siempre la misma:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:80px;">Día</th><th>Qué ocurre</th><th>Herramienta</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="capa">LUNES</td>
+              <td><strong>Entrega y presentación del proyecto</strong> — la empresa conoce MASFRAME, entiende qué vamos a medir y por qué</td>
+              <td>Diagnóstico inicial + Simulador</td>
+            </tr>
+            <tr>
+              <td class="capa">SEMANA</td>
+              <td><strong>Trabajo conjunto</strong> — se recoge información, se identifican síntomas, se registran observaciones y correcciones</td>
+              <td>Agenda conjunta + Simulador</td>
+            </tr>
+            <tr>
+              <td class="capa">VIERNES</td>
+              <td><strong>Recogida de datos</strong> — cierre de la semana, entrega de hallazgos. Maite ve los datos en tiempo real durante todo el proceso</td>
+              <td>Simulador · acceso Maite</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout" style="margin-top:16px;">Lo que observes y corrijas durante la semana alimenta directamente el sistema. <strong>Tu trabajo en campo mejora el producto.</strong></div>
+    </section>
+
+    <!-- PRIMEROS PASOS -->
+    <section class="sec">
+      <div class="sec-hdr"><div class="sec-label">Tus Primeros Pasos</div><div class="sec-rule"></div></div>
+      <div class="steps">
+        <div class="step"><div class="step-n">01</div><div class="step-t">Firmar el Acuerdo de Confidencialidad</div></div>
+        <div class="step"><div class="step-n">02</div><div class="step-t">Acceso conjunto a la plataforma y simulador</div></div>
+        <div class="step"><div class="step-n">03</div><div class="step-t">Fase de pruebas de forma independiente</div></div>
+        <div class="step"><div class="step-n">04</div><div class="step-t">Documentar la recogida de info y correcciones en el simulador</div></div>
+        <div class="step"><div class="step-n">05</div><div class="step-t">Descubrir el valor real y proponer tu tarifa</div></div>
+      </div>
+      <p class="contact">Cualquier duda operativa, clínica o de sistema va directamente a <strong>Maite</strong>. Si algo no funciona o no sabes cómo proceder — preguntas. Eso es parte del proceso.</p>
+    </section>
+
+    <!-- NDA BAND -->
+    <div class="nda-band">
+      <div class="nda-label">Acuerdo de Confidencialidad</div>
+      <div class="nda-line"></div>
+    </div>
+
+    <!-- NDA -->
+    <section class="nda-sec">
+      <p class="nda-p">Al incorporarte como Consultora Clínica en fase beta de MASFRAME, aceptas mantener confidencialidad sobre:</p>
+      <ul class="nda-list">
+        <li>La <strong>metodología MASFRAME</strong> y todos sus componentes — metodología, fichas clínicas, CODEX, herramientas</li>
+        <li>Los <strong>datos de los clientes</strong> a los que puedas tener acceso en plataforma</li>
+        <li>La <strong>información interna</strong> de Masesora — estrategia, precios, documentos internos</li>
+        <li>Cualquier material, documento o conversación marcada como confidencial</li>
+      </ul>
+      <p class="nda-p">Este compromiso se extiende <span class="nda-dur">durante toda la colaboración y 3 años después</span> de su finalización, con independencia de cómo termine la relación.</p>
+      <p class="nda-p nda-ref">El texto completo del Acuerdo de Confidencialidad está recogido en el documento 02_acuerdo_confidencialidad_CC.</p>
+
+      <div class="sig">
+        <p class="sig-decl">He leído y comprendo el contenido de este documento y el Acuerdo de Confidencialidad MASFRAME completo. Me comprometo a cumplir con todas las obligaciones de confidencialidad descritas.</p>
+        <div class="sig-fields">
+          <div class="sf">
+            <div class="sf-label">Nombre completo</div>
+            <input class="sig-input" type="text" placeholder="Nombre y apellidos" id="inp-nombre">
+          </div>
+          <div class="sf">
+            <div class="sf-label">DNI / NIE</div>
+            <input class="sig-input" type="text" placeholder="00000000A" id="inp-dni">
+          </div>
+          <div class="sf" style="grid-column:1/-1;">
+            <div class="sf-label">Fecha</div>
+            <input class="sig-input" type="date" id="inp-fecha">
+          </div>
+          <div class="sf" style="grid-column:1/-1;">
+            <div class="sf-label">Firma <span id="sig-status" style="font-size:7px;letter-spacing:1px;color:var(--muted);margin-left:8px;font-weight:400;text-transform:none;">— dibuja con el ratón o el dedo</span></div>
+            <div style="position:relative;border:1px solid rgba(15,26,53,.2);background:#fff;">
+              <canvas id="sig-canvas" style="display:block;width:100%;height:110px;cursor:crosshair;touch-action:none;"></canvas>
+              <div id="sig-placeholder" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="font-size:11px;color:rgba(78,85,120,.3);letter-spacing:1px;">Firma aquí</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px;">
+              <button onclick="clearSig()" class="sig-btn sig-btn-sec">Limpiar</button>
+              <button onclick="confirmSig()" class="sig-btn sig-btn-pri" id="btn-confirm">Confirmar firma</button>
+            </div>
+            <div id="sig-confirmed" style="display:none;margin-top:10px;padding:10px 14px;background:rgba(200,168,75,.08);border-left:3px solid var(--gold);font-size:11px;color:var(--navy);">
+              ✓ Firma registrada — <span id="sig-timestamp"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<style>
+.sig-input{
+  width:100%;border:none;border-bottom:1px solid rgba(15,26,53,.3);
+  padding:8px 0;font-size:13px;font-family:inherit;color:var(--ink);
+  background:transparent;outline:none;
+}
+.sig-input:focus{border-bottom-color:var(--gold);}
+.sig-input::placeholder{color:rgba(78,85,120,.35);}
+.sig-btn{
+  padding:7px 18px;font-size:10px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;border:none;cursor:pointer;font-family:inherit;
+}
+.sig-btn-sec{background:transparent;color:var(--muted);border:1px solid rgba(15,26,53,.15);}
+.sig-btn-sec:hover{background:rgba(15,26,53,.05);}
+.sig-btn-pri{background:var(--navy);color:var(--gold-d);}
+.sig-btn-pri:hover{background:var(--navy-mid);}
+.sig-btn-pri:disabled{opacity:.4;cursor:not-allowed;}
+</style>
+
+<script>
+(function(){
+  const canvas = document.getElementById('sig-canvas');
+  const ctx = canvas.getContext('2d');
+  const placeholder = document.getElementById('sig-placeholder');
+  let drawing = false, hasContent = false, confirmed = false;
+
+  function resize(){
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    ctx.strokeStyle = '#0F1A35';
+    ctx.lineWidth = 1.8;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+  }
+  resize();
+
+  function pos(e){
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: src.clientX - r.left, y: src.clientY - r.top };
+  }
+
+  function start(e){ if(confirmed) return; e.preventDefault(); drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); }
+  function move(e){ if(!drawing||confirmed) return; e.preventDefault(); const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); hasContent=true; placeholder.style.display='none'; }
+  function end(){ drawing=false; }
+
+  canvas.addEventListener('mousedown',start);
+  canvas.addEventListener('mousemove',move);
+  canvas.addEventListener('mouseup',end);
+  canvas.addEventListener('mouseleave',end);
+  canvas.addEventListener('touchstart',start,{passive:false});
+  canvas.addEventListener('touchmove',move,{passive:false});
+  canvas.addEventListener('touchend',end);
+
+  window.clearSig = function(){
+    if(confirmed) return;
+    const r = canvas.getBoundingClientRect();
+    ctx.clearRect(0,0,r.width,r.height);
+    hasContent=false;
+    placeholder.style.display='flex';
+    document.getElementById('sig-confirmed').style.display='none';
+    document.getElementById('sig-status').textContent='— dibuja con el ratón o el dedo';
+  };
+
+  window.confirmSig = function(){
+    if(!hasContent){ canvas.style.outline='1px solid #C8A84B'; setTimeout(()=>canvas.style.outline='',800); return; }
+    confirmed=true;
+    canvas.style.cursor='default';
+    const now = new Date();
+    const ts = now.toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}) + ' · ' + now.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('sig-timestamp').textContent = ts;
+    document.getElementById('sig-confirmed').style.display='block';
+    document.getElementById('sig-status').textContent='— confirmada';
+    document.getElementById('btn-confirm').disabled=true;
+  };
+})();
+</script>
+    </section>
+
+  </main>
+
+  <!-- CIERRE MOTIVACIONAL -->
+  <div style="background:var(--navy);padding:36px 56px;margin-top:0;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,.06) 1px,transparent 1px);background-size:22px 22px;pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;max-width:600px;">
+      <div style="font-size:9px;font-weight:800;letter-spacing:4px;color:var(--gold-d);text-transform:uppercase;margin-bottom:14px;">Para terminar</div>
+      <div style="font-size:20px;font-weight:800;color:var(--white);line-height:1.3;margin-bottom:16px;">Vamos juntas.</div>
+      <p style="font-size:13.5px;color:rgba(249,247,242,.75);line-height:1.9;">Tienes la metodología, el argumentario, el árbol de objeciones y el CODEX. Y mientras estás en campo, Maite está al otro lado del simulador viendo exactamente lo que tú ves.<br><br>Lo que construyamos juntas esta semana va a dar forma a algo que todavía no existe. Eso tiene valor — y lo reconoceremos cuando lo veamos.<br><br>Cuando estés lista, empezamos tu primera visita a <em style="color:var(--gold-d);">La Clínica de Empresas</em>.</p>
+    </div>
+  </div>
+
+  <footer class="ftr">
+    <div class="ftr-t">MASFRAME</div>
+    <div class="ftr-t">masesora.com</div>
+    <div class="ftr-t">La Clínica de Empresas</div>
+  </footer>
+
+</div>
