@@ -103,6 +103,10 @@ class EseSubmitRequest(BaseModel):
     sintomas_detectados: Optional[List[str]] = []
     timestamp:           Optional[str] = None
     session_id:          Optional[str] = None
+    # Consentimiento (texto 05_texto_consentimiento_MASESORA, apartados 2 y 3)
+    consent:             Optional[bool] = None   # obligatorio: informe + acceso a La Clinica
+    consent_comercial:   Optional[bool] = False  # opcional y separado: contacto comercial
+    consent_version:     Optional[str] = None
 
 
 # ─────────────────────────────────────────────────────────────
@@ -306,6 +310,10 @@ async def submit_ese(data: EseSubmitRequest):
         "insights":            data.insights.dict(),
         "sintomas_detectados": data.sintomas_detectados,
         "ese_timestamp":       data.timestamp or ahora.isoformat(),
+        "consent":             data.consent,
+        "consent_comercial":   bool(data.consent_comercial),
+        "consent_version":     data.consent_version,
+        "consent_at":          ahora,
     }
 
     if existente:
