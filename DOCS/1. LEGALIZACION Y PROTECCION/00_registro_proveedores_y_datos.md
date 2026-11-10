@@ -19,7 +19,7 @@
 
 | Proveedor | Servicio donde interviene | Qué datos recibe | Para qué | Dónde | Base jurídica | Verificado en |
 |---|---|---|---|---|---|---|
-| **Render Services, Inc.** | Escáner, Masframe, Tu Solución | Todo lo que el usuario envía a los servidores (ver §3) | Alojamiento del servidor y de las webs | Backend de Masframe y Escáner: Fráncfort (UE). Servidor de Tu Solución: **región sin confirmar** | Encargado (art. 28) | `render.yml` (`region: frankfurt`); `ese/index.html` (`API_BASE`); `ts/index.html` (`tsm-awye.onrender.com`) |
+| **Render Services, Inc.** | Escáner, Masframe, Tu Solución | Todo lo que el usuario envía a los servidores (ver §3) | Alojamiento del servidor y de las webs | Backend de Masframe y Escáner: Fráncfort (UE). Servidor de Tu Solución (servicio `TSM`, Node): Fráncfort (UE), según el panel de Render | Encargado (art. 28) | `render.yml` (`region: frankfurt`); `ese/index.html` (`API_BASE`); `ts/index.html` (`tsm-awye.onrender.com`) |
 | **MongoDB, Inc. (Atlas)** | Escáner, Masframe | Datos del Escáner (email, empresa, facturación, respuestas, abandono de fases), cuentas y expedientes de clientes | Base de datos | **Región del clúster sin confirmar** | Encargado | `routers/ese_router.py` (`MONGO_URI`, colecciones `clients`, `ese_dropoff`) |
 | **Resend, Inc.** | Escáner, Masframe, Tu Solución | Email del destinatario, empresa, contenido del informe o del aviso | Envío de correos al cliente y copia interna a info@masesora.com | EE. UU. (transferencia internacional) | Encargado | `email_service.py`; `generate-prd.js` (`api.resend.com`) |
 | **Stripe, Inc. (Stripe Payments Europe, Ltd.)** | Masframe | Datos de tarjeta (los introduce el cliente en Stripe, no pasan por nuestro servidor); email y nombre para facturas; en el pago, código de expediente, plan y síntomas contratados | Cobro y facturación | UE / EE. UU. | Ejecución de contrato; obligación legal (facturación) | `routers/payments_router.py`; `routers/ciclos_router.py`; frontend carga `js.stripe.com` |
@@ -70,8 +70,7 @@
 Se pregunta una sola vez:
 
 1. Región del clúster de MongoDB Atlas.
-2. Región del servidor de Tu Solución (`tsm-awye`).
-3. Qué contiene la hoja de Google Sheets que lee `ese_sync_service.py`, y si sigue en uso.
-4. Si Tu Solución tiene otro despliegue que sí guarde los leads.
+2. Qué contiene la hoja de Google Sheets que lee `ese_sync_service.py`, y si sigue en uso.
+3. Si Tu Solución tiene otro despliegue que sí guarde los leads.
 
 Hasta que se contesten, los textos dicen «proveedores con servidores en la UE o con cláusulas contractuales tipo» sin nombrar región.
