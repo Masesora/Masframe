@@ -1,8 +1,8 @@
 # AVISO LEGAL — MASFRAME®
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026 para su publicación en https://laclinicadempresas.masesora.com/aviso-legal
-> Requiere revisión por asesor legal antes de publicación definitiva.
+> Documento actualizado el 10/11/2026 para su publicación en https://laclinicadempresas.masesora.com/legal/aviso-legal.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> **Qué cambia:** se corrige el código postal (03520) y las direcciones de los textos legales.
 
 ---
 
@@ -12,7 +12,7 @@ En cumplimiento de lo dispuesto en el artículo 10 de la Ley 34/2002, de 11 de j
 
 - **Titular:** María Teresa Cabezuelos Morcillo.
 - **NIF:** 74860612M.
-- **Domicilio profesional:** Carrer Gabriel Miró 27, 03530 Polop (Alicante, España).
+- **Domicilio profesional:** Carrer Gabriel Miró 27, 03520 Polop (Alicante, España).
 - **Email de contacto:** info@masesora.com.
 - **Actividad:** prestación de servicios de consultoría operativa y gestión empresarial a través de la plataforma MASFRAME®.
 - **URL del servicio:** https://laclinicadempresas.masesora.com/.
@@ -56,7 +56,7 @@ La plataforma puede contener enlaces a sitios de terceros. La Titular no asume r
 
 ## 7. Protección de datos personales
 
-El tratamiento de datos personales que se realiza a través de la plataforma se rige por la Política de Privacidad de MASFRAME®, accesible en https://laclinicadempresas.masesora.com/privacidad y que forma parte integrante del presente aviso legal.
+El tratamiento de datos personales que se realiza a través de la plataforma se rige por la Política de Privacidad de MASFRAME®, accesible en https://laclinicadempresas.masesora.com/legal/privacidad.html y que forma parte integrante del presente aviso legal.
 
 ## 8. Modificación del aviso legal
 
@@ -68,4 +68,4 @@ El presente aviso legal se rige por la legislación española. Para la resoluci�
 
 ---
 
-**Fecha de última actualización:** 25 de abril de 2026.
+**Fecha de última actualización:** 10 de noviembre de 2026.

@@ -1,52 +1,34 @@
 # TEXTOS DE CONSENTIMIENTO — MASFRAME®
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026.
-> Micro-textos para integrar en los distintos puntos de captación de consentimiento dentro de la plataforma MASFRAME®.
-> Requiere revisión por asesor legal antes de publicación definitiva.
+> Documento actualizado el 10/11/2026. Sustituye a la versión del 25/04/2026.
+> Micro-textos para los puntos de la plataforma MASFRAME® donde se acepta algo.
+> Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> **Qué cambia:** hoy la plataforma tiene **una sola casilla**, en el paso de datos de facturación (`ScannerReceptionPage.tsx`), que solo dice «Acepto los términos y condiciones». Este documento pasa a describir lo que existe y lo que se instala en la plataforma a partir de ahora, y retira el consentimiento explícito por síntomas, que la plataforma nunca recogió.
+> **Decisión para quien revise:** si los síntomas autodeclarados deben tratarse como dato sensible del art. 9 RGPD (ver la Política de Privacidad). Si se decide que sí, hay que crear la casilla y su registro; hasta entonces el apartado 2 queda retirado.
 
 ---
 
-## 1. Consentimiento general del formulario de registro / contacto
+## 1. Aceptación de términos y de la política de privacidad en el pago — OBLIGATORIO
 
-*Utilizar junto a un checkbox obligatorio.*
+*Casilla obligatoria en el paso de datos de facturación, antes de «Continuar al pago». Sustituye al texto actual «Acepto los términos y condiciones del servicio MASFRAME».*
 
-> He leído y acepto la [Política de Privacidad](https://laclinicadempresas.masesora.com/privacidad) y el [Aviso Legal](https://laclinicadempresas.masesora.com/aviso-legal) de MASFRAME®. Consiento que María Teresa Cabezuelos Morcillo trate mis datos personales para las finalidades descritas, entre ellas la gestión de mi cuenta y la prestación del servicio. Puedo retirar este consentimiento y ejercer mis derechos escribiendo a info@masesora.com.
+> ☐ He leído y acepto los [Términos y Condiciones](https://laclinicadempresas.masesora.com/legal/terminos.html) de MASFRAME® y la [Política de Privacidad](https://laclinicadempresas.masesora.com/legal/privacidad.html). Entiendo que, si contrato como consumidor y pido el inicio inmediato del servicio digital, pierdo el derecho de desistimiento una vez se haya prestado por completo. Puedo ejercer mis derechos escribiendo a info@masesora.com.
 
----
+## 2. Consentimiento explícito para síntomas autodeclarados — RETIRADO
 
-## 2. Consentimiento explícito para síntomas autodeclarados (art. 9.2.a RGPD)
+*La versión anterior preveía una casilla de consentimiento explícito (art. 9.2.a RGPD) antes de introducir los síntomas. La plataforma nunca la tuvo. Mientras no se decida lo contrario, los síntomas se tratan como datos de la empresa por ejecución de contrato (ver la Política de Privacidad).*
 
-*Obligatorio antes de introducir información clínico-empresarial sensible en la plataforma. Checkbox separado y explícito.*
+## 3. Comunicaciones comerciales — OPCIONAL (cuando se incorpore)
 
-> Entiendo que la información que voy a introducir sobre la situación de mi empresa puede incluir datos sensibles relacionados con síntomas operativos autodeclarados. Consiento de forma expresa y específica que MASFRAME® trate esta información con la finalidad de realizar el análisis clínico-empresarial descrito en la [Política de Privacidad](https://laclinicadempresas.masesora.com/privacidad). Entiendo que este análisis tiene naturaleza orientativa y **no constituye diagnóstico médico ni tratamiento clínico**. Puedo retirar este consentimiento en cualquier momento desde mi cuenta o escribiendo a info@masesora.com.
+*Casilla NO obligatoria, separada de la anterior. Hoy no existe en la plataforma; mientras no exista, no se envían comunicaciones comerciales.*
 
----
+> ☐ Acepto recibir comunicaciones comerciales de MASFRAME® (novedades, contenidos útiles y ofertas) en el email indicado. Puedo darme de baja en cualquier momento desde cualquiera de esos emails o escribiendo a info@masesora.com.
 
-## 3. Consentimiento para comunicaciones comerciales
+## 4. Aviso de cookies
 
-*Checkbox adicional, NO obligatorio, separado del consentimiento general.*
-
-> Acepto recibir comunicaciones comerciales de MASFRAME® (novedades, contenidos útiles y ofertas) en el email indicado. Sé que puedo darme de baja en cualquier momento desde cualquiera de esos emails o escribiendo a info@masesora.com.
+*MASFRAME® no usa cookies de analítica ni de publicidad (ver la Política de Cookies) y por eso no muestra aviso de cookies. Si se incorporan, se usará el mismo aviso que las webs masesora.com y masesora.es: «Aceptar» y «Rechazar» con el mismo peso, y «Configurar cookies» en el pie.*
 
 ---
 
-## 4. Aceptación de términos en proceso de contratación
-
-*Obligatorio antes de realizar cualquier pago.*
-
-> He leído y acepto los [Términos y Condiciones de Uso](https://laclinicadempresas.masesora.com/terminos) de MASFRAME®. Confirmo que he sido informado de que, al solicitar el inicio inmediato de la prestación del servicio digital, pierdo mi derecho de desistimiento una vez haya sido plenamente ejecutado.
-
----
-
-## 5. Aviso de cookies (si en el futuro se incorporan cookies no técnicas)
-
-*Actualmente MASFRAME® solo utiliza cookies técnicas y no requiere banner. Este texto queda listo para cuando se incorporen cookies de analítica o terceros.*
-
-> Esta web utiliza cookies propias y de terceros para analizar el uso del sitio y mejorar el servicio. Puedes aceptar todas las cookies, configurar qué tipos aceptas o rechazar las no esenciales. Más información en nuestra [Política de Cookies](https://laclinicadempresas.masesora.com/cookies).
->
-> [Aceptar todas] [Configurar] [Rechazar no esenciales]
-
----
-
-**Fecha de última actualización:** 25 de abril de 2026.
+**Fecha de última actualización:** 10 de noviembre de 2026.

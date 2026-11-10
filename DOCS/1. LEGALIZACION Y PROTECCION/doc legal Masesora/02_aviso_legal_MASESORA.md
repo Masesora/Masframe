@@ -1,8 +1,8 @@
 # AVISO LEGAL — MASESORA
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026 para su publicación en https://www.masesora.com/aviso-legal
-> Requiere revisión por asesor legal antes de publicación definitiva.
+> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/legal/aviso-legal.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> **Qué cambia:** el aviso cubre también el Escáner de Salud Empresarial (masesora.es).
 
 ---
 
@@ -15,12 +15,12 @@ En cumplimiento de lo dispuesto en el artículo 10 de la Ley 34/2002, de 11 de j
 - **Domicilio profesional:** Carrer Gabriel Miró 27, 03520 Polop (Alicante, España).
 - **Email de contacto:** info@masesora.com.
 - **Actividad:** construcción de sistemas y soluciones operativas para micropymes y profesionales autónomos; prestación del diagnóstico operativo Tu Solución y de servicios de consultoría asociados.
-- **URL del servicio:** https://www.masesora.com.
+- **URL del servicio:** https://www.masesora.com y https://www.masesora.es (Escáner de Salud Empresarial).
 - **Marca comercial:** Masesora — *Constructora de Sistemas y Soluciones*.
 
 ## 2. Objeto
 
-El presente aviso legal regula el acceso y uso del sitio web https://www.masesora.com, incluyendo el diagnóstico operativo **Tu Solución** y demás contenidos publicados. El mero acceso al sitio implica la aceptación sin reservas del presente aviso legal y de las demás condiciones aplicables (política de privacidad, política de cookies y, en su caso, términos y condiciones específicos).
+El presente aviso legal regula el acceso y uso de los sitios web https://www.masesora.com y https://www.masesora.es, incluyendo el diagnóstico operativo **Tu Solución**, el **Escáner de Salud Empresarial** y demás contenidos publicados. El mero acceso al sitio implica la aceptación sin reservas del presente aviso legal y de las demás condiciones aplicables (política de privacidad, política de cookies y, en su caso, términos y condiciones específicos).
 
 ## 3. Condiciones de uso
 
@@ -62,7 +62,7 @@ El sitio puede contener enlaces a sitios de terceros. La Titular no asume respon
 
 ## 8. Protección de datos personales
 
-El tratamiento de datos personales que se realiza a través del sitio se rige por la Política de Privacidad de Masesora, accesible en https://www.masesora.com/privacidad y que forma parte integrante del presente aviso legal.
+El tratamiento de datos personales que se realiza a través del sitio se rige por la Política de Privacidad de Masesora, accesible en https://www.masesora.com/legal/privacidad.html y que forma parte integrante del presente aviso legal.
 
 ## 9. Modificación del aviso legal
 
@@ -74,4 +74,4 @@ El presente aviso legal se rige por la legislación española. Para la resoluci�
 
 ---
 
-**Fecha de última actualización:** 25 de abril de 2026.
+**Fecha de última actualización:** 10 de noviembre de 2026.

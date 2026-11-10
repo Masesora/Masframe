@@ -1,9 +1,9 @@
 # TÉRMINOS Y CONDICIONES DE USO — MASESORA / TU SOLUCIÓN
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026 para su publicación en https://www.masesora.com/terminos
-> Requiere revisión por asesor legal antes de publicación definitiva.
-> **Asunciones tomadas:** (1) El diagnóstico Tu Solución es **gratuito**; (2) La ficha técnica de la herramienta derivada se entrega sin coste tras la captación del lead; (3) La implementación posterior de la herramienta se regulará por contrato específico entre las partes.
+> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/legal/terminos.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> **Asunciones:** (1) El diagnóstico Tu Solución y el Escáner de Salud Empresarial son **gratuitos**; (2) La ficha técnica y el informe se entregan sin coste; (3) La implementación posterior se regulará por contrato específico entre las partes.
+> **Qué cambia:** los términos cubren también el Escáner (masesora.es) y su código de acceso a La Clínica de Empresas.
 
 ---
 
@@ -13,11 +13,11 @@
 - **NIF:** 74860612M.
 - **Domicilio:** Carrer Gabriel Miró 27, 03520 Polop (Alicante, España).
 - **Email:** info@masesora.com.
-- **Servicio:** sitio web y diagnóstico operativo Tu Solución, accesibles en https://www.masesora.com.
+- **Servicio:** sitio web y diagnóstico operativo Tu Solución (https://www.masesora.com) y Escáner de Salud Empresarial (https://www.masesora.es).
 
 ## 2. Objeto
 
-Los presentes términos regulan el acceso y uso del sitio web de Masesora y, en particular, del diagnóstico operativo **Tu Solución**: una herramienta de autoevaluación gratuita orientada a micropymes y profesionales autónomos para identificar áreas operativas críticas y proponer la herramienta derivada que el negocio necesita.
+Los presentes términos regulan el acceso y uso del sitio web de Masesora y, en particular, del diagnóstico operativo **Tu Solución** y del **Escáner de Salud Empresarial**: herramientas de autoevaluación gratuita orientada a micropymes y profesionales autónomos para identificar áreas operativas críticas y proponer la herramienta derivada que el negocio necesita.
 
 ## 3. Aceptación
 
@@ -31,11 +31,13 @@ Tu Solución ofrece:
 - Resultado con problema principal, problema secundario y herramienta operativa derivada.
 - Envío por correo electrónico, a solicitud expresa de la persona usuaria, de una ficha técnica detallada de la herramienta derivada (descripción, alcance, entregables y orientación sobre inversión).
 
+El Escáner ofrece, también de forma gratuita, una autoevaluación de la salud de la empresa, un informe que se envía por correo a solicitud de la persona usuaria y un código de acceso a La Clínica de Empresas (MASFRAME®). Los servicios de pago de La Clínica de Empresas se rigen por sus propios Términos y Condiciones.
+
 **La ficha técnica y el diagnóstico tienen carácter orientativo.** La contratación posterior de servicios de implementación se formalizará, en su caso, mediante contrato específico entre las partes.
 
 ## 5. Gratuidad
 
-El diagnóstico Tu Solución y el envío de la ficha técnica son **gratuitos** para la persona usuaria. No se solicita ningún dato de pago ni se genera obligación económica alguna por el simple uso del diagnóstico.
+El diagnóstico Tu Solución, el Escáner, el envío de la ficha técnica y del informe son **gratuitos** para la persona usuaria. No se solicita ningún dato de pago ni se genera obligación económica alguna por el simple uso del diagnóstico.
 
 ## 6. Obligaciones de la persona usuaria
 
@@ -72,7 +74,7 @@ La Titular podrá modificar los presentes términos en cualquier momento. La con
 
 ## 11. Protección de datos
 
-El tratamiento de datos personales se regula en la Política de Privacidad de Masesora, accesible en https://www.masesora.com/privacidad.
+El tratamiento de datos personales se regula en la Política de Privacidad de Masesora, accesible en https://www.masesora.com/legal/privacidad.html.
 
 ## 12. Legislación aplicable y jurisdicción
 
@@ -80,4 +82,4 @@ Los presentes términos se rigen por la legislación española. Para la resoluci
 
 ---
 
-**Fecha de última actualización:** 25 de abril de 2026.
+**Fecha de última actualización:** 10 de noviembre de 2026.
