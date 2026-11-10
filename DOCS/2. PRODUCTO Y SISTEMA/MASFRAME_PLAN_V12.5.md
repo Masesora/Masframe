@@ -3012,7 +3012,7 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 - **Cookies reales** (`_ga`, `_fbp`, Stripe) pendientes de medir en producción tras aceptar; la duración que figura es la de Google y Meta por defecto.
 - Los correos HTML de `email_service.py` aún enlazan Google Fonts; el aviso de info@ del ESE no incluye `consent_comercial`.
 - **Bloque D:** Search Console de `.com` y `.es` (DNS en DonDominio) y registros de Resend, que va como otra sesión.
-- **Copia local sin versionar:** `C:\Masframe\masesora_backend\DOCS. LEGALIZACION Y PROTECCION` tiene los textos de abril; no usarla para publicar. Las vigentes están en `origin/main`.
+- **Copia local sin versionar:** `C:/Masframe/masesora_backend/DOCS/1. LEGALIZACION Y PROTECCION` tiene los textos de abril; no usarla para publicar. Las vigentes están en `origin/main`.
 - **Anuncios (100 €/mes):** pueden reanudarse cuando `tusolucion` y `ESE` estén desplegados y comprobados. Ya están comprobados en producción: `.com`, `.es`, La Clínica y el backend (sin elegir cookies, 0 peticiones a Google y Meta).
 
 ---
