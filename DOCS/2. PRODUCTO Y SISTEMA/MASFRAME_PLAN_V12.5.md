@@ -2975,6 +2975,40 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 
 **Decisiones abiertas.** (a) Papel de cada dominio: propuesta, `.com` es la marca y `.es` el escáner, cada uno con su canonical. (b) Cuánto tiempo dedicar a SEO: un dominio nuevo y local tarda de 3 a 6 meses en dar tráfico; Instagram y los anuncios siguen siendo la vía a corto plazo.
 
+## LXV. SESIÓN 10 NOV 2026 — Los textos legales dicen lo que el código hace, y el aviso de cookies llega a .com
+
+**Qué se hizo.** El documento manda y el código lo cumple: se verificó cada proveedor y cada dato contra el código, se reescribieron los textos legales con esa tabla y se llevó el resultado a las tres webs. Todo con el cartel de «Borrador para revisión legal»; Claude no sustituye la revisión.
+
+**Hallazgos que obligaron a corregir los textos (no a ampliarlos).**
+1. **Tu Solución no guarda leads en base de datos.** Su backend (`tsm-awye.onrender.com`, Node) no tiene ruta `/api/save-lead` y la landing da por buena la llamada aunque falle. El lead solo llega a info@ por Resend. La ruta `/api/leads/` del backend Python existe y nadie la llama.
+2. **Anthropic recibe el nombre** (`client.name`) y los textos libres del diagnóstico, **antes** del formulario con consentimiento. Base: servicio pedido (art. 6.1.b), con aviso al empezar. El email no viaja.
+3. **Las cookies `session`, `csrf_token` y `ui_pref` de Masframe no existían.** La sesión va en `localStorage` (`masframe_token`, `masframe_user`).
+4. **Los legales de La Clínica no estaban publicados** (`/legal/terminos.html` daba 404, y es el enlace del paso de pago). Y solo había una casilla, sin política de privacidad ni consentimiento de síntomas.
+5. **Los términos hablaban de suscripción con renovación y de «no reembolsos»**; el código cobra un pago único y `pricing_policy.py` tiene la garantía de resultado del PRE.
+6. **`.com` y Tu Solución cargaban GA4 y el Píxel sin consentimiento** (y la copia publicada de aviso y términos decía «03530 La Nucía»).
+7. **Google Fonts** se cargaba antes de elegir en las cuatro webs. El texto de cookies decía «sin pedirte permiso… no requieren consentimiento» justo encima de esa línea: error de tono y de fondo, corregido en la fuente.
+8. Cloudflare está delante de los tres dominios (cabecera `Server: cloudflare`; no fija cookies).
+
+**Cambios (commits locales, ramas separadas).**
+- *Masframe, `legal/bloque-a-docs`:* `00_registro_proveedores_y_datos.md` (tabla única), privacidad, cookies, términos, aviso y consentimientos de Masesora y de Masframe; `generar_html.py` (los HTML salen de los `.md`). CP 03520 en todos.
+- *Masframe, `feat/ese-consentimiento`:* `EseSubmitRequest` y `ese_recibido` guardan `consent`, `consent_comercial`, `consent_version` y fecha.
+- *Masesora_frontend, `feat/com-cookies-legal`:* aviso con Aceptar/Rechazar y «Configurar cookies» (landing y Tu Solución), GA4 y Píxel solo tras aceptar; `legal/*.html` regenerados sin cartel; legales de La Clínica en `src/public/legal/`; casilla del pago con términos, privacidad y aviso de desistimiento; `og-image.jpg`, descripción de 158 caracteres, `robots.txt`, `sitemap.xml`; tipografías en local (landing, Tu Solución y La Clínica, 0 peticiones a Google).
+- *ESE, `feat/ese-legal-seo` (sobre `feat/politica-cookies`):* `ese_sid` y los avisos de abandono solo con cookies aceptadas; `empresa`, email y facturación fuera de GA4 y Meta (el nombre sigue llegando al servidor por `fireDropoff` con consentimiento); pestañas del modal desde DOCS; consentimiento obligatorio + contacto comercial opcional separados; canonical, og, JSON-LD a `https://www.masesora.es/`; salto desde `ese-cc2u.onrender.com`; `robots.txt`, `sitemap.xml`; Montserrat en local.
+
+**Comprobado en navegador:** sin elección, 0 scripts de Google/Meta en las tres páginas; Rechazar no carga nada; Aceptar carga `fbevents` y `gtag`; «Configurar cookies» reabre; en ESE sin consentimiento no hay `ese_sid` ni envíos, y al aceptar sale `page_loaded`; los eventos de GA4 llegan sin `empresa`. Las pestañas del modal y los HTML legales se vieron renderizados. **No abierto en pantalla:** la casilla del paso de pago de La Clínica (exige sesión); pasó `tsc` y compila.
+
+**Abierto.**
+- **Revisión legal** de todo, con cuatro decisiones marcadas en los cárteles: síntomas como dato de empresa (no art. 9), garantía del PRE vigente, base 6.1.b de Tu Solución antes del consentimiento, transferencias a Anthropic.
+- **Datos que no están en el código:** región del clúster de Atlas y del servidor de Tu Solución; contenido de la hoja de Google Sheets que lee `ese_sync_service.py`; si existe otro despliegue de Tu Solución que guarde leads.
+- **Tu Solución:** su formulario sigue con una casilla («recibir el PRD por email/WhatsApp»), sin la separación del 05 y sin el aviso inicial del apartado 4 del 05; `/api/save-lead` no existe. `src/pages/TSM/` (sin versionar) y `eselanding/` (divergida) no se han tocado.
+- **`og-image.jpg` de .com es la tarjeta del Escáner** (por el encargo). Conviene una propia de Masesora.
+- **Cookies reales** (`_ga`, `_fbp`, Stripe) pendientes de medir en producción con consentimiento; la duración que figura es la de Google y Meta por defecto.
+- Los correos HTML de `email_service.py` aún enlazan Google Fonts; el aviso de info@ no incluye `consent_comercial`.
+- **Bloque D:** Search Console de `.com` y `.es` (DNS en DonDominio) y registros de Resend, que va como otra sesión.
+- **Anuncios (100 €/mes):** siguen en pausa hasta que lo anterior esté desplegado y comprobado en producción. `.com` publicado va por detrás del repositorio.
+
+---
+
 ---
 
 ---
@@ -3033,3 +3067,4 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 *§LXII añadida en sesión 5 sep 2026 — sesión de infraestructura: el subdominio de La Clínica pasa de redirección de Nominalia a dominio propio en Render (Verified + Certificate Issued, 200 OK). El CORS estaba a fuego en `main.py` y se probó antes de tocarlo: 400 con el origen nuevo contra 200 con el viejo, o sea que el login habría fallado en silencio. `FRONTEND_URL` en Render es una variable huérfana. El enlace más usado del sistema no vivía en ninguna landing sino en `CLINICA_URL` de `email_service.py`. Mapeadas las tres landings a su servicio en producción. Pendiente: redespliegue de landings y backend, handle de Instagram inconsistente, documentos legales nombrando la URL vieja y 2/2 dominios en Render*
 *§LXIII añadida en sesión 8 nov 2026 — el escáner en `masesora.es` no registraba nada (dominio fuera del CORS) y la landing lo tapaba con un código `MAS-` de 5 cifras inventado en el navegador: 401 seguro en La Clínica. CORS corregido (Masframe#44), landing sin código falso (ESE#1), copia interna de cada informe ESE a info@masesora.com incluso si el envío al cliente falla (Masframe#45), y el ESE y el login aceptan cualquier email con el regex del login escapado*
 *§LXIV añadida en sesión 9 nov 2026 — auditoría SEO de masesora.com y masesora.es (la .es se declara copia de ese-cc2u.onrender.com; la .com carga GA4 y Píxel sin consentimiento), política de cookies de ESE reescrita en rama sin PR, y el orden de lo pendiente antes de reanudar los anuncios. Nada de la Fase 0 aplicado.*
+*§LXV añadida en sesión 10 nov 2026 — los textos legales pasan a decir lo que el código hace (Tu Solución no guarda leads, Anthropic recibe el nombre, Masframe sin cookies propias, términos con garantía y pago único), registro único de proveedores, GA4 y Píxel solo tras aceptar en .com y en ESE, `ese_sid` ligado al banner, legales de La Clínica publicados, consentimiento obligatorio y comercial separados, tipografías en local y canonical de masesora.es. Sin push; revisión legal pendiente.*
