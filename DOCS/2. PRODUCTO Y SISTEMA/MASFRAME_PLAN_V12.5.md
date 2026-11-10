@@ -3007,7 +3007,7 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 - **Cookies reales** (`_ga`, `_fbp`, Stripe) pendientes de medir en producción con consentimiento; la duración que figura es la de Google y Meta por defecto.
 - Los correos HTML de `email_service.py` aún enlazan Google Fonts; el aviso de info@ no incluye `consent_comercial`.
 - **Bloque D:** Search Console de `.com` y `.es` (DNS en DonDominio) y registros de Resend, que va como otra sesión.
-- **Tres copias de la landing, otra vez.** `Masesora-frontend/src/pages/masesoralanding` (con el enlace a La Clínica corregido) y `Masesora/Masesora` (la que sirve Render, con `.mf-savemore` y aún `masfront.onrender.com`) han divergido, igual que `tusolucion` frente a `masesoralanding/ts` (551 líneas). Hay que decidir cuál es la fuente y borrar o sincronizar las otras.
+- **Landing de masesora.com: una sola fuente (resuelto).** `Masesora-frontend/src/pages/masesoralanding` es la fuente y `Masesora/Masesora` (lo que sirve Render) es su copia, hecha con `scripts/publicar-landing.sh`. Al sincronizar se recuperaron los arreglos posteriores a junio (erratas del ticker y de la bio, enlace de Acceso clientes, CTA) y **se perdió el hero de mensajes comerciales de junio**, sustituido por el de cuatro cifras. Sigue abierto Tu Solución: `tusolucion` frente a `masesoralanding/ts` difieren en 551 líneas y la versión publicada no lleva GA4 ni Píxel.
 - **Anuncios (100 €/mes):** siguen en pausa hasta que lo anterior esté desplegado y comprobado en producción. `.com` publicado va por detrás del repositorio.
 
 ---
