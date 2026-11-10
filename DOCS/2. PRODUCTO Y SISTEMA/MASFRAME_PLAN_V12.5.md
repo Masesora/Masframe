@@ -3030,6 +3030,8 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 
 **El producto estuvo parado del 27 ago al 10 nov.** El último cambio de producto en `symptoms.json` es `825ba53` (27 ago); lo posterior fue infraestructura (§LXII a §LXV).
 
+**Medición reproducida el 10 nov 2026** con `scripts/medir_secciones_catalogo.py` (solo lectura, sobre las 182 secciones): con una regla explícita salen **11 candidatas B y 7 candidatas D**, no 14 y 16. El barrido del §LXI.C no se guardó y no se puede reproducir exactamente; las listas actuales son las que cuentan. Son candidatas: alguna parece útil (p. ej. el *Canvas ICP* de CARDIO-S3 r1) y hay que mirarla antes de borrar.
+
 **Siguiente sesión de producto, en este orden (§LXI.C):**
 1. **B, 14 secciones que no alimentan el KPI ni bajan acción:** mecánico, se borran. Primero se listan para que Maite las vea.
 2. **D, 16 calculadas que solo son un paso intermedio:** mecánico, se absorben en la fórmula que las usa.
