@@ -3013,7 +3013,7 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 - **`og-image.jpg` de .com es la tarjeta del Escáner** (por el encargo). Conviene una propia de Masesora.
 - **Cookies reales** (`_ga`, `_fbp`, Stripe) pendientes de medir en producción tras aceptar; la duración que figura es la de Google y Meta por defecto.
 - Los correos HTML de `email_service.py` aún enlazan Google Fonts; el aviso de info@ del ESE no incluye `consent_comercial`.
-- **Bloque D:** Search Console de `.com` y `.es` (DNS en DonDominio) y registros de Resend, que va como otra sesión.
+- **Bloque D:** Search Console **verificado** para `masesora.com` y `masesora.es` el 10 nov 2026 (TXT en DonDominio; el token de `.es` estaba puesto en `.com` y se movió). Falta subir `sitemap.xml` en cada propiedad. Los registros de Resend van como otra sesión: un dominio solo admite **un** SPF, así que el de Resend se fusiona con `v=spf1 include:spf.dondominio.com` de `.es` y no se añade aparte (`.com` no tiene SPF todavía).
 - **Copia local sin versionar:** `C:/Masframe/masesora_backend/DOCS/1. LEGALIZACION Y PROTECCION` tiene los textos de abril; no usarla para publicar. Las vigentes están en `origin/main`.
 - **Anuncios (100 €/mes):** pueden reanudarse cuando `tusolucion` y `ESE` estén desplegados y comprobados. Ya están comprobados en producción: `.com`, `.es`, La Clínica y el backend (sin elegir cookies, 0 peticiones a Google y Meta).
 
