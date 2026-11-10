@@ -21,6 +21,7 @@
 ## 3. Para qué usamos tus datos y con qué base legal
 
 - **Elaborar la propuesta que ves en pantalla al terminar el diagnóstico de Tu Solución** — es necesario para darte el servicio que has pedido (art. 6.1.b RGPD). Para ello tu nombre y tus respuestas se envían al proveedor que redacta la propuesta (ver el apartado 4).
+- **Gestionar la reunión que reservas** — es necesario para darte el servicio que has pedido (art. 6.1.b RGPD).
 - **Enviarte la ficha técnica de Tu Solución o el informe del Escáner, y darte acceso a La Clínica de Empresas con tu código** — tu consentimiento (art. 6.1.a RGPD), que das al marcar la casilla obligatoria del formulario.
 - **Contactarte después para explorar la implementación** — solo si marcas la casilla opcional, aparte de la anterior (art. 6.1.a RGPD). Puedes retirarla cuando quieras.
 - **Saber en qué paso del Escáner se abandona la página, si aceptas las cookies de estadística** — tu consentimiento (art. 6.1.a RGPD).
@@ -36,6 +37,7 @@ Para prestarte el servicio usamos proveedores que tratan datos por nuestra cuent
 - **MongoDB, Inc. (Atlas)** — base de datos donde se guarda lo que envías en el Escáner.
 - **Resend, Inc.** — envío de correos: el informe o la ficha que te llega a ti y una copia interna a info@masesora.com.
 - **Anthropic, PBC** — solo en **Tu Solución**: recibe tu nombre y las respuestas del diagnóstico, incluidos los textos libres que escribas, para redactar tu propuesta en pantalla. No recibe tu email.
+- **Cal.com, Inc.** — solo si reservas una reunión: recibe lo que escribas en su calendario y, si la reservas desde Tu Solución, tu nombre y un resumen de tu diagnóstico, que viajan dentro de la cita.
 - **Cloudflare, Inc. y Netlify, Inc.** — entrega de las páginas web y seguridad.
 - **Google y Meta** — solo si aceptas las cookies de medición.
 

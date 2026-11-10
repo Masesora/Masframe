@@ -26,6 +26,7 @@
 | **Meta Platforms Ireland Ltd.** — Píxel (`4359415267704371`) | masesora.com y masesora.es | Datos de navegación y eventos | Medir anuncios | UE / EE. UU. | Consentimiento (banner), solo tras aceptar | Ídem |
 | ~~Google Fonts~~ | masesora.com, masesora.es y La Clínica | — | — | — | — | **Alojadas en local desde el 10/11/2026**: el navegador ya no contacta con Google. Excepción: los correos HTML de `email_service.py` aún enlazan Google Fonts |
 | **Google LLC** — Sheets (solo lectura) | Masframe (herramienta interna) | Lee una hoja con respuestas históricas del Escáner | Recuperar datos de leads antiguos | EE. UU. | Interés legítimo | `onboarding/ese_sync_service.py`. Contenido de la hoja: ver §6 |
+| **Cal.com, Inc.** | masesora.com y Tu Solución | Lo que escribas al reservar; desde Tu Solución también el nombre y un resumen del diagnóstico (en la dirección de la cita, `notes`) | Reservar una reunión | EE. UU. | Necesario para el servicio pedido (art. 6.1.b) | `ts/index.html` (`connectAltButtons`, `buildBookingNotes`) |
 | **Cloudflare, Inc.** | masesora.com, masesora.es y La Clínica | Dirección IP y datos técnicos de cada visita (pasan por su red) | Entrega de la web y seguridad | Red global, con servidores en la UE | Interés legítimo (seguridad) | Cabeceras HTTP de los tres dominios (`Server: cloudflare`); no fijan cookies |
 | **Netlify, Inc.** | Escáner (masesora.es) | Solo sirve la página; no recibe datos del formulario | Alojamiento de la web | EE. UU. | Encargado | Plan §LXIII (ESE publica en Netlify, además de Render) |
 | **Consultores Clínicos (CC)** | Masframe | Identificación, contacto, datos económicos y operativos del cliente, KPIs e informes | Prestar el servicio al cliente | España | Encargados, con compromiso firmado | `DOCS/3. PERFILES/ONBOARDING/03_compromiso_proteccion_datos_CC.md` (cláusulas 1-6) |
@@ -34,7 +35,7 @@
 
 | Servicio | Datos | Destino | Conservación |
 |---|---|---|---|
-| Tu Solución | Nombre, email, negocio, respuestas del diagnóstico | **Anthropic** (respuestas), **Resend** → info@masesora.com. **No se guarda en base de datos**: no existe la ruta `/api/save-lead` en el servidor y la web ignora el fallo | Lo que quede en el buzón info@. Máx. 3 años desde el último contacto (política vigente) |
+| Tu Solución | Nombre, email, teléfono (opcional), respuestas del diagnóstico, propuesta generada | **Anthropic** (nombre y respuestas), **Resend** → la persona (con su consentimiento) y copia a info@masesora.com por `/api/save-lead`. **No se guarda en base de datos** | Lo que quede en el buzón info@. Máx. 3 años desde el último contacto (política vigente) |
 | Escáner | Email, empresa, facturación estimada, respuestas, síntomas detectados, puntuaciones | MongoDB (`clients`); informe al cliente y **copia a info@masesora.com** vía Resend | Sin borrado automático en el código. Política: máx. 3 años desde el último contacto |
 | Escáner, abandono | Identificador de visita (`ese_sid`), fase alcanzada, empresa, facturación, nº de síntomas, estado, navegador (user agent) | MongoDB (`ese_dropoff`) | Sin borrado automático en el código |
 | Masframe | Cuenta (nombre, email, teléfono, empresa), expediente clínico, síntomas autodeclarados, pagos | MongoDB; Stripe (pagos); Resend (avisos) | Relación contractual + 6 años (fiscal) |
