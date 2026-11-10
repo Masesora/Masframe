@@ -3068,9 +3068,9 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 
 **Condición que cambia la decisión:** ≥50 informes y ningún pago → se cambia el precio o la promesa antes de tocar secciones; <10 informes en 4 semanas → se cambia de canal (asesorías) antes de pensar en el producto.
 
-**Datos pendientes:** horas a la semana que Maite puede dedicar a hablar con dueños (con 3 h el objetivo se reduce a la mitad que con 6 h). Los anuncios siguen en pausa (§LXV); este plan no depende de ellos.
+**Datos de Maite (10 nov 2026):** puede dedicar **3 horas al día** (unas 21 a la semana), así que las 10 conversaciones caben en la primera semana. Publica **dos veces por semana, miércoles y domingos**, en Instagram y TikTok, con el mismo nombre en las dos: **@laclinicadempresas**. Formato **híbrido**: ella no es de cámara pero es quien mejor lo cuenta; se combina su voz o su presencia breve con piezas diseñadas. Los anuncios siguen en pausa (§LXV); este plan no depende de ellos.
 
-**Siguiente sesión (11 nov 2026): plan de lanzamiento en Instagram y TikTok para acompañar el boca a boca.** Pendiente de definir: qué se publica (formatos y frecuencia), el enlace al Escáner en cada pieza, y cómo se cuenta lo que llega (el número de informes de la etapa 1). Parte de lo ya decidido sobre Instagram (@laclinicadempresas, plan «Analítica del Domingo»; anuncios en pausa, solo orgánico) y del copy sin culpar al dueño.
+**Siguiente sesión (11 nov 2026): plan de lanzamiento en Instagram y TikTok** para acompañar el boca a boca. Cadencia: miércoles y domingos (domingo 10:00; hora del miércoles por fijar), mismo contenido en las dos redes. Carpeta de contenido: `DOCS/6. CONTENIDO REDES/`, con subcarpeta por semana, lista maestra de temas y nota de cómo medir. Los diseños ya hechos se movieron a `DOCS/6. CONTENIDO REDES/INSTAGRAM_DISENOS/` (39 ficheros: días de caja, fuga invisible, anemia de margen y Analítica del Domingo; 7 llevan `${names[n]}` en el nombre por un fallo de script y no se tocan). Parte de lo decidido sobre Instagram (@laclinicadempresas, plan «Analítica del Domingo»; solo orgánico) y del copy sin culpar al dueño.
 
 ### Anexo LXVII.A — Mensaje para dueños (registro: lo entienden Manoli, Paqui y Felipe, sin culpar a nadie)
 
