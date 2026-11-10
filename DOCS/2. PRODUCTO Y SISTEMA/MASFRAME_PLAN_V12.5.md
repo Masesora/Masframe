@@ -3042,6 +3042,42 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 
 ---
 
+## LXVII. SESIÓN 10 NOV 2026 (cont.) — Nadie ha visto el Escáner: el cuello es la demanda, no el producto
+
+**Dato que lo cambia todo (Maite, 10 nov 2026):** hay **0 informes del Escáner**. No se ha publicitado ni compartido, ni con desconocidos ni con su entorno. Toda validación hasta hoy (las certificaciones «🟢🟢 end-to-end», el «funciona y está todo ok» de UCI-S1) es **interna**: la han dado el constructor y la dueña, y no cuenta como evidencia de mercado. Prueba de que las revisiones internas no bastan: el §XLVII («tu validator sigue siendo una mierda»).
+
+**Decisión: se congela el catálogo y se enseña el producto.** Quedan en pausa las 62 secciones con texto libre, las 90 con demasiados campos, los 110 desplegables premarcados y el cierre manual del banco de 176 casos (§LXI.C, §LXVI). Solo se arregla lo que un cliente real demuestre que le atasca. Lo mecánico (11 candidatas B y 7 D, `scripts/medir_secciones_catalogo.py`) se acota a **media jornada**, mirándolas Maite una a una. Lo que bloqueaba mostrarlo (riesgo legal, correo que no se enviaba, aviso de cookies) quedó resuelto en §LXV.
+
+**Umbrales, fijados antes de empezar** (supuestos sin datos propios; se ajustan con los primeros 30 informes):
+
+| Etapa | Plazo | Éxito | Fracaso (qué significa) |
+|---|---|---|---|
+| **1. Que lo vean** | 4 semanas, hasta el 8 dic 2026 | **30 informes completados por desconocidos** y **10 conversaciones** con dueños | <10 informes: el canal no funciona; se cambia de canal, no de producto |
+| **2. Que alguien pague** | hasta el 15 ene 2027 (diciembre es flojo) | **2 clientes de pago que no sean amigos ni familia** | 0 pagos con 30 informes: el problema es el precio o la promesa, no las secciones |
+
+**Cómo se cuenta.** Un informe = un expediente del Escáner en la colección `clients` (fase `ese_completado`); no depende del consentimiento de cookies, a diferencia de GA4 y de los avisos de abandono. **No cuentan** amigos, familia ni la propia Maite. Un cliente de pago = pago confirmado en Stripe.
+
+**Esta semana (Maite), tres cosas:**
+1. **10 conversaciones con dueños de la zona** (Polop, La Nucía, Benidorm, Altea: peluquerías, talleres, bares, asesorías), en persona o por WhatsApp, con desconocidos. Mensaje en `Anexo LXVII.A`.
+2. **Sentarse con 3 de ellos mientras hacen el Escáner, sin ayudarles.** Lo que se atasque es lo que se arregla; sustituye al pulido a ciegas.
+3. **Ficha de Google Business Profile** (gratuita; Fase 1 del SEO de §LXIV).
+
+**En paralelo (Claude, sin gastar tiempo de Maite):** un **arnés automático** del banco de 176 casos: para cada caso calcula el KPI con A y B, aplica los valores post y comprueba que el KPI mejora; rojo/verde en segundos y en cada cambio. Sustituye al cierre aritmético manual de §LX/§LXI.
+
+**Alternativa en reserva: dos asesorías piloto.** La propia web dice que MASFRAME es para asesorías; una asesoría con 5 clientes pymes vale más que 5 búsquedas en frío y no depende de Instagram ni de anuncios. Se activa si a las 2 semanas las conversaciones de calle no mueven la aguja.
+
+**Condición que cambia la decisión:** ≥50 informes y ningún pago → se cambia el precio o la promesa antes de tocar secciones; <10 informes en 4 semanas → se cambia de canal (asesorías) antes de pensar en el producto.
+
+**Datos pendientes:** horas a la semana que Maite puede dedicar a hablar con dueños (con 3 h el objetivo se reduce a la mitad que con 6 h). Los anuncios siguen en pausa (§LXV); este plan no depende de ellos.
+
+### Anexo LXVII.A — Mensaje para dueños (registro: lo entienden Manoli, Paqui y Felipe, sin culpar a nadie)
+
+> Hola, [nombre]. Soy Maite Cabezuelos, de Polop. Estoy haciendo un diagnóstico gratuito a negocios de la zona: en 10 minutos te dice dónde se te va el dinero o el tiempo y qué sistema te falta. No hace falta tarjeta ni compromiso. Casi nadie ha tenido nunca ese sistema, así que no es cuestión de hacerlo mejor o peor. Si te viene bien, lo hacemos juntos en cinco minutos o te paso el enlace: masesora.es. Me ayudaría mucho tu opinión sincera.
+
+**Para la sesión con 3 dueños (solo mirar y anotar):** dónde dudan, qué pregunta no entienden, en qué pantalla se paran, qué dicen en voz alta. Al final, tres preguntas: *¿Qué te ha sorprendido?, ¿qué no has entendido?, ¿qué harías ahora con este resultado?*
+
+---
+
 ---
 
 ---
@@ -3100,3 +3136,4 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 *§LXIV añadida en sesión 9 nov 2026 — auditoría SEO de masesora.com y masesora.es (la .es se declara copia de ese-cc2u.onrender.com; la .com carga GA4 y Píxel sin consentimiento), política de cookies de ESE reescrita en rama sin PR, y el orden de lo pendiente antes de reanudar los anuncios. Nada de la Fase 0 aplicado.*
 *§LXV añadida en sesión 10 nov 2026 — los textos legales pasan a decir lo que el código hace y se revisan legalmente: registro único de proveedores, Tu Solución sin base de datos pero ahora con `/api/save-lead` real (antes decía «va en camino» sin enviar), Cal.com y Anthropic como proveedores, Masframe sin cookies propias, términos con garantía y pago único. GA4 y Píxel solo tras aceptar en .com y en ESE, `ese_sid` ligado al banner, legales de La Clínica publicados, consentimiento obligatorio y comercial separados, tipografías en local y canonical de masesora.es. Se descubre que Render sirve `Masesora/Masesora` y `tusolucion`, no `Masesora-frontend`; landing con una sola fuente. Pendientes: deploy manual de tusolucion y ESE, Atlas y Sheets, Search Console.*
 *§LXVI añadida en sesión 10 nov 2026 (cont.) — UCI-S1 cerrada por Maite (0 bloqueantes, 8 avisos de forma sin acción; el cabo de C5 ya estaba resuelto), el producto estuvo parado del 27 ago al 10 nov, y el orden de las siguientes sesiones de producto según §LXI.C: 14 secciones muertas, 16 intermedias, 62 con texto libre, 90 con demasiados campos, 110 desplegables premarcados y el banco de 176 casos.*
+*§LXVII añadida en sesión 10 nov 2026 (cont.) — hay 0 informes del Escáner: nadie lo ha visto, así que el cuello es la demanda y no el producto. Se congela el catálogo; umbrales por etapas (30 informes de desconocidos y 10 conversaciones hasta el 8 dic; 2 pagos hasta el 15 ene), tres tareas de Maite esta semana, arnés automático del banco de 176 por Claude y asesorías piloto como plan B.*
