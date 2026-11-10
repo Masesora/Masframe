@@ -1,10 +1,5 @@
 # POLÍTICA DE COOKIES — MASFRAME®
 
-> **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026 para su publicación en https://laclinicadempresas.masesora.com/legal/cookies.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
-> **Qué cambia respecto a la versión anterior:** las cookies `session`, `csrf_token` y `ui_pref` no existen: la plataforma no pone cookies propias y guarda la sesión en el almacenamiento local del navegador. Se añaden Cloudflare y las cookies de Stripe en la página de pago.
-> **Pendiente de comprobar en el navegador antes de publicar:** los nombres y la duración exactos de las cookies que fija Stripe.js en la página de pago.
-
 ---
 
 ## 1. ¿Qué son las cookies?

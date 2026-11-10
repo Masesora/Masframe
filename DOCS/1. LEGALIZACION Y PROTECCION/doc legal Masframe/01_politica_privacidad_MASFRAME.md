@@ -1,10 +1,5 @@
 # POLÍTICA DE PRIVACIDAD — MASFRAME®
 
-> **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026 para su publicación en https://laclinicadempresas.masesora.com/legal/privacidad.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
-> **Qué cambia respecto a la versión anterior:** se añaden MongoDB Atlas, Cloudflare y los Consultores Clínicos como quienes pueden acceder a los datos. Se quitan promesas que la plataforma no cumple hoy: no existe un formulario de consentimiento para los síntomas ni un registro de IP, y no hay copias o auditorías documentadas.
-> **Decisión para quien revise:** la versión anterior trataba los síntomas autodeclarados como dato sensible (art. 9.2.a RGPD) con consentimiento explícito. La plataforma no recoge ese consentimiento, y los síntomas son información de la empresa, no de salud. Esta versión los trata como datos de empresa por ejecución de contrato. Debe confirmarlo o corregirlo quien revise.
-
 ---
 
 ## 1. Responsable del tratamiento

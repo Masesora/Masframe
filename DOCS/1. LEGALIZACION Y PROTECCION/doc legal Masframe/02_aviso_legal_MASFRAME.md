@@ -1,9 +1,5 @@
 # AVISO LEGAL — MASFRAME®
 
-> **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026 para su publicación en https://laclinicadempresas.masesora.com/legal/aviso-legal.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
-> **Qué cambia:** se corrige el código postal (03520) y las direcciones de los textos legales.
-
 ---
 
 ## 1. Información general (LSSI-CE, art. 10)

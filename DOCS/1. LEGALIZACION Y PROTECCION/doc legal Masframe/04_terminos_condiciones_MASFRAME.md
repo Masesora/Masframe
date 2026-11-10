@@ -1,10 +1,5 @@
 # TÉRMINOS Y CONDICIONES DE USO — MASFRAME®
 
-> **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026 para su publicación en https://laclinicadempresas.masesora.com/legal/terminos.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
-> **Qué cambia respecto a la versión anterior:** se corrigen tres cosas que no coincidían con la plataforma. (1) El plan se paga una vez; no es una suscripción con renovación automática. (2) Se incluye la **garantía de resultado del PRE**, que la versión anterior contradecía al decir que no hay reembolsos. (3) Se corrige el código postal (03520).
-> **Para quien revise:** el texto de la garantía sale de `config/pricing_policy.py` (`guarantee_pre`). Confirme que sigue siendo la oferta vigente. La casilla de aceptación que hay hoy en el paso de datos de facturación solo menciona los términos; la política de privacidad se acepta mediante el enlace, sin casilla propia.
-
 ---
 
 ## 1. Identificación del prestador del servicio

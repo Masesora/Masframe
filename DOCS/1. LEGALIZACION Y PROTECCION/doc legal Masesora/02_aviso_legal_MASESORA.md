@@ -1,9 +1,5 @@
 # AVISO LEGAL — MASESORA
 
-> **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/legal/aviso-legal.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
-> **Qué cambia:** el aviso cubre también el Escáner de Salud Empresarial (masesora.es).
-
 ---
 
 ## 1. Información general (LSSI-CE, art. 10)

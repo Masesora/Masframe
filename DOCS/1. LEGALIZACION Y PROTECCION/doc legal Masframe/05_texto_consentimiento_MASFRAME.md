@@ -1,12 +1,5 @@
 # TEXTOS DE CONSENTIMIENTO — MASFRAME®
 
-> **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026. Sustituye a la versión del 25/04/2026.
-> Micro-textos para los puntos de la plataforma MASFRAME® donde se acepta algo.
-> Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
-> **Qué cambia:** hoy la plataforma tiene **una sola casilla**, en el paso de datos de facturación (`ScannerReceptionPage.tsx`), que solo dice «Acepto los términos y condiciones». Este documento pasa a describir lo que existe y lo que se instala en la plataforma a partir de ahora, y retira el consentimiento explícito por síntomas, que la plataforma nunca recogió.
-> **Decisión para quien revise:** si los síntomas autodeclarados deben tratarse como dato sensible del art. 9 RGPD (ver la Política de Privacidad). Si se decide que sí, hay que crear la casilla y su registro; hasta entonces el apartado 2 queda retirado.
-
 ---
 
 ## 1. Aceptación de términos y de la política de privacidad en el pago — OBLIGATORIO

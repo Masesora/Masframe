@@ -1,11 +1,5 @@
 # TEXTOS DE CONSENTIMIENTO — MASESORA / TU SOLUCIÓN / ESCÁNER
 
-> **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026. Sustituye a la versión del 25/04/2026.
-> Micro-textos para el formulario de **Tu Solución** (bloque `cta-form` de `tu-solucion.html`), para el formulario del **Escáner** (masesora.es) y para el aviso de cookies de las dos webs.
-> Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
-> **Qué cambia:** se quita la frase «no compartimos tus datos con terceros», que ya no es cierta. El Escáner pasa a tener las mismas dos casillas que Tu Solución: una obligatoria y otra opcional y separada. El aviso de cookies deja de ser «para el futuro» y es el que usan las dos webs.
-
 ---
 
 ## 1. Tu Solución: consentimiento del formulario de ficha técnica — OBLIGATORIO

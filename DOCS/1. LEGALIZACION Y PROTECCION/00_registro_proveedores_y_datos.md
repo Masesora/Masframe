@@ -1,8 +1,6 @@
 # REGISTRO ÚNICO DE PROVEEDORES Y DATOS — MASESORA / MASFRAME
 
-> **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento interno, no se publica. Es la tabla de la que salen las políticas de privacidad y de cookies de **Masesora** (masesora.com, Tu Solución), del **Escáner** (masesora.es) y de **Masframe** (La Clínica de Empresas). Si cambia un proveedor o un dato, se cambia aquí primero y después en los textos.
-> Verificado contra el código el 10/11/2026. La columna «Verificado en» dice dónde está la prueba. Claude no sustituye la revisión legal.
+*Documento interno, no se publica. Es la tabla de la que salen las políticas de privacidad y de cookies de Masesora (masesora.com, Tu Solución), del Escáner (masesora.es) y de Masframe (La Clínica de Empresas). Si cambia un proveedor o un dato, se cambia aquí primero y después en los textos. Verificado contra el código el 10/11/2026.*
 
 ---
 

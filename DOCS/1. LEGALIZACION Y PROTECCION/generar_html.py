@@ -45,6 +45,8 @@ def inline(t):
 
 
 def cartel(lineas):
+    if not any(l.strip(">").strip() for l in lineas):
+        return ""
     partes = []
     for l in lineas:
         l = l.lstrip(">").strip()
@@ -119,7 +121,10 @@ def main():
             crlf = "\r\n" in viejo
             viejo = viejo.replace("\r\n", "\n")
             cart, cuerpo_html = cuerpo(md)
-            ini = viejo.index('  <div class="draft-banner">')
+            if '  <div class="draft-banner">' in viejo:
+                ini = viejo.index('  <div class="draft-banner">')
+            else:  # ya sin cartel: el cuerpo empieza tras el h1
+                ini = viejo.index('</h1>') + len('</h1>') + 2
             fin = viejo.index("</main>")
             nuevo = viejo[:ini] + ("" if SIN_CARTEL else cartel(cart)) + cuerpo_html + viejo[fin:]
             desc = DESCRIPCIONES.get((carpeta, destino))
