@@ -3070,6 +3070,8 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 
 **Datos pendientes:** horas a la semana que Maite puede dedicar a hablar con dueños (con 3 h el objetivo se reduce a la mitad que con 6 h). Los anuncios siguen en pausa (§LXV); este plan no depende de ellos.
 
+**Siguiente sesión (11 nov 2026): plan de lanzamiento en Instagram y TikTok para acompañar el boca a boca.** Pendiente de definir: qué se publica (formatos y frecuencia), el enlace al Escáner en cada pieza, y cómo se cuenta lo que llega (el número de informes de la etapa 1). Parte de lo ya decidido sobre Instagram (@laclinicadempresas, plan «Analítica del Domingo»; anuncios en pausa, solo orgánico) y del copy sin culpar al dueño.
+
 ### Anexo LXVII.A — Mensaje para dueños (registro: lo entienden Manoli, Paqui y Felipe, sin culpar a nadie)
 
 > Hola, [nombre]. Soy Maite Cabezuelos, de Polop. Estoy haciendo un diagnóstico gratuito a negocios de la zona: en 10 minutos te dice dónde se te va el dinero o el tiempo y qué sistema te falta. No hace falta tarjeta ni compromiso. Casi nadie ha tenido nunca ese sistema, así que no es cuestión de hacerlo mejor o peor. Si te viene bien, lo hacemos juntos en cinco minutos o te paso el enlace: masesora.es. Me ayudaría mucho tu opinión sincera.
