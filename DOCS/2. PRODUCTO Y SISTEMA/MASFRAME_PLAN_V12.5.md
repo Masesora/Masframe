@@ -2986,7 +2986,7 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 4. **Los legales de La Clínica no estaban publicados** (`/legal/terminos.html` daba 404, y es el enlace del paso de pago). Y solo había una casilla, sin política de privacidad ni consentimiento de síntomas.
 5. **Los términos hablaban de suscripción con renovación y de «no reembolsos»**; el código cobra un pago único y `pricing_policy.py` tiene la garantía de resultado del PRE.
 6. **`.com` y Tu Solución cargaban GA4 y el Píxel sin consentimiento** (y la copia publicada de aviso y términos decía «03530 La Nucía»).
-7. **Google Fonts** se cargaba antes de elegir en las cuatro webs. El texto de cookies decía «sin pedirte permiso… no requieren consentimiento» justo encima de esa línea: error de tono y de fondo, corregido en la fuente.
+7. **Google Fonts** se cargaba antes de elegir en las cuatro webs. El texto de cookies de ESE llevaba un encabezado coloquial que afirmaba que no hacía falta consentimiento justo encima de esa línea: error de tono y de fondo, corregido en la fuente y propagado a las cuatro webs.
 8. Cloudflare está delante de los tres dominios (cabecera `Server: cloudflare`; no fija cookies).
 
 **Cambios (commits locales, ramas separadas).**
