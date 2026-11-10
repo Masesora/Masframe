@@ -1,7 +1,7 @@
 # POLÍTICA DE PRIVACIDAD — MASESORA / TU SOLUCIÓN / ESCÁNER
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/privacidad. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/legal/privacidad.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
 > **Qué cambia respecto a la versión anterior:** ya no se dice que no haya proveedores externos. Se nombran los que reciben datos, se cubre también el Escáner de Salud Empresarial (masesora.es) y se explica el uso de Google y Meta con tu permiso.
 
 ---
@@ -68,7 +68,7 @@ Si crees que tus datos no se tratan como deben, puedes reclamar ante la **Agenci
 
 ## 8. Cambios en esta política
 
-Podemos modificarla si cambian la ley o los proveedores que usamos. Si el cambio es importante, lo avisaremos en la web. La versión vigente es la publicada en https://www.masesora.com/privacidad.
+Podemos modificarla si cambian la ley o los proveedores que usamos. Si el cambio es importante, lo avisaremos en la web. La versión vigente es la publicada en https://www.masesora.com/legal/privacidad.html.
 
 ---
 

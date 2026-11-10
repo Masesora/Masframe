@@ -1,7 +1,7 @@
 # POLÍTICA DE COOKIES — MASESORA
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/cookies. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/legal/cookies.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
 > **Qué cambia respecto a la versión anterior:** las webs masesora.com y masesora.es usan Google Analytics 4 y el Píxel de Meta, pero solo después de que aceptes en el aviso de cookies. La versión anterior decía que no se usaba ningún tercero. Esta política cubre las dos webs y es la misma en las dos.
 
 ---

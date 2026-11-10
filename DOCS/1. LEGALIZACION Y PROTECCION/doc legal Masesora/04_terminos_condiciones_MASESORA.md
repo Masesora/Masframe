@@ -1,7 +1,7 @@
 # TÉRMINOS Y CONDICIONES DE USO — MASESORA / TU SOLUCIÓN
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/terminos. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/legal/terminos.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
 > **Asunciones:** (1) El diagnóstico Tu Solución y el Escáner de Salud Empresarial son **gratuitos**; (2) La ficha técnica y el informe se entregan sin coste; (3) La implementación posterior se regulará por contrato específico entre las partes.
 > **Qué cambia:** los términos cubren también el Escáner (masesora.es) y su código de acceso a La Clínica de Empresas.
 
@@ -74,7 +74,7 @@ La Titular podrá modificar los presentes términos en cualquier momento. La con
 
 ## 11. Protección de datos
 
-El tratamiento de datos personales se regula en la Política de Privacidad de Masesora, accesible en https://www.masesora.com/privacidad.
+El tratamiento de datos personales se regula en la Política de Privacidad de Masesora, accesible en https://www.masesora.com/legal/privacidad.html.
 
 ## 12. Legislación aplicable y jurisdicción
 

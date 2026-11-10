@@ -1,7 +1,7 @@
 # AVISO LEGAL — MASESORA
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/aviso-legal. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/legal/aviso-legal.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
 > **Qué cambia:** el aviso cubre también el Escáner de Salud Empresarial (masesora.es).
 
 ---
@@ -62,7 +62,7 @@ El sitio puede contener enlaces a sitios de terceros. La Titular no asume respon
 
 ## 8. Protección de datos personales
 
-El tratamiento de datos personales que se realiza a través del sitio se rige por la Política de Privacidad de Masesora, accesible en https://www.masesora.com/privacidad y que forma parte integrante del presente aviso legal.
+El tratamiento de datos personales que se realiza a través del sitio se rige por la Política de Privacidad de Masesora, accesible en https://www.masesora.com/legal/privacidad.html y que forma parte integrante del presente aviso legal.
 
 ## 9. Modificación del aviso legal
 

@@ -48,7 +48,7 @@
 |---|---|---|---|---|---|---|
 | `ese_cookie_consent` | masesora.es | Almacenamiento local, propia | Masesora | 12 meses | No (guarda la elección) | `ese/index.html` |
 | `ese_sid` | masesora.es | Almacenamiento de sesión, propia | Masesora | Hasta cerrar la pestaña | **Sí** (estadística de abandono). Hoy se crea siempre: se corrige en el Bloque C | `ese/index.html` |
-| `mas_cookie_ack` | masesora.com | Almacenamiento local, propia | Masesora | Hasta borrarlo | No. Se sustituye por la elección del banner | `masesoralanding/index.html` |
+| `mas_cookie_consent` | masesora.com (landing y Tu Solución) | Almacenamiento local, propia | Masesora | 12 meses | No (guarda la elección). Sustituye a `mas_cookie_ack` | `masesoralanding/index.html`, `ts/index.html` |
 | Progreso de Tu Solución | masesora.com | Almacenamiento local, propia | Masesora | Hasta borrarlo | No (técnica: retomar el diagnóstico) | `ts/index.html` (`STORAGE_KEY`) |
 | `masframe_token`, `masframe_user` | Masframe | Almacenamiento local, propia | Masesora | Sesión; el token caduca a las 8 h | No (técnica: mantener la sesión) | Frontend de Masframe |
 | `_ga`, `_ga_*` | masesora.com y .es | Cookie, de tercero | Google | Hasta 2 años (valor por defecto de GA4; se confirma en el navegador) | **Sí** | Pendiente de comprobar en el navegador |

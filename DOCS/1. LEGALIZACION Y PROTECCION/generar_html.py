@@ -17,7 +17,7 @@ AQUI = Path(__file__).parent
 SIN_CARTEL = "--sin-cartel" in sys.argv
 
 CARPETAS = {
-    "doc legal Masesora": {"sufijo": "MASESORA", "rutas": None},
+    "doc legal Masesora": {"sufijo": "MASESORA", "rutas": "/legal/{}.html"},
     "doc legal Masframe": {"sufijo": "MASFRAME", "rutas": "/legal/{}.html"},
 }
 DOCS = {
