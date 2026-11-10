@@ -3006,7 +3006,8 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 **Abierto.**
 - **Despliegues sin lanzar:** `tusolucion` (`5482467`) y `ESE` (`29fb47c`) no se redesplegaron solos; hay que lanzarlos a mano en Render. Después, comprobar el formulario de Tu Solución (que llegue el correo y la copia a info@) y el modal de masesora.es con Cal.com.
 - **Dos cambios posteriores a la revisión legal** que debe ver quien revisó: Cal.com en la privacidad (§3 y §4) y el teléfono en la casilla obligatoria de Tu Solución.
-- **Dos datos que solo tiene Maite:** región del clúster de Atlas y contenido de la hoja de Google Sheets que lee `ese_sync_service.py`. (Resueltos: TSM está en Fráncfort y no existe otro despliegue de Tu Solución que guarde leads.)
+- **Un dato que solo tiene Maite:** contenido de la hoja de Google Sheets que lee `ese_sync_service.py` (endpoint interno `/internal/sync-codes`, que parece no estar enchufado en `main.py`). (Resueltos: Atlas está en Fráncfort, UE; TSM está en Fráncfort; no existe otro despliegue de Tu Solución que guarde leads.)
+- **Atlas sin copias de seguridad** (panel: «Backup: inactive», 10 nov 2026). Si el clúster admite copias, activarlas: guarda los expedientes de los clientes.
 - **Tu Solución:** `masesoralanding/ts` (frontend) y el repo `tusolucion` difieren en 551 líneas y la publicada no lleva GA4 ni Píxel; hay que decidir la fuente. `src/pages/TSM/` sigue sin versionar. El backend TSM tiene CORS abierto: cualquiera puede llamar a `generate-prd` y gastar crédito de Anthropic.
 - **`og-image.jpg` de .com es la tarjeta del Escáner** (por el encargo). Conviene una propia de Masesora.
 - **Cookies reales** (`_ga`, `_fbp`, Stripe) pendientes de medir en producción tras aceptar; la duración que figura es la de Google y Meta por defecto.
