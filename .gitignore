@@ -23,3 +23,6 @@ Thumbs.db
 
 # Node (bundle.js ya existe, pero no node_modules)
 node_modules/
+
+# Notas locales con datos de acceso: nunca al repo
+arrancar todo.txt
