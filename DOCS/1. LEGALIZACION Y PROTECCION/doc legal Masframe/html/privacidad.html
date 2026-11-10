@@ -44,7 +44,7 @@ a{color:var(--accent)}
 
   <div class="draft-banner">
     <strong>Borrador para revisión legal</strong>
-    Documento generado el 25/04/2026 para su publicación en https://laclinicadempresas.masesora.com/privacidad. Requiere revisión por asesor legal antes de publicación definitiva.
+    Documento actualizado el 10/11/2026 para su publicación en https://laclinicadempresas.masesora.com/legal/privacidad.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.<br><br><em>Qué cambia respecto a la versión anterior:</em> se añaden MongoDB Atlas, Cloudflare y los Consultores Clínicos como quienes pueden acceder a los datos. Se quitan promesas que la plataforma no cumple hoy: no existe un formulario de consentimiento para los síntomas ni un registro de IP, y no hay copias o auditorías documentadas.<br><br><em>Decisión para quien revise:</em> la versión anterior trataba los síntomas autodeclarados como dato sensible (art. 9.2.a RGPD) con consentimiento explícito. La plataforma no recoge ese consentimiento, y los síntomas son información de la empresa, no de salud. Esta versión los trata como datos de empresa por ejecución de contrato. Debe confirmarlo o corregirlo quien revise.
   </div>
 
   <h2>1. Responsable del tratamiento</h2>
@@ -52,73 +52,66 @@ a{color:var(--accent)}
     <li><strong>Responsable:</strong> María Teresa Cabezuelos Morcillo (en adelante, «la Titular»).</li>
     <li><strong>NIF:</strong> 74860612M.</li>
     <li><strong>Domicilio:</strong> Carrer Gabriel Miró 27, 03520 Polop (Alicante, España).</li>
-    <li><strong>Email de contacto:</strong> info@masesora.com.</li>
-    <li><strong>Plataforma:</strong> MASFRAME®, accesible en https://laclinicadempresas.masesora.com/ y servicios asociados.</li>
+    <li><strong>Email de contacto:</strong> <a href="mailto:info@masesora.com">info@masesora.com</a>.</li>
+    <li><strong>Plataforma:</strong> MASFRAME® (La Clínica de Empresas), accesible en https://laclinicadempresas.masesora.com/.</li>
   </ul>
-
   <h2>2. Datos personales tratados</h2>
-  <p>En el marco de la plataforma MASFRAME® se tratan las siguientes categorías de datos:</p>
   <ul>
-    <li><strong>Datos identificativos:</strong> nombre y apellidos, email, teléfono, empresa y cargo cuando proceda.</li>
-    <li><strong>Datos de uso y acceso:</strong> credenciales, registros de acceso, dirección IP aproximada y logs de acciones básicas en la plataforma.</li>
-    <li><strong>Datos de facturación y cobro:</strong> los necesarios para la gestión de pagos y facturación mediante Stripe.</li>
-    <li><strong>Información sobre la organización del cliente y síntomas autodeclarados</strong> relativos a la situación de la empresa, introducidos libremente por la persona usuaria dentro de MASFRAME®.</li>
+    <li><strong>Datos de identificación y contacto:</strong> nombre y apellidos, email, teléfono, empresa y cargo.</li>
+    <li><strong>Datos de facturación:</strong> razón social, CIF/NIF, representante legal, dirección fiscal y email de facturación. Los datos de tarjeta los introduces directamente en Stripe: <strong>no pasan por nuestros servidores</strong>.</li>
+    <li><strong>Datos de acceso:</strong> tu código de acceso y tu contraseña (guardada cifrada). La sesión caduca a las 8 horas.</li>
+    <li><strong>Información de tu empresa y síntomas que señalas:</strong> facturación, márgenes, procesos, equipo, incidencias y los síntomas que identificas, que introduces tú dentro de la plataforma, junto con los resultados que generamos (KPIs, diagnósticos, informes). <strong>En ningún caso se emite diagnóstico ni tratamiento médico</strong>: el análisis es exclusivamente de empresa.</li>
+    <li><strong>Datos técnicos de conexión:</strong> tu dirección IP la reciben los proveedores que sirven la plataforma y envían los correos, como parte normal del servicio. Nosotros no la registramos.</li>
   </ul>
-  <p>Dado el contenido de los síntomas autodeclarados, estos datos pueden considerarse especialmente sensibles. Por ello se aplican medidas de seguridad reforzadas y se requiere consentimiento explícito específico. <strong>En ningún caso se emite diagnóstico ni tratamiento médico</strong>; el análisis tiene naturaleza exclusivamente clínico-empresarial.</p>
-
-  <h2>3. Finalidades y bases jurídicas</h2>
+  <h2>3. Para qué usamos tus datos y con qué base legal</h2>
   <ul>
-    <li><strong>Gestión de cuenta y acceso a MASFRAME®</strong> — ejecución de contrato (art. 6.1.b RGPD).</li>
-    <li><strong>Prestación de servicios de consultoría y planes PRE, PAE y PIE</strong> — ejecución de contrato (art. 6.1.b RGPD).</li>
-    <li><strong>Gestión de pagos, facturación y obligaciones contables y fiscales</strong> — ejecución de contrato y cumplimiento de obligaciones legales (art. 6.1.b y 6.1.c RGPD).</li>
-    <li><strong>Comunicaciones operativas relacionadas con el servicio</strong> (incidencias, cambios relevantes, avisos legales) — interés legítimo de la Titular (art. 6.1.f RGPD).</li>
-    <li><strong>Comunicaciones comerciales sobre MASFRAME®</strong>, cuando la persona usuaria lo haya aceptado — consentimiento (art. 6.1.a RGPD).</li>
-    <li><strong>Análisis estadístico y mejora del servicio</strong> mediante datos agregados o seudonimizados, sin elaboración de perfiles con efectos jurídicos significativos — interés legítimo (art. 6.1.f RGPD).</li>
-    <li><strong>Tratamiento de síntomas autodeclarados</strong> para el análisis clínico-empresarial descrito en MASFRAME® — consentimiento explícito (art. 9.2.a RGPD), otorgado mediante el formulario de consentimiento informado dentro de la plataforma.</li>
+    <li><strong>Crear y gestionar tu cuenta y darte acceso a MASFRAME®</strong> — ejecución del contrato (art. 6.1.b RGPD).</li>
+    <li><strong>Prestar el servicio de consultoría y los planes PRE, PAE y PIE, incluido el análisis de la información de tu empresa</strong> — ejecución del contrato (art. 6.1.b RGPD).</li>
+    <li><strong>Cobros, facturación y obligaciones contables y fiscales</strong> — ejecución del contrato y obligación legal (art. 6.1.b y 6.1.c RGPD).</li>
+    <li><strong>Avisos del servicio</strong> (incidencias, cambios importantes, avisos legales) — interés legítimo de la Titular (art. 6.1.f RGPD).</li>
+    <li><strong>Comunicaciones comerciales</strong> — solo si las has aceptado expresamente (art. 6.1.a RGPD). Sin ese consentimiento no las enviamos.</li>
+    <li><strong>Mejorar el servicio con datos agregados o sin nombre</strong> — interés legítimo (art. 6.1.f RGPD), sin perfiles con efectos jurídicos.</li>
   </ul>
-
-  <h2>4. Destinatarios y encargados del tratamiento</h2>
-  <p>Los datos podrán ser comunicados a los siguientes proveedores, que actúan como encargados del tratamiento bajo las instrucciones de la Titular:</p>
+  <h2>4. Quién más puede acceder a tus datos</h2>
+  <p>Estos proveedores tratan datos por nuestra cuenta (encargados del tratamiento) y no los usan para sus propios fines:</p>
   <ul>
-    <li><strong>Stripe, Inc.</strong> — procesamiento de pagos.</li>
-    <li><strong>Render Services, Inc.</strong> — hosting y despliegue del backend y frontend de MASFRAME®.</li>
-    <li><strong>Resend, Inc.</strong> — envío de correos electrónicos transaccionales y notificaciones.</li>
+    <li><strong>Stripe</strong> (Stripe Payments Europe, Ltd. y Stripe, Inc.) — cobros y facturas. Recibe tu email y el nombre de la empresa para facturar, y los datos de tarjeta que introduces en su formulario.</li>
+    <li><strong>Render Services, Inc.</strong> — alojamiento de los servidores. El servidor principal está en Fráncfort (UE).</li>
+    <li><strong>MongoDB, Inc. (Atlas)</strong> — base de datos donde se guardan las cuentas y los expedientes.</li>
+    <li><strong>Resend, Inc.</strong> — envío de correos del servicio y avisos.</li>
+    <li><strong>Cloudflare, Inc.</strong> — entrega de las páginas y seguridad.</li>
   </ul>
-  <p>Estos proveedores pueden realizar transferencias internacionales de datos fuera del Espacio Económico Europeo. En tales casos se aplican mecanismos de garantía adecuados, como cláusulas contractuales tipo aprobadas por la Comisión Europea u otros instrumentos de adecuación reconocidos por la normativa.</p>
-  <p>Fuera de lo anterior, los datos no se cederán a terceros salvo obligación legal.</p>
-
-  <h2>5. Plazos de conservación</h2>
+  <p>Además, <strong>los Consultores Clínicos (CC)</strong> que te acompañan acceden a los datos de tu empresa que necesitan para prestarte el servicio: identificación, contacto, datos económicos y operativos, KPIs e informes. Cada Consultor firma un compromiso de protección de datos y confidencialidad: solo puede usar los datos para el servicio, no puede cederlos ni subcontratar, debe avisarnos en menos de 24 horas de cualquier incidente y debe borrar o devolver los datos al terminar.</p>
+  <p>Algunos de estos proveedores están en Estados Unidos. Las transferencias se amparan en las garantías que prevé el RGPD, como las cláusulas contractuales tipo de la Comisión Europea u otros mecanismos reconocidos.</p>
+  <p>Fuera de lo anterior, no cedemos tus datos a terceros salvo obligación legal.</p>
+  <h2>5. Cuánto tiempo los guardamos</h2>
   <ul>
-    <li><strong>Datos de clientes y cuentas de usuario:</strong> mientras se mantenga la relación contractual y, posteriormente, durante los plazos necesarios para atender eventuales responsabilidades legales (por ejemplo, 6 años en materia contable y fiscal).</li>
-    <li><strong>Datos relativos a síntomas autodeclarados:</strong> mientras la cuenta se mantenga activa o hasta que la persona usuaria retire su consentimiento o solicite la supresión, salvo que deban bloquearse por obligación legal.</li>
-    <li><strong>Datos de comunicaciones comerciales:</strong> hasta la retirada del consentimiento.</li>
+    <li><strong>Cuenta y expediente:</strong> mientras dure la relación contractual y, después, el tiempo necesario para atender responsabilidades legales (por ejemplo, 6 años en materia contable y fiscal).</li>
+    <li><strong>Información de tu empresa y síntomas:</strong> mientras tu cuenta esté activa o hasta que pidas su supresión, salvo que deban bloquearse por obligación legal.</li>
+    <li><strong>Comunicaciones comerciales:</strong> hasta que retires tu consentimiento.</li>
   </ul>
-
-  <h2>6. Derechos de las personas interesadas</h2>
-  <p>La persona usuaria puede ejercer en cualquier momento sus derechos de <strong>acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad</strong>, así como <strong>retirar el consentimiento</strong> otorgado, enviando una solicitud escrita a <a href="mailto:info@masesora.com">info@masesora.com</a>, indicando el derecho que desea ejercer e identificándose adecuadamente.</p>
-  <p>Asimismo, tiene derecho a presentar una reclamación ante la <strong>Agencia Española de Protección de Datos (AEPD)</strong> a través de <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>.</p>
-
-  <h2>7. Medidas de seguridad</h2>
+  <h2>6. Tus derechos</h2>
+  <p>Puedes pedir en cualquier momento <strong>acceso, rectificación, supresión, oposición, limitación y portabilidad</strong>, y <strong>retirar tu consentimiento</strong>, escribiendo a <strong><a href="mailto:info@masesora.com">info@masesora.com</a></strong> e indicando qué derecho quieres ejercer. Retirarlo no afecta a lo ya hecho antes.</p>
+  <p>Si crees que tus datos no se tratan como deben, puedes reclamar ante la <strong>Agencia Española de Protección de Datos</strong> (www.aepd.es).</p>
+  <h2>7. Cómo protegemos tus datos</h2>
   <ul>
-    <li>Cifrado de las comunicaciones mediante HTTPS.</li>
-    <li>Controles de acceso y gestión de contraseñas robustas.</li>
-    <li>Copias de seguridad periódicas.</li>
-    <li>Registro de actividad y auditoría.</li>
-    <li>Evaluación periódica de riesgos, con especial énfasis en la protección de información sensible relativa a síntomas autodeclarados.</li>
+    <li>Las comunicaciones van cifradas (HTTPS).</li>
+    <li>Las contraseñas se guardan cifradas y la sesión caduca a las 8 horas.</li>
+    <li>Cada persona ve solo lo que le corresponde según su perfil (cliente, Consultor o administración).</li>
+    <li>Los Consultores trabajan bajo un compromiso de protección de datos y confidencialidad.</li>
   </ul>
+  <h2>8. Cambios en esta política</h2>
+  <p>Podemos modificarla si cambian la ley o los proveedores que usamos. Si el cambio es importante, lo avisaremos en la plataforma o por correo. La versión vigente es la publicada en https://laclinicadempresas.masesora.com/legal/privacidad.html.</p>
 
-  <h2>8. Cambios en la política de privacidad</h2>
-  <p>La presente política podrá modificarse para adaptarse a cambios normativos o en la prestación del servicio. Cualquier modificación relevante se comunicará mediante aviso en la plataforma o por correo electrónico. La versión vigente será la publicada en https://laclinicadempresas.masesora.com/privacidad en cada momento.</p>
-
-  <p class="meta">Fecha de última actualización: 25 de abril de 2026.</p>
+  <p class="meta">Fecha de última actualización: 10 de noviembre de 2026.</p>
 </main>
 <footer class="legal-footer">
   © 2026 MASFRAME® — María Teresa Cabezuelos Morcillo · NIF 74860612M
   <br>
-  <a href="/privacidad">Política de Privacidad</a><span class="sep">·</span>
-  <a href="/aviso-legal">Aviso Legal</a><span class="sep">·</span>
-  <a href="/cookies">Política de Cookies</a><span class="sep">·</span>
-  <a href="/terminos">Términos y Condiciones</a>
+  <a href="/legal/privacidad.html">Política de Privacidad</a><span class="sep">·</span>
+  <a href="/legal/aviso-legal.html">Aviso Legal</a><span class="sep">·</span>
+  <a href="/legal/cookies.html">Política de Cookies</a><span class="sep">·</span>
+  <a href="/legal/terminos.html">Términos y Condiciones</a>
 </footer>
 </body>
 </html>

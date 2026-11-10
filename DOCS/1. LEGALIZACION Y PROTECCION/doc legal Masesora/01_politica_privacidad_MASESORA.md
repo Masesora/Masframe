@@ -1,9 +1,8 @@
-# POLÍTICA DE PRIVACIDAD — MASESORA / TU SOLUCIÓN
+# POLÍTICA DE PRIVACIDAD — MASESORA / TU SOLUCIÓN / ESCÁNER
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026 para su publicación en https://www.masesora.com/privacidad
-> Requiere revisión por asesor legal antes de publicación definitiva.
-> **Asunciones tomadas:** (1) Responsable = persona física autónoma, misma persona que en MASFRAME®; (2) No hay encargados externos en la fase actual (el envío del email se realiza mediante `mailto:` desde el navegador del propio usuario, por lo que no hay tratamiento automatizado en servidor); (3) No se utilizan cookies de terceros; (4) El diagnóstico Tu Solución **NO recoge datos especialmente sensibles**: solo información operativa del negocio y datos identificativos del lead.
+> Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/privacidad. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> **Qué cambia respecto a la versión anterior:** ya no se dice que no haya proveedores externos. Se nombran los que reciben datos, se cubre también el Escáner de Salud Empresarial (masesora.es) y se explica el uso de Google y Meta con tu permiso.
 
 ---
 
@@ -13,60 +12,64 @@
 - **NIF:** 74860612M.
 - **Domicilio:** Carrer Gabriel Miró 27, 03520 Polop (Alicante, España).
 - **Email de contacto:** info@masesora.com.
-- **Email operativo del diagnóstico:** direccionmasesora@gmail.com.
-- **Sitio web:** https://www.masesora.com.
-- **Servicio cubierto por esta política:** diagnóstico operativo gratuito **Tu Solución** y el sitio web general de Masesora.
+- **Servicios cubiertos por esta política:** el sitio web https://www.masesora.com, el diagnóstico gratuito **Tu Solución** y el **Escáner de Salud Empresarial** (https://www.masesora.es).
 
 ## 2. Datos personales tratados
 
-En el marco del sitio web de Masesora y del diagnóstico Tu Solución se tratan las siguientes categorías de datos:
+- **Datos que nos das tú:** tu nombre (en Tu Solución), tu email y el nombre de tu negocio.
+- **Respuestas al diagnóstico o al Escáner:** información sobre cómo funciona tu negocio (sector, tamaño, horario, volumen, canal principal, facturación estimada, áreas y síntomas que señalas). Es información de empresa; **no pedimos datos especialmente sensibles** del artículo 9.1 del RGPD.
+- **Datos de uso del Escáner:** un identificador de tu visita, el paso del Escáner en el que te encuentras o abandonas, y el tipo de navegador. Sirven para saber en qué paso se abandona (estadística propia).
+- **Datos de navegación con tu permiso:** si aceptas las cookies de medición, Google y Meta reciben datos de tu visita (ver la Política de Cookies).
+- **Datos técnicos de conexión:** tu dirección IP la reciben los proveedores que sirven la web y envían los correos, como parte normal del servicio. Nosotros no la guardamos.
 
-- **Datos identificativos aportados por la persona usuaria** al solicitar la ficha técnica: nombre, email y nombre del negocio.
-- **Respuestas del diagnóstico operativo:** información sobre el funcionamiento del negocio (sector, tamaño, horario, volumen, canal principal, áreas operativas y respuestas a las preguntas del diagnóstico). Esta información **no incluye datos personales sensibles** en el sentido del art. 9.1 RGPD; se refiere exclusivamente a aspectos operativos del negocio declarados por el propio usuario.
-- **Datos técnicos mínimos de navegación:** dirección IP aproximada, tipo de navegador y fecha y hora de acceso, recogidos únicamente cuando sean estrictamente necesarios para la seguridad del servicio.
+## 3. Para qué usamos tus datos y con qué base legal
 
-## 3. Finalidades y bases jurídicas
+- **Elaborar la propuesta que ves en pantalla al terminar el diagnóstico de Tu Solución** — es necesario para darte el servicio que has pedido (art. 6.1.b RGPD). Para ello tu nombre y tus respuestas se envían al proveedor que redacta la propuesta (ver el apartado 4).
+- **Enviarte la ficha técnica de Tu Solución o el informe del Escáner, y darte acceso a La Clínica de Empresas con tu código** — tu consentimiento (art. 6.1.a RGPD), que das al marcar la casilla obligatoria del formulario.
+- **Contactarte después para explorar la implementación** — solo si marcas la casilla opcional, aparte de la anterior (art. 6.1.a RGPD). Puedes retirarla cuando quieras.
+- **Saber en qué paso del Escáner se abandona la página, si aceptas las cookies de estadística** — tu consentimiento (art. 6.1.a RGPD).
+- **Medir el uso de las webs y de nuestros anuncios con Google Analytics y el Píxel de Meta** — solo si aceptas en el aviso de cookies (art. 6.1.a RGPD). Rechazarlas no cambia nada del servicio.
+- **Mejorar el servicio con datos agregados o sin nombre** — interés legítimo (art. 6.1.f RGPD), sin perfiles con efectos jurídicos.
+- **Atender tus peticiones de derechos y cumplir obligaciones legales** — obligación legal (art. 6.1.c RGPD).
 
-Los datos se tratan para las siguientes finalidades y con las bases jurídicas indicadas:
+## 4. Quién más recibe tus datos
 
-- **Prestación del diagnóstico gratuito Tu Solución y envío de la ficha técnica resultante** — consentimiento de la persona usuaria (art. 6.1.a RGPD), otorgado al enviar el formulario de solicitud.
-- **Contacto comercial posterior para explorar la implementación de la herramienta operativa derivada**, siempre que la persona usuaria lo haya aceptado expresamente — consentimiento (art. 6.1.a RGPD).
-- **Mejora del servicio mediante análisis agregado o seudonimizado** de los diagnósticos realizados, sin elaboración de perfiles con efectos jurídicos significativos — interés legítimo (art. 6.1.f RGPD).
-- **Atención a solicitudes de ejercicio de derechos** y cumplimiento de obligaciones legales aplicables — obligación legal (art. 6.1.c RGPD).
+Para prestarte el servicio usamos proveedores que tratan datos por nuestra cuenta (encargados del tratamiento). No usan tus datos para sus propios fines.
 
-## 4. Destinatarios y encargados del tratamiento
+- **Render Services, Inc.** — alojamiento de los servidores. El servidor principal del Escáner está en Fráncfort (UE).
+- **MongoDB, Inc. (Atlas)** — base de datos donde se guarda lo que envías en el Escáner.
+- **Resend, Inc.** — envío de correos: el informe o la ficha que te llega a ti y una copia interna a info@masesora.com.
+- **Anthropic, PBC** — solo en **Tu Solución**: recibe tu nombre y las respuestas del diagnóstico, incluidos los textos libres que escribas, para redactar tu propuesta en pantalla. No recibe tu email.
+- **Cloudflare, Inc. y Netlify, Inc.** — entrega de las páginas web y seguridad.
+- **Google y Meta** — solo si aceptas las cookies de medición.
 
-En la fase actual del servicio Tu Solución, **no se producen cesiones a terceros ni intervienen encargados externos del tratamiento**. El envío del correo electrónico con la ficha técnica se realiza mediante el gestor de correo del propio dispositivo de la persona usuaria.
+Algunos de estos proveedores están en Estados Unidos. Las transferencias se amparan en las garantías que prevé el RGPD, como las cláusulas contractuales tipo de la Comisión Europea u otros mecanismos reconocidos.
 
-En caso de que en el futuro se incorporen proveedores para automatizar el envío de correos, el alojamiento del sitio o el análisis estadístico, esta política se actualizará indicando expresamente los encargados del tratamiento y las eventuales transferencias internacionales de datos.
+Fuera de lo anterior, no cedemos tus datos a terceros salvo obligación legal.
 
-Fuera de lo anterior, los datos no se cederán a terceros salvo obligación legal.
+## 5. Cuánto tiempo los guardamos
 
-## 5. Plazos de conservación
+- **Datos de contacto y respuestas:** mientras mantengas el interés en el servicio y, como máximo, **3 años desde el último contacto**, salvo que pidas antes que los borremos.
+- **Datos de uso del Escáner (paso, identificador de visita):** el mismo plazo que las respuestas.
+- **Datos agregados o sin nombre:** pueden conservarse sin límite, porque ya no identifican a nadie.
 
-- **Datos del lead (nombre, email, negocio):** se conservarán mientras se mantenga la relación comercial o el interés en el servicio, y, posteriormente, durante los plazos necesarios para atender eventuales responsabilidades legales. Como referencia general, máximo **3 años desde el último contacto**, salvo que la persona usuaria solicite antes la supresión.
-- **Respuestas del diagnóstico:** se conservarán asociadas al lead durante el mismo plazo. Las versiones agregadas o seudonimizadas usadas para mejora del servicio podrán conservarse de forma indefinida.
-- **Datos técnicos de navegación:** se conservarán por el plazo mínimo necesario para la seguridad del servicio, habitualmente no superior a 12 meses.
+## 6. Tus derechos
 
-## 6. Derechos de las personas interesadas
+Puedes pedir en cualquier momento **acceso, rectificación, supresión, oposición, limitación y portabilidad**, y **retirar tu consentimiento**, escribiendo a **info@masesora.com** e indicando qué derecho quieres ejercer. Retirarlo no afecta a lo ya hecho antes.
 
-La persona usuaria puede ejercer en cualquier momento sus derechos de **acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad**, así como **retirar el consentimiento** otorgado, enviando una solicitud escrita a **info@masesora.com**, indicando el derecho que desea ejercer e identificándose adecuadamente.
+Si crees que tus datos no se tratan como deben, puedes reclamar ante la **Agencia Española de Protección de Datos** (www.aepd.es).
 
-Asimismo, tiene derecho a presentar una reclamación ante la **Agencia Española de Protección de Datos (AEPD)** si considera que el tratamiento de sus datos no se ajusta a la normativa, a través de www.aepd.es.
+## 7. Cómo protegemos tus datos
 
-## 7. Medidas de seguridad
+- Las comunicaciones van cifradas (HTTPS).
+- Solo las personas autorizadas por la Titular acceden a la base de datos y al buzón info@masesora.com.
+- El avance de tu diagnóstico se guarda en tu propio navegador mientras lo rellenas.
+- Revisamos la seguridad del servicio cuando cambiamos algo que afecta a los datos.
 
-La Titular aplica medidas técnicas y organizativas apropiadas para garantizar un nivel de seguridad adecuado al riesgo, incluyendo:
+## 8. Cambios en esta política
 
-- Cifrado de las comunicaciones mediante HTTPS.
-- Almacenamiento local seguro de los datos del diagnóstico en el dispositivo de la persona usuaria mientras dura la sesión.
-- Acceso restringido a las ficheros internos de leads únicamente a las personas autorizadas por la Titular.
-- Revisión periódica de la seguridad del servicio.
-
-## 8. Cambios en la política de privacidad
-
-La presente política podrá modificarse para adaptarse a cambios normativos o en la prestación del servicio, incluyendo la futura incorporación de encargados externos (por ejemplo, un proveedor de envío de emails o un CRM). Cualquier modificación relevante se comunicará mediante aviso en el sitio web. La versión vigente será la publicada en https://www.masesora.com/privacidad en cada momento.
+Podemos modificarla si cambian la ley o los proveedores que usamos. Si el cambio es importante, lo avisaremos en la web. La versión vigente es la publicada en https://www.masesora.com/privacidad.
 
 ---
 
-**Fecha de última actualización:** 25 de abril de 2026.
+**Fecha de última actualización:** 10 de noviembre de 2026.

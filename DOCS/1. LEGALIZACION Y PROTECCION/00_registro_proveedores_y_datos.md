@@ -23,11 +23,12 @@
 | **MongoDB, Inc. (Atlas)** | Escáner, Masframe | Datos del Escáner (email, empresa, facturación, respuestas, abandono de fases), cuentas y expedientes de clientes | Base de datos | **Región del clúster sin confirmar** | Encargado | `routers/ese_router.py` (`MONGO_URI`, colecciones `clients`, `ese_dropoff`) |
 | **Resend, Inc.** | Escáner, Masframe, Tu Solución | Email del destinatario, empresa, contenido del informe o del aviso | Envío de correos al cliente y copia interna a info@masesora.com | EE. UU. (transferencia internacional) | Encargado | `email_service.py`; `generate-prd.js` (`api.resend.com`) |
 | **Stripe, Inc. (Stripe Payments Europe, Ltd.)** | Masframe | Datos de tarjeta (los introduce el cliente en Stripe, no pasan por nuestro servidor); email y nombre para facturas; en el pago, código de expediente, plan y síntomas contratados | Cobro y facturación | UE / EE. UU. | Ejecución de contrato; obligación legal (facturación) | `routers/payments_router.py`; `routers/ciclos_router.py`; frontend carga `js.stripe.com` |
-| **Anthropic, PBC** | **Solo Tu Solución** | Las respuestas del diagnóstico (sector, tamaño, canal, áreas, respuestas) para redactar la ficha técnica | Generar la ficha técnica | EE. UU. (transferencia internacional) | Consentimiento del formulario (obligatorio) | `backend-tu-solucion/generate-prd.js` (`@anthropic-ai/sdk`) |
+| **Anthropic, PBC** | **Solo Tu Solución** | Nombre, actividad, sector, tamaño, volumen, respuestas, herramientas, «visión» y textos libres del diagnóstico. **No recibe el email** | Redactar la propuesta que se ve en pantalla | EE. UU. (transferencia internacional) | Necesario para el servicio pedido (art. 6.1.b). Ocurre **antes** del formulario de consentimiento, por lo que el aviso va al empezar el diagnóstico | `backend-tu-solucion/generate-prd.js` (`buildUserMessage`); `ts/index.html` (`payload`) |
 | **Google LLC** — Analytics (GA4, `G-62L9S89H53`) | masesora.com y masesora.es | Datos de navegación y eventos (ver §4) | Medir el uso de las webs | EE. UU. | Consentimiento (banner), solo tras aceptar | `masesoralanding/index.html`; `ese/index.html` |
 | **Meta Platforms Ireland Ltd.** — Píxel (`4359415267704371`) | masesora.com y masesora.es | Datos de navegación y eventos | Medir anuncios | UE / EE. UU. | Consentimiento (banner), solo tras aceptar | Ídem |
 | **Google LLC** — Fonts | masesora.com y masesora.es | Dirección IP al cargar la tipografía | Mostrar la tipografía | EE. UU. | Interés legítimo hasta alojarla en local | Ídem (`fonts.googleapis.com`). Se carga **antes** del consentimiento |
 | **Google LLC** — Sheets (solo lectura) | Masframe (herramienta interna) | Lee una hoja con respuestas históricas del Escáner | Recuperar datos de leads antiguos | EE. UU. | Interés legítimo | `onboarding/ese_sync_service.py`. Contenido de la hoja: ver §6 |
+| **Cloudflare, Inc.** | masesora.com, masesora.es y La Clínica | Dirección IP y datos técnicos de cada visita (pasan por su red) | Entrega de la web y seguridad | Red global, con servidores en la UE | Interés legítimo (seguridad) | Cabeceras HTTP de los tres dominios (`Server: cloudflare`); no fijan cookies |
 | **Netlify, Inc.** | Escáner (masesora.es) | Solo sirve la página; no recibe datos del formulario | Alojamiento de la web | EE. UU. | Encargado | Plan §LXIII (ESE publica en Netlify, además de Render) |
 | **Consultores Clínicos (CC)** | Masframe | Identificación, contacto, datos económicos y operativos del cliente, KPIs e informes | Prestar el servicio al cliente | España | Encargados, con compromiso firmado | `DOCS/3. PERFILES/ONBOARDING/03_compromiso_proteccion_datos_CC.md` (cláusulas 1-6) |
 
@@ -55,6 +56,10 @@
 | Cookies de Stripe.js | Masframe, en la página de pago | Cookie, de tercero | Stripe | Las fija Stripe | No (seguridad y prevención del fraude) | Pendiente de comprobar en el navegador |
 
 **Corrección respecto al texto anterior de Masframe:** las cookies `session`, `csrf_token` y `ui_pref` **no existen**. El servidor no pone ninguna cookie; la sesión va en almacenamiento local.
+
+**Publicación de los textos legales de La Clínica:** `https://laclinicadempresas.masesora.com/legal/terminos.html` devuelve 404 (comprobado el 10/11/2026) y es el enlace del paso de pago (`ScannerReceptionPage.tsx`). Los legales de Masframe no están publicados en ninguna parte; se publican en el Bloque B.
+
+**Consentimientos que existen hoy en el código de La Clínica:** una sola casilla, «Acepto los términos y condiciones», en el paso de datos de facturación. No hay casilla de política de privacidad, ni de consentimiento para los síntomas autodeclarados, ni de comunicaciones comerciales. Los textos publicados no pueden decir que existen.
 
 ## 5. Evento que lleva dato personal a Google y Meta
 

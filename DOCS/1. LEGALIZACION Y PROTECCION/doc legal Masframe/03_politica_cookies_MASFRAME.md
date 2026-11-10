@@ -1,47 +1,49 @@
 # POLÍTICA DE COOKIES — MASFRAME®
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
-> Documento generado el 25/04/2026 para su publicación en https://laclinicadempresas.masesora.com/cookies
-> Requiere revisión por asesor legal antes de publicación definitiva.
-> **Asunción tomada:** la plataforma MASFRAME® **no utiliza cookies de analítica ni de terceros**. Utiliza exclusivamente cookies técnicas estrictamente necesarias para el funcionamiento del servicio (sesión, autenticación, preferencias de interfaz). En caso de incorporar en el futuro Google Analytics, Meta Pixel, Hotjar u otras herramientas, esta política deberá actualizarse y será obligatorio un banner de consentimiento conforme a la Guía de Cookies de la AEPD.
+> Documento actualizado el 10/11/2026 para su publicación en https://laclinicadempresas.masesora.com/legal/cookies.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
+> **Qué cambia respecto a la versión anterior:** las cookies `session`, `csrf_token` y `ui_pref` no existen: la plataforma no pone cookies propias y guarda la sesión en el almacenamiento local del navegador. Se añaden Google Fonts, Cloudflare y las cookies de Stripe en la página de pago.
+> **Pendiente de comprobar en el navegador antes de publicar:** los nombres y la duración exactos de las cookies que fija Stripe.js en la página de pago.
 
 ---
 
 ## 1. ¿Qué son las cookies?
 
-Las cookies son pequeños archivos de datos que un sitio web almacena en el dispositivo de la persona usuaria al navegar. Permiten al sitio recordar información sobre la visita (por ejemplo, identificador de sesión o preferencias de idioma).
+Son pequeños archivos que una página guarda en tu dispositivo para recordar información. Esta plataforma también usa el almacenamiento local del navegador (`localStorage`), que cumple una función parecida y tratamos igual que a las cookies.
 
-## 2. Cookies utilizadas por MASFRAME®
+## 2. Qué usa MASFRAME®
 
-MASFRAME® utiliza **únicamente cookies técnicas estrictamente necesarias** para el funcionamiento del servicio. Estas cookies no requieren consentimiento previo conforme al artículo 22.2 LSSI-CE.
+MASFRAME® **no usa cookies de analítica ni de publicidad**, y no carga Google Analytics ni el Píxel de Meta. Solo usa lo necesario para que funcione. No requiere consentimiento (art. 22.2 LSSI-CE).
 
-| Tipo | Nombre orientativo | Finalidad | Duración |
-|------|--------------------|-----------|----------|
-| Técnica | `session` | Mantener la sesión de usuario autenticado. | Sesión |
-| Técnica | `csrf_token` | Prevenir ataques de falsificación de petición (CSRF). | Sesión |
-| Técnica | `ui_pref` | Recordar preferencias de interfaz de la persona usuaria. | 30 días |
+| Nombre | Tecnología | Para qué | Duración |
+|---|---|---|---|
+| `masframe_token` | Almacenamiento local, propia | Mantener tu sesión abierta. | La sesión caduca a las 8 horas |
+| `masframe_user` | Almacenamiento local, propia | Recordar quién eres dentro de la plataforma mientras la usas. | Hasta que cierres sesión o borres el almacenamiento |
+| Cookies de Stripe | Cookie, de tercero (Stripe) | Seguridad y prevención del fraude en el pago. Se cargan al entrar en las páginas donde se puede pagar. | Las fija Stripe |
 
-**MASFRAME® no utiliza cookies publicitarias, de seguimiento comportamental, de redes sociales ni de terceros.**
+**Google Fonts (tipografía).** La letra se descarga desde servidores de Google al abrir la plataforma, por lo que Google puede recibir tu dirección IP.
 
-## 3. Gestión y desactivación de cookies
+**Cloudflare.** Las páginas pasan por la red de Cloudflare, Inc., que entrega la web y la protege. Cloudflare recibe tu dirección IP como parte de ese servicio. No pone cookies en estas páginas.
 
-La persona usuaria puede configurar su navegador para aceptar, rechazar o eliminar las cookies almacenadas. Los principales navegadores ofrecen esta posibilidad en sus menús de configuración:
+## 3. Cómo gestionarlas
+
+Puedes borrar el almacenamiento local y las cookies desde los ajustes de tu navegador:
 
 - **Google Chrome:** Configuración → Privacidad y seguridad → Cookies y otros datos de sitios.
 - **Mozilla Firefox:** Ajustes → Privacidad y seguridad → Cookies y datos del sitio.
 - **Safari:** Preferencias → Privacidad → Gestionar datos de sitios web.
 - **Microsoft Edge:** Configuración → Cookies y permisos del sitio.
 
-La desactivación de cookies técnicas puede afectar al correcto funcionamiento de la plataforma.
+Si lo borras, se cerrará tu sesión y tendrás que volver a entrar. Si tu navegador lo bloquea, no podrás usar la plataforma.
 
-## 4. Cambios en la política de cookies
+## 4. Cambios en esta política
 
-La presente política podrá modificarse si la Titular incorpora nuevas herramientas que utilicen cookies. Cualquier modificación relevante se notificará a través de la plataforma. En caso de incorporación de cookies no técnicas, se mostrará un banner de consentimiento previo a su instalación.
+Si la plataforma incorpora herramientas de medición o de publicidad, mostraremos antes un aviso de cookies para que aceptes o rechaces, y actualizaremos esta política.
 
 ## 5. Contacto
 
-Para cualquier cuestión relativa a esta política, la persona usuaria puede dirigirse a **info@masesora.com**.
+Para cualquier duda sobre esta política, escríbenos a **info@masesora.com**.
 
 ---
 
-**Fecha de última actualización:** 25 de abril de 2026.
+**Fecha de última actualización:** 10 de noviembre de 2026.
