@@ -3022,6 +3022,24 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 
 ---
 
+## LXVI. SESIÓN 10 NOV 2026 (cont.) — UCI-S1 cerrada por Maite, y dónde queda el plan de producto
+
+**Decisión de Maite: UCI-S1 está cerrada («funciona y está todo ok»).** Comprobado ese día con `auditar_sintoma.py UCI-S1`: **0 bloqueantes y 8 avisos de forma** que no se actúan (`interpretacion` ausente en r2.s1 y r5.s1; r2-r5 sin `vista:'tarjeta'`, que puede ser deliberado según §LXI.B; r1 simulador y r6 pipeline fuera del alcance del auditor). Las seis ramas se habían revisado en §XLVII, §XLIX, §LI y §LXI. El «cabo de C5» (UCI-S1 como excepción del banco de 176) ya no existe: su `input_revised_1` es «Caja disponible actual (post)», un valor post como en los otros 29 síntomas.
+
+**Lo que esto cierra.** El acuerdo del 27 ago 2026 («el método por tandas no se juzga hasta revisar UCI-S1 entero») llega a su condición. Falta que Maite diga si el orden del §LXI.D (medir antes de tocar, decidir por tipo, aplicar en una pasada, enseñar el resultado y no el proceso) se aplica al resto del catálogo. Hasta entonces no se cambia de método.
+
+**El producto estuvo parado del 27 ago al 10 nov.** El último cambio de producto en `symptoms.json` es `825ba53` (27 ago); lo posterior fue infraestructura (§LXII a §LXV).
+
+**Siguiente sesión de producto, en este orden (§LXI.C):**
+1. **B, 14 secciones que no alimentan el KPI ni bajan acción:** mecánico, se borran. Primero se listan para que Maite las vea.
+2. **D, 16 calculadas que solo son un paso intermedio:** mecánico, se absorben en la fórmula que las usa.
+3. **A, 62 secciones con texto libre que baja a C4:** hay que escribir 3-5 opciones por sección; una ronda de decisiones por tipo.
+4. **C, 90 secciones con más de 6 campos por fila:** podar lo que no decide, no mide ni identifica.
+5. **110 desplegables premarcados:** 68 preguntas «Sí», 28 escalas en el extremo alto y 20 estados donde el valor por defecto es correcto (esos 20 no se tocan).
+6. **Banco de 176 casos:** cerrar la aritmética de C5 caso a caso (cada A/B de C0 con una suma o resta que mueva el KPI).
+
+---
+
 ---
 
 ---
@@ -3079,3 +3097,4 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 *§LXIII añadida en sesión 8 nov 2026 — el escáner en `masesora.es` no registraba nada (dominio fuera del CORS) y la landing lo tapaba con un código `MAS-` de 5 cifras inventado en el navegador: 401 seguro en La Clínica. CORS corregido (Masframe#44), landing sin código falso (ESE#1), copia interna de cada informe ESE a info@masesora.com incluso si el envío al cliente falla (Masframe#45), y el ESE y el login aceptan cualquier email con el regex del login escapado*
 *§LXIV añadida en sesión 9 nov 2026 — auditoría SEO de masesora.com y masesora.es (la .es se declara copia de ese-cc2u.onrender.com; la .com carga GA4 y Píxel sin consentimiento), política de cookies de ESE reescrita en rama sin PR, y el orden de lo pendiente antes de reanudar los anuncios. Nada de la Fase 0 aplicado.*
 *§LXV añadida en sesión 10 nov 2026 — los textos legales pasan a decir lo que el código hace y se revisan legalmente: registro único de proveedores, Tu Solución sin base de datos pero ahora con `/api/save-lead` real (antes decía «va en camino» sin enviar), Cal.com y Anthropic como proveedores, Masframe sin cookies propias, términos con garantía y pago único. GA4 y Píxel solo tras aceptar en .com y en ESE, `ese_sid` ligado al banner, legales de La Clínica publicados, consentimiento obligatorio y comercial separados, tipografías en local y canonical de masesora.es. Se descubre que Render sirve `Masesora/Masesora` y `tusolucion`, no `Masesora-frontend`; landing con una sola fuente. Pendientes: deploy manual de tusolucion y ESE, Atlas y Sheets, Search Console.*
+*§LXVI añadida en sesión 10 nov 2026 (cont.) — UCI-S1 cerrada por Maite (0 bloqueantes, 8 avisos de forma sin acción; el cabo de C5 ya estaba resuelto), el producto estuvo parado del 27 ago al 10 nov, y el orden de las siguientes sesiones de producto según §LXI.C: 14 secciones muertas, 16 intermedias, 62 con texto libre, 90 con demasiados campos, 110 desplegables premarcados y el banco de 176 casos.*
