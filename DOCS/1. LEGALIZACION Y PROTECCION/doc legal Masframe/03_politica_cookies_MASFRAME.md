@@ -2,7 +2,7 @@
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
 > Documento actualizado el 10/11/2026 para su publicación en https://laclinicadempresas.masesora.com/legal/cookies.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
-> **Qué cambia respecto a la versión anterior:** las cookies `session`, `csrf_token` y `ui_pref` no existen: la plataforma no pone cookies propias y guarda la sesión en el almacenamiento local del navegador. Se añaden Google Fonts, Cloudflare y las cookies de Stripe en la página de pago.
+> **Qué cambia respecto a la versión anterior:** las cookies `session`, `csrf_token` y `ui_pref` no existen: la plataforma no pone cookies propias y guarda la sesión en el almacenamiento local del navegador. Se añaden Cloudflare y las cookies de Stripe en la página de pago.
 > **Pendiente de comprobar en el navegador antes de publicar:** los nombres y la duración exactos de las cookies que fija Stripe.js en la página de pago.
 
 ---
@@ -13,7 +13,7 @@ Son pequeños archivos que una página guarda en tu dispositivo para recordar in
 
 ## 2. Qué usa MASFRAME®
 
-MASFRAME® **no usa cookies de analítica ni de publicidad**, y no carga Google Analytics ni el Píxel de Meta. Solo usa lo necesario para que funcione. No requiere consentimiento (art. 22.2 LSSI-CE).
+MASFRAME® **no usa cookies de analítica ni de publicidad**, y no carga Google Analytics ni el Píxel de Meta. Solo usa lo necesario para que la plataforma funcione, por lo que no hace falta que lo aceptes (art. 22.2 LSSI-CE).
 
 | Nombre | Tecnología | Para qué | Duración |
 |---|---|---|---|
@@ -21,7 +21,7 @@ MASFRAME® **no usa cookies de analítica ni de publicidad**, y no carga Google 
 | `masframe_user` | Almacenamiento local, propia | Recordar quién eres dentro de la plataforma mientras la usas. | Hasta que cierres sesión o borres el almacenamiento |
 | Cookies de Stripe | Cookie, de tercero (Stripe) | Seguridad y prevención del fraude en el pago. Se cargan al entrar en las páginas donde se puede pagar. | Las fija Stripe |
 
-**Google Fonts (tipografía).** La letra se descarga desde servidores de Google al abrir la plataforma, por lo que Google puede recibir tu dirección IP.
+**Tipografía.** La letra se sirve desde nuestros propios servidores. No se descarga de Google.
 
 **Cloudflare.** Las páginas pasan por la red de Cloudflare, Inc., que entrega la web y la protege. Cloudflare recibe tu dirección IP como parte de ese servicio. No pone cookies en estas páginas.
 

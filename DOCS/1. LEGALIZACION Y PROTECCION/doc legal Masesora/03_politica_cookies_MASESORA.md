@@ -2,7 +2,7 @@
 
 > **[BORRADOR PARA REVISIÓN LEGAL]**
 > Documento actualizado el 10/11/2026 para su publicación en https://www.masesora.com/legal/cookies.html. Sustituye a la versión del 25/04/2026. Requiere revisión por una persona con conocimiento legal antes de su publicación definitiva; esta redacción no la sustituye.
-> **Qué cambia respecto a la versión anterior:** las webs masesora.com y masesora.es usan Google Analytics 4 y el Píxel de Meta, pero solo después de que aceptes en el aviso de cookies. La versión anterior decía que no se usaba ningún tercero. Esta política cubre las dos webs y es la misma en las dos.
+> **Qué cambia respecto a la versión anterior:** las webs masesora.com y masesora.es usan Google Analytics 4 y el Píxel de Meta, pero solo después de que aceptes en el aviso de cookies. La tipografía ya no se descarga de Google. La versión anterior decía que no se usaba ningún tercero. Esta política cubre las dos webs y es la misma en las dos.
 
 ---
 
@@ -10,9 +10,9 @@
 
 Son pequeños archivos que una página guarda en tu dispositivo para recordar información o medir cómo se usa. Estas webs también usan otras tecnologías parecidas, como el almacenamiento local del navegador (`localStorage` y `sessionStorage`), y las tratamos igual que a las cookies.
 
-## 2. Qué usamos sin pedirte permiso
+## 2. Lo que necesita la página para funcionar
 
-Son propias o necesarias para que la página funcione. No requieren consentimiento (art. 22.2 LSSI-CE).
+Son propias y sirven para que la página funcione o para recordar lo que eliges. Por eso no hace falta que las aceptes (art. 22.2 LSSI-CE).
 
 | Nombre | Dónde | Tecnología | Para qué | Duración |
 |---|---|---|---|---|
@@ -20,11 +20,11 @@ Son propias o necesarias para que la página funcione. No requieren consentimien
 | `ese_cookie_consent` | masesora.es | Almacenamiento local, propia | Lo mismo, en el Escáner. | 12 meses |
 | Progreso de Tu Solución | masesora.com | Almacenamiento local, propia | Guardar tus respuestas para que puedas retomar el diagnóstico si cierras la ventana. | Hasta que lo borres o termines |
 
-**Google Fonts (tipografía).** La letra se descarga desde servidores de Google al abrir la página, por lo que Google puede recibir tu dirección IP. Esto ocurre antes de que elijas sobre las cookies.
+**Tipografía.** La letra de las páginas se sirve desde nuestros propios servidores. No se descarga de Google.
 
 **Cloudflare.** Las páginas pasan por la red de Cloudflare, Inc., que entrega la web y la protege. Cloudflare recibe tu dirección IP como parte de ese servicio. No pone cookies en estas páginas.
 
-## 3. Qué usamos solo si las aceptas
+## 3. Lo que solo usamos si lo aceptas
 
 Si pulsas «Aceptar», cargamos estos servicios. Si pulsas «Rechazar», no se carga ninguno.
 
