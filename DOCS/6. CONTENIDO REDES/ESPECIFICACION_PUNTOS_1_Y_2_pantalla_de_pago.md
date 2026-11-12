@@ -4,39 +4,37 @@
 
 ---
 
-# PUNTO 1 · La garantía y los textos tienen que decir lo mismo que los Términos §7
+# PUNTO 1 · La garantía: mínimos cambios, según lo que Maite aclaró el 12 nov 2026
 
-**Los Términos (revisados por el asesor) dicen:** la garantía es **solo del PRE**; si a la semana 6 el indicador principal no se ha alcanzado y el cliente ha completado el protocolo, se amplía el servicio sin coste; si pasados 3 meses más sigue sin alcanzarse, se devuelve el importe del PRE; **no aplica** al PAE ni al PIE, ni a casos sin protocolo completo, ni a inacción del cliente.
+**Estado:** las **erratas** (ciclos clínicos, «lo más», «porque», «por tanto» y el enlace de Instagram `@laclinicadempresas`) **ya están corregidas y subidas** (frontend `9c75d2c`; landing; correos del backend `d94e7a2`, pendientes de que Render despliegue el backend).
 
-## Cambios exactos, en `src/pages/ScannerReceptionPage.tsx`
+**Decisión de Maite: se mantiene «De 2 a 6 semanas: es el tiempo medio de nuestros tratamientos».**
 
-| Línea | Hoy | Propuesta |
+**Cómo funciona la garantía, según Maite:** en C0 la calculadora fija el KPI de partida y se puede **personalizar el objetivo** para que el KPI **mejore siempre**. La letra pequeña: si el cliente no completa las capas del tratamiento (incluidas las acciones de su Agente de Cambio Interno, ACI), **no hay garantía**; si las completa, el tratamiento produce una mejora porque se ejecutan acciones y decisiones sobre el problema.
+
+**Lo que ya dice el producto:** es la decisión de producto del **§LX.F (27 ago 2026)**: *la garantía se cumple con que el KPI de partida mejore*; `readyForAlta = c4Complete && mejoro`, no «alcanzar el objetivo». Y los Términos §7 ya exigen «protocolo completo y sin inacción del cliente».
+
+**Lo único que no coincide con eso** son las palabras «alcanzar / superar el KPI maestro» (en la pantalla, en los Términos §7 y en `config/pricing_policy.py`) y el alcance (los Términos y `pricing_policy.py` dicen solo PRE).
+
+## Cambios mínimos, en `src/pages/ScannerReceptionPage.tsx`
+
+| Línea | Hoy | Propuesta (mínima) |
 |---|---|---|
-| 759 | «Lo mas importante es que **siempre vas a superar el KPI maestro** que definamos, por que tu empresa **siempre obtendrá resultados positivos**, y además obtendrás tu certificado de alta.» | «Medimos el indicador principal de tu síntoma al empezar y al terminar. Cuando lo alcanzas, recibes tu certificado de alta, con la evidencia documentada de lo que ha cambiado.» |
-| 758 | «…*(\*Ciclos **cínicos** son nuestros servicios ampliados de ejecución directa en los planes superiores PIE y PAE)*» | «…*(Los ciclos **clínicos** son nuestros servicios ampliados de ejecución directa en los planes PAE y PIE.)*» |
-| 1155 (etiqueta) | «Garantía de Resultado · **Plan de Impulso Empresarial**» | «Garantía de Resultado · **Plan de Rescate Estructural (PRE)**» |
-| 1158 (titular) | «El sistema MASFRAME funciona, **si no, no lo pagas.**» | «Si tu indicador no mejora, **te devolvemos el PRE.***» (con la nota «Con las condiciones de abajo.») |
-| 1162 (tarjeta 1) | «Si el KPI maestro no se alcanza en el plazo definido, el servicio se extiende sin coste adicional **hasta conseguir mejorar el resultado**.» | «Si a la semana 6 el indicador principal no se ha alcanzado y has completado el protocolo, ampliamos el servicio sin coste.» |
-| 1163 (tarjeta 2) | «De 2 a 6 semanas: **Es el tiempo medio de nuestros tratamientos.** Hasta 3 meses marcamos para que se logre superar el kpi maestro, si no MASFRAME devuelve íntegramente el importe del PRE.» | «Tres meses más: si pasado ese plazo el indicador sigue sin alcanzarse, devolvemos íntegro el importe del PRE.» *(Se retira «tiempo medio»: aún no hay clientes que lo demuestren. Nuestro objetivo es verlo mejorar en las primeras 6 semanas.)* |
-| 1164 (tarjeta 3) | «Garantía de resultado: **Siempre vas a conseguir un retorno positivo**… Nuestra Garantía de resultado es **total, incluso con ejecución interna**.» | «Qué cubre: es la garantía del plan PRE. No cubre los casos en que no se ha completado el protocolo ni los de inacción del cliente. Está detallada en los Términos y Condiciones.» (con enlace a `/legal/terminos.html`) |
-| 1033 (insignia «CON GARANTÍA») | En la tarjeta del **PIE** | **Se mueve a la tarjeta del PRE** (el PIE no la tiene) |
-| 1008 (PAE) | «…y **por tanta**, resultados óptimos.» | «…y **por tanto**, resultados óptimos.» |
-| 759, 758 | «**Lo mas**», «**por que**» | «**Lo más**», «**porque**» (queda corregido con el cambio de la línea 759) |
-| 1229-1232 | `instagram.com/laclinicadeempresas` y texto `@laclinicadeempresas` | `instagram.com/laclinicadempresas` y `@laclinicadempresas` |
+| 759 | «Lo más importante es que **siempre vas a superar el KPI maestro** que definamos, porque tu empresa **siempre obtendrá resultados positivos**, y además obtendrás tu certificado de alta.» | «Lo más importante es que, **si completas las capas del tratamiento, tu indicador mejora respecto a tu punto de partida**: fijamos tu objetivo en C0 para que sea así. Y obtendrás tu certificado de alta.» |
+| 1155 | «Garantía de Resultado · **Plan de Impulso Empresarial**» | «Garantía de Resultado · **Método MASFRAME**» |
+| 1158 | «El sistema MASFRAME funciona, si no, no lo pagas.» | **Se mantiene.** Se añade debajo, en pequeño: «Con las condiciones de abajo.» |
+| 1162 | «Si el KPI maestro no se alcanza en el plazo definido, el servicio se extiende sin coste adicional hasta conseguir mejorar el resultado.» | «Si completas las capas del tratamiento y tu indicador **no mejora** en el plazo definido, el servicio se extiende sin coste adicional hasta conseguir mejorar el resultado.» |
+| 1163 | «De 2 a 6 semanas: Es el tiempo medio de nuestros tratamientos. Hasta 3 meses marcamos para que se logre **superar el kpi maestro**, si no MASFRAME devuelve íntegramente el importe del PRE.» | **Se mantiene** salvo «superar el kpi maestro» → «**mejorar tu indicador**». |
+| 1164 | «Siempre vas a conseguir un retorno positivo… Nuestra Garantía de resultado es **total, incluso con ejecución interna**.» | «Mientras completes las capas del tratamiento con tu Agente de Cambio Interno (ACI), tu indicador mejora: está medido. Si no se completan, la garantía no aplica. Detalle en los Términos y Condiciones.» (con enlace a `/legal/terminos.html`) |
 
-**El mismo error de Instagram está en 6 sitios más** (`DischargePage.tsx:1514`, `email_service.py`, la landing `masesoralanding/index.html`, `QRtarjetavisita/index.html` y dos HTML de bienvenida del CIE). Los correos del backend son los más importantes: los recibe el cliente. Se corrigen en la misma tanda.
+**Fuera de la pantalla (una frase en cada sitio):** Términos §7 (`04_terminos_condiciones_MASFRAME.md`) y `config/pricing_policy.py`: «no se ha alcanzado» → «**no ha mejorado respecto a su punto de partida**». Es un cambio de redacción en un texto ya revisado: se lo pasamos a quien lo revisó.
 
-## Una decisión tuya
-**¿Qué incluye exactamente el PRE?** La pantalla se contradice:
-- Línea 756: «Con asesoramiento de tu Consultor Clínico Digital».
-- Línea 758: «El Consultor Clínico supervisa… **entre 6 y 10 horas** de supervisión».
-- Línea 1007 (PRE): «Activación 100 % digital, **sin consultor/a asignado/a**».
+## Dos decisiones que quedan
+1. **¿Alcance?** Los Términos y `pricing_policy.py` limitan la garantía **al PRE**. Maite dice que «el tratamiento siempre la tiene». **Propuesta:** dejarlo en PRE por ahora. Con solo tres síntomas disponibles (UCI) el único plan que se puede comprar **es** el PRE, así que la cuestión no se plantea hasta que se abran más especialidades. La insignia «CON GARANTÍA» (L1033) se pasa del PIE al PRE. Si se amplía a PAE y PIE, hay que cambiar Términos y `pricing_policy.py` y revisarlos de nuevo (la devolución sería de 2.900 € o 4.500 €).
+2. **Quién fija el objetivo personalizado.** La pantalla de C0 dice «¿Este objetivo no aplica a tu empresa? Ajustar», es decir, lo puede cambiar el cliente. Para que «siempre mejora» sea una garantía medible y no discutible, el objetivo debería quedar **fijado en C0, con Maite o el consultor, y registrado en el expediente**. A confirmar.
 
-**Propuesta por defecto:** que mande el PRE como está definido en `pricing_policy.py` (digital, sin consultor asignado) y que la supervisión de 6-10 h figure como propia de PAE y PIE:
-- Línea 756: se quita «Con asesoramiento de tu Consultor Clínico Digital».
-- Línea 758: «En los planes **PAE y PIE**, un Consultor Clínico supervisa y valida las decisiones contigo (6 a 10 horas de supervisión de alto valor). En el **PRE** el tratamiento es 100 % digital; si lo necesitas, puedes escribir a Maite por WhatsApp.»
-
----
+## Lo que no cambia (sigue de la versión anterior)
+- **¿Qué incluye el PRE?** La pantalla se contradice: «sin consultor asignado» (L1007) frente a «6 a 10 horas de supervisión» (L758) y «con asesoramiento de tu Consultor Clínico Digital» (L756). Propuesta: PRE 100 % digital; la supervisión de 6-10 h, de PAE y PIE.
 
 # PUNTO 2 · Solo los tres síntomas de la UCI se pueden activar
 
