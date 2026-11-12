@@ -3122,6 +3122,54 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 
 ---
 
+## LXX. SESIÓN 13 NOV 2026 — Revisión global (SEO en vivo y pendientes) y plan de trabajo único
+
+**Cómo se midió.** Solo lectura, en vivo, sobre `masesora.com`, `masesora.es` y `laclinicadempresas.masesora.com`: HTML publicado, cabeceras, robots, sitemap, enlaces y datos estructurados. **No medido:** la velocidad (el servicio gratuito de Google dio 429), la indexación (la búsqueda web no devuelve nada de la marca; hay que mirarlo en Search Console) y la ficha de Google Business Profile. No hay herramienta de palabras clave: las frases de abajo son **hipótesis**.
+
+### A. La Fase 0 de §LXIV está aplicada (verificado en vivo)
+`robots.txt` y `sitemap.xml` en .com (5 URLs) y .es (1); canonical correcto en ambos (`www`); `og-image.jpg` de .com ya responde (antes daba 404); descripción de .com con 158 caracteres; `masesora.es` ya no se declara copia de `ese-cc2u.onrender.com`; la app (`laclinicadempresas`) lleva `noindex` a propósito; el apex redirige con 301 a `www`; GA4 y Píxel solo tras aceptar el banner.
+
+### B. Hallazgos nuevos
+| Dónde | Problema | Gravedad | Arreglo |
+|---|---|---|---|
+| .com | Los botones principales llevan a dominios técnicos de Render: `ese-cc2u.onrender.com` (el Escáner, que ya vive en `masesora.es`), `tusolucion`, `masframelanding`, `qrtarjetavisita`. Resta confianza, parte las visitas y rompe el seguimiento del Escáner. | Alta | Enlazar el Escáner a `masesora.es` con la etiqueta de origen; decidir qué otros destinos son públicos y darles dominio propio. |
+| .com | Dice «Beta privada · Lista de acceso abierta». Contradice la decisión del 12 nov (imagen de empresa consolidada; nada de «beta», «piloto» ni «plazas de lanzamiento»). | Alta | Cambiar el texto (decisión de copy de Maite). |
+| .com y .es | Cada dominio tiene una sola página con contenido (más las legales en .com). No hay nada que pueda posicionar por lo que busca un dueño de negocio. | Alta (estratégica) | Una guía por síntoma de la UCI (3), con el lenguaje del cliente que ya está en `symptoms.json`; empezar por una. |
+| .com | Título de 32 caracteres, solo marca («MASESORA · Dinamismo Empresarial»). | Media | Título con la promesa: p. ej. «MASESORA · Diagnóstico gratuito de tu negocio en 10 minutos» (60). |
+| .com y .es | Tildes que faltan en mayúsculas: H1 de .com («LA CLINICA») y un H2 de .es («ESCANER DE SALUD EMPRESARIAL»). | Media | Corregir (también es ortografía de marca). |
+| .es | JSON-LD solo de tipo `Service`; .com ya tiene Organization, Person, Service, WebSite y FAQPage. | Baja | Añadir Organization y FAQPage. |
+| app | `sitemap.xml` devuelve la app (200) y no hay `robots.txt`. Irrelevante mientras sea `noindex`. | Baja | Servir un `robots.txt` de bloqueo; no urgente. |
+
+### C. Frases candidatas (hipótesis, sin datos de volumen)
+Caja (UCI-S1): «mi negocio no tiene liquidez», «cómo mejorar la tesorería de mi negocio», «por qué no tengo dinero si vendo». Cobros (UCI-S2): «cómo reclamar una factura que no pagan», «clientes que tardan en pagar». Margen (UCI-S3): «cómo calcular el margen de mi negocio», «vendo mucho y gano poco». Transversal: «diagnóstico gratuito de mi empresa», «asesoría para autónomos en Alicante / Marina Baixa». Se contrastan con Search Console a las 4-6 semanas.
+
+### D. Plan de trabajo único (SEO + producto + legal), por orden de impacto
+**Antes de cobrar al primer cliente**
+1. **Contrato y factura de las compras de 99 € y 198 €** (Claude, ~1 día). Hoy las plantillas solo conocen PRE, PAE y PIE: una compra de 1 síntoma saldría con el texto del PRE («hasta 3 síntomas, 3 meses») y sin la garantía de mejora. Variante «Tratamiento por síntoma».
+2. **Plan de marketing v2: precios** (Claude, 15 min). La línea «PRE 399 € o 999 €» pasa a 99 / 198 / 249 €.
+3. **Prueba de pago de principio a fin** (Maite): 1 síntoma, que cobre, active la cuenta, mande el correo y genere el contrato.
+4. **.com sin «Beta» y con el Escáner en `masesora.es`** (Claude + Maite, 1 h, y publicar con `publicar-landing.sh`).
+5. **Tildes y título de .com** (Claude, 30 min).
+
+**Semanas 1 a 2**
+6. **Lista de espera «Quirófano Ocupado»** (Claude el código; el texto de privacidad lo cierra el asesor).
+7. **Asesor legal:** Términos §7, política de privacidad (lista de espera) y el anexo 13 de la política de precios.
+8. **Acortar la pantalla previa al precio** (Claude): reordenar bienvenida, síntomas, precio y garantía; lo explicativo, debajo.
+9. **Search Console** (Maite): comprobar qué páginas están indexadas y reenviar los sitemaps.
+10. **Google Business Profile** (Maite): ficha con Polop y el área de servicio.
+
+**Semanas 2 a 4**
+11. **Primera guía por síntoma** y, si funciona, las otras dos (Claude redacta desde `symptoms.json`; Maite revisa el registro de Manoli, Paqui y Felipe).
+12. **Objetivo personalizado del cliente persistente** (hoy solo vive en la sesión).
+
+**Con clientes reales:** base de datos con copias de seguridad (M10), Render de pago, medir las duraciones reales de las cookies, aprobar el método del catálogo (§LXI.D).
+
+**Siempre en marcha (Maite):** WhatsApp a conocidos, las 12 piezas (miércoles 13:00 y domingo 10:00) y la medición de los viernes. **Metas:** 30 informes y 10 conversaciones el 8 de diciembre; 2 o 3 pagos el 15 de enero, cuando se revisan precios y oferta.
+
+**Disciplina.** No invertir en más SEO hasta tener los datos de Search Console (4-6 semanas): un dominio nuevo y local tarda de 3 a 6 meses en dar tráfico, y Instagram y las conversaciones siguen siendo la vía a corto plazo.
+
+---
+
 ---
 
 ---
@@ -3183,3 +3231,4 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 *§LXVII añadida en sesión 10 nov 2026 (cont.) — hay 0 informes del Escáner: nadie lo ha visto, así que el cuello es la demanda y no el producto. Se congela el catálogo; umbrales por etapas (30 informes de desconocidos y 10 conversaciones hasta el 8 dic; 2 pagos hasta el 15 ene), tres tareas de Maite esta semana, arnés automático del banco de 176 por Claude y asesorías piloto como plan B.*
 *§LXVIII añadida en sesión 12 nov 2026 — lo técnico ejecutado sin decisiones (erratas, correos, límite de uso de Tu Solución, carpetas de contenido, scripts de conteo y del banco de 176, disponibilidad solo-UCI en ramas) y los hallazgos: el objetivo personalizado no se guarda y el pago del síntoma suelto está roto.*
 *§LXIX añadida en sesión 12 nov 2026 (cont.) — garantía de mejora medida de todos los planes y sin devolución (revisable), consultor asignado público y horas internas, solo UCI en venta con «Quirófano Ocupado» y PAE/PIE en gris, síntoma suelto de 99 € sí, sin plazas de lanzamiento, y limpieza hecha.*
+*§LXX añadida en sesión 13 nov 2026 — revisión global en vivo de las tres webs, Fase 0 de SEO verificada como aplicada, hallazgos nuevos (enlaces a dominios de Render, «Beta», una sola página por dominio) y plan de trabajo único con lo pendiente.*
