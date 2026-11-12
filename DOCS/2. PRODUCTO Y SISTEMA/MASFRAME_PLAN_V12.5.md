@@ -3171,6 +3171,43 @@ Caja (UCI-S1): «mi negocio no tiene liquidez», «cómo mejorar la tesorería d
 
 ---
 
+## LXXI. SESIÓN 13 NOV 2026 (cont.) — Lo ejecutado, lo desplegado y lo que queda para mañana
+
+**Ejecutado hoy (con commit).**
+| Qué | Backend (`Masesora/Masframe`) | Frontend / webs |
+|---|---|---|
+| Versión de validación: 99 € por síntoma, 198 € con dos, 249 € con tres (PRE); PAE y PIE congelados; solo la tarjeta que encaja | `467fc1b`, `9c2192e`, `2fc0c59` | `27009a2` |
+| Anexo 13 de la política de precios (sin tocar lo anterior) | `2fc0c59` | — |
+| Contrato y factura: variante «Tratamiento por síntoma»; Garantía 05 = garantía de mejora medida, sin devolución; plan y síntomas guardados al pagar | `1f3cd89` | — |
+| Plan de marketing v2 con los precios nuevos; revisión global §LXX | `1f3cd89`, `41242ec` | — |
+| Sección «Así es el tratamiento» con el texto de Maite (4 pasos horizontales; paso 4: «La mejora, medida y garantizada») | — | `5627726`, `f53c865` |
+| `masesora.com`: fuera «Beta privada», botón al diagnóstico en `masesora.es` con origen, tilde y título | — | `17d3dc3` (fuente) y `6da2341` (repo que publica, comprobado en vivo) |
+| Lista de espera «Recomendado para ti · Quirófano Ocupado», con consentimiento y privacidad actualizada | `407e83c` | `591417f` |
+
+**Corrección a §LXX.** El dominio técnico `ese-cc2u.onrender.com` solo aparecía en la precarga y en los datos estructurados de `.com`, no en los botones. El hueco real era otro: ningún botón de `.com` llevaba al Escáner. Ya lo lleva.
+
+**Estado del despliegue del backend (Render, manual).** Confirmado por Maite: `2fc0c59`. **Pendiente de desplegar: `1f3cd89` (contrato y factura) y `407e83c` (lista de espera).** Hasta entonces los contratos salen con el texto antiguo y el botón «Apuntarme» daría error (el frontend ya está publicado).
+
+**Lo que Maite revisa esta noche.** El plan de marketing v2: **no incluye los prompts para ejecutar con Claude** (por ejemplo `/motion` para las animaciones) **ni los guiones completos** listos para grabar. Se añade mañana.
+
+**Para mañana, por orden.**
+1. **Maite:** desplegar el backend (`407e83c`), la prueba de pago de principio a fin con 1 síntoma y comprobar en `/scanner-reception/MAS-31XRG4JO` los precios 99 / 198 / 249 € y, si el cliente tiene recomendados fuera de la UCI, la lista de espera.
+2. **Plan de marketing v2: prompts ejecutables y guiones.** Para cada una de las 12 piezas: el guion completo (con lo que dice `symptoms.json`), el prompt de Claude para producirla (animación con `/motion`, diseño, texto de pantalla, pie, hashtags) y la lista de comprobación. Sin «IA» en el texto al cliente, sin culpar al dueño, ejemplos etiquetados como *ilustrativos*.
+3. **Acortar la pantalla previa al precio** (propuesta: bienvenida y «Hoy tratamos tu dinero», síntomas, precio con el WhatsApp de Maite, garantía y, debajo, lo explicativo).
+4. **`masesora.es` (repo `Masesora/ESE`):** tilde del H2 «ESCÁNER» y datos estructurados Organization y FAQPage.
+5. **Asesor legal (Maite):** Términos §7, Garantía 05 y cláusulas 10 y 14 del contrato, política de privacidad (lista de espera) y anexo 13 de la política de precios.
+6. **Contrato y factura de adicionales:** hoy se guardan en un solo documento por cliente y el siguiente sobrescribe al anterior. Resolver antes de vender adicionales.
+7. **Primera guía por síntoma** (la de Caja, UCI-S1), desde `symptoms.json`.
+8. **Objetivo personalizado del cliente persistente** (hoy solo vive en la sesión).
+9. **Panel de administración:** los contadores por plan no cuentan el plan nuevo «SUELTO».
+10. **Dominios:** decidir cuáles de los botones de `.com` a Render (Tu Solución, landing de MAS@FRAME, tarjeta de visita) tienen dominio propio. Confirmar si la landing de MAS@FRAME publicada ya dice «Desde 249 €» y revisar la calculadora de `diagnostico_síntomas.html` (dice «399 €/mes»).
+
+**Tuyo, siempre en marcha.** Search Console (qué páginas están indexadas, reenviar los sitemaps), ficha de Google Business Profile, WhatsApp a conocidos, programar y publicar las piezas (miércoles 13:00 y domingo 10:00), medición de los viernes. **Metas:** 30 informes y 10 conversaciones el 8 de diciembre; 2 o 3 pagos el 15 de enero, cuando se revisan precios y oferta.
+
+**Con clientes reales.** Base de datos con copias de seguridad (M10), Render de pago, duraciones reales de las cookies, aprobar el método del catálogo (§LXI.D).
+
+---
+
 ---
 
 ---
@@ -3233,3 +3270,4 @@ Caja (UCI-S1): «mi negocio no tiene liquidez», «cómo mejorar la tesorería d
 *§LXVIII añadida en sesión 12 nov 2026 — lo técnico ejecutado sin decisiones (erratas, correos, límite de uso de Tu Solución, carpetas de contenido, scripts de conteo y del banco de 176, disponibilidad solo-UCI en ramas) y los hallazgos: el objetivo personalizado no se guarda y el pago del síntoma suelto está roto.*
 *§LXIX añadida en sesión 12 nov 2026 (cont.) — garantía de mejora medida de todos los planes y sin devolución (revisable), consultor asignado público y horas internas, solo UCI en venta con «Quirófano Ocupado» y PAE/PIE en gris, síntoma suelto de 99 € sí, sin plazas de lanzamiento, y limpieza hecha.*
 *§LXX añadida en sesión 13 nov 2026 — revisión global en vivo de las tres webs, Fase 0 de SEO verificada como aplicada, hallazgos nuevos (enlaces a dominios de Render, «Beta», una sola página por dominio) y plan de trabajo único con lo pendiente.*
+*§LXXI añadida en sesión 13 nov 2026 (cont.) — lo ejecutado con sus commits, el estado de despliegue del backend, la nota sobre los prompts y guiones del plan de marketing, y el orden de trabajo de mañana.*
