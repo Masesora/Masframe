@@ -74,7 +74,7 @@ def build_contract_from_scanner(scanner: ScannerOutput) -> Contract:
     price = get_product_price(plan, facturacion)
 
     # 5. Garantía PRE si aplica
-    guarantee = PRICING_POLICY["guarantee_pre"] if plan == "PRE" else None
+    guarantee = PRICING_POLICY["guarantee_pre"]  # garantía de mejora medida: todos los planes
 
     # 6. Construir contrato oficial
     return Contract(

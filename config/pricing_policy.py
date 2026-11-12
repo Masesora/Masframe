@@ -60,24 +60,23 @@ PRICING_POLICY = {
     },
 
     "guarantee_pre": {
-        "title": "Garantía de Resultado sobre el PRE",
+        "title": "Garantía de mejora medida",
         "summary": (
-            "O el protocolo funciona, o no lo pagas. "
-            "Si el KPI maestro no se alcanza en 6 semanas, el PRE se suspende y extendemos el servicio sin coste. "
-            "Si tras 3 meses adicionales no se logra, devolvemos el PRE íntegro."
+            "Medimos tu indicador principal antes y después. "
+            "Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore."
         ),
         "conditions": {
             "activation": (
-                "Semana 6: si el KPI maestro no se cumple y el protocolo ha sido ejecutado correctamente, "
-                "el PRE queda suspendido y se activa una extensión clínica gratuita del servicio."
+                "Si el cliente completa el protocolo (todas las capas del tratamiento, con su Agente de Cambio Interno) "
+                "y el indicador principal no ha mejorado respecto a su punto de partida, se amplía el servicio "
+                "sin coste adicional hasta que mejore."
             ),
             "limit": (
-                "Si tras 3 meses adicionales el KPI maestro sigue sin alcanzarse, se procede a la devolución íntegra del importe del PRE. "
-                "El PIE se mantiene siempre como pago por diagnóstico y hoja de ruta clínica."
+                "Esta garantía no da derecho a la devolución del precio. La Titular puede revisar sus condiciones "
+                "para contrataciones futuras; a cada contrato se le aplican las vigentes en el momento de su contratación."
             ),
             "exclusions": (
-                "La garantía no aplica a PIE ni PAE, ni a casos sin ejecución completa del protocolo, "
-                "ni a situaciones con inacción o incumplimientos del cliente."
+                "No se aplica si el protocolo no se completa, ni en casos de inacción o incumplimiento por parte del cliente."
             )
         }
     }

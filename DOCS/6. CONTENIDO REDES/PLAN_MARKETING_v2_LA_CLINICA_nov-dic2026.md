@@ -16,12 +16,13 @@
 
 ### Frases que SÍ se pueden decir
 - «Un diagnóstico gratis de 10 minutos.»
-- «Si a las 6 semanas el indicador principal no ha mejorado, ampliamos el servicio sin coste; y si tras tres meses más sigue sin mejorar, devolvemos el importe del plan PRE.» *(Solo PRE, con las condiciones de los Términos §7: protocolo completo y sin inacción del cliente.)*
+- «Medimos tu número antes y después. Si haces el tratamiento completo y no mejora, seguimos trabajando sin coste hasta que mejore.» *(Garantía de mejora medida, de todos los planes, con las condiciones de los Términos §7. No hay devolución del precio.)*
 - «Casi nadie ha tenido nunca un sistema para esto; no es cuestión de hacerlo mejor o peor.»
 
 ### Frases que NO se dicen
-- «Siempre superarás el KPI», «resultado garantizado al 100 %», «garantía total», «tu empresa siempre obtendrá resultados positivos», «si no, no lo pagas» (sin las condiciones).
-- Cualquier garantía asociada al PIE o al PAE.
+- «Siempre superarás el KPI», «resultado garantizado al 100 %», «garantía total», «tu empresa siempre obtendrá resultados positivos», «si no, no lo pagas», «te devolvemos el dinero».
+- Cualquier promesa de devolución del precio.
+- «Plazas de lanzamiento», «piloto», «beta»: la marca es de empresa consolidada; los casos de éxito se publican poco a poco.
 - «IA»: se dice «Masesora».
 - Ninguna frase que culpe al dueño («si te centraras», «deberías»).
 - Nada que sugiera que existen especialidades o un local que aún no existen. La imagen de la clínica física, siempre como *«así imaginamos nuestra clínica»*.

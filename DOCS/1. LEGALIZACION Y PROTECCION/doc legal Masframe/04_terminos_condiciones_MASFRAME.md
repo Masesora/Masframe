@@ -39,13 +39,14 @@ MASFRAME® ofrece:
 ## 6. Duración y fin del servicio
 
 - La duración es la del plan contratado.
-- Puedes dejar de usar el servicio cuando quieras escribiendo a info@masesora.com. No se devuelve el importe de lo ya prestado, salvo la garantía de resultado del apartado 7 y el derecho de desistimiento del apartado 8.
+- Puedes dejar de usar el servicio cuando quieras escribiendo a info@masesora.com. No se devuelve el importe de lo ya prestado, salvo el derecho de desistimiento del apartado 8.
 
-## 7. Garantía de resultado del PRE
+## 7. Garantía de mejora medida
 
-- **Semana 6:** si el KPI maestro no se ha alcanzado y has ejecutado correctamente el protocolo, el PRE se suspende y activamos una extensión gratuita del servicio.
-- **Si pasados 3 meses más** el KPI maestro sigue sin alcanzarse, te **devolvemos íntegro el importe del PRE**.
-- **No se aplica** a los planes PIE y PAE, a los casos en que no se haya ejecutado el protocolo completo, ni a situaciones de inacción o incumplimiento por parte del cliente.
+- **En todos los planes**, el tratamiento se mide al empezar y al terminar. Si completas el protocolo (todas las capas del tratamiento, con tu Agente de Cambio Interno) y tu indicador principal no ha mejorado respecto a tu punto de partida, **ampliamos el servicio sin coste adicional** hasta que mejore.
+- Esta garantía **no da derecho a la devolución del precio**.
+- **No se aplica** si el protocolo no se completa, ni en casos de inacción o incumplimiento por parte del cliente.
+- La Titular puede **revisar las condiciones de esta garantía** para contrataciones futuras. A cada contrato se le aplican las condiciones vigentes en el momento de su contratación.
 
 ## 8. Derecho de desistimiento (consumidores)
 
