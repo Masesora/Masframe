@@ -30,7 +30,7 @@ def get_clients_collection():
 # 2026: una empresa de ese tamaño necesita una conversación antes de comprometerse a un
 # checkout automático, no cobro en línea para ese tramo.
 PRECIOS_EUR = {
-    "PRE": [399, 999],
+    "PRE": [249, 249],  # precio único del PRE (12 nov 2026); antes 399 / 999 según facturación
     "PAE": [999, 2900],
     "PIE": [1499, 4500],
 }
@@ -102,7 +102,7 @@ async def create_payment_intent(data: dict):
         plan = _plan_por_num_sintomas(len(sintomas))
         if plan == "SUELTO":
             # Un síntoma suelto por cliente desde el Escáner: si pudiera repetirse, tres compras
-            # de 99 € saldrían más baratas que el PRE (399 €). Los siguientes los recomienda el
+            # de 99 € saldrían más baratas que el PRE (249 €). Los siguientes los recomienda el
             # consultor (modo «adicional») o pasa al PRE.
             if cliente.get("fase") == "pago_completado":
                 raise HTTPException(

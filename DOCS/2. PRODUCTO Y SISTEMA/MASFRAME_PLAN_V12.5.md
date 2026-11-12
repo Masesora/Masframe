@@ -241,7 +241,7 @@ La fuente de verdad es siempre `symptoms.json`. Algunos nombres en el plan anter
 | Síntomas | Hasta 3 | 4 a 6 | 7 a 10 |
 | Consultor | Sin asignar | Activo en 2 ciclos | Presente siempre |
 | Garantía | No | No | **Total** |
-| Precio < 15k€/año | 399€ | 999€ | 1.499€ |
+| Precio < 15k€/año | 249€ (PRE, precio único desde el 12 nov 2026; antes 399€ / 999€) | 999€ | 1.499€ |
 | Precio 15k–499k€/año | 999€ | 2.900€ | 4.500€ |
 | Precio ≥ 500k€/año | 2.499€ | 9.999€ | 24.499€ |
 
@@ -257,7 +257,7 @@ Opción de compra unitaria fuera de los planes PRE/PAE/PIE.
 3. Cliente hace clic → Stripe → paga 99€
 4. Síntoma se activa en `sintomas_activos`
 
-**Contexto:** Upsell dentro de la relación clínica (no venta fría). Entrada más accesible del sistema (99€ vs 399€+ de planes).
+**Contexto:** Upsell dentro de la relación clínica (no venta fría). Entrada más accesible del sistema (99€ vs 249€ del PRE).
 
 ### Pricing Beta
 
@@ -590,7 +590,7 @@ Ambos están consolidados en **ESTADO Y REGLAS VIGENTES §C y §D**. Aquí no se
 
 Flujo: Admin/CC recomienda → aparece en TriajePage con botón de compra → Stripe → 99€ → síntoma activo en `sintomas_activos`.
 
-Contexto: Upsell dentro de relación clínica. Entrada más accesible (99€ vs 399€+ planes). Al hablar de precios MASESORA, mencionar como primera opción de acceso.
+Contexto: Upsell dentro de relación clínica. Entrada más accesible (99€ vs 249€ del PRE). Al hablar de precios MASESORA, mencionar como primera opción de acceso.
 
 ---
 
@@ -3110,6 +3110,11 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 6. **Plazas de lanzamiento: no.** Imagen de empresa consolidada; el acompañamiento personal es el valor; los casos se publican poco a poco.
 7. **Pantalla muy larga:** hay que acortarla; propuesta de reordenar (diagnóstico y precio primero, explicación después).
 8. Objetivo personalizado por el cliente (sin guardar) y Render de pago: más adelante, con clientes.
+
+9. **PAE y PIE congelados (decisión 12 nov, tarde).** Siguen en el código (`PLANES_CONGELADOS` en `ScannerReceptionPage.tsx`; `PRECIOS_EUR` y `_plan_por_num_sintomas` en el servidor) pero **no se muestran**. Se reactivan cuando se **valide el producto** y haya síntomas disponibles para ellos (4 para el PAE, 7 para el PIE): se quitan de esa lista y se retoca la pantalla. No se borra nada.
+10. **Pantalla de planes: solo la tarjeta que encaja.** Con 1 síntoma marcado sale solo «Un síntoma · 99 €»; con 2 o 3, solo el PRE. Con 0 o más de 3 sale un aviso. Cada plan solo se contrata si encaja con los síntomas marcados (antes se podía pulsar el PRE con 5 y se cobraba otro importe).
+11. **Síntoma suelto de 99 €, resuelto:** precio en el servidor (`PRECIO_SINTOMA_SUELTO`), un suelto por cliente desde el Escáner (si ya pagó, el servidor lo rechaza) y los adicionales que recomienda el consultor a 99 € cada uno. El descuento de los 99 € dentro del PRE queda **sin implementar** y sin prometer.
+12. **PRE a 249 € (precio único).** Sustituye a 399 € (facturación < 15.000 €/mes) y 999 € (≥ 15.000 €/mes): al PRE se le quitan los tramos. Con 249 €, tres síntomas sueltos (297 €) ya no salen más baratos que el PRE, pero dos (198 €) sí; por eso se mantiene el límite de un suelto por cliente. PAE y PIE conservan sus tramos mientras estén congelados.
 
 **Limpieza hecha (con comprobación de que no afecta a nada visible):** worktree viejo de 73 MB del frontend y rama remota `claude/new-session-it9am3` de Masframe (su único commit ya estaba en `main` como #47).
 

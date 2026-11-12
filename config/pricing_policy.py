@@ -49,8 +49,8 @@ PRICING_POLICY = {
             "name": "Plan de Rescate Estratégico",
             "description": "Diagnóstico profundo por especialidad, identificación de síntomas y hoja de ruta clínica.",
             "prices": {
-                "low": 399,
-                "high": 999
+                "low": 249,
+                "high": 249
             }
         }
     },

@@ -488,7 +488,7 @@ async def send_pago_email(
     codigo:       str,
     sintomas_ids: list,
     plan:         str = "PRE",
-    importe:      float = 399,
+    importe:      float = 249,
 ):
     if not RESEND_API_KEY:
         raise ValueError("RESEND_API_KEY no configurada")
