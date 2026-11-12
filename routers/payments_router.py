@@ -29,16 +29,22 @@ def get_clients_collection():
 # tiene precio fijo -- "Consultar" (ver _tier_facturacion), decisión de producto sesión 8 ago
 # 2026: una empresa de ese tamaño necesita una conversación antes de comprometerse a un
 # checkout automático, no cobro en línea para ese tramo.
+PRECIO_PRE = 249  # PRE: precio único (ver bloque de VALIDACIÓN más abajo)
 PRECIOS_EUR = {
-    "PRE": [249, 249],  # precio único del PRE (12 nov 2026); antes 399 / 999 según facturación
+    "PRE": [PRECIO_PRE, PRECIO_PRE],  # 249 € único (validación); antes 399 / 999 según facturación
     "PAE": [999, 2900],
     "PIE": [1499, 4500],
 }
 
-# Síntoma suelto: 99 € por síntoma, igual para cualquier facturación (sin tramos).
-# Decisión de Maite, 12 nov 2026. DEBE coincidir con getPrecio("SUELTO") en
-# ScannerReceptionPage.tsx y con PRECIO_SINTOMA en TriajePage.tsx.
+# VERSIÓN DE VALIDACIÓN (provisional, decisión de Maite, 12 nov 2026): 99 € por síntoma, con tope
+# de 249 € por los tres (PRE). 1 síntoma = 99 €, 2 = 198 €, 3 = 249 €. Igual para cualquier
+# facturación. DEBE coincidir con getPrecio() en ScannerReceptionPage.tsx y con PRECIO_SINTOMA en
+# TriajePage.tsx. PAE y PIE siguen con sus precios, pero están congelados (no se venden).
 PRECIO_SINTOMA_SUELTO = 99
+
+
+def precio_validacion(n: int) -> int:
+    return min(PRECIO_SINTOMA_SUELTO * n, PRECIO_PRE)
 
 
 def _tier_facturacion(facturacion: float) -> "int | None":
@@ -50,9 +56,9 @@ def _tier_facturacion(facturacion: float) -> "int | None":
 
 
 def _plan_por_num_sintomas(n: int) -> str:
-    if n == 1:
+    if n <= 2:
         return "SUELTO"
-    if n <= 3:
+    if n == 3:
         return "PRE"
     if n <= 6:
         return "PAE"
@@ -100,23 +106,16 @@ async def create_payment_intent(data: dict):
         precio_eur = PRECIO_SINTOMA_SUELTO * len(sintomas)
     else:
         plan = _plan_por_num_sintomas(len(sintomas))
-        if plan == "SUELTO":
-            # Un síntoma suelto por cliente desde el Escáner: si pudiera repetirse, tres compras
-            # de 99 € saldrían más baratas que el PRE (249 €). Los siguientes los recomienda el
-            # consultor (modo «adicional») o pasa al PRE.
-            if cliente.get("fase") == "pago_completado":
-                raise HTTPException(
-                    status_code=400,
-                    detail="Ya tienes un tratamiento activo. Habla con tu consultor para añadir más síntomas.",
-                )
-            precio_eur = PRECIO_SINTOMA_SUELTO
+        if plan in ("SUELTO", "PRE"):
+            # Versión de validación: 1 = 99 €, 2 = 198 €, 3 = 249 € (tope). Sin tramos de
+            # facturación y sin límite de compras: comprar los tres por separado cuesta 297 €,
+            # más que el tope, así que no hay forma de salir ganando esquivando el PRE.
+            precio_eur = precio_validacion(len(sintomas))
         else:
+            # PAE y PIE (congelados): conservan sus tramos por facturación.
             facturacion = float(cliente.get("facturacion") or 0)
             tier = _tier_facturacion(facturacion)
             if tier is None:
-                # Defensa en profundidad: el frontend ya no deja llegar hasta aquí para este tramo
-                # (bloquea el checkout y redirige a contacto), pero el servidor tampoco confía en
-                # eso -- si de algún modo se llega, se rechaza en vez de cobrar cualquier cosa.
                 raise HTTPException(
                     status_code=400,
                     detail="Esta facturación requiere una propuesta a medida — contacta con el equipo antes de proceder al pago",

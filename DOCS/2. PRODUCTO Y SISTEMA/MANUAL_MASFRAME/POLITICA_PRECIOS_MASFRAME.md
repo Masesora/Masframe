@@ -402,3 +402,38 @@ Este documento maestro sirve como **manual interno**, **política clínica**, **
 
 Todo converge en un principio único:  
 si el caso exige más profundidad, más presión y más responsabilidad sobre el resultado, el punto de llegada natural es el **PIE – Plan de Impulso Empresarial**, el flagship clínico del modelo MAS@FRAME®. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/111015919/de9c9ebd-9ffd-471d-8a4f-5a3b26205610/POLITICA_PRECIOS_MASFRAME.md)
+
+
+***
+
+## 13. VERSIÓN DE VALIDACIÓN (provisional) · desde el 12 de noviembre de 2026
+
+**Qué es.** Un anexo que se **añade** a esta política sin tocar lo anterior. Mientras se valida el producto, **para lo que se vende hoy**, manda este apartado sobre el 7.2 (precios) y sobre lo que el documento dice de garantía. Todo lo demás se mantiene tal cual.
+
+### 13.1 Qué se vende en la validación
+Solo se vende la **UCI** (los tres síntomas financieros: Obstrucción de Caja, Fuga Invisible y Anemia de Margen). El resto de tratamientos aparece como «Quirófano Ocupado» y se ofrecerá con una lista de espera.
+
+### 13.2 Precios
+| Síntomas elegidos | Precio | Qué es |
+|---|---|---|
+| 1 | **99 €** | Tratamiento de un síntoma |
+| 2 | **198 €** | 2 × 99 € |
+| 3 | **249 €** | **PRE**: tope por los tres síntomas de la UCI |
+
+- **El precio es el mismo para cualquier facturación.** No hay tramos de 15.000 €/mes en la validación.
+- **El PRE ya no cuesta 399 € / 999 €:** son **249 €**, y solo se contrata con los tres síntomas.
+- Los síntomas que el consultor recomienda a un cliente que ya está en tratamiento se cobran a **99 € cada uno**.
+- Comprar los tres por separado cuesta 297 €, más que el tope de 249 €: no hay forma de salir ganando esquivando el PRE.
+- No hay descuento comercial ni se negocia el precio.
+
+### 13.3 Garantía
+En todos los productos: **garantía de mejora medida, sin devolución del precio**. Se mide el indicador al empezar y al terminar; si se completa el tratamiento (con el Agente de Cambio Interno) y el indicador no mejora, se amplía el servicio sin coste hasta que mejore. Las condiciones son las de los Términos y Condiciones §7, que se pueden revisar para contrataciones futuras. Esto sustituye a lo que el apartado 6.4 dice de devolución del importe.
+
+### 13.4 Consultor
+Todos los tratamientos tienen un consultor asignado. La dedicación de horas es dato interno y no se comunica.
+
+### 13.5 Congelado hasta validar el producto
+**PAE y PIE** (con sus precios del 7.2), **los descuentos clínicos del PIE (apartado 8)** y **la conversión automática PAE → PIE (apartado 9)** siguen en el código y en este documento, pero **no se venden ni se muestran**. Se reactivan cuando el producto esté validado y haya síntomas disponibles para ellos.
+
+### 13.6 Cuándo se revisa
+El **15 de enero de 2027**, con los datos de las metas del plan (30 informes, 10 conversaciones, 2 o 3 pagos). Hasta entonces los precios de este apartado no cambian.
