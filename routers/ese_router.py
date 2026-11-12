@@ -467,6 +467,44 @@ async def apuntar_lista_espera(
     return {"status": "ok", "sintomas": ids}
 
 
+# Resumen para el panel de administración (solo consultores y admin). Cuenta personas, no avisos.
+# Se marcan como «prueba» las que parecen de prueba (mismo criterio que scripts/contar_informes_escaner.py)
+# y no cuentan en el total: la demanda real es lo que decide qué especialidad se abre después.
+_PATRON_PRUEBA = re.compile(r"prueba|test|ejemplo|claude|@masesora\.", re.I)
+
+
+@router.get("/lista-espera/resumen")
+async def resumen_lista_espera(user: dict = Depends(require_cc_or_admin)):
+    docs = list(get_lista_espera_collection().find({"activo": True}, {"_id": 0}).sort("created_at", -1).limit(500))
+    info = {x.get("symptom_id"): (x.get("symptom_name", ""), x.get("specialty_id", "")) for x in SYMPTOMS}
+
+    def es_prueba(d):
+        return bool(_PATRON_PRUEBA.search(str(d.get("email", ""))) or _PATRON_PRUEBA.search(str(d.get("empresa", ""))))
+
+    contador = {}
+    items = []
+    for d in docs:
+        prueba = es_prueba(d)
+        if not prueba:
+            for sid in d.get("sintomas", []):
+                contador[sid] = contador.get(sid, 0) + 1
+        fecha = d.get("created_at")
+        items.append({
+            "codigo": d.get("codigo", ""),
+            "email": d.get("email", ""),
+            "empresa": d.get("empresa", ""),
+            "sintomas": d.get("sintomas", []),
+            "apuntado": fecha.isoformat() if hasattr(fecha, "isoformat") else str(fecha or ""),
+            "prueba": prueba,
+        })
+    por_sintoma = sorted(
+        [{"id": sid, "nombre": info.get(sid, ("", ""))[0], "especialidad": info.get(sid, ("", ""))[1], "personas": n}
+         for sid, n in contador.items()],
+        key=lambda x: (-x["personas"], x["id"]),
+    )
+    return {"total": sum(1 for i in items if not i["prueba"]), "total_con_pruebas": len(items), "por_sintoma": por_sintoma, "items": items}
+
+
 # ⭐ FASE 2 — PATCH /ese/{codigo}
 # ─────────────────────────────────────────────────────────────
 
