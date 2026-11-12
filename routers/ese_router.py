@@ -495,6 +495,20 @@ async def actualizar_pago(
                         status_code=400,
                         detail="Los síntomas a activar no coinciden con los que se pagaron",
                     )
+        # Qué se ha contratado, para el contrato, la factura y el panel de administración:
+        # el plan y los síntomas pagados salen de los metadatos que fijó el servidor al crear el
+        # PaymentIntent (el cliente no puede tocarlos). Sin esto el contrato salía siempre como PRE.
+        meta_pago = intent.metadata or {}
+        pagados_ids = [x for x in (meta_pago.get("sintomas") or "").split(",") if x]
+        if pagados_ids:
+            previos_c = cliente.get("sintomas_contratados") or cliente.get("sintomas_activos") or []
+            update_data["sintomas_contratados"] = sorted(set(str(x) for x in previos_c) | set(pagados_ids))
+        if meta_pago.get("plan"):
+            if meta_pago.get("tipo") == "adicional":
+                # un adicional no cambia el plan del cliente (si aún no tenía, queda «por síntoma»)
+                update_data["plan"] = cliente.get("plan") or "SUELTO"
+            else:
+                update_data["plan"] = meta_pago["plan"]
         update_data["fase"] = "pago_completado"
         update_data["fecha_activacion"] = ahora.isoformat()
 

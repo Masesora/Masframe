@@ -8,7 +8,7 @@
 
 **Oferta:** *La Clínica de Empresas para tu negocio.* Gancho gratuito: el **Escáner de Salud Empresarial** (10 minutos, informe por email). Primer tratamiento disponible: **la UCI financiera**, tres síntomas que son dinero: **caja, cobros y margen**.
 
-**Lo que se vende:** el **plan PRE** (hasta 3 síntomas), 399 € o 999 € según la facturación. El servidor elige el plan por el número de síntomas (1-3 PRE, 4-6 PAE, 7-10 PIE), así que con solo tres síntomas disponibles **el único plan posible es el PRE**. Un cliente que compra la UCI es **una venta**, no tres.
+**Lo que se vende (versión de validación, desde el 12 nov):** **99 € por síntoma, con tope de 249 € por los tres** (el PRE): 1 síntoma = 99 €, 2 = 198 €, 3 = 249 €. El precio es el mismo para cualquier facturación. El servidor calcula el importe por el número de síntomas, y PAE y PIE están congelados. Un cliente que compra la UCI entera es **una venta de 249 €**; quien empieza con uno puede completar después. Detalle en el anexo 13 de `POLITICA_PRECIOS_MASFRAME.md`.
 
 **La línea de venta, en una frase:** *«Tu negocio es un paciente. En 10 minutos te digo qué síntoma tiene, y si lo tratamos, lo medimos.»*
 

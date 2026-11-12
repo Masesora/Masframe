@@ -41,7 +41,7 @@ def _build_datos(doc: dict) -> dict:
         "ciudad":        doc.get("ciudad", ""),
         "codigo_postal": doc.get("codigo_postal", ""),
         "plan":          doc.get("plan", "Plan MASFRAME"),
-        "sintomas":      doc.get("sintomas_contratados", []),
+        "sintomas":      doc.get("sintomas_contratados") or doc.get("sintomas_activos") or [],
         "importe":       float(doc.get("importe", 0)),
         "fecha":         doc.get("fecha_activacion") or datetime.utcnow().strftime("%Y-%m-%d"),
     }

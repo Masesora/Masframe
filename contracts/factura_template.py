@@ -63,6 +63,14 @@ def generar_factura_html(datos: dict) -> str:
         for s in sintomas
     )
 
+    # Nombre comercial del plan en la línea de factura (el contrato usa el código: SUELTO, PRE...)
+    plan_nombre = {
+        "SUELTO": "Tratamiento por síntoma · MASFRAME®",
+        "PRE": "Plan de Rescate Estructural (PRE) · MASFRAME®",
+        "PAE": "Plan de Actuación Estratégica (PAE) · MASFRAME®",
+        "PIE": "Plan de Impulso Empresarial (PIE) · MASFRAME®",
+    }.get(str(datos.get("plan", "")).upper(), datos.get("plan", "Plan MASFRAME®"))
+
     stripe_ref  = datos.get("stripe_ref", "")
     metodo_pago = datos.get("metodo_pago", "Tarjeta de crédito")
 
@@ -465,7 +473,7 @@ def generar_factura_html(datos: dict) -> str:
     <tbody>
       <tr class="plan-row">
         <td class="desc-cell">
-          <strong>{datos.get('plan', 'Plan MASFRAME®')}</strong><br/>
+          <strong>{plan_nombre}</strong><br/>
           <span style="font-size:9pt;color:#666;">Expediente: {datos.get('codigo', '')}</span>
         </td>
         <td class="amount-cell">{base:,.2f} €</td>

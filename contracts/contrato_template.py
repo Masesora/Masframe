@@ -8,10 +8,19 @@ from datetime import date
 
 # ─── Planes ───────────────────────────────────────────────────────────────────
 PLANES = {
+    # Versión de validación (12 nov 2026): 1 síntoma = 99 €, 2 = 198 €, 3 = 249 € (PRE).
+    "SUELTO": {
+        "nombre":        "Tratamiento por síntoma",
+        "ciclos":        "Protocolo C0–C6 completo del síntoma contratado, sin ciclos clínicos digitales adicionales",
+        "sintomas":      "1 o 2 síntomas",
+        "consultor":     "Asignación de CC en fase de diagnóstico",
+        "duracion_meses": 3,
+        "tiene_garantia": False,
+    },
     "PRE": {
         "nombre":        "Programa de Rescate Empresarial (PRE)",
         "ciclos":        "Protocolo C0–C6 completo sin ciclos clínicos digitales adicionales",
-        "sintomas":      "Hasta 3 síntomas",
+        "sintomas":      "Los 3 síntomas de la UCI",
         "consultor":     "Asignación de CC en fase de diagnóstico",
         "duracion_meses": 3,
         "tiene_garantia": False,
@@ -30,7 +39,7 @@ PLANES = {
         "sintomas":      "De 7 a 10 síntomas",
         "consultor":     "CC presente en todos los ciclos",
         "duracion_meses": 12,
-        "tiene_garantia": True,
+        "tiene_garantia": False,
     },
 }
 
@@ -220,22 +229,21 @@ CLAUSULAS = [
         no se mide en C0 no puede certificarse en C6. La trazabilidad es total o el
         expediente queda invalidado.</p>
 
-        <p><strong>Garantía 05 — Si el protocolo no funciona, no asumes el coste</strong>
-        <span style="color:#B89D52;font-weight:600;">(exclusiva Plan PIE).</span><br/>
-        En la semana 6 el <strong>Precision Check</strong> —el motor automático que evalúa la
-        coherencia entre las 7 capas y los KPIs— emite el veredicto. Si el ACI ha cumplido
-        con las evidencias y los objetivos no se han alcanzado, La Clínica amplía el
-        tratamiento hasta <strong>3 meses sin coste adicional</strong>. Si tras ese periodo adicional
-        el KPI Maestro sigue sin cumplir el criterio de alta, La Clínica <strong>devuelve el
-        importe íntegro</strong>. Sin negociación. Sin interpretaciones. Sin condiciones adicionales.</p>
+        <p><strong>Garantía 05 — Garantía de mejora medida</strong>
+        <span style="color:#B89D52;font-weight:600;">(todos los planes).</span><br/>
+        El tratamiento se mide al empezar (C0) y al terminar (C6). Si El Cliente completa
+        el protocolo, con su Agente de Cambio Interno, y el indicador principal no ha mejorado
+        respecto a su punto de partida, La Clínica <strong>amplía el servicio sin coste
+        adicional</strong> hasta que mejore. Esta garantía <strong>no da derecho a la devolución
+        del precio</strong>. La Clínica puede revisar sus condiciones para contrataciones futuras;
+        a este contrato se le aplican las vigentes en la fecha de su contratación.</p>
 
         <p style="background:#F8F6F0;border-left:3px solid #B89D52;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:16px;font-size:0.85rem;">
         <strong>Condiciones de elegibilidad a garantía (Garantía 05):</strong> La garantía
         queda condicionada al cumplimiento íntegro de las obligaciones de El Cliente
         establecidas en la Cláusula 4 y a la ausencia de desviaciones del protocolo
         no autorizadas por el CC. Cualquier cambio estratégico, de equipo o de datos
-        no comunicado al CC invalida la elegibilidad. El tope de garantía se fija
-        por síntoma en el Anexo I.</p>"""
+        no comunicado al CC invalida la elegibilidad.</p>"""
     ),
     (
         "9. DURACIÓN Y VIGENCIA",
@@ -260,8 +268,8 @@ CLAUSULAS = [
         en la plataforma (tarjeta bancaria, Stripe, transferencia bancaria). La confirmación
         del pago activa automáticamente el expediente clínico y el acceso a la plataforma.</p>
         <p>El importe pagado <strong>no es reembolsable</strong> salvo en los supuestos previstos
-        en la Garantía 05 (Plan PIE) o por causas de resolución imputables exclusivamente
-        a La Clínica.</p>"""
+        en los Términos y Condiciones (derecho de desistimiento) o por causas de resolución
+        imputables exclusivamente a La Clínica.</p>"""
     ),
     (
         "11. CONFIDENCIALIDAD",
@@ -325,7 +333,7 @@ CLAUSULAS = [
             previo requerimiento fehaciente con plazo de subsanación de 15 días.</li>
         <li>Imposibilidad sobrevenida y acreditada de prestación del servicio.</li>
         <li>Solicitud del Cliente con preaviso de 15 días naturales (sin reembolso del
-            importe ya abonado, salvo Garantía 05 aplicable o resolución imputable a La Clínica).</li>
+            importe ya abonado, salvo el desistimiento que corresponda o resolución imputable a La Clínica).</li>
         <li>Incumplimiento de la cláusula de confidencialidad o propiedad intelectual
             por parte del Cliente, con efectos inmediatos y sin perjuicio de las
             acciones legales que procedan.</li>
@@ -800,8 +808,8 @@ def generar_contrato_html(datos: dict) -> str:
     <div class="garantia-item">
       <div class="garantia-num">05</div>
       <div class="garantia-text">
-        <strong>Si el protocolo no funciona, no asumes el coste.</strong>
-        {"<span style='color:#E8C96A;'> Activa para Plan PIE.</span> Si el ACI cumple y el KPI Maestro no alcanza el criterio, La Clínica extiende 3 meses sin coste. Si sigue sin cumplirse, devuelve el importe íntegro. Sin negociación." if plan_info["tiene_garantia"] else "<span style='color:rgba(249,247,242,0.4);'> No aplica al plan contratado.</span>"}
+        <strong>Garantía de mejora medida.</strong>
+        Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore. No hay devolución del precio.
       </div>
     </div>
   </div>
