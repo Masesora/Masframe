@@ -3080,6 +3080,25 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 
 ---
 
+## LXVIII. SESIÓN 12 NOV 2026 — Lo técnico ejecutado sin decisiones, y lo que queda por decidir
+
+**Hecho (todo comprobado):**
+- **Erratas** de la pantalla de recepción y enlace de Instagram `@laclinicadempresas` (frontend, landing y correos del backend; frontend `9c75d2c`, backend `d94e7a2`).
+- **Copia a info@ del Escáner** con la casilla `consent_comercial`; **Google Fonts fuera** de las plantillas de contrato y factura (los correos nunca lo usaron). Backend `1558fdc`.
+- **Servidor de Tu Solución:** límite de 10 propuestas por hora y por IP en `/api/generate-prd` (cada llamada cuesta dinero en la API de Anthropic); probado, la llamada 11 devuelve 429. `tusolucion` `ffec0cf`.
+- **Carpetas de contenido** en `DOCS/6. CONTENIDO REDES/`: una por semana (47 a 52), una por pieza con `pieza.md` y `resultados.md`, `00_TEMAS.md` (12 programados + 20 ideas del catálogo) y `00_COMO_MEDIR.md`. Backend `2fd4b5a`.
+- **`scripts/contar_informes_escaner.py`:** cuenta los informes por semana **excluyendo pruebas** («Prueba Claude» y similares). Probado con datos simulados.
+- **`scripts/arnes_banco_176.py`:** recalcula C0 y comprueba C5 de los 176 casos: **0 errores reales, 14 casos con C5 cerrado y coherente (todos de UCI), 162 sin cierre aritmético en C5** (pendiente, congelado).
+- **Disponibilidad (en ramas `feat/disponibilidad`, sin desplegar):** el control ya existía (`src/config/beta.ts`) con `BETA_BYPASS = true` desde el 1 jul («testing»), por eso se podían elegir los 30 síntomas. La rama lo pone en producción: solo UCI-S1/S2/S3, el resto sale como «Quirófano Ocupado», la preselección ignora los no disponibles y se añade un aviso si no queda ninguno. En el backend, `config/sintomas_disponibles.json` y rechazo con 400 en `create-payment-intent`. Probado con TestClient y `tsc`.
+
+**Hallazgos:**
+- **El objetivo personalizado del cliente no se guarda:** vive solo en memoria (`useState`) y se avisa al consultor por correo (`notify-cc`). Para aprender objetivos por nicho habría que persistirlo en el expediente (`TreatmentPage.tsx:11229-11240`).
+- **El pago del síntoma suelto está roto** (la ventana no manda la lista de síntomas, el servidor responde 400) y el servidor no tiene precio de 99 €: cobraría el PRE (399 o 999 €).
+- **Backend y correos:** los cambios del backend se despliegan a mano en Render.
+- **Cookies reales** (`_ga`, `_fbp`, Stripe) siguen sin medirse en producción.
+
+---
+
 ---
 
 ---
@@ -3139,3 +3158,4 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 *§LXV añadida en sesión 10 nov 2026 — los textos legales pasan a decir lo que el código hace y se revisan legalmente: registro único de proveedores, Tu Solución sin base de datos pero ahora con `/api/save-lead` real (antes decía «va en camino» sin enviar), Cal.com y Anthropic como proveedores, Masframe sin cookies propias, términos con garantía y pago único. GA4 y Píxel solo tras aceptar en .com y en ESE, `ese_sid` ligado al banner, legales de La Clínica publicados, consentimiento obligatorio y comercial separados, tipografías en local y canonical de masesora.es. Se descubre que Render sirve `Masesora/Masesora` y `tusolucion`, no `Masesora-frontend`; landing con una sola fuente. Pendientes: deploy manual de tusolucion y ESE, Atlas y Sheets, Search Console.*
 *§LXVI añadida en sesión 10 nov 2026 (cont.) — UCI-S1 cerrada por Maite (0 bloqueantes, 8 avisos de forma sin acción; el cabo de C5 ya estaba resuelto), el producto estuvo parado del 27 ago al 10 nov, y el orden de las siguientes sesiones de producto según §LXI.C: 14 secciones muertas, 16 intermedias, 62 con texto libre, 90 con demasiados campos, 110 desplegables premarcados y el banco de 176 casos.*
 *§LXVII añadida en sesión 10 nov 2026 (cont.) — hay 0 informes del Escáner: nadie lo ha visto, así que el cuello es la demanda y no el producto. Se congela el catálogo; umbrales por etapas (30 informes de desconocidos y 10 conversaciones hasta el 8 dic; 2 pagos hasta el 15 ene), tres tareas de Maite esta semana, arnés automático del banco de 176 por Claude y asesorías piloto como plan B.*
+*§LXVIII añadida en sesión 12 nov 2026 — lo técnico ejecutado sin decisiones (erratas, correos, límite de uso de Tu Solución, carpetas de contenido, scripts de conteo y del banco de 176, disponibilidad solo-UCI en ramas) y los hallazgos: el objetivo personalizado no se guarda y el pago del síntoma suelto está roto.*
