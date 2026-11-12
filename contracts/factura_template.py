@@ -77,9 +77,7 @@ def generar_factura_html(datos: dict) -> str:
     *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 
     /* ── Tipografía ── */
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
-    /* ── Variables ── */
+/* ── Variables ── */
     :root {{
       --navy:   #0F1A35;
       --gold:   #B89D52;

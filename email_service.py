@@ -3,7 +3,7 @@
 
 import os
 import httpx
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 FROM_EMAIL     = "info@masesora.com"
@@ -408,6 +408,7 @@ async def send_ese_email(
     especialidades: List[Dict],
     insights:      Dict,
     ya_registrado: bool = False,
+    consent_comercial: Optional[bool] = None,
 ) -> Dict[str, str]:
     """
     Envia el informe ESE al cliente y una copia aparte a ESE_COPIA_EMAIL.
@@ -463,6 +464,7 @@ async def send_ese_email(
                 f'background:#fff8e1;border:1px solid #e0c46c;border-radius:8px;font-size:14px;">'
                 f'<strong>Copia interna · {etiqueta}</strong><br>'
                 f'Empresa: {empresa}<br>Email: {email}<br>Código: {codigo}<br>'
+                f'Contacto comercial (casilla opcional): {"SÍ" if consent_comercial else "no"}<br>'
                 f'Correo al cliente: {resultado["cliente"]}</div>'
             )
             prefijo = "[ESE repetido]" if ya_registrado else "[ESE nuevo]"

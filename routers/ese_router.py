@@ -362,6 +362,7 @@ async def submit_ese(data: EseSubmitRequest):
             especialidades= [e.dict() for e in data.especialidades],
             insights      = data.insights.dict(),
             ya_registrado = bool(existente),
+            consent_comercial = bool(data.consent_comercial),
         )
     except Exception as e:
         envios = {"cliente": f"NO enviado (error: {e})", "copia": "NO enviado"}
