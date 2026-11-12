@@ -1,11 +1,20 @@
 from fastapi import APIRouter, HTTPException
 from pymongo import MongoClient
+import json
 import stripe
 import os
+from pathlib import Path
 
 router = APIRouter(prefix="/payments", tags=["Payments"])
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+
+
+def sintomas_disponibles() -> set:
+    """IDs que se pueden activar y pagar (config/sintomas_disponibles.json)."""
+    ruta = Path(__file__).resolve().parent.parent / "config" / "sintomas_disponibles.json"
+    with open(ruta, encoding="utf-8") as f:
+        return set(json.load(f).get("disponibles", []))
 
 
 def get_clients_collection():
@@ -64,6 +73,13 @@ async def create_payment_intent(data: dict):
         raise HTTPException(status_code=400, detail="Falta el código de cliente")
     if not isinstance(sintomas, list) or len(sintomas) == 0:
         raise HTTPException(status_code=400, detail="Faltan los síntomas seleccionados para calcular el precio")
+
+    no_disponibles = sorted({str(s) for s in sintomas} - sintomas_disponibles())
+    if no_disponibles:
+        raise HTTPException(
+            status_code=400,
+            detail="Este tratamiento aún no está disponible: " + ", ".join(no_disponibles),
+        )
 
     cliente = get_clients_collection().find_one({"codigo": codigo})
     if not cliente:
