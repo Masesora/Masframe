@@ -52,6 +52,12 @@ def get_collection():
     db = client["masesora"]
     return db["clients"]
 
+def get_lista_espera_collection():
+    client = MongoClient(os.environ["MONGO_URI"])
+    db = client["masesora"]
+    return db["lista_espera"]
+
+
 def get_dropoff_collection():
     client = MongoClient(os.environ["MONGO_URI"])
     db = client["masesora"]
@@ -395,6 +401,70 @@ async def get_ese(codigo: str):
     if not doc:
         raise HTTPException(status_code=404, detail="Código no encontrado")
     return doc
+
+
+# ⭐ LISTA DE ESPERA — POST /ese/{codigo}/lista-espera
+# Tratamientos recomendados en el diagnóstico que hoy no se pueden contratar («Quirófano Ocupado»).
+# El cliente deja su consentimiento para que le avisemos cuando se abran. El email sale del
+# expediente (no se acepta uno nuevo en la petición) y se guarda el texto exacto que aceptó.
+# ─────────────────────────────────────────────────────────────
+
+class ListaEsperaIn(BaseModel):
+    sintomas: List[str]
+    consentimiento: bool
+    texto_consentimiento: str
+
+
+LISTA_ESPERA_VERSION = "lista-espera-v1-2026-11-13"
+_ID_SINTOMA = re.compile(r"^[A-Za-z0-9_-]{2,30}$")
+
+
+@router.post("/{codigo}/lista-espera")
+async def apuntar_lista_espera(
+    codigo: str,
+    data: ListaEsperaIn,
+    user: dict = Depends(get_current_user),
+):
+    check_owns_or_internal(user, codigo)
+
+    if data.consentimiento is not True:
+        raise HTTPException(status_code=400, detail="Hace falta tu consentimiento para avisarte")
+    ids = []
+    for s in data.sintomas:
+        s = str(s).strip()
+        if _ID_SINTOMA.match(s) and s not in ids:
+            ids.append(s)
+    if not ids:
+        raise HTTPException(status_code=400, detail="Falta indicar qué tratamientos quieres esperar")
+    ids = ids[:40]
+
+    cliente = get_collection().find_one({"codigo": codigo})
+    if not cliente:
+        raise HTTPException(status_code=404, detail="Código no encontrado")
+    email = str(cliente.get("email") or "").strip()
+    if not email:
+        raise HTTPException(status_code=400, detail="Tu expediente no tiene email para avisarte")
+
+    ahora = datetime.utcnow()
+    get_lista_espera_collection().update_one(
+        {"codigo": codigo},
+        {
+            "$set": {
+                "email": email,
+                "empresa": cliente.get("empresa", ""),
+                "consentimiento": True,
+                "texto_consentimiento": data.texto_consentimiento[:800],
+                "consent_version": LISTA_ESPERA_VERSION,
+                "consent_at": ahora,
+                "activo": True,
+                "updated_at": ahora,
+            },
+            "$addToSet": {"sintomas": {"$each": ids}},
+            "$setOnInsert": {"created_at": ahora},
+        },
+        upsert=True,
+    )
+    return {"status": "ok", "sintomas": ids}
 
 
 # ⭐ FASE 2 — PATCH /ese/{codigo}

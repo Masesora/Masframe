@@ -16,6 +16,7 @@
 - **Datos de facturación:** razón social, CIF/NIF, representante legal, dirección fiscal y email de facturación. Los datos de tarjeta los introduces directamente en Stripe: **no pasan por nuestros servidores**.
 - **Datos de acceso:** tu código de acceso y tu contraseña (guardada cifrada). La sesión caduca a las 8 horas.
 - **Información de tu empresa y síntomas que señalas:** facturación, márgenes, procesos, equipo, incidencias y los síntomas que identificas, que introduces tú dentro de la plataforma, junto con los resultados que generamos (KPIs, diagnósticos, informes). **En ningún caso se emite diagnóstico ni tratamiento médico**: el análisis es exclusivamente de empresa.
+- **Lista de espera:** si nos lo pides, tu email (el de tu expediente) y los tratamientos que quieres esperar, junto con el texto que aceptaste y la fecha.
 - **Datos técnicos de conexión:** tu dirección IP la reciben los proveedores que sirven la plataforma y envían los correos, como parte normal del servicio. Nosotros no la registramos.
 
 ## 3. Para qué usamos tus datos y con qué base legal
@@ -24,6 +25,7 @@
 - **Prestar el servicio de consultoría y los planes PRE, PAE y PIE, incluido el análisis de la información de tu empresa** — ejecución del contrato (art. 6.1.b RGPD).
 - **Cobros, facturación y obligaciones contables y fiscales** — ejecución del contrato y obligación legal (art. 6.1.b y 6.1.c RGPD).
 - **Avisos del servicio** (incidencias, cambios importantes, avisos legales) — interés legítimo de la Titular (art. 6.1.f RGPD).
+- **Avisarte cuando se abra un tratamiento que hoy no está disponible (lista de espera)** — solo si marcas la casilla al pedirlo; consentimiento (art. 6.1.a RGPD). Puedes retirarlo cuando quieras escribiendo a info@masesora.com.
 - **Comunicaciones comerciales** — solo si las has aceptado expresamente (art. 6.1.a RGPD). Sin ese consentimiento no las enviamos.
 - **Mejorar el servicio con datos agregados o sin nombre** — interés legítimo (art. 6.1.f RGPD), sin perfiles con efectos jurídicos.
 
@@ -47,6 +49,7 @@ Fuera de lo anterior, no cedemos tus datos a terceros salvo obligación legal.
 
 - **Cuenta y expediente:** mientras dure la relación contractual y, después, el tiempo necesario para atender responsabilidades legales (por ejemplo, 6 años en materia contable y fiscal).
 - **Información de tu empresa y síntomas:** mientras tu cuenta esté activa o hasta que pidas su supresión, salvo que deban bloquearse por obligación legal.
+- **Lista de espera:** hasta que se abra el tratamiento y te avisemos, o hasta que retires tu consentimiento.
 - **Comunicaciones comerciales:** hasta que retires tu consentimiento.
 
 ## 6. Tus derechos
@@ -68,4 +71,4 @@ Podemos modificarla si cambian la ley o los proveedores que usamos. Si el cambio
 
 ---
 
-**Fecha de última actualización:** 10 de noviembre de 2026.
+**Fecha de última actualización:** 13 de noviembre de 2026.
