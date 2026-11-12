@@ -1,3 +1,5 @@
+> **SUSTITUIDO el 12 nov 2026 por `PLAN_MARKETING_v2_LA_CLINICA_nov-dic2026.md`.** Se conserva por historial; la tabla de horas de este documento era orientativa y no se usa.
+
 # PLAN DE MARKETING SENCILLO · 12 nov 2026 – 15 ene 2027
 
 **Meta:** vender **2 o 3 planes** (PRE) a negocios que no son amigos ni familia, con **5 horas a la semana** de Maite como máximo.
