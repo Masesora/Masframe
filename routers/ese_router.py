@@ -475,11 +475,22 @@ async def actualizar_pago(
         # publicable), así que son la fuente fiable de qué se pagó de verdad.
         activos = data.especialidades_activas or data.sintomas_activos
         if activos is not None:
-            sintomas_pagados = (intent.metadata or {}).get("sintomas", "")
+            meta = intent.metadata or {}
+            sintomas_pagados = meta.get("sintomas", "")
             if sintomas_pagados:
                 pagados_set = set(sintomas_pagados.split(","))
                 activos_set = set(str(s) for s in activos)
-                if activos_set != pagados_set:
+                if meta.get("tipo") == "adicional":
+                    # Síntomas añadidos a un cliente ya activo: el cliente envía los que ya tenía
+                    # más los pagados. Lo pagado debe estar dentro, y lo demás debe ser lo que ya
+                    # tenía activo (no se cuela ningún síntoma sin pagar).
+                    previos = set(str(s) for s in (cliente.get("sintomas_activos") or []))
+                    if not pagados_set <= activos_set or not (activos_set - pagados_set) <= previos:
+                        raise HTTPException(
+                            status_code=400,
+                            detail="Los síntomas a activar no coinciden con los que se pagaron",
+                        )
+                elif activos_set != pagados_set:
                     raise HTTPException(
                         status_code=400,
                         detail="Los síntomas a activar no coinciden con los que se pagaron",
@@ -508,8 +519,8 @@ async def actualizar_pago(
                 empresa      = doc.get("empresa", ""),
                 codigo       = codigo,
                 sintomas_ids = data.sintomas_activos or data.especialidades_activas or [],
-                plan         = "PRE",
-                importe      = data.importe or 399,
+                plan         = (intent.metadata or {}).get("plan") or "PRE",
+                importe      = data.importe or 0,
             )
         except Exception as e:
             print(f"[PAGO] Error email post-pago {codigo}: {e}")

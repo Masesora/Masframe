@@ -35,6 +35,11 @@ PRECIOS_EUR = {
     "PIE": [1499, 4500],
 }
 
+# Síntoma suelto: 99 € por síntoma, igual para cualquier facturación (sin tramos).
+# Decisión de Maite, 12 nov 2026. DEBE coincidir con getPrecio("SUELTO") en
+# ScannerReceptionPage.tsx y con PRECIO_SINTOMA en TriajePage.tsx.
+PRECIO_SINTOMA_SUELTO = 99
+
 
 def _tier_facturacion(facturacion: float) -> "int | None":
     if facturacion >= 500000:
@@ -45,6 +50,8 @@ def _tier_facturacion(facturacion: float) -> "int | None":
 
 
 def _plan_por_num_sintomas(n: int) -> str:
+    if n == 1:
+        return "SUELTO"
     if n <= 3:
         return "PRE"
     if n <= 6:
@@ -85,18 +92,36 @@ async def create_payment_intent(data: dict):
     if not cliente:
         raise HTTPException(status_code=404, detail="Código no encontrado")
 
-    facturacion = float(cliente.get("facturacion") or 0)
-    plan = _plan_por_num_sintomas(len(sintomas))
-    tier = _tier_facturacion(facturacion)
-    if tier is None:
-        # Defensa en profundidad: el frontend ya no deja llegar hasta aquí para este tramo
-        # (bloquea el checkout y redirige a contacto), pero el servidor tampoco confía en
-        # eso -- si de algún modo se llega, se rechaza en vez de cobrar cualquier cosa.
-        raise HTTPException(
-            status_code=400,
-            detail="Esta facturación requiere una propuesta a medida — contacta con el equipo antes de proceder al pago",
-        )
-    precio_eur = PRECIOS_EUR[plan][tier]
+    # «adicional»: síntomas que el consultor recomienda a un cliente que ya está en tratamiento
+    # (modal de TriajePage). Se cobran a 99 € cada uno.
+    adicional = data.get("tipo") == "adicional"
+    if adicional:
+        plan = "SUELTO"
+        precio_eur = PRECIO_SINTOMA_SUELTO * len(sintomas)
+    else:
+        plan = _plan_por_num_sintomas(len(sintomas))
+        if plan == "SUELTO":
+            # Un síntoma suelto por cliente desde el Escáner: si pudiera repetirse, tres compras
+            # de 99 € saldrían más baratas que el PRE (399 €). Los siguientes los recomienda el
+            # consultor (modo «adicional») o pasa al PRE.
+            if cliente.get("fase") == "pago_completado":
+                raise HTTPException(
+                    status_code=400,
+                    detail="Ya tienes un tratamiento activo. Habla con tu consultor para añadir más síntomas.",
+                )
+            precio_eur = PRECIO_SINTOMA_SUELTO
+        else:
+            facturacion = float(cliente.get("facturacion") or 0)
+            tier = _tier_facturacion(facturacion)
+            if tier is None:
+                # Defensa en profundidad: el frontend ya no deja llegar hasta aquí para este tramo
+                # (bloquea el checkout y redirige a contacto), pero el servidor tampoco confía en
+                # eso -- si de algún modo se llega, se rechaza en vez de cobrar cualquier cosa.
+                raise HTTPException(
+                    status_code=400,
+                    detail="Esta facturación requiere una propuesta a medida — contacta con el equipo antes de proceder al pago",
+                )
+            precio_eur = PRECIOS_EUR[plan][tier]
     amount = precio_eur * 100  # Stripe trabaja en céntimos
 
     try:
@@ -107,6 +132,7 @@ async def create_payment_intent(data: dict):
             metadata={
                 "codigo": codigo,
                 "plan": plan,
+                "tipo": "adicional" if adicional else "plan",
                 # orden estable para poder comparar por igualdad de texto al confirmar
                 "sintomas": ",".join(sorted(str(s) for s in sintomas)),
             },
