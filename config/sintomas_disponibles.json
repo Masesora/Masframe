@@ -1,0 +1,4 @@
+{
+  "_comentario": "Sintomas que se pueden activar y pagar. Para abrir una especialidad, anadir sus IDs aqui Y en Masesora-frontend/src/config/beta.ts (BETA_ACTIVE_SYMPTOMS). El servidor es el que lo hace cumplir.",
+  "disponibles": ["UCI-S1", "UCI-S2", "UCI-S3"]
+}
