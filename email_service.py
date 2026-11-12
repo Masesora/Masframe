@@ -11,7 +11,7 @@ FROM_EMAIL     = "info@masesora.com"
 # Vacio = sin copia.
 ESE_COPIA_EMAIL = os.environ.get("ESE_COPIA_EMAIL", "info@masesora.com")
 CLINICA_URL    = "https://laclinicadempresas.masesora.com"
-INSTAGRAM      = "@laclinicadeempresas"
+INSTAGRAM      = "@laclinicadempresas"
 WEB            = "www.masesora.com"
 TELEFONO       = "609 987 436"
 
@@ -339,7 +339,7 @@ def generar_html_email(
         </p>
         <p style="font-size:12px;color:rgba(249,247,242,.4);margin:0;
           font-family:Georgia,serif">
-          <a href="https://instagram.com/laclinicadeempresas"
+          <a href="https://instagram.com/laclinicadempresas"
             style="color:rgba(200,168,75,.6);text-decoration:none">
             📸 {INSTAGRAM}
           </a>
