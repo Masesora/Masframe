@@ -3099,6 +3099,24 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 
 ---
 
+## LXIX. SESIÓN 12 NOV 2026 (cont.) — Decisiones de Maite sobre la oferta, y lo publicado
+
+**Decisiones:**
+1. **Garantía de mejora medida, de todos los planes, sin devolución del precio.** No hay producto validado para devolver dinero. Si se completa el tratamiento (con el ACI) y el indicador no mejora respecto a su punto de partida, se amplía el servicio sin coste. Atada legalmente y **revisable en el futuro**. Cambiado en Términos §7, `pricing_policy.py` (sale en contratos y triaje), `contract_router.py` (garantía en todos los planes), pantalla de pago y plan de marketing. **Pendiente: que lo vea el asesor.**
+2. **Todos los síntomas tienen consultor asignado (público); las «6 a 10 horas» son internas** y se quitan de la pantalla. El PRE pasa a «100 % digital, con tu Consultor Clínico asignado».
+3. **Solo la UCI se vende.** Publicado: `BETA_BYPASS=false`, `BETA_ACTIVE_SYMPTOMS` = UCI-S1/S2/S3, «Quirófano Ocupado» para el resto, preselección solo de los disponibles y aviso si no queda ninguno; el servidor rechaza con 400 cualquier síntoma fuera de `config/sintomas_disponibles.json`. **PAE y PIE en gris «Próximamente»** mientras no haya 4 o 7 síntomas disponibles.
+4. **Síntoma suelto de 99 €: sí se vende.** Pendiente: arreglar el pago (400), poner el precio en el servidor, y confirmar las reglas (1 suelto por cliente y descuento de los 99 € en el PRE en 30 días).
+5. **Lista de espera:** sí; falta implementarla (código y privacidad, que lo ve el asesor), con la distinción «recomendado para ti pero próximamente».
+6. **Plazas de lanzamiento: no.** Imagen de empresa consolidada; el acompañamiento personal es el valor; los casos se publican poco a poco.
+7. **Pantalla muy larga:** hay que acortarla; propuesta de reordenar (diagnóstico y precio primero, explicación después).
+8. Objetivo personalizado por el cliente (sin guardar) y Render de pago: más adelante, con clientes.
+
+**Limpieza hecha (con comprobación de que no afecta a nada visible):** worktree viejo de 73 MB del frontend y rama remota `claude/new-session-it9am3` de Masframe (su único commit ya estaba en `main` como #47).
+
+**Pendiente de Maite:** lanzar el deploy del backend en Render (para que entren el rechazo de síntomas no disponibles, la garantía en contratos y los correos con el Instagram bien).
+
+---
+
 ---
 
 ---
@@ -3159,3 +3177,4 @@ Hasta cerrar 1-7 no se reactivan los anuncios.
 *§LXVI añadida en sesión 10 nov 2026 (cont.) — UCI-S1 cerrada por Maite (0 bloqueantes, 8 avisos de forma sin acción; el cabo de C5 ya estaba resuelto), el producto estuvo parado del 27 ago al 10 nov, y el orden de las siguientes sesiones de producto según §LXI.C: 14 secciones muertas, 16 intermedias, 62 con texto libre, 90 con demasiados campos, 110 desplegables premarcados y el banco de 176 casos.*
 *§LXVII añadida en sesión 10 nov 2026 (cont.) — hay 0 informes del Escáner: nadie lo ha visto, así que el cuello es la demanda y no el producto. Se congela el catálogo; umbrales por etapas (30 informes de desconocidos y 10 conversaciones hasta el 8 dic; 2 pagos hasta el 15 ene), tres tareas de Maite esta semana, arnés automático del banco de 176 por Claude y asesorías piloto como plan B.*
 *§LXVIII añadida en sesión 12 nov 2026 — lo técnico ejecutado sin decisiones (erratas, correos, límite de uso de Tu Solución, carpetas de contenido, scripts de conteo y del banco de 176, disponibilidad solo-UCI en ramas) y los hallazgos: el objetivo personalizado no se guarda y el pago del síntoma suelto está roto.*
+*§LXIX añadida en sesión 12 nov 2026 (cont.) — garantía de mejora medida de todos los planes y sin devolución (revisable), consultor asignado público y horas internas, solo UCI en venta con «Quirófano Ocupado» y PAE/PIE en gris, síntoma suelto de 99 € sí, sin plazas de lanzamiento, y limpieza hecha.*
