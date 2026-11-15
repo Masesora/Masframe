@@ -3208,6 +3208,26 @@ Caja (UCI-S1): «mi negocio no tiene liquidez», «cómo mejorar la tesorería d
 
 ---
 
+## LXXII. 15 NOV 2026 — Panel de compradores simulados (Founder Skill) y lo que enseña
+
+**Qué se hizo.** Se instalaron las 11 skills de Founder Skill (MIT, revisadas: solo biblioteca estándar, sin red) en la carpeta de skills del usuario (`.claude/skills/`), y se pasó el panel de compradores con **20 compradores simulados** (modo rápido, semilla 7) sobre la oferta de validación (99 / 198 / 249 €). Todo está en `DOCS/6. CONTENIDO REDES/FOUNDER_PANEL_15nov2026/`. **Son simulaciones: sirven para encontrar objeciones, no para predecir ventas, y sus citas no se usan como testimonios.** El perfil de cliente es una suposición mía cargada hacia la desconfianza, así que el resultado hay que leerlo con eso.
+
+**Resultado.** 0 compran, 20 no. Motivos: confianza 13, tiempo 3, su gestor 3, precio 1. **Los 20 harían el diagnóstico gratis.** Para cambiar el no piden: devolución o pagar solo si mejora (12), recomendación de alguien del gremio (9), un caso real con nombre y cifras (8), el visto bueno de su gestor (8), que no les quite horas (7).
+
+**Precio (Van Westendorp).** Rango aceptable 31 a 131 €; menor resistencia 40 €; indiferencia 70 €. 99 € no es «demasiado caro» para nadie, pero a 13 de 20 ya les parece caro; **198 € y 249 € son «demasiado caros» para 13 y 16 de 20.**
+
+**Hipótesis para contrastar con personas reales (antes del 15 de enero).**
+1. Confianza antes que precio: un caso real con nombre y cifras (hace falta un cliente real con permiso).
+2. Quitar riesgo sin devolver dinero: primer paso de 40 a 50 € o pago partido (una parte al empezar y otra al alta).
+3. El diagnóstico gratis debe enseñar un número en euros de lo que pierde ese negocio al mes.
+4. El gestor es un portero: hoja «para tu gestor» y probar a llegar por gestorías.
+5. Decir cuántas horas pide al dueño; ofrecer una versión «hecha contigo».
+6. Revisar 198 y 249 € con 10 respuestas reales de precio.
+
+**Siguiente en el panel.** Repetir con una oferta B (primer paso a 49 €, número en euros en el diagnóstico, hoja para el gestor) y comparar. Es una prueba de qué ensayar con personas, no una venta.
+
+---
+
 ---
 
 ---
@@ -3271,3 +3291,4 @@ Caja (UCI-S1): «mi negocio no tiene liquidez», «cómo mejorar la tesorería d
 *§LXIX añadida en sesión 12 nov 2026 (cont.) — garantía de mejora medida de todos los planes y sin devolución (revisable), consultor asignado público y horas internas, solo UCI en venta con «Quirófano Ocupado» y PAE/PIE en gris, síntoma suelto de 99 € sí, sin plazas de lanzamiento, y limpieza hecha.*
 *§LXX añadida en sesión 13 nov 2026 — revisión global en vivo de las tres webs, Fase 0 de SEO verificada como aplicada, hallazgos nuevos (enlaces a dominios de Render, «Beta», una sola página por dominio) y plan de trabajo único con lo pendiente.*
 *§LXXI añadida en sesión 13 nov 2026 (cont.) — lo ejecutado con sus commits, el estado de despliegue del backend, la nota sobre los prompts y guiones del plan de marketing, y el orden de trabajo de mañana.*
+*§LXXII añadida el 15 nov 2026 — panel de compradores simulados con Founder Skill: resultado, precio y hipótesis para contrastar.*
