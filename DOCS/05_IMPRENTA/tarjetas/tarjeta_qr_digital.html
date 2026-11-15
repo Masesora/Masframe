@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Maite Cabezuelos · Soluciones Empresariales</title>
+
+<meta name="description" content="Maite Cabezuelos, fundadora de MASESORA®. Construimos sistemas autónomos para autónomos y micropymes. Contacto directo.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MASESORA® · Maite Cabezuelos">
+<meta property="og:description" content="Construimos sistemas que generan dinero. Diagnóstico clínico, tratamiento estructurado, alta certificada.">
+<meta property="og:url" content="https://qrtarjetavisita.onrender.com">
+<meta name="theme-color" content="#0F1A35">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --navy:#0F1A35;
+  --gold:#B89D52;
+  --gold-light:#D4B96A;
+  --gold-soft:#E8C96A;
+  --white:#FFFFFF;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--navy);
+  font-family:'Montserrat',sans-serif;
+  color:var(--white);
+  min-height:100vh;
+  padding:36px 18px 56px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── ANIMACIONES ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes waveDraw{0%{stroke-dashoffset:400;opacity:.3}40%{opacity:1}100%{stroke-dashoffset:0;opacity:.85}}
+@keyframes waveDrawEco{0%{stroke-dashoffset:380;opacity:0}30%{opacity:.18}100%{stroke-dashoffset:0;opacity:.18}}
+@keyframes pulseOrigin{0%,100%{r:5;opacity:.8}50%{r:7;opacity:1}}
+@keyframes pulseImpulse{0%,100%{r:4;opacity:.65}50%{r:6;opacity:.9}}
+@keyframes riseImpulse{0%{stroke-dashoffset:80;opacity:0}60%{opacity:0}100%{stroke-dashoffset:0;opacity:.75}}
+@keyframes floatWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* ── OLA ── */
+.wave-icon{width:140px;height:140px;margin-bottom:14px;opacity:0;animation:fadeUp .8s ease-out .2s forwards;filter:drop-shadow(0 0 30px rgba(184,157,82,.3))}
+.wave-group{animation:floatWave 4s ease-in-out infinite;transform-origin:80px 80px}
+
+/* ── WORDMARK ── */
+.brand{text-align:center;margin-top:8px;opacity:0;animation:fadeUp .9s ease-out .9s forwards}
+.brand-name{font-size:clamp(2rem,8vw,2.6rem);font-weight:800;letter-spacing:.10em;color:var(--white);line-height:1}
+.brand-divider{display:block;width:60%;max-width:240px;height:1px;background:rgba(184,157,82,.55);margin:8px auto 6px}
+.brand-tagline{font-size:.68rem;font-weight:500;letter-spacing:.42em;color:var(--gold)}
+
+/* ── PERFIL ── */
+.profile{text-align:center;margin:22px 0 4px;opacity:0;animation:fadeUp .9s ease-out 1.2s forwards}
+.profile-name{font-size:1.08rem;font-weight:600;color:var(--white);letter-spacing:.04em}
+.profile-role{font-size:.74rem;font-weight:400;color:rgba(255,255,255,.6);letter-spacing:.06em;margin-top:3px}
+
+/* ── BLOQUE BOTONES ── */
+.options-block{width:100%;max-width:360px;margin-top:30px;opacity:0;animation:fadeUp .9s ease-out 1.4s forwards}
+.options-title{font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.45);text-align:center;margin-bottom:18px}
+
+.gold-button{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(135deg,var(--gold-soft) 0%,var(--gold) 60%,#9A7E3A 100%);
+  padding:14px 22px;margin:0 0 10px;width:100%;
+  border-radius:999px;color:var(--navy);
+  font-family:'Montserrat',sans-serif;font-weight:700;
+  text-decoration:none;font-size:.9rem;letter-spacing:.04em;text-align:center;
+  box-shadow:0 8px 24px -10px rgba(184,157,82,.5);
+  transition:transform .2s,box-shadow .2s,filter .2s;border:none;cursor:pointer;
+}
+.gold-button:hover,.gold-button:focus-visible{transform:translateY(-2px);box-shadow:0 12px 32px -10px rgba(184,157,82,.7);filter:brightness(1.05)}
+.gold-button:active{transform:translateY(0);filter:brightness(.95)}
+.gold-button.primary{font-size:1rem;padding:16px 22px;letter-spacing:.06em;text-transform:uppercase}
+
+.ghost-button{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:12px 20px;margin:8px 0 0;width:100%;
+  border-radius:999px;background:transparent;
+  border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);
+  font-family:'Montserrat',sans-serif;font-weight:500;
+  text-decoration:none;font-size:.84rem;letter-spacing:.04em;text-align:center;
+  transition:border-color .2s,color .2s;cursor:pointer;
+}
+.ghost-button:hover,.ghost-button:focus-visible{border-color:var(--gold);color:var(--gold)}
+
+.divider{height:1px;width:80%;max-width:280px;background:rgba(255,255,255,.08);margin:18px auto 8px}
+
+/* ── FOOTER ── */
+.tarjeta-footer{margin-top:42px;font-size:.62rem;color:rgba(255,255,255,.35);text-align:center;letter-spacing:.06em;line-height:1.6}
+.tarjeta-footer a{color:rgba(184,157,82,.8);text-decoration:none}
+.tarjeta-footer a:hover{color:var(--gold-light)}
+
+@media(max-width:380px){
+  .brand-name{font-size:1.7rem;letter-spacing:.08em}
+  .brand-tagline{font-size:.6rem;letter-spacing:.32em}
+  .gold-button{font-size:.85rem;padding:13px 18px}
+  .gold-button.primary{font-size:.92rem;padding:15px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── OLA ANIMADA ── -->
+<svg class="wave-icon" viewBox="0 0 100 100" aria-hidden="true">
+  <g class="wave-group">
+    <path d="M 10,78 C 10,78 13,22 24,22 C 35,22 38,58 50,58 C 62,58 65,22 76,22 C 87,22 89,78 89,78"
+      fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+      stroke-dasharray="400" style="animation:waveDraw 2.6s ease forwards"/>
+    <path d="M 13,82 C 13,82 16,26 26,26 C 36,26 39,62 50,62 C 61,62 64,26 74,26 C 84,26 86,82 86,82"
+      fill="none" stroke="url(#gold)" stroke-width="1.3" stroke-linecap="round" opacity="0.18"
+      stroke-dasharray="380" style="animation:waveDrawEco 3.2s ease forwards"/>
+    <circle cx="10" cy="78" r="5" fill="url(#gold)" style="animation:pulseOrigin 2.8s ease-in-out infinite"/>
+    <circle cx="92" cy="11" r="4" fill="url(#gold)" style="animation:pulseImpulse 2.8s ease-in-out infinite"/>
+    <line x1="89" y1="78" x2="92" y2="14" stroke="url(#gold)" stroke-width="2.5"
+      stroke-linecap="round" stroke-dasharray="80" style="animation:riseImpulse 2.4s ease forwards"/>
+  </g>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#9A7E3A"/>
+      <stop offset="50%"  stop-color="#E8C96A"/>
+      <stop offset="100%" stop-color="#B89D52"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ── WORDMARK ── -->
+<div class="brand">
+  <div class="brand-name">MASESORA</div>
+  <span class="brand-divider"></span>
+  <div class="brand-tagline">DINAMISMO EMPRESARIAL</div>
+</div>
+
+<!-- ── PERFIL ── -->
+<div class="profile">
+  <div class="profile-name">Maite Cabezuelos</div>
+  <div class="profile-role">Soluciones Empresariales</div>
+</div>
+
+<!-- ── BOTONES ── -->
+<div class="options-block">
+
+  <p class="options-title">Tienes 5 minutos, no scrolees.</p>
+  <a class="gold-button primary" href="https://www.masesora.com" target="_blank" rel="noopener">
+    Visitar masesora.com →
+  </a>
+  <a class="gold-button primary" href="https://wa.me/34609987436">
+    ¿Hablamos?
+  </a>
+  <a class="gold-button" href="mailto:info@masesora.com">
+    info@masesora.com
+  </a>
+
+  <div class="divider"></div>
+
+  <a class="gold-button" href="https://tusolucion.onrender.com" target="_blank" rel="noopener">
+    Valorar MI SOLUCIÓN
+  </a>
+  <a class="gold-button" href="https://ese-cc2u.onrender.com" target="_blank" rel="noopener">
+    Ver la SALUD DE MI EMPRESA
+  </a>
+
+  <a class="ghost-button" href="contacto-maite.vcf" download="Maite-Cabezuelos-MASESORA.vcf">
+    + Añadir a mis contactos
+  </a>
+ 
+
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="tarjeta-footer">
+  <p>MASESORA® · MAS@FRAME® · DINAMISMO EMPRESARIAL</p>
+  <p style="margin-top:6px">
+    <a href="https://www.masesora.com" target="_blank" rel="noopener">www.masesora.com</a>
+  </p>
+</div>
+
+<!-- ── SCHEMA.ORG ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Maite Cabezuelos",
+  "givenName": "Maite",
+  "familyName": "Cabezuelos Morcillo",
+  "jobTitle": "Fundadora · Dirección Clínica",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "MASESORA",
+    "url": "https://www.masesora.com",
+    "logo": "https://www.masesora.com/assets/masesora-logo-icon.svg"
+  },
+  "telephone": "+34609987436",
+  "email": "info@masesora.com",
+  "url": "https://qrtarjetavisita.onrender.com",
+  "sameAs": [
+    "https://www.masesora.com",
+    "https://instagram.com/laclinicadeempresas"
+  ]
+}
+</script>
+
+</body>
+</html>

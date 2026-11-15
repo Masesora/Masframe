@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Tarjeta de Visita · MASESORA®</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Montserrat', Arial, sans-serif; background: #F9F7F2; color: #0F1A35; }
+
+header { background: #0F1A35; padding: 20px 36px; display: flex; align-items: flex-end; justify-content: space-between; }
+.h-logo { font-weight: 800; font-size: 18px; color: #F9F7F2; letter-spacing: 3px; }
+.h-sub  { font-size: 9px; color: #B89D52; letter-spacing: 3px; text-transform: uppercase; margin-top: 3px; }
+
+.container { max-width: 960px; margin: 0 auto; padding: 36px 32px 60px; }
+h2 { font-weight: 800; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #B89D52;
+     margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(184,157,82,.2); }
+.preview-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #aaa; margin-bottom: 14px; }
+.stage { display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 32px; }
+
+.card-viewer {
+  background: #e5e1d9; border-radius: 8px; padding: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.card-2x { transform: scale(2); transform-origin: top left; display: inline-block; }
+.card-box-2x { width: calc(85mm * 2); height: calc(55mm * 2); }
+.card-box-1x { width: 85mm; height: 55mm; }
+
+.btn-print {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: #0F1A35; color: #F9F7F2; border: none; padding: 13px 28px; border-radius: 4px;
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px;
+  letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: background .2s;
+}
+.btn-print:hover { background: #B89D52; color: #0F1A35; }
+.nota { background: rgba(184,157,82,.08); border-left: 3px solid #B89D52;
+        padding: 12px 16px; font-size: 11px; color: #555; line-height: 1.6;
+        border-radius: 0 4px 4px 0; margin-top: 20px; }
+.nota strong { color: #0F1A35; }
+
+/* ══ TARJETA ══════════════════════════════════════ */
+.tarjeta {
+  width: 85mm; height: 55mm;
+  background: #F9F7F2;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 32px rgba(15,26,53,.15);
+}
+
+/* Zona cream — marca + identidad */
+.t-top {
+  flex: 1;
+  padding: 4mm 6mm 3mm 6mm;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.t-wordmark { font-family:Arial,Helvetica,sans-serif; font-weight:900; font-size:13pt; color:#0F1A35; letter-spacing:3pt; line-height:1; }
+.t-tagline  { font-family:Arial,Helvetica,sans-serif; font-size:3.8pt; color:#B89D52; letter-spacing:2pt; text-transform:uppercase; margin-top:1.3mm; }
+
+/* Icono ola — lateral derecho como fondo */
+.t-wave-bg { position:absolute; right:3mm; top:3mm; width:26mm; height:26mm; z-index:0; pointer-events:none; opacity:.95; }
+
+/* Identidad personal — foto izq, nombre+rol der alineados al borde inferior */
+.t-identity { display:flex; flex-direction:row; align-items:flex-end; gap:3mm; position:relative; z-index:1; }
+.t-identity > div { padding-bottom:4mm; }
+.t-top-brand { position:relative; z-index:1; }
+.t-photo    { width:26mm; height:26mm; border-radius:50%; object-fit:cover; object-position:top center;
+              flex-shrink:0; display:block; }
+.t-name     { font-family:Arial,Helvetica,sans-serif; font-weight:700; font-size:7.5pt; color:#0F1A35; letter-spacing:.2pt; line-height:1; }
+.t-role     { font-family:Arial,Helvetica,sans-serif; font-size:4.5pt; color:rgba(15,26,53,.6); letter-spacing:.5pt; margin-top:.5mm; }
+
+/* Zona navy — contacto */
+.t-bottom {
+  height: 13mm; flex-shrink: 0;
+  background: #0F1A35;
+  display: flex; justify-content: center; align-items: center;
+  padding: 0 6mm;
+}
+.t-cline { font-family:Arial,Helvetica,sans-serif; font-size:6.5pt; font-weight:700; color:rgba(249,247,242,.92); letter-spacing:.1pt; text-align:center; }
+.t-dot   { color:#B89D52; margin:0 1.5pt; }
+
+/* ══ IMPRESIÓN ════════════════════════════════════ */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body > *, header, .container, h2, .stage, .preview-label,
+  .card-viewer, .btn-print, .nota { display: none !important; }
+  .print-only { display: block !important; }
+  @page { size: 85mm 55mm; margin: 0; }
+}
+.print-only { display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="h-logo">MASESORA</div>
+    <div class="h-sub">Tarjeta de Visita · 85×55mm · Arte final imprenta</div>
+  </div>
+  <div style="font-size:10px;color:rgba(184,157,82,.5);letter-spacing:1px">Junio 2026</div>
+</header>
+
+<!-- SVG defs reutilizables -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="gld" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%"  stop-color="#9A7E3A"/>
+      <stop offset="50%" stop-color="#E8C96A"/>
+      <stop offset="100%" stop-color="#B89D52"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="container">
+  <div style="margin-bottom:36px">
+    <h2>Tarjeta de visita · Arte final</h2>
+    <div class="stage">
+
+      <!-- 2:1 -->
+      <div>
+        <div class="preview-label">Escala 2:1 — diseño</div>
+        <div class="card-viewer">
+          <div class="card-box-2x">
+            <div class="card-2x">
+              <div class="tarjeta">
+
+                <div class="t-top">
+                  <svg class="t-wave-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10,78 C10,78 13,22 24,22 C35,22 38,58 50,58 C62,58 65,22 76,22 C87,22 89,78 89,78"
+                      fill="none" stroke="url(#gld)" stroke-width="5.5" stroke-linecap="round"/>
+                    <path d="M13,82 C13,82 16,26 26,26 C36,26 39,62 50,62 C61,62 64,26 74,26 C84,26 86,82 86,82"
+                      fill="none" stroke="url(#gld)" stroke-width="1.3" stroke-linecap="round" opacity=".3"/>
+                    <circle cx="10" cy="78" r="5" fill="url(#gld)"/>
+                    <circle cx="92" cy="11" r="3.5" fill="url(#gld)" opacity=".8"/>
+                    <line x1="89" y1="78" x2="92" y2="14" stroke="url(#gld)" stroke-width="2.5" stroke-linecap="round" opacity=".85"/>
+                  </svg>
+                  <div class="t-top-brand">
+                    <div class="t-wordmark">MASESORA</div>
+                    <div class="t-tagline">La Clínica de Empresas</div>
+                  </div>
+                  <div class="t-identity">
+                    <img class="t-photo" src="../../01_BRANDING_BASE/aplicaciones_basicas/maite.png" alt="Maite Cabezuelos">
+                    <div>
+                      <div class="t-name">Maite Cabezuelos</div>
+                      <div class="t-role">Dirección Clínica</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="t-bottom">
+                  <div class="t-cline">609 987 436 <span class="t-dot">·</span> info@masesora.com <span class="t-dot">·</span> masesora.com</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1:1 -->
+      <div>
+        <div class="preview-label">Escala 1:1 — tamaño real</div>
+        <div class="card-viewer" style="padding:20px">
+          <div class="card-box-1x">
+            <div class="tarjeta">
+
+              <div class="t-top">
+                <svg class="t-wave-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10,78 C10,78 13,22 24,22 C35,22 38,58 50,58 C62,58 65,22 76,22 C87,22 89,78 89,78"
+                    fill="none" stroke="url(#gld)" stroke-width="5.5" stroke-linecap="round"/>
+                  <path d="M13,82 C13,82 16,26 26,26 C36,26 39,62 50,62 C61,62 64,26 74,26 C84,26 86,82 86,82"
+                    fill="none" stroke="url(#gld)" stroke-width="1.3" stroke-linecap="round" opacity=".3"/>
+                  <circle cx="10" cy="78" r="5" fill="url(#gld)"/>
+                  <circle cx="92" cy="11" r="3.5" fill="url(#gld)" opacity=".8"/>
+                  <line x1="89" y1="78" x2="92" y2="14" stroke="url(#gld)" stroke-width="2.5" stroke-linecap="round" opacity=".85"/>
+                </svg>
+                <div class="t-top-brand">
+                  <div class="t-wordmark">MASESORA</div>
+                  <div class="t-tagline">La Clínica de Empresas</div>
+                </div>
+                <div class="t-identity">
+                  <img class="t-photo" src="../../01_BRANDING_BASE/aplicaciones_basicas/maite.png" alt="Maite Cabezuelos">
+                  <div>
+                    <div class="t-name">Maite Cabezuelos</div>
+                    <div class="t-role">Dirección Clínica</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="t-bottom">
+                <div class="t-cline">609 987 436 <span class="t-dot">·</span> info@masesora.com <span class="t-dot">·</span> masesora.com</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn-print" onclick="window.print()">Imprimir / Exportar PDF</button>
+
+    <div class="nota">
+      <strong>Para la imprenta:</strong> Archivo → Imprimir → "Guardar como PDF", escala 100%, sin márgenes, tamaño personalizado 85×55mm.<br>
+      Banda navy inferior con cobertura total — pedir perfil CMYK a la imprenta para negro intenso.<br><br>
+      <strong>Sangrado:</strong> Si la imprenta exige 3mm, ampliar la banda navy 3mm extra antes de exportar.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
