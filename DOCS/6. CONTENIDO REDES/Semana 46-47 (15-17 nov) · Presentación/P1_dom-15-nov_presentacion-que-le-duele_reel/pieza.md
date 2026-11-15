@@ -49,7 +49,7 @@ El primer paso es pasar por el Escáner de Salud Empresarial: masesora.es. Es gr
 - Alternativa si se prefiere carrusel: las 5 imágenes `assets/01_gancho.png` … `assets/05_cierre.png`
 
 ## Aprobación (la marcas tú)
-- [ ] **APROBADO PARA PUBLICAR** · Maite
+- [x] **APROBADO PARA PUBLICAR** · Maite (aprobado en el chat el 15 nov, 16:31)
 
 ### Cambios pedidos
 -
@@ -58,12 +58,13 @@ El primer paso es pasar por el Escáner de Salud Empresarial: masesora.es. Es gr
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 - 15 nov · Textos reescritos a petición de Maite (más naturales, sin frases hechas).
 - 15 nov · Audio limpiado (ruido −12 dB, voz igualada y a volumen de redes) y cierre con masesora.es justo después de «Escáner de Salud Empresarial».
+- 15 nov · Programado: Instagram (Meta Business Suite) y TikTok (TikTok Studio), dom 15 nov a las 20:00 (Madrid). Portada de Instagram: cambiar desde la app tras publicar.
 - 15 nov · Nueva grabación de Maite (Canva): pausas acortadas, ritmo +6 %, limpieza y música; reel de 30 s.
 - 15 nov · Pasa a reel animado sincronizado con la voz de Maite, con subtítulos palabra a palabra.
 
 ## Lista de comprobación
 - [x] Imagen o diseño en `assets/`
 - [x] Sin «IA», sin culpar al dueño, sin precio, sin frases prohibidas
-- [ ] Programado en Business Suite
+- [x] Programado en Business Suite
 - [ ] Publicado en Instagram y en TikTok
 - [ ] Respondidos los comentarios con CLINICA (con el enlace de arriba)
