@@ -5,7 +5,7 @@
 | **Fecha y hora** | Dom 22 nov · 10:00 |
 | **Formato** | Carrusel educativo (6 diapositivas) |
 | **Síntoma · dolor** | **Cobros** · «1.800 € en la calle» |
-| **Palabra clave** | **PELU** |
+| **Llamada a la acción** | **masesora.es** (enlace en el perfil) |
 | **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=pelu&utm_content=02` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=pelu&utm_content=02` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
@@ -13,7 +13,7 @@
 *Fuente: UCI-S2 `description_symptom`, `kpi_impact`, `example`, `justi_capa3`, `justi_capa4`.*
 - **Portada:** *«1.800 € en la calle.»* · «Facturado, entregado… y sin cobrar.»
 - **Diapositivas:** 2 · *Ejemplo ilustrativo:* una peluquería factura 9.000 € en 3 meses. 3 · 1.800 € están vencidos sin cobrar: un 20 %. 4 · «Ese dinero es beneficio tuyo que estás financiando gratis a tus clientes.» 5 · Lo primero: una **radiografía de cobros por cliente**: quién te debe, cuánto y desde cuándo. 6 · Dos gestos: facturar al entregar y reclamar en firme lo vencido con una carta formal. *«Nada de perseguir cobros a mano.»* En el ejemplo, la cifra baja al 8 %.
-- **Pie:** «Haz tu cuenta: vencido ÷ facturado en 3 meses. Comenta PELU y te paso el diagnóstico gratuito.»
+- **Pie:** «Haz tu cuenta: vencido ÷ facturado en 3 meses.» + Escáner de Salud Empresarial: masesora.es (antes: palabra clave PELU)
 
 ## Pie de publicación · Instagram
 ```
@@ -23,7 +23,7 @@ Ejemplo ilustrativo: una peluquería factura 9.000 € en 3 meses y 1.800 € es
 
 Lo primero, una radiografía de cobros por cliente: quién te debe, cuánto y desde cuándo. Después, dos gestos: facturar al entregar y reclamar lo vencido con una carta formal. En el ejemplo, la cifra baja al 8 %.
 
-Haz tu cuenta: vencido ÷ facturado en 3 meses. Comenta PELU y te paso el diagnóstico gratuito.
+Haz tu cuenta: vencido ÷ facturado en 3 meses. Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
 Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #peluqueria #esteticaprofesional #autonomos #pymes #cobros #facturas
@@ -37,7 +37,7 @@ Ejemplo ilustrativo: una peluquería factura 9.000 € en 3 meses y 1.800 € es
 
 Lo primero, una radiografía de cobros por cliente: quién te debe, cuánto y desde cuándo. Después, dos gestos: facturar al entregar y reclamar lo vencido con una carta formal. En el ejemplo, la cifra baja al 8 %.
 
-Haz tu cuenta: vencido ÷ facturado en 3 meses. Enlace en mi perfil: diagnóstico gratuito.
+Haz tu cuenta: vencido ÷ facturado en 3 meses. Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
 Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #peluqueria #esteticaprofesional #autonomos #pymes #cobros #facturas
@@ -56,6 +56,7 @@ Guárdalo para repetir la cuenta cada mes.
 -
 
 ## Estado del agente
+- 15 nov · Cierre cambiado a masesora.es (sin palabra clave).
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 
 ## Lista de comprobación

@@ -1,0 +1,95 @@
+{
+ "voz": "musica_sin_voz.wav",
+ "duracion": 26.0,
+ "etiqueta": "UCI · Caja · Taller",
+ "portada_t": 3.0,
+ "palabras": [],
+ "escenas": [
+  {
+   "tipo": "titulo",
+   "inicio": 0.0,
+   "palabras_hasta": 2.6,
+   "texto": "El problema no es que no entre dinero.",
+   "oro": "Es que no sale lo que ya ganaste."
+  },
+  {
+   "tipo": "frase",
+   "inicio": 4.2,
+   "palabras_hasta": 5.6,
+   "texto": "Abre tu banco.",
+   "oro": "Mira cuánto tienes hoy."
+  },
+  {
+   "tipo": "frase",
+   "inicio": 7.2,
+   "palabras_hasta": 9.0,
+   "eyebrow": "Tus días de caja",
+   "texto": "Saldo ÷ gastos fijos de un mes × 30",
+   "oro": ""
+  },
+  {
+   "tipo": "pasos",
+   "inicio": 10.6,
+   "palabras_hasta": 11.0,
+   "texto": "¿Dónde está tu número?",
+   "pasos": [
+    {
+     "t": 11.2,
+     "titulo": "Menos de 30 días",
+     "detalle": "Vendes por urgencia, no por estrategia."
+    },
+    {
+     "t": 12.6,
+     "titulo": "Más de 60 días",
+     "detalle": "Recuperas el control."
+    }
+   ]
+  },
+  {
+   "tipo": "pasos",
+   "inicio": 15.0,
+   "palabras_hasta": 15.6,
+   "eyebrow": "Ejemplo ilustrativo · Taller",
+   "texto": "8.500 € en caja, 8.000 € de gastos fijos",
+   "pasos": [
+    {
+     "t": 15.9,
+     "titulo": "Antes: 31 días",
+     "detalle": "Dinero atrapado en stock y facturas sin cobrar."
+    },
+    {
+     "t": 17.4,
+     "titulo": "Después: 60 días",
+     "detalle": "Tras liberar 7.500 €."
+    }
+   ]
+  },
+  {
+   "tipo": "alta",
+   "inicio": 19.6,
+   "fin": 22.2,
+   "palabras_hasta": 21.0,
+   "texto": "Tu caja respira",
+   "oro": "sin necesidad de nuevas ventas.",
+   "pasos": []
+  },
+  {
+   "tipo": "escaner",
+   "inicio": 22.2,
+   "palabras_hasta": 23.6,
+   "eyebrow": "¿Cuántos días tiene tu taller?",
+   "texto": "Escáner de Salud",
+   "oro": "Empresarial",
+   "chips": [
+    {
+     "t": 23.7,
+     "txt": "masesora.es"
+    },
+    {
+     "t": 24.1,
+     "txt": "Gratis · 10 minutos"
+    }
+   ]
+  }
+ ]
+}

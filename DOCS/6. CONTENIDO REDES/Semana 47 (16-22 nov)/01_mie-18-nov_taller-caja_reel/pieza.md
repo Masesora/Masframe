@@ -5,7 +5,7 @@
 | **Fecha y hora** | Mié 18 nov · 13:00 (a probar) |
 | **Formato** | Reel hablado (voz + pantalla) |
 | **Síntoma · dolor** | **Caja** · «no sale lo que ya ganaste» |
-| **Palabra clave** | **TALLER** |
+| **Llamada a la acción** | **masesora.es** (enlace en el perfil) |
 | **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=taller&utm_content=01` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=taller&utm_content=01` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
@@ -13,16 +13,7 @@
 *Fuente: UCI-S1 `description_symptom`, `kpi_impact`, `impact_treatment`, `example`.*
 - **Gancho:** pantalla: *«El problema no es que no entre dinero. Es que no sale lo que ya ganaste.»* Voz: «Abre tu banco. Mira cuánto tienes hoy.»
 - **Cuerpo:** «Divide ese saldo entre lo que gastas al mes en fijos y multiplícalo por 30: son tus días de caja. Por debajo de 30, tu negocio vende por urgencia, no por estrategia. Por encima de 60, recuperas el control. *Ejemplo ilustrativo:* un taller con 8.500 € en caja y 8.000 € de gastos fijos al mes tiene 31 días. Tras liberar 7.500 € atrapados en stock y facturas pendientes de cobro, sube a 60. Tu caja respira sin necesidad de nuevas ventas.»
-- **Cierre:** «Comenta TALLER y te paso el diagnóstico gratuito de 10 minutos.»
-
-## Locución (lo que grabas)
-> El problema no es que no entre dinero. Es que no sale lo que ya ganaste.
-> Abre tu banco. Mira cuánto tienes hoy.
-> Divide ese saldo entre lo que gastas al mes en fijos y multiplícalo por 30: son tus días de caja.
-> Por debajo de 30, tu negocio vende por urgencia, no por estrategia. Por encima de 60, recuperas el control.
-> Un ejemplo: un taller con 8.500 euros en caja y 8.000 de gastos fijos al mes tiene 31 días. Tras liberar 7.500 euros atrapados en stock y facturas pendientes de cobro, sube a 60.
-> Tu caja respira sin necesidad de nuevas ventas.
-> Comenta TALLER y te paso el diagnóstico gratuito de 10 minutos.
+- **Cierre:** «Escáner de Salud Empresarial: masesora.es» (antes: palabra clave TALLER)
 
 ## Pie de publicación · Instagram
 ```
@@ -34,7 +25,7 @@ Abre tu banco y haz la cuenta: saldo ÷ gastos fijos de un mes × 30. Son tus d�
 
 Ejemplo ilustrativo: un taller con 8.500 € en caja y 8.000 € de gastos fijos al mes tiene 31 días. Liberó 7.500 € atrapados en stock y facturas pendientes de cobro, y subió a 60.
 
-Comenta TALLER y te paso el diagnóstico gratuito de 10 minutos.
+¿Cuántos días de caja tiene tu taller? Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
 Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #talleres #tallermecanico #autonomos #pymes #caja #gestionfinanciera
@@ -50,17 +41,16 @@ Abre tu banco y haz la cuenta: saldo ÷ gastos fijos de un mes × 30. Son tus d�
 
 Ejemplo ilustrativo: un taller con 8.500 € en caja y 8.000 € de gastos fijos al mes tiene 31 días. Liberó 7.500 € atrapados en stock y facturas pendientes de cobro, y subió a 60.
 
-Enlace en mi perfil: diagnóstico gratuito de 10 minutos.
+¿Cuántos días de caja tiene tu taller? Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
 Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #talleres #tallermecanico #autonomos #pymes #caja #gestionfinanciera
 ```
 
 ## Archivos para publicar
-- Instagram (Reel): `assets/reel_instagram.mp4` · portada `assets/01_gancho.png`
+- Instagram (reel): `assets/reel_instagram.mp4` · portada `assets/portada.png`
 - TikTok (vídeo): `assets/reel_tiktok.mp4`
-- Diapositivas sueltas: `assets/01_gancho.png` … `assets/07_cierre-*.png`
-- **Falta tu voz:** graba la locución de arriba (unos 43 s, sin prisa) y guárdala como `assets/voz.m4a`. El agente vuelve a montar los dos vídeos con ella. Si prefieres publicarlo sin voz, escribe «SIN VOZ» junto a la casilla de aprobación: saldrá solo con los textos en pantalla.
+- Sin voz: reel animado con música de fondo original (26 s).
 
 ## Aprobación (la marcas tú)
 - [ ] **APROBADO PARA PUBLICAR** · Maite
@@ -71,6 +61,7 @@ Guárdalo para repetir la cuenta cada mes.
 -
 
 ## Estado del agente
+- 15 nov · Rehecho como reel animado sin voz (variedad de formatos), con masesora.es tras el Escáner y sin palabra clave.
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 
 ## Lista de comprobación
