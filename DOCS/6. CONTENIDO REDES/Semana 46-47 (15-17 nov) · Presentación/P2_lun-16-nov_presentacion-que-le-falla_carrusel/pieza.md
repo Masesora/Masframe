@@ -39,10 +39,10 @@ El Escáner de la Salud de tu empresa en www.masesora.es
 - Instagram (carrusel) y TikTok (modo foto), en este orden: `assets/01_gancho.png`, `assets/02_conjunto.png`, `assets/03_diagnostico.png`, `assets/04_escaner.png`, `assets/05_cierre.png`
 
 ## Aprobación (la marcas tú)
-- [ ] **APROBADO PARA PUBLICAR** · Maite
+- [OK ] SLIDES PERFERFECTAS, FALTA PONER MUSICA DE FONDO!**APROBADO PARA PUBLICAR** · Maite
 
 ### Cambios pedidos
--
+- SLIDES PERFERFECTAS, FALTA PONER MUSICA DE FONDO!
 
 ## Estado del agente
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
