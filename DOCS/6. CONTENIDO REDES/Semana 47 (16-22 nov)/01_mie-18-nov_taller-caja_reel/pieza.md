@@ -57,6 +57,7 @@ En La Clínica de Empresas te hacemos ver el verdadero valor de tu negocio. Empi
 -
 
 ## Estado del agente
+- 15 nov · Programada en Instagram y TikTok: mié 18, 13:00.
 - 15 nov · Montado con la voz de Maite (limpia, música nueva en La mayor 122 BPM); pantalla y pie alineados con su audio; ya no es solo para talleres.
 - 15 nov · Maite pide voz: locución preparada, a la espera de su audio.
 - 15 nov · Rehecho como reel animado sin voz (variedad de formatos), con masesora.es tras el Escáner y sin palabra clave.
@@ -67,6 +68,6 @@ En La Clínica de Empresas te hacemos ver el verdadero valor de tu negocio. Empi
 - [x] Voz o clip grabado (si el formato lo pide)
 - [x] Imagen o diseño en `assets/`
 - [ ] Texto de pantalla y pie revisados (sin «IA», sin culpar al dueño, ejemplo etiquetado como *ilustrativo*)
-- [ ] Programado en Business Suite
+- [x] Programado en Business Suite
 - [ ] Publicado en Instagram y en TikTok
 - [ ] Respondidos los comentarios con la palabra clave (con el enlace de arriba)

@@ -58,6 +58,7 @@ En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo pa
 -
 
 ## Estado del agente
+- 15 nov · Instagram: publicada el dom 15 a las 21:29. TikTok: programada mar 17, 13:00.
 - 15 nov · Pasa a imagen con movimiento (variedad de formatos de la semana), con masesora.es tras «Escáner de Salud Empresarial».
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 - 15 nov · Textos reescritos a petición de Maite (más naturales, sin frases hechas).
@@ -65,6 +66,6 @@ En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo pa
 ## Lista de comprobación
 - [x] Imagen o diseño en `assets/`
 - [x] Sin «IA», sin culpar al dueño, sin precio, sin frases prohibidas
-- [ ] Programado en Business Suite
+- [x] Programado en Business Suite
 - [ ] Publicado en Instagram y en TikTok
 - [ ] Respondidos los comentarios con CLINICA (con el enlace de arriba)

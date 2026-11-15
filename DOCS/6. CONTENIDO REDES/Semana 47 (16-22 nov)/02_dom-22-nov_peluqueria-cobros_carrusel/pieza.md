@@ -56,6 +56,7 @@ Guárdalo para repetir la cuenta cada mes.
 -
 
 ## Estado del agente
+- 15 nov · Programada en Instagram (carrusel) y TikTok (fotos): dom 22, 10:00.
 - 15 nov · Cierre cambiado a masesora.es (sin palabra clave).
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 
@@ -64,6 +65,6 @@ Guárdalo para repetir la cuenta cada mes.
 - [ ] Voz o clip grabado (si el formato lo pide)
 - [x] Imagen o diseño en `assets/`
 - [ ] Texto de pantalla y pie revisados (sin «IA», sin culpar al dueño, ejemplo etiquetado como *ilustrativo*)
-- [ ] Programado en Business Suite
+- [x] Programado en Business Suite
 - [ ] Publicado en Instagram y en TikTok
 - [ ] Respondidos los comentarios con la palabra clave (con el enlace de arriba)

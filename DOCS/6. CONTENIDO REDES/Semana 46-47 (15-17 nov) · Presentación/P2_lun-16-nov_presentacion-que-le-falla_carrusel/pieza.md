@@ -46,6 +46,7 @@ El Escáner de la Salud de tu empresa en www.masesora.es
 - SLIDES PERFERFECTAS, FALTA PONER MUSICA DE FONDO!
 
 ## Estado del agente
+- 15 nov · Instagram: publicada el dom 15 a las 21:11. TikTok: programada lun 16, 13:00.
 - 15 nov · Maite pide música de fondo: convertido en vídeo de diapositivas con música original (Fa mayor, 114 BPM).
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 - 15 nov · Textos reescritos a petición de Maite (más naturales, sin frases hechas).
@@ -53,6 +54,6 @@ El Escáner de la Salud de tu empresa en www.masesora.es
 ## Lista de comprobación
 - [x] Imagen o diseño en `assets/`
 - [x] Sin «IA», sin culpar al dueño, sin precio, sin frases prohibidas
-- [ ] Programado en Business Suite
+- [x] Programado en Business Suite
 - [ ] Publicado en Instagram y en TikTok
 - [ ] Respondidos los comentarios con CLINICA (con el enlace de arriba)
