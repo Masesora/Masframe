@@ -3200,7 +3200,7 @@ Caja (UCI-S1): «mi negocio no tiene liquidez», «cómo mejorar la tesorería d
 7. **Primera guía por síntoma** (la de Caja, UCI-S1), desde `symptoms.json`.
 8. **Objetivo personalizado del cliente persistente** (hoy solo vive en la sesión).
 9. **Panel de administración:** los contadores por plan no cuentan el plan nuevo «SUELTO».
-10. **Dominios:** decidir cuáles de los botones de `.com` a Render (Tu Solución, landing de MAS@FRAME, tarjeta de visita) tienen dominio propio. Confirmar si la landing de MAS@FRAME publicada ya dice «Desde 249 €» y revisar la calculadora de `diagnostico_síntomas.html` (dice «399 €/mes»).
+10. **Dominios (corrección del 15 nov: Tu Solución está viva y no tiene nada pendiente; sale de esta lista):** decidir si la landing de MAS@FRAME y la tarjeta de visita, que cuelgan de direcciones de Render, necesitan dominio propio. Confirmar si la landing de MAS@FRAME publicada ya dice «Desde 249 €» y revisar la calculadora de `diagnostico_síntomas.html` (dice «399 €/mes»).
 
 **Tuyo, siempre en marcha.** Search Console (qué páginas están indexadas, reenviar los sitemaps), ficha de Google Business Profile, WhatsApp a conocidos, programar y publicar las piezas (miércoles 13:00 y domingo 10:00), medición de los viernes. **Metas:** 30 informes y 10 conversaciones el 8 de diciembre; 2 o 3 pagos el 15 de enero, cuando se revisan precios y oferta.
 

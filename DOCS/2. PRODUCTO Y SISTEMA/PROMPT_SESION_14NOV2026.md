@@ -43,6 +43,6 @@ Sesión del 14 nov 2026. Continuamos con Maite (MASESORA / MASFRAME / La Clínic
 7. Primera guía por síntoma (Caja, UCI-S1).
 8. Objetivo personalizado del cliente persistente.
 9. Panel de administración: los contadores por plan no cuentan el plan «SUELTO».
-10. Dominios de los botones de `.com` a Render y la calculadora de `diagnostico_síntomas.html` («399 €/mes»).
+10. Dominio propio para la landing de MAS@FRAME y la tarjeta de visita (**Tu Solución está viva y no tiene nada pendiente**) y la calculadora de `diagnostico_síntomas.html` («399 €/mes»).
 
 **Primer paso.** Pregunta a Maite, en una sola ronda: (a) si desplegó el backend, (b) qué cambios decidió sobre el plan de marketing. Después, empieza por el punto 2.
