@@ -1,12 +1,12 @@
-# Pieza 01 · Mié 18 nov · Taller × Caja
+# Pieza 01 · Mié 18 nov · Caja (general)
 
 | | |
 |---|---|
 | **Fecha y hora** | Mié 18 nov · 13:00 (a probar) |
-| **Formato** | Reel hablado (voz + pantalla) |
+| **Formato** | Reel animado con la voz de Maite (26 s) |
 | **Síntoma · dolor** | **Caja** · «no sale lo que ya ganaste» |
 | **Llamada a la acción** | **masesora.es** (enlace en el perfil) |
-| **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=taller&utm_content=01` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=taller&utm_content=01` |
+| **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=caja&utm_content=01` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=caja&utm_content=01` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Guion
@@ -23,34 +23,24 @@
 
 ## Pie de publicación · Instagram
 ```
-El problema no es que no entre dinero. Es que no sale lo que ya ganaste.
+Tienes el negocio lleno, no paras un minuto y la cuenta no te sale.
 
-Abre tu banco y haz la cuenta: saldo ÷ gastos fijos de un mes × 30. Son tus días de caja.
-· Menos de 30: vendes por urgencia, no por estrategia.
-· Más de 60: recuperas el control.
+Haz la prueba: abre el banco y mira el dato. ¿Cuántos días aguantarías si mañana dejaran de pagarte?
 
-Ejemplo ilustrativo: un taller con 8.500 € en caja y 8.000 € de gastos fijos al mes tiene 31 días. Liberó 7.500 € atrapados en stock y facturas pendientes de cobro, y subió a 60.
+En La Clínica de Empresas te hacemos ver el verdadero valor de tu negocio. Empieza por el Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
 
-¿Cuántos días de caja tiene tu taller? Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
-Guárdalo para repetir la cuenta cada mes.
-
-#LaClinicaDeEmpresas #talleres #tallermecanico #autonomos #pymes #caja #gestionfinanciera
+#LaClinicaDeEmpresas #autonomos #pymes #negocios #caja #gestionfinanciera #emprendedores
 ```
 
 ## Pie de publicación · TikTok
 ```
-El problema no es que no entre dinero. Es que no sale lo que ya ganaste.
+Tienes el negocio lleno, no paras un minuto y la cuenta no te sale.
 
-Abre tu banco y haz la cuenta: saldo ÷ gastos fijos de un mes × 30. Son tus días de caja.
-· Menos de 30: vendes por urgencia, no por estrategia.
-· Más de 60: recuperas el control.
+Haz la prueba: abre el banco y mira el dato. ¿Cuántos días aguantarías si mañana dejaran de pagarte?
 
-Ejemplo ilustrativo: un taller con 8.500 € en caja y 8.000 € de gastos fijos al mes tiene 31 días. Liberó 7.500 € atrapados en stock y facturas pendientes de cobro, y subió a 60.
+En La Clínica de Empresas te hacemos ver el verdadero valor de tu negocio. Empieza por el Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en mi perfil.
 
-¿Cuántos días de caja tiene tu taller? Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
-Guárdalo para repetir la cuenta cada mes.
-
-#LaClinicaDeEmpresas #talleres #tallermecanico #autonomos #pymes #caja #gestionfinanciera
+#LaClinicaDeEmpresas #autonomos #pymes #negocios #caja #gestionfinanciera #emprendedores
 ```
 
 ## Archivos para publicar
@@ -67,13 +57,14 @@ Guárdalo para repetir la cuenta cada mes.
 -
 
 ## Estado del agente
+- 15 nov · Montado con la voz de Maite (limpia, música nueva en La mayor 122 BPM); pantalla y pie alineados con su audio; ya no es solo para talleres.
 - 15 nov · Maite pide voz: locución preparada, a la espera de su audio.
 - 15 nov · Rehecho como reel animado sin voz (variedad de formatos), con masesora.es tras el Escáner y sin palabra clave.
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 
 ## Lista de comprobación
 - [ ] Guion revisado por Maite
-- [ ] Voz o clip grabado (si el formato lo pide)
+- [x] Voz o clip grabado (si el formato lo pide)
 - [x] Imagen o diseño en `assets/`
 - [ ] Texto de pantalla y pie revisados (sin «IA», sin culpar al dueño, ejemplo etiquetado como *ilustrativo*)
 - [ ] Programado en Business Suite

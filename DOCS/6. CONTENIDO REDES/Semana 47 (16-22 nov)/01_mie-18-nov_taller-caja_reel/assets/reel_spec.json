@@ -1,93 +1,435 @@
 {
- "voz": "musica_sin_voz.wav",
- "duracion": 26.0,
- "etiqueta": "UCI · Caja · Taller",
- "portada_t": 3.0,
- "palabras": [],
+ "voz": "audio_final.wav",
+ "duracion": 25.9,
+ "etiqueta": "Caja",
+ "portada_t": 1.4,
+ "palabras": [
+  {
+   "w": "Si",
+   "s": 0.4,
+   "e": 0.46
+  },
+  {
+   "w": "tienes",
+   "s": 0.46,
+   "e": 0.64
+  },
+  {
+   "w": "el",
+   "s": 0.64,
+   "e": 0.9
+  },
+  {
+   "w": "negocio",
+   "s": 0.9,
+   "e": 1.42
+  },
+  {
+   "w": "lleno,",
+   "s": 1.42,
+   "e": 1.96
+  },
+  {
+   "w": "no",
+   "s": 2.22,
+   "e": 2.34
+  },
+  {
+   "w": "paras",
+   "s": 2.34,
+   "e": 2.74
+  },
+  {
+   "w": "un",
+   "s": 2.74,
+   "e": 2.9
+  },
+  {
+   "w": "minuto.",
+   "s": 2.9,
+   "e": 3.68
+  },
+  {
+   "w": "Y",
+   "s": 3.68,
+   "e": 3.86
+  },
+  {
+   "w": "la",
+   "s": 3.86,
+   "e": 3.98
+  },
+  {
+   "w": "cuenta",
+   "s": 3.98,
+   "e": 4.24
+  },
+  {
+   "w": "no",
+   "s": 4.24,
+   "e": 4.76
+  },
+  {
+   "w": "te",
+   "s": 4.76,
+   "e": 4.9
+  },
+  {
+   "w": "sale.",
+   "s": 4.9,
+   "e": 5.16
+  },
+  {
+   "w": "Haz",
+   "s": 5.56,
+   "e": 5.76
+  },
+  {
+   "w": "la",
+   "s": 5.76,
+   "e": 5.88
+  },
+  {
+   "w": "prueba.",
+   "s": 5.88,
+   "e": 6.16
+  },
+  {
+   "w": "Abre",
+   "s": 6.66,
+   "e": 6.94
+  },
+  {
+   "w": "el",
+   "s": 6.94,
+   "e": 7.04
+  },
+  {
+   "w": "banco",
+   "s": 7.04,
+   "e": 7.3
+  },
+  {
+   "w": "y",
+   "s": 7.3,
+   "e": 7.74
+  },
+  {
+   "w": "mira",
+   "s": 7.74,
+   "e": 7.92
+  },
+  {
+   "w": "el",
+   "s": 7.92,
+   "e": 8.06
+  },
+  {
+   "w": "dato.",
+   "s": 8.06,
+   "e": 8.28
+  },
+  {
+   "w": "¿Qué",
+   "s": 8.7,
+   "e": 8.78
+  },
+  {
+   "w": "me",
+   "s": 8.78,
+   "e": 8.9
+  },
+  {
+   "w": "dices?",
+   "s": 8.9,
+   "e": 9.22
+  },
+  {
+   "w": "¿Cuántos",
+   "s": 9.6,
+   "e": 9.94
+  },
+  {
+   "w": "días",
+   "s": 9.94,
+   "e": 10.22
+  },
+  {
+   "w": "crees",
+   "s": 10.22,
+   "e": 10.66
+  },
+  {
+   "w": "que",
+   "s": 10.66,
+   "e": 10.82
+  },
+  {
+   "w": "aguantarías",
+   "s": 10.82,
+   "e": 11.38
+  },
+  {
+   "w": "si",
+   "s": 11.38,
+   "e": 11.58
+  },
+  {
+   "w": "mañana",
+   "s": 11.58,
+   "e": 11.86
+  },
+  {
+   "w": "dejaran",
+   "s": 11.86,
+   "e": 12.36
+  },
+  {
+   "w": "de",
+   "s": 12.36,
+   "e": 12.46
+  },
+  {
+   "w": "pagarte?",
+   "s": 12.46,
+   "e": 12.94
+  },
+  {
+   "w": "En",
+   "s": 13.32,
+   "e": 13.46
+  },
+  {
+   "w": "la",
+   "s": 13.46,
+   "e": 13.6
+  },
+  {
+   "w": "Clínica",
+   "s": 13.6,
+   "e": 14.0
+  },
+  {
+   "w": "de",
+   "s": 14.0,
+   "e": 14.14
+  },
+  {
+   "w": "Empresas",
+   "s": 14.14,
+   "e": 14.62
+  },
+  {
+   "w": "te",
+   "s": 14.62,
+   "e": 14.88
+  },
+  {
+   "w": "vamos",
+   "s": 14.88,
+   "e": 15.08
+  },
+  {
+   "w": "a",
+   "s": 15.08,
+   "e": 15.24
+  },
+  {
+   "w": "hacer",
+   "s": 15.24,
+   "e": 15.4
+  },
+  {
+   "w": "ver",
+   "s": 15.4,
+   "e": 15.54
+  },
+  {
+   "w": "el",
+   "s": 15.54,
+   "e": 15.72
+  },
+  {
+   "w": "verdadero",
+   "s": 15.72,
+   "e": 16.16
+  },
+  {
+   "w": "valor",
+   "s": 16.16,
+   "e": 16.4
+  },
+  {
+   "w": "de",
+   "s": 16.4,
+   "e": 16.64
+  },
+  {
+   "w": "tu",
+   "s": 16.64,
+   "e": 16.78
+  },
+  {
+   "w": "negocio.",
+   "s": 16.78,
+   "e": 17.2
+  },
+  {
+   "w": "Empieza",
+   "s": 17.4,
+   "e": 17.74
+  },
+  {
+   "w": "con",
+   "s": 17.74,
+   "e": 17.96
+  },
+  {
+   "w": "nuestro",
+   "s": 17.96,
+   "e": 18.2
+  },
+  {
+   "w": "Escáner",
+   "s": 18.2,
+   "e": 18.58
+  },
+  {
+   "w": "de",
+   "s": 18.58,
+   "e": 18.74
+  },
+  {
+   "w": "Salud",
+   "s": 18.74,
+   "e": 18.94
+  },
+  {
+   "w": "Empresarial",
+   "s": 18.94,
+   "e": 19.68
+  },
+  {
+   "w": "para",
+   "s": 19.68,
+   "e": 20.22
+  },
+  {
+   "w": "comprobar",
+   "s": 20.22,
+   "e": 20.76
+  },
+  {
+   "w": "en",
+   "s": 20.76,
+   "e": 21.0
+  },
+  {
+   "w": "qué",
+   "s": 21.0,
+   "e": 21.16
+  },
+  {
+   "w": "áreas",
+   "s": 21.16,
+   "e": 21.4
+  },
+  {
+   "w": "necesita",
+   "s": 21.4,
+   "e": 22.02
+  },
+  {
+   "w": "mejorar",
+   "s": 22.02,
+   "e": 22.36
+  },
+  {
+   "w": "tu",
+   "s": 22.36,
+   "e": 22.6
+  },
+  {
+   "w": "empresa.",
+   "s": 22.6,
+   "e": 22.86
+  },
+  {
+   "w": "Pincha en",
+   "s": 23.24,
+   "e": 23.64
+  },
+  {
+   "w": "el",
+   "s": 23.64,
+   "e": 23.78
+  },
+  {
+   "w": "enlace",
+   "s": 23.78,
+   "e": 24.04
+  },
+  {
+   "w": "del",
+   "s": 24.04,
+   "e": 24.28
+  },
+  {
+   "w": "perfil.",
+   "s": 24.28,
+   "e": 24.68
+  }
+ ],
  "escenas": [
   {
    "tipo": "titulo",
    "inicio": 0.0,
-   "palabras_hasta": 2.6,
-   "texto": "El problema no es que no entre dinero.",
-   "oro": "Es que no sale lo que ya ganaste."
+   "palabras_hasta": 4.9,
+   "texto": "Tienes el negocio lleno",
+   "oro": "y la cuenta no te sale."
   },
   {
    "tipo": "frase",
-   "inicio": 4.2,
-   "palabras_hasta": 5.6,
-   "texto": "Abre tu banco.",
-   "oro": "Mira cuánto tienes hoy."
+   "inicio": 5.4,
+   "palabras_hasta": 8.1,
+   "eyebrow": "Haz la prueba",
+   "texto": "Abre el banco.",
+   "oro": "Mira el dato."
   },
   {
    "tipo": "frase",
-   "inicio": 7.2,
-   "palabras_hasta": 9.0,
-   "eyebrow": "Tus días de caja",
-   "texto": "Saldo ÷ gastos fijos de un mes × 30",
-   "oro": ""
+   "inicio": 8.6,
+   "palabras_hasta": 12.5,
+   "texto": "¿Cuántos días aguantarías",
+   "oro": "si mañana dejaran de pagarte?"
   },
   {
-   "tipo": "pasos",
-   "inicio": 10.6,
-   "palabras_hasta": 11.0,
-   "texto": "¿Dónde está tu número?",
-   "pasos": [
-    {
-     "t": 11.2,
-     "titulo": "Menos de 30 días",
-     "detalle": "Vendes por urgencia, no por estrategia."
-    },
-    {
-     "t": 12.6,
-     "titulo": "Más de 60 días",
-     "detalle": "Recuperas el control."
-    }
-   ]
-  },
-  {
-   "tipo": "pasos",
-   "inicio": 15.0,
-   "palabras_hasta": 15.6,
-   "eyebrow": "Ejemplo ilustrativo · Taller",
-   "texto": "8.500 € en caja, 8.000 € de gastos fijos",
-   "pasos": [
-    {
-     "t": 15.9,
-     "titulo": "Antes: 31 días",
-     "detalle": "Dinero atrapado en stock y facturas sin cobrar."
-    },
-    {
-     "t": 17.4,
-     "titulo": "Después: 60 días",
-     "detalle": "Tras liberar 7.500 €."
-    }
-   ]
-  },
-  {
-   "tipo": "alta",
-   "inicio": 19.6,
-   "fin": 22.2,
-   "palabras_hasta": 21.0,
-   "texto": "Tu caja respira",
-   "oro": "sin necesidad de nuevas ventas.",
-   "pasos": []
+   "tipo": "frase",
+   "inicio": 13.2,
+   "palabras_hasta": 16.8,
+   "eyebrow": "En La Clínica de Empresas",
+   "texto": "te hacemos ver",
+   "oro": "el verdadero valor de tu negocio."
   },
   {
    "tipo": "escaner",
-   "inicio": 22.2,
-   "palabras_hasta": 23.6,
-   "eyebrow": "¿Cuántos días tiene tu taller?",
+   "inicio": 17.3,
+   "palabras_hasta": 19.0,
+   "eyebrow": "¿Qué áreas necesita mejorar tu empresa?",
    "texto": "Escáner de Salud",
    "oro": "Empresarial",
    "chips": [
     {
-     "t": 23.7,
+     "t": 19.1,
      "txt": "masesora.es"
     },
     {
-     "t": 24.1,
+     "t": 21.0,
      "txt": "Gratis · 10 minutos"
+    },
+    {
+     "t": 23.2,
+     "txt": "Enlace en el perfil ↓"
     }
    ]
   }
