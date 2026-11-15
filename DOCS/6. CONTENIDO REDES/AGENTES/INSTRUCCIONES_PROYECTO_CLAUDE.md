@@ -37,6 +37,7 @@
 - Las otras nueve especialidades (Neurología, Procesos, Gestión, Operativa, Personas, Psiquiatría, Experiencia, Marca y Cardiología) existen en el catálogo, pero NO se venden ni se publican hasta que estén disponibles. Nunca decir «10 especialidades» ni «ves todos los síntomas».
 - Garantía, con esta redacción y ninguna otra (es la del contrato y la de los Términos §7): «Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.» No hay devolución del precio.
 - En redes no se habla de precio.
+- Cada vez que se nombre el Escáner de Salud Empresarial, justo detrás va masesora.es (es el enlace al Escáner).
 
 ## A quién hablamos
 - Dueños de micropymes y autónomos de la Marina Baixa (Polop, La Nucía, Benidorm, Altea y alrededores), de 38 a 62 años, con muchos años de oficio. Cinco nichos: **taller · peluquería y estética · hostelería · asesoría · oficios** (electricistas, fontaneros e instaladores que cobran a 30, 60 o 90 días).

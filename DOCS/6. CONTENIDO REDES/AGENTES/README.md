@@ -24,7 +24,8 @@ Trabaja con **10 días de antelación**. Para cada pieza con fecha en los próxi
 2. Rellena en `pieza.md`: locución (si es vídeo), pie de Instagram, pie de TikTok («Enlace en mi perfil»), hashtags y «Archivos para publicar».
 3. Si hay «Cambios pedidos» sin atender, los aplica, vuelve a exportar y anota en «Estado del agente» qué cambió.
 4. Si aparece `assets/voz.m4a` (o `clip.mp4`) nuevo, vuelve a montar los vídeos.
-5. Revisa las reglas del plan antes de entregar: sin «IA», sin culpar al dueño, cifras solo del plan y etiquetadas como *ejemplo ilustrativo*, sin especialidades que no se venden, sin «piloto», «beta» ni «plazas», sin promesas de devolución. Usuario correcto: **@laclinicadempresas**.
+5. Cada vez que aparezca «Escáner de Salud Empresarial» (pantalla, voz o pie), justo detrás va **masesora.es**. Respeta la variedad de formatos de la semana (§4 del plan) y usa `herramientas/reel_animado.py` para reels y piezas con movimiento.
+6. Revisa las reglas del plan antes de entregar: sin «IA», sin culpar al dueño, cifras solo del plan y etiquetadas como *ejemplo ilustrativo*, sin especialidades que no se venden, sin «piloto», «beta» ni «plazas», sin promesas de devolución. Usuario correcto: **@laclinicadempresas**.
 6. Hace commit en `main` (solo dentro de `DOCS/6. CONTENIDO REDES/`) y avisa a Maite de qué piezas esperan su revisión.
 
 **Nunca** marca la casilla de aprobación ni publica.

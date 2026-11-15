@@ -5,34 +5,34 @@
 | **Fecha y hora** | Lun 16 nov · 13:00 |
 | **Formato** | Carrusel (5 imágenes 4:5) |
 | **Objetivo** | Presentar La Clínica de Empresas antes de las piezas por nicho |
-| **Palabra clave** | **CLINICA** |
+| **Llamada a la acción** | **masesora.es** (enlace en el perfil) |
 | **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=presentacion&utm_content=p2` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=presentacion&utm_content=p2` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Gancho
-**¿Qué falla a tu negocio?**
+**¿Qué falla en tu negocio?**
 
 
 ## Pie de publicación · Instagram
 ```
-¿Qué falla a tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
+¿Qué falla en tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
 
 Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial: contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
 
 El Escáner es gratis y no te compromete a nada.
-www.masesora.es
+Entra en masesora.es (tienes el enlace en el perfil).
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
 
 ## Pie de publicación · TikTok
 ```
-¿Qué falla a tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
+¿Qué falla en tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
 
 Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial: contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
 
 El Escáner es gratis y no te compromete a nada.
-www.masesora.es
+Entra en masesora.es (tienes el enlace en el perfil).
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```

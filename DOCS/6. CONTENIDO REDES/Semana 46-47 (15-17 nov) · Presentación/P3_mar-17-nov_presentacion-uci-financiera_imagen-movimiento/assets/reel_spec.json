@@ -1,0 +1,61 @@
+{
+ "voz": "silencio.wav",
+ "duracion": 13.5,
+ "etiqueta": "UCI Financiera",
+ "portada_t": 2.4,
+ "palabras": [],
+ "escenas": [
+  {
+   "tipo": "titulo",
+   "inicio": 0.0,
+   "palabras_hasta": 2.4,
+   "texto": "¿Por qué a final de mes",
+   "oro": "no ves todo lo que facturas?"
+  },
+  {
+   "tipo": "pasos",
+   "inicio": 3.6,
+   "palabras_hasta": 4.2,
+   "texto": "Puede estar en tres sitios",
+   "pasos": [
+    {
+     "t": 4.3,
+     "titulo": "Obstrucción de Caja",
+     "detalle": "Dinero atrapado en mercancía, anticipos o trabajos sin facturar."
+    },
+    {
+     "t": 5.7,
+     "titulo": "Fuga Invisible",
+     "detalle": "Facturas vencidas que siguen sin cobrar."
+    },
+    {
+     "t": 7.1,
+     "titulo": "Anemia de Margen",
+     "detalle": "Precios que no cubren lo que te cuesta el trabajo."
+    }
+   ]
+  },
+  {
+   "tipo": "escaner",
+   "inicio": 9.8,
+   "palabras_hasta": 10.6,
+   "eyebrow": "¿En cuál está tu dinero?",
+   "texto": "Escáner de Salud",
+   "oro": "Empresarial",
+   "chips": [
+    {
+     "t": 10.7,
+     "txt": "masesora.es"
+    },
+    {
+     "t": 11.2,
+     "txt": "Gratis"
+    },
+    {
+     "t": 11.6,
+     "txt": "10 minutos"
+    }
+   ]
+  }
+ ]
+}

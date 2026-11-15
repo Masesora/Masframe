@@ -1,5 +1,5 @@
 {
- "voz": "voz_maite.ogg",
+ "voz": "voz_maite_limpia.wav",
  "duracion": 47.0,
  "etiqueta": "Presentación",
  "portada_t": 1.8,
@@ -483,7 +483,7 @@
    "inicio": 4.0,
    "palabras_hasta": 7.2,
    "texto": "Lo notas cada mes,",
-   "oro": "aunque no sepas ponerle nombre."
+   "oro": "pero no sabes ponerle nombre."
   },
   {
    "tipo": "barras_cuenta",
@@ -529,7 +529,7 @@
    "fin": 36.3,
    "palabras_hasta": 33.5,
    "texto": "Te damos el alta",
-   "oro": "cuando tus números han mejorado.",
+   "oro": "cuando tus números hayan mejorado de verdad.",
    "pasos": []
   },
   {
@@ -540,6 +540,10 @@
    "texto": "Escáner de Salud",
    "oro": "Empresarial",
    "chips": [
+    {
+     "t": 40.62,
+     "txt": "masesora.es"
+    },
     {
      "t": 40.8,
      "txt": "Gratis"
@@ -554,14 +558,14 @@
    "tipo": "cierre",
    "inicio": 43.9,
    "palabras_hasta": 45.0,
-   "texto": "¿Qué le duele a la tuya?",
+   "texto": "El primer paso, en masesora.es",
    "instagram": {
-    "boton": "Comenta CLINICA",
-    "debajo": "y te paso el enlace"
+    "boton": "masesora.es",
+    "debajo": "Enlace en el perfil · gratis · 10 minutos"
    },
    "tiktok": {
-    "boton": "Enlace en mi perfil",
-    "debajo": "Escáner gratuito · 10 minutos"
+    "boton": "masesora.es",
+    "debajo": "Enlace en el perfil · gratis · 10 minutos"
    }
   }
  ]

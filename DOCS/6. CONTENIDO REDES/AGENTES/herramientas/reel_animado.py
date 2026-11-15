@@ -79,7 +79,7 @@ SPEC.escenas.forEach((s,i)=>{
   if(s.tipo==='barras_cuenta'){h+=`<h2>${words(s.texto)}</h2><div class="bars" style="padding:0 120px"><div class="bar" data-h="1" style="background:var(--gold)"><span>Facturado</span></div><div class="bar" data-h="0.38" style="background:var(--crit)"><span>En la cuenta</span></div></div>`}
   if(s.tipo==='barras_meses'){h+=`<h2>${words(s.texto)}</h2><div class="bars">`+[.9,.35,.75,.2,.95,.45].map((v,k)=>`<div class="bar" data-h="${v}" style="background:${v>.6?'var(--gold)':'rgba(255,255,255,.25)'}"><span>${['E','F','M','A','M','J'][k]}</span></div>`).join('')+`</div>`}
   if(s.tipo==='pasos'||s.tipo==='alta'){h+=`<h2 style="font-size:66px">${words(s.texto)} ${s.oro?words(s.oro,'gold'):''}</h2>`+s.pasos.map((p,k)=>`<div class="step" data-t="${p.t}"><div class="n">${k+1}</div><div class="t">${p.titulo}<small>${p.detalle}</small></div></div>`).join('')}
-  if(s.tipo==='escaner'){h+=`<h2>${words(s.texto)} ${s.oro?'<br>'+words(s.oro,'gold'):''}</h2><div>`+s.chips.map(c=>`<span class="chip" data-t="${c.t}">${c.txt}</span>`).join('')+`</div>`}
+  if(s.tipo==='escaner'){h+=`<h2>${words(s.texto)} ${s.oro?'<br>'+words(s.oro,'gold'):''}</h2><div>`+s.chips.map((c,k)=>`<span class="chip" data-t="${c.t}" style="${k===0?"background:var(--gold);color:var(--navy);font-size:44px":""}">${c.txt}</span>`).join('')+`</div>`}
   if(s.tipo==='cierre'){const c=s[PLAT]; h+=`<h2>${words(s.texto)}</h2><div class="go">${c.boton}</div><div class="ill">${c.debajo}</div>`}
   d.innerHTML=h; root.appendChild(d);
 });

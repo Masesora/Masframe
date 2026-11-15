@@ -69,6 +69,10 @@ Domingo a las **10:00**; miércoles a las **13:00** *(a probar)*. El mismo conte
 `https://www.masesora.es/?utm_source=<instagram|tiktok>&utm_medium=organic&utm_campaign=<taller|pelu|bar|asesoria|oficio>&utm_content=<nº de pieza>`
 Se manda al responder a quien comenta y se pone en la biografía la semana de la pieza. Cada `pieza.md` lleva los suyos.
 
+**Regla fija (Maite, 15 nov):** cada vez que se nombra el Escáner de Salud Empresarial, en pantalla, en voz o en el pie, justo detrás va **masesora.es**, que es el enlace al Escáner.
+
+**Variedad de formatos (Maite, 15 nov):** cada semana se combinan formatos distintos (al menos un reel, un carrusel y una imagen o pieza con movimiento); nunca dos formatos iguales seguidos; como mucho un reel con la voz de Maite por semana y, si no hay audio, se monta sin voz.
+
 **Reglas del pie de publicación:** primera línea = el gancho; la cuenta en una línea («saldo ÷ gastos fijos × 30»); el ejemplo, siempre como *ejemplo ilustrativo*; el cierre con la palabra clave (Instagram) o «Enlace en mi perfil» (TikTok); y, en las piezas con cuenta, «Guárdalo para repetir la cuenta cada mes», que empuja los guardados. Hashtags: `#LaClinicaDeEmpresas` + nicho + `#autonomos #pymes` (5 a 7, sin relleno).
 
 ## 5. LOS 12 GUIONES (cada uno cita su fuente en `symptoms.json`)

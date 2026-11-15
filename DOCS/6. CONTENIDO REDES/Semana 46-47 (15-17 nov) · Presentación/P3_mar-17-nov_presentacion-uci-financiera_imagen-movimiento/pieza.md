@@ -3,9 +3,9 @@
 | | |
 |---|---|
 | **Fecha y hora** | Mar 17 nov · 13:00 |
-| **Formato** | Carrusel (6 imágenes 4:5) |
+| **Formato** | Imagen con movimiento (13 s, 9:16), sin voz |
 | **Objetivo** | Presentar La Clínica de Empresas antes de las piezas por nicho |
-| **Palabra clave** | **CLINICA** |
+| **Llamada a la acción** | **masesora.es** (enlace en el perfil) |
 | **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=presentacion&utm_content=p3` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=presentacion&utm_content=p3` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
@@ -27,7 +27,7 @@ Anemia de Margen: precios que no cubren lo que te cuesta el trabajo, contando tu
 En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo paso a paso y un consultor clínico asignado. Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.
 
 ¿En cuál de los tres está tu dinero? El Escáner te lo dice en 10 minutos, y es gratis.
-Comenta CLINICA y te paso el enlace.
+Entra en masesora.es (tienes el enlace en el perfil).
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
@@ -43,13 +43,15 @@ Anemia de Margen: precios que no cubren lo que te cuesta el trabajo, contando tu
 En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo paso a paso y un consultor clínico asignado. Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.
 
 ¿En cuál de los tres está tu dinero? El Escáner te lo dice en 10 minutos, y es gratis.
-Enlace en mi perfil.
+Entra en masesora.es (tienes el enlace en el perfil).
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
 
 ## Archivos para publicar
-- Instagram (carrusel) y TikTok (modo foto), en este orden: `assets/01_gancho.png`, `assets/02_caja.png`, `assets/03_cobros.png`, `assets/04_margen.png`, `assets/05_tratamiento.png`, `assets/06_cierre.png`
+- Instagram (reel): `assets/reel_instagram.mp4` · portada `assets/portada.png`
+- TikTok (vídeo): `assets/reel_tiktok.mp4`
+- Sin voz: se le añade música de la biblioteca comercial al subirlo.
 
 ## Aprobación (la marcas tú)
 - [ ] **APROBADO PARA PUBLICAR** · Maite
@@ -58,6 +60,7 @@ Enlace en mi perfil.
 -
 
 ## Estado del agente
+- 15 nov · Pasa a imagen con movimiento (variedad de formatos de la semana), con masesora.es tras «Escáner de Salud Empresarial».
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 - 15 nov · Textos reescritos a petición de Maite (más naturales, sin frases hechas).
 

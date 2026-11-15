@@ -6,9 +6,9 @@ Sirve para **no repetir**, ver **qué interesa** a cada nicho y **añadir ideas*
 
 | # | Fecha | Gancho | Formato | Palabra clave | Estado |
 |---|---|---|---|---|---|
-| P1 | Dom 15 nov 20:00 | «¿Qué le duele a tu empresa?» | Reel animado con voz | CLINICA | programado |
-| P2 | Lun 16 nov 13:00 | «¿Qué le falla a tu negocio?» | Carrusel (5) | CLINICA | programado |
-| P3 | Mar 17 nov 13:00 | «¿Por qué a final de mes no ves todo lo que facturas?» | Carrusel (6) | CLINICA | programado |
+| P1 | Dom 15 nov 20:00 | «¿Qué le duele a tu empresa?» | Reel animado con voz | masesora.es | programado |
+| P2 | Lun 16 nov 13:00 | «¿Qué falla en tu negocio?» | Carrusel (5) | masesora.es | programado |
+| P3 | Mar 17 nov 13:00 | «¿Por qué a final de mes no ves todo lo que facturas?» | Imagen con movimiento | masesora.es | programado |
 
 ## Programados (los 12 del plan v2)
 
