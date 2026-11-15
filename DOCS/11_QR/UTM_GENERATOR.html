@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>UTM Generator · MASESORA®</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #F9F7F2; color: #0F1A35; min-height: 100vh; }
+  header { background: #0F1A35; padding: 24px 32px; }
+  header h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 18px; color: #F9F7F2; letter-spacing: 2px; text-transform: uppercase; }
+  header p { font-size: 11px; color: rgba(184,157,82,0.6); letter-spacing: 1px; margin-top: 4px; }
+  .container { padding: 32px; max-width: 900px; margin: 0 auto; }
+  .card { background: white; border-radius: 5px; padding: 28px; box-shadow: 0 1px 8px rgba(15,26,53,0.08); margin-bottom: 24px; }
+  h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #B89D52; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(184,157,82,0.2); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #B89D52; margin-bottom: 5px; }
+  .field input, .field select { width: 100%; border: 1px solid rgba(184,157,82,0.35); border-radius: 3px; padding: 9px 12px; font-size: 13px; color: #0F1A35; font-family: inherit; }
+  .field input:focus, .field select:focus { outline: 2px solid #B89D52; }
+  .field .hint { font-size: 10px; color: #aaa; margin-top: 4px; }
+  .result-box { background: #0F1A35; border-radius: 4px; padding: 16px 18px; margin-top: 20px; display: flex; align-items: center; gap: 12px; }
+  .result-url { font-family: monospace; font-size: 12px; color: #B89D52; flex: 1; word-break: break-all; line-height: 1.6; }
+  .btn { background: #B89D52; color: #0F1A35; border: none; padding: 10px 20px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; border-radius: 3px; white-space: nowrap; }
+  .btn:hover { background: #F9F7F2; }
+  .btn-sm { padding: 7px 14px; font-size: 9px; }
+  .btn-save { background: #0F1A35; color: #B89D52; border: 1px solid rgba(184,157,82,0.3); }
+  .btn-save:hover { background: #B89D52; color: #0F1A35; border-color: #B89D52; }
+  .copy-ok { color: #27ae60; font-size: 11px; margin-left: 8px; opacity: 0; transition: opacity 0.3s; }
+  table { width: 100%; border-collapse: collapse; }
+  th { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #B89D52; padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(184,157,82,0.2); }
+  td { padding: 10px 12px; font-size: 12px; border-bottom: 1px solid rgba(184,157,82,0.08); }
+  td:first-child { font-family: monospace; color: #555; word-break: break-all; font-size: 11px; }
+  tr:hover td { background: rgba(184,157,82,0.03); }
+  .del-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 13px; }
+  .del-btn:hover { color: #e74c3c; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .preset-btn { background: rgba(184,157,82,0.1); border: 1px solid rgba(184,157,82,0.25); color: #8a6e2a; padding: 5px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
+  .preset-btn:hover { background: #B89D52; color: #0F1A35; border-color: #B89D52; }
+  .urls-base { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>UTM Generator · MASESORA®</h1>
+  <p>Genera URLs de tracking para cada soporte y canal</p>
+</header>
+<div class="container">
+  <div class="card">
+    <h2>Configurar URL</h2>
+    <div class="field">
+      <label>URL base</label>
+      <div class="urls-base">
+        <button class="preset-btn" onclick="setUrl('https://www.masesora.com')">masesora.com</button>
+        <button class="preset-btn" onclick="setUrl('https://masframelanding.onrender.com')">masframelanding</button>
+        <button class="preset-btn" onclick="setUrl('https://tusolucion.onrender.com')">tusolucion</button>
+      </div>
+      <input type="url" id="url" placeholder="https://www.masesora.com" oninput="generar()">
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label>utm_source <span style="color:#ccc;font-weight:400;">(origen)</span></label>
+        <div class="presets">
+          <button class="preset-btn" onclick="setField('source','triptico')">tríptico</button>
+          <button class="preset-btn" onclick="setField('source','tarjeta')">tarjeta</button>
+          <button class="preset-btn" onclick="setField('source','instagram')">instagram</button>
+          <button class="preset-btn" onclick="setField('source','linkedin')">linkedin</button>
+          <button class="preset-btn" onclick="setField('source','email')">email</button>
+        </div>
+        <input type="text" id="source" placeholder="triptico" oninput="generar()">
+      </div>
+      <div class="field">
+        <label>utm_medium <span style="color:#ccc;font-weight:400;">(canal)</span></label>
+        <div class="presets">
+          <button class="preset-btn" onclick="setField('medium','qr')">qr</button>
+          <button class="preset-btn" onclick="setField('medium','impreso')">impreso</button>
+          <button class="preset-btn" onclick="setField('medium','social')">social</button>
+          <button class="preset-btn" onclick="setField('medium','email')">email</button>
+        </div>
+        <input type="text" id="medium" placeholder="qr" oninput="generar()">
+      </div>
+      <div class="field">
+        <label>utm_campaign <span style="color:#ccc;font-weight:400;">(campaña)</span></label>
+        <div class="presets">
+          <button class="preset-btn" onclick="setField('campaign','masframe')">masframe</button>
+          <button class="preset-btn" onclick="setField('campaign','tusolucion')">tusolucion</button>
+          <button class="preset-btn" onclick="setField('campaign','salud_negocio')">salud negocio</button>
+        </div>
+        <input type="text" id="campaign" placeholder="masframe_2026" oninput="generar()">
+      </div>
+      <div class="field">
+        <label>utm_content <span style="color:#ccc;font-weight:400;">(variante, opcional)</span></label>
+        <input type="text" id="content" placeholder="panel2" oninput="generar()">
+        <div class="hint">Útil para diferenciar variantes del mismo soporte</div>
+      </div>
+    </div>
+    <div class="result-box" id="result-box" style="display:none;">
+      <span class="result-url" id="result-url"></span>
+      <button class="btn btn-sm" onclick="copiar()">Copiar</button>
+      <span class="copy-ok" id="copy-ok">✓ Copiado</span>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;">
+      <button class="btn" onclick="generar()">Generar URL</button>
+      <button class="btn btn-save" onclick="guardar()">Guardar en historial</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Historial de URLs</h2>
+    <table>
+      <thead><tr><th>URL generada</th><th>Fuente</th><th>Campaña</th><th>Fecha</th><th></th></tr></thead>
+      <tbody id="historial"></tbody>
+    </table>
+    <p id="hist-empty" style="text-align:center;color:#bbb;font-size:12px;padding:20px;">Sin URLs guardadas aún</p>
+  </div>
+</div>
+
+<script>
+let historial = JSON.parse(localStorage.getItem('masesora_utm') || '[]');
+
+function setUrl(v) { document.getElementById('url').value = v; generar(); }
+function setField(id, v) { document.getElementById(id).value = v; generar(); }
+
+function generar() {
+  const url = document.getElementById('url').value.trim();
+  if (!url) return;
+  const params = new URLSearchParams();
+  const s = document.getElementById('source').value.trim();
+  const m = document.getElementById('medium').value.trim();
+  const c = document.getElementById('campaign').value.trim();
+  const ct = document.getElementById('content').value.trim();
+  if (s) params.set('utm_source', s);
+  if (m) params.set('utm_medium', m);
+  if (c) params.set('utm_campaign', c);
+  if (ct) params.set('utm_content', ct);
+  const full = params.toString() ? url + '?' + params.toString() : url;
+  document.getElementById('result-url').textContent = full;
+  document.getElementById('result-box').style.display = 'flex';
+}
+
+function copiar() {
+  const url = document.getElementById('result-url').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    const ok = document.getElementById('copy-ok');
+    ok.style.opacity = 1;
+    setTimeout(() => ok.style.opacity = 0, 2000);
+  });
+}
+
+function guardar() {
+  const url = document.getElementById('result-url').textContent;
+  if (!url || url === '') return;
+  historial.unshift({
+    url, source: document.getElementById('source').value,
+    campaign: document.getElementById('campaign').value,
+    fecha: new Date().toLocaleDateString('es-ES')
+  });
+  localStorage.setItem('masesora_utm', JSON.stringify(historial));
+  renderHistorial();
+}
+
+function rmHist(i) { historial.splice(i,1); localStorage.setItem('masesora_utm', JSON.stringify(historial)); renderHistorial(); }
+
+function renderHistorial() {
+  const tbody = document.getElementById('historial');
+  document.getElementById('hist-empty').style.display = historial.length ? 'none' : 'block';
+  tbody.innerHTML = historial.map((h,i) => `
+    <tr>
+      <td><a href="${h.url}" target="_blank" style="color:#B89D52;">${h.url}</a></td>
+      <td>${h.source}</td><td>${h.campaign}</td><td>${h.fecha}</td>
+      <td><button class="del-btn" onclick="rmHist(${i})">✕</button></td>
+    </tr>`).join('');
+}
+
+renderHistorial();
+</script>
+</body>
+</html>
