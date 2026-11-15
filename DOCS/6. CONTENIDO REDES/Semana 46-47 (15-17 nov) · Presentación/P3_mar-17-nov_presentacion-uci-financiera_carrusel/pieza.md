@@ -10,38 +10,40 @@
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Gancho
-**¿Por qué no ves a final de mes todo lo que facturas?**
+**¿Por qué a final de mes no ves todo lo que facturas?**
 
 Alternativas (si prefieres otra, escríbela en «Cambios pedidos» y se rehace la portada):
-- «Facturas bien y sobrevives mal. Hay tres razones.»
-- «El dinero que ganas se queda en tres sitios. ¿En cuál está el tuyo?»
+- «Facturas bien y a final de mes no te queda.»
+- «¿Dónde se queda el dinero que facturas?»
 
 ## Pie de publicación · Instagram
 ```
-¿Por qué no ves a final de mes todo lo que facturas? Hay tres sitios donde se queda el dinero:
+¿Por qué a final de mes no ves todo lo que facturas? El dinero puede estar en uno de estos tres sitios:
 
-· Obstrucción de Caja: dinero atrapado en mercancía parada, en anticipos o en trabajos terminados que aún no has facturado.
-· Fuga Invisible: facturas vencidas sin cobrar, beneficio tuyo que estás financiando gratis a tus clientes.
-· Anemia de Margen: precios que no cubren el coste real, con tu sueldo dentro.
+Obstrucción de Caja: dinero atrapado en mercancía parada, en anticipos o en trabajos terminados que aún no has facturado.
+Fuga Invisible: facturas vencidas que siguen sin cobrar. Es dinero tuyo que tus clientes usan gratis.
+Anemia de Margen: precios que no cubren lo que te cuesta el trabajo, contando tu sueldo.
 
-En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo paso a paso y tu consultor clínico. Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.
+En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo paso a paso y un consultor clínico asignado. Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.
 
-¿Cuál es el tuyo? El Escáner te lo dice en 10 minutos, gratis. Comenta CLINICA y te paso el enlace.
+¿En cuál de los tres está tu dinero? El Escáner te lo dice en 10 minutos, y es gratis.
+Comenta CLINICA y te paso el enlace.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
 
 ## Pie de publicación · TikTok
 ```
-¿Por qué no ves a final de mes todo lo que facturas? Hay tres sitios donde se queda el dinero:
+¿Por qué a final de mes no ves todo lo que facturas? El dinero puede estar en uno de estos tres sitios:
 
-· Obstrucción de Caja: dinero atrapado en mercancía parada, en anticipos o en trabajos terminados que aún no has facturado.
-· Fuga Invisible: facturas vencidas sin cobrar, beneficio tuyo que estás financiando gratis a tus clientes.
-· Anemia de Margen: precios que no cubren el coste real, con tu sueldo dentro.
+Obstrucción de Caja: dinero atrapado en mercancía parada, en anticipos o en trabajos terminados que aún no has facturado.
+Fuga Invisible: facturas vencidas que siguen sin cobrar. Es dinero tuyo que tus clientes usan gratis.
+Anemia de Margen: precios que no cubren lo que te cuesta el trabajo, contando tu sueldo.
 
-En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo paso a paso y tu consultor clínico. Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.
+En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo paso a paso y un consultor clínico asignado. Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.
 
-¿Cuál es el tuyo? El Escáner te lo dice en 10 minutos, gratis. Enlace en mi perfil.
+¿En cuál de los tres está tu dinero? El Escáner te lo dice en 10 minutos, y es gratis.
+Enlace en mi perfil.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
@@ -57,6 +59,7 @@ En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo pa
 
 ## Estado del agente
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
+- 15 nov · Textos reescritos a petición de Maite (más naturales, sin frases hechas).
 
 ## Lista de comprobación
 - [x] Imagen o diseño en `assets/`

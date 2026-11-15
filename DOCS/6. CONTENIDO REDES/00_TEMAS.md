@@ -8,7 +8,7 @@ Sirve para **no repetir**, ver **qué interesa** a cada nicho y **añadir ideas*
 |---|---|---|---|---|---|
 | P1 | Dom 15 nov 20:00 | «¿Qué le duele a tu empresa?» | Carrusel (5) | CLINICA | programado |
 | P2 | Lun 16 nov 13:00 | «¿Qué le falla a tu negocio?» | Carrusel (5) | CLINICA | programado |
-| P3 | Mar 17 nov 13:00 | «¿Por qué no ves a final de mes todo lo que facturas?» | Carrusel (6) | CLINICA | programado |
+| P3 | Mar 17 nov 13:00 | «¿Por qué a final de mes no ves todo lo que facturas?» | Carrusel (6) | CLINICA | programado |
 
 ## Programados (los 12 del plan v2)
 

@@ -13,35 +13,33 @@
 **¿Qué le duele a tu empresa?**
 
 Alternativas (si prefieres otra, escríbela en «Cambios pedidos» y se rehace la portada):
-- «Trabajas más que nunca y a final de mes no se nota. Eso tiene nombre.»
-- «Tu empresa no está rota. Tiene síntomas.» (la premisa como portada)
+- «Trabajas más que nunca y a final de mes no lo notas en la cuenta.»
+- «Lo que le pasa a tu negocio tiene nombre, y se puede tratar.»
 
 ## Pie de publicación · Instagram
 ```
-¿Qué le duele a tu empresa?
+¿Qué le duele a tu empresa? Seguramente lo notas cada mes, aunque nadie le haya puesto nombre.
 
-Facturas bien y a final de mes no se nota. Si no estás tú, las cosas no salen. Hay meses buenos y meses vacíos, sin saber por qué.
+Facturas bien, pero a final de mes la cuenta no lo refleja. Hay meses buenos y meses vacíos, y no sabes bien por qué.
 
-Tu empresa no está rota. Tiene síntomas. Y casi nadie ha tenido nunca un sistema para tratarlos.
+En La Clínica de Empresas cada uno de esos problemas es un síntoma, y se puede tratar. Medimos el síntoma con tus números, lo trabajas paso a paso con tu consultor clínico y te damos el alta cuando el número ha mejorado.
 
-Esto es La Clínica de Empresas: diagnóstico con tus números, tratamiento paso a paso con tu consultor clínico y alta cuando tu número ha mejorado de verdad.
-
-Todo empieza por el Escáner de Salud Empresarial: gratis y en 10 minutos. Comenta CLINICA y te paso el enlace.
+El primer paso es el Escáner de Salud Empresarial. Es gratis y se hace en 10 minutos.
+Comenta CLINICA y te paso el enlace.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
 
 ## Pie de publicación · TikTok
 ```
-¿Qué le duele a tu empresa?
+¿Qué le duele a tu empresa? Seguramente lo notas cada mes, aunque nadie le haya puesto nombre.
 
-Facturas bien y a final de mes no se nota. Si no estás tú, las cosas no salen. Hay meses buenos y meses vacíos, sin saber por qué.
+Facturas bien, pero a final de mes la cuenta no lo refleja. Hay meses buenos y meses vacíos, y no sabes bien por qué.
 
-Tu empresa no está rota. Tiene síntomas. Y casi nadie ha tenido nunca un sistema para tratarlos.
+En La Clínica de Empresas cada uno de esos problemas es un síntoma, y se puede tratar. Medimos el síntoma con tus números, lo trabajas paso a paso con tu consultor clínico y te damos el alta cuando el número ha mejorado.
 
-Esto es La Clínica de Empresas: diagnóstico con tus números, tratamiento paso a paso con tu consultor clínico y alta cuando tu número ha mejorado de verdad.
-
-Todo empieza por el Escáner de Salud Empresarial: gratis y en 10 minutos. Enlace en mi perfil.
+El primer paso es el Escáner de Salud Empresarial. Es gratis y se hace en 10 minutos.
+Enlace en mi perfil.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
@@ -57,6 +55,7 @@ Todo empieza por el Escáner de Salud Empresarial: gratis y en 10 minutos. Enlac
 
 ## Estado del agente
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
+- 15 nov · Textos reescritos a petición de Maite (más naturales, sin frases hechas).
 
 ## Lista de comprobación
 - [x] Imagen o diseño en `assets/`
