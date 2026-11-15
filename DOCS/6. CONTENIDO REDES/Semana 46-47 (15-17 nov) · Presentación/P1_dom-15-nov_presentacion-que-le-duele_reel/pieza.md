@@ -18,28 +18,28 @@ Alternativas (si prefieres otra, escríbela en «Cambios pedidos» y se rehace l
 
 ## Pie de publicación · Instagram
 ```
-¿Qué le duele a tu empresa? Seguramente lo notas cada mes, aunque nadie le haya puesto nombre.
+¿Qué le duele a tu empresa? Lo notas cada mes, pero no sabes ponerle nombre.
 
-Facturas bien, pero a final de mes la cuenta no lo refleja. Hay meses buenos y meses vacíos, y no sabes bien por qué.
+Facturas bien, pasan los meses y no ves realmente el esfuerzo reflejado en tus cuentas. 
 
-En La Clínica de Empresas cada uno de esos problemas es un síntoma, y se puede tratar. Medimos el síntoma con tus números, lo trabajas paso a paso con tu consultor clínico y te damos el alta cuando el número ha mejorado.
+En La Clínica de Empresas esto un síntoma, y se puede tratar. Lo medimos, lo trabajas paso a paso con tu consultor clínico y te damos el alta cuando el número realmente haya mejorado.
 
-El primer paso es el Escáner de Salud Empresarial. Es gratis y se hace en 10 minutos.
-Comenta CLINICA y te paso el enlace.
+El primer paso es pasar por el Escáner de Salud Empresarial. Es gratis y se hace en 10 minutos.
+Pincha en www.masesora.es 
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
 
 ## Pie de publicación · TikTok
 ```
-¿Qué le duele a tu empresa? Seguramente lo notas cada mes, aunque nadie le haya puesto nombre.
+¿Qué le duele a tu empresa? Lo notas cada mes, pero no sabes ponerle nombre.
 
-Facturas bien, pero a final de mes la cuenta no lo refleja. Hay meses buenos y meses vacíos, y no sabes bien por qué.
+Facturas bien, pasan los meses y no ves realmente el esfuerzo reflejado en tus cuentas. 
 
-En La Clínica de Empresas cada uno de esos problemas es un síntoma, y se puede tratar. Medimos el síntoma con tus números, lo trabajas paso a paso con tu consultor clínico y te damos el alta cuando el número ha mejorado.
+En La Clínica de Empresas esto un síntoma, y se puede tratar. Lo medimos, lo trabajas paso a paso con tu consultor clínico y te damos el alta cuando el número realmente haya mejorado.
 
-El primer paso es el Escáner de Salud Empresarial. Es gratis y se hace en 10 minutos.
-Enlace en mi perfil.
+El primer paso es pasar por el Escáner de Salud Empresarial. Es gratis y se hace en 10 minutos.
+Pincha en www.masesora.es 
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
