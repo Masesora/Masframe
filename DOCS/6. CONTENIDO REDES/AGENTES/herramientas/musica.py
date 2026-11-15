@@ -1,53 +1,51 @@
-# Música de fondo original (sintetizada aquí, sin derechos de terceros): pad cálido + arpegio suave + bajo + pulso ligero.
+# Música de fondo original, luminosa y con ritmo (Re mayor, 110 BPM): pulso suave, palmas, arpegio brillante, acordes y bajo.
 import numpy as np, wave, sys
-SR=48000; BPM=96; dur=float(sys.argv[2]); out=sys.argv[1]
-beat=60/BPM; N=int(dur*SR); t=np.arange(N)/SR
-def note(m): return 440*2**((m-69)/12)
-# Progresión Am - F - C - G (2 compases de 4 tiempos cada acorde)
-chords=[[57,60,64],[53,57,60],[48,52,55],[55,59,62]]
-bar=4*beat; L=np.zeros(N); R=np.zeros(N)
-def env(n,a,r):
-    e=np.ones(n); a=int(a*SR); r=int(r*SR)
-    e[:a]=np.linspace(0,1,a); e[-r:]*=np.linspace(1,0,r); return e
-k=0; pos=0.0
-while pos<dur:
-    ch=chords[k%4]; seg=2*bar; i0=int(pos*SR); i1=min(N,int((pos+seg)*SR)); n=i1-i0
-    if n<=0: break
-    tt=np.arange(n)/SR
-    pad=np.zeros(n)
-    for m in ch+[ch[0]+12]:
-        f=note(m)
-        for d in (-0.12,0.0,0.12):  # desafinado suave
-            ph=2*np.pi*f*(1+d/100)*tt
-            pad+= (np.sin(ph)+0.25*np.sin(2*ph)+0.08*np.sin(3*ph))
-    pad*=env(n,1.2,1.2)*0.035
-    bass=np.sin(2*np.pi*note(ch[0]-12)*tt)*0.09*env(n,0.3,0.8)
-    L[i0:i1]+=pad+bass; R[i0:i1]+=pad*0.92+bass
-    # arpegio en corcheas
-    arp=[ch[0]+12,ch[1]+12,ch[2]+12,ch[1]+12]
-    steps=int(seg/(beat/2))
-    for s in range(steps):
-        j0=i0+int(s*beat/2*SR); ln=int(0.45*SR)
-        if j0+ln>N: break
-        f=note(arp[s%4]); tt2=np.arange(ln)/SR
-        pl=(np.sin(2*np.pi*f*tt2)+0.3*np.sin(4*np.pi*f*tt2))*np.exp(-tt2*7)*0.028
-        pan=0.35 if s%2 else -0.35
-        L[j0:j0+ln]+=pl*(1-pan); R[j0:j0+ln]+=pl*(1+pan)
-    # pulso suave (bombo blando) en 1 y 3, tic en contratiempos
-    for b in range(int(seg/beat)):
-        j0=i0+int(b*beat*SR)
-        if b%2==0:
-            ln=int(0.25*SR); tt3=np.arange(ln)/SR
-            if j0+ln<=N:
-                kick=np.sin(2*np.pi*(55+60*np.exp(-tt3*30))*tt3)*np.exp(-tt3*14)*0.12
-                L[j0:j0+ln]+=kick; R[j0:j0+ln]+=kick
-        j1=j0+int(beat/2*SR); ln=int(0.05*SR)
-        if j1+ln<=N:
-            hh=np.random.default_rng(b+k).standard_normal(ln)*np.exp(-np.arange(ln)/SR*90)*0.012
-            hh=np.diff(np.concatenate([[0],hh]))  # más agudo
-            L[j1:j1+ln]+=hh; R[j1:j1+ln]+=hh
-    pos+=seg; k+=1
-fade=env(N,1.5,2.5); L*=fade; R*=fade
-st=np.stack([L,R],1); st/=np.abs(st).max()*1.15
-w=wave.open(out,'wb'); w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
-w.writeframes((st*32767).astype(np.int16).tobytes()); w.close()
+SR=48000; BPM=110; dur=float(sys.argv[2]); out=sys.argv[1]
+b=60/BPM; N=int(dur*SR)
+L=np.zeros(N); R=np.zeros(N); rng=np.random.default_rng(7)
+def nf(m): return 440*2**((m-69)/12)
+def add(sig,t0,pan=0.0,g=1.0):
+    i=int(t0*SR); j=min(N,i+len(sig))
+    if i>=N: return
+    s=sig[:j-i]*g; L[i:j]+=s*(1-pan); R[i:j]+=s*(1+pan)
+def pluck(f,d=0.35):
+    t=np.arange(int(d*SR))/SR
+    return (np.sin(2*np.pi*f*t)+0.5*np.sin(2*np.pi*2*f*t)*np.exp(-t*18)+0.25*np.sin(2*np.pi*3*f*t)*np.exp(-t*25))*np.exp(-t*9)
+def keys(fs,d):
+    t=np.arange(int(d*SR))/SR; s=np.zeros_like(t)
+    for f in fs:
+        for h,a in [(1,1),(2,.45),(3,.2),(4,.1)]: s+=a*np.sin(2*np.pi*f*h*t)*np.exp(-t*(3+h))
+    return s*np.minimum(1,t*200)
+def kick():
+    t=np.arange(int(.22*SR))/SR; return np.sin(2*np.pi*(50+90*np.exp(-t*35))*t)*np.exp(-t*16)
+def clap():
+    n=int(.18*SR); t=np.arange(n)/SR; x=rng.standard_normal(n)
+    x=np.convolve(x,np.ones(6)/6,'same')-np.convolve(x,np.ones(40)/40,'same')
+    env=np.exp(-t*28)+0.6*np.exp(-np.maximum(0,t-.012)*30)*(t>.012)
+    return x*env
+def shaker():
+    n=int(.06*SR); x=rng.standard_normal(n); x=np.diff(np.concatenate([[0],x])); return x*np.exp(-np.arange(n)/SR*70)
+# D - A - Bm - G
+prog=[(62,[62,66,69]),(57,[57,61,64]),(59,[59,62,66]),(55,[55,59,62])]
+bar=4*b; nbars=int(np.ceil(dur/bar))+1
+for k in range(nbars):
+    root,ch=prog[k%4]; t0=k*bar
+    # bajo en corcheas
+    for s in range(8):
+        f=nf(root-24); t=np.arange(int(b/2*0.9*SR))/SR
+        add(np.sin(2*np.pi*f*t)*np.minimum(1,t*300)*np.exp(-t*4),t0+s*b/2,0,0.20)
+    # acordes en contratiempo
+    for s in range(4):
+        add(keys([nf(m) for m in ch],0.5),t0+s*b+b/2,0.1,0.05)
+    # arpegio en semicorcheas
+    arp=[ch[0]+12,ch[1]+12,ch[2]+12,ch[1]+24]
+    for s in range(16):
+        add(pluck(nf(arp[s%4])),t0+s*b/4,(-0.4 if s%2 else 0.4),0.045)
+    # percusión
+    for s in range(4):
+        add(kick(),t0+s*b,0,0.30)
+        if s in (1,3): add(clap(),t0+s*b,0,0.10)
+    for s in range(8): add(shaker(),t0+s*b/2+b/4,0.3,0.035)
+fade=np.ones(N); a=int(0.6*SR); r=int(1.8*SR); fade[:a]=np.linspace(0,1,a); fade[-r:]=np.linspace(1,0,r)
+st=np.stack([L*fade,R*fade],1); st/=np.abs(st).max()*1.1
+w=wave.open(out,'wb'); w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((st*32767).astype(np.int16).tobytes()); w.close()
