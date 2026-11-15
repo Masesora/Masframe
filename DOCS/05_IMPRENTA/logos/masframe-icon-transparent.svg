@@ -1,0 +1,14 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MASFRAME">
+  <defs>
+    <linearGradient id="gld_mft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C8A84B"/>
+      <stop offset="50%" stop-color="#E8C96A"/>
+      <stop offset="100%" stop-color="#B89D52"/>
+    </linearGradient>
+  </defs>
+  <polygon points="50,20 76,35 76,65 50,80 24,65 24,35" fill="none" stroke="url(#gld_mft)" stroke-width="1.8" opacity="0.9"/>
+  <polygon points="50,28 69,39 69,61 50,72 31,61 31,39" fill="none" stroke="url(#gld_mft)" stroke-width="0.7" opacity="0.28"/>
+  <text x="50" y="58" font-family="Georgia,serif" font-size="28" font-weight="700" fill="currentColor" text-anchor="middle">M</text>
+  <line x1="78" y1="34" x2="92" y2="22" stroke="url(#gld_mft)" stroke-width="1.2" opacity="0.45"/>
+  <line x1="82" y1="30" x2="93" y2="20" stroke="url(#gld_mft)" stroke-width="0.5" opacity="0.2"/>
+</svg>

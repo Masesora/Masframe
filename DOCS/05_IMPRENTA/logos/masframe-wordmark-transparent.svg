@@ -1,0 +1,22 @@
+<svg viewBox="0 0 720 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MASFRAME - Sistema Clínico de Intervención Empresarial">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&amp;display=swap');</style>
+    <linearGradient id="gld_t" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C8A84B"/>
+      <stop offset="50%" stop-color="#E8C96A"/>
+      <stop offset="100%" stop-color="#B89D52"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(28,40)">
+    <polygon points="52,0 88,0 106,31 88,62 52,62 34,31" fill="none" stroke="url(#gld_t)" stroke-width="1.4" opacity=".9"/>
+    <polygon points="54,9 82,9 96,31 82,53 54,53 40,31" fill="none" stroke="url(#gld_t)" stroke-width=".5" opacity=".28"/>
+    <text x="70" y="44" font-family="Georgia,serif" font-size="28" font-weight="700" fill="currentColor" text-anchor="middle">M</text>
+    <line x1="97" y1="12" x2="118" y2="46" stroke="url(#gld_t)" stroke-width="1.1" opacity=".45"/>
+    <line x1="104" y1="6" x2="123" y2="38" stroke="url(#gld_t)" stroke-width=".5" opacity=".2"/>
+  </g>
+  <g transform="translate(164,44)">
+    <text x="0" y="52" font-family="'Montserrat',sans-serif" font-weight="800" font-size="46" fill="currentColor" letter-spacing="4">MASFRAME</text>
+    <rect x="0" y="62" width="510" height="1" fill="url(#gld_t)" opacity=".55"/>
+    <text x="0" y="82" font-family="'Montserrat',sans-serif" font-weight="500" font-size="11" fill="#B89D52" letter-spacing="4.5">SISTEMA CLÍNICO DE INTERVENCIÓN EMPRESARIAL</text>
+  </g>
+</svg>
