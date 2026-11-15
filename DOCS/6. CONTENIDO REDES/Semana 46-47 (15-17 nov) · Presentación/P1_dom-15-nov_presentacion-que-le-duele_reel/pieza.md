@@ -49,13 +49,7 @@ El primer paso es pasar por el Escáner de Salud Empresarial: masesora.es. Es gr
 - Alternativa si se prefiere carrusel: las 5 imágenes `assets/01_gancho.png` … `assets/05_cierre.png`
 
 ## Respuesta a comentarios
-- [ ] **Respuestas automáticas autorizadas** · Maite
-
-Texto fijo para los comentarios de interés («me interesa», «info», «¿cómo funciona?», «CLINICA», emojis de aplauso…):
-```
-¡Gracias! Puedes hacer el Escáner de Salud Empresarial gratis en masesora.es (enlace en el perfil). Son 10 minutos y recibes tu informe por email.
-```
-Preguntas concretas, críticas, dudas de precio o mensajes privados: no se responden solos; se te pasan con un borrador.
+Las hace Maite (15 nov: sin respuestas automáticas por ahora).
 
 ## Aprobación (la marcas tú)
 - [x] **APROBADO PARA PUBLICAR** · Maite (aprobado en el chat el 15 nov, 16:31)
