@@ -5,6 +5,7 @@
 ## 0. Dónde estamos y qué buscamos
 
 - **Punto de partida (10 nov):** 0 informes del Escáner de desconocidos. El cuello es la demanda, no el producto (§LXVII). Instagram @laclinicadempresas: nada publicado todavía.
+- **Estado de las redes (15 nov, 22:00):** en Instagram ya están publicadas las tres piezas de presentación (P1 20:01, P2 21:11 y P3 21:29; las dos últimas salieron al momento en vez de programarse). En TikTok está publicada P1, y P2 y P3 salen el lun 16 y el mar 17 a las 13:00. Las piezas 01 (mié 18, 13:00) y 02 (dom 22, 10:00) están programadas en las dos redes. Biografía de TikTok con masesora.es; en Instagram falta el enlace, que solo se pone desde el móvil.
 - **Metas (§LXVII):** **30 informes de desconocidos y 10 conversaciones el 8 dic**; **2 o 3 pagos de desconocidos el 15 ene 2027**, cuando se revisan precio y oferta. No cuentan amigos, familia ni pruebas.
 - **Ritmo de control** (propuesto en `FOUNDER_PANEL_15nov2026/skills/launch.md`, pendiente de tu SÍ): ≥3 informes el 20 nov, ≥10 el 27 nov, ≥22 el 4 dic. Primera decisión con datos: **viernes 27 nov**.
 - **Qué hace cada canal:** las redes dan visibilidad y marca; lo que cierra es la **conversación con Maite** (WhatsApp o 15 min). Las redes no sustituyen a las 10 conversaciones con dueños de la zona ni a la ficha de Google Business Profile.
@@ -50,8 +51,8 @@ Domingo a las **10:00**; miércoles a las **13:00** *(a probar)*. El mismo conte
 
 | # | Fecha | Nicho | Formato | Síntoma · dolor que se ataca | Palabra clave | Carpeta |
 |---|---|---|---|---|---|---|
-| 1 | Mié 18 nov | Taller | Reel hablado (voz + pantalla) | **Caja** · «no sale lo que ya ganaste» | TALLER | `Semana 47 (16-22 nov)/01_mie-18-nov_taller-caja_reel` |
-| 2 | Dom 22 nov | Peluquería | Carrusel educativo (6 diapositivas) | **Cobros** · «1.800 € en la calle» | PELU | `Semana 47 (16-22 nov)/02_dom-22-nov_peluqueria-cobros_carrusel` |
+| 1 | Mié 18 nov | General (antes Taller) | Reel animado con la voz de Maite | **Caja** · «tienes el negocio lleno y la cuenta no te sale» | masesora.es | `Semana 47 (16-22 nov)/01_mie-18-nov_taller-caja_reel` |
+| 2 | Dom 22 nov | Peluquería | Carrusel educativo (6 diapositivas) | **Cobros** · «1.800 € en la calle» | masesora.es | `Semana 47 (16-22 nov)/02_dom-22-nov_peluqueria-cobros_carrusel` |
 | 3 | Mié 25 nov | Hostelería | Imagen con frase gancho | **Margen** · «facturas bien y sobrevives mal» | BAR | `Semana 48 (23-29 nov)/03_mie-25-nov_hosteleria-margen_imagen` |
 | 4 | Dom 29 nov | Asesoría | Pantalla dividida con esquema | **Caja** · «tu trabajo está hecho; tu dinero, no» | ASESORIA | `Semana 48 (23-29 nov)/04_dom-29-nov_asesoria-caja_esquema` |
 | 5 | Mié 2 dic | Peluquería | Reel hablado | **Margen** · «las mechas te dejan 40 €» | PELU | `Semana 49 (30 nov-6 dic)/05_mie-02-dic_peluqueria-margen_reel` |
@@ -63,7 +64,7 @@ Domingo a las **10:00**; miércoles a las **13:00** *(a probar)*. El mismo conte
 | 11 | Mié 23 dic | Taller | Imagen con frase gancho | **Cobros** · «reclamar a mano no funciona; una carta formal, sí» | TALLER | `Semana 52 (21-27 dic)/11_mie-23-dic_taller-cobros_imagen` |
 | 12 | Dom 27 dic | Peluquería | Pantalla dividida con esquema | **Caja** · «cierras el año: ¿cuántos días de caja tienes para enero?» | PELU | `Semana 52 (21-27 dic)/12_dom-27-dic_peluqueria-caja_esquema` |
 
-**La palabra clave identifica el nicho.** En todas las piezas el cierre es el mismo: *«Comenta [PALABRA] y te paso el diagnóstico gratuito»*. Contar comentarios por palabra dice qué nicho se mueve, sin herramientas.
+**Llamada a la acción (desde el 15 nov):** todas las piezas cierran con *«Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil»*. Las piezas 01 y 02 ya no piden comentar una palabra. La columna «Palabra clave» de las piezas 3 a 12 queda pendiente de la decisión 6 del §8: sin palabra clave se pierde la señal de qué nicho comenta, y solo queda la del enlace con UTM.
 
 **Enlaces con seguimiento (UTM).** Uno por pieza y por red, para saber qué pieza trae cada informe:
 `https://www.masesora.es/?utm_source=<instagram|tiktok>&utm_medium=organic&utm_campaign=<taller|pelu|bar|asesoria|oficio>&utm_content=<nº de pieza>`
@@ -73,7 +74,7 @@ Se manda al responder a quien comenta y se pone en la biografía la semana de la
 
 **Variedad de formatos (Maite, 15 nov):** cada semana se combinan formatos distintos (al menos un reel, un carrusel y una imagen o pieza con movimiento); nunca dos formatos iguales seguidos; como mucho un reel con la voz de Maite por semana y, si no hay audio, se monta sin voz.
 
-**Reglas del pie de publicación:** primera línea = el gancho; la cuenta en una línea («saldo ÷ gastos fijos × 30»); el ejemplo, siempre como *ejemplo ilustrativo*; el cierre con la palabra clave (Instagram) o «Enlace en mi perfil» (TikTok); y, en las piezas con cuenta, «Guárdalo para repetir la cuenta cada mes», que empuja los guardados. Hashtags: `#LaClinicaDeEmpresas` + nicho + `#autonomos #pymes` (5 a 7, sin relleno).
+**Reglas del pie de publicación:** primera línea = el gancho; la cuenta en una línea («saldo ÷ gastos fijos × 30»); el ejemplo, siempre como *ejemplo ilustrativo*; el cierre con «Escáner de Salud Empresarial: masesora.es» y «Tienes el enlace en el perfil» (en TikTok, «en mi perfil»); y, en las piezas con cuenta, «Guárdalo para repetir la cuenta cada mes», que empuja los guardados. Hashtags: `#LaClinicaDeEmpresas` + nicho + `#autonomos #pymes` (5 a 7, sin relleno).
 
 ## 5. LOS 12 GUIONES (cada uno cita su fuente en `symptoms.json`)
 Estructura: **Gancho** (texto en pantalla y primeros 3 segundos) · **Cuerpo** (claro, humano, sin tecnicismos) · **Cierre** (comentar la palabra clave). En TikTok el cierre es «Enlace en mi perfil».
@@ -163,7 +164,7 @@ Cada viernes, con `00_COMO_MEDIR.md` (señal de dinero por nicho, de 1 a 10 punt
 
 - **El plan «Analítica del Domingo» (borrado el 15 nov).** Se aprovecha: los enlaces con `utm_medium` y `utm_content`, la línea «guárdalo para repetir la cuenta» y la lista de «antes de publicar» (§10). Se descarta: la etiqueta «Analítica del domingo», las «10 especialidades» y el recorrido «ves todos los síntomas», porque solo se vende la UCI. Sus piezas de Arritmia Comercial (CARDIO-S2), Dependencia Crítica (OPE-S2) y el vídeo «La puerta de entrada» quedan en `00_TEMAS.md` como **en espera** hasta que esos síntomas se vendan.
 - **Los diseños antiguos (`INSTAGRAM_DISENOS`, borrados el 15 nov).** Llevaban el usuario equivocado (@laclinica**de**empresas), la etiqueta antigua y las 10 especialidades, y 7 archivos estaban duplicados por un fallo de script. Su estilo (azul marino, oro, Montserrat, línea de monitor) vive ahora en `AGENTES/herramientas/clinica.css`, y las piezas 01 y 02 ya están rehechas con él.
-- **La publicación ya programada en Meta Business Suite** (foto «FUGA INVISIBLE», dom 29 nov a las 10:00) sale del plan antiguo: repite el ejemplo de la pieza 02 y ocupa el hueco de la pieza 04. **Se mantiene hasta que Maite la revise** (decisión 1 del §8).
+- **La publicación ya programada en Meta Business Suite** (foto «FUGA INVISIBLE») sale del plan antiguo y repite el ejemplo de la pieza 02. Estaba programada para el lun 16 a las 13:00, chocando con P2; el 15 nov se pasó al **dom 29 nov a las 10:00** (Meta no dejó pasarla a borradores), que es el hueco de la pieza 04. **Se mantiene hasta que Maite la revise** (decisión 1 del §8).
 - **Anuncios de pago:** en pausa hasta «coger ritmo» con el orgánico (decisión 2 del §8, 15 nov).
 - **La clínica física:** como historia de marca (*«así imaginamos nuestra clínica»*), nunca como algo existente. Alianzas con 2 o 3 profesionales locales para piezas conjuntas, cuando haya un contacto.
 
@@ -171,10 +172,11 @@ Cada viernes, con `00_COMO_MEDIR.md` (señal de dinero por nicho, de 1 a 10 punt
 
 | # | Decisión | De dónde sale | Qué cambia si dices SÍ |
 |---|---|---|---|
-| 1 | ~~Borrar la foto «FUGA INVISIBLE» programada para el 29 nov en Meta~~ **15 nov: NO por ahora; Maite la revisa antes.** | §7 | Se mantiene programada. Los agentes no la tocan. Si sigue el 28 nov, el 29 nov salen dos publicaciones (la foto y la pieza 04). |
+| 1 | ~~Borrar la foto «FUGA INVISIBLE»~~ **15 nov: NO por ahora; Maite la revisa antes.** Movida del lun 16 al dom 29 nov, 10:00. | §7 | Recomendación: quitarla, porque repite la pieza 02. Si sigue el 28 nov, el 29 nov salen dos publicaciones (la foto y la pieza 04). |
 | 2 | **15 nov: NO hasta «coger ritmo» con el orgánico.** Activar **100 € de anuncios** del 16 nov al 15 dic, solo Instagram hacia el Escáner: 50 € cobros para oficios, 30 € taller, 20 € para impulsar la pieza orgánica que más informes traiga | `FOUNDER_PANEL…/skills/marketing.md` y `launch.md` | Se mide coste por informe (tope 20 €); se pausa un anuncio con clics y 0 informes en 10 días. Los agentes **no** gastan dinero: los anuncios los lanzas tú. |
 | 3 | Confirmar los umbrales de control (§0) | `launch.md` | Fijan qué se decide el 27 nov. |
 | 4 | Posicionamiento B: «para el autónomo que ha trabajado y no ha cobrado» (UCI-S2) como mensaje principal | `marketing.md`, consejo | Si SÍ, a partir de la semana 49 las piezas de cobros ganan peso y el agente usa los ganchos del §9. Las 12 piezas no se rehacen. |
+| 6 | ¿Recuperar la palabra clave por nicho (TALLER, PELU, BAR, ASESORIA, OFICIO) como segunda llamada a la acción, además de masesora.es? | 15 nov | Si SÍ, las piezas 3 a 12 cierran con masesora.es y «o comenta [PALABRA]». Si NO, se mide el nicho solo por los enlaces con UTM. |
 | 5 | ~~Probar con personas reales la oferta en dos pagos (39 € + 60 € al mejorar)~~ **15 nov: NO, descartado por Maite.** | `offer.md`, `pricing.md` | Es para las conversaciones, no para las redes: hasta que lo decidas, las piezas no hablan de precio. |
 
 ## 9. Banco de ganchos (para el agente de producción y para los anuncios)
@@ -196,7 +198,7 @@ Salen de las objeciones del panel simulado (no son testimonios). Se pueden usar 
 - [x] Aviso de cookies en masesora.es y masesora.com (§LXV).
 - [x] Solo la UCI se puede contratar; garantía alineada (§LXIX).
 - [x] Usuario @laclinicadempresas correcto en web, correos y diseños nuevos.
-- [ ] Biografía de Instagram y TikTok con el enlace UTM de la semana y la frase «Diagnóstico gratuito de 10 minutos».
+- [ ] Biografía: TikTok hecho (15 nov, «Escáner de Salud Empresarial gratis en masesora.es»); Instagram con texto hecho, falta el enlace desde el móvil.
 - [ ] Comprobar en Meta (Administrador de eventos) y en Google Analytics (tiempo real) que entra una visita al Escáner con UTM.
 - [ ] Deploy del backend en Render de `1f3cd89` (contrato y factura) y `407e83c` (lista de espera), pendientes según §LXXI. Sin ellos, el botón «Apuntarme» da error a quien llegue desde las redes (lo lanzas tú).
-- [ ] Respuesta a comentarios con la palabra clave: quién la hace y en cuánto tiempo (los agentes no responden en tu nombre).
+- [x] Respuesta a comentarios: la hace Maite; los agentes no responden por ahora (15 nov).
