@@ -43,6 +43,11 @@ Guárdalo para repetir la cuenta cada mes.
 #LaClinicaDeEmpresas #peluqueria #esteticaprofesional #autonomos #pymes #cobros #facturas
 ```
 
+## Kit de distribución
+- **Historia y encuesta:** `assets/historia.png` («De todo lo que facturaste en 3 meses, ¿cuánto sigue sin cobrar?» · Menos del 10 % / Más del 20 %). Opcional esta semana.
+- **Palabras de búsqueda:** cobrar facturas, peluquería Benidorm, autónomos Marina Baixa.
+- **Compartir fuera de las redes:** `compartir.md` (WhatsApp, grupos, Google Business Profile, LinkedIn).
+
 ## Archivos para publicar
 - Instagram (carrusel, 6 imágenes 4:5, en este orden): `assets/01_portada.png`, `02_facturado.png`, `03_vencido.png`, `04_financiando.png`, `05_radiografia.png`, `06_tratamiento.png`
 - TikTok (modo foto, mismas 6 imágenes y mismo orden)
