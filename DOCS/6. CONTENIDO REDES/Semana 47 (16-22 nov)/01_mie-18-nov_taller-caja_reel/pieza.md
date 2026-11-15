@@ -16,11 +16,10 @@
 - **Cierre:** «Escáner de Salud Empresarial: masesora.es» (antes: palabra clave TALLER)
 
 ## Locución (la graba Maite · versión final dictada por ella)
-1. Tienes el negocio lleno y no paras en todo el mes. Haz una prueba. Abre el banco y mira lo que tienes.
-2. ¿Cuántos días crees que aguantarías de verdad si mañana nadie te pagara?
-3. ¿Sabes cuánto dinero tienes parado, y sabes lo que vale? ¿Cuántas facturas tienes sin cobrar? ¿Cuánto trabajo tienes sin facturar?
-4. Seguramente en tu negocio hay dinero que no ves, y vale mucho. En La Clínica de Empresas te ayudamos a encontrarlo.
-5. Empieza por el Escáner de Salud Empresarial, en masesora.es, y verás en qué áreas necesita mejorar tu empresa. Es gratis y son diez minutos.
+1. Tienes el negocio lleno, no paras un minuto y la cuenta no te sale.
+2. Haz la prueba. Abre el banco y mira el dato. ¿Cuántos días crees que aguantarías si mañana dejaran de pagarte?
+3. En La Clínica de Empresas te hacemos ver lo que vale de verdad tu negocio.
+4. Empieza por nuestro Escáner de Salud Empresarial, en masesora.es, y verás qué áreas necesita mejorar. Es gratis y lo tienes en el enlace del perfil.
 
 ## Pie de publicación · Instagram
 ```
