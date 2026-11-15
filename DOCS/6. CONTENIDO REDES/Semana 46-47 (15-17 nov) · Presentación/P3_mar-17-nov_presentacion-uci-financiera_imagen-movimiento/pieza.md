@@ -52,7 +52,7 @@ En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo pa
 - Sin voz: lleva música de fondo original (sin derechos de terceros).
 
 ## Aprobación (la marcas tú)
-SI **APROBADO PARA PUBLICAR** · Maite
+- [x] **APROBADO PARA PUBLICAR** · Maite (aprobado en el chat el 15 nov, 20:55)
 
 ### Cambios pedidos
 -

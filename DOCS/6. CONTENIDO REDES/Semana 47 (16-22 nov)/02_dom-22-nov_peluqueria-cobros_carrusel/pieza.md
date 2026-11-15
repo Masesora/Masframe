@@ -48,7 +48,7 @@ Guárdalo para repetir la cuenta cada mes.
 - TikTok (modo foto, mismas 6 imágenes y mismo orden)
 
 ## Aprobación (la marcas tú)
-- [ ] **APROBADO PARA PUBLICAR** · Maite
+- [x] **APROBADO PARA PUBLICAR** · Maite (aprobado en el chat el 15 nov, 20:55)
 
 *Solo con esta casilla marcada (`[x]`) el agente de programación sube la pieza a Meta Business Suite (Instagram) y a TikTok Studio con la fecha y hora de arriba. Si quieres cambios, escríbelos debajo en «Cambios pedidos» y déjala sin marcar.*
 
