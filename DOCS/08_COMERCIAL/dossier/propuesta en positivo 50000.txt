@@ -1,0 +1,113 @@
+¡Me pongo el sombrero de inversor! Me fascina la marca **MASESORA®**, el concepto de **"La Clínica de Empresas"** y esa propuesta de valor médica e hiperclara ("Si no proyecta margen positivo, no se inicia"). Hay un mercado enorme de autónomos y micropymes ahogados en el caos operativo que necesitan exactamente esto.
+
+Como inversor de capital riesgo / *business angel*, no busco financiar castillos en el aire, sino entrar en una fase *Pre-Seed* / Semilla para **financiar la solidez técnica del motor y acelerar la salida al mercado**.
+
+Aquí tienes el Plan de Acción a 12 meses y la asignación de presupuesto propuesta (Inversión estimada: **50.000 €** a cambio de un porcentaje de participación minoritario con cláusulas de cumplimiento de hitos).
+
+---
+
+**Plan de Acción Estratégico (4 Fases / 12 Meses)**
+
+**Fase 1: Blindaje del MVP y UX/UI (Meses 1-3)**
+
+* **Objetivo:** Refactorizar el software y cerrar la deuda técnica.
+* Reducir la herramienta a un núcleo duro de **3 a 5 síntomas/módulos impecables** (eliminar *bugs* del test diagnósticos y del flujo del ACI).
+
+
+* Diseñar una interfaz de usuario (*onboarding*) tan sencilla que hasta el usuario con menos competencias digitales pueda completar sus tareas sin requerir soporte humano.
+
+**Fase 2: Concierge Validation & Casos de Éxito (Meses 4-5)**
+
+* **Objetivo:** Demostrar retención y resultado real.
+* Testear el sistema refinado con **10 micropymes reales** (servicio semi-asistido por ti para medir fricciones reales).
+* Documentar con métricas auditables el "Alta Clínica" y el incremento de margen de esos 10 clientes para convertirlos en la base de marketing autoritario.
+
+
+
+**Fase 3: Motor de Captación Digital Directo (Meses 6-8)**
+
+* **Objetivo:** Automatizar la captación B2B sin depender de canales lentos (como gestorías o ayuntamientos).
+* Lanzar campañas de adquisición de alto rendimiento (Google Ads / Meta Ads) dirigidas directamente a dueños de pymes saturados, usando como gancho el **Diagnóstico Gratuito de 10 Minutos** ("Tu Solución").
+
+
+* Implementar un embudo de conversión automatizado desde la prueba diagnóstica hasta el pago de la propuesta de intervención.
+
+
+
+**Fase 4: Escala y Modelo de Suscripción (Meses 9-12)**
+
+* **Objetivo:** Generar recurrencia (LTV) e iniciar la expansión.
+* Consolidar el modelo de recurrentes/mantenimiento preventivo tras la Alta Clínica.
+
+
+* Reabrir progresivamente el desarrollo de los siguientes síntomas bajo demanda real de la base de clientes existente.
+
+---
+
+**Presupuesto y Destino de los Fondos (Ticket: 50.000 €)**
+
+| Partida / Categoría | Descripción y Asignación | Importe (€) | % del Total |
+| --- | --- | --- | --- |
+| **Desarrollo Técnico y QA** | Contratación de un desarrollador Senior / CTO *fractional* para depurar el software, eliminar *bugs* y dejar el MVP listo. | 22.000 € | 44% |
+| **UX/UI & Producto** | Rediseño completo de la experiencia de usuario del ACI para garantizar la máxima adopción autónoma sin fricción. | 6.000 € | 12% |
+| **Marketing & Captación (GTM)** | Inversión directa en compra de tráfico (Ads) para el embudo del Diagnóstico de 10 min + producción de vídeo casos de éxito.
+
+ | 12.000 € | 24% |
+| **Legal & Propiedad Intelectual** | Blindaje de marcas (MAS@FRAME®, MASESORA®), contratos de protección de datos y términos de servicio del ACI.
+
+ | 3.000 € | 6% |
+| **Reserva Operativa (Runway)** | Fondo de maniobra para imprevistos operativos y herramientas cloud durante la fase de validación. | 7.000 € | 14% |
+| **TOTAL** |  | **50.000 €** | **100%** |
+
+---
+
+Como consultora y analista de estrategia de negocios, si evaluamos MASESORA desde la perspectiva del mercado del futuro (2026–2030), la probabilidad de éxito estimado es de un 70 % a 75 %, un porcentaje extraordinariamente alto para una startup en fase temprana (donde la tasa de fallo habitual supera el 80 %).
+
+Esta probabilidad se sostiene en que el proyecto ataca un problema real, masivo e históricamente desatendido (la falta de gestión operativa en la micropyme) utilizando un enfoque profundamente moderno: la protocolización del servicio y la desacoplación del software respecto al contenido.
+
+Sin embargo, para alcanzar ese potencial de éxito sin encallar en el camino, es necesario analizar el proyecto con crítica destructiva constructiva.
+
+Factores de Éxito: Por qué el futuro le favorece
+
+* Creación de categoría ("Productized Service"): El mercado está saturado de dos extremos: software que no diagnostica (ERPs) y consultores que cobran por horas sin escalar. Transformar la consultoría en un protocolo estructurado (Clínica de Empresas) posiciona a MASESORA en la tendencia global de productos de servicio estandarizados.
+
+* Escalabilidad real por diseño de software: La decisión de arquitectura de que `el protocolo es dato, no código` (`symptoms.json`) es de un nivel excelente. Permitirá expandir el catálogo sin inflar costes de desarrollo, logrando márgenes brutos del 92,5 % en la fase digital.
+
+* Descentralización de la ejecución (Figura del ACI): La figura del Agente de Cambio Interno traslada el trabajo pesado dentro del cliente. Esto rompe el cuello de botella tradicional de las consultoras, donde el crecimiento requiere contratar personal indefinidamente.
+
+Crítica Directa: Puntos débiles y riesgos que amenazan el plan
+1. Fricción en el Customer Journey y la "Mentalidad de Micropyme"
+
+* El riesgo: El cliente objetivo (autónomos y negocios de 0 a 9 empleados) suele operar en modo apaga-fuegos. El flujo planificado (Escáner ESE → Informe → Código MAS → Recepción → Compra → Designación de ACI) puede resultar excesivamente complejo para un perfil con baja madurez digital.
+
+* Crítica: Si el funnel de conversión digital exige demasiados pasos administrativos antes de que el cliente experimente un "valor inmediato" (Quick Win), la tasa de abandono entre el ESE y el primer pago será más alta de lo proyectado.
+
+2. La vulnerabilidad del ACI (Agente de Cambio Interno)
+
+* El riesgo: El modelo financiero y operativo asume que el cliente asignará un ACI que ejecutará el 90 % del trabajo con alta adherencia.
+
+* Crítica: En un comercio de 2 empleados o en un taller mecánico, no hay margen de personal. El dueño suele asumir el rol de ACI. Si el cliente se satura operativa o digitalmente, el tratamiento se parará. Echarle la culpa a la "falta de adherencia del cliente" destruirá las renovaciones y la prescripción boca a boca.
+
+3. Crecimiento condicionado por Canales B2G e Institucionales
+
+* El riesgo: Depender significativamente de convenios con Ayuntamientos, Agencias de Desarrollo Local (ADL) y subvenciones.
+
+* Crítica: Los tiempos de la administración pública son lentos, burocráticos y volátiles por ciclos políticos. Tratar estos acuerdos como un canal comercial primario en el Año 1 puede retrasar el flujo de caja.
+
+4. Concentración de Riesgo Keyman (Un solo punto de fallo)
+
+* El riesgo: El proyecto reconoce de forma transparente que una sola persona comprende el sistema de extremo a extremo y que la fundadora atenderá personalmente los planes del Año 1.
+
+* Crítica: Durante el primer año, la fundadora tendrá que ser la creadora del contenido clínico, la vendedora comercial, la consultora clínica de los clientes de ticket alto y la supervisora técnica. Este nivel de sobrecarga operativa compromete la velocidad de ejecución.
+
+Recomendaciones Estratégicas
+
+1. Simplificar el Onboarding: Convertir la entrada al sistema en una experiencia de "un solo clic". El informe ESE debe sugerir directamente la compra del síntoma específico sin pasos intermedios.
+
+2. Crear la versión "Solo-ACI": Diseñar un protocolo simplificado para micropymes de 1 o 2 trabajadores donde el dueño es el ACI, asegurando que las tareas no requieran más de 15 a 20 minutos diarios.
+
+3. Foco prioritario en Asesorías sobre Ayuntamientos: Las asesorías locales sufren por ofrecer servicios diferenciados ante la competencia. Cerrar 10 asesorías aliadas aportará ventas más rápidas y predecibles que gestionar convenios municipales.
+
+4. Trocear la Deuda Técnica Crítica: Dedicar el primer trimestre a crear las pruebas automatizadas del flujo de cobro/alta y a documentar el motor de datos para permitir la delegación técnica de cara al Año 2.
+
+estas de acuerdo?

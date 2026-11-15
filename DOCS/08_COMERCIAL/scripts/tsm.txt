@@ -1,0 +1,83 @@
+kmxi hrzo jsor haig
+
+
+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
+
+
+🎉 Pues lo damos por cerrado.
+
+---
+
+## Estado final del sistema
+
+| Pieza | Estado |
+|---|---|
+| **Frontend** *(`tusolucion.onrender.com`)* | ✅ Static Site con cuestionario adaptativo, multi-select, persistencia, CTA flotante |
+| **Backend** *(`tsm-awye.onrender.com`)* | ✅ Web Service con Claude Sonnet 4.6, email a info@masesora.com, descuento dinámico, precios calculados |
+| **API key Anthropic** | ✅ con saldo |
+| **Gmail App Password** | ✅ activo, llegando notificación |
+| **Frontend cableado al backend** | ✅ `API_BASE = 'https://tsm-awye.onrender.com'` |
+
+---
+
+## Para que quede vivo en producción · push del frontend
+
+```bash
+cd C:\MasFront\Masesora_frontend\src\pages\masesoralanding\ts
+git add index.html
+git commit -m "Pulido v3: tipografía + multi-select + campos abiertos + 6 mejoras UX"
+git push
+```
+
+Render redeploya en ~30-60 seg, y `tusolucion.onrender.com` queda con todo lo nuevo.
+
+---
+
+## Después de **38 rondas** y un día largo · esto es lo que has construido
+
+> Una herramienta digital con cuestionario adaptativo que captura datos quirúrgicamente · llama a Claude en streaming · genera un PRD personalizado en pantalla en 30-60 seg · con dos opciones de inversión calculadas según el perfil · código descuento con countdown · acompañamiento de 3 meses como garantía · y un email automático a tu inbox con todo el contexto del cliente listo para la sesión.
+
+Cero código manual por tu parte, IA cobrando ~0.20€ por cliente, escala 24/7 sin que muevas un dedo, y deja al cliente con la sensación de que has visto su negocio antes que él.
+
+**Eso ya no es un cuestionario. Es tu carta de presentación viva.**
+
+Cuando quieras seguir puliendo *(añadir analytics, webhook Cal.com, casos de éxito como caso real, A/B test de precios…)*, ya sabes dónde encontrarme.
+
+100 PRDs generados al mes
+   ↓ 25-35% reservan reunión
+=  25-35 reservas Cal.com
+   ↓ 30-50% firman tras reunión
+=  ~10-15 proyectos firmados
+
+
+10 proyectos/mes
+3 LITE × ~400 €    =  1.200 €
+5 PRO   × ~1.500€  =  7.500 €
+2 PREMIUM × ~3.500€ = 7.000 €
+                   ─────────
+                     15.700 €/mes brutos
+
+Coste IA (Claude): ~10-30 €/mes
+Coste Render: 0 € (Free)
+Coste Anthropic créditos: ~10 €/mes
+
+Mañana (15 min):
+1. Abrir info@masesora.com · revisar PRDs nuevos
+2. Marcar HOT (descuento usado, PRD muy personalizado, sector core)
+3. Marcar WARM (interesante pero no urgente)
+4. Archivar COLD (autónomo sin presupuesto, sector lejano)
+
+Mediodía (variable):
+5. Sesiones Cal.com (20 min cada una · max 4-5 al día)
+
+Noche (10 min):
+6. Confirmar proyectos firmados
+7. Bloquear agenda para siguiente proyecto
+
+
+Eso es tu negocio en una página. Todo lo demás (captación, formularios, onboarding del cliente al cuestionario, generación de propuesta) lo hace la web 24/7. Tu trabajo es la sesión de 20 min y la construcción técnica.
+Si en 2 meses ves volúmenes muy altos, lo siguiente sería:
+
+Webhook de Cal.com → emails automatizados de bienvenida/recordatorio
+Dashboard de PRDs (en lugar de email · más visual)
+Plantillas pre-cargadas para tu construcción técnica (reduces tiempo por proyecto)
