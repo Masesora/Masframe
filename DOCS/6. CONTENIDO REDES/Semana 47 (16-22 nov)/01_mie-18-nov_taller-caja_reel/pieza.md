@@ -17,9 +17,9 @@
 
 ## Locución (la graba Maite · versión final dictada por ella)
 1. Tienes el negocio lleno, no paras un minuto y la cuenta no te sale.
-2. Haz la prueba. Abre el banco y mira el dato. ¿Cuántos días crees que aguantarías si mañana dejaran de pagarte?
-3. En La Clínica de Empresas te hacemos ver lo que vale de verdad tu negocio.
-4. Empieza por nuestro Escáner de Salud Empresarial, en masesora.es, y verás qué áreas necesita mejorar. Es gratis y lo tienes en el enlace del perfil.
+2. Haz la prueba: abre el banco y mira el dato. ¿Cuántos días crees que aguantarías si mañana dejaran de pagarte?
+3. En La Clínica de Empresas te vamos a hacer ver el verdadero valor de tu negocio.
+4. Empieza con nuestro Escáner de Salud Empresarial, en masesora.es, para comprobar en qué áreas necesita mejorar tu empresa. Pincha en el enlace del perfil.
 
 ## Pie de publicación · Instagram
 ```
