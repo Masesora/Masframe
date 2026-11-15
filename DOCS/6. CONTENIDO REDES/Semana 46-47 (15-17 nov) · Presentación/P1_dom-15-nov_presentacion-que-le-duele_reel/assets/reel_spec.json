@@ -1,0 +1,568 @@
+{
+ "voz": "voz_maite.ogg",
+ "duracion": 47.0,
+ "etiqueta": "Presentación",
+ "portada_t": 1.8,
+ "palabras": [
+  {
+   "w": "¿Qué",
+   "s": 0.0,
+   "e": 1.0
+  },
+  {
+   "w": "le",
+   "s": 1.0,
+   "e": 1.14
+  },
+  {
+   "w": "duele",
+   "s": 1.14,
+   "e": 1.38
+  },
+  {
+   "w": "a",
+   "s": 1.38,
+   "e": 1.44
+  },
+  {
+   "w": "tu",
+   "s": 1.44,
+   "e": 1.52
+  },
+  {
+   "w": "empresa?",
+   "s": 1.52,
+   "e": 1.86
+  },
+  {
+   "w": "Lo",
+   "s": 4.16,
+   "e": 4.42
+  },
+  {
+   "w": "notas",
+   "s": 4.42,
+   "e": 4.74
+  },
+  {
+   "w": "cada",
+   "s": 4.74,
+   "e": 5.0
+  },
+  {
+   "w": "mes,",
+   "s": 5.0,
+   "e": 5.32
+  },
+  {
+   "w": "aunque",
+   "s": 5.7,
+   "e": 6.0
+  },
+  {
+   "w": "no",
+   "s": 6.0,
+   "e": 6.36
+  },
+  {
+   "w": "sabes",
+   "s": 6.36,
+   "e": 6.54
+  },
+  {
+   "w": "ponerle",
+   "s": 6.54,
+   "e": 7.06
+  },
+  {
+   "w": "nombre.",
+   "s": 7.06,
+   "e": 7.32
+  },
+  {
+   "w": "Facturas",
+   "s": 7.88,
+   "e": 8.34
+  },
+  {
+   "w": "bien,",
+   "s": 8.34,
+   "e": 8.68
+  },
+  {
+   "w": "pero",
+   "s": 9.08,
+   "e": 9.18
+  },
+  {
+   "w": "a",
+   "s": 9.18,
+   "e": 9.3
+  },
+  {
+   "w": "final",
+   "s": 9.3,
+   "e": 9.5
+  },
+  {
+   "w": "de",
+   "s": 9.5,
+   "e": 9.7
+  },
+  {
+   "w": "mes,",
+   "s": 9.7,
+   "e": 9.92
+  },
+  {
+   "w": "la",
+   "s": 10.02,
+   "e": 10.06
+  },
+  {
+   "w": "cuenta",
+   "s": 10.06,
+   "e": 10.26
+  },
+  {
+   "w": "no",
+   "s": 10.26,
+   "e": 10.52
+  },
+  {
+   "w": "lo",
+   "s": 10.52,
+   "e": 10.64
+  },
+  {
+   "w": "refleja.",
+   "s": 10.64,
+   "e": 11.16
+  },
+  {
+   "w": "Hay",
+   "s": 12.14,
+   "e": 12.72
+  },
+  {
+   "w": "meses",
+   "s": 12.72,
+   "e": 12.94
+  },
+  {
+   "w": "buenos,",
+   "s": 12.94,
+   "e": 13.28
+  },
+  {
+   "w": "hay",
+   "s": 13.66,
+   "e": 13.76
+  },
+  {
+   "w": "meses",
+   "s": 13.76,
+   "e": 14.18
+  },
+  {
+   "w": "menos",
+   "s": 14.18,
+   "e": 14.56
+  },
+  {
+   "w": "buenos",
+   "s": 14.56,
+   "e": 15.0
+  },
+  {
+   "w": "y",
+   "s": 15.0,
+   "e": 16.0
+  },
+  {
+   "w": "no",
+   "s": 16.0,
+   "e": 16.28
+  },
+  {
+   "w": "sabes",
+   "s": 16.28,
+   "e": 16.54
+  },
+  {
+   "w": "exactamente",
+   "s": 16.54,
+   "e": 17.04
+  },
+  {
+   "w": "qué",
+   "s": 17.04,
+   "e": 18.44
+  },
+  {
+   "w": "le",
+   "s": 18.44,
+   "e": 18.56
+  },
+  {
+   "w": "pasa.",
+   "s": 18.56,
+   "e": 18.82
+  },
+  {
+   "w": "En",
+   "s": 19.9,
+   "e": 20.16
+  },
+  {
+   "w": "la",
+   "s": 20.16,
+   "e": 20.24
+  },
+  {
+   "w": "Clínica",
+   "s": 20.24,
+   "e": 20.62
+  },
+  {
+   "w": "de",
+   "s": 20.62,
+   "e": 20.78
+  },
+  {
+   "w": "Empresas,",
+   "s": 20.78,
+   "e": 21.16
+  },
+  {
+   "w": "esto",
+   "s": 21.36,
+   "e": 21.6
+  },
+  {
+   "w": "es",
+   "s": 21.6,
+   "e": 21.72
+  },
+  {
+   "w": "un",
+   "s": 21.72,
+   "e": 21.82
+  },
+  {
+   "w": "síntoma",
+   "s": 21.82,
+   "e": 22.28
+  },
+  {
+   "w": "y",
+   "s": 22.81,
+   "e": 23.1
+  },
+  {
+   "w": "se",
+   "s": 23.1,
+   "e": 23.24
+  },
+  {
+   "w": "puede",
+   "s": 23.24,
+   "e": 23.46
+  },
+  {
+   "w": "tratar,",
+   "s": 23.46,
+   "e": 23.9
+  },
+  {
+   "w": "lo",
+   "s": 25.04,
+   "e": 25.52
+  },
+  {
+   "w": "medimos",
+   "s": 25.52,
+   "e": 25.98
+  },
+  {
+   "w": "y",
+   "s": 25.98,
+   "e": 27.0
+  },
+  {
+   "w": "lo",
+   "s": 27.0,
+   "e": 27.12
+  },
+  {
+   "w": "trabajas",
+   "s": 27.12,
+   "e": 27.56
+  },
+  {
+   "w": "paso",
+   "s": 27.56,
+   "e": 27.8
+  },
+  {
+   "w": "a",
+   "s": 27.8,
+   "e": 27.92
+  },
+  {
+   "w": "paso",
+   "s": 27.92,
+   "e": 28.12
+  },
+  {
+   "w": "con",
+   "s": 28.12,
+   "e": 28.6
+  },
+  {
+   "w": "un",
+   "s": 28.6,
+   "e": 28.74
+  },
+  {
+   "w": "consultor",
+   "s": 28.74,
+   "e": 29.26
+  },
+  {
+   "w": "clínico.",
+   "s": 29.26,
+   "e": 29.78
+  },
+  {
+   "w": "Te",
+   "s": 30.6,
+   "e": 30.98
+  },
+  {
+   "w": "damos",
+   "s": 30.98,
+   "e": 31.2
+  },
+  {
+   "w": "el",
+   "s": 31.2,
+   "e": 31.38
+  },
+  {
+   "w": "alta",
+   "s": 31.38,
+   "e": 31.62
+  },
+  {
+   "w": "cuando",
+   "s": 31.62,
+   "e": 32.36
+  },
+  {
+   "w": "tus",
+   "s": 32.36,
+   "e": 33.12
+  },
+  {
+   "w": "números",
+   "s": 33.12,
+   "e": 33.62
+  },
+  {
+   "w": "realmente",
+   "s": 33.62,
+   "e": 34.24
+  },
+  {
+   "w": "hayan",
+   "s": 34.24,
+   "e": 35.04
+  },
+  {
+   "w": "mejorado.",
+   "s": 35.04,
+   "e": 35.6
+  },
+  {
+   "w": "El",
+   "s": 36.46,
+   "e": 36.7
+  },
+  {
+   "w": "primer",
+   "s": 36.7,
+   "e": 36.92
+  },
+  {
+   "w": "paso",
+   "s": 36.92,
+   "e": 37.36
+  },
+  {
+   "w": "es",
+   "s": 37.36,
+   "e": 38.02
+  },
+  {
+   "w": "pasar",
+   "s": 38.02,
+   "e": 38.88
+  },
+  {
+   "w": "por",
+   "s": 38.88,
+   "e": 39.14
+  },
+  {
+   "w": "el",
+   "s": 39.14,
+   "e": 39.24
+  },
+  {
+   "w": "Escáner",
+   "s": 39.24,
+   "e": 39.56
+  },
+  {
+   "w": "de",
+   "s": 39.56,
+   "e": 39.74
+  },
+  {
+   "w": "Salud",
+   "s": 39.74,
+   "e": 40.02
+  },
+  {
+   "w": "Empresarial",
+   "s": 40.02,
+   "e": 40.62
+  },
+  {
+   "w": "completamente",
+   "s": 40.62,
+   "e": 41.78
+  },
+  {
+   "w": "gratis",
+   "s": 41.78,
+   "e": 42.76
+  },
+  {
+   "w": "y",
+   "s": 42.76,
+   "e": 43.06
+  },
+  {
+   "w": "en",
+   "s": 43.06,
+   "e": 43.18
+  },
+  {
+   "w": "10",
+   "s": 43.18,
+   "e": 43.3
+  },
+  {
+   "w": "minutos.",
+   "s": 43.3,
+   "e": 43.7
+  }
+ ],
+ "escenas": [
+  {
+   "tipo": "titulo",
+   "inicio": 0.0,
+   "palabras_hasta": 1.9,
+   "texto": "¿Qué le duele",
+   "oro": "a tu empresa?"
+  },
+  {
+   "tipo": "frase",
+   "inicio": 4.0,
+   "palabras_hasta": 7.2,
+   "texto": "Lo notas cada mes,",
+   "oro": "aunque no sepas ponerle nombre."
+  },
+  {
+   "tipo": "barras_cuenta",
+   "inicio": 7.7,
+   "palabras_hasta": 11.0,
+   "texto": "Facturas bien, pero la cuenta no lo refleja."
+  },
+  {
+   "tipo": "barras_meses",
+   "inicio": 11.9,
+   "palabras_hasta": 15.0,
+   "texto": "Meses buenos y meses menos buenos."
+  },
+  {
+   "tipo": "frase",
+   "inicio": 19.6,
+   "palabras_hasta": 25.5,
+   "eyebrow": "En La Clínica de Empresas",
+   "texto": "esto es un síntoma",
+   "oro": "y se puede tratar."
+  },
+  {
+   "tipo": "pasos",
+   "inicio": 25.6,
+   "palabras_hasta": 26.4,
+   "texto": "Así trabajamos",
+   "pasos": [
+    {
+     "t": 25.9,
+     "titulo": "Lo medimos",
+     "detalle": "Con tus números."
+    },
+    {
+     "t": 27.0,
+     "titulo": "Paso a paso",
+     "detalle": "Con tu consultor clínico."
+    }
+   ]
+  },
+  {
+   "tipo": "alta",
+   "inicio": 30.4,
+   "fin": 36.3,
+   "palabras_hasta": 33.5,
+   "texto": "Te damos el alta",
+   "oro": "cuando tus números han mejorado.",
+   "pasos": []
+  },
+  {
+   "tipo": "escaner",
+   "inicio": 36.3,
+   "palabras_hasta": 39.5,
+   "eyebrow": "El primer paso",
+   "texto": "Escáner de Salud",
+   "oro": "Empresarial",
+   "chips": [
+    {
+     "t": 40.8,
+     "txt": "Gratis"
+    },
+    {
+     "t": 42.4,
+     "txt": "10 minutos"
+    }
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "inicio": 43.9,
+   "palabras_hasta": 45.0,
+   "texto": "¿Qué le duele a la tuya?",
+   "instagram": {
+    "boton": "Comenta CLINICA",
+    "debajo": "y te paso el enlace"
+   },
+   "tiktok": {
+    "boton": "Enlace en mi perfil",
+    "debajo": "Escáner gratuito · 10 minutos"
+   }
+  }
+ ]
+}

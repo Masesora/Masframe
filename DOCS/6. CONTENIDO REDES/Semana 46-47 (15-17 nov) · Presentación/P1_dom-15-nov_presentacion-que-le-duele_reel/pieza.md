@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Fecha y hora** | Dom 15 nov · 20:00 |
-| **Formato** | Carrusel (5 imágenes 4:5) |
+| **Formato** | Reel animado con la voz de Maite (47 s, 9:16) |
 | **Objetivo** | Presentar La Clínica de Empresas antes de las piezas por nicho |
 | **Palabra clave** | **CLINICA** |
 | **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=presentacion&utm_content=p1` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=presentacion&utm_content=p1` |
@@ -45,7 +45,10 @@ Enlace en mi perfil.
 ```
 
 ## Archivos para publicar
-- Instagram (carrusel) y TikTok (modo foto), en este orden: `assets/01_gancho.png`, `assets/02_sintomas.png`, `assets/03_premisa.png`, `assets/04_la-clinica.png`, `assets/05_cierre.png`
+- Instagram (reel): `assets/reel_instagram.mp4` · portada `assets/portada.png`
+- TikTok (vídeo): `assets/reel_tiktok.mp4`
+- Voz: `assets/voz_maite.ogg` (grabada por Maite, voz real: no lleva etiqueta de IA)
+- Alternativa si se prefiere carrusel: las 5 imágenes `assets/01_gancho.png` … `assets/05_cierre.png`
 
 ## Aprobación (la marcas tú)
 - [ ] **APROBADO PARA PUBLICAR** · Maite
@@ -56,6 +59,7 @@ Enlace en mi perfil.
 ## Estado del agente
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 - 15 nov · Textos reescritos a petición de Maite (más naturales, sin frases hechas).
+- 15 nov · Pasa a reel animado sincronizado con la voz de Maite, con subtítulos palabra a palabra.
 
 ## Lista de comprobación
 - [x] Imagen o diseño en `assets/`
