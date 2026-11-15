@@ -15,14 +15,12 @@
 - **Cuerpo:** «Divide ese saldo entre lo que gastas al mes en fijos y multiplícalo por 30: son tus días de caja. Por debajo de 30, tu negocio vende por urgencia, no por estrategia. Por encima de 60, recuperas el control. *Ejemplo ilustrativo:* un taller con 8.500 € en caja y 8.000 € de gastos fijos al mes tiene 31 días. Tras liberar 7.500 € atrapados en stock y facturas pendientes de cobro, sube a 60. Tu caja respira sin necesidad de nuevas ventas.»
 - **Cierre:** «Escáner de Salud Empresarial: masesora.es» (antes: palabra clave TALLER)
 
-## Locución (la graba Maite)
-1. Tienes el taller lleno, no paras en todo el mes, y cuando miras el banco no te sale la cuenta.
-2. Haz una prueba. Abre el banco y mira lo que tienes hoy.
-3. ¿Cuántos días aguantarías si mañana nadie te pagara? Si no llegas a un mes, vas con el agua al cuello.
-4. Te pongo un ejemplo. Un taller que aguantaba treinta y un días tenía siete mil quinientos euros metidos en piezas que no se movían y en clientes que no le pagaban. Los recuperó, y ahora aguanta sesenta.
-5. Seguramente en tu taller también hay dinero escondido. Te ayudamos a encontrarlo. Empieza por el Escáner de Salud Empresarial: masesora.es. Es gratis y son diez minutos. El enlace lo tienes en el perfil.
-
-*En pantalla, durante la frase 4, va la etiqueta «Ejemplo ilustrativo».*
+## Locución (la graba Maite · versión final dictada por ella)
+1. Tienes el negocio lleno y no paras en todo el mes. Haz una prueba. Abre el banco y mira lo que tienes.
+2. ¿Cuántos días crees que aguantarías de verdad si mañana nadie te pagara?
+3. ¿Sabes cuánto dinero tienes parado, y sabes lo que vale? ¿Cuántas facturas tienes sin cobrar? ¿Cuánto trabajo tienes sin facturar?
+4. Seguramente en tu negocio hay dinero que no ves, y vale mucho. En La Clínica de Empresas te ayudamos a encontrarlo.
+5. Empieza por el Escáner de Salud Empresarial, en masesora.es, y verás en qué áreas necesita mejorar tu empresa. Es gratis y son diez minutos.
 
 ## Pie de publicación · Instagram
 ```
