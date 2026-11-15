@@ -15,6 +15,16 @@
 - **Cuerpo:** «Divide ese saldo entre lo que gastas al mes en fijos y multiplícalo por 30: son tus días de caja. Por debajo de 30, tu negocio vende por urgencia, no por estrategia. Por encima de 60, recuperas el control. *Ejemplo ilustrativo:* un taller con 8.500 € en caja y 8.000 € de gastos fijos al mes tiene 31 días. Tras liberar 7.500 € atrapados en stock y facturas pendientes de cobro, sube a 60. Tu caja respira sin necesidad de nuevas ventas.»
 - **Cierre:** «Escáner de Salud Empresarial: masesora.es» (antes: palabra clave TALLER)
 
+## Locución (la graba Maite)
+1. El problema no es que no entre dinero. Es que no sale lo que ya ganaste.
+2. Haz una prueba. Abre tu banco y mira cuánto tienes hoy.
+3. Divide ese saldo entre lo que pagas de fijos al mes y multiplícalo por treinta. Esos son tus días de caja.
+4. Si te salen menos de treinta, vendes por urgencia, no por estrategia. Con más de sesenta, recuperas el control.
+5. Un ejemplo ilustrativo. Un taller con ocho mil quinientos euros en caja y ocho mil de gastos fijos al mes tiene treinta y un días.
+6. Libera siete mil quinientos euros que tenía parados en stock y en facturas sin cobrar. Y sube a sesenta.
+7. Su caja respira sin necesidad de vender más.
+8. ¿Cuántos días tiene tu taller? Compruébalo en el Escáner de Salud Empresarial: masesora.es. Es gratis y son diez minutos. Tienes el enlace en el perfil.
+
 ## Pie de publicación · Instagram
 ```
 El problema no es que no entre dinero. Es que no sale lo que ya ganaste.
@@ -50,7 +60,7 @@ Guárdalo para repetir la cuenta cada mes.
 ## Archivos para publicar
 - Instagram (reel): `assets/reel_instagram.mp4` · portada `assets/portada.png`
 - TikTok (vídeo): `assets/reel_tiktok.mp4`
-- Sin voz: reel animado con música de fondo original (26 s).
+- Con voz de Maite: reel animado con música de fondo; el texto de pantalla se sincroniza con su audio.
 
 ## Aprobación (la marcas tú)
 - [ ] **APROBADO PARA PUBLICAR** · Maite
@@ -61,6 +71,7 @@ Guárdalo para repetir la cuenta cada mes.
 -
 
 ## Estado del agente
+- 15 nov · Maite pide voz: locución preparada, a la espera de su audio.
 - 15 nov · Rehecho como reel animado sin voz (variedad de formatos), con masesora.es tras el Escáner y sin palabra clave.
 - 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 
