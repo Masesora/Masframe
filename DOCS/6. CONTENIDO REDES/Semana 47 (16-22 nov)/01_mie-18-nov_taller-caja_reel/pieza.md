@@ -16,12 +16,14 @@
 - **Cierre:** «Escáner de Salud Empresarial: masesora.es» (antes: palabra clave TALLER)
 
 ## Locución (la graba Maite)
-1. Trabajo no te falta, pero no obtienes el beneficio que esperas.
-2. Haz una prueba. Abre tu banco y mira cuánto tienes hoy.
-3. Divídelo entre tus gastos fijos del mes y multiplícalo por treinta. Esos son tus días de caja.
-4. Menos de treinta: vas con el agua al cuello. Más de sesenta: estás tranquilo.
-5. Ejemplo ilustrativo. Un taller con treinta y un días. Liberó siete mil quinientos euros parados en stock y en facturas sin cobrar. Ahora tiene sesenta.
-6. Te proponemos opciones para que liberes el máximo de días de caja. Compruébalo en el Escáner de Salud Empresarial: masesora.es. Es gratis y son diez minutos. Tienes el enlace en el perfil.
+1. Tienes el taller lleno, no paras en todo el mes, y cuando miras el banco no te sale la cuenta.
+2. Haz una prueba. Abre el banco y mira lo que tienes hoy.
+3. Divídelo entre lo que pagas de fijos cada mes y multiplícalo por treinta. Te sale cuántos días aguantas si mañana dejas de cobrar.
+4. Si no llegas a treinta, vas con el agua al cuello. Con sesenta ya duermes tranquilo.
+5. Te pongo un ejemplo. Un taller que aguantaba treinta y un días tenía siete mil quinientos euros metidos en piezas que no se movían y en clientes que no le pagaban. Los recuperó, y ahora aguanta sesenta.
+6. Seguramente en tu taller también hay dinero escondido. Te ayudamos a encontrarlo. Empieza por el Escáner de Salud Empresarial: masesora.es. Es gratis y son diez minutos. El enlace lo tienes en el perfil.
+
+*En pantalla, durante la frase 5, va la etiqueta «Ejemplo ilustrativo».*
 
 ## Pie de publicación · Instagram
 ```
