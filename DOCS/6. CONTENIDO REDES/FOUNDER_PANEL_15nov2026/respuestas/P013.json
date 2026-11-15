@@ -1,0 +1,13 @@
+{
+  "id": "P013",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "El diagnóstico gratis sí lo haría, por ver qué sale. Pero pagar 99 € con tarjeta a una web que no conozco, sin que nadie del gremio me la haya recomendado, no lo hago.",
+  "objection": "No me fío de pagar con tarjeta a una web que no conozco, y si no mejoro no me devuelven el dinero, solo me dicen que siga trabajando.",
+  "would_change_my_mind": "Que otro dueño de un taller o una peluquería de mi zona me contara que le funcionó, o poder pagar después de ver un resultado y con devolución si no mejora.",
+  "price_too_cheap": 20,
+  "price_cheap": 49,
+  "price_expensive": 99,
+  "price_too_expensive": 180
+}

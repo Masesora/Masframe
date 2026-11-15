@@ -1,0 +1,13 @@
+{
+  "id": "P016",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "Los números los lleva mi gestor y no contrato nada que tenga que ver con el dinero sin preguntarle. Con lo que gano, 99 € por probar algo que quizá mi gestor ya me da no me lo gasto.",
+  "objection": "¿Esto no me lo hace ya mi gestor? Pago una gestoría para eso, y no me fío de que alguien de internet me arregle los cobros a 60-90 días, que dependen de lo que hagan mis clientes y no de mí. Y sin devolución, si no me sirve pierdo el dinero.",
+  "would_change_my_mind": "Que mi gestor me dijera que lo contrate, o que hubiera una devolución del dinero real, o poder ver primero con mis propias cifras algo concreto que no me da ya la gestoría.",
+  "price_too_cheap": 15,
+  "price_cheap": 35,
+  "price_expensive": 80,
+  "price_too_expensive": 130
+}

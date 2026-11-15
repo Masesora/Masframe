@@ -1,0 +1,13 @@
+{
+  "id": "P017",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "Los números los lleva mi gestor y yo no contrato nada que tenga que ver con dinero sin preguntárselo. Hacer el diagnóstico gratis quizá sí, pero pagar 99 euros por mi cuenta, no.",
+  "objection": "¿Esto no me lo hace ya mi gestor? Y si ya pago a la gestoría, ¿por qué voy a pagar a otro por mirar lo mismo? Además, que no te devuelvan el dinero si no mejora me echa para atrás.",
+  "would_change_my_mind": "Que mi gestor me dijera que esto le sirve y que no se solapa con lo que ya hace, o que alguien como yo, de mi mismo oficio, me contara que le funcionó.",
+  "price_too_cheap": 25,
+  "price_cheap": 45,
+  "price_expensive": 90,
+  "price_too_expensive": 150
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P018",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "No os conozco y 99 euros por algo online que no puedo tocar, sin devolución, me echa para atrás. Mi gestor ya me cobra por esto y no me fío de pagar a un desconocido por adelantado.",
+  "objection": "Si pago y no me sirve, no recupero el dinero; solo me dais más trabajo gratis. Y no sé quién sois ni si habéis llevado negocios como el mío.",
+  "would_change_my_mind": "Poder probarlo de verdad gratis con mis números, que un cliente parecido a mí me cuente que le funcionó, o que hubiera devolución del dinero.",
+  "price_too_cheap": 25,
+  "price_cheap": 49,
+  "price_expensive": 120,
+  "price_too_expensive": 200
+}

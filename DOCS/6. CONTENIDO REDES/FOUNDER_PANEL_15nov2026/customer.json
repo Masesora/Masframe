@@ -1,0 +1,37 @@
+{
+  "business": "Masesora · La Clínica de Empresas (tratamiento de caja, cobros y margen para micropymes)",
+  "target": "Dueños y dueñas de micropymes y autónomos con equipo pequeño en España que venden y facturan, pero sienten que el dinero no les cuadra: caja que se bloquea, cobros que tardan 30-60-90 días y margen que no saben calcular. Talleres, peluquerías, bares y restaurantes, asesorías y oficios (electricistas, fontaneros).",
+  "where": "España, sobre todo costa de Alicante (Marina Baixa) y alrededores; llegan por Instagram o por una recomendación",
+  "age": [38, 62],
+  "segments": [
+    {"name": "Autónomo o micro con 0-2 empleados (menos de 15.000 € al mes de facturación)", "share": 0.50, "income": [16000, 30000]},
+    {"name": "Pequeña empresa con 3-8 empleados (15.000 a 75.000 € al mes)", "share": 0.40, "income": [30000, 55000]},
+    {"name": "Empresa mayor con equipo y gestor propio (más de 75.000 € al mes)", "share": 0.10, "income": [55000, 95000]}
+  ],
+  "behaviours": [
+    {"name": "Lo deja todo en manos de su gestor", "share": 0.22, "how": "Lo que sean números se lo pasa a la gestoría y no contrata nada de dinero sin consultárselo."},
+    {"name": "Desconfía de los consultores", "share": 0.18, "how": "Ya pagó a un asesor o a un curso que no le sirvió; solo paga si ve algo concreto y probado."},
+    {"name": "Compra por recomendación", "share": 0.16, "how": "Solo contrata lo que le recomienda alguien del gremio o un conocido."},
+    {"name": "Mira primero el precio", "share": 0.14, "how": "Compara y busca lo más barato; un precio muy bajo le hace sospechar."},
+    {"name": "Va siempre justo de tiempo", "share": 0.14, "how": "Trabaja muchas horas; solo compra si no le quita horas de su día."},
+    {"name": "Prueba lo gratis y no suele pagar", "share": 0.10, "how": "Hace el diagnóstico o descarga lo gratuito, pero rara vez pasa a pagar."},
+    {"name": "Curioso con las herramientas digitales", "share": 0.06, "how": "Usa apps, prueba lo nuevo y se anima a probar si es fácil."}
+  ],
+  "objections": [
+    "¿Esto no me lo hace ya mi gestor?",
+    "¿Por qué 99 euros y quién sois? No os conozco",
+    "¿Y si pago y mi número no mejora?",
+    "No tengo tiempo para hacer un tratamiento de varias semanas",
+    "Mi caso es distinto, esto es para otros negocios",
+    "Ya me gasté dinero en un consultor y no me sirvió",
+    "Me suena a un curso o a un PDF más",
+    "No me fío de pagar con tarjeta a una web que no conozco"
+  ],
+  "habits": [
+    "te levantas pronto y cierras tarde, y los papeles los haces por la noche",
+    "dependes de que los clientes te paguen a 30, 60 o 90 días para poder pagar nóminas y proveedores",
+    "tu gestor te manda el trimestre y casi no lo entiendes",
+    "te enteras de las cosas por el boca a boca del gremio y por Instagram",
+    "a final de mes miras la cuenta y no sabes bien por qué no sobra más"
+  ]
+}

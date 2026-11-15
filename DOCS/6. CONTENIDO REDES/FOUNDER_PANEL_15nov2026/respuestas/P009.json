@@ -1,0 +1,13 @@
+{
+  "id": "P009",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "No os conozco y ya me quemé una vez pagando a un asesor que no me sirvió. El diagnóstico gratis lo miraría, pero pagar 99 € a ciegas por un tratamiento online, no.",
+  "objection": "¿Quién sois y qué habéis conseguido con negocios como el mío? Todo suena bien pero no veo ni un caso concreto ni un número probado. Y sin devolución del dinero, el riesgo es todo mío.",
+  "would_change_my_mind": "Ver el caso real de un negocio parecido al mío (un taller o una peluquería, con nombre) que mejoró su caja o sus cobros, y hacer el diagnóstico gratis y que me enseñe algo concreto de mi negocio que yo no sabía.",
+  "price_too_cheap": 20,
+  "price_cheap": 49,
+  "price_expensive": 99,
+  "price_too_expensive": 180
+}

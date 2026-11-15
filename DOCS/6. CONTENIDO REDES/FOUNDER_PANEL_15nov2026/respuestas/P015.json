@@ -1,0 +1,13 @@
+{
+  "id": "P015",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "timing",
+  "reason": "Yo ya voy justo de horas y esto son 7 capas durante semanas, con deberes mios cada una. Y además pienso que mi caso es distinto, que esto vale para otros negocios, no para el mío.",
+  "objection": "No tengo tiempo para meterme semanas en un tratamiento online, y 99 euros por algo que no sé si va a funcionar en mi negocio, sin devolución, me parece mucho. Que me sigan trabajando gratis no me devuelve el dinero ni las horas.",
+  "would_change_my_mind": "Que un compañero del gremio, un taller o un bar como el mío, me cuente que le sacó dinero y que le llevó pocas horas a la semana. Si me lo hacen ellos con mis facturas en vez de hacerlo yo, hablamos.",
+  "price_too_cheap": 15,
+  "price_cheap": 39,
+  "price_expensive": 120,
+  "price_too_expensive": 220
+}

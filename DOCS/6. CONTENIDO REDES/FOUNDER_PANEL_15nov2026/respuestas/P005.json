@@ -1,0 +1,13 @@
+{
+  "id": "P005",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Ya me gasté dinero en un asesor y en un curso que no me sirvieron de nada, y esto me suena a otro curso más, aunque sea online y con nombre bonito. 99 euros por un síntoma sin haber visto antes algo concreto de otro negocio como el mío, y sin devolución, no me lo juego.",
+  "objection": "Que no hay devolución del dinero. Me dicen que si no mejora seguimos trabajando, pero yo ya pagué y a ver quién me asegura que mejora. Y no conozco a nadie del gremio que lo haya hecho.",
+  "would_change_my_mind": "Que un compañero de mi gremio, alguien que conozco, me enseñe lo que le salió y cuánto cobra de más o de menos ahora; o poder pagar solo cuando se vea la mejora.",
+  "price_too_cheap": 15,
+  "price_cheap": 35,
+  "price_expensive": 80,
+  "price_too_expensive": 130
+}

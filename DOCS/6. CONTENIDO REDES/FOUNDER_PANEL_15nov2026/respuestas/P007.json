@@ -1,0 +1,13 @@
+{
+  "id": "P007",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "timing",
+  "reason": "No tengo tiempo para un tratamiento de varias semanas, y encima ya tengo equipo y gestor propio que lleva el dinero. 99 euros no es lo que me frena, lo que me frena son las horas que me va a quitar.",
+  "objection": "De 2 a 6 semanas de pasos y de decisiones que revisar con un consultor son horas de mi agenda que no tengo. Si me quita tiempo, no lo compro, y mi gestor ya me cuenta lo de caja y margen.",
+  "would_change_my_mind": "Que lo hicieran por mi y me dieran el resultado en un informe de una hora o menos, o que alguien de confianza del gremio me dijera que no me quita casi tiempo y que mi gestor no me lo da.",
+  "price_too_cheap": 25,
+  "price_cheap": 60,
+  "price_expensive": 200,
+  "price_too_expensive": 450
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P004",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Yo contrato lo que me recomienda alguien del gremio, y a esto no lo conoce nadie que yo sepa. Además ya tengo gestor y equipo, y el dinero de mi empresa no lo trato con una web que no conozco.",
+  "objection": "¿Esto no me lo hace ya mi gestor? Y si no es así, por qué tendría que fiarme de una clínica online de la que no me ha hablado nadie, sin devolución si no me sirve.",
+  "would_change_my_mind": "Que un compañero del gremio, alguien al que conozca, me contara que lo ha hecho y que le ha mejorado la caja de verdad, y que mi gestor me dijera que no se solapa con lo que ya hace.",
+  "price_too_cheap": 40,
+  "price_cheap": 90,
+  "price_expensive": 250,
+  "price_too_expensive": 500
+}

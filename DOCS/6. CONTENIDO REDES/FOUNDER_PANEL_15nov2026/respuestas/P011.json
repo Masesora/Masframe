@@ -1,0 +1,13 @@
+{
+  "id": "P011",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "Yo los numeros se los paso a mi gestor y no contrato nada de dinero sin preguntarle a el. Y casi no entiendo ni lo que me manda cada trimestre, asi que no me veo haciendo yo un tratamiento de 7 capas.",
+  "objection": "Esto parece para otros negocios, no para el mio, y yo no pago 99 euros por algo que mi gestor no ha visto ni me ha dicho que haga. Ademas si no mejora no me devuelven el dinero.",
+  "would_change_my_mind": "Que mi gestor me dijera que lo contrate, o que alguien me lo hiciera todo sin yo tener que entender los numeros.",
+  "price_too_cheap": 15,
+  "price_cheap": 30,
+  "price_expensive": 80,
+  "price_too_expensive": 150
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P003",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Ya me gasté dinero en un consultor y no me sirvió, y esto me suena a lo mismo aunque sea online. Entre el trabajo y perseguir cobros no tengo horas para estar 2 a 6 semanas haciendo capas paso a paso.",
+  "objection": "Que me quite tiempo y al final no me sirva, y encima sin devolución. Lo de 'seguimos trabajando hasta que mejore' es más horas mías, no mi dinero de vuelta.",
+  "would_change_my_mind": "Ver un caso real de un negocio como el mío (taller, bar, oficio) que cobró antes, y poder pedir la devolución si en un par de semanas no veo nada. Y que me pida pocas horas a la semana.",
+  "price_too_cheap": 30,
+  "price_cheap": 60,
+  "price_expensive": 150,
+  "price_too_expensive": 300
+}

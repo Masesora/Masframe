@@ -1,0 +1,13 @@
+{
+  "id": "P010",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "timing",
+  "reason": "No tengo tiempo para hacer un tratamiento de varias semanas, y 99 euros por un solo síntoma es mucho para lo que yo saco al año. El diagnóstico gratis a lo mejor lo hago, pero pagar no.",
+  "objection": "Son de 2 a 6 semanas de estar pendiente y encima, si no mejora, no me devuelven el dinero; solo me dicen que seguimos trabajando. Yo no sé si eso me va a cuadrar la cuenta a final de mes.",
+  "would_change_my_mind": "Que fuese bastante más barato, o que me dejasen probar un primer paso de pago pequeño y viera algo concreto en mi cuenta en una semana, sin tener que dedicarle horas.",
+  "price_too_cheap": 15,
+  "price_cheap": 35,
+  "price_expensive": 70,
+  "price_too_expensive": 110
+}

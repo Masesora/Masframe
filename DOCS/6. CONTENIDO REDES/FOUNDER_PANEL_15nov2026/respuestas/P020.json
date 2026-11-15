@@ -1,0 +1,13 @@
+{
+  "id": "P020",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Esto de los números se lo paso siempre a mi gestor y no contrato nada de dinero sin preguntarle. Y ya me gasté dinero en un consultor que no me sirvió, así que no voy a pagar a otro sin conocerlo.",
+  "objection": "Ya tiré dinero con un consultor y no me sirvió. Esto es online, no conozco a nadie, y encima si no mejora no me devuelven el dinero, solo 'seguimos trabajando'. Eso no me tranquiliza.",
+  "would_change_my_mind": "Que mi gestor lo mirase y me dijera que está bien, y que me enseñaran el caso de otra empresa como la mía (3-8 empleados, cobros a 60-90 días) que de verdad cobrara antes, con nombre y número. O poder pagar solo si mejora.",
+  "price_too_cheap": 25,
+  "price_cheap": 49,
+  "price_expensive": 120,
+  "price_too_expensive": 200
+}

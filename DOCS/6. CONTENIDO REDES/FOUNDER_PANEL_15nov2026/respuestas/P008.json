@@ -1,0 +1,13 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "99 € por un solo síntoma es mucho para mí, que apenas saco para vivir, y encima sin devolución. Y lo del dinero ya me lo debería llevar mi gestor; el diagnóstico gratis sí lo haría una noche, pero pagar no.",
+  "objection": "Pago 99 € y si no me sirve no me devuelven nada, solo me dicen que siga trabajando. ¿Y qué me aporta que no me dé mi gestor ya?",
+  "would_change_my_mind": "Poder probar un síntoma por 30-40 € con devolución si no me mejora, o que el diagnóstico gratis me enseñe un fallo concreto en euros que me esté costando cada mes.",
+  "price_too_cheap": 15,
+  "price_cheap": 35,
+  "price_expensive": 70,
+  "price_too_expensive": 120
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P002",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "El diagnóstico gratis lo haría, que son 10 minutos y no cuesta nada. Pero pagar 99 € por algo que no sé si va a cambiar mi cuenta a final de mes, de una gente que no conozco, no me lo juego a la primera.",
+  "objection": "Me suena a un curso más con otro nombre. Si no mejora no me devuelven el dinero, solo me dicen que siguen trabajando, y no sé quién es el consultor ni qué es una 'capa'.",
+  "would_change_my_mind": "Ver el diagnóstico gratis y que me enseñe un número concreto en euros de lo que pierdo en mi negocio, o un caso de otro negocio parecido al mío con su antes y después, o poder devolver el dinero si no mejora.",
+  "price_too_cheap": 15,
+  "price_cheap": 39,
+  "price_expensive": 99,
+  "price_too_expensive": 180
+}

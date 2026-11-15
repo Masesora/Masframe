@@ -1,0 +1,13 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Ya me quemé una vez con un asesor y un curso que no me sirvieron, y aquí no veo ni un caso de otro negocio como el mío al que le haya funcionado. El diagnóstico gratis lo haría por curiosidad, pero pagar 99 € de entrada sin pruebas, no.",
+  "objection": "¿Y si pago y mi número no mejora? Me dicen que siguen trabajando sin coste, pero no me devuelven el dinero, y a mí lo que me han vendido siempre es tiempo.",
+  "would_change_my_mind": "Ver un caso real, con nombre y cifras, de un negocio parecido al mío (taller, bar, oficio) al que le mejoró el número, o poder pagar la mayor parte cuando el número haya mejorado de verdad.",
+  "price_too_cheap": 25,
+  "price_cheap": 50,
+  "price_expensive": 150,
+  "price_too_expensive": 300
+}
