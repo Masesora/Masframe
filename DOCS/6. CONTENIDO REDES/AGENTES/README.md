@@ -4,7 +4,7 @@
 `- [x] **APROBADO PARA PUBLICAR** · Maite`. Si quieres cambios, escríbelos en «Cambios pedidos» y deja la casilla sin marcar.
 Todo lo demás lo hacen tres agentes, que funcionan como tareas programadas de Claude.
 
-Fuente de verdad: `PLAN_MARKETING_v2_LA_CLINICA_nov-dic2026.md` (guiones, fechas, palabras clave, frases que sí y que no).
+Fuente de verdad: `PLAN_MARKETING_v2_LA_CLINICA_nov-dic2026.md` (guiones, fechas, frases que sí y que no) y **`KIT_DISTRIBUCION.md`** (lo que acompaña a cada pieza para ganar visualizaciones sin pagar: 3 ganchos, historia con encuesta, búsqueda, y el kit para WhatsApp, Google, LinkedIn y Facebook).
 
 ## El circuito de una pieza
 
@@ -25,8 +25,9 @@ Trabaja con **10 días de antelación**. Para cada pieza con fecha en los próxi
 3. Si hay «Cambios pedidos» sin atender, los aplica, vuelve a exportar y anota en «Estado del agente» qué cambió.
 4. Si aparece `assets/voz.m4a` (o `clip.mp4`) nuevo, vuelve a montar los vídeos.
 5. Cada vez que aparezca «Escáner de Salud Empresarial» (pantalla, voz o pie), justo detrás va **masesora.es**. Respeta la variedad de formatos de la semana (§4 del plan) y usa `herramientas/reel_animado.py` para reels y piezas con movimiento.
-6. Revisa las reglas del plan antes de entregar: sin «IA», sin culpar al dueño, cifras solo del plan y etiquetadas como *ejemplo ilustrativo*, sin especialidades que no se venden, sin «piloto», «beta» ni «plazas», sin promesas de devolución. Usuario correcto: **@laclinicadempresas**.
-6. Hace commit en `main` (solo dentro de `DOCS/6. CONTENIDO REDES/`) y avisa a Maite de qué piezas esperan su revisión.
+6. **Kit de distribución** (`KIT_DISTRIBUCION.md`): en cada pieza de vídeo monta además `reel_tiktok_B.mp4` y `reel_tiktok_C.mp4` (mismo cuerpo, otro gancho y otra portada); en todas, `historia.png` (1080×1920) con la encuesta de autodiagnóstico; en los carruseles, `carrusel.pdf`; y escribe en `pieza.md` las secciones «Ganchos A/B/C», «Historia y encuesta», «Palabras de búsqueda» y «Ubicación», y el archivo `compartir.md` (WhatsApp, grupos, Google Business Profile, LinkedIn). La primera línea del pie es una pregunta que se contesta con una palabra o un número.
+7. Revisa las reglas del plan antes de entregar: sin «IA», sin culpar al dueño, cifras solo del plan y etiquetadas como *ejemplo ilustrativo*, sin especialidades que no se venden, sin «piloto», «beta» ni «plazas», sin promesas de devolución. Usuario correcto: **@laclinicadempresas**.
+8. Hace commit en `main` (solo dentro de `DOCS/6. CONTENIDO REDES/`) y avisa a Maite de qué piezas esperan su revisión.
 
 **Nunca** marca la casilla de aprobación ni publica.
 
@@ -35,15 +36,17 @@ Trabaja con **10 días de antelación**. Para cada pieza con fecha en los próxi
 2. Comprueba que existen todos los archivos de «Archivos para publicar» y que la marca de aprobación está en un commit de Maite, no del propio agente. Si falta algo, no programa y avisa.
 3. **Instagram:** Meta Business Suite → Crear publicación (o Crear reel) → cuenta laclinicadempresas → sube los archivos en orden → pega el pie de Instagram → Programar en la fecha y hora de `pieza.md` (hora de Madrid).
 4. **TikTok:** TikTok Studio → Subir (vídeo o fotos) → pie de TikTok → Programar a la misma fecha y hora (TikTok permite hasta 10 días de antelación; si la pieza está más lejos, espera).
-5. Marca `- [x] Programado en Business Suite`, anota en «Estado del agente» la fecha y hora programadas en cada red, pone «Programada» y la fecha en las dos líneas de la pieza en `REGISTRO_PUBLICACIONES.xlsx`, hace commit y avisa.
+5. **Kit de distribución:** programa también la historia (`historia.png`, 2 horas después de la pieza, con encuesta si Meta lo permite desde el ordenador); marca Facebook si la página está conectada; etiqueta la ubicación de `pieza.md`; y, cuando entran en la ventana de 10 días de TikTok, programa los ganchos B (a los 14 días) y C (a los 21 días) en huecos libres (martes, jueves o sábado, 19:00). Copia `compartir.md` y el vídeo de TikTok a `redes_para_subir\<pieza>\` para que Maite los comparta.
+6. Marca `- [x] Programado en Business Suite`, anota en «Estado del agente» la fecha y hora programadas en cada red, pone «Programada» y la fecha en las dos líneas de la pieza en `REGISTRO_PUBLICACIONES.xlsx`, hace commit y avisa.
 
 **Nunca** publica una pieza sin la marca, no cambia la fecha ni el texto aprobados, no promociona (Boost) ni gasta dinero, y no toca publicaciones que no ha creado él.
 
 ## 3 · Agente de MEDICIÓN — viernes, 17:23 (en tu ordenador, con Chrome)
-1. Para cada pieza publicada esa semana o la anterior, lee en Meta Business Suite y TikTok Studio: alcance (o espectadores), guardados, compartidos, visitas al perfil, comentarios con la palabra clave y mensajes privados.
+1. Para cada pieza publicada esa semana o la anterior, lee en Meta Business Suite y TikTok Studio: alcance (o espectadores), guardados, compartidos, visitas al perfil, comentarios y mensajes privados, y además **retención a los 3 segundos, % de visualización completa, tiempo medio y % desde búsqueda**, por gancho (A, B o C), y las respuestas a la encuesta de la historia.
 2. Rellena `resultados.md` de cada pieza, las columnas amarillas de su línea de Instagram y de TikTok en `REGISTRO_PUBLICACIONES.xlsx` (estado «Publicada», fecha y resultados; los puntos se calculan solos) y la columna «Resultado (puntos)» de `00_TEMAS.md`, siguiendo `00_COMO_MEDIR.md`.
 3. Lista a quién comentó la palabra clave y aún no ha recibido respuesta, con el enlace UTM de su nicho, para que Maite responda.
-4. Propone la **única decisión del viernes** (qué tema o nicho se repite y cuál se deja) y la deja escrita para que Maite la confirme.
+4. Dice qué gancho gana y propone volver a publicar la pieza con más retención con su gancho B la semana siguiente.
+5. Propone la **única decisión del viernes** (qué tema o nicho se repite y cuál se deja) y la deja escrita para que Maite la confirme.
 
 **Nunca** responde comentarios ni mensajes en nombre de Maite.
 
