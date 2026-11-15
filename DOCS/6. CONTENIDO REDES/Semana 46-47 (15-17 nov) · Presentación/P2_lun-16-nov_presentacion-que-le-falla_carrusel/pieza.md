@@ -19,7 +19,7 @@
 
 Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial (masesora.es): contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
 
-El Escáner es gratis y no te compromete a nada. Tienes el enlace en el perfil.
+El Escáner de la Salud de tu empresa en www.masesora.es
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
@@ -30,7 +30,7 @@ El Escáner es gratis y no te compromete a nada. Tienes el enlace en el perfil.
 
 Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial (masesora.es): contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
 
-El Escáner es gratis y no te compromete a nada. Tienes el enlace en el perfil.
+El Escáner de la Salud de tu empresa en www.masesora.es
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
