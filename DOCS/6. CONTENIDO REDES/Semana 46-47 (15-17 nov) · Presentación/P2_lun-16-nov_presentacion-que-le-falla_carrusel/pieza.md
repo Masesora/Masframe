@@ -10,32 +10,29 @@
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Gancho
-**¿Qué le falla a tu negocio?**
+**¿Qué falla a tu negocio?**
 
-Alternativas (si prefieres otra, escríbela en «Cambios pedidos» y se rehace la portada):
-- «¿Qué le falla a tu equipo?» (tu propuesta; el resto de la pieza no cambia)
-- «¿Cuándo miraste tu negocio entero por última vez?»
 
 ## Pie de publicación · Instagram
 ```
-¿Qué le falla a tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
+¿Qué falla a tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
 
 Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial: contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
 
 El Escáner es gratis y no te compromete a nada.
-Comenta CLINICA y te paso el enlace.
+www.masesora.es
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
 
 ## Pie de publicación · TikTok
 ```
-¿Qué le falla a tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
+¿Qué falla a tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
 
 Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial: contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
 
 El Escáner es gratis y no te compromete a nada.
-Enlace en mi perfil.
+www.masesora.es
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
