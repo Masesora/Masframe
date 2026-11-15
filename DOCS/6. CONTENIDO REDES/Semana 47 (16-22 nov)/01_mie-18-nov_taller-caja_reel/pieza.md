@@ -16,14 +16,13 @@
 - **Cierre:** «Escáner de Salud Empresarial: masesora.es» (antes: palabra clave TALLER)
 
 ## Locución (la graba Maite)
-1. El problema no es que no entre dinero. Es que no sale lo que ya ganaste.
-2. Haz una prueba. Abre tu banco y mira cuánto tienes hoy.
-3. Divide ese saldo entre lo que pagas de fijos al mes y multiplícalo por treinta. Esos son tus días de caja.
-4. Si te salen menos de treinta, vendes por urgencia, no por estrategia. Con más de sesenta, recuperas el control.
-5. Un ejemplo ilustrativo. Un taller con ocho mil quinientos euros en caja y ocho mil de gastos fijos al mes tiene treinta y un días.
-6. Libera siete mil quinientos euros que tenía parados en stock y en facturas sin cobrar. Y sube a sesenta.
-7. Su caja respira sin necesidad de vender más.
-8. ¿Cuántos días tiene tu taller? Compruébalo en el Escáner de Salud Empresarial: masesora.es. Es gratis y son diez minutos. Tienes el enlace en el perfil.
+1. ¿Facturas bien y aun así llegas justo a final de mes? No eres el único.
+2. Haz esta cuenta conmigo. Mira cuánto tienes hoy en el banco.
+3. Divídelo entre lo que pagas de fijos cada mes y multiplícalo por treinta. Te sale cuántos días aguantas sin cobrar nada más.
+4. Si te salen menos de treinta, coges trabajos por necesidad. A partir de sesenta, decides tú.
+5. Te pongo un ejemplo ilustrativo. Un taller con ocho mil quinientos euros en el banco y ocho mil de fijos al mes. Treinta y un días.
+6. Tenía siete mil quinientos euros parados entre piezas en el almacén y facturas sin cobrar. Los sacó de ahí y llegó a sesenta. Sin vender más.
+7. ¿Cuántos días aguanta tu taller? Haz el Escáner de Salud Empresarial en masesora.es. Es gratis y en diez minutos lo sabes. El enlace está en mi perfil.
 
 ## Pie de publicación · Instagram
 ```
