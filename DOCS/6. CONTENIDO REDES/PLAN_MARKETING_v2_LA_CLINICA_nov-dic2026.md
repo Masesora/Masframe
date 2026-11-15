@@ -159,16 +159,16 @@ Cada viernes, con `00_COMO_MEDIR.md` (señal de dinero por nicho, de 1 a 10 punt
 
 - **El plan «Analítica del Domingo» (borrado el 15 nov).** Se aprovecha: los enlaces con `utm_medium` y `utm_content`, la línea «guárdalo para repetir la cuenta» y la lista de «antes de publicar» (§10). Se descarta: la etiqueta «Analítica del domingo», las «10 especialidades» y el recorrido «ves todos los síntomas», porque solo se vende la UCI. Sus piezas de Arritmia Comercial (CARDIO-S2), Dependencia Crítica (OPE-S2) y el vídeo «La puerta de entrada» quedan en `00_TEMAS.md` como **en espera** hasta que esos síntomas se vendan.
 - **Los diseños antiguos (`INSTAGRAM_DISENOS`, borrados el 15 nov).** Llevaban el usuario equivocado (@laclinica**de**empresas), la etiqueta antigua y las 10 especialidades, y 7 archivos estaban duplicados por un fallo de script. Su estilo (azul marino, oro, Montserrat, línea de monitor) vive ahora en `AGENTES/herramientas/clinica.css`, y las piezas 01 y 02 ya están rehechas con él.
-- **La publicación ya programada en Meta Business Suite** (foto «FUGA INVISIBLE», dom 29 nov a las 10:00) sale del plan antiguo: repite el ejemplo de la pieza 02 y ocupa el hueco de la pieza 04. **Hay que borrarla** (decisión 1 del §8).
-- **Anuncios de pago:** en pausa salvo que digas SÍ a la propuesta del §8.
+- **La publicación ya programada en Meta Business Suite** (foto «FUGA INVISIBLE», dom 29 nov a las 10:00) sale del plan antiguo: repite el ejemplo de la pieza 02 y ocupa el hueco de la pieza 04. **Se mantiene hasta que Maite la revise** (decisión 1 del §8).
+- **Anuncios de pago:** en pausa hasta «coger ritmo» con el orgánico (decisión 2 del §8, 15 nov).
 - **La clínica física:** como historia de marca (*«así imaginamos nuestra clínica»*), nunca como algo existente. Alianzas con 2 o 3 profesionales locales para piezas conjuntas, cuando haya un contacto.
 
 ## 8. Decisiones pendientes de Maite (SÍ / NO)
 
 | # | Decisión | De dónde sale | Qué cambia si dices SÍ |
 |---|---|---|---|
-| 1 | Borrar la foto «FUGA INVISIBLE» programada para el 29 nov en Meta | §7 | Nada choca con la pieza 04. Los agentes no la tocan sin tu orden. |
-| 2 | Activar **100 € de anuncios** del 16 nov al 15 dic, solo Instagram hacia el Escáner: 50 € cobros para oficios, 30 € taller, 20 € para impulsar la pieza orgánica que más informes traiga | `FOUNDER_PANEL…/skills/marketing.md` y `launch.md` | Se mide coste por informe (tope 20 €); se pausa un anuncio con clics y 0 informes en 10 días. Los agentes **no** gastan dinero: los anuncios los lanzas tú. |
+| 1 | ~~Borrar la foto «FUGA INVISIBLE» programada para el 29 nov en Meta~~ **15 nov: NO por ahora; Maite la revisa antes.** | §7 | Se mantiene programada. Los agentes no la tocan. Si sigue el 28 nov, el 29 nov salen dos publicaciones (la foto y la pieza 04). |
+| 2 | **15 nov: NO hasta «coger ritmo» con el orgánico.** Activar **100 € de anuncios** del 16 nov al 15 dic, solo Instagram hacia el Escáner: 50 € cobros para oficios, 30 € taller, 20 € para impulsar la pieza orgánica que más informes traiga | `FOUNDER_PANEL…/skills/marketing.md` y `launch.md` | Se mide coste por informe (tope 20 €); se pausa un anuncio con clics y 0 informes en 10 días. Los agentes **no** gastan dinero: los anuncios los lanzas tú. |
 | 3 | Confirmar los umbrales de control (§0) | `launch.md` | Fijan qué se decide el 27 nov. |
 | 4 | Posicionamiento B: «para el autónomo que ha trabajado y no ha cobrado» (UCI-S2) como mensaje principal | `marketing.md`, consejo | Si SÍ, a partir de la semana 49 las piezas de cobros ganan peso y el agente usa los ganchos del §9. Las 12 piezas no se rehacen. |
 | 5 | Probar con personas reales la oferta en dos pagos (39 € + 60 € al mejorar) | `offer.md`, `pricing.md` | Es para las conversaciones, no para las redes: hasta que lo decidas, las piezas no hablan de precio. |
