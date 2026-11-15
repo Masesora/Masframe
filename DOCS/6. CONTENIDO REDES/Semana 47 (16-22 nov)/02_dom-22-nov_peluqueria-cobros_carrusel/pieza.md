@@ -15,13 +15,51 @@
 - **Diapositivas:** 2 · *Ejemplo ilustrativo:* una peluquería factura 9.000 € en 3 meses. 3 · 1.800 € están vencidos sin cobrar: un 20 %. 4 · «Ese dinero es beneficio tuyo que estás financiando gratis a tus clientes.» 5 · Lo primero: una **radiografía de cobros por cliente**: quién te debe, cuánto y desde cuándo. 6 · Dos gestos: facturar al entregar y reclamar en firme lo vencido con una carta formal. *«Nada de perseguir cobros a mano.»* En el ejemplo, la cifra baja al 8 %.
 - **Pie:** «Haz tu cuenta: vencido ÷ facturado en 3 meses. Comenta PELU y te paso el diagnóstico gratuito.»
 
-## Hashtags (a rellenar)
+## Pie de publicación · Instagram
+```
+1.800 € en la calle. Facturado, entregado… y sin cobrar.
+
+Ejemplo ilustrativo: una peluquería factura 9.000 € en 3 meses y 1.800 € están vencidos sin cobrar: un 20 %. Ese dinero es beneficio tuyo que estás financiando gratis a tus clientes.
+
+Lo primero, una radiografía de cobros por cliente: quién te debe, cuánto y desde cuándo. Después, dos gestos: facturar al entregar y reclamar lo vencido con una carta formal. En el ejemplo, la cifra baja al 8 %.
+
+Haz tu cuenta: vencido ÷ facturado en 3 meses. Comenta PELU y te paso el diagnóstico gratuito.
+
+#LaClinicaDeEmpresas #peluqueria #esteticaprofesional #autonomos #pymes #cobros #facturas
+```
+
+## Pie de publicación · TikTok
+```
+1.800 € en la calle. Facturado, entregado… y sin cobrar.
+
+Ejemplo ilustrativo: una peluquería factura 9.000 € en 3 meses y 1.800 € están vencidos sin cobrar: un 20 %. Ese dinero es beneficio tuyo que estás financiando gratis a tus clientes.
+
+Lo primero, una radiografía de cobros por cliente: quién te debe, cuánto y desde cuándo. Después, dos gestos: facturar al entregar y reclamar lo vencido con una carta formal. En el ejemplo, la cifra baja al 8 %.
+
+Haz tu cuenta: vencido ÷ facturado en 3 meses. Enlace en mi perfil: diagnóstico gratuito.
+
+#LaClinicaDeEmpresas #peluqueria #esteticaprofesional #autonomos #pymes #cobros #facturas
+```
+
+## Archivos para publicar
+- Instagram (carrusel, 6 imágenes 4:5, en este orden): `assets/01_portada.png`, `02_facturado.png`, `03_vencido.png`, `04_financiando.png`, `05_radiografia.png`, `06_tratamiento.png`
+- TikTok (modo foto, mismas 6 imágenes y mismo orden)
+
+## Aprobación (la marcas tú)
+- [ ] **APROBADO PARA PUBLICAR** · Maite
+
+*Solo con esta casilla marcada (`[x]`) el agente de programación sube la pieza a Meta Business Suite (Instagram) y a TikTok Studio con la fecha y hora de arriba. Si quieres cambios, escríbelos debajo en «Cambios pedidos» y déjala sin marcar.*
+
+### Cambios pedidos
 -
+
+## Estado del agente
+- 15 nov · Producción: diseños, pies y hashtags listos para revisar.
 
 ## Lista de comprobación
 - [ ] Guion revisado por Maite
 - [ ] Voz o clip grabado (si el formato lo pide)
-- [ ] Imagen o diseño en `assets/`
+- [x] Imagen o diseño en `assets/`
 - [ ] Texto de pantalla y pie revisados (sin «IA», sin culpar al dueño, ejemplo etiquetado como *ilustrativo*)
 - [ ] Programado en Business Suite
 - [ ] Publicado en Instagram y en TikTok
