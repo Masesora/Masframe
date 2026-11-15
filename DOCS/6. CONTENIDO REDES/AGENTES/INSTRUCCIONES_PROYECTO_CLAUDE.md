@@ -35,7 +35,7 @@
   - **Fuga Invisible (UCI-S2)**. Número: facturas vencidas sin cobrar ÷ lo facturado en 3 meses. Más del 20 %: fuga real de caja, «beneficio tuyo que estás financiando gratis a tus clientes».
   - **Anemia de Margen (UCI-S3)**. Número: (lo facturado − lo que cuesta, con tu sueldo dentro) ÷ lo facturado, sobre 3 meses. Menos del 30 %: «facturas bien y sobrevives mal».
 - Las otras nueve especialidades (Neurología, Procesos, Gestión, Operativa, Personas, Psiquiatría, Experiencia, Marca y Cardiología) existen en el catálogo, pero NO se venden ni se publican hasta que estén disponibles. Nunca decir «10 especialidades» ni «ves todos los síntomas».
-- Garantía, con esta redacción y ninguna otra: «Medimos tu número antes y después. Si haces el tratamiento completo y no mejora, seguimos trabajando sin coste hasta que mejore.» No hay devolución del precio.
+- Garantía, con esta redacción y ninguna otra (es la del contrato y la de los Términos §7): «Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.» No hay devolución del precio.
 - En redes no se habla de precio.
 
 ## A quién hablamos
@@ -217,12 +217,13 @@ Cada recurso tiene aspecto de «informe de diagnóstico» de Masesora y usa solo
 | Agente de **programación** (9:17 cada día) | Solo con la marca de Maite | Programa la pieza en Meta Business Suite y en TikTok Studio. |
 | Agente de **medición** (viernes, 17:23) | Semanal | Rellena los resultados y la señal de dinero, y propone la decisión del viernes. |
 
-## 7 · Lista para que el equipo valide
+## 7 · Validación (15 nov 2026)
 
-- [ ] La lista de nichos y la zona (Marina Baixa) son correctas.
-- [ ] La redacción de la garantía es exactamente la de Términos §7.
-- [ ] Las frases prohibidas y los ejemplos de «falta de respeto» cubren todo lo que no queréis ver.
-- [ ] Los cuatro disparadores de la DISTRIBUIDORA (A-D) os parecen bien. Ninguno usa el miedo ni critica al gestor.
-- [ ] Os parece bien la «hoja para tu gestor» como recurso. Hay que decidir quién la revisa antes de publicarla.
-- [ ] Calendario fijo de miércoles a las 13:00 y domingo a las 10:00.
-- [ ] Respuesta a los comentarios con palabra clave: quién la hace y en cuánto tiempo.
+- [x] Calendario fijo: miércoles a las 13:00 y domingo a las 10:00 (Maite, 15 nov).
+- [x] Garantía: misma frase que el contrato (`contracts/contrato_template.py`) y los Términos §7.
+- [x] Registro de publicaciones en Excel, una línea por publicación y red: `REGISTRO_PUBLICACIONES.xlsx` (lo actualizan los agentes de programación y medición).
+- [ ] Nichos y zona: taller · peluquería y estética · hostelería · asesoría · oficios; Polop, La Nucía, Benidorm, Altea y alrededores (§LXVII).
+- [ ] Frases prohibidas y reglas de respeto (bloque 0, «Cómo hablamos», puntos 2 y 6).
+- [ ] Los cuatro tipos de gancho de la DISTRIBUIDORA (§3: A alerta de caja, B dinero que ya es tuyo, C lo que no se ve en la contabilidad, D escena del gremio).
+- [ ] «Hoja para tu gestor» (recurso para el cliente, §5): se mantiene o se quita.
+- [ ] Quién responde a los comentarios con palabra clave y en cuánto tiempo.

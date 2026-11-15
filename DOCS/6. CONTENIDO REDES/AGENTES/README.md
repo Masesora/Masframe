@@ -17,6 +17,7 @@ Plan v2 ──► 1. PRODUCCIÓN ──► carpeta lista ──► TU REVISIÓN 
 
 ## 1 · Agente de PRODUCCIÓN — cada día, 8:43 (nube)
 Trabaja con **10 días de antelación**. Para cada pieza con fecha en los próximos 10 días:
+0. Cuando deja una pieza lista para revisar, pone «Producida · pendiente de aprobación» en sus dos líneas de `REGISTRO_PUBLICACIONES.xlsx` (con openpyxl, sin tocar las fórmulas).
 1. Si `assets/` no tiene los archivos finales: escribe `assets/slides.html` a partir del guion de `pieza.md`, con las clases de `herramientas/clinica.css` y el modelo de las piezas 01 y 02, y lo exporta con `python3 herramientas/render.py "<carpeta>"`.
    - Carrusel e imagen: 1080×1350 (4:5). Reel y pantalla dividida: 1080×1920 (9:16) con `assets/reel.json` para montar el vídeo.
    - Pantalla dividida: monta el esquema en el lado derecho y deja el izquierdo para el clip de Maite (`assets/clip.mp4`); si no hay clip, se avisa.
@@ -33,13 +34,13 @@ Trabaja con **10 días de antelación**. Para cada pieza con fecha en los próxi
 2. Comprueba que existen todos los archivos de «Archivos para publicar» y que la marca de aprobación está en un commit de Maite, no del propio agente. Si falta algo, no programa y avisa.
 3. **Instagram:** Meta Business Suite → Crear publicación (o Crear reel) → cuenta laclinicadempresas → sube los archivos en orden → pega el pie de Instagram → Programar en la fecha y hora de `pieza.md` (hora de Madrid).
 4. **TikTok:** TikTok Studio → Subir (vídeo o fotos) → pie de TikTok → Programar a la misma fecha y hora (TikTok permite hasta 10 días de antelación; si la pieza está más lejos, espera).
-5. Marca `- [x] Programado en Business Suite`, anota en «Estado del agente» la fecha y hora programadas en cada red, hace commit y avisa.
+5. Marca `- [x] Programado en Business Suite`, anota en «Estado del agente» la fecha y hora programadas en cada red, pone «Programada» y la fecha en las dos líneas de la pieza en `REGISTRO_PUBLICACIONES.xlsx`, hace commit y avisa.
 
 **Nunca** publica una pieza sin la marca, no cambia la fecha ni el texto aprobados, no promociona (Boost) ni gasta dinero, y no toca publicaciones que no ha creado él.
 
 ## 3 · Agente de MEDICIÓN — viernes, 17:23 (en tu ordenador, con Chrome)
 1. Para cada pieza publicada esa semana o la anterior, lee en Meta Business Suite y TikTok Studio: alcance (o espectadores), guardados, compartidos, visitas al perfil, comentarios con la palabra clave y mensajes privados.
-2. Rellena `resultados.md` de cada pieza y la columna «Resultado (puntos)» de `00_TEMAS.md` (cambia el estado a `publicado`), siguiendo `00_COMO_MEDIR.md`.
+2. Rellena `resultados.md` de cada pieza, las columnas amarillas de su línea de Instagram y de TikTok en `REGISTRO_PUBLICACIONES.xlsx` (estado «Publicada», fecha y resultados; los puntos se calculan solos) y la columna «Resultado (puntos)» de `00_TEMAS.md`, siguiendo `00_COMO_MEDIR.md`.
 3. Lista a quién comentó la palabra clave y aún no ha recibido respuesta, con el enlace UTM de su nicho, para que Maite responda.
 4. Propone la **única decisión del viernes** (qué tema o nicho se repite y cuál se deja) y la deja escrita para que Maite la confirme.
 
