@@ -8,6 +8,7 @@ Todo lo de Instagram y TikTok de «La Clínica de Empresas» está en esta carpe
 | `Semana NN (…)/NN_fecha_nicho-sintoma_formato/` | Una carpeta por pieza: `pieza.md` (guion, pies, aprobación) + `assets/` (diseños y vídeos) + `resultados.md`. **Aquí es donde revisas y apruebas.** |
 | `00_TEMAS.md` | Lista maestra: programados, ideas sembradas, en espera y lo que pide el cliente. |
 | `00_COMO_MEDIR.md` | Cómo se mide cada viernes (señal de dinero por nicho). |
+| `AGENTES/INSTRUCCIONES_PROYECTO_CLAUDE.md` | Instrucciones base y los cinco agentes del proyecto de Claude (MAIN, COPYWRITER, DISTRIBUIDORA, MANAGER, DISEÑADORA), v2 para validar. |
 | `AGENTES/` | Cómo funcionan los agentes de producción, programación y medición, y sus herramientas. |
 | `FOUNDER_PANEL_15nov2026/` | Panel de compradores simulados y análisis del 15 nov (origen de las decisiones del §8 del plan). No son clientes ni testimonios. |
 

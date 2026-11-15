@@ -171,7 +171,7 @@ Cada viernes, con `00_COMO_MEDIR.md` (señal de dinero por nicho, de 1 a 10 punt
 | 2 | **15 nov: NO hasta «coger ritmo» con el orgánico.** Activar **100 € de anuncios** del 16 nov al 15 dic, solo Instagram hacia el Escáner: 50 € cobros para oficios, 30 € taller, 20 € para impulsar la pieza orgánica que más informes traiga | `FOUNDER_PANEL…/skills/marketing.md` y `launch.md` | Se mide coste por informe (tope 20 €); se pausa un anuncio con clics y 0 informes en 10 días. Los agentes **no** gastan dinero: los anuncios los lanzas tú. |
 | 3 | Confirmar los umbrales de control (§0) | `launch.md` | Fijan qué se decide el 27 nov. |
 | 4 | Posicionamiento B: «para el autónomo que ha trabajado y no ha cobrado» (UCI-S2) como mensaje principal | `marketing.md`, consejo | Si SÍ, a partir de la semana 49 las piezas de cobros ganan peso y el agente usa los ganchos del §9. Las 12 piezas no se rehacen. |
-| 5 | Probar con personas reales la oferta en dos pagos (39 € + 60 € al mejorar) | `offer.md`, `pricing.md` | Es para las conversaciones, no para las redes: hasta que lo decidas, las piezas no hablan de precio. |
+| 5 | ~~Probar con personas reales la oferta en dos pagos (39 € + 60 € al mejorar)~~ **15 nov: NO, descartado por Maite.** | `offer.md`, `pricing.md` | Es para las conversaciones, no para las redes: hasta que lo decidas, las piezas no hablan de precio. |
 
 ## 9. Banco de ganchos (para el agente de producción y para los anuncios)
 
