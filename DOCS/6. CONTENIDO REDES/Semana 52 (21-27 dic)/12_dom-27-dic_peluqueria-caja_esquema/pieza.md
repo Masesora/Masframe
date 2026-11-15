@@ -6,7 +6,7 @@
 | **Formato** | Pantalla dividida con esquema |
 | **Síntoma · dolor** | **Caja** · «cierras el año: ¿cuántos días de caja tienes para enero?» |
 | **Palabra clave** | **PELU** |
-| **Enlace al responder** | `masesora.es/?utm_source=instagram&utm_campaign=pelu` |
+| **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=pelu&utm_content=12` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=pelu&utm_content=12` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Guion

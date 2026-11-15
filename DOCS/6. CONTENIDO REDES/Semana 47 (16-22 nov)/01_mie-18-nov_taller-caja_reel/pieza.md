@@ -6,7 +6,7 @@
 | **Formato** | Reel hablado (voz + pantalla) |
 | **Síntoma · dolor** | **Caja** · «no sale lo que ya ganaste» |
 | **Palabra clave** | **TALLER** |
-| **Enlace al responder** | `masesora.es/?utm_source=instagram&utm_campaign=taller` |
+| **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=taller&utm_content=01` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=taller&utm_content=01` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Guion
@@ -35,6 +35,7 @@ Abre tu banco y haz la cuenta: saldo ÷ gastos fijos de un mes × 30. Son tus d�
 Ejemplo ilustrativo: un taller con 8.500 € en caja y 8.000 € de gastos fijos al mes tiene 31 días. Liberó 7.500 € atrapados en stock y facturas pendientes de cobro, y subió a 60.
 
 Comenta TALLER y te paso el diagnóstico gratuito de 10 minutos.
+Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #talleres #tallermecanico #autonomos #pymes #caja #gestionfinanciera
 ```
@@ -50,6 +51,7 @@ Abre tu banco y haz la cuenta: saldo ÷ gastos fijos de un mes × 30. Son tus d�
 Ejemplo ilustrativo: un taller con 8.500 € en caja y 8.000 € de gastos fijos al mes tiene 31 días. Liberó 7.500 € atrapados en stock y facturas pendientes de cobro, y subió a 60.
 
 Enlace en mi perfil: diagnóstico gratuito de 10 minutos.
+Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #talleres #tallermecanico #autonomos #pymes #caja #gestionfinanciera
 ```

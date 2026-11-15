@@ -6,7 +6,7 @@
 | **Formato** | Imagen con frase gancho |
 | **Síntoma · dolor** | **Margen** · «facturas bien y sobrevives mal» |
 | **Palabra clave** | **BAR** |
-| **Enlace al responder** | `masesora.es/?utm_source=instagram&utm_campaign=bar` |
+| **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=bar&utm_content=03` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=bar&utm_content=03` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Guion

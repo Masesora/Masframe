@@ -3238,6 +3238,17 @@ Caja (UCI-S1): «mi negocio no tiene liquidez», «cómo mejorar la tesorería d
 
 **Siguiente en el panel.** Repetir con una oferta B (primer paso a 49 €, número en euros en el diagnóstico, hoja para el gestor) y comparar. Es una prueba de qué ensayar con personas, no una venta.
 
+
+## LXXIII. 15 NOV 2026 — La campaña en redes se centraliza en `DOCS/6. CONTENIDO REDES/` y pasa a agentes
+
+**Decisión de Maite:** todo lo de Instagram y TikTok vive en `DOCS/6. CONTENIDO REDES/` (índice en `00_LEEME.md`). El plan único es `PLAN_MARKETING_v2_LA_CLINICA_nov-dic2026.md`, que recoge §LXVII, §LXIX, §LXX y §LXXII. Este documento sigue siendo el maestro del producto.
+
+**Borrado (sigue en el historial de git):** `INSTAGRAM_ANALITICA_DOMINGO_nov-dic2026.md` (no se ejecutó; se aprovechan los UTM con `utm_medium` y `utm_content`, la línea «guárdalo para repetir la cuenta» y la lista de antes de publicar; Arritmia, Dependencia y «La puerta de entrada» quedan en espera en `00_TEMAS.md`) y la carpeta `INSTAGRAM_DISENOS` (usuario equivocado @laclinicadeempresas, «10 especialidades», 7 duplicados rotos).
+
+**Agentes (tareas programadas de Claude, detalle en `AGENTES/README.md`):** producción cada día a las 8:43 (diseños, pies y hashtags con 10 días de antelación; nunca publica), programación cada día a las 9:17 en el ordenador de Maite con Chrome (solo piezas con `[x] APROBADO PARA PUBLICAR` marcado por Maite; Meta Business Suite para Instagram y TikTok Studio) y medición los viernes a las 17:23 (rellena `resultados.md` y `00_TEMAS.md`; nunca responde en nombre de Maite). Piezas 01 y 02 producidas y a la espera de aprobación; la 01 necesita la voz de Maite.
+
+**Hallazgo en Meta Business Suite:** hay una foto programada del plan antiguo («FUGA INVISIBLE», dom 29 nov a las 10:00) que choca con la pieza 04. Pendiente de que Maite la borre (decisión 1 del §8 del plan de campaña).
+
 ---
 
 ---

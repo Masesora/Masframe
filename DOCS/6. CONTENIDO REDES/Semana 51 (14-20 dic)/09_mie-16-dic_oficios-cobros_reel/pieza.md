@@ -6,7 +6,7 @@
 | **Formato** | Reel hablado |
 | **Síntoma · dolor** | **Cobros** · «terminas hoy, cobras a 60 días» |
 | **Palabra clave** | **OFICIO** |
-| **Enlace al responder** | `masesora.es/?utm_source=instagram&utm_campaign=oficio` |
+| **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=oficio&utm_content=09` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=oficio&utm_content=09` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Guion

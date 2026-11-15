@@ -44,6 +44,14 @@ Sirve para **no repetir**, ver **qué interesa** a cada nicho y **añadir ideas*
 | Cómo saber en un minuto si estás vendiendo por urgencia | Caja | `kpi_impact` | idea |
 | Así imaginamos nuestra clínica (siempre con esa etiqueta) | Bastidores | visión de Maite | idea |
 
+## En espera (del antiguo plan «Analítica del Domingo»; se publican cuando el síntoma se venda)
+
+| Idea | Síntoma | Formato previsto | Estado |
+|---|---|---|---|
+| «Tu mejor mes y tu peor mes»: peor mes ÷ mejor mes; por debajo del 60 %, arritmia comercial. Ejemplo ilustrativo: agencia de marketing, del 35 % al 68 % | CARDIO-S2 Arritmia Comercial | Reel (~30 s) | en espera |
+| «¿Cuántos días puede funcionar tu negocio sin ti?»: días sin intervenir ÷ días laborables; más del 85 %, funciona sin ti. Ejemplo ilustrativo: empresa de servicios, del 51 % al 86 % | OPE-S2 Dependencia Crítica | Carrusel (6) | en espera |
+| «La puerta de entrada»: Maite a cámara + pantalla del Escáner, informe y código de acceso. Rehacer sin «10 especialidades» ni «ves todos los síntomas» | Transversal | Vídeo 60-75 s | idea (se puede adaptar ya a la UCI) |
+
 ## Ideas nuevas (se añaden aquí según surjan)
 -
 

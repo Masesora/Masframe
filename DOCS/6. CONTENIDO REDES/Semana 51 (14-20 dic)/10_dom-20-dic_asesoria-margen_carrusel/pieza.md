@@ -6,7 +6,7 @@
 | **Formato** | Carrusel educativo |
 | **Síntoma · dolor** | **Margen** · «¿cuánto te deja cada cliente?» |
 | **Palabra clave** | **ASESORIA** |
-| **Enlace al responder** | `masesora.es/?utm_source=instagram&utm_campaign=asesoria` |
+| **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=asesoria&utm_content=10` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=asesoria&utm_content=10` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Guion

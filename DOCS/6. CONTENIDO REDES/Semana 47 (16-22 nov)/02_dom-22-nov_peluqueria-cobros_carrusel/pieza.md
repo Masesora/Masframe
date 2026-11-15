@@ -6,7 +6,7 @@
 | **Formato** | Carrusel educativo (6 diapositivas) |
 | **Síntoma · dolor** | **Cobros** · «1.800 € en la calle» |
 | **Palabra clave** | **PELU** |
-| **Enlace al responder** | `masesora.es/?utm_source=instagram&utm_campaign=pelu` |
+| **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=pelu&utm_content=02` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=pelu&utm_content=02` |
 | **Redes** | Instagram y TikTok (mismo contenido; en TikTok el cierre es «Enlace en mi perfil») |
 
 ## Guion
@@ -24,6 +24,7 @@ Ejemplo ilustrativo: una peluquería factura 9.000 € en 3 meses y 1.800 € es
 Lo primero, una radiografía de cobros por cliente: quién te debe, cuánto y desde cuándo. Después, dos gestos: facturar al entregar y reclamar lo vencido con una carta formal. En el ejemplo, la cifra baja al 8 %.
 
 Haz tu cuenta: vencido ÷ facturado en 3 meses. Comenta PELU y te paso el diagnóstico gratuito.
+Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #peluqueria #esteticaprofesional #autonomos #pymes #cobros #facturas
 ```
@@ -37,6 +38,7 @@ Ejemplo ilustrativo: una peluquería factura 9.000 € en 3 meses y 1.800 € es
 Lo primero, una radiografía de cobros por cliente: quién te debe, cuánto y desde cuándo. Después, dos gestos: facturar al entregar y reclamar lo vencido con una carta formal. En el ejemplo, la cifra baja al 8 %.
 
 Haz tu cuenta: vencido ÷ facturado en 3 meses. Enlace en mi perfil: diagnóstico gratuito.
+Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #peluqueria #esteticaprofesional #autonomos #pymes #cobros #facturas
 ```

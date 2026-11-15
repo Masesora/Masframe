@@ -46,6 +46,6 @@ Trabaja con **10 días de antelación**. Para cada pieza con fecha en los próxi
 **Nunca** responde comentarios ni mensajes en nombre de Maite.
 
 ## Herramientas
-- `herramientas/clinica.css`: estilos de marca (azul marino, oro, Montserrat), sacados de los diseños de `INSTAGRAM_DISENOS`.
+- `herramientas/clinica.css`: estilos de marca (azul marino, oro, Montserrat), sacados de los diseños antiguos (borrados el 15 nov; siguen en el historial de git).
 - `herramientas/render.py`: exporta `assets/slides.html` a PNG y, con `reel.json`, monta los MP4 de Instagram y TikTok (con voz si existe `voz.m4a`).
 - `herramientas/fonts/`: Montserrat (licencia OFL), incrustada al exportar.

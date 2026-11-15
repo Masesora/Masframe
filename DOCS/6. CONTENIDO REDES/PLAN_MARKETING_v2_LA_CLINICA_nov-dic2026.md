@@ -1,8 +1,15 @@
-# PLAN DE MARKETING v2 · «LA CLÍNICA DE EMPRESAS PARA TU NEGOCIO» · 18 nov – 27 dic 2026
+# PLAN DE LA CAMPAÑA · «LA CLÍNICA DE EMPRESAS PARA TU NEGOCIO» · 18 nov – 27 dic 2026
 
-> **Borrador para revisión de Maite (actualizado el 12 nov 2026).** Sustituye a `PLAN_MARKETING_SENCILLO…`. **Los guiones salen de `data/symptoms.json`**: cada uno cita el campo del catálogo del que viene (`description_symptom`, `kpi_impact`, `impact_treatment`, `example`, las causas de C1, los títulos de las herramientas de C3…). Las cifras de ejemplo son las del campo `example` y van etiquetadas como *ejemplo ilustrativo*. Donde el catálogo no tiene cifra, no se inventa: se invita al dueño a hacer su propia cuenta.
+> **Documento único de la campaña en redes (actualizado el 15 nov 2026).** Todo lo de Instagram y TikTok vive en `DOCS/6. CONTENIDO REDES/`: este plan, `00_TEMAS.md`, `00_COMO_MEDIR.md`, las carpetas por semana y los agentes (`AGENTES/README.md`). Recoge lo decidido en `MASFRAME_PLAN_V12.5.md` (§LXVII, §LXIX, §LXX y §LXXII) y lo aprovechable del antiguo plan «Analítica del Domingo», que se ha borrado (sigue en el historial de git). **Los guiones salen de `data/symptoms.json`**: cada uno cita el campo del catálogo del que viene. Las cifras de ejemplo son las del campo `example` y van etiquetadas como *ejemplo ilustrativo*. Donde el catálogo no tiene cifra, no se inventa: se invita al dueño a hacer su propia cuenta.
 
----
+## 0. Dónde estamos y qué buscamos
+
+- **Punto de partida (10 nov):** 0 informes del Escáner de desconocidos. El cuello es la demanda, no el producto (§LXVII). Instagram @laclinicadempresas: nada publicado todavía.
+- **Metas (§LXVII):** **30 informes de desconocidos y 10 conversaciones el 8 dic**; **2 o 3 pagos de desconocidos el 15 ene 2027**, cuando se revisan precio y oferta. No cuentan amigos, familia ni pruebas.
+- **Ritmo de control** (propuesto en `FOUNDER_PANEL_15nov2026/skills/launch.md`, pendiente de tu SÍ): ≥3 informes el 20 nov, ≥10 el 27 nov, ≥22 el 4 dic. Primera decisión con datos: **viernes 27 nov**.
+- **Qué hace cada canal:** las redes dan visibilidad y marca; lo que cierra es la **conversación con Maite** (WhatsApp o 15 min). Las redes no sustituyen a las 10 conversaciones con dueños de la zona ni a la ficha de Google Business Profile.
+- **Tiempo de Maite:** unas 3 horas al día. En redes solo revisa y aprueba cada pieza (y graba la voz de los reels); producir, programar y medir lo hacen los agentes.
+- **Formato híbrido:** Maite no es de cámara, pero es quien mejor lo cuenta. Su voz o una presencia breve, combinada con piezas diseñadas.
 
 ## 1. La oferta y la línea de venta
 
@@ -36,7 +43,7 @@
 3. **La Clínica**, `laclinicadempresas.masesora.com/login` con el código → primera vez: `/scanner-reception` (diagnóstico, planes y pago con Stripe).
 4. Tras pagar, entra en su tratamiento: C0 medir → C1 filtrar → C2 priorizar → C3 mapa → C4 plan → C5 ejecutar → C6 revisar y alta.
 
-**Antes de la primera pieza (18 nov) hay dos arreglos en `/scanner-reception`**, especificados al detalle en `ESPECIFICACION_PUNTOS_1_Y_2_pantalla_de_pago.md`: (1) alinear la garantía y los textos con los Términos §7; (2) que solo los tres síntomas de la UCI se puedan activar.
+**Hecho antes de la primera pieza (12-13 nov, §LXIX):** la garantía y los textos de `/scanner-reception` están alineados con los Términos §7, y solo se pueden activar los tres síntomas de la UCI (el resto sale como «Quirófano Ocupado»). **Compromiso que hay que cumplir:** el informe dice que te contactamos en menos de 24 h.
 
 ## 4. TABLA MAESTRA DE PLANIFICACIÓN (12 piezas, dos por semana)
 Domingo a las **10:00**; miércoles a las **13:00** *(a probar)*. El mismo contenido en Instagram y TikTok. Taller, Peluquería y Asesoría reciben los tres formatos, Hostelería dos y Oficios uno (es una prueba), para que **el formato no se confunda con el nicho** al medir.
@@ -57,6 +64,12 @@ Domingo a las **10:00**; miércoles a las **13:00** *(a probar)*. El mismo conte
 | 12 | Dom 27 dic | Peluquería | Pantalla dividida con esquema | **Caja** · «cierras el año: ¿cuántos días de caja tienes para enero?» | PELU | `Semana 52 (21-27 dic)/12_dom-27-dic_peluqueria-caja_esquema` |
 
 **La palabra clave identifica el nicho.** En todas las piezas el cierre es el mismo: *«Comenta [PALABRA] y te paso el diagnóstico gratuito»*. Contar comentarios por palabra dice qué nicho se mueve, sin herramientas.
+
+**Enlaces con seguimiento (UTM).** Uno por pieza y por red, para saber qué pieza trae cada informe:
+`https://www.masesora.es/?utm_source=<instagram|tiktok>&utm_medium=organic&utm_campaign=<taller|pelu|bar|asesoria|oficio>&utm_content=<nº de pieza>`
+Se manda al responder a quien comenta y se pone en la biografía la semana de la pieza. Cada `pieza.md` lleva los suyos.
+
+**Reglas del pie de publicación:** primera línea = el gancho; la cuenta en una línea («saldo ÷ gastos fijos × 30»); el ejemplo, siempre como *ejemplo ilustrativo*; el cierre con la palabra clave (Instagram) o «Enlace en mi perfil» (TikTok); y, en las piezas con cuenta, «Guárdalo para repetir la cuenta cada mes», que empuja los guardados. Hashtags: `#LaClinicaDeEmpresas` + nicho + `#autonomos #pymes` (5 a 7, sin relleno).
 
 ## 5. LOS 12 GUIONES (cada uno cita su fuente en `symptoms.json`)
 Estructura: **Gancho** (texto en pantalla y primeros 3 segundos) · **Cuerpo** (claro, humano, sin tecnicismos) · **Cierre** (comentar la palabra clave). En TikTok el cierre es «Enlace en mi perfil».
@@ -138,28 +151,48 @@ Estructura: **Gancho** (texto en pantalla y primeros 3 segundos) · **Cuerpo** (
 - **Cuerpo:** «Por debajo de 30 días, tu negocio vende por urgencia, no por estrategia. Saber hoy cuántos días aguantas te da tiempo para moverte antes de enero. El dinero existe, pero a veces está bloqueado dentro de tu propio negocio.»
 - **Cierre:** «Comenta PELU y te paso el diagnóstico gratuito.»
 
-## 6. MÉTRICA SENCILLA (cada viernes, una hoja)
-**Para cada pieza, apunta:** alcance, guardados, compartidos, visitas al perfil, **comentarios con la palabra clave** y **mensajes privados**.
+## 6. Cómo se mide
 
-**La señal de dinero**, por nicho, con puntos:
-
-| Qué ocurre | Puntos |
-|---|---|
-| Comenta la palabra clave | 1 |
-| Escribe al privado con una pregunta sobre su negocio | 2 |
-| Hace el Escáner | 3 |
-| Pide hablar o pregunta el precio | 5 |
-| Paga | 10 |
-
-**Cómo leerlo:** suma los puntos de cada nicho y divídelos entre las piezas publicadas para ese nicho. **El nicho con más puntos por pieza es el que tiene dinero e interés real.** Hostelería (2 piezas) y Oficios (1) se comparan con cautela: tienen menos muestra.
-
-**Atribución sin herramientas:** al responder a quien comenta, envía el enlace con el nicho: `masesora.es/?utm_source=instagram&utm_campaign=taller` (y `pelu`, `bar`, `asesoria`, `oficio`). En la conversación, pregunta siempre *«¿cómo nos conociste?»*.
-
-**Excluye siempre los expedientes de prueba** (p. ej. «Prueba Claude») al contar informes.
-
-**Umbrales (§LXVII):** 8 dic → 30 informes de desconocidos y 10 conversaciones; 15 ene → 2 o 3 planes PRE vendidos.
+Cada viernes, con `00_COMO_MEDIR.md` (señal de dinero por nicho, de 1 a 10 puntos) y la hoja `resultados.md` de cada pieza. Lo rellena el agente de medición; tú confirmas la única decisión del viernes. Los informes del Escáner se cuentan con `scripts/contar_informes_escaner.py`, sin pruebas.
 
 ## 7. Qué se descarta y qué queda aparte
-- **El plan «Analítica del Domingo» anterior** incluye piezas de especialidades que aún no se venden (Arritmia Comercial, Dependencia Crítica). **No se publican** hasta que esos síntomas estén disponibles. Se reutilizan solo los diseños de la UCI (`01_dias-de-caja`, `02_fuga-invisible`, `04_anemia-de-margen`).
-- **Anuncios de pago:** en pausa.
+
+- **El plan «Analítica del Domingo» (borrado el 15 nov).** Se aprovecha: los enlaces con `utm_medium` y `utm_content`, la línea «guárdalo para repetir la cuenta» y la lista de «antes de publicar» (§10). Se descarta: la etiqueta «Analítica del domingo», las «10 especialidades» y el recorrido «ves todos los síntomas», porque solo se vende la UCI. Sus piezas de Arritmia Comercial (CARDIO-S2), Dependencia Crítica (OPE-S2) y el vídeo «La puerta de entrada» quedan en `00_TEMAS.md` como **en espera** hasta que esos síntomas se vendan.
+- **Los diseños antiguos (`INSTAGRAM_DISENOS`, borrados el 15 nov).** Llevaban el usuario equivocado (@laclinica**de**empresas), la etiqueta antigua y las 10 especialidades, y 7 archivos estaban duplicados por un fallo de script. Su estilo (azul marino, oro, Montserrat, línea de monitor) vive ahora en `AGENTES/herramientas/clinica.css`, y las piezas 01 y 02 ya están rehechas con él.
+- **La publicación ya programada en Meta Business Suite** (foto «FUGA INVISIBLE», dom 29 nov a las 10:00) sale del plan antiguo: repite el ejemplo de la pieza 02 y ocupa el hueco de la pieza 04. **Hay que borrarla** (decisión 1 del §8).
+- **Anuncios de pago:** en pausa salvo que digas SÍ a la propuesta del §8.
 - **La clínica física:** como historia de marca (*«así imaginamos nuestra clínica»*), nunca como algo existente. Alianzas con 2 o 3 profesionales locales para piezas conjuntas, cuando haya un contacto.
+
+## 8. Decisiones pendientes de Maite (SÍ / NO)
+
+| # | Decisión | De dónde sale | Qué cambia si dices SÍ |
+|---|---|---|---|
+| 1 | Borrar la foto «FUGA INVISIBLE» programada para el 29 nov en Meta | §7 | Nada choca con la pieza 04. Los agentes no la tocan sin tu orden. |
+| 2 | Activar **100 € de anuncios** del 16 nov al 15 dic, solo Instagram hacia el Escáner: 50 € cobros para oficios, 30 € taller, 20 € para impulsar la pieza orgánica que más informes traiga | `FOUNDER_PANEL…/skills/marketing.md` y `launch.md` | Se mide coste por informe (tope 20 €); se pausa un anuncio con clics y 0 informes en 10 días. Los agentes **no** gastan dinero: los anuncios los lanzas tú. |
+| 3 | Confirmar los umbrales de control (§0) | `launch.md` | Fijan qué se decide el 27 nov. |
+| 4 | Posicionamiento B: «para el autónomo que ha trabajado y no ha cobrado» (UCI-S2) como mensaje principal | `marketing.md`, consejo | Si SÍ, a partir de la semana 49 las piezas de cobros ganan peso y el agente usa los ganchos del §9. Las 12 piezas no se rehacen. |
+| 5 | Probar con personas reales la oferta en dos pagos (39 € + 60 € al mejorar) | `offer.md`, `pricing.md` | Es para las conversaciones, no para las redes: hasta que lo decidas, las piezas no hablan de precio. |
+
+## 9. Banco de ganchos (para el agente de producción y para los anuncios)
+
+Salen de las objeciones del panel simulado (no son testimonios). Se pueden usar como primera frase o titular cuando una pieza lo pida o al rehacer una pieza con «Cambios pedidos»:
+
+1. «Lo has trabajado, lo has facturado y no lo has cobrado. Eso se arregla, y se mide.» (cobros)
+2. «Nadie te enseñó a calcular cuánto te queda de cada reparación. Lo calculamos contigo.» (taller, margen)
+3. «Subir el precio del corte da apuro. Saber cuánto te deja cada servicio, menos.» (peluquería, margen)
+4. «Hay dinero en el negocio, pero a final de mes no está. Mira dónde se queda.» (caja)
+5. «Quince preguntas, diez minutos, un informe. Sin llamadas ni cursos.» (tiempo)
+6. «Tu gestor lleva los impuestos. Esto es otra cosa: dónde se queda el dinero.» (gestor)
+7. «Si terminas y tu número no mejora, seguimos contigo sin cobrarte más hasta que mejore.» (garantía, solo con esta redacción)
+
+**Descartados:** «Estamos empezando y aún no hay casos publicados» (choca con la imagen de empresa consolidada) y «99 € por un problema» (no se habla de precio en redes hasta la decisión 5). Los ganchos 1, 3 y 4 hablan de dinero: si el informe del Escáner no enseña una cifra en euros, se dice «dónde», no «cuánto».
+
+## 10. Antes de publicar la primera pieza (mié 18 nov)
+
+- [x] Aviso de cookies en masesora.es y masesora.com (§LXV).
+- [x] Solo la UCI se puede contratar; garantía alineada (§LXIX).
+- [x] Usuario @laclinicadempresas correcto en web, correos y diseños nuevos.
+- [ ] Biografía de Instagram y TikTok con el enlace UTM de la semana y la frase «Diagnóstico gratuito de 10 minutos».
+- [ ] Comprobar en Meta (Administrador de eventos) y en Google Analytics (tiempo real) que entra una visita al Escáner con UTM.
+- [ ] Deploy del backend en Render de `1f3cd89` (contrato y factura) y `407e83c` (lista de espera), pendientes según §LXXI. Sin ellos, el botón «Apuntarme» da error a quien llegue desde las redes (lo lanzas tú).
+- [ ] Respuesta a comentarios con la palabra clave: quién la hace y en cuánto tiempo (los agentes no responden en tu nombre).
