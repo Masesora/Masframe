@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu Solución · Diagnóstico Ejecutivo — Masesora</title>
+<meta name="description" content="Diagnóstico ejecutivo en 15 minutos. La IA construye tu PRD presupuestado en pantalla. Sin reuniones para verlo. Sin formularios trampa.">
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-62L9S89H53"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-62L9S89H53');
+</script>
+
+<!-- Meta Pixel -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','4359415267704371');
+  fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4359415267704371&ev=PageView&noscript=1"/></noscript>
+
+<!-- Tracking unificado · clicks a GA4 + Meta Pixel -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a');
+      if (!a || !a.href) return;
+      var href = a.href;
+      var from = location.pathname || '/';
+      if (href.indexOf('cal.com') !== -1) {
+        if (typeof gtag==='function') gtag('event','clic_agendar_reunion',{from:from});
+        if (typeof fbq==='function') fbq('track','Schedule',{content_name:'Cal.com',from:from});
+      } else if (href.indexOf('wa.me') !== -1) {
+        if (typeof gtag==='function') gtag('event','clic_whatsapp_avatar',{from:from});
+        if (typeof fbq==='function') fbq('track','Contact',{content_name:'WhatsApp Avatar',from:from});
+      }
+    });
+  });
+</script>
+
+<!-- FAVICON -->
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+<!-- OPEN GRAPH -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Masesora">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Tu Solución · Diagnóstico MAS@FRAME® — Masesora">
+<meta property="og:description" content="En 15 minutos identificamos qué frena tu negocio. La IA construye tu PRD en pantalla, ahora.">
+<meta property="og:url" content="https://tusolucion.onrender.com/">
+
+<!-- TWITTER -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tu Solución · MASESORA">
+<meta name="twitter:description" content="Diagnóstico clínico para micropymes y autónomos. 15 minutos. Resultado determinista.">
+
+<!-- TIPOGRAFÍA -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+
+<!-- SCHEMA.ORG -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://tusolucion.onrender.com/#webpage",
+      "url": "https://tusolucion.onrender.com/",
+      "name": "Tu Solución · Diagnóstico Ejecutivo — Masesora",
+      "description": "Diagnóstico ejecutivo adaptativo con IA en vivo para micropymes y autónomos.",
+      "inLanguage": "es-ES",
+      "publisher": { "@id": "https://www.masesora.com/#org" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.masesora.com/#org",
+      "name": "Masesora",
+      "url": "https://www.masesora.com",
+      "founder": { "@type": "Person", "name": "María Teresa Cabezuelos Morcillo" },
+      "areaServed": "ES"
+    },
+    {
+      "@type": "Service",
+      "name": "Tu Solución · Diagnóstico Ejecutivo",
+      "description": "Diagnóstico adaptativo en 15 minutos con IA generando el PRD presupuestado en pantalla.",
+      "provider": { "@id": "https://www.masesora.com/#org" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }
+    }
+  ]
+}
+</script>
+
+<style>
+:root{
+  --navy:#0F1A35; --navy-deep:#080F22; --navy-soft:#1A2848;
+  --gold:#B89D52; --gold-soft:#D4BC7A; --gold-light:#E8D08F;
+  --cream:#FAF7F2; --cream-soft:#FFFFFF; --line:#E5DFD3;
+  --text:#1A1A1A; --muted:#4A4A4A; --white:#FFFFFF;
+  --ok:#2E7D4F; --crit:#B8471F;
+  --shadow:0 10px 40px -12px rgba(15,26,53,.25);
+  --shadow-soft:0 4px 20px -8px rgba(15,26,53,.12);
+  --font-display:'Montserrat', system-ui, sans-serif;
+  --font-italic:'Playfair Display', Georgia, serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font-display);color:var(--text);background:var(--cream);line-height:1.55;-webkit-font-smoothing:antialiased;font-weight:400;min-height:100vh}
+h1,h2,h3,h4{font-weight:800;color:var(--navy);letter-spacing:-0.01em;line-height:1.15;margin:0;font-family:var(--font-display)}
+h1 em, h2 em, h3 em{font-family:var(--font-italic);font-style:italic;font-weight:500;letter-spacing:0}
+
+*:focus{outline:none}
+*:focus-visible{outline:2.5px solid var(--gold);outline-offset:3px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+}
+
+/* ============ HERO (intacto) ============ */
+.topbar{background:var(--navy);color:var(--white);padding:.6rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--gold);gap:1rem}
+.topbar-brand{display:flex;align-items:center;gap:.75rem;flex-shrink:0;text-decoration:none}
+.topbar-brand svg{height:46px;width:auto;display:block}
+.topbar-link{color:var(--gold-soft);text-decoration:none;font-size:.78rem;letter-spacing:.06em;font-weight:500;text-transform:lowercase}
+.topbar-link:hover{color:var(--gold)}
+
+.screen{display:none;animation:fadeIn .5s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.hero{background:var(--navy);color:var(--white);padding:4rem 1.5rem;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(184,157,82,.13),transparent 70%);pointer-events:none}
+.hero-inner{max-width:880px;margin:0 auto;position:relative;z-index:2}
+.hero .eyebrow{color:var(--gold);letter-spacing:0.2em;font-size:.8rem;font-weight:700;margin-bottom:1rem;text-transform:uppercase}
+.hero h1{color:var(--white);margin-bottom:1rem;font-size:clamp(2.2rem,6vw,3.75rem)}
+.hero h1 em{color:var(--gold);font-family:var(--font-italic);font-style:italic;font-weight:500}
+.hero .lead{font-size:1.1rem;color:#D6D1C1;max-width:620px;margin-bottom:2rem;line-height:1.6}
+.hero .spec{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:2.5rem;color:#B5B0A0;font-size:.85rem}
+.hero .spec div{display:flex;align-items:center;gap:.5rem}
+.hero .spec .dot{width:5px;height:5px;background:var(--gold);border-radius:50%}
+
+.emilia-anchor{position:relative;background:linear-gradient(135deg,rgba(184,157,82,.13),rgba(184,157,82,.04));border:1.5px solid rgba(184,157,82,.45);border-radius:14px;padding:1.5rem 1.8rem;margin:2rem 0}
+.emilia-anchor::before{content:"CASO REAL";position:absolute;top:-.6rem;left:1.5rem;font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--gold);background:var(--navy);padding:.2rem .65rem;border-radius:999px}
+.emilia-badge{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:.55rem}
+.emilia-quote{font-size:.97rem;color:#D6D1C1;line-height:1.58;font-style:italic;margin-bottom:.75rem}
+.emilia-result{font-size:.84rem;color:var(--gold-soft);font-weight:600}
+.emilia-result::before{content:"→ "}
+
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.95rem 1.8rem;border:none;cursor:pointer;font-weight:700;font-size:.92rem;letter-spacing:.04em;border-radius:999px;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease,background .2s ease,color .2s ease;text-decoration:none;font-family:inherit;line-height:1;position:relative;overflow:hidden}
+.btn-primary{background:linear-gradient(135deg,var(--gold-soft),var(--gold));color:var(--navy);box-shadow:0 8px 24px -6px rgba(184,157,82,.55),inset 0 1px 0 rgba(255,255,255,.4)}
+.btn-primary::before{content:'';position:absolute;top:0;left:0;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-100%);transition:transform .8s}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 36px -8px rgba(184,157,82,.7);filter:brightness(1.08)}
+.btn-primary:hover::before{animation:btnShimmer 1.2s ease forwards}
+.btn-primary:disabled{background:#888;color:#444;cursor:not-allowed;transform:none;box-shadow:none;filter:none}
+.btn-primary:disabled::before{display:none}
+.btn-ghost{background:transparent;color:var(--navy);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--navy);background:rgba(184,157,82,.06);transform:translateY(-1px)}
+@keyframes btnShimmer{to{transform:translateX(220%)}}
+
+.hero-trust{margin-top:2.2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.12)}
+.hero-trust-item{font-size:.82rem;color:#C0BBA8;line-height:1.45}
+.hero-trust-item strong{color:var(--gold);font-weight:700;display:block;margin-bottom:.15rem;letter-spacing:.02em}
+
+@media(max-width:640px){
+  .hero{padding:2.5rem 1.25rem}
+  .hero h1{font-size:clamp(1.7rem,8vw,2.2rem)}
+  .hero .lead{font-size:.95rem}
+  .hero .spec{gap:.7rem;font-size:.78rem}
+}
+
+/* ============ STEPBAR ============ */
+.stepbar{background:var(--white);padding:.8rem 1.25rem;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;box-shadow:var(--shadow-soft);display:none}
+.stepbar.visible{display:block}
+.stepbar-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:.5rem;justify-content:center}
+.step-dot{width:9px;height:9px;border-radius:50%;background:rgba(184,157,82,.25);transition:all .3s ease}
+.step-dot.done{background:var(--gold)}
+.step-dot.active{background:var(--gold);box-shadow:0 0 0 4px rgba(184,157,82,.2);transform:scale(1.3)}
+.step-label{font-size:.65rem;color:var(--muted);letter-spacing:.14em;font-weight:700;text-transform:uppercase;margin-left:.7rem}
+.step-label strong{color:var(--navy);font-weight:800}
+
+/* ============ CUESTIONARIO ============ */
+.q-screen{padding:3.5rem 1.5rem 4rem;min-height:calc(100vh - 50px)}
+.q-screen.active{display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.q-inner{width:100%;max-width:580px}
+
+.q-eyebrow{font-size:.65rem;letter-spacing:.32em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:1.2rem;text-align:center}
+.q-text{font-family:var(--font-display);font-weight:400;font-size:clamp(1.4rem,3.5vw,2rem);line-height:1.25;color:var(--navy);text-align:center;margin:0 0 2.2rem 0}
+.q-text em{font-family:var(--font-italic);font-style:italic;color:var(--gold);font-weight:400}
+.q-text strong{color:var(--gold);font-weight:600}
+.q-helper{text-align:center;color:var(--muted);font-size:.9rem;margin:-1.5rem 0 1.5rem;font-family:var(--font-display);font-weight:500;line-height:1.5}
+
+.q-input{display:block;width:100%;padding:1rem 1.3rem;border:1.5px solid var(--line);background:var(--white);color:var(--text);font-family:inherit;font-size:1.1rem;border-radius:14px;transition:all .25s ease;font-weight:500}
+.q-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(184,157,82,.15)}
+.q-input::placeholder{color:#9a958a;font-style:italic}
+.q-textarea{min-height:110px;resize:vertical;line-height:1.5;font-size:1rem}
+
+.q-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-bottom:1rem}
+.q-chip{padding:.95rem 1rem;border:1.5px solid var(--line);background:var(--white);color:var(--text);font-family:inherit;font-size:.9rem;font-weight:600;border-radius:12px;cursor:pointer;transition:all .2s ease;text-align:center;line-height:1.3}
+.q-chip:hover{border-color:var(--gold);background:rgba(184,157,82,.06);transform:translateY(-2px)}
+.q-chip.selected{border-color:var(--gold);background:linear-gradient(135deg,rgba(184,157,82,.18),rgba(184,157,82,.05));color:var(--navy);box-shadow:0 6px 20px -6px rgba(184,157,82,.35)}
+
+.q-section-label{font-size:.62rem;letter-spacing:.22em;color:var(--gold);font-weight:800;text-transform:uppercase;margin:1.6rem 0 .7rem 0}
+.q-section-label:first-child{margin-top:0}
+
+.q-areas{display:grid;grid-template-columns:1fr;gap:.55rem}
+.q-area-group-label{font-size:.6rem;letter-spacing:.2em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-top:.7rem;margin-bottom:.4rem;padding-left:.3rem}
+.q-area-group-label:first-child{margin-top:0}
+.q-area-card{padding:.85rem 1.05rem;border:1.5px solid var(--line);background:var(--white);color:var(--navy);font-family:var(--font-display);font-weight:500;border-radius:12px;cursor:pointer;transition:all .2s ease;text-align:left;font-size:.93rem;line-height:1.45}
+.q-area-card:hover{border-color:var(--gold);background:rgba(184,157,82,.06);transform:translateX(3px)}
+.q-area-card.selected{border-color:var(--gold);background:linear-gradient(135deg,rgba(184,157,82,.15),rgba(184,157,82,.04));box-shadow:0 6px 20px -6px rgba(184,157,82,.3)}
+
+.q-scale{display:flex;justify-content:space-between;align-items:flex-end;gap:.4rem;margin-bottom:1rem}
+.q-scale-btn{flex:1;padding:1rem .5rem;border:1.5px solid var(--line);background:var(--white);color:var(--navy);font-family:inherit;border-radius:12px;cursor:pointer;transition:all .2s ease;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.4rem}
+.q-scale-btn:hover{border-color:var(--gold);background:rgba(184,157,82,.06);transform:translateY(-3px)}
+.q-scale-btn.selected{border-color:var(--gold);background:linear-gradient(135deg,rgba(184,157,82,.18),rgba(184,157,82,.05));box-shadow:0 8px 22px -6px rgba(184,157,82,.35)}
+.q-scale-emoji{font-size:1.5rem;line-height:1}
+.q-scale-label{font-size:.66rem;font-weight:600;color:var(--muted);line-height:1.2}
+.q-scale-btn.selected .q-scale-label{color:var(--navy);font-weight:700}
+
+.q-tools{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
+.q-tool{padding:.75rem .85rem;border:1.5px solid var(--line);background:var(--white);color:var(--navy);font-family:inherit;border-radius:10px;cursor:pointer;transition:all .2s ease;text-align:left;font-size:.83rem;line-height:1.35;display:flex;align-items:flex-start;gap:.55rem}
+.q-tool:hover{border-color:var(--gold);background:rgba(184,157,82,.05)}
+.q-tool.selected{border-color:var(--gold);background:rgba(184,157,82,.1);color:var(--navy)}
+.q-tool::before{content:"";width:14px;height:14px;flex-shrink:0;border:1.5px solid var(--line);border-radius:3px;margin-top:2px;transition:all .2s ease;background:var(--white)}
+.q-tool.selected::before{background:var(--gold);border-color:var(--gold);content:"✓";color:var(--navy);text-align:center;font-size:11px;line-height:11px;font-weight:900;padding-top:1px}
+@media(max-width:520px){.q-tools{grid-template-columns:1fr}}
+
+.q-actions{margin-top:2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.q-back{background:none;border:none;color:var(--muted);font-family:inherit;font-size:.85rem;cursor:pointer;padding:.5rem 0}
+.q-back:hover{color:var(--navy)}
+.q-skip{margin-top:1rem;text-align:center;font-size:.78rem;color:var(--muted)}
+.q-skip a{color:var(--gold);text-decoration:underline;cursor:pointer}
+
+@media(max-width:640px){.q-grid{grid-template-columns:1fr}.q-scale{flex-wrap:wrap}}
+
+/* ============ LOADING ============ */
+#screen-loading{background:linear-gradient(180deg,var(--navy) 0%,var(--navy-deep) 100%);color:var(--cream);min-height:100vh}
+#screen-loading.active{display:flex;flex-direction:column;justify-content:center;align-items:center}
+#screen-loading .q-text{color:var(--cream)}
+.loading-ecg{width:140px;height:80px;margin-bottom:2.5rem}
+.loading-ecg path{stroke:var(--gold);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-dasharray:300;stroke-dashoffset:300;animation:ecgRun 2.2s ease-in-out infinite}
+@keyframes ecgRun{0%{stroke-dashoffset:300}50%{stroke-dashoffset:0;filter:drop-shadow(0 0 8px var(--gold))}100%{stroke-dashoffset:-300;filter:drop-shadow(0 0 0 var(--gold))}}
+.loading-title{font-family:var(--font-display);font-weight:300;font-size:1.6rem;color:var(--cream);text-align:center;margin-bottom:.6rem;letter-spacing:-0.01em}
+.loading-title strong{color:var(--gold-light);font-weight:600}
+.loading-subtitle{font-family:var(--font-italic);font-style:italic;color:var(--gold-light);font-size:1.05rem;text-align:center;min-height:2rem;transition:opacity .4s ease}
+
+/* ============ PRD ============ */
+#screen-prd{padding:3rem 1.5rem 4rem;background:var(--cream);min-height:100vh}
+.prd-inner{width:100%;max-width:760px;margin:0 auto}
+.prd-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:2px solid var(--gold);text-align:center}
+.prd-stamp{font-size:.6rem;letter-spacing:.28em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:.85rem}
+.prd-title{font-family:var(--font-display);font-weight:300;font-size:clamp(1.6rem,4vw,2.3rem);color:var(--navy);line-height:1.15;margin:0;letter-spacing:-0.01em}
+.prd-title strong{color:var(--gold);font-weight:600}
+.prd-title em{font-family:var(--font-italic);font-style:italic;color:var(--gold);font-weight:500}
+.prd-meta{margin-top:.65rem;font-size:.85rem;color:var(--muted);font-weight:500}
+
+.prd-content{font-family:var(--font-display);color:var(--text);line-height:1.7;font-size:1rem}
+.prd-content h2{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--gold);text-transform:uppercase;letter-spacing:.16em;margin:2.3rem 0 .9rem 0;padding-bottom:.55rem;border-bottom:1px dashed rgba(184,157,82,.3)}
+.prd-content h2:first-child{margin-top:.5rem}
+.prd-content p{margin:.7rem 0}
+.prd-content strong{color:var(--navy);font-weight:700}
+.prd-content em{font-family:var(--font-italic);font-style:italic;color:var(--navy);font-weight:500}
+.prd-content code{background:rgba(184,157,82,.15);color:var(--navy);padding:.1rem .45rem;border-radius:4px;font-family:'SFMono-Regular',Menlo,monospace;font-size:.88rem;font-weight:700}
+.prd-content ul{padding-left:0;list-style:none;margin:.5rem 0}
+.prd-content > ul > li{padding:.4rem 0 .4rem 1.6rem;position:relative;line-height:1.6}
+.prd-content > ul > li::before{content:"→";position:absolute;left:0;color:var(--gold);font-weight:700}
+.prd-typing{border-right:2px solid var(--gold);animation:cursorBlink 1s step-end infinite;display:inline-block;margin-left:2px}
+@keyframes cursorBlink{50%{border-right-color:transparent}}
+
+/* Tarjetas alternativas */
+.alt-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:2rem 0 1.5rem 0}
+.alt-card{background:var(--white);border:1.5px solid var(--line);border-radius:18px;padding:1.6rem 1.7rem;display:flex;flex-direction:column;transition:all .25s ease;position:relative;box-shadow:0 4px 16px -8px rgba(15,26,53,.12)}
+.alt-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 18px 50px -16px rgba(184,157,82,.35)}
+.alt-card.recommended{background:linear-gradient(180deg,rgba(184,157,82,.05),var(--white));border-color:var(--gold)}
+.alt-card.recommended::before{content:"⭐ Recomendado para tu perfil";position:absolute;top:.85rem;right:.85rem;font-size:.55rem;letter-spacing:.16em;color:var(--gold);font-weight:800;text-transform:uppercase;background:rgba(184,157,82,.15);padding:.25rem .6rem;border-radius:999px;border:1px solid rgba(184,157,82,.3)}
+.alt-tag{font-size:.6rem;letter-spacing:.24em;color:var(--gold);font-weight:800;text-transform:uppercase;margin-bottom:.85rem}
+.alt-name{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--navy);line-height:1.3;margin:0 0 .85rem 0;letter-spacing:-0.01em}
+.alt-desc{font-family:var(--font-display);font-weight:500;font-size:.95rem;color:var(--text);line-height:1.55;margin:0 0 1.3rem 0}
+.alt-stack-label,.alt-kpis-label{font-size:.58rem;letter-spacing:.22em;color:var(--gold);font-weight:800;text-transform:uppercase;margin:1rem 0 .55rem 0}
+.alt-stack,.alt-kpis{list-style:none;margin:0 0 .7rem 0;padding:0}
+.alt-stack li,.alt-kpis li{padding:.35rem 0;color:var(--text);font-size:.86rem;line-height:1.5;border-bottom:1px dashed rgba(184,157,82,.18)}
+.alt-stack li:last-child,.alt-kpis li:last-child{border-bottom:none}
+.alt-stack li code{background:rgba(184,157,82,.18);color:var(--navy);padding:.1rem .45rem;border-radius:4px;font-family:'SFMono-Regular',Menlo,monospace;font-size:.78rem;font-weight:700}
+.alt-kpis li strong{color:var(--gold);font-weight:700}
+.alt-roadmap{font-size:.86rem;color:var(--text);line-height:1.55;margin:.5rem 0 1.2rem 0;padding:.6rem .9rem;background:var(--cream);border-left:2px solid var(--gold);border-radius:0 6px 6px 0}
+.alt-roadmap strong{color:var(--navy);font-weight:700}
+.alt-price{margin:1rem 0 1.3rem 0;padding:1rem 1.1rem;background:var(--cream);border:1px dashed var(--gold);border-radius:12px;text-align:center}
+.alt-price-label{font-size:.6rem;letter-spacing:.22em;color:var(--gold);font-weight:800;text-transform:uppercase;margin-bottom:.45rem}
+.alt-price-range{font-family:var(--font-display);font-weight:300;color:var(--navy);font-size:1.7rem;line-height:1;letter-spacing:-0.02em;margin-bottom:.55rem}
+.alt-price-range strong{font-weight:800;color:var(--gold)}
+.alt-price-from{font-size:.7rem;color:var(--muted);font-weight:500;letter-spacing:.05em;display:block;margin-bottom:.2rem}
+.alt-price-detail{font-size:.72rem;color:var(--muted);line-height:1.4}
+.alt-cta{margin-top:auto;padding:.95rem 1.4rem;border-radius:999px;font-family:inherit;font-weight:700;font-size:.88rem;letter-spacing:.04em;cursor:pointer;border:none;transition:all .25s ease;text-decoration:none;display:inline-block;text-align:center}
+.alt-cta-light{background:var(--white);color:var(--navy);border:1.5px solid var(--gold)}
+.alt-cta-light:hover{background:rgba(184,157,82,.08);transform:translateY(-2px)}
+.alt-cta-recommended{background:linear-gradient(135deg,var(--gold-soft),var(--gold) 60%,#9A7E3A);color:var(--navy);box-shadow:0 10px 28px -8px rgba(184,157,82,.5),inset 0 1px 0 rgba(255,255,255,.4)}
+.alt-cta-recommended:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 36px -8px rgba(184,157,82,.7);filter:brightness(1.08)}
+@media(max-width:680px){.alt-grid{grid-template-columns:1fr;gap:1rem}.alt-card.recommended::before{top:.6rem;right:.6rem;font-size:.5rem}}
+
+/* Bloque descuento */
+.discount-block{margin-top:3rem;padding:2rem 2.2rem;background:linear-gradient(135deg,rgba(184,157,82,.18),rgba(184,157,82,.05));border:1.5px solid var(--gold);border-radius:18px;position:relative;overflow:hidden;display:none}
+.discount-block.visible{display:block}
+.discount-block::before{content:"";position:absolute;top:-30%;right:-10%;width:300px;height:300px;background:radial-gradient(circle,rgba(184,157,82,.2),transparent 70%);pointer-events:none}
+.discount-eyebrow{font-size:.62rem;letter-spacing:.28em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:1rem}
+.discount-title{font-family:var(--font-display);font-weight:700;font-size:1.18rem;color:var(--navy);line-height:1.3;margin:0 0 1rem 0;position:relative}
+.discount-title strong{color:var(--gold)}
+.discount-code-row{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin:1.3rem 0 1.1rem 0;padding:1.1rem 1.4rem;background:var(--white);border:1px dashed var(--gold);border-radius:12px;position:relative}
+.discount-code{font-family:'SFMono-Regular',Menlo,monospace;font-weight:800;font-size:1.5rem;color:var(--gold);letter-spacing:.1em;flex:1;min-width:0}
+.discount-copy-btn{background:var(--gold);color:var(--navy);border:none;font-family:inherit;font-weight:700;font-size:.78rem;padding:.55rem 1rem;border-radius:999px;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:all .2s ease}
+.discount-copy-btn:hover{background:var(--gold-soft);transform:translateY(-1px)}
+.discount-copy-btn.copied{background:var(--ok);color:var(--white)}
+.discount-countdown{font-size:.92rem;color:var(--text);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem;position:relative}
+.discount-countdown strong{color:var(--gold);font-weight:800;font-family:'SFMono-Regular',Menlo,monospace;font-size:1.05rem;background:rgba(184,157,82,.15);padding:.15rem .55rem;border-radius:6px;letter-spacing:.05em}
+.discount-countdown.expired strong{background:rgba(184,71,31,.15);color:var(--crit)}
+.discount-cuotas{margin-top:1.5rem;padding-top:1.2rem;border-top:1px dashed rgba(184,157,82,.25);text-align:center;position:relative}
+.cuotas-link{color:var(--navy);font-size:.88rem;text-decoration:none;line-height:1.5;display:inline-block}
+.cuotas-link:hover{color:var(--gold)}
+.cuotas-link strong{color:var(--gold);font-weight:700;text-decoration:underline;text-decoration-color:rgba(184,157,82,.4);text-underline-offset:3px}
+
+/* Form lead secundario plegado */
+.lead-secondary{margin-top:2rem;padding-top:1.5rem;border-top:1px dashed var(--line);text-align:center}
+.lead-secondary-toggle{background:none;border:none;color:var(--gold);font-family:inherit;font-weight:700;font-size:.85rem;letter-spacing:.04em;cursor:pointer;text-decoration:underline}
+.lead-secondary-toggle:hover{color:var(--navy)}
+.lead-secondary-form{display:none;max-width:480px;margin:1rem auto 0;padding:1.5rem;background:var(--white);border:1px solid var(--line);border-radius:14px}
+.lead-secondary-form.visible{display:block}
+.lead-secondary-form input{display:block;width:100%;padding:.7rem 1rem;border:1.5px solid var(--line);background:var(--white);font-family:inherit;font-size:.92rem;color:var(--text);border-radius:10px;margin-bottom:.5rem}
+.lead-secondary-form input:focus{outline:none;border-color:var(--gold)}
+.lead-secondary-form button{width:100%;margin-top:.6rem}
+.lead-secondary-form .lead-consent{font-size:.75rem;color:var(--muted);line-height:1.4;margin:.6rem 0;display:flex;gap:.5rem;align-items:flex-start;cursor:pointer;text-align:left}
+.lead-secondary-form .lead-consent input{width:auto;margin:.2rem 0 0 0;padding:0}
+.lead-secondary-form .lead-consent a{color:var(--gold)}
+
+/* Error */
+.error-box{padding:1.5rem;background:rgba(184,71,31,.06);border:1.5px solid var(--crit);border-radius:12px;color:var(--crit);font-size:.95rem;line-height:1.5;text-align:center;margin:2rem 0}
+.error-box strong{display:block;margin-bottom:.5rem;font-size:1.05rem}
+
+/* Footer */
+.legal-footer{background:var(--navy);color:#A0A198;padding:1.5rem;text-align:center;font-size:.78rem;border-top:1px solid rgba(255,255,255,.08)}
+.legal-footer a{color:var(--gold-soft);text-decoration:none;margin:0 .5rem}
+.legal-footer a:hover{color:var(--gold)}
+.legal-footer .sep{color:#555;margin:0 .15rem}
+</style>
+</head>
+<body>
+
+<!-- ============ TOPBAR ============ -->
+<div class="topbar">
+  <a href="https://www.masesora.com" target="_blank" rel="noopener" class="topbar-brand" aria-label="Masesora">
+    <svg viewBox="0 0 480 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Masesora">
+      <text x="240" y="72" font-family="Montserrat, sans-serif" font-weight="800" font-size="56" letter-spacing="5" fill="#FFFFFF" text-anchor="middle">MASESORA</text>
+      <line x1="80" y1="86" x2="400" y2="86" stroke="#B89D52" stroke-width="0.6" opacity="0.55"/>
+      <text x="240" y="108" font-family="Montserrat, sans-serif" font-weight="500" font-size="11" letter-spacing="4.5" fill="#B89D52" text-anchor="middle">DIAGNÓSTICO EJECUTIVO</text>
+    </svg>
+  </a>
+  <a href="https://www.masesora.com" target="_blank" rel="noopener" class="topbar-link">www.masesora.com</a>
+</div>
+
+<!-- ============ STEPBAR ============ -->
+<div class="stepbar" id="stepbar"><div class="stepbar-inner" id="stepbarInner"></div></div>
+
+<!-- ============ Q1: Nombre + actividad · pantalla inicial ============ -->
+<section class="screen q-screen active" id="screen-q1">
+  <div class="q-inner">
+    <div class="q-eyebrow">Pregunta 1 de 7</div>
+    <h2 class="q-text">Antes de empezar —<br>
+    <em>¿cómo te llamamos?</em>
+   </h2>
+    <input type="text" class="q-input" id="q-name" placeholder="Tu nombre" autocomplete="given-name">
+    <h3 class="q-text" style="font-size:1.1rem;margin-top:2rem;margin-bottom:.8rem">Y <em>en una línea</em>, ¿qué haces?</h3>
+    <input type="text" class="q-input" id="q-activity" placeholder="Ej: Despacho de abogados especializado en mercantil">
+    <div class="q-actions">
+      <span></span>
+      <button class="btn btn-primary" id="q1-next" disabled onclick="goStep(2)">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q2: Sector + tamaño + volumen ============ -->
+<section class="screen q-screen" id="screen-q2">
+  <div class="q-inner">
+    <div class="q-eyebrow">Pregunta 2 de 7</div>
+    <h2 class="q-text"><em>Cuéntanos</em> el contexto de tu negocio.</h2>
+    <div class="q-section-label">Sector</div>
+    <div class="q-grid">
+      <button class="q-chip" data-field="sector" data-value="Servicios profesionales">Servicios profesionales</button>
+      <button class="q-chip" data-field="sector" data-value="Salud y bienestar">Salud y bienestar</button>
+      <button class="q-chip" data-field="sector" data-value="Comercio">Comercio / Retail</button>
+      <button class="q-chip" data-field="sector" data-value="Hostelería">Hostelería</button>
+      <button class="q-chip" data-field="sector" data-value="Construcción">Construcción / Reformas</button>
+      <button class="q-chip" data-field="sector" data-value="Formación">Formación</button>
+      <button class="q-chip" data-field="sector" data-value="Creativo">Creativo / Agencia</button>
+      <button class="q-chip" data-field="sector" data-value="Otro">Otro</button>
+    </div>
+    <div id="sector-other-wrap" style="display:none;margin-top:.7rem">
+      <input type="text" class="q-input" id="q-sector-other" placeholder="Escribe tu sector concreto (ej: terapias alternativas, repostería artesanal, asesoría energética...)" maxlength="80">
+    </div>
+    <div class="q-section-label">Tamaño del equipo</div>
+    <div class="q-grid">
+      <button class="q-chip" data-field="size" data-value="Autónomo">Trabajo solo/a</button>
+      <button class="q-chip" data-field="size" data-value="2-5">2 a 5 personas</button>
+      <button class="q-chip" data-field="size" data-value="6-15">6 a 15 personas</button>
+    </div>
+    <div class="q-section-label">Volumen mensual de clientes</div>
+    <div class="q-grid">
+      <button class="q-chip" data-field="volume" data-value="Menos de 100">Menos de 100</button>
+      <button class="q-chip" data-field="volume" data-value="100-500">Entre 100 y 500</button>
+      <button class="q-chip" data-field="volume" data-value="Más de 500">Más de 500</button>
+    </div>
+    <div class="q-actions">
+      <button class="q-back" onclick="goStep(1)">← Volver</button>
+      <button class="btn btn-primary" id="q2-next" disabled onclick="goStep(3)">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q3: Áreas (10 → 8 piezas) ============ -->
+<section class="screen q-screen" id="screen-q3">
+  <div class="q-inner">
+    <div class="q-eyebrow">Pregunta 3 de 7</div>
+    <h2 class="q-text"><em>¿Dónde te duele</em> más en tu día a día?</h2>
+    <p class="q-helper">Marca <strong>hasta 3 áreas</strong> · cuanto más concreto, más afina TU SOLUCIÓN. <span style="display:inline-block;padding:.15rem .55rem;background:rgba(184,157,82,.12);border-radius:999px;color:var(--gold);font-weight:700;font-size:.78rem;letter-spacing:.04em;margin-left:.4rem"><span id="q3-counter">0</span>/3</span></p>
+    <div class="q-areas">
+      <div class="q-area-group-label">PULSO COMERCIAL</div>
+      <button class="q-area-card" data-area="1" data-piece="P2">"Pierdo llamadas, emails y contactos que podrían ser clientes."</button>
+      <button class="q-area-card" data-area="2" data-piece="P2">"El negocio me controla a mí; paso el día apagando fuegos."</button>
+      <button class="q-area-card" data-area="3" data-piece="P3">"En cuanto el cliente sale por la puerta, me olvido de él."</button>
+      <div class="q-area-group-label">TU DÍA A DÍA</div>
+      <button class="q-area-card" data-area="4" data-piece="P4">"No controlo bien el estado de cada cliente y trabajo en curso."</button>
+      <button class="q-area-card" data-area="9" data-piece="P7">"Cada cosa se hace de forma distinta · sin procesos claros."</button>
+      <button class="q-area-card" data-area="10" data-piece="P8">"He tocado techo: para crecer tendría que romperme yo."</button>
+      <div class="q-area-group-label">TUS NÚMEROS</div>
+      <button class="q-area-card" data-area="5" data-piece="P5">"No sé en tiempo real qué entra, qué sale y qué me queda."</button>
+      <button class="q-area-card" data-area="6" data-piece="P6">"Las obligaciones fiscales/laborales se me pueden colar."</button>
+      <div class="q-area-group-label">TU CONTINUIDAD</div>
+      <button class="q-area-card" data-area="7" data-piece="P3">"Comunicar con clientes de forma constante me cuesta."</button>
+      <button class="q-area-card" data-area="8" data-piece="P1">"Si yo no estoy un día, todo se para."</button>
+    </div>
+
+    <!-- Bloque "Mi caso no encaja" -->
+    <div class="no-fit-block" style="margin-top:1.5rem;padding:1.1rem 1.4rem;background:rgba(184,157,82,.05);border:1.5px dashed rgba(184,157,82,.4);border-radius:14px">
+      <div style="font-size:.78rem;color:var(--navy);font-weight:600;margin-bottom:.6rem">¿Tu caso no encaja en ninguna de estas?</div>
+      <textarea class="q-input q-textarea" id="q-no-fit" placeholder="Cuéntanos tu situación con tus palabras (1-3 frases). La IA lo lee y afina el diagnóstico." style="min-height:80px;font-size:.9rem"></textarea>
+    </div>
+
+    <div class="q-actions">
+      <button class="q-back" onclick="goStep(2)">← Volver</button>
+      <button class="btn btn-primary" id="q3-next" disabled onclick="goStep(4)">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q4: Pregunta-clave RAMIFICADA ============ -->
+<section class="screen q-screen" id="screen-q4">
+  <div class="q-inner">
+    <div class="q-eyebrow">Pregunta 4 de 7 · personalizada</div>
+    <h2 class="q-text" id="q4-text"></h2>
+    <p class="q-helper" id="q4-helper" style="display:none">Cuéntalo con tus palabras — la IA lo lee.</p>
+    <div id="q4-options"></div>
+    <div class="q-actions">
+      <button class="q-back" onclick="goStep(3)">← Volver</button>
+      <button class="btn btn-primary" id="q4-next" disabled onclick="goStep(5)">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q5: Herramientas ============ -->
+<section class="screen q-screen" id="screen-q5">
+  <div class="q-inner">
+    <div class="q-eyebrow">Pregunta 5 de 7</div>
+    <h2 class="q-text"><em>¿Qué herramientas</em> usas hoy?</h2>
+    <p class="q-helper">Marca todas las que ya usas. Si ya tienes algo, lo aprovechamos — no te lo cambiamos.</p>
+    <div class="q-tools">
+      <button class="q-tool" data-tool="contasimple">ContaSimple / Quaderno / Anfix</button>
+      <button class="q-tool" data-tool="craft">Craft / ClickUp</button>
+      <button class="q-tool" data-tool="calendly">Calendly / Cover Manager</button>
+      <button class="q-tool" data-tool="crm">HubSpot Free / Pipedrive / Brevo</button>
+      <button class="q-tool" data-tool="whatsapp">WhatsApp Business</button>
+      <button class="q-tool" data-tool="sheets">Excel / Google Sheets</button>
+      <button class="q-tool" data-tool="sectorial">TPV o software de mi sector</button>
+      <button class="q-tool" data-tool="slack">Slack / Teams / Discord</button>
+      <button class="q-tool" data-tool="email">Email + Calendar</button>
+      <button class="q-tool" data-tool="nada">Nada estructurado</button>
+    </div>
+    <div style="margin-top:1rem">
+      <label style="font-size:.78rem;color:var(--muted);font-weight:600;display:block;margin-bottom:.4rem">¿Otra herramienta clave que uses?</label>
+      <input type="text" class="q-input" id="q-tools-other" placeholder="Opcional · ej: Holded, Toggl, Airtable, Stripe..." style="font-size:.92rem;padding:.7rem 1rem">
+    </div>
+    <div class="q-actions">
+      <button class="q-back" onclick="goStep(4)">← Volver</button>
+      <button class="btn btn-primary" id="q5-next" disabled onclick="goStep(6)">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q6: Tu visión ============ -->
+<section class="screen q-screen" id="screen-q6">
+  <div class="q-inner">
+    <div class="q-eyebrow">Pregunta 6 de 7</div>
+    <h2 class="q-text">Si esto se resolviera mañana — <em>¿qué cambiaría en tu día?</em></h2>
+    <p class="q-helper">No te pido números. Te pido la imagen mental — lo primero que sentirías al despertar.</p>
+    <textarea class="q-input q-textarea" id="q-vision" placeholder="Por ejemplo: 'Sabría en qué punto está cada caso sin pensarlo' o 'Mis tardes serían mías'"></textarea>
+    <div class="q-actions">
+      <button class="q-back" onclick="goStep(5)">← Volver</button>
+      <button class="btn btn-primary" onclick="goStep(7)">Siguiente →</button>
+    </div>
+    <p class="q-skip"><a onclick="goStep(7)">Saltar este paso →</a></p>
+  </div>
+</section>
+
+<!-- ============ Q7: Intensidad ============ -->
+<section class="screen q-screen" id="screen-q7">
+  <div class="q-inner">
+    <div class="q-eyebrow">Pregunta 7 de 7</div>
+    <h2 class="q-text"><em>¿Cuánto te frena</em> hoy en tu día a día?</h2>
+    <div class="q-scale">
+      <button class="q-scale-btn" data-intensity="1"><span class="q-scale-emoji">😌</span><span class="q-scale-label">Apenas me afecta</span></button>
+      <button class="q-scale-btn" data-intensity="2"><span class="q-scale-emoji">🙂</span><span class="q-scale-label">Lo noto a veces</span></button>
+      <button class="q-scale-btn" data-intensity="3"><span class="q-scale-emoji">😐</span><span class="q-scale-label">Me molesta cada semana</span></button>
+      <button class="q-scale-btn" data-intensity="4"><span class="q-scale-emoji">😟</span><span class="q-scale-label">Me frena cada día</span></button>
+      <button class="q-scale-btn" data-intensity="5"><span class="q-scale-emoji">😣</span><span class="q-scale-label">Me está bloqueando ya</span></button>
+    </div>
+    <div class="q-actions">
+      <button class="q-back" onclick="goStep(6)">← Volver</button>
+      <button class="btn btn-primary" id="q7-next" disabled onclick="generatePRD()">Construir mi PRD →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOADING ============ -->
+<section class="screen q-screen" id="screen-loading">
+  <div class="q-inner" style="text-align:center;max-width:520px">
+    <svg class="loading-ecg" viewBox="0 0 200 100">
+      <path d="M 0,50 L 50,50 L 65,30 L 75,75 L 85,15 L 95,85 L 105,50 L 200,50"/>
+    </svg>
+    <h2 class="loading-title">Estamos <strong>construyendo TU SOLUCIÓN</strong>…</h2>
+    <p class="loading-subtitle" id="loading-subtitle">Leyendo tus respuestas…</p>
+  </div>
+</section>
+
+<!-- ============ PRD ============ -->
+<section class="screen" id="screen-prd">
+  <div class="prd-inner">
+    <header class="prd-header">
+      <div class="prd-stamp">SISTEMA TU SOLUCIÓN · Equipo MASESORA</div>
+      <h1 class="prd-title" id="prd-title"></h1>
+      <div class="prd-meta" id="prd-meta"></div>
+    </header>
+
+    <div class="prd-content" id="prd-content"></div>
+
+    <!-- Bloque descuento -->
+    <div class="discount-block" id="discount-block">
+      <div class="discount-eyebrow">Descuento por reserva inmediata</div>
+      <p style="font-size:.85rem;color:var(--text);margin:0 0 1.2rem 0;line-height:1.5"><strong style="color:var(--ok)">✓ Maite ya ha recibido la necesidad de tu negocio.</strong> en su email. Puedes reservar tranquilamente.</p>
+      <h3 class="discount-title">Si reservas tu sesión <strong>en las próximas 2 horas</strong>, aplicamos <strong>15% de descuento</strong> sobre la opción que elijas.</h3>
+      <div class="discount-code-row">
+        <div class="discount-code" id="discount-code">DESC-A8B3</div>
+        <button class="discount-copy-btn" id="discount-copy" onclick="copyCode()">📋 Copiar</button>
+      </div>
+      <div class="discount-countdown" id="discount-countdown">
+        ⏱ Tu código expira en <strong id="countdown-timer">02:00:00</strong>
+      </div>
+      <div class="discount-cuotas">
+        <a href="https://wa.me/34609987433?text=Hola%20Maite%2C%20me%20interesa%20pero%20me%20gustar%C3%ADa%20saber%20si%20se%20puede%20pagar%20en%20cuotas." target="_blank" rel="noopener" class="cuotas-link">
+          ¿Te encaja la idea pero no la cifra ahora? <strong>Hablamos de pago en cuotas →</strong>
+        </a>
+      </div>
+    </div>
+
+    <!-- D · Botón "empezar de nuevo" -->
+    <div style="margin-top:1rem;text-align:center">
+      <button onclick="resetAll()" style="background:none;border:none;color:var(--muted);font-family:inherit;font-size:.78rem;cursor:pointer;text-decoration:underline">↻ Empezar un diagnóstico nuevo</button>
+    </div>
+
+    <!-- Form lead secundario plegado -->
+    <div class="lead-secondary">
+      <button class="lead-secondary-toggle" id="leadToggleBtn" onclick="toggleLeadForm()">O si prefieres recibir la necesidad de tu negocio por escrito antes de hablar →</button>
+      <div class="lead-secondary-form" id="leadForm">
+        <p style="font-size:.88rem;color:var(--muted);margin:0 0 .8rem 0;line-height:1.5">Te enviamos TU SOLUCIÓN que acabas de leer + actualizaciones del precio cerrado tras revisión.</p>
+        <input type="text" name="leadName" placeholder="Nombre" autocomplete="given-name">
+        <input type="email" name="leadEmail" placeholder="Email" autocomplete="email">
+        <input type="tel" name="leadPhone" placeholder="WhatsApp (opcional · con prefijo)" autocomplete="tel">
+        <label class="lead-consent">
+          <input type="checkbox" id="leadConsent">
+          <span>He leído y acepto la <a href="https://www.masesora.com/legal/privacidad.html" target="_blank">Política de Privacidad</a>. Consiento recibir el PRD por email/WhatsApp.</span>
+        </label>
+        <button class="btn btn-primary" id="leadSubmit" onclick="submitLead()" disabled>Enviármelo →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- C · CTA persistente flotante (visible durante el cuestionario) -->
+<a href="https://cal.com/masesora/reunion" target="_blank" rel="noopener" id="cta-flotante" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:100;background:linear-gradient(135deg,var(--gold-soft),var(--gold));color:var(--navy);padding:.85rem 1.4rem;border-radius:999px;font-family:inherit;font-weight:700;font-size:.82rem;letter-spacing:.04em;text-decoration:none;box-shadow:0 12px 32px -8px rgba(184,157,82,.6),inset 0 1px 0 rgba(255,255,255,.4);transition:all .25s ease;display:none;align-items:center;gap:.5rem">
+  💬 Hablar con Maite directamente →
+</a>
+<style>
+#cta-flotante.visible{display:inline-flex !important}
+#cta-flotante:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 18px 42px -10px rgba(184,157,82,.8)}
+@media(max-width:640px){
+  #cta-flotante{bottom:1rem;right:1rem;font-size:.75rem;padding:.7rem 1.1rem}
+}
+</style>
+
+<!-- ============ FOOTER ============ -->
+<footer class="legal-footer">
+  <!-- Bloque de contacto destacado -->
+  <div class="footer-contact" style="margin-bottom:1.5rem;padding-bottom:1.2rem;border-bottom:1px solid rgba(255,255,255,.1)">
+    <div style="font-family:var(--font-italic);font-style:italic;color:var(--gold-light);font-size:1.05rem;margin-bottom:.95rem;letter-spacing:.01em">¿Hablamos sin esperar al cuestionario?</div>
+    <div class="footer-cta-row" style="display:inline-flex;flex-wrap:wrap;gap:.7rem;justify-content:center;align-items:center">
+      <a href="https://wa.me/34609987433?text=Hola%20Maite%2C%20te%20escribo%20desde%20Tu%20Soluci%C3%B3n%20de%20MASESORA." target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#25d366,#128c7e);color:white;padding:.7rem 1.3rem;border-radius:999px;text-decoration:none;font-weight:700;font-size:.83rem;letter-spacing:.02em;box-shadow:0 8px 22px -6px rgba(37,211,102,.5);transition:all .2s">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.892 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+        WhatsApp directo
+      </a>
+      <a href="https://www.linkedin.com/in/maite-cabezuelos-morcillo/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5rem;background:#0A66C2;color:white;padding:.7rem 1.3rem;border-radius:999px;text-decoration:none;font-weight:700;font-size:.83rem;letter-spacing:.02em;box-shadow:0 8px 22px -6px rgba(10,102,194,.5);transition:all .2s">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn de Maite
+      </a>
+      <a href="mailto:info@masesora.com" style="display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1.5px solid var(--gold);color:var(--gold-light);padding:.65rem 1.25rem;border-radius:999px;text-decoration:none;font-weight:700;font-size:.83rem;letter-spacing:.02em;transition:all .2s">
+        ✉ info@masesora.com
+      </a>
+    </div>
+  </div>
+  © 2026 Masesora — Maite Cabezuelos
+  <br>
+  <a href="https://www.masesora.com/legal/privacidad.html" target="_blank" rel="noopener">Política de Privacidad</a><span class="sep">·</span>
+  <a href="https://www.masesora.com/legal/aviso-legal.html" target="_blank" rel="noopener">Aviso Legal</a><span class="sep">·</span>
+  <a href="https://www.masesora.com/legal/cookies.html" target="_blank" rel="noopener">Política de Cookies</a>
+</footer>
+
+<script>
+/* ========================================================================
+   Tu Solución · MASESORA · v3 (con Claude API en streaming)
+   ========================================================================
+   IMPORTANTE: cambiar API_BASE por la URL real del backend en Render.
+   ======================================================================== */
+
+const API_BASE = 'https://tsm-awye.onrender.com'; // ← URL del backend Render
+
+// ============================================================
+// ESTADO
+// ============================================================
+const state = {
+  step: 1, name: '', activity: '',
+  sector: '', sectorOther: '', size: '', volume: '',
+  areas: [], pieces: [],   // multi-select hasta 3 áreas
+  noFitText: '',           // "mi caso no encaja" textarea
+  branchAnswer: '',
+  branchOther: '',         // "otra situación" en Q4
+  tools: [],
+  toolsOther: '',          // "otra herramienta" en Q5
+  vision: '', intensity: null,
+  discountCode: null
+};
+
+// area / piece (singulares) son derivados — la pieza dominante es la primera elegida
+Object.defineProperty(state, 'area', { get(){ return this.areas[0] || null } });
+Object.defineProperty(state, 'piece', { get(){ return this.pieces[0] || null } });
+
+// ============================================================
+// CATÁLOGO DE PIEZAS · solo para mostrar pregunta-clave correcta
+// (los precios y stack los calcula el backend)
+// ============================================================
+const BRANCH_Q = {
+  P1: { text: '<em>¿En qué te podemos ayudar exactamente?</em>', helper: true, type: 'text', placeholder: 'Cuéntanos con tus palabras' },
+  P2: { text: '¿Por qué canal te llegan más <em>contactos interesados</em>?', type: 'choice', options: ['Recomendación', 'Web / redes', 'Presencial · pasan por mi local', 'Llamada telefónica en frío', 'WhatsApp directo', 'Múltiples canales sin control'] },
+  P3: { text: 'Tras cerrar un trabajo, <em>¿con qué frecuencia</em> vuelves a contactar al cliente?', type: 'choice', options: ['Casi nunca', 'Solo cuando vuelvo a ofrecer algo', 'De forma puntual', 'Tengo plan pero no lo cumplo', 'Tengo plan y lo cumplo'] },
+  P4: { text: 'Si te pregunto <em>AHORA</em> en qué estado está tu trabajo más importante, ¿cuánto tardas en responderme?', type: 'choice', options: ['5 segundos lo sé', 'Tengo que pensarlo un poco', 'Tengo que mirar varios sitios', 'Tengo que llamar a alguien', 'No sabría decirte exacto'] },
+  P5: { text: '¿Llevas tu contabilidad <em>personalmente</em> o tienes asesor?', type: 'choice', options: ['Asesor lo lleva todo', 'Asesor + yo lo reviso', 'Yo lo llevo y asesor revisa', 'Yo solo/a', 'No lo llevo de forma sistemática'] },
+  P6: { text: '¿Te ha pasado en el último año que se te <em>colara una obligación fiscal</em> o sanción inesperada?', type: 'choice', options: ['Nunca', 'Una vez', 'Varias veces', 'Frecuentemente', 'No estoy seguro/a'] },
+  P7: { text: 'Si mañana entrara <em>una persona nueva</em> al equipo, ¿qué % del trabajo podría aprender de un manual existente?', type: 'choice', options: ['80%+ (todo documentado)', '50-80%', '20-50%', 'Menos de 20%', 'Soy solo/a, no aplica'] },
+  P8: { text: 'Si mañana te entrara <em>el doble</em> de clientes, ¿qué pasaría?', type: 'choice', options: ['Lo absorbería bien', 'Tendría que trabajar más horas', 'Rechazaría trabajos', 'Colapsaría yo', 'Colapsaría todo el sistema'] }
+};
+
+// ============================================================
+// STEPBAR
+// ============================================================
+function renderStepbar(){
+  const inner = document.getElementById('stepbarInner');
+  if (state.step < 1 || state.step > 7) {
+    document.getElementById('stepbar').classList.remove('visible');
+    return;
+  }
+  document.getElementById('stepbar').classList.add('visible');
+  const dots = [];
+  for (let i = 1; i <= 7; i++) {
+    const cls = i < state.step ? 'done' : (i === state.step ? 'active' : '');
+    dots.push(`<div class="step-dot ${cls}"></div>`);
+  }
+  inner.innerHTML = dots.join('') + `<span class="step-label">PASO <strong>${state.step}</strong> DE 7</span>`;
+}
+
+// ============================================================
+// NAVEGACIÓN
+// ============================================================
+function goStep(n) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  state.step = n;
+  if (n >= 1 && n <= 7) {
+    document.getElementById(`screen-q${n}`).classList.add('active');
+    if (n === 4) renderBranchQuestion();
+  }
+  renderStepbar();
+  window.scrollTo(0, 0);
+  // CTA flotante: visible durante cuestionario (steps 1-7), oculto en intro/loading/PRD
+  const cta = document.getElementById('cta-flotante');
+  if (cta) cta.classList.toggle('visible', n >= 1 && n <= 7);
+  // Guardar estado
+  if (typeof saveState === 'function') saveState();
+}
+
+// ============================================================
+// Q1
+// ============================================================
+const nameInput = document.getElementById('q-name');
+const actInput = document.getElementById('q-activity');
+function checkQ1() {
+  state.name = nameInput.value.trim();
+  state.activity = actInput.value.trim();
+  document.getElementById('q1-next').disabled = !(state.name.length >= 2 && state.activity.length >= 3);
+}
+nameInput.addEventListener('input', checkQ1);
+actInput.addEventListener('input', checkQ1);
+
+// ============================================================
+// Q2
+// ============================================================
+document.querySelectorAll('[data-field]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const field = btn.dataset.field;
+    document.querySelectorAll(`[data-field="${field}"]`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state[field] = btn.dataset.value;
+    // Si elige "Otro" en sector → abre campo libre
+    if (field === 'sector') {
+      const wrap = document.getElementById('sector-other-wrap');
+      if (btn.dataset.value === 'Otro') wrap.style.display = 'block';
+      else { wrap.style.display = 'none'; state.sectorOther = ''; }
+    }
+    checkQ2();
+  });
+});
+document.getElementById('q-sector-other')?.addEventListener('input', e => {
+  state.sectorOther = e.target.value.trim();
+  checkQ2();
+});
+function checkQ2() {
+  const sectorOk = state.sector && (state.sector !== 'Otro' || state.sectorOther.length >= 2);
+  document.getElementById('q2-next').disabled = !(sectorOk && state.size && state.volume);
+}
+
+// ============================================================
+// Q3
+// ============================================================
+document.querySelectorAll('[data-area]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = parseInt(btn.dataset.area);
+    const piece = btn.dataset.piece;
+    const idx = state.areas.indexOf(id);
+    if (idx >= 0) {
+      // ya seleccionada → la quitamos
+      state.areas.splice(idx, 1);
+      state.pieces.splice(idx, 1);
+      btn.classList.remove('selected');
+    } else if (state.areas.length < 3) {
+      // añadir si quedan slots
+      state.areas.push(id);
+      state.pieces.push(piece);
+      btn.classList.add('selected');
+    }
+    // resetear branch si cambió la pieza dominante
+    if (state.areas.length === 0) state.branchAnswer = '';
+    document.getElementById('q3-next').disabled = state.areas.length === 0;
+    // Actualizar contador si existe
+    const c = document.getElementById('q3-counter');
+    if (c) c.textContent = state.areas.length;
+  });
+});
+// Listener para "mi caso no encaja" en Q3 · habilita el next si hay >=10 chars
+document.getElementById('q-no-fit').addEventListener('input', e => {
+  state.noFitText = e.target.value.trim();
+  // Si tiene texto significativo, habilita el next aunque no haya áreas
+  const ok = state.areas.length > 0 || state.noFitText.length >= 10;
+  document.getElementById('q3-next').disabled = !ok;
+});
+
+
+// ============================================================
+// Q4 (ramificada)
+// ============================================================
+function renderBranchQuestion() {
+  const piece = state.piece || 'P4';
+  const config = BRANCH_Q[piece];
+  document.getElementById('q4-text').innerHTML = config.text;
+  document.getElementById('q4-helper').style.display = config.helper ? 'block' : 'none';
+
+  const optsContainer = document.getElementById('q4-options');
+  if (config.type === 'text') {
+    optsContainer.innerHTML = `<textarea class="q-input q-textarea" id="q4-textarea" placeholder="${config.placeholder}"></textarea>`;
+    document.getElementById('q4-textarea').addEventListener('input', e => {
+      state.branchAnswer = e.target.value.trim();
+      document.getElementById('q4-next').disabled = state.branchAnswer.length < 3;
+    });
+  } else {
+    optsContainer.innerHTML = `<div class="q-grid">${
+      config.options.map(opt => `<button class="q-chip" data-branch="${opt.replace(/"/g, '&quot;')}">${opt}</button>`).join('')
+    }</div>
+    <div style="margin-top:1.2rem;padding:1rem 1.2rem;background:rgba(184,157,82,.05);border:1.5px dashed rgba(184,157,82,.35);border-radius:12px">
+      <label style="font-size:.78rem;color:var(--navy);font-weight:600;display:block;margin-bottom:.4rem">¿Tu caso no encaja en ninguna de estas? · Cuéntalo:</label>
+      <textarea class="q-input q-textarea" id="q4-branch-other" placeholder="Opcional · si las opciones de arriba no capturan tu caso, descríbelo aquí" style="min-height:70px;font-size:.9rem"></textarea>
+    </div>`;
+    optsContainer.querySelectorAll('[data-branch]').forEach(b => {
+      b.addEventListener('click', () => {
+        optsContainer.querySelectorAll('[data-branch]').forEach(x => x.classList.remove('selected'));
+        b.classList.add('selected');
+        state.branchAnswer = b.dataset.branch;
+        document.getElementById('q4-next').disabled = false;
+      });
+    });
+    // Listener para "otra situación"
+    document.getElementById('q4-branch-other').addEventListener('input', e => {
+      state.branchOther = e.target.value.trim();
+      // Habilita el next si hay texto significativo, aunque no haya seleccionado opción
+      if (state.branchOther.length >= 5 && !state.branchAnswer) {
+        document.getElementById('q4-next').disabled = false;
+      }
+    });
+  }
+  document.getElementById('q4-next').disabled = true;
+}
+
+// ============================================================
+// Q5
+// ============================================================
+document.querySelectorAll('[data-tool]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('selected');
+    const tool = btn.dataset.tool;
+    if (btn.classList.contains('selected')) {
+      if (!state.tools.includes(tool)) state.tools.push(tool);
+    } else {
+      state.tools = state.tools.filter(t => t !== tool);
+    }
+    document.getElementById('q5-next').disabled = state.tools.length === 0;
+  });
+});
+document.getElementById('q-tools-other')?.addEventListener('input', e => {
+  state.toolsOther = e.target.value.trim();
+});
+
+
+// ============================================================
+// Q6
+// ============================================================
+document.getElementById('q-vision').addEventListener('input', e => state.vision = e.target.value.trim());
+
+// ============================================================
+// Q7
+// ============================================================
+document.querySelectorAll('[data-intensity]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-intensity]').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.intensity = parseInt(btn.dataset.intensity);
+    document.getElementById('q7-next').disabled = false;
+  });
+});
+
+// ============================================================
+// GENERATE PRD · streaming SSE desde el backend
+// ============================================================
+async function generatePRD() {
+  // Pantalla loading
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-loading').classList.add('active');
+  document.getElementById('stepbar').classList.remove('visible');
+
+  const messages = [
+    'Leyendo tus respuestas…',
+    'Buscando patrones en tu sector…',
+    'Identificando la pieza que frena tu negocio…',
+    'Calculando precios según tu perfil…',
+    'Construyendo las opciones que sí encajan contigo…',
+    'Si llevas más de 30 segundos esperando, tranquilo · primera petición del día tarda algo más'
+  ];
+  let mi = 0;
+  const sub = document.getElementById('loading-subtitle');
+  const loadInterval = setInterval(() => {
+    mi = (mi + 1) % messages.length;
+    sub.style.opacity = 0;
+    setTimeout(() => { sub.textContent = messages[mi]; sub.style.opacity = 1; }, 250);
+  }, 2000);
+
+  // Preparar pantalla PRD
+  const nameUp = (state.name || 'TU').toUpperCase();
+  document.getElementById('prd-title').innerHTML = `<strong>${nameUp}</strong>, este es <em>tu PRD presupuestado.</em>`;
+  document.getElementById('prd-meta').textContent = `${state.activity} · ${state.sector} · ${state.size} · ${state.volume} clientes/mes`;
+
+  const payload = {
+    client: {
+      name: state.name,
+      activity: state.activity,
+      sector: state.sector === 'Otro' && state.sectorOther ? state.sectorOther : state.sector,
+      sectorRaw: state.sector,
+      size: state.size,
+      volume: state.volume
+    },
+    diagnosis: {
+      piece: state.piece,                  // pieza dominante (primera elegida)
+      areaId: state.area,                  // área dominante
+      areas: state.areas,                  // todas las áreas seleccionadas (hasta 3)
+      pieces: state.pieces,                // todas las piezas correspondientes
+      branchAnswer: state.branchAnswer,
+      branchOther: state.branchOther,      // texto libre Q4
+      noFitText: state.noFitText,          // texto libre Q3 "no encaja"
+      tools: state.tools,
+      toolsOther: state.toolsOther,        // texto libre herramienta extra
+      vision: state.vision,
+      intensity: state.intensity
+    }
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}/api/generate-prd`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'text/event-stream' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    // Cambiar a pantalla PRD una vez empezamos a recibir
+    clearInterval(loadInterval);
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-prd').classList.add('active');
+    const content = document.getElementById('prd-content');
+    content.innerHTML = '<span class="prd-typing"></span>';
+    let fullText = '';
+
+    // GA4 · evento clave de conversión: el visitante ha completado el cuestionario
+    if (typeof gtag === 'function') {
+      gtag('event', 'cuestionario_completado', {
+        piece: state.piece || 'unknown',
+        size: state.size || 'unknown',
+        volume: state.volume || 'unknown',
+        intensity: state.intensity || 0,
+        has_email: !!state.email
+      });
+    }
+    // Meta Pixel · Lead estándar (compatible con audiencias Lookalike)
+    if (typeof fbq === 'function') {
+      fbq('track', 'Lead', {
+        content_name: 'cuestionario_completado',
+        content_category: state.piece || 'unknown',
+        custom_data: {
+          size: state.size || 'unknown',
+          volume: state.volume || 'unknown',
+          intensity: state.intensity || 0
+        }
+      });
+    }
+
+    // Procesar SSE
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop();
+
+      let currentEvent = 'message';
+      for (const line of lines) {
+        if (line.startsWith('event: ')) {
+          currentEvent = line.substring(7).trim();
+        } else if (line.startsWith('data: ')) {
+          try {
+            const data = JSON.parse(line.substring(6));
+            if (currentEvent === 'chunk') {
+              fullText += data.markdown;
+              content.innerHTML = mdToHtml(fullText) + '<span class="prd-typing"></span>';
+              window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            } else if (currentEvent === 'discount') {
+              showDiscount(data);
+            } else if (currentEvent === 'done') {
+              content.innerHTML = mdToHtml(fullText);
+              connectAltButtons();
+              // Una vez generado el PRD, podemos limpiar el estado guardado
+              clearState();
+            } else if (currentEvent === 'error') {
+              throw new Error(data.message);
+            }
+          } catch (e) {
+            console.warn('SSE parse error:', e, line);
+          }
+        }
+      }
+    }
+
+  } catch (err) {
+    console.error('Error generating PRD:', err);
+    clearInterval(loadInterval);
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-prd').classList.add('active');
+    const errMsg = (err && err.message) ? err.message : 'Error desconocido';
+    document.getElementById('prd-content').innerHTML = `
+      <div class="error-box">
+        <strong>No hemos podido construir tu PRD ahora mismo.</strong>
+        <p style="margin:.5rem 0;font-size:.85rem;color:#888">Detalle técnico: ${errMsg}</p>
+        <p style="margin-top:1rem">Reserva igualmente y lo construimos contigo en la reunión.</p>
+        <div style="margin-top:1rem">
+          <a href="https://cal.com/masesora/reunion" target="_blank" rel="noopener" class="btn btn-primary">Reservar 20 min con Maite →</a>
+        </div>
+      </div>
+    `;
+  }
+}
+
+// ============================================================
+// MARKDOWN → HTML simple
+// ============================================================
+function mdToHtml(md) {
+  return md
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(?:^|\n)- (.+?)(?=\n|$)/g, '\n<li>$1</li>')
+    .replace(/(<li>[\s\S]+?<\/li>)(\n\n|$)/g, '<ul>$1</ul>$2')
+    .split(/\n\n+/)
+    .map(block => {
+      const trimmed = block.trim();
+      if (!trimmed) return '';
+      if (trimmed.startsWith('<h2') || trimmed.startsWith('<h3') || trimmed.startsWith('<ul') || trimmed.startsWith('<div') || trimmed.startsWith('<button')) return trimmed;
+      return `<p>${trimmed}</p>`;
+    })
+    .join('\n');
+}
+
+// ============================================================
+// DESCUENTO
+// ============================================================
+function showDiscount(data) {
+  state.discountCode = data.code;
+  const block = document.getElementById('discount-block');
+  block.classList.add('visible');
+  document.getElementById('discount-code').textContent = data.code;
+
+  const expiresAt = new Date(data.valid_until).getTime();
+  const timer = document.getElementById('countdown-timer');
+  const countdown = document.getElementById('discount-countdown');
+  const tick = setInterval(() => {
+    const remaining = expiresAt - Date.now();
+    if (remaining <= 0) {
+      clearInterval(tick);
+      timer.textContent = 'EXPIRADO';
+      countdown.classList.add('expired');
+      countdown.innerHTML = '⚠ Tu código ha <strong>expirado</strong>. Sigues pudiendo reservar sin descuento.';
+      return;
+    }
+    const h = Math.floor(remaining / 3600000);
+    const m = Math.floor((remaining % 3600000) / 60000);
+    const s = Math.floor((remaining % 60000) / 1000);
+    timer.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+}
+
+function connectAltButtons() {
+  document.querySelectorAll('.alt-cta').forEach(btn => {
+    if (btn.dataset.connected) return;
+    btn.dataset.connected = '1';
+    btn.addEventListener('click', () => {
+      const code = state.discountCode || '';
+      const option = btn.dataset.option || '';
+      const price = btn.dataset.price || '';
+      const url = `https://cal.com/masesora/reunion?discount=${code}&option=${option}&price=${price}`;
+      window.open(url, '_blank');
+    });
+  });
+}
+
+function copyCode() {
+  const code = document.getElementById('discount-code').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('discount-copy');
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copiar'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ============================================================
+// FORM LEAD SECUNDARIO PLEGADO
+// ============================================================
+function toggleLeadForm() {
+  const form = document.getElementById('leadForm');
+  const btn = document.getElementById('leadToggleBtn');
+  form.classList.toggle('visible');
+  btn.textContent = form.classList.contains('visible')
+    ? '← Volver a la opción de reservar'
+    : 'O si prefieres recibir el PRD por escrito antes de hablar →';
+}
+
+// Habilitar botón submit cuando hay email + consent
+const leadEmailInput = () => document.querySelector('input[name="leadEmail"]');
+const leadConsent = () => document.getElementById('leadConsent');
+function checkLeadForm() {
+  const email = leadEmailInput().value.trim();
+  const ok = email.includes('@') && email.length > 5 && leadConsent().checked;
+  document.getElementById('leadSubmit').disabled = !ok;
+}
+document.addEventListener('input', e => {
+  if (e.target.matches('input[name="leadEmail"]') || e.target.matches('input[name="leadName"]') || e.target.matches('input[name="leadPhone"]')) checkLeadForm();
+});
+document.addEventListener('change', e => { if (e.target.id === 'leadConsent') checkLeadForm(); });
+
+async function submitLead() {
+  const data = {
+    leadName: document.querySelector('input[name="leadName"]').value.trim(),
+    leadEmail: document.querySelector('input[name="leadEmail"]').value.trim(),
+    leadPhone: document.querySelector('input[name="leadPhone"]').value.trim(),
+    consent: document.getElementById('leadConsent').checked,
+    discountCode: state.discountCode,
+    diagnosis: { ...state }
+  };
+  // Endpoint opcional · si no existe, el cliente igualmente recibe confirmación
+  try {
+    await fetch(`${API_BASE}/api/save-lead`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  } catch (e) { /* no bloqueante */ }
+  document.getElementById('leadForm').innerHTML = `
+    <div style="text-align:center;padding:1rem">
+      <div style="font-size:2rem;margin-bottom:.5rem">✓</div>
+      <strong style="color:var(--ok);font-size:1.05rem">PRD en camino</strong>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:.5rem">Te llegará a <strong>${data.leadEmail}</strong> en menos de 24h.</p>
+    </div>
+  `;
+}
+
+// ============================================================
+// A · PERSISTENCIA · localStorage
+// ============================================================
+const STORAGE_KEY = 'masesora_tu_solucion_v3';
+function saveState() {
+  try {
+    const snapshot = {
+      v: 3, ts: Date.now(),
+      step: state.step,
+      name: state.name, activity: state.activity,
+      sector: state.sector, sectorOther: state.sectorOther,
+      size: state.size, volume: state.volume,
+      areas: state.areas, pieces: state.pieces,
+      noFitText: state.noFitText,
+      branchAnswer: state.branchAnswer, branchOther: state.branchOther,
+      tools: state.tools, toolsOther: state.toolsOther,
+      vision: state.vision, intensity: state.intensity
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+  } catch (e) {}
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    // Expira en 7 días
+    if (!s.ts || Date.now() - s.ts > 7 * 24 * 3600 * 1000) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return s;
+  } catch (e) { return null; }
+}
+function restoreState(s) {
+  if (!s) return;
+  Object.assign(state, {
+    name: s.name||'', activity: s.activity||'',
+    sector: s.sector||'', sectorOther: s.sectorOther||'',
+    areas: s.areas||[], pieces: s.pieces||[],
+    noFitText: s.noFitText||'',
+    branchAnswer: s.branchAnswer||'', branchOther: s.branchOther||'',
+    tools: s.tools||[], toolsOther: s.toolsOther||'',
+    vision: s.vision||'', intensity: s.intensity||null
+  });
+  // Restaurar valores en inputs
+  const setVal = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+  setVal('q-name', state.name);
+  setVal('q-activity', state.activity);
+  setVal('q-sector-other', state.sectorOther);
+  setVal('q-no-fit', state.noFitText);
+  setVal('q-tools-other', state.toolsOther);
+  setVal('q-vision', state.vision);
+  // Restaurar selecciones visuales
+  document.querySelectorAll('[data-field]').forEach(b => {
+    if (b.dataset.value === state[b.dataset.field]) b.classList.add('selected');
+  });
+  if (state.sector === 'Otro') {
+    const wrap = document.getElementById('sector-other-wrap');
+    if (wrap) wrap.style.display = 'block';
+  }
+  document.querySelectorAll('[data-area]').forEach(b => {
+    if (state.areas.includes(parseInt(b.dataset.area))) b.classList.add('selected');
+  });
+  document.querySelectorAll('[data-tool]').forEach(b => {
+    if (state.tools.includes(b.dataset.tool)) b.classList.add('selected');
+  });
+  if (state.intensity) {
+    const sel = document.querySelector(`[data-intensity="${state.intensity}"]`);
+    if (sel) sel.classList.add('selected');
+  }
+  if (typeof checkQ1 === 'function') checkQ1();
+  if (typeof checkQ2 === 'function') checkQ2();
+  if (state.areas.length > 0) document.getElementById('q3-next').disabled = false;
+  const counter = document.getElementById('q3-counter');
+  if (counter) counter.textContent = state.areas.length;
+}
+function clearState() { try { localStorage.removeItem(STORAGE_KEY); } catch (e) {} }
+
+// Guardar estado en cada interacción significativa
+['input', 'click'].forEach(evt => {
+  document.addEventListener(evt, e => {
+    if (e.target.matches('.q-input, .q-textarea, .q-chip, .q-area-card, .q-tool, .q-scale-btn')) {
+      setTimeout(saveState, 50);
+    }
+  });
+});
+
+// B · PRE-WARM del backend al cargar la página
+async function prewarmBackend() {
+  try {
+    await fetch(`${API_BASE}/api/health`, { mode: 'cors' });
+    console.log('[masesora] backend pre-warm OK');
+  } catch (e) { /* silencioso */ }
+}
+
+// D · Reset / "empezar de nuevo"
+function resetAll() {
+  if (!confirm('¿Empezar un diagnóstico nuevo? Se borrarán las respuestas actuales.')) return;
+  clearState();
+  Object.assign(state, {
+    step: 1, name: '', activity: '',
+    sector: '', sectorOther: '', size: '', volume: '',
+    areas: [], pieces: [],
+    noFitText: '', branchAnswer: '', branchOther: '',
+    tools: [], toolsOther: '',
+    vision: '', intensity: null, discountCode: null
+  });
+  document.querySelectorAll('.q-input, .q-textarea').forEach(i => i.value = '');
+  document.querySelectorAll('.selected').forEach(b => b.classList.remove('selected'));
+  const wrap = document.getElementById('sector-other-wrap');
+  if (wrap) wrap.style.display = 'none';
+  const c = document.getElementById('q3-counter'); if (c) c.textContent = '0';
+  document.querySelectorAll('.btn[id$="-next"]').forEach(b => b.disabled = true);
+  goStep(1);
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = loadState();
+  if (saved && (saved.name || saved.areas?.length || saved.activity)) {
+    if (confirm('Tienes un diagnóstico a medio hacer. ¿Lo retomamos?')) {
+      restoreState(saved);
+    } else {
+      clearState();
+      goStep(1);
+    }
+  } else {
+    goStep(1);
+  }
+  prewarmBackend();
+});
+</script>
+
+<!-- Avatar Maite · siempre visible · arriba derecha · enlaza a WhatsApp -->
+<a href="https://wa.me/34609987433?text=Hola%20Maite%2C%20te%20escribo%20desde%20Tu%20Soluci%C3%B3n%20de%20MASESORA." target="_blank" rel="noopener" id="cta-whatsapp" title="Habla conmigo · Maite Cabezuelos" aria-label="Habla con Maite por WhatsApp" style="position:fixed;top:80px;right:1.5rem;z-index:100;width:64px;height:64px;display:block;text-decoration:none;transition:all .25s ease">
+  <span class="cta-maite-circle" style="display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;border:3px solid var(--gold);background:var(--navy);box-shadow:0 10px 28px -8px rgba(184,157,82,.55),inset 0 0 0 2px rgba(255,255,255,.25)">
+    <img src="./MAITE1.webp" alt="Maite Cabezuelos" loading="eager" decoding="async" onerror="this.onerror=null;this.src='./MAITE1.png';" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block"/>
+  </span>
+  <span aria-hidden="true" style="position:absolute;bottom:-3px;right:-3px;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px -2px rgba(37,211,102,.6)">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.892 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+  </span>
+</a>
+
+<!-- Cal.com · solo visible durante cuestionario · abajo derecha -->
+<a href="https://cal.com/masesora/reunion" target="_blank" rel="noopener" id="cta-flotante" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:100;background:linear-gradient(135deg,var(--gold-soft),var(--gold));color:var(--navy);padding:.85rem 1.4rem;border-radius:999px;font-family:inherit;font-weight:700;font-size:.82rem;letter-spacing:.04em;text-decoration:none;box-shadow:0 12px 32px -8px rgba(184,157,82,.6),inset 0 1px 0 rgba(255,255,255,.4);transition:all .25s ease;display:none;align-items:center;gap:.5rem">
+  📅 Agendar con Maite
+</a>
+<style>
+#cta-flotante.visible{display:inline-flex !important}
+#cta-flotante:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 18px 42px -10px rgba(184,157,82,.8)}
+#cta-whatsapp:hover{transform:translateY(-3px) scale(1.07)}
+#cta-whatsapp:hover .cta-maite-circle{box-shadow:0 16px 36px -8px rgba(184,157,82,.85),inset 0 0 0 2px rgba(255,255,255,.45)!important;border-color:var(--gold-light)!important}
+@keyframes maite-pulse{0%,100%{box-shadow:0 10px 28px -8px rgba(184,157,82,.55),inset 0 0 0 2px rgba(255,255,255,.25)}50%{box-shadow:0 10px 28px -8px rgba(184,157,82,.55),inset 0 0 0 2px rgba(255,255,255,.25),0 0 0 8px rgba(184,157,82,.18)}}
+#cta-whatsapp .cta-maite-circle{animation:maite-pulse 2.6s ease-in-out infinite}
+#cta-whatsapp:hover .cta-maite-circle{animation:none}
+@media(max-width:640px){
+  #cta-whatsapp{top:auto;bottom:5.5rem;right:1rem;width:54px;height:54px}
+  #cta-flotante{bottom:1rem;right:1rem;font-size:.75rem;padding:.7rem 1.1rem}
+}
+</style>
+
+</body>
+</html>
