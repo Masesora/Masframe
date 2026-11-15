@@ -24,8 +24,7 @@ Facturas bien, pasan los meses y no ves realmente el esfuerzo reflejado en tus c
 
 En La Clínica de Empresas esto es un síntoma, y se puede tratar. Lo medimos, lo trabajas paso a paso con tu consultor clínico y te damos el alta cuando el número realmente haya mejorado.
 
-El primer paso es pasar por el Escáner de Salud Empresarial. Es gratis y se hace en 10 minutos.
-Entra en masesora.es (tienes el enlace en el perfil).
+El primer paso es pasar por el Escáner de Salud Empresarial: masesora.es. Es gratis y se hace en 10 minutos. Tienes el enlace en el perfil.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
@@ -38,8 +37,7 @@ Facturas bien, pasan los meses y no ves realmente el esfuerzo reflejado en tus c
 
 En La Clínica de Empresas esto es un síntoma, y se puede tratar. Lo medimos, lo trabajas paso a paso con tu consultor clínico y te damos el alta cuando el número realmente haya mejorado.
 
-El primer paso es pasar por el Escáner de Salud Empresarial. Es gratis y se hace en 10 minutos.
-Entra en masesora.es (tienes el enlace en el perfil).
+El primer paso es pasar por el Escáner de Salud Empresarial: masesora.es. Es gratis y se hace en 10 minutos. Tienes el enlace en el perfil.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```

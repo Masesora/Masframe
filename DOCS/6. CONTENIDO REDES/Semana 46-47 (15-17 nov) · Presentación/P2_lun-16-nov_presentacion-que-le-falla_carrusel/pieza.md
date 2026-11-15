@@ -17,10 +17,9 @@
 ```
 ¿Qué falla en tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
 
-Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial: contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
+Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial (masesora.es): contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
 
-El Escáner es gratis y no te compromete a nada.
-Entra en masesora.es (tienes el enlace en el perfil).
+El Escáner es gratis y no te compromete a nada. Tienes el enlace en el perfil.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
@@ -29,10 +28,9 @@ Entra en masesora.es (tienes el enlace en el perfil).
 ```
 ¿Qué falla en tu negocio? A veces es la caja, a veces el equipo o las ventas, y a menudo varias cosas a la vez. Cuando una parte falla, las demás lo acaban notando.
 
-Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial: contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
+Por eso en La Clínica de Empresas primero miramos el negocio entero, igual que un médico antes de recetar. Lo hacemos con el Escáner de Salud Empresarial (masesora.es): contestas desde el móvil en 10 minutos, te llega por email un informe con los síntomas de tu negocio y, con el código del informe, entras en La Clínica.
 
-El Escáner es gratis y no te compromete a nada.
-Entra en masesora.es (tienes el enlace en el perfil).
+El Escáner es gratis y no te compromete a nada. Tienes el enlace en el perfil.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```

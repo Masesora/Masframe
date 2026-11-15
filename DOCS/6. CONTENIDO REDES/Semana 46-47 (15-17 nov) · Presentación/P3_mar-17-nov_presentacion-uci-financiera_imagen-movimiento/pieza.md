@@ -26,8 +26,7 @@ Anemia de Margen: precios que no cubren lo que te cuesta el trabajo, contando tu
 
 En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo paso a paso y un consultor clínico asignado. Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.
 
-¿En cuál de los tres está tu dinero? El Escáner te lo dice en 10 minutos, y es gratis.
-Entra en masesora.es (tienes el enlace en el perfil).
+¿En cuál de los tres está tu dinero? El Escáner de Salud Empresarial te lo dice: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
@@ -42,8 +41,7 @@ Anemia de Margen: precios que no cubren lo que te cuesta el trabajo, contando tu
 
 En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo paso a paso y un consultor clínico asignado. Medimos tu indicador al empezar y al terminar. Si completas el tratamiento y no mejora, seguimos trabajando sin coste adicional hasta que mejore.
 
-¿En cuál de los tres está tu dinero? El Escáner te lo dice en 10 minutos, y es gratis.
-Entra en masesora.es (tienes el enlace en el perfil).
+¿En cuál de los tres está tu dinero? El Escáner de Salud Empresarial te lo dice: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
 
 #LaClinicaDeEmpresas #autonomos #pymes #saludempresarial #MarinaBaixa
 ```
