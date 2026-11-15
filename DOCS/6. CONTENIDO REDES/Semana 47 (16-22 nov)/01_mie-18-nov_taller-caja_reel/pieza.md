@@ -43,6 +43,13 @@ En La Clínica de Empresas te hacemos ver el verdadero valor de tu negocio. Empi
 #LaClinicaDeEmpresas #autonomos #pymes #negocios #caja #gestionfinanciera #emprendedores
 ```
 
+## Kit de distribución
+- **Ganchos:** A (publicado el 18 nov en Instagram y TikTok) «Tienes el negocio lleno y la cuenta no te sale» · B `assets/reel_tiktok_B.mp4` empieza por la pregunta «¿Cuántos días aguantarías si mañana dejaran de pagarte?» (TikTok, jue 3 dic, 19:00) · C `assets/reel_tiktok_C.mp4` portada «Trabajas sin parar y el banco no lo refleja» (TikTok, jue 10 dic, 19:00).
+- **Historia y encuesta:** `assets/historia.png`, mié 18 nov a las 15:00. Pregunta «Si mañana dejaran de pagarte, ¿cuántos días aguantarías?»; respuestas «Menos de 30 días / Más de 60 días» (se contesta respondiendo a la historia; si se publica desde el móvil, añadir el sticker de encuesta).
+- **Palabras de búsqueda:** autónomos Benidorm, gestión de caja, pymes Marina Baixa.
+- **Ubicación (Instagram):** Benidorm.
+- **Compartir fuera de las redes:** `compartir.md` (WhatsApp, grupos, Google Business Profile, LinkedIn).
+
 ## Archivos para publicar
 - Instagram (reel): `assets/reel_instagram.mp4` · portada `assets/portada.png`
 - TikTok (vídeo): `assets/reel_tiktok.mp4`
