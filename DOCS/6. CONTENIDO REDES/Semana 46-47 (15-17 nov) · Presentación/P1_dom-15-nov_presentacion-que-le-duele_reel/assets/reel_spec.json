@@ -1,6 +1,6 @@
 {
  "voz": "audio_final.wav",
- "duracion": 30.0,
+ "duracion": 28.4,
  "etiqueta": "Presentación",
  "portada_t": 1.3,
  "palabras": [
@@ -360,7 +360,7 @@
    "e": 22.56
   },
   {
-   "w": "paso,",
+   "w": "paso",
    "s": 22.56,
    "e": 22.9
   },
@@ -375,7 +375,7 @@
    "e": 23.68
   },
   {
-   "w": "o",
+   "w": "por",
    "s": 23.68,
    "e": 23.94
   },
@@ -400,14 +400,9 @@
    "e": 24.72
   },
   {
-   "w": "Empresarial:",
+   "w": "Empresarial.",
    "s": 24.72,
    "e": 25.46
-  },
-  {
-   "w": "masesora.es",
-   "s": 25.51,
-   "e": 26.06
   },
   {
    "w": "Pincha",
@@ -438,8 +433,8 @@
   {
    "tipo": "barras_cuenta",
    "inicio": 4.2,
-   "palabras_hasta": 6.5,
-   "texto": "Facturas, pero tu esfuerzo no se ve en la cuenta."
+   "palabras_hasta": 7.0,
+   "texto": "Facturas, pero no ves el esfuerzo reflejado en tus cuentas."
   },
   {
    "tipo": "frase",
@@ -452,7 +447,7 @@
   {
    "tipo": "pasos",
    "inicio": 14.0,
-   "palabras_hasta": 14.5,
+   "palabras_hasta": 14.4,
    "texto": "Así trabajamos",
    "pasos": [
     {
@@ -461,9 +456,9 @@
      "detalle": "Con tus números."
     },
     {
-     "t": 15.4,
-     "titulo": "Paso a paso",
-     "detalle": "Con tu consultor o de forma autónoma."
+     "t": 15.3,
+     "titulo": "Lo trabajas paso a paso",
+     "detalle": "Con un consultor o de manera autónoma."
     }
    ]
   },
@@ -471,15 +466,15 @@
    "tipo": "alta",
    "inicio": 19.0,
    "fin": 22.0,
-   "palabras_hasta": 20.5,
+   "palabras_hasta": 21.2,
    "texto": "Te damos el alta",
-   "oro": "cuando tu número haya mejorado de verdad.",
+   "oro": "cuando el número realmente haya mejorado.",
    "pasos": []
   },
   {
    "tipo": "escaner",
    "inicio": 22.0,
-   "palabras_hasta": 24.5,
+   "palabras_hasta": 24.6,
    "eyebrow": "El primer paso",
    "texto": "Escáner de Salud",
    "oro": "Empresarial",
@@ -490,27 +485,9 @@
     },
     {
      "t": 25.6,
-     "txt": "Gratis"
-    },
-    {
-     "t": 26.0,
-     "txt": "10 minutos"
+     "txt": "Enlace en el perfil ↓"
     }
    ]
-  },
-  {
-   "tipo": "cierre",
-   "inicio": 26.6,
-   "palabras_hasta": 27.4,
-   "texto": "Empieza aquí ↓",
-   "instagram": {
-    "boton": "masesora.es",
-    "debajo": "Enlace en el perfil"
-   },
-   "tiktok": {
-    "boton": "masesora.es",
-    "debajo": "Enlace en el perfil"
-   }
   }
  ]
 }

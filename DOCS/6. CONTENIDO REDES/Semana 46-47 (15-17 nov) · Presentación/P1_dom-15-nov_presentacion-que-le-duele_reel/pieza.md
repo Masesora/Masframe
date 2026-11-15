@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Fecha y hora** | Dom 15 nov · 20:00 |
-| **Formato** | Reel animado con la voz de Maite (30 s, 9:16) |
+| **Formato** | Reel animado con la voz de Maite (28 s, 9:16) |
 | **Objetivo** | Presentar La Clínica de Empresas antes de las piezas por nicho |
 | **Llamada a la acción** | **masesora.es** (enlace en el perfil) |
 | **Enlace al responder** | Instagram: `https://www.masesora.es/?utm_source=instagram&utm_medium=organic&utm_campaign=presentacion&utm_content=p1` · TikTok: `https://www.masesora.es/?utm_source=tiktok&utm_medium=organic&utm_campaign=presentacion&utm_content=p1` |
