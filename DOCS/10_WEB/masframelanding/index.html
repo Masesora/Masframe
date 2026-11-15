@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>MASFRAME® · La Primera Clínica de Empresas</title>
+  <meta name="description" content="MASFRAME® es La Primera Clínica de Empresas. Diagnosticamos qué le pasa a tu negocio con 10 especialidades y 30 diagnósticos precisos, prescribimos el tratamiento y certificamos el alta. No es consultoría. Es medicina empresarial."/>
+
+  <link rel="canonical" href="https://masframelanding.onrender.com/"/>
+
+  <meta property="og:type"        content="website"/>
+  <meta property="og:url"         content="https://masframelanding.onrender.com/"/>
+  <meta property="og:title"       content="MASFRAME® · La Primera Clínica de Empresas"/>
+  <meta property="og:description" content="10 especialidades. 30 diagnósticos precisos. El primer sistema que diagnostica qué le pasa a tu empresa, prescribe el tratamiento y certifica el alta."/>
+  <meta property="og:image"       content="https://masframelanding.onrender.com/og-image.png"/>
+  <meta property="og:locale"      content="es_ES"/>
+  <meta property="og:site_name"   content="MASFRAME® · MASESORA"/>
+
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:title"       content="MASFRAME® · La Primera Clínica de Empresas"/>
+  <meta name="twitter:description" content="10 especialidades. 30 diagnósticos precisos. Medicina empresarial con protocolo, precisión y certificado de alta."/>
+  <meta name="twitter:image"       content="https://masframelanding.onrender.com/og-image.png"/>
+
+  <link rel="icon" type="image/svg+xml" href="masframe-icon-transparent.svg">
+  <link rel="shortcut icon" href="masframe-icon-transparent.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://ese.masesora.com"/>
+  <link rel="dns-prefetch" href="https://masesora.onrender.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "MASFRAME® · La Primera Clínica de Empresas",
+    "url": "https://masframelanding.onrender.com",
+    "description": "El primer sistema clínico empresarial. Diagnosticamos qué le pasa a tu empresa con 10 especialidades y 30 diagnósticos precisos, prescribimos el tratamiento y certificamos el alta.",
+    "areaServed": "ES",
+    "serviceType": "Diagnóstico y Tratamiento Empresarial",
+    "parentOrganization": {
+      "@type": "Organization",
+      "name": "MASESORA · La Clínica de Empresas",
+      "url": "https://www.masesora.com"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Especialidades Clínicas MASFRAME®",
+      "numberOfItems": 10
+    }
+  }
+  </script>
+
+  <style>
+/* ── TOKENS ─────────────────────────────────────── */
+:root{
+  --navy:   #0F1A35;
+  --navy2:  #142040;
+  --navy3:  #1a2d5a;
+  --gold:   #B89D52;
+  --gold2:  #C8A84B;
+  --gold3:  #E8C96A;
+  --gold4:  #D4B96A;
+  --golddim:rgba(184,157,82,.12);
+  --goldbdr:rgba(184,157,82,.28);
+  --off:    #F9F7F2;
+  --off2:   #EDE9DF;
+  --white:  #FFFFFF;
+  --border: #E3E6EA;
+  --muted:  #6B6560;
+  --muted2: #8B857F;
+  --red:    #D7263D;
+  --tq:     #0ABFBC;
+  --tqdim:  rgba(10,191,188,.08);
+  --tqbdr:  rgba(10,191,188,.22);
+  --purple: #7C5CBF;
+  --cg:     'Cormorant Garamond',Georgia,serif;
+  --sans:   'DM Sans',system-ui,sans-serif;
+  --mono:   'IBM Plex Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--off);color:var(--navy);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── SKIP LINK ───────────────────────────────────── */
+.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;font-weight:700;font-size:.9rem;text-decoration:none}
+.skip-link:focus{position:fixed;top:0;left:0;width:auto;height:auto;padding:14px 28px;background:var(--gold);color:var(--navy);z-index:10000;border-radius:0 0 8px 0;outline:none}
+
+/* ── FOCUS ───────────────────────────────────────── */
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+*:focus:not(:focus-visible){outline:none}
+
+/* ── ANIMATIONS ──────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.rv.vi{opacity:1;transform:translateY(0)}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+
+/* ── PROGRESS ────────────────────────────────────── */
+#pb{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold3));z-index:9999;transition:width .1s}
+
+/* ── TOPBAR ──────────────────────────────────────── */
+.topbar{background:var(--navy2);border-bottom:1px solid rgba(184,157,82,.15);padding:7px 40px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase}
+.topbar-l{display:flex;align-items:center;gap:8px;color:rgba(249,247,242,.3)}
+.topbar-brand{font-family:var(--cg);font-size:.88rem;font-weight:700;color:var(--gold2);letter-spacing:.06em;font-style:normal}
+.topbar-tag{color:rgba(200,168,75,.55);font-family:var(--mono);font-size:.52rem;letter-spacing:.1em}
+.topbar-r{color:rgba(200,168,75,.42);text-decoration:none;transition:color .2s}
+.topbar-r:hover{color:var(--gold2)}
+
+/* ── NAV ─────────────────────────────────────────── */
+nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 40px;height:66px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(15,26,53,.06)}
+.nlogo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nlogo-hex{width:38px;height:38px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nlogo-hex svg{width:22px;height:22px}
+.nlogo-text{display:flex;flex-direction:column;gap:2px}
+.nlogo-main{font-family:var(--cg);font-size:1.15rem;font-weight:700;color:var(--navy);letter-spacing:.1em}
+.nlogo-sub{font-family:var(--mono);font-size:.5rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase}
+.nright{display:flex;align-items:center;gap:28px}
+.nlinks{display:flex;gap:22px;list-style:none}
+.nlinks a{font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.02em;transition:color .2s}
+.nlinks a:hover{color:var(--navy)}
+.nbadge{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.6rem;font-weight:500;color:var(--tq);letter-spacing:.08em;padding:5px 12px;border:1px solid var(--tqbdr);border-radius:999px;background:var(--tqdim);min-height:44px;text-decoration:none;transition:background .2s}
+.nbadge:hover{background:rgba(10,191,188,.16)}
+.nbadge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--tq);animation:pulse 2s infinite;flex-shrink:0}
+.ncta{padding:9px 20px;border-radius:999px;background:var(--navy);color:var(--off);font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:.04em;border:1px solid rgba(184,157,82,.25);box-shadow:0 4px 14px rgba(15,26,53,.25);transition:filter .15s,transform .15s;min-height:44px;display:inline-flex;align-items:center}
+.ncta:hover{background:var(--navy2);transform:translateY(-1px);border-color:rgba(184,157,82,.4)}
+@media(max-width:860px){.nlinks{display:none}nav{padding:0 20px}.topbar{padding:7px 20px}}
+
+/* ── HERO ─────────────────────────────────────────── */
+.hero{background:var(--navy);background-image:radial-gradient(circle at 10% 0%,rgba(212,185,106,.28) 0,transparent 55%),radial-gradient(circle at 85% 0%,rgba(45,95,168,.45) 0,transparent 60%);padding:72px 40px 100px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(249,247,242,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(249,247,242,.05) 1px,transparent 1px);background-size:56px 56px;pointer-events:none}
+.hero-ecg{position:absolute;bottom:0;left:0;right:0;height:80px;overflow:hidden;opacity:.18}
+.hero-ecg svg{width:200%;height:100%}
+.hero-in{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px;align-items:center;position:relative;z-index:1}
+.h-ey{font-family:var(--mono);font-size:.62rem;font-weight:600;color:var(--gold4);letter-spacing:.22em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;animation:fadeUp .6s cubic-bezier(.22,1,.36,1) both}
+.h-ey::before{content:'';width:22px;height:1px;background:var(--gold4)}
+.h1{font-family:var(--cg);font-size:clamp(2.8rem,4.5vw,4.2rem);font-weight:700;line-height:1.02;letter-spacing:-.01em;color:var(--off);margin-bottom:18px;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .08s both}
+.h1 em{font-style:italic;color:var(--gold3)}
+.h-claim{font-family:var(--cg);font-size:1.18rem;font-style:italic;font-weight:400;color:var(--gold4);line-height:1.45;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid rgba(184,157,82,.25);animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .13s both}
+.h-sub{font-size:.96rem;line-height:1.8;color:rgba(249,247,242,.7);max-width:480px;margin-bottom:28px;font-weight:300;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .16s both}
+.h-bullets{display:flex;flex-direction:column;gap:10px;margin-bottom:32px;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .22s both}
+.h-b{display:flex;align-items:flex-start;gap:10px;font-size:.86rem;color:rgba(249,247,242,.65);font-weight:300}
+.h-b-dot{width:5px;height:5px;border-radius:50%;background:var(--gold2);flex-shrink:0;margin-top:7px}
+.h-act{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .28s both}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:linear-gradient(135deg,var(--gold4),var(--gold));color:var(--navy);font-weight:700;font-size:.88rem;letter-spacing:.04em;text-decoration:none;border:none;cursor:pointer;box-shadow:0 10px 28px rgba(184,157,82,.32);transition:transform .15s,filter .15s;min-height:44px}
+.btn-gold:hover{transform:translateY(-2px);filter:brightness(1.07)}
+.btn-outline-w{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;border:1px solid rgba(249,247,242,.2);color:rgba(249,247,242,.75);font-size:.84rem;font-weight:500;text-decoration:none;transition:border-color .2s,color .2s;min-height:44px}
+.btn-outline-w:hover{border-color:rgba(184,157,82,.5);color:var(--gold3)}
+.h-counts{display:flex;gap:0;margin-top:28px;padding-top:24px;border-top:1px solid rgba(249,247,242,.12);animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .32s both}
+.hc{flex:1;padding-right:24px;border-right:1px solid rgba(249,247,242,.1)}
+.hc:last-child{border-right:none;padding-right:0;padding-left:24px}
+.hc:not(:first-child):not(:last-child){padding:0 24px}
+.hc-n{font-family:var(--cg);font-size:2.4rem;font-weight:700;color:var(--off);line-height:1}
+.hc-n span{color:var(--gold3)}
+.hc-l{font-family:var(--mono);font-size:.56rem;color:rgba(249,247,242,.4);letter-spacing:.12em;text-transform:uppercase;margin-top:4px}
+
+/* Monitor */
+.monitor{background:var(--white);border-radius:20px;border:1px solid var(--border);box-shadow:0 24px 56px rgba(15,26,53,.35);overflow:hidden;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .18s both}
+.mon-hd{background:var(--navy);padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
+.mon-ttl{font-family:var(--mono);font-size:.62rem;font-weight:600;color:var(--gold4);letter-spacing:.1em;text-transform:uppercase}
+.mon-dots{display:flex;gap:5px}
+.mdot{width:9px;height:9px;border-radius:50%}
+.mon-bd{padding:18px}
+.mon-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.mkpi{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center}
+.mkpi-v{font-family:var(--cg);font-size:1.4rem;font-weight:700;color:var(--navy)}
+.mkpi-v.c{color:var(--red)}.mkpi-v.w{color:var(--gold)}.mkpi-v.ok{color:var(--tq)}
+.mkpi-l{font-family:var(--mono);font-size:.54rem;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.mon-layers{display:flex;flex-direction:column;gap:7px}
+.mlayer{display:flex;align-items:center;gap:10px}
+.ml-c{font-family:var(--mono);font-size:.62rem;font-weight:600;color:var(--navy);width:22px;flex-shrink:0}
+.ml-b{flex:1;height:5px;background:var(--off2);border-radius:999px;overflow:hidden}
+.ml-f{height:100%;background:linear-gradient(90deg,var(--tq),rgba(10,191,188,.4));border-radius:999px}
+.ml-s{font-family:var(--mono);font-size:.54rem;font-weight:600;letter-spacing:.08em;padding:2px 8px;border-radius:4px;flex-shrink:0}
+.mlayer.act .ml-b{background:rgba(184,157,82,.15)}
+.mlayer.act .ml-f{background:linear-gradient(90deg,var(--gold),rgba(184,157,82,.4))}
+.mon-ft{background:var(--off);border-top:1px solid var(--border);padding:10px 18px;display:flex;justify-content:space-between;align-items:center}
+.mon-ft-t{font-family:var(--mono);font-size:.54rem;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase}
+.pbadge{font-family:var(--mono);font-size:.62rem;font-weight:700;color:var(--tq);padding:3px 8px;border:1px solid var(--tqbdr);border-radius:6px;background:var(--tqdim)}
+.mon-example{font-family:var(--mono);font-size:.5rem;color:rgba(184,157,82,.45);letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:6px;background:rgba(184,157,82,.04);border-top:1px solid rgba(184,157,82,.1)}
+
+@media(max-width:900px){.hero-in{grid-template-columns:1fr}.monitor{display:none}}
+@media(max-width:600px){.hero{padding:56px 20px 80px}}
+
+/* ── SECTIONS ─────────────────────────────────────── */
+section{padding:80px 40px}
+.si{max-width:1120px;margin:0 auto}
+.s-white{background:var(--white)}
+.s-off{background:var(--off)}
+.s-navy{background:var(--navy)}
+.ey{font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin-bottom:12px}
+.s-navy .ey{color:var(--gold4)}
+.s-white .ey,.s-off .ey{color:var(--gold)}
+.h2{font-family:var(--cg);font-size:clamp(2.2rem,3.5vw,3.4rem);font-weight:700;line-height:1.05;letter-spacing:-.01em;margin-bottom:16px}
+.s-navy .h2{color:var(--off)}
+.s-white .h2,.s-off .h2{color:var(--navy)}
+.h2 em{font-style:italic;color:var(--gold2)}
+.h3{font-family:var(--cg);font-size:1.3rem;font-weight:700;line-height:1.2}
+.s-navy .h3{color:var(--off)}.s-white .h3,.s-off .h3{color:var(--navy)}
+.lead{font-size:.95rem;line-height:1.82;font-weight:300}
+.s-navy .lead{color:rgba(249,247,242,.65)}
+.s-white .lead,.s-off .lead{color:var(--muted)}
+.rule{width:44px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:1px;margin-bottom:28px}
+.claim{font-family:var(--cg);font-size:1.2rem;font-style:italic;font-weight:400;line-height:1.55;padding:16px 0;border-top:1px solid var(--goldbdr);border-bottom:1px solid var(--goldbdr);margin:20px 0;color:var(--gold2)}
+.note{font-family:var(--mono);font-size:.6rem;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase}
+.chip{font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
+.chip-gold{background:var(--golddim);border:1px solid var(--goldbdr);color:var(--gold2)}
+.chip-tq{background:var(--tqdim);border:1px solid var(--tqbdr);color:var(--tq)}
+.chip-dim{background:rgba(249,247,242,.06);border:1px solid rgba(249,247,242,.1);color:rgba(249,247,242,.5)}
+.chip-off{background:rgba(15,26,53,.05);border:1px solid var(--border);color:var(--muted)}
+@media(max-width:600px){section{padding:56px 20px}}
+
+/* ── LA CLÍNICA (impacto) ────────────────────────── */
+.clinica-qs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;margin-top:48px;border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.cq{padding:36px 32px;background:var(--white);border-left:4px solid var(--gold);position:relative;transition:background .2s}
+.cq:hover{background:var(--off)}
+.cq.cq-red{border-left-color:var(--red)}
+.cq.cq-gold{border-left-color:var(--gold)}
+.cq.cq-purple{border-left-color:var(--purple)}
+.cq.cq-tq{border-left-color:var(--tq)}
+.cq-q{font-family:var(--cg);font-size:clamp(1.4rem,2.2vw,1.85rem);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:10px}
+.cq-line{font-size:.84rem;color:var(--muted);font-weight:300;line-height:1.5}
+.cq-tag{font-family:var(--mono);font-size:.52rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-top:16px;display:block}
+.cq.cq-red .cq-tag{color:var(--red)}.cq.cq-gold .cq-tag{color:var(--gold)}.cq.cq-purple .cq-tag{color:var(--purple)}.cq.cq-tq .cq-tag{color:var(--tq)}
+@media(max-width:860px){.clinica-qs{grid-template-columns:1fr}.cq{padding:28px 24px}}
+
+/* ── ESPECIALIDADES ──────────────────────────────── */
+.s-esp{background:var(--navy);position:relative;overflow:hidden}
+.s-esp::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(184,157,82,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(184,157,82,.07) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;z-index:0}
+.s-esp .si{position:relative;z-index:1}
+.s-esp .esp-hd .ey{color:var(--gold4)}
+.s-esp .h2{color:var(--off)}
+.s-esp .h2 em{color:var(--gold3)}
+.s-esp .lead{color:rgba(249,247,242,.6)}
+.s-esp .esp-primero{background:rgba(184,157,82,.12);border-color:rgba(184,157,82,.3);color:var(--gold3)}
+.s-esp .esp-grid{border-color:rgba(249,247,242,.08)}
+.s-esp .esp{background:rgba(249,247,242,.04)}
+.s-esp .esp:hover,.s-esp .esp.tapped{background:linear-gradient(145deg,var(--gold2),var(--gold3) 70%,#d4b45a)}
+.s-esp .esp-nom{color:var(--off)}
+.s-esp .esp-dept{color:rgba(249,247,242,.35)}
+.s-esp .esp-lema{color:rgba(249,247,242,.45)}
+
+.esp-hd{text-align:center;margin-bottom:40px}
+.esp-primero{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.54rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:999px;background:var(--golddim);border:1px solid var(--goldbdr);color:var(--gold2);margin-bottom:16px}
+.esp-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.esp{background:var(--white);padding:22px 18px;cursor:pointer;transition:background .2s,box-shadow .2s;position:relative}
+.esp:hover,.esp.tapped{background:linear-gradient(145deg,var(--gold2),var(--gold3) 70%,#d4b45a);z-index:1;box-shadow:0 8px 32px rgba(184,157,82,.28)}
+.esp:hover .esp-nom,.esp.tapped .esp-nom{color:var(--navy)!important;opacity:1}
+.esp:hover .esp-dept,.esp.tapped .esp-dept{color:rgba(15,26,53,.55)!important;opacity:1}
+.esp:hover .esp-lema,.esp.tapped .esp-lema{color:rgba(15,26,53,.65)!important;opacity:1}
+.esp:hover .esp-expl,.esp.tapped .esp-expl{display:block;color:rgba(15,26,53,.7)}
+.esp:hover .esp-pills,.esp.tapped .esp-pills{display:flex}
+.esp:hover .pill,.esp.tapped .pill{background:rgba(15,26,53,.1);color:var(--navy);border-color:rgba(15,26,53,.2)}
+.esp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.esp-nom{font-family:var(--cg);font-size:1.1rem;font-weight:700;color:var(--navy);transition:color .2s}
+.esp-dept{font-family:var(--mono);font-size:.54rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);transition:color .2s;white-space:nowrap}
+.esp-lema{font-size:.88rem;font-style:italic;color:var(--muted);line-height:1.45;transition:color .2s}
+.esp-expl{display:none;font-size:.87rem;line-height:1.68;color:rgba(249,247,242,.78);margin-top:10px;font-weight:300}
+.esp-pills{display:none;flex-direction:column;gap:5px;margin-top:12px}
+.pill{font-family:var(--mono);font-size:.62rem;padding:4px 10px;border-radius:4px;font-weight:600;letter-spacing:.06em;display:inline-block;background:rgba(249,247,242,.08);color:rgba(249,247,242,.78);border:1px solid rgba(249,247,242,.15)}
+@media(max-width:1000px){.esp-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.esp-grid{grid-template-columns:1fr}}
+
+/* ── PROTOCOLO ───────────────────────────────────── */
+.proto-hd{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px;align-items:start;margin-bottom:40px}
+.tramos{display:flex;flex-direction:column;gap:2px;border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+.tramo{background:var(--white)}
+.tramo-label{padding:12px 24px;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.tramo-1 .tramo-label{background:rgba(10,191,188,.06);color:var(--tq);border-left:3px solid var(--tq)}
+.tramo-2 .tramo-label{background:var(--golddim);color:var(--gold);border-left:3px solid var(--gold)}
+.tramo-3 .tramo-label{background:rgba(124,92,191,.06);color:var(--purple);border-left:3px solid var(--purple)}
+.capas{display:flex;flex-direction:column}
+.capa{display:flex;gap:0;border-bottom:1px solid var(--border);transition:background .2s}
+.capa:last-child{border-bottom:none}
+.capa:hover{background:var(--off)}
+.cline{padding:20px 20px 20px 24px;flex-shrink:0}
+.ccirc{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.72rem;font-weight:700;background:var(--navy);color:var(--off)}
+.tramo-1 .ccirc{background:rgba(10,191,188,.1);color:var(--tq);border:1px solid var(--tqbdr)}
+.tramo-2 .ccirc{background:var(--golddim);color:var(--gold);border:1px solid var(--goldbdr)}
+.tramo-3 .ccirc{background:rgba(124,92,191,.08);color:var(--purple);border:1px solid rgba(124,92,191,.2)}
+.ccont{padding:18px 24px 18px 0;flex:1}
+.ctag{font-family:var(--mono);font-size:.56rem;font-weight:600;color:var(--muted2);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+.cname{font-family:var(--cg);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:6px;line-height:1.25}
+.cdesc{font-size:.8rem;line-height:1.65;color:var(--muted);font-weight:300}
+@media(max-width:860px){.proto-hd{grid-template-columns:1fr;gap:28px}}
+
+/* ── METODOLOGÍA (equipo + diferencial) ──────────── */
+.meto-hd{text-align:center;margin-bottom:48px}
+.meto-in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:64px;align-items:start}
+.dif-bullets{display:flex;flex-direction:column;gap:14px}
+.dif-b{display:flex;gap:16px;padding:18px 20px;background:var(--off);border:1px solid var(--border);border-radius:14px;transition:border-color .2s,box-shadow .2s}
+.dif-b:hover{border-color:var(--goldbdr);box-shadow:0 4px 16px rgba(184,157,82,.1)}
+.dif-b-num{font-family:var(--cg);font-size:1.6rem;font-weight:700;color:var(--gold);flex-shrink:0;width:28px;line-height:1}
+.dif-b-t{font-family:var(--cg);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+.dif-b-d{font-size:.8rem;line-height:1.65;color:var(--muted);font-weight:300}
+.roles{display:flex;flex-direction:column;gap:14px}
+.roles-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.role{display:flex;gap:16px;padding:22px;background:var(--white);border:1px solid var(--border);border-radius:16px;transition:border-color .2s,box-shadow .2s}
+.role:hover{border-color:var(--goldbdr);box-shadow:0 6px 24px rgba(184,157,82,.1)}
+.pc-system{padding:20px 22px;background:linear-gradient(135deg,rgba(124,92,191,.05),rgba(15,26,53,.02));border:1px solid rgba(124,92,191,.2);border-radius:14px;border-left:4px solid var(--purple);display:flex;gap:18px;align-items:flex-start}
+.pc-system-ic{width:38px;height:38px;border-radius:10px;background:rgba(124,92,191,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+@media(max-width:860px){.roles-2{grid-template-columns:1fr}.pc-system{flex-direction:column;gap:10px}}
+.role-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.role-t{font-family:var(--cg);font-size:1rem;font-weight:700;margin-bottom:6px}
+.role-d{font-size:.8rem;line-height:1.65;color:var(--muted);font-weight:300;margin-bottom:8px}
+@media(max-width:860px){.meto-in{grid-template-columns:1fr;gap:36px}}
+
+/* ── PLANES DE INTERVENCIÓN ──────────────────────── */
+.planes-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:48px}
+.plan-card{background:var(--white);border:1px solid var(--border);border-radius:20px;display:flex;flex-direction:column;transition:box-shadow .25s,transform .25s}
+.plan-card:hover{box-shadow:0 16px 48px rgba(15,26,53,.1);transform:translateY(-4px)}
+/* PAE — navy */
+.plan-card.pae{background:var(--navy);border-color:var(--goldbdr)}
+.pae .plan-label{color:rgba(249,247,242,.35)}
+.pae .plan-name{color:var(--off)}
+
+.pae .plan-divider{background:rgba(249,247,242,.1)}
+.pae .plan-ciclos-n{color:var(--gold3)}
+.pae .plan-ciclos-l{color:rgba(249,247,242,.35)}
+.pae .plan-desc{color:rgba(249,247,242,.6)}
+.pae .plan-feat{color:rgba(249,247,242,.55)}
+.pae .plan-feat::before{color:var(--gold3)}
+.pae .plan-ft{border-top-color:rgba(249,247,242,.1)}
+/* PIE flagship — gold */
+.plan-card.flagship{background:linear-gradient(145deg,var(--gold2),var(--gold3) 60%,#d4b45a);border-color:rgba(15,26,53,.25);box-shadow:0 20px 60px rgba(184,157,82,.35)}
+.plan-card.flagship:hover{box-shadow:0 28px 70px rgba(184,157,82,.5);transform:translateY(-5px)}
+.flagship .plan-label{color:rgba(15,26,53,.45)}
+.flagship .plan-name{color:var(--navy)}
+
+.flagship .plan-divider{background:rgba(15,26,53,.15)}
+.flagship .plan-ciclos-n{color:var(--navy)}
+.flagship .plan-ciclos-l{color:rgba(15,26,53,.65)}
+.flagship .plan-desc{color:rgba(15,26,53,.9)}
+.flagship .plan-feat{color:rgba(15,26,53,.82)}
+.flagship .plan-feat::before{color:var(--navy)}
+.flagship .plan-ft{border-top-color:rgba(15,26,53,.15)}
+/* shared */
+.plan-hd{padding:24px 24px 0}
+.plan-flagship-badge{font-family:var(--mono);font-size:.52rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:var(--navy);border:1px solid var(--navy);color:var(--off);display:inline-block;margin-bottom:12px}
+.plan-name{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--navy);line-height:1;margin-bottom:6px;letter-spacing:.08em}
+.plan-fullname{font-family:var(--cg);font-size:1.55rem;font-weight:700;line-height:1.1;color:var(--navy);margin-bottom:14px}
+.pae .plan-fullname{color:var(--off)}
+.flagship .plan-fullname{color:var(--navy)}
+
+.plan-divider{height:1px;background:var(--border);margin:0 24px}
+.plan-bd{padding:20px 24px;flex:1;display:flex;flex-direction:column;gap:8px}
+.plan-ciclos{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.plan-ciclos-n{font-family:var(--cg);font-size:2rem;font-weight:700;color:var(--gold);line-height:1}
+.plan-ciclos-l{font-family:var(--mono);font-size:.54rem;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+.plan-desc{font-size:.82rem;line-height:1.68;color:var(--muted);font-weight:300;margin-bottom:8px}
+.plan-features{display:flex;flex-direction:column;gap:5px}
+.plan-feat{display:flex;align-items:flex-start;gap:8px;font-size:.78rem;color:var(--muted);font-weight:300}
+.plan-feat::before{content:'—';font-family:var(--mono);font-size:.6rem;color:var(--gold);flex-shrink:0;margin-top:2px}
+.plan-ft{padding:18px 24px;border-top:1px solid var(--border);margin-top:auto}
+.plan-badge-ft{font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:8px 18px;border-radius:999px;display:inline-block}
+.badge-ft-gold{background:rgba(184,157,82,.12);border:1px solid var(--goldbdr);color:#8B6E1E}
+.badge-ft-white{background:rgba(249,247,242,.08);border:1px solid rgba(249,247,242,.18);color:rgba(249,247,242,.7)}
+.badge-ft-tq{background:rgba(15,26,53,.15);border:1px solid rgba(15,26,53,.3);color:var(--navy)}
+.planes-claim{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;text-align:center;color:var(--muted2);margin-top:20px}
+.plan-precio{font-family:var(--cg);font-size:1.05rem;font-weight:600;color:var(--gold2);margin-top:6px;margin-bottom:16px;letter-spacing:.01em}
+.pae .plan-precio{color:var(--gold3)}
+.flagship .plan-precio{color:#0F1A35;font-weight:700}
+.plan-ciclo-def{background:rgba(184,157,82,.07);border:1px solid var(--goldbdr);border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:.78rem;line-height:1.6;color:var(--muted);font-weight:300}
+.pae .plan-ciclo-def{background:rgba(249,247,242,.06);border-color:rgba(249,247,242,.12);color:rgba(249,247,242,.5)}
+.flagship .plan-ciclo-def{background:rgba(15,26,53,.1);border-color:rgba(15,26,53,.2);color:rgba(15,26,53,.85)}
+.plan-ciclo-def strong{font-weight:500}
+.plan-cta{display:block;margin:16px 24px 20px;padding:11px 20px;border-radius:999px;text-align:center;font-family:var(--sans);font-size:.82rem;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:filter .15s,transform .15s}
+.plan-cta:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.plan-cta-gold{background:linear-gradient(135deg,var(--gold4),var(--gold));color:#0F1A35;font-weight:700;box-shadow:0 6px 18px rgba(184,157,82,.35)}
+.plan-cta-white{background:rgba(249,247,242,.1);border:1px solid rgba(249,247,242,.25);color:var(--off)}
+.plan-cta-navy{background:var(--navy);color:var(--gold3);font-weight:700;box-shadow:0 6px 18px rgba(15,26,53,.3)}
+@media(max-width:900px){.planes-grid{grid-template-columns:1fr;max-width:480px;margin-left:auto;margin-right:auto}}
+
+/* ── FLOATING CTA (all devices) ─────────────────── */
+.float-cta{position:fixed;bottom:28px;right:28px;z-index:500;opacity:0;transform:translateY(12px);transition:opacity .4s,transform .4s;pointer-events:none}
+.float-cta.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.float-cta a{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;border-radius:999px;background:linear-gradient(135deg,var(--gold4),var(--gold));color:var(--navy);font-weight:700;font-size:1rem;letter-spacing:.04em;text-decoration:none;box-shadow:0 8px 28px rgba(184,157,82,.45);white-space:nowrap}
+.float-cta a:hover{filter:brightness(1.07);transform:translateY(-2px);transition:filter .15s,transform .15s}
+@media(max-width:860px){.float-cta{bottom:72px;right:12px;left:12px}.float-cta a{justify-content:center;width:100%}}
+
+/* ── POPUP ASESORÍAS ─────────────────────────────── */
+.popup-overlay{position:fixed;inset:0;background:rgba(15,26,53,.72);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s;backdrop-filter:blur(4px)}
+.popup-overlay.open{opacity:1;pointer-events:auto}
+.popup-box{background:var(--white);border-radius:24px;max-width:480px;width:calc(100% - 32px);padding:0;overflow:hidden;box-shadow:0 32px 80px rgba(15,26,53,.35);transform:translateY(24px) scale(.97);transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.popup-overlay.open .popup-box{transform:translateY(0) scale(1)}
+.popup-hd{background:var(--navy);padding:28px 28px 22px;position:relative}
+.popup-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(249,247,242,.1);border:none;color:rgba(249,247,242,.6);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.popup-close:hover{background:rgba(249,247,242,.2)}
+.popup-ey{font-family:var(--mono);font-size:.52rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold4);margin-bottom:8px}
+.popup-ttl{font-family:var(--cg);font-size:1.6rem;font-weight:700;color:var(--off);line-height:1.1;margin-bottom:6px}
+.popup-sub{font-size:.82rem;color:rgba(249,247,242,.55);font-weight:300;line-height:1.6}
+.popup-bd{padding:24px 28px 28px}
+.popup-desc{font-size:.86rem;line-height:1.75;color:var(--muted);font-weight:300;margin-bottom:20px}
+.popup-acts{display:flex;flex-direction:column;gap:10px}
+.popup-btn-p{display:block;padding:13px 20px;border-radius:999px;background:linear-gradient(135deg,var(--gold4),var(--gold));color:var(--navy);font-weight:700;font-size:.84rem;text-align:center;text-decoration:none;letter-spacing:.04em;box-shadow:0 6px 18px rgba(184,157,82,.3)}
+.popup-btn-s{display:block;padding:12px 20px;border-radius:999px;border:1px solid var(--border);color:var(--muted);font-size:.82rem;text-align:center;text-decoration:none;transition:border-color .2s,color .2s}
+.popup-btn-s:hover{border-color:var(--goldbdr);color:var(--navy)}
+.popup-dismiss{text-align:center;margin-top:14px;font-size:.72rem;color:var(--muted2);cursor:pointer;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
+
+/* ── FAQ ─────────────────────────────────────────── */
+.faq-list{display:flex;flex-direction:column;gap:2px;border:1px solid var(--border);border-radius:18px;overflow:hidden;max-width:780px;margin:40px auto 0}
+details.faq-item{background:var(--white)}
+details.faq-item+details.faq-item{border-top:1px solid var(--border)}
+details.faq-item summary{padding:20px 24px;font-family:var(--cg);font-size:1.05rem;font-weight:600;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:background .2s,color .2s}
+details.faq-item summary::-webkit-details-marker{display:none}
+details.faq-item summary::after{content:'+';font-family:var(--mono);font-size:1.1rem;font-weight:400;color:var(--gold);flex-shrink:0;transition:transform .25s;line-height:1}
+details.faq-item:hover summary{background:var(--off)}
+details.faq-item[open] summary{background:var(--off);color:var(--gold2)}
+details.faq-item[open] summary::after{transform:rotate(45deg);color:var(--gold2)}
+.faq-bd{padding:0 24px 22px;font-size:.88rem;line-height:1.78;color:var(--muted);font-weight:300;border-top:1px solid var(--border);padding-top:16px}
+
+/* ── EL ALTA + CÍRCULO ───────────────────────────── */
+.alta-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:64px;align-items:start}
+.cert{background:var(--white);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(15,26,53,.12)}
+.cert-hd{background:var(--navy);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.cert-hl{font-family:var(--mono);font-size:.56rem;color:var(--gold4);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.cert-hr{font-family:var(--mono);font-size:.54rem;color:rgba(249,247,242,.3);letter-spacing:.06em}
+.cert-bd{padding:22px}
+.cert-ttl{font-family:var(--cg);font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:16px}
+.cert-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.cert-box{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.cert-box-l{font-family:var(--mono);font-size:.54rem;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.cert-box-v{font-family:var(--cg);font-size:.95rem;font-weight:700;color:var(--navy)}
+.cert-box-s{font-size:.7rem;color:var(--muted2);margin-top:2px}
+.cert-decision{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.cert-verdict{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cv-l{font-family:var(--mono);font-size:.58rem;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase}
+.cv-v{font-family:var(--cg);font-size:1.4rem;font-weight:700;color:var(--tq)}
+.cscore{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.cs-bar{flex:1;height:5px;background:var(--off2);border-radius:999px;overflow:hidden}
+.cs-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--tq),rgba(10,191,188,.4));border-radius:999px}
+.cs-n{font-family:var(--mono);font-size:.64rem;font-weight:600;color:var(--tq);white-space:nowrap}
+.cert-kpis{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.ckpi-col{background:var(--off);padding:10px 12px}
+.ckpi-col-h{font-family:var(--mono);font-size:.52rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.ckpi-col-h.ini{color:var(--red)}.ckpi-col-h.rev{color:var(--tq)}
+.ckpi-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;border-bottom:1px solid var(--border)}
+.ckpi-row:last-child{border-bottom:none}
+.ckpi-l{font-size:.66rem;color:var(--muted2);font-weight:300}
+.ckpi-v{font-family:var(--mono);font-size:.7rem;font-weight:700}
+.ckpi-v.bad{color:var(--red)}.ckpi-v.ok{color:var(--tq)}
+.cert-ft{display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border)}
+.cfirma{font-size:.78rem;color:var(--muted2);font-weight:300}
+.cfirma strong{display:block;color:var(--navy);font-weight:600;margin-top:2px}
+.example-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.54rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:var(--golddim);border:1px solid var(--goldbdr);color:var(--gold);margin-bottom:12px}
+@media(max-width:860px){.alta-in{grid-template-columns:1fr;gap:36px}}
+
+/* ── CÍRCULO DE EXCELENCIA ───────────────────────── */
+.circulo{margin-top:48px;padding:36px 40px;border:1px solid var(--goldbdr);border-radius:20px;background:linear-gradient(135deg,var(--golddim) 0%,rgba(249,247,242,0) 60%);display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
+.circulo-icon{width:56px;height:56px;border-radius:16px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.circulo-kicker{font-family:var(--mono);font-size:.54rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.circulo-t{font-family:var(--cg);font-size:1.25rem;font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.2}
+.circulo-d{font-size:.85rem;line-height:1.7;color:var(--muted);font-weight:300}
+.circulo-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+@media(max-width:860px){.circulo{grid-template-columns:1fr;gap:20px;padding:24px}.circulo-icon{display:none}}
+
+/* ── CTA FINAL (ESE) ─────────────────────────────── */
+.ctafin{background:var(--navy);background-image:radial-gradient(circle at 50% 0%,rgba(212,185,106,.22) 0,transparent 55%);padding:100px 40px;text-align:center;position:relative;overflow:hidden}
+.ctafin::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(249,247,242,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(249,247,242,.04) 1px,transparent 1px);background-size:56px 56px;pointer-events:none}
+.ctafin-in{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.ctafin-q{font-family:var(--cg);font-size:clamp(2.2rem,4vw,3.8rem);font-weight:700;color:var(--off);line-height:1.05;margin-bottom:16px}
+.ctafin-q em{font-style:italic;color:var(--gold3)}
+.ctafin-sub{font-size:.96rem;line-height:1.82;color:rgba(249,247,242,.65);font-weight:300;max-width:580px;margin:0 auto 28px}
+.ctafin-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.ctafin-act{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.ctafin-note{font-family:var(--mono);font-size:.56rem;color:rgba(249,247,242,.28);letter-spacing:.1em;text-transform:uppercase}
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer{background:var(--navy2);border-top:1px solid rgba(184,157,82,.15);padding:40px}
+.ft-in{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.ft-brand{font-family:var(--cg);font-size:1.1rem;font-weight:700;color:var(--off);letter-spacing:.06em}
+.ft-brand span{display:block;font-family:var(--mono);font-size:.54rem;font-weight:400;color:rgba(249,247,242,.3);letter-spacing:.1em;margin-top:3px;font-style:normal}
+.ft-links{display:flex;gap:18px;list-style:none}
+.ft-links a{font-size:.78rem;color:rgba(249,247,242,.35);text-decoration:none;transition:color .2s;min-height:44px;display:inline-flex;align-items:center}
+.ft-links a:hover{color:var(--gold2)}
+.ft-legal{font-size:.66rem;color:rgba(249,247,242,.25);font-family:var(--mono);letter-spacing:.06em}
+@media(max-width:700px){footer{padding:32px 20px 88px}.ft-in{flex-direction:column;gap:14px}}
+
+
+/* ── ABBR ────────────────────────────────────────── */
+abbr[title]{text-decoration:underline dotted var(--gold);cursor:help}
+  </style>
+</head>
+<body>
+
+<a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+<div id="pb" aria-hidden="true"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-l">
+    <span>Un sistema de</span>
+    <a href="https://www.masesora.com" class="topbar-brand">MASESORA</a>
+    <span class="topbar-tag">· La Clínica de Empresas</span>
+  </div>
+  <a href="https://www.masesora.com" class="topbar-r">← masesora.com</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav" aria-label="Navegación principal">
+  <a class="nlogo" href="#" aria-label="MASFRAME® · Inicio">
+    <div class="nlogo-hex" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#C8A84B"/><stop offset="100%" stop-color="#B89D52"/>
+          </linearGradient>
+        </defs>
+        <polygon points="12,2 20,6.5 20,17.5 12,22 4,17.5 4,6.5" fill="none" stroke="url(#nhg)" stroke-width="1.2"/>
+        <polygon points="12,5 17.5,8 17.5,16 12,19 6.5,16 6.5,8" fill="none" stroke="url(#nhg)" stroke-width="0.5" opacity="0.4"/>
+        <text x="12" y="15.5" font-family="Georgia,serif" font-size="7" font-weight="700" fill="#F9F7F2" text-anchor="middle">M</text>
+      </svg>
+    </div>
+    <div class="nlogo-text">
+      <div class="nlogo-main">MASFRAME<sup style="font-size:.5em;opacity:.55">®</sup></div>
+      <div class="nlogo-sub">La Primera Clínica de Empresas</div>
+    </div>
+  </a>
+  <div class="nright">
+    <ul class="nlinks" role="list">
+      <li><a href="#clinica">La Clínica</a></li>
+      <li><a href="#especialidades">Especialidades</a></li>
+      <li><a href="#metodologia">Equipo</a></li>
+      <li><a href="#planes">Los planes</a></li>
+      <li><a href="#alta">El Alta</a></li>
+    </ul>
+    <a href="https://ese-cc2u.onrender.com" class="nbadge" aria-label="Empezar diagnóstico gratuito en el Escáner de Salud Empresarial">
+      Diagnóstico gratuito
+    </a>
+    <a href="https://masfront.onrender.com" class="ncta">Entrar a La Clínica →</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<main id="contenido-principal">
+<section class="hero s-navy" aria-labelledby="hero-title">
+  <div class="hero-ecg" aria-hidden="true">
+    <svg viewBox="0 0 2400 80" preserveAspectRatio="none" fill="none">
+      <polyline points="0,40 100,40 140,40 170,5 200,75 230,40 280,40 360,40 400,40 430,3 460,77 490,40 540,40 640,40 680,40 710,6 740,74 770,40 820,40 960,40 1000,40 1030,4 1060,76 1090,40 1140,40 1280,40 1320,40 1350,5 1380,75 1410,40 1460,40 1600,40 1640,40 1670,3 1700,77 1730,40 1780,40 1920,40 1960,40 1990,6 2020,74 2050,40 2100,40 2240,40 2280,40 2310,4 2340,76 2370,40 2400,40"
+        stroke="#B89D52" stroke-width="1.5" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="hero-in">
+    <div>
+      <div class="h-ey">MASFRAME® · La Primera Clínica de Empresas · Protocolo C0–C6</div>
+      <h1 class="h1" id="hero-title">Tu empresa tiene <em>síntomas.</em><br>Nosotros los tratamos.</h1>
+      <p class="h-claim">No es consultoría. Es medicina empresarial.</p>
+      <p class="h-sub">El primer sistema que diagnostica exactamente qué le pasa a tu negocio, diseña el tratamiento y certifica que el problema está resuelto. Con protocolo, precisión y evidencia documentada.</p>
+      <div class="h-bullets">
+        <div class="h-b"><div class="h-b-dot" aria-hidden="true"></div><span>10 especialidades y 30 diagnósticos precisos para cualquier síntoma empresarial.</span></div>
+        <div class="h-b"><div class="h-b-dot" aria-hidden="true"></div><span>Protocolo clínico de 7 capas — sin atajos, sin interpretaciones.</span></div>
+        <div class="h-b"><div class="h-b-dot" aria-hidden="true"></div><span>Certificado de Alta que garantiza que los KPIs mejoraron y los objetivos se lograron.</span></div>
+      </div>
+      <div class="h-act">
+        <a href="https://ese.masesora.com" class="btn-gold">Empezar diagnóstico gratuito</a>
+        <a href="https://masesora.onrender.com/login" class="btn-outline-w">Entrar a La Clínica →</a>
+      </div>
+      <div class="h-counts" aria-label="Cifras clave de MASFRAME®">
+        <div class="hc">
+          <div class="hc-n" data-target="10" aria-label="10 especialidades">10</div>
+          <div class="hc-l">Especialidades</div>
+        </div>
+        <div class="hc">
+          <div class="hc-n" data-target="30" aria-label="30 diagnósticos precisos">30</div>
+          <div class="hc-l">Diagnósticos precisos</div>
+        </div>
+        <div class="hc">
+          <div class="hc-n" aria-label="Protocolo de 7 capas, de C0 a C6">C0<span aria-hidden="true">–</span>C6</div>
+          <div class="hc-l">Capas del protocolo</div>
+        </div>
+      </div>
+    </div>
+    <!-- Monitor: ejemplo visual de tratamiento activo -->
+    <div class="monitor rv" aria-label="Ejemplo de monitor de tratamiento activo en La Clínica MASFRAME®">
+      <div class="mon-hd">
+        <span class="mon-ttl">Tratamiento activo · UCI-S1</span>
+        <div class="mon-dots" aria-hidden="true">
+          <div class="mdot" style="background:#D7263D"></div>
+          <div class="mdot" style="background:var(--gold)"></div>
+          <div class="mdot" style="background:var(--tq)"></div>
+        </div>
+      </div>
+      <div class="mon-bd">
+        <div class="mon-kpis">
+          <div class="mkpi"><div class="mkpi-v c">32%</div><div class="mkpi-l">Liquidez</div></div>
+          <div class="mkpi"><div class="mkpi-v w">C3</div><div class="mkpi-l">Capa activa</div></div>
+          <div class="mkpi"><div class="mkpi-v ok">72</div><div class="mkpi-l">Precisión</div></div>
+        </div>
+        <div class="mon-layers" aria-label="Estado de las capas del protocolo">
+          <div class="mlayer"><span class="ml-c">C0</span><div class="ml-b"><div class="ml-f" style="width:100%"></div></div><span class="ml-s" style="background:rgba(10,191,188,.08);color:var(--tq)">COMPLETADO</span></div>
+          <div class="mlayer"><span class="ml-c">C1</span><div class="ml-b"><div class="ml-f" style="width:100%"></div></div><span class="ml-s" style="background:rgba(10,191,188,.08);color:var(--tq)">COMPLETADO</span></div>
+          <div class="mlayer"><span class="ml-c">C2</span><div class="ml-b"><div class="ml-f" style="width:100%"></div></div><span class="ml-s" style="background:rgba(10,191,188,.08);color:var(--tq)">COMPLETADO</span></div>
+          <div class="mlayer act"><span class="ml-c">C3</span><div class="ml-b"><div class="ml-f" style="width:65%"></div></div><span class="ml-s" style="background:var(--golddim);color:var(--gold)">EN CURSO</span></div>
+          <div class="mlayer"><span class="ml-c">C4</span><div class="ml-b"><div class="ml-f" style="width:0"></div></div><span class="ml-s" style="background:rgba(15,26,53,.04);color:var(--muted2)">PENDIENTE</span></div>
+          <div class="mlayer"><span class="ml-c">C5</span><div class="ml-b"><div class="ml-f" style="width:0"></div></div><span class="ml-s" style="background:rgba(15,26,53,.04);color:var(--muted2)">PENDIENTE</span></div>
+          <div class="mlayer"><span class="ml-c">C6</span><div class="ml-b"><div class="ml-f" style="width:0"></div></div><span class="ml-s" style="background:rgba(15,26,53,.04);color:var(--muted2)">ALTA</span></div>
+        </div>
+      </div>
+      <div class="mon-ft">
+        <span class="mon-ft-t">PRECISION CHECK · EN PROCESO</span>
+        <span class="pbadge" aria-label="Precision Check: 72 de 100">72 / 100</span>
+      </div>
+      <div class="mon-example" aria-hidden="true">Ejemplo real de tratamiento activo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 1. LA CLÍNICA ── -->
+<section class="s-off" id="clinica" aria-labelledby="clinica-title">
+  <div class="si">
+    <div class="rv" style="max-width:640px;margin:0 auto 0;text-align:center">
+      <div class="ey">¿Cuál es tu situación?</div>
+      <h2 class="h2" id="clinica-title">Tu empresa tiene síntomas.<br><em>Nosotros sabemos cuáles son.</em></h2>
+    </div>
+    <div class="clinica-qs">
+      <div class="cq cq-red rv d1">
+        <div class="cq-q">¿La caja no llega a fin de mes?</div>
+        <div class="cq-line">Liquidez crítica, tensión de caja o riesgo real de insolvencia. Cada día sin intervención es un día más de pérdida.</div>
+        <span class="cq-tag">Urgencias · Intervención inmediata</span>
+      </div>
+      <div class="cq cq-gold rv d2">
+        <div class="cq-q">¿Facturáis, pero no crecéis?</div>
+        <div class="cq-line">El negocio funciona, pero no avanza. Hay esfuerzo, hay clientes, pero el siguiente nivel no llega.</div>
+        <span class="cq-tag">Techo invisible · Diagnóstico de bloqueo</span>
+      </div>
+      <div class="cq cq-purple rv d3">
+        <div class="cq-q">¿Cada cliente nuevo genera más caos que margen?</div>
+        <div class="cq-line">Crecéis, pero el sistema no aguanta. Más trabajo, mismos resultados. La rentabilidad se diluye.</div>
+        <span class="cq-tag">Caos del crecimiento · Reestructuración</span>
+      </div>
+      <div class="cq cq-tq rv d4">
+        <div class="cq-q">¿Quieres que funcione sin ti?</div>
+        <div class="cq-line">Jubilación, venta, traspaso o franquicia. La empresa tiene que valer y sobrevivir sin depender de su fundador.</div>
+        <span class="cq-tag">Legado y traspaso · Protocolo de salida</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. ESPECIALIDADES ── -->
+<section class="s-navy s-esp" id="especialidades" aria-labelledby="esp-title">
+  <div class="si">
+    <div class="esp-hd rv">
+      <div class="ey">Nuestra oferta</div>
+      <div class="esp-primero" aria-label="El primer sistema con este nivel de detalle">
+        <span aria-hidden="true">◎</span> El primero con este nivel de detalle clínico
+      </div>
+      <h2 class="h2" id="esp-title">10 especialidades.<br><em>30 diagnósticos precisos.</em></h2>
+      <p class="lead" style="margin-top:10px;max-width:620px;margin-left:auto;margin-right:auto">Cada especialidad mapea un área concreta de tu negocio. Cada diagnóstico identifica una causa raíz tratable. Ninguna consultora convencional tiene este nivel de precisión clínica.</p>
+    </div>
+    <div class="esp-grid rv d2" role="list" aria-label="Las 10 especialidades clínicas de MASFRAME®">
+      <div class="esp c rv" role="listitem" tabindex="0" aria-label="UCI Financiera — Finanzas">
+        <div class="esp-top"><div class="esp-nom">UCI Financiera</div><span class="esp-dept">Finanzas</span></div>
+        <div class="esp-lema">"Si el flujo de caja no es el adecuado, todo falla."</div>
+        <div class="esp-expl">Aquí tratamos los casos donde la empresa ya no puede permitirse un error más. Estabilizamos la liquidez como si fuera un órgano vital.</div>
+        <div class="esp-pills"><span class="pill">Hemorragia de Liquidez</span><span class="pill">Hemorragia de Rentabilidad</span><span class="pill">Punto Ciego de Costes</span></div>
+      </div>
+      <div class="esp w rv" role="listitem" tabindex="0" aria-label="Unidad de Procesos — Procesos">
+        <div class="esp-top"><div class="esp-nom">Unidad de Procesos</div><span class="esp-dept">Procesos</span></div>
+        <div class="esp-lema">"Si todo tarda, estás perdiendo dinero sin notarlo."</div>
+        <div class="esp-expl">Cuellos de botella, urgencias constantes y desgaste operativo ralentizan tu empresa. Reordenamos y simplificamos tu sistema operativo.</div>
+        <div class="esp-pills"><span class="pill">Esclerosis Operativa</span><span class="pill">Colapso de Capacidad</span><span class="pill">Fuga de Calidad Crónica</span></div>
+      </div>
+      <div class="esp w rv" role="listitem" tabindex="0" aria-label="Cardiología Comercial — Comercial">
+        <div class="esp-top"><div class="esp-nom">Cardiología Comercial</div><span class="esp-dept">Comercial</span></div>
+        <div class="esp-lema">"Si no conviertes, no creces."</div>
+        <div class="esp-expl">El corazón comercial de tu empresa late más lento de lo que debería. Reactivamos tu pulso comercial con diagnóstico preciso y tratamiento estructurado.</div>
+        <div class="esp-pills"><span class="pill">Arritmia Comercial</span><span class="pill">Dependencia Crítica de Clientes</span><span class="pill">Síndrome de Oferta Difusa</span></div>
+      </div>
+      <div class="esp w rv" role="listitem" tabindex="0" aria-label="Neurología Estratégica — Estrategia">
+        <div class="esp-top"><div class="esp-nom">Neurología Estratégica</div><span class="esp-dept">Estrategia</span></div>
+        <div class="esp-lema">"Sin dirección clara, cualquier esfuerzo se diluye."</div>
+        <div class="esp-expl">Falta foco, claridad y dirección. Ordenamos la mente estratégica del negocio para activar decisiones rentables y sostenibles.</div>
+        <div class="esp-pills"><span class="pill">Amnesia Estratégica</span><span class="pill">Dispersión Directiva</span><span class="pill">Síndrome de Decisión Reactiva</span></div>
+      </div>
+      <div class="esp o rv" role="listitem" tabindex="0" aria-label="Gestión Clínica — Gestión">
+        <div class="esp-top"><div class="esp-nom">Gestión Clínica</div><span class="esp-dept">Gestión</span></div>
+        <div class="esp-lema">"Funcionar no es lo mismo que sostenerse."</div>
+        <div class="esp-expl">Sistemas forzados, personas agotadas y estructuras al límite. Rehabilitamos la organización para que funcione sin depender de la urgencia.</div>
+        <div class="esp-pills"><span class="pill">Ceguera de Control</span><span class="pill">Riesgo de Cumplimiento</span><span class="pill">Fragilidad de Roles y Responsabilidades</span></div>
+      </div>
+      <div class="esp o rv" role="listitem" tabindex="0" aria-label="Cirugía de Marca — Marca">
+        <div class="esp-top"><div class="esp-nom">Cirugía de Marca</div><span class="esp-dept">Marca</span></div>
+        <div class="esp-lema">"Si no destacas, te comparan por precio."</div>
+        <div class="esp-expl">Identidades que no reflejan el verdadero valor de la empresa. Intervenimos la marca con precisión quirúrgica para que transmita lo que vale.</div>
+        <div class="esp-pills"><span class="pill">Identidad Competitiva Débil</span><span class="pill">Propuesta Única Difusa</span><span class="pill">Comunicación de Marca Inconsistente</span></div>
+      </div>
+      <div class="esp c rv" role="listitem" tabindex="0" aria-label="Psiquiatría Organizacional — Organizacional">
+        <div class="esp-top"><div class="esp-nom">Psiquiatría Organizacional</div><span class="esp-dept">Organizacional</span></div>
+        <div class="esp-lema">"La tensión interna siempre termina saliendo."</div>
+        <div class="esp-expl">Conflictos latentes, desgaste emocional y clima deteriorado. Restauramos el equilibrio y la salud organizacional del equipo.</div>
+        <div class="esp-pills"><span class="pill">Sobrecarga Emocional Operativa</span><span class="pill">Desalineación de Perfiles</span><span class="pill">Desconexión Emocional del Equipo</span></div>
+      </div>
+      <div class="esp c rv" role="listitem" tabindex="0" aria-label="Rescate de Personas — Personas">
+        <div class="esp-top"><div class="esp-nom">Rescate de Personas</div><span class="esp-dept">Personas</span></div>
+        <div class="esp-lema">"El talento no avisa cuando se va."</div>
+        <div class="esp-expl">Personas clave mal ubicadas, desgaste silencioso y riesgo real de fuga. Intervenimos con diagnóstico individual antes de que sea demasiado tarde.</div>
+        <div class="esp-pills"><span class="pill">Riesgo de Fuga de Talento</span><span class="pill">Hipoproductividad Sistémica</span><span class="pill">Fragilidad por Dependencia Crítica</span></div>
+      </div>
+      <div class="esp o rv" role="listitem" tabindex="0" aria-label="Terapia de Experiencia — Experiencia">
+        <div class="esp-top"><div class="esp-nom">Terapia de Experiencia</div><span class="esp-dept">Experiencia</span></div>
+        <div class="esp-lema">"Si no te recuerdan, te reemplazan."</div>
+        <div class="esp-expl">Procesos que no transmiten valor, fricción innecesaria y experiencias olvidables. Transformamos la experiencia del cliente en un diferencial competitivo.</div>
+        <div class="esp-pills"><span class="pill">Inconsistencia Experiencial</span><span class="pill">Recuperación en Caliente Fallida</span><span class="pill">Bajo Valor Percibido</span></div>
+      </div>
+      <div class="esp g rv" role="listitem" tabindex="0" aria-label="Excelencia Operativa — Excelencia">
+        <div class="esp-top"><div class="esp-nom">Excelencia Operativa</div><span class="esp-dept">Excelencia</span></div>
+        <div class="esp-lema">"Tu empresa está lista para consolidar su excelencia."</div>
+        <div class="esp-expl">Para empresas que ya han demostrado que pueden crecer y ahora deben mantenerse arriba. Consolidamos estándares de alto rendimiento y acceso al Círculo de Excelencia.</div>
+        <div class="esp-pills"><span class="pill">Lentitud de Integración</span><span class="pill">Dependencia Crítica del Líder</span><span class="pill">Ritmo Operativo Irregular</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3. PROTOCOLO ── -->
+<section class="s-off" id="protocolo" aria-labelledby="protocolo-title">
+  <div class="si">
+    <div class="proto-hd">
+      <div class="rv">
+        <div class="ey">El protocolo</div>
+        <h2 class="h2" id="protocolo-title">7 capas.<br><em>Un resultado verificable.</em></h2>
+        <div class="rule" aria-hidden="true"></div>
+        <p class="lead">El mismo protocolo para cada tratamiento, sin excepciones. Cada capa tiene entradas y salidas concretas. Lo que no se mide en C0 no puede certificarse en C6. Ningún paso se salta. Ningún resultado queda a la interpretación.</p>
+      </div>
+      <div class="rv d2">
+        <div class="claim">"Lo que no se mide, no existe. Lo que no se certifica, no ocurrió."</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
+          <span class="chip chip-tq">C0–C2 · Diagnóstico</span>
+          <span class="chip chip-gold">C3–C4 · Tratamiento</span>
+          <span class="chip" style="background:rgba(124,92,191,.08);border:1px solid rgba(124,92,191,.2);color:var(--purple)">C5–C6 · Alta</span>
+        </div>
+      </div>
+    </div>
+    <div class="tramos rv">
+      <div class="tramo tramo-1">
+        <div class="tramo-label">C0 – C2 · Diagnóstico</div>
+        <div class="capas">
+          <div class="capa"><div class="cline"><div class="ccirc">C0</div></div><div class="ccont"><div class="ctag">Inputs iniciales</div><div class="cname">Medimos. Lo que no existe en un número, no existe.</div><p class="cdesc">KPI base, fecha y contexto de partida. El punto de referencia contra el que se mide todo. Sin C0 no hay tratamiento posible.</p></div></div>
+          <div class="capa"><div class="cline"><div class="ccirc">C1</div></div><div class="ccont"><div class="ctag">Priorización</div><div class="cname">Focalizamos. No todos los síntomas tienen el mismo peso clínico.</div><p class="cdesc">Selección de las causas más relevantes. El sistema propone, el <abbr title="Agente de Cambio Interno">ACI</abbr> decide, el <abbr title="Consultor Clínico Certificado">CC</abbr> valida.</p></div></div>
+          <div class="capa"><div class="cline"><div class="ccirc">C2</div></div><div class="ccont"><div class="ctag">Decisiones</div><div class="cname">Comprometemos. Una decisión no ejecutada no es una decisión.</div><p class="cdesc">Evaluación de opciones y decisión comprometida. No se avanza sin una acción concreta, con responsable y consecuencia medible.</p></div></div>
+        </div>
+      </div>
+      <div class="tramo tramo-2">
+        <div class="tramo-label">C3 – C4 · Tratamiento</div>
+        <div class="capas">
+          <div class="capa"><div class="cline"><div class="ccirc">C3</div></div><div class="ccont"><div class="ctag">Comprensión · Capa crítica</div><div class="cname">Diagnosticamos. El cuello de botella real, no el aparente.</div><p class="cdesc">Diagnóstico profundo del obstáculo principal. Análisis de flujo, causa-raíz o journey según el tipo de síntoma.</p></div></div>
+          <div class="capa"><div class="cline"><div class="ccirc">C4</div></div><div class="ccont"><div class="ctag">Cambio</div><div class="cname">Planificamos. Con responsables, fechas y métricas reales.</div><p class="cdesc">Plan de acción estructurado. No hay plan que no pueda medirse. No hay acción sin responsable nominal.</p></div></div>
+        </div>
+      </div>
+      <div class="tramo tramo-3">
+        <div class="tramo-label">C5 – C6 · Alta clínica</div>
+        <div class="capas">
+          <div class="capa"><div class="cline"><div class="ccirc">C5</div></div><div class="ccont"><div class="ctag">Ejecución</div><div class="cname">Ejecutamos. El plan que no se convierte en checklist no se ejecuta.</div><p class="cdesc">Checklist con seguimiento de tareas y porcentaje de avance. La ejecución es lo único real.</p></div></div>
+          <div class="capa"><div class="cline"><div class="ccirc">C6</div></div><div class="ccont"><div class="ctag">Alta clínica · Certificación</div><div class="cname">Certificamos. Con evidencia, KPIs y Precision Check.</div><p class="cdesc">Evidencias documentadas, OKRs verificados y Precision Check automático. Si el score supera los criterios, el <abbr title="Consultor Clínico Certificado">CC</abbr> emite el Certificado de Alta oficial.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4. EQUIPO CLÍNICO ── -->
+<section class="s-off" id="metodologia" aria-labelledby="equipo-title">
+  <div class="si">
+    <div class="rv" style="max-width:680px;margin:0 auto 40px;text-align:center">
+      <div class="ey">El equipo clínico</div>
+      <h2 class="h2" id="equipo-title">Tu empresa ejecuta.<br><em>Nuestros especialistas certifican.</em></h2>
+      <p class="lead" style="margin-top:10px">No mandamos a un consultor externo a pasar semanas en tu empresa. MASFRAME® funciona desde dentro, con tu propio equipo guiado por el sistema y validado por nuestros especialistas certificados.</p>
+    </div>
+    <div class="roles-2">
+          <div class="role rv d1">
+            <div class="role-ic" style="background:rgba(10,191,188,.08)" aria-hidden="true"><span style="font-family:var(--mono);font-size:.62rem;font-weight:700;color:var(--tq)">ACI</span></div>
+            <div>
+              <div class="role-t" style="color:var(--tq)"><abbr title="Agente de Cambio Interno">ACI</abbr> · Agente de Cambio Interno</div>
+              <p class="role-d">Persona de tu propio equipo. El sistema le indica qué analizar, qué decidir y cómo documentarlo en cada capa. No necesita experiencia consultora previa. El sistema es el experto.</p>
+              <div class="note">Ejecuta C0–C6 · Guiado por el sistema</div>
+            </div>
+          </div>
+          <div class="role rv d2">
+            <div class="role-ic" style="background:var(--golddim)" aria-hidden="true"><span style="font-family:var(--mono);font-size:.62rem;font-weight:700;color:var(--gold)">CC</span></div>
+            <div>
+              <div class="role-t" style="color:var(--gold)"><abbr title="Consultor Clínico Certificado">CC</abbr> · Consultor Clínico Certificado</div>
+              <p class="role-d">Especialista certificado en MASFRAME®. Supervisa el tratamiento, valida las capas críticas y firma el Certificado de Alta cuando el Precision Check es favorable.</p>
+              <div class="note">Supervisión estratégica · Firma el alta</div>
+            </div>
+          </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4b. GARANTÍAS DEL MASFRAME® ── -->
+<section class="s-white" id="garantias" aria-labelledby="garantias-title">
+  <div class="si">
+    <div class="rv" style="max-width:680px;margin:0 auto 40px;text-align:center">
+      <div class="ey">Lo que nos diferencia</div>
+      <h2 class="h2" id="garantias-title">Garantías del MASFRAME®</h2>
+      <p class="lead" style="margin-top:10px">No es lo que prometemos. Es lo que el sistema certifica.</p>
+    </div>
+    <div class="dif-bullets" style="max-width:780px;margin:0 auto">
+          <div class="dif-b rv d1">
+            <div class="dif-b-num" aria-hidden="true">01</div>
+            <div>
+              <div class="dif-b-t">El alta se gana con datos, no con tiempo</div>
+              <div class="dif-b-d">Al contratar un síntoma se definen en contrato los KPIs de partida y un periodo de tratamiento — variable según tamaño de empresa y síntoma. Al cierre, el sistema compara KPIs iniciales y finales, revisa las evidencias del <abbr title="Agente de Cambio Interno">ACI</abbr> y emite el veredicto. Si los criterios se cumplen, el <abbr title="Consultor Clínico Certificado">CC</abbr> firma el alta.</div>
+            </div>
+          </div>
+          <div class="dif-b rv d2">
+            <div class="dif-b-num" aria-hidden="true">02</div>
+            <div>
+              <div class="dif-b-t">Precio fijo por tratamiento</div>
+              <div class="dif-b-d">Sabes exactamente lo que pagas antes de empezar. Sin horas facturables, sin sorpresas al final, sin informes que nadie implementa.</div>
+            </div>
+          </div>
+          <div class="dif-b rv d3">
+            <div class="dif-b-num" aria-hidden="true">03</div>
+            <div>
+              <div class="dif-b-t">No invadimos la intimidad del negocio</div>
+              <div class="dif-b-d">El <abbr title="Agente de Cambio Interno">ACI</abbr> ejecuta el protocolo desde dentro de tu empresa. El <abbr title="Consultor Clínico Certificado">CC</abbr> supervisa, valida y firma el alta. Sin consultores externos que pasen semanas en tu empresa. Sin acceso a lo que no necesitan ver.</div>
+            </div>
+          </div>
+          <div class="dif-b rv d4">
+            <div class="dif-b-num" aria-hidden="true">04</div>
+            <div>
+              <div class="dif-b-t">El mismo protocolo, sin excepciones</div>
+              <div class="dif-b-d">No hay interpretaciones. No hay atajos. Las 7 capas siempre en orden, siempre con entradas y salidas concretas. Lo que no se mide en C0 no puede certificarse en C6.</div>
+            </div>
+          </div>
+          <div class="dif-b rv" style="border-left:3px solid var(--tq)">
+            <div class="dif-b-num" style="color:var(--tq)" aria-hidden="true">05</div>
+            <div>
+              <div class="dif-b-t">Si el protocolo no funciona, no asumes el coste</div>
+              <div class="dif-b-d">En la semana 6 el <strong style="font-weight:500;color:var(--navy)">Precision Check</strong> — el motor automático que evalúa la coherencia entre las 7 capas y los KPIs — emite el veredicto. Si el <abbr title="Agente de Cambio Interno">ACI</abbr> ha cumplido con las evidencias y los objetivos no se han alcanzado, ampliamos hasta 3 meses sin coste. Si tras ese periodo adicional el KPI maestro sigue sin cumplirse, devolvemos el importe íntegro. Sin negociación. Sin interpretaciones.</div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. PLANES DE INTERVENCIÓN ── -->
+<section class="s-off" id="planes" aria-labelledby="planes-title">
+  <div class="si">
+    <div class="rv" style="text-align:center;max-width:680px;margin:0 auto">
+      <div class="ey">Los planes de intervención</div>
+      <h2 class="h2" id="planes-title">El diagnóstico clasifica la urgencia.<br><em>El plan define el nivel de intervención.</em></h2>
+      <p class="lead" style="margin-top:12px">Tras el diagnóstico inicial, el sistema determina qué plan se ajusta a tu caso. Tres niveles de intervención clínica. El precio lo define el alcance y el riesgo, nunca las horas.</p>
+    </div>
+    <div class="planes-grid">
+
+      <!-- PRE -->
+      <div class="plan-card rv d1">
+        <div class="plan-hd">
+          <div class="plan-name">PRE</div>
+          <div class="plan-fullname">Plan de Rescate Estructural</div>
+          <div class="plan-precio">Desde 399 €</div>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-bd">
+          <div class="plan-ciclos">
+            <div class="plan-ciclos-n" style="font-size:2.6rem">1</div>
+            <div class="plan-ciclos-l">Ciclo<br>clínico</div>
+          </div>
+          <div class="plan-ciclo-def"><strong>¿Qué es un ciclo clínico?</strong> Un ciclo es un tratamiento completo de un síntoma a través de las 7 capas del protocolo (C0–C6), con KPIs de entrada y salida verificados.</div>
+          <p class="plan-desc">Se activa cuando la viabilidad de la empresa está comprometida. Liquidez en riesgo, desequilibrio estructural severo o riesgo de insolvencia. El objetivo es detener el daño y garantizar la continuidad.</p>
+          <div class="plan-features">
+            <div class="plan-feat">Intervención estructural de impacto inmediato</div>
+            <div class="plan-feat">Estabilización de caja y reestructuración de deuda</div>
+            <div class="plan-feat">Base clínica para acceder a PAE o PIE</div>
+          </div>
+        </div>
+        <div class="plan-ft">
+          <span class="plan-badge-ft badge-ft-gold">Plan de Rescate Estructural</span>
+        </div>
+        <a href="https://ese.masesora.com" class="plan-cta plan-cta-gold">Empezar diagnóstico →</a>
+      </div>
+
+      <!-- PAE -->
+      <div class="plan-card pae rv d2">
+        <div class="plan-hd">
+          <div class="plan-name">PAE</div>
+          <div class="plan-fullname">Plan de Actuación Estratégica</div>
+          <div class="plan-precio">Desde 999 €</div>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-bd">
+          <div class="plan-ciclos">
+            <div class="plan-ciclos-n" style="font-size:2.6rem">2</div>
+            <div class="plan-ciclos-l">Ciclos<br>clínicos</div>
+          </div>
+          <div class="plan-ciclo-def"><strong>2 ciclos = 2 síntomas tratados</strong> de principio a fin, con sus KPIs, evidencias y veredicto del Precision Check. Cada ciclo tiene su propio Certificado de Alta.</div>
+          <p class="plan-desc">Para empresas con síntomas claros y controlables, sin crisis inmediata. El objetivo es definir dirección, intervenir antes del colapso y estabilizar lo que está en escalada.</p>
+          <div class="plan-features">
+            <div class="plan-feat">Diagnóstico ampliado + intervención focalizada en hasta 6 síntomas</div>
+            <div class="plan-feat">Corrección, ajuste y optimización preventiva</div>
+            <div class="plan-feat">Alta capacidad de intervención clínica estructurada</div>
+          </div>
+        </div>
+        <div class="plan-ft">
+          <span class="plan-badge-ft badge-ft-white">Plan de Actuación Estratégica</span>
+        </div>
+        <a href="https://ese.masesora.com" class="plan-cta plan-cta-white">Empezar diagnóstico →</a>
+      </div>
+
+      <!-- PIE (flagship) -->
+      <div class="plan-card flagship rv d3">
+        <div class="plan-hd">
+          <div class="plan-flagship-badge">Flagship clínico</div>
+          <div class="plan-name">PIE</div>
+          <div class="plan-fullname">Plan de Impulso Empresarial</div>
+          <div class="plan-precio">Desde 1.499 €</div>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-bd">
+          <div class="plan-ciclos">
+            <div class="plan-ciclos-n" style="font-size:2.6rem">3</div>
+            <div class="plan-ciclos-l">Ciclos<br>clínicos</div>
+          </div>
+          <div class="plan-ciclo-def"><strong>3 ciclos con garantía total.</strong> Si tras los ciclos los KPIs no mejoran, ampliamos hasta 3 meses sin coste. Si aun así no se alcanzan, devolución íntegra. Sin negociación.</div>
+          <p class="plan-desc">Para cuando no te puedes permitir fallar ni perder más tiempo, margen u oportunidad. Intervención clínica intensiva con garantía total sobre el KPI maestro.</p>
+          <div class="plan-features">
+            <div class="plan-feat">Diagnóstico profundo, intervención intensiva y consolidación</div>
+            <div class="plan-feat">Intervención clínica multisistémica de máxima profundidad</div>
+            <div class="plan-feat">Garantía total: extensión sin coste o devolución íntegra</div>
+          </div>
+        </div>
+        <div class="plan-ft">
+          <span class="plan-badge-ft badge-ft-tq">Garantía total</span>
+        </div>
+        <a href="https://ese.masesora.com" class="plan-cta plan-cta-navy">Empezar diagnóstico →</a>
+      </div>
+
+    </div>
+    <p class="planes-claim rv">El escáner clasifica la urgencia · La propuesta económica se presenta tras el diagnóstico</p>
+  </div>
+</section>
+
+<!-- ── 6. EL ALTA ── -->
+<section class="s-off" id="alta" aria-labelledby="alta-title">
+  <div class="si">
+    <div class="alta-in">
+      <div class="rv">
+        <div class="ey">El resultado</div>
+        <h2 class="h2" id="alta-title" style="margin-bottom:14px">El único sistema que certifica <em>que funcionó.</em></h2>
+        <p class="lead">El Certificado de Alta no es un documento de cortesía. Es evidencia de que el tratamiento superó los criterios clínicos, que los KPIs iniciales mejoraron y que el problema está resuelto. Puedes mostrárselo a tu equipo, a tus inversores, a tu banco.</p>
+        <div class="claim rv d2">"Un alta clínica no se emite porque el tiempo pasó. Se emite porque los números lo demuestran."</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px" class="rv d3">
+          <span class="chip chip-tq">Precision Check automático</span>
+          <span class="chip chip-gold">KPIs verificados</span>
+          <span class="chip chip-off">Certificado oficial</span>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="example-tag" aria-label="Esto es un ejemplo real de Certificado de Alta MASFRAME®">
+          <span aria-hidden="true">◎</span> Ejemplo de Certificado de Alta
+        </div>
+        <div class="cert" role="img" aria-label="Ejemplo de Certificado de Alta Clínica MASFRAME®: Hemorragia de Liquidez tratada, Precision Check EXCELENTE, score 100 de 100">
+          <div class="cert-hd">
+            <div class="cert-hl">MASFRAME® · CERTIFICADO DE ALTA</div>
+            <div class="cert-hr">REF: UCI-S1-2026-0042</div>
+          </div>
+          <div class="cert-bd">
+            <div class="cert-ttl">Certificado de Alta Clínica</div>
+            <div class="cert-row2">
+              <div class="cert-box">
+                <div class="cert-box-l">Síntoma tratado</div>
+                <div class="cert-box-v">Hemorragia de Liquidez</div>
+                <div class="cert-box-s">UCI-S1 · UCI Financiera</div>
+              </div>
+              <div class="cert-box">
+                <div class="cert-box-l">Protocolo completado</div>
+                <div class="cert-box-v">C0 → C1 → C2 → C3 → C4 → C5 → C6</div>
+                <div class="cert-box-s">7 capas · coherencia verificada</div>
+              </div>
+            </div>
+            <div class="cert-kpis">
+              <div class="ckpi-col">
+                <div class="ckpi-col-h ini">KPIs iniciales · C0</div>
+                <div class="ckpi-row"><span class="ckpi-l">Ratio de liquidez</span><span class="ckpi-v bad">0.6</span></div>
+                <div class="ckpi-row"><span class="ckpi-l">DSO (días cobro)</span><span class="ckpi-v bad">67 d</span></div>
+                <div class="ckpi-row"><span class="ckpi-l">Cobros &gt;90 días</span><span class="ckpi-v bad">38%</span></div>
+              </div>
+              <div class="ckpi-col">
+                <div class="ckpi-col-h rev">KPIs al alta · C6</div>
+                <div class="ckpi-row"><span class="ckpi-l">Ratio de liquidez</span><span class="ckpi-v ok">1.4</span></div>
+                <div class="ckpi-row"><span class="ckpi-l">DSO (días cobro)</span><span class="ckpi-v ok">31 d</span></div>
+                <div class="ckpi-row"><span class="ckpi-l">Cobros &gt;90 días</span><span class="ckpi-v ok">9%</span></div>
+              </div>
+            </div>
+            <div class="cert-decision">
+              <div class="cert-box-l">Decisión comprometida</div>
+              <div style="font-family:var(--cg);font-size:.88rem;line-height:1.6;color:var(--muted);font-style:italic;margin-top:5px">"Reestructuración del ciclo de cobro con automatización de recordatorios y revisión de condiciones de pago a clientes clave."</div>
+            </div>
+            <div class="cert-verdict">
+              <div class="cv-l">Veredicto Precision Check</div>
+              <div class="cv-v">EXCELENTE</div>
+            </div>
+            <div class="cscore">
+              <div class="cs-bar"><div class="cs-fill"></div></div>
+              <span class="cs-n">Score: 100 / 100</span>
+            </div>
+            <div class="cert-ft">
+              <div class="cfirma">Emitido por<strong>Consultor Clínico Certificado</strong></div>
+              <div class="cfirma" style="text-align:right">Fecha de alta<strong>13 / 03 / 2026</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Círculo de Excelencia Operativa -->
+    <div class="circulo rv">
+      <div class="circulo-icon" aria-hidden="true"><span style="font-family:var(--mono);font-size:.56rem;font-weight:700;color:var(--gold);letter-spacing:.05em">CEO</span></div>
+      <div>
+        <div class="circulo-kicker">Post-alta · En desarrollo</div>
+        <div class="circulo-t">El Círculo de Excelencia Operativa.</div>
+        <p class="circulo-d">Los empresarios que obtienen su Certificado de Alta entran en el <strong style="font-weight:500;color:var(--navy)">Círculo de Excelencia Operativa</strong>: un espacio entre pares donde compartir lo que funcionó, construir con criterio y acceder a formación de alto nivel. Sin ventas. Sin coaches. Solo empresarios que ya han demostrado que sus números mejoran cuando trabajan con método.</p>
+        <div class="circulo-chips">
+          <span class="chip chip-gold">Acceso por alta certificada</span>
+          <span class="chip chip-off">Pares que han pasado por el protocolo</span>
+          <span class="chip chip-off">Formación aplicada</span>
+          <span class="chip chip-off" style="background:rgba(10,191,188,.07);border-color:var(--tqbdr);color:var(--tq)">Próximamente</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 7. FAQ ── -->
+<section class="s-white" id="faq" aria-labelledby="faq-title">
+  <div class="si">
+    <div class="rv" style="text-align:center;max-width:680px;margin:0 auto">
+      <div class="ey">Preguntas frecuentes</div>
+      <h2 class="h2" id="faq-title">Es un sistema único.<br><em>Las dudas también lo son.</em></h2>
+      <p class="lead" style="margin-top:10px">No hay otro sistema como MASFRAME®. Aquí resolvemos las preguntas que más se repiten cuando algo así no existía antes.</p>
+    </div>
+    <div class="faq-list rv d1">
+      <details class="faq-item">
+        <summary>¿Quién puede ser el ACI en mi empresa?</summary>
+        <div class="faq-bd">Cualquier persona de tu equipo. No necesita experiencia consultora previa ni formación específica. MASFRAME® le guía paso a paso en cada capa del protocolo, indicándole exactamente qué analizar, qué decidir y cómo documentarlo. El sistema es el experto; el <abbr title="Agente de Cambio Interno">ACI</abbr> ejecuta.</div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cuánto dura un tratamiento?</summary>
+        <div class="faq-bd">Depende del síntoma elegido y del tamaño de la empresa. El periodo exacto se define en contrato antes de empezar — nunca hay sorpresas. Al cierre de ese periodo, el sistema compara los KPIs iniciales con los actuales y emite el veredicto clínico de alta.</div>
+      </details>
+      <details class="faq-item">
+        <summary>¿La garantía aplica a todos los planes?</summary>
+        <div class="faq-bd">No. La garantía total — extensión sin coste hasta 3 meses adicionales y, si procede, devolución íntegra — es exclusiva del <strong style="font-weight:500;color:var(--navy)">PIE – Plan de Impulso Empresarial</strong>. El PRE y el PAE no incluyen garantía de resultado ligada a ciclos clínicos.</div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Tengo que dejar a mi asesor o consultor actual?</summary>
+        <div class="faq-bd">No. MASFRAME® no sustituye a tu asesor fiscal, laboral ni a ningún consultor externo. Trabaja desde dentro de tu empresa con tu propio equipo, sin acceso a lo que no necesita ver. Añade un protocolo clínico estructurado que ningún servicio de consultoría convencional puede ofrecer.</div>
+      </details>
+      <details class="faq-item">
+        <summary>¿El Escáner de Salud Empresarial genera algún compromiso?</summary>
+        <div class="faq-bd">Ninguno. El <abbr title="Escáner de Salud Empresarial">ESE</abbr> es completamente gratuito, no requiere tarjeta de crédito ni compromiso de contratación. Al finalizar recibes un informe preliminar con las áreas de mayor riesgo, el nivel de urgencia y la recomendación de plan. Sin presión comercial.</div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué ocurre si el Precision Check no aprueba el alta?</summary>
+        <div class="faq-bd">El protocolo no se cierra. Si el score no alcanza el umbral ÓPTIMO o EXCELENTE, el tratamiento se extiende hasta que las capas sean coherentes. En el plan PIE, esa extensión no tiene coste adicional — está cubierta por la garantía. El alta solo se emite cuando el sistema lo certifica, sin excepciones.</div>
+      </details>
+      <details class="faq-item">
+        <summary>¿MASFRAME® funciona para cualquier tipo de empresa?</summary>
+        <div class="faq-bd">MASFRAME® está diseñado para empresas en funcionamiento, con facturación activa y al menos una persona interna capaz de asumir el rol de <abbr title="Agente de Cambio Interno">ACI</abbr>. No es un programa de creación de empresas ni de formación genérica. Funciona mejor en empresas que ya tienen síntomas claros — y que quieren resolverlos con rigor, no con intuición.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ── 8. CTA FINAL ── -->
+<section class="ctafin">
+  <div class="ctafin-in">
+    <div class="ey rv">El primer paso</div>
+    <h2 class="ctafin-q rv d1">¿Cuánto le está costando a tu empresa <em>no hacer nada?</em></h2>
+    <p class="ctafin-sub rv d2">El Escáner de Salud Empresarial es gratuito. En 10 minutos tienes el cuadro clínico completo de tu empresa: qué está fallando, con qué nivel de urgencia y qué especialidad necesita intervención inmediata.</p>
+    <div class="ctafin-chips rv d3">
+      <span class="chip chip-tq">✓ Gratuito</span>
+      <span class="chip chip-dim">Sin tarjeta</span>
+      <span class="chip chip-dim">10 minutos</span>
+      <span class="chip chip-gold">Código de acceso incluido</span>
+    </div>
+    <div class="ctafin-act rv d3">
+      <a href="https://ese.masesora.com" class="btn-gold" style="font-size:.92rem;padding:13px 28px">Empezar diagnóstico clínico</a>
+      <a href="https://masesora.onrender.com/login" class="btn-outline-w">Entrar a La Clínica →</a>
+    </div>
+    <p class="ctafin-note rv d4">Sin compromiso · Resultado inmediato · Código de acceso incluido</p>
+  </div>
+</section>
+
+<!-- ── FLOATING CTA ── -->
+<div class="float-cta" id="floatCta" aria-live="polite">
+  <a href="https://ese.masesora.com" aria-label="Empezar diagnóstico clínico gratuito">
+    Empezar diagnóstico clínico
+  </a>
+</div>
+
+<!-- ── POPUP ASESORÍAS ── -->
+<div class="popup-overlay" id="popupOverlay" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+  <div class="popup-box">
+    <div class="popup-hd">
+      <button class="popup-close" id="popupClose" aria-label="Cerrar">&times;</button>
+      <div class="popup-ey">Para asesorías · Modelo SaaS</div>
+      <div class="popup-ttl" id="popup-title">¿Eres una asesoría?</div>
+      <div class="popup-sub">Convierte tu despacho en una Clínica Empresarial con el sistema MASFRAME®.</div>
+    </div>
+    <div class="popup-bd">
+      <p class="popup-desc">MASFRAME® está disponible como plataforma SaaS para asesorías y despachos profesionales que quieran ofrecer diagnóstico clínico a sus clientes bajo su propia marca. Deja de vender horas. Empieza a certificar resultados.</p>
+      <div class="popup-acts">
+        <a href="mailto:info@masesora.com?subject=Asesoría%20interesada%20en%20MASFRAME%20SaaS" class="popup-btn-p">Quiero saber más sobre el modelo SaaS</a>
+        <a href="https://ese.masesora.com" class="popup-btn-s">Prefiero empezar como empresa cliente</a>
+      </div>
+      <div class="popup-dismiss" id="popupDismiss">No me interesa</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-in">
+    <div class="ft-brand">MASFRAME®<span>Un sistema de MASESORA · masframe.masesora.com</span></div>
+    <ul class="ft-links">
+      <li><a href="https://www.masesora.com">← MASESORA</a></li>
+      <li><a href="https://ese.masesora.com">Escáner ESE</a></li>
+      <li><a href="https://masesora.onrender.com/login">Acceder al sistema</a></li>
+      <li><a href="mailto:info@masesora.com">Contacto</a></li>
+    </ul>
+    <div class="ft-legal">© 2026 MASFRAME® · MASESORA · Todos los derechos reservados</div>
+  </div>
+</footer>
+
+<script>
+/* Progress bar */
+const pb=document.getElementById('pb');
+window.addEventListener('scroll',()=>{pb.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%'},{passive:true});
+
+/* Scroll reveal */
+const rvs=document.querySelectorAll('.rv');
+const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vi');ro.unobserve(x.target)}})},{threshold:.08,rootMargin:'0px 0px -24px 0px'});
+rvs.forEach(e=>ro.observe(e));
+
+/* Counters */
+function ac(el){const t=parseInt(el.dataset.target);if(!t)return;let c=0;const s=Math.ceil(t/18);const ti=setInterval(()=>{c=Math.min(c+s,t);el.textContent=c;if(c>=t)clearInterval(ti)},60)}
+const co=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){ac(x.target);co.unobserve(x.target)}})},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(e=>co.observe(e));
+
+/* Nav shadow */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.style.boxShadow=window.scrollY>40?'0 4px 20px rgba(15,26,53,.12)':'0 2px 12px rgba(15,26,53,.06)'},{passive:true});
+
+/* Floating CTA — visible after 300px scroll */
+const floatCta=document.getElementById('floatCta');
+let floatVisible=false;
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>300&&!floatVisible){floatCta.classList.add('visible');floatVisible=true}
+  else if(window.scrollY<=300&&floatVisible){floatCta.classList.remove('visible');floatVisible=false}
+},{passive:true});
+
+/* Especialidades — tap en móvil */
+document.querySelectorAll('.esp').forEach(e=>{
+  e.addEventListener('click',()=>{
+    const active=document.querySelector('.esp.tapped');
+    if(active&&active!==e)active.classList.remove('tapped');
+    e.classList.toggle('tapped');
+  });
+});
+
+/* Popup asesorías — aparece a los 18s, una sola vez */
+const popupOverlay=document.getElementById('popupOverlay');
+const popupClose=document.getElementById('popupClose');
+const popupDismiss=document.getElementById('popupDismiss');
+function closePopup(){popupOverlay.classList.remove('open');try{localStorage.setItem('mf_popup_seen','1')}catch(e){}}
+(function(){
+  let seen=false;try{seen=localStorage.getItem('mf_popup_seen')}catch(e){}
+  if(!seen){setTimeout(()=>popupOverlay.classList.add('open'),18000);}
+})();
+if(popupClose)popupClose.addEventListener('click',closePopup);
+if(popupDismiss)popupDismiss.addEventListener('click',closePopup);
+popupOverlay.addEventListener('click',e=>{if(e.target===popupOverlay)closePopup()});
+</script>
+</body>
+</html>
