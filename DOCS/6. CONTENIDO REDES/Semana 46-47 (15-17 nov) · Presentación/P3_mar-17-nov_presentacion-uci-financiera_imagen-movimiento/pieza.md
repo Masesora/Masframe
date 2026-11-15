@@ -49,7 +49,7 @@ En la UCI Financiera de La Clínica de Empresas los tratamos con un protocolo pa
 ## Archivos para publicar
 - Instagram (reel): `assets/reel_instagram.mp4` · portada `assets/portada.png`
 - TikTok (vídeo): `assets/reel_tiktok.mp4`
-- Sin voz: se le añade música de la biblioteca comercial al subirlo.
+- Sin voz: lleva música de fondo original (sin derechos de terceros).
 
 ## Aprobación (la marcas tú)
 - [ ] **APROBADO PARA PUBLICAR** · Maite
