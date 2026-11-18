@@ -70,7 +70,7 @@ Pieza de imagen (sin vídeo): sale solo el gancho A. Si prefieres otro, escríbe
 - Historia (Instagram): `assets/historia.png`
 
 ## Aprobación (la marcas tú)
-- [ ] **APROBADO PARA PUBLICAR** · Maite
+- [x] **APROBADO PARA PUBLICAR** · Maite (v3, 18 nov, 23:25)
 
 *Solo con esta casilla marcada (`[x]`) el agente de programación sube la pieza a Meta Business Suite (Instagram) y a TikTok Studio con la fecha y hora de arriba. Si quieres cambios, escríbelos debajo en «Cambios pedidos» y déjala sin marcar.*
 
