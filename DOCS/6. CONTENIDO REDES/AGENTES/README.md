@@ -23,7 +23,7 @@ Trabaja con **10 días de antelación**. Para cada pieza con fecha en los próxi
    - Pantalla dividida: monta el esquema en el lado derecho y deja el izquierdo para el clip de Maite (`assets/clip.mp4`); si no hay clip, se avisa.
 2. Rellena en `pieza.md`: locución (si es vídeo), pie de Instagram, pie de TikTok («Enlace en mi perfil»), hashtags y «Archivos para publicar».
 3. Si hay «Cambios pedidos» sin atender, los aplica, vuelve a exportar y anota en «Estado del agente» qué cambió.
-4. Si aparece `assets/voz.m4a` (o `clip.mp4`) nuevo, vuelve a montar los vídeos.
+4. Si aparece `assets/voz.m4a` (o `clip.mp4`) nuevo, limpia primero la voz con `herramientas/voz.py` (nivel de limpieza 35, el que viene por defecto: aprobado por Maite el 18 nov para todas las piezas con audio desde el dom 22) y después vuelve a montar los vídeos.
 5. Cada vez que aparezca «Escáner de Salud Empresarial» (pantalla, voz o pie), justo detrás va **masesora.es**. Respeta la variedad de formatos de la semana (§4 del plan) y usa `herramientas/reel_animado.py` para reels y piezas con movimiento.
 6. **Kit de distribución** (`KIT_DISTRIBUCION.md`): en cada pieza de vídeo monta además `reel_tiktok_B.mp4` y `reel_tiktok_C.mp4` (mismo cuerpo, otro gancho y otra portada); en todas, `historia.png` (1080×1920) con la encuesta de autodiagnóstico; en los carruseles, `carrusel.pdf`; y escribe en `pieza.md` las secciones «Ganchos A/B/C», «Historia y encuesta», «Palabras de búsqueda» y «Ubicación», y el archivo `compartir.md` (WhatsApp, grupos, Google Business Profile, LinkedIn). La primera línea del pie es una pregunta que se contesta con una palabra o un número.
 7. Revisa las reglas del plan antes de entregar: sin «IA», sin culpar al dueño, cifras solo del plan y etiquetadas como *ejemplo ilustrativo*, sin especialidades que no se venden, sin «piloto», «beta» ni «plazas», sin promesas de devolución. Usuario correcto: **@laclinicadempresas**.
@@ -52,5 +52,6 @@ Trabaja con **10 días de antelación**. Para cada pieza con fecha en los próxi
 
 ## Herramientas
 - `herramientas/clinica.css`: estilos de marca (azul marino, oro, Montserrat), sacados de los diseños antiguos (borrados el 15 nov; siguen en el historial de git).
+- `herramientas/voz.py`: limpieza de voz con DeepFilterNet (nivel 35 fijo), ecualización y mezcla con la música. Necesita el binario `deep-filter` en `~/dfbin/` (ver la cabecera del script).
 - `herramientas/render.py`: exporta `assets/slides.html` a PNG y, con `reel.json`, monta los MP4 de Instagram y TikTok (con voz si existe `voz.m4a`).
 - `herramientas/fonts/`: Montserrat (licencia OFL), incrustada al exportar.
