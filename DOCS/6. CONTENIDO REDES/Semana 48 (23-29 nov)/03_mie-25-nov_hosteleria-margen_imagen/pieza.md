@@ -66,7 +66,7 @@ Pieza de imagen (sin vídeo): sale solo el gancho A. Si prefieres otro, escríbe
 - Historia (Instagram): `assets/historia.png`
 
 ## Aprobación (la marcas tú)
-- [ ] **APROBADO PARA PUBLICAR** · Maite
+- [x] **APROBADO PARA PUBLICAR** · Maite (18 nov, 22:16)
 
 *Solo con esta casilla marcada (`[x]`) el agente de programación sube la pieza a Meta Business Suite (Instagram) y a TikTok Studio con la fecha y hora de arriba. Si quieres cambios, escríbelos debajo en «Cambios pedidos» y déjala sin marcar.*
 
@@ -76,11 +76,13 @@ Pieza de imagen (sin vídeo): sale solo el gancho A. Si prefieres otro, escríbe
 ## Estado del agente
 - 16 nov · Producción: imagen, historia, pies, hashtags y `compartir.md` listos para revisar. Cierre con masesora.es, sin «Comenta BAR» (la palabra clave sigue pendiente de tu decisión 6 del §8). En el texto de apoyo, «lo que deberías cobrarte como sueldo» pasa a «tu propio sueldo» (sin «deberías»), y «el material» a «el género», que es como se dice en hostelería.
 
+- 18 nov · Maite aprueba la pieza tal cual. Se programa mié 25, 13:00 en Instagram y TikTok.
+
 ## Lista de comprobación
-- [ ] Guion revisado por Maite
+- [x] Guion revisado por Maite
 - [ ] Voz o clip grabado (si el formato lo pide) · no hace falta en esta pieza
 - [x] Imagen o diseño en `assets/`
-- [ ] Texto de pantalla y pie revisados (sin «IA», sin culpar al dueño, ejemplo etiquetado como *ilustrativo*)
+- [x] Texto de pantalla y pie revisados (sin «IA», sin culpar al dueño, ejemplo etiquetado como *ilustrativo*)
 - [ ] Programado en Business Suite
 - [ ] Publicado en Instagram y en TikTok
 - [ ] Respondidos los comentarios con la palabra clave (con el enlace de arriba)
