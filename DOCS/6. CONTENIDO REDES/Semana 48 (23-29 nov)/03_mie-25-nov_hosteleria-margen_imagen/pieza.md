@@ -24,9 +24,11 @@ Facturas bien y sobrevives mal. Pasa cuando el precio de tu carta no cubre tu co
 
 La cuenta, sobre 3 meses: (lo facturado − lo que te cuesta, con tu sueldo dentro) ÷ lo facturado × 100.
 
-Por encima del 30 %, tu negocio genera beneficio. Por debajo, solo mueve dinero. Hazla sobre 3 meses: un mes flojo o un pico te dan una foto falsa.
+Por debajo del 30 %, arriesgas capital y horas sin recompensa. Del 30 % en adelante, tu esfuerzo te devuelve beneficio. Hazla sobre 3 meses: un mes flojo o un pico te dan una foto falsa.
 
-Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
+En La Clínica ordenamos los precios de tu carta para que cada plato llegue a ese 30 %.
+
+Empieza por el Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Tienes el enlace en el perfil.
 Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #hosteleria #bares #restaurantes #autonomos #pymes #margen
@@ -40,9 +42,11 @@ Facturas bien y sobrevives mal. Pasa cuando el precio de tu carta no cubre tu co
 
 La cuenta, sobre 3 meses: (lo facturado − lo que te cuesta, con tu sueldo dentro) ÷ lo facturado × 100.
 
-Por encima del 30 %, tu negocio genera beneficio. Por debajo, solo mueve dinero. Hazla sobre 3 meses: un mes flojo o un pico te dan una foto falsa.
+Por debajo del 30 %, arriesgas capital y horas sin recompensa. Del 30 % en adelante, tu esfuerzo te devuelve beneficio. Hazla sobre 3 meses: un mes flojo o un pico te dan una foto falsa.
 
-Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Enlace en mi perfil.
+En La Clínica ordenamos los precios de tu carta para que cada plato llegue a ese 30 %.
+
+Empieza por el Escáner de Salud Empresarial: masesora.es. Es gratis y son 10 minutos. Enlace en mi perfil.
 Guárdalo para repetir la cuenta cada mes.
 
 #LaClinicaDeEmpresas #hosteleria #bares #restaurantes #autonomos #pymes #margen
@@ -71,7 +75,7 @@ Pieza de imagen (sin vídeo): sale solo el gancho A. Si prefieres otro, escríbe
 *Solo con esta casilla marcada (`[x]`) el agente de programación sube la pieza a Meta Business Suite (Instagram) y a TikTok Studio con la fecha y hora de arriba. Si quieres cambios, escríbelos debajo en «Cambios pedidos» y déjala sin marcar.*
 
 ### Cambios pedidos
-- 18 nov, 23:16 · La imagen no se entendía: no se leía el orden ni qué significaban «menos/más del 30 %» (parecían botones). Rehecha en v2: paso 1 (lo que tiene que pagar cada precio, con «tu sueldo» marcado), paso 2 (lo que sobra es tu margen, regla con la línea del 30 %) y cierre «¿Y el tuyo? Calcúlalo gratis · masesora.es». Pendiente de que Maite la apruebe.
+- 18 nov, 23:16 · La imagen no se entendía: no se leía el orden ni qué significaban «menos/más del 30 %» (parecían botones). Rehecha en v2 y, tras su segunda corrección (23:22: «lo que sobra es tu margen» infravalora el riesgo y las horas del dueño), en v3: paso 2 «Y asegurarte, como mínimo, un 30 % de margen», «por debajo: arriesgas capital y horas sin recompensa», «del 30 % en adelante: tu esfuerzo te devuelve beneficio» y «En La Clínica ordenamos los precios de tu carta para que cada plato llegue a ese 30 %». v2: paso 1 (lo que tiene que pagar cada precio, con «tu sueldo» marcado), paso 2 (lo que sobra es tu margen, regla con la línea del 30 %) y cierre «¿Y el tuyo? Calcúlalo gratis · masesora.es». Pendiente de que Maite la apruebe.
 
 ## Estado del agente
 - 16 nov · Producción: imagen, historia, pies, hashtags y `compartir.md` listos para revisar. Cierre con masesora.es, sin «Comenta BAR» (la palabra clave sigue pendiente de tu decisión 6 del §8). En el texto de apoyo, «lo que deberías cobrarte como sueldo» pasa a «tu propio sueldo» (sin «deberías»), y «el material» a «el género», que es como se dice en hostelería.
