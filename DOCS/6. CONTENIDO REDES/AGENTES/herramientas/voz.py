@@ -8,7 +8,7 @@ Uso:
 Pasos:
   1. Extrae la voz a 48 kHz mono.
   2. DeepFilterNet (binario `deep-filter`, gratuito y local) quita ruido y reverberación de la sala.
-     --limpieza son los dB máximos de reducción: 35 suena natural; 100 es limpieza total.
+     --limpieza son los dB máximos de reducción: 60 es el nivel aprobado (18 nov); 100 es limpieza total.
   3. Ecualización de voz: corte de graves, menos «caja» en 250 Hz, presencia en 3 kHz y aire en 10 kHz.
   4. De-esser, compresión suave, quitar silencios largos y velocidad (--tempo).
   5. Volumen final para redes: -16 LUFS la voz sola y -14 LUFS la mezcla con música
@@ -32,7 +32,7 @@ def main():
     ap.add_argument("entrada"); ap.add_argument("salida")
     ap.add_argument("--musica"); ap.add_argument("--mezcla")
     ap.add_argument("--tempo", type=float, default=1.06)
-    ap.add_argument("--limpieza", type=float, default=35)
+    ap.add_argument("--limpieza", type=float, default=60)
     a = ap.parse_args()
     tmp = tempfile.mkdtemp()
     raw = os.path.join(tmp, "voz.wav")

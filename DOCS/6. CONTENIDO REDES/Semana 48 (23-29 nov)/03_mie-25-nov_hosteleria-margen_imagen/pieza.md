@@ -66,12 +66,12 @@ Pieza de imagen (sin vídeo): sale solo el gancho A. Si prefieres otro, escríbe
 - Historia (Instagram): `assets/historia.png`
 
 ## Aprobación (la marcas tú)
-- [x] **APROBADO PARA PUBLICAR** · Maite (18 nov, 22:16)
+- [ ] **APROBADO PARA PUBLICAR** · Maite
 
 *Solo con esta casilla marcada (`[x]`) el agente de programación sube la pieza a Meta Business Suite (Instagram) y a TikTok Studio con la fecha y hora de arriba. Si quieres cambios, escríbelos debajo en «Cambios pedidos» y déjala sin marcar.*
 
 ### Cambios pedidos
--
+- 18 nov, 23:16 · La imagen no se entendía: no se leía el orden ni qué significaban «menos/más del 30 %» (parecían botones). Rehecha en v2: paso 1 (lo que tiene que pagar cada precio, con «tu sueldo» marcado), paso 2 (lo que sobra es tu margen, regla con la línea del 30 %) y cierre «¿Y el tuyo? Calcúlalo gratis · masesora.es». Pendiente de que Maite la apruebe.
 
 ## Estado del agente
 - 16 nov · Producción: imagen, historia, pies, hashtags y `compartir.md` listos para revisar. Cierre con masesora.es, sin «Comenta BAR» (la palabra clave sigue pendiente de tu decisión 6 del §8). En el texto de apoyo, «lo que deberías cobrarte como sueldo» pasa a «tu propio sueldo» (sin «deberías»), y «el material» a «el género», que es como se dice en hostelería.
