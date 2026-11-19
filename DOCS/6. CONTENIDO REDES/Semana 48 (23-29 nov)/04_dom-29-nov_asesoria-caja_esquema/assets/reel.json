@@ -1,0 +1,7 @@
+{
+  "frames": ["01_gancho", "02_camino", "03_sin-facturar", "04_anticipos", "05_tardan", "06_cuenta"],
+  "segundos": [3, 4, 5, 5, 4, 6, 5],
+  "plataforma_final": {"instagram": "07_cierre-ig", "tiktok": "07_cierre-tt"},
+  "ganchos": {"B": "01_gancho_B", "C": "01_gancho_C"},
+  "clip_zona": [90, 700, 420, 670]
+}

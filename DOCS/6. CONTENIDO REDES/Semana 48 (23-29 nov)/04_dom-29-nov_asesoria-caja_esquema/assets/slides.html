@@ -1,0 +1,232 @@
+<!-- Pieza 04 · Asesoría × Caja · pantalla dividida 9:16 (1080x1920).
+     Arriba, el titular de cada momento. Abajo a la izquierda, el hueco del clip de Maite (assets/clip.mp4, zona 90,700,420,670
+     en reel.json); sin clip se ve el número grande de cada paso. Abajo a la derecha, el esquema del camino del dinero.
+     Zona segura de Instagram/TikTok: y 250 a 1500 y margen derecho de 120 px (botones de TikTok). -->
+<style>
+.frame{height:1920px}
+.safe{top:250px;bottom:420px}
+.brand{bottom:300px}
+.d h1{font-size:84px;line-height:1.08;margin-top:10px}
+.d h2{font-size:64px;line-height:1.12;margin-top:10px}
+.d .sub{font-size:36px;line-height:1.3;color:rgba(255,255,255,.85);margin-top:18px;font-weight:500}
+.d .sub b{color:var(--gold2);font-weight:700}
+/* Hueco del clip (izquierda) */
+.cl{position:absolute;left:90px;top:700px;width:420px;height:760px;z-index:2;border-radius:30px;overflow:hidden;
+    background:linear-gradient(160deg,rgba(30,48,96,.95),rgba(15,26,53,.95));border:3px solid rgba(184,157,82,.55)}
+.cl .in{position:absolute;left:0;right:0;top:0;height:670px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 30px}
+.cl .n{font-weight:800;font-size:250px;line-height:.9;color:var(--gold2)}
+.cl .n.sm{font-size:150px}
+.cl .w{font-weight:700;font-size:34px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-top:24px;line-height:1.3}
+.cl .who{position:absolute;left:0;right:0;bottom:0;height:90px;background:var(--gold);color:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cl .who b{font-weight:800;font-size:30px;letter-spacing:.12em}
+.cl .who span{font-weight:600;font-size:18px;letter-spacing:.2em;text-transform:uppercase}
+/* Esquema (derecha) */
+.fl{position:absolute;left:550px;width:410px;top:700px;height:760px;z-index:2;display:flex;flex-direction:column;justify-content:space-between}
+.nd{position:relative;height:138px;border-radius:24px;border:3px solid var(--gold);background:rgba(255,255,255,.06);display:flex;align-items:center;gap:18px;padding:0 22px}
+.nd .i{flex:0 0 auto;width:62px;height:62px;border-radius:50%;background:var(--gold);color:var(--navy);font-weight:800;font-size:32px;display:flex;align-items:center;justify-content:center}
+.nd .t{font-weight:700;font-size:34px;line-height:1.15}
+.nd.dim{opacity:.38}
+.nd.ok{border-color:var(--ok);background:rgba(46,125,79,.25)} .nd.ok .i{background:var(--ok);color:#fff}
+.nd.bad{border-color:var(--crit);background:rgba(184,71,31,.28)} .nd.bad .i{background:var(--crit);color:#fff}
+.ar{position:relative;height:70px;display:flex;align-items:center;justify-content:center}
+.ar::before{content:"";width:6px;height:100%;background:var(--gold);border-radius:3px}
+.ar::after{content:"";position:absolute;bottom:-2px;border-left:16px solid transparent;border-right:16px solid transparent;border-top:20px solid var(--gold)}
+.ar.dim{opacity:.38}
+.ar.bad::before{background:var(--crit)} .ar.bad::after{border-top-color:var(--crit)}
+.stop{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;background:var(--crit);color:#fff;font-weight:800;font-size:24px;letter-spacing:.14em;
+      padding:12px 22px;border-radius:999px;white-space:nowrap;box-shadow:0 0 0 6px rgba(184,71,31,.35),0 0 30px rgba(184,71,31,.7);text-transform:uppercase}
+.nd .stop{left:auto;right:-14px;top:-18px;transform:none;font-size:20px;padding:9px 16px}
+/* Cuenta y cierre (derecha) */
+.fr{border:3px solid var(--gold);background:rgba(255,255,255,.05);border-radius:26px;padding:40px 26px;text-align:center}
+.fr .a{font-weight:800;font-size:40px;color:var(--gold2);line-height:1.15}
+.fr .l{height:5px;background:var(--gold);margin:22px 0;border-radius:3px}
+.fr .b{font-weight:700;font-size:31px;line-height:1.2}
+.x30{font-weight:800;font-size:76px;text-align:center;margin:14px 0}
+.lv{border-radius:24px;padding:24px 26px;font-size:30px;font-weight:600;line-height:1.3;background:var(--crit)}
+.lv b{display:block;font-size:33px;font-weight:800}
+.esc{font-weight:700;font-size:28px;letter-spacing:.16em;color:var(--gold2);text-transform:uppercase;text-align:center;line-height:1.35}
+.go{text-align:center;background:var(--gold);color:var(--navy);font-weight:800;font-size:46px;border-radius:999px;padding:30px 10px}
+.pill2{text-align:center;border:3px solid var(--gold);color:var(--gold2);font-weight:700;font-size:30px;letter-spacing:.08em;padding:20px 10px;border-radius:999px}
+</style>
+
+<!-- ============ 01 · Gancho A ============ -->
+<div class="frame d" data-name="01_gancho">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h1>Tu trabajo está hecho.<br><span class="gold">Tu dinero, no.</span></h1>
+  </div>
+  <div class="cl"><div class="in"><div class="n sm">€ ?</div><div class="w">¿Dónde está<br>tu dinero?</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl">
+    <div class="nd ok"><div class="i">✓</div><div class="t">Trabajo terminado</div></div>
+    <div class="ar"></div>
+    <div class="nd"><div class="i">2</div><div class="t">Factura</div></div>
+    <div class="ar bad"><span class="stop">Atasco</span></div>
+    <div class="nd dim"><div class="i">3</div><div class="t">Cobro</div></div>
+    <div class="ar dim"></div>
+    <div class="nd dim"><div class="i">4</div><div class="t">Tu cuenta</div></div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
+
+<!-- ============ 01 · Gancho B (TikTok, a los 14 días) ============ -->
+<div class="frame d" data-name="01_gancho_B">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h1>Trabajo de sobra.<br><span class="gold">¿Y tu dinero?</span></h1>
+  </div>
+  <div class="cl"><div class="in"><div class="n sm">€ ?</div><div class="w">¿Dónde está<br>tu dinero?</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl">
+    <div class="nd ok"><div class="i">✓</div><div class="t">Trabajo terminado</div></div>
+    <div class="ar"></div>
+    <div class="nd"><div class="i">2</div><div class="t">Factura</div></div>
+    <div class="ar bad"><span class="stop">Atasco</span></div>
+    <div class="nd dim"><div class="i">3</div><div class="t">Cobro</div></div>
+    <div class="ar dim"></div>
+    <div class="nd dim"><div class="i">4</div><div class="t">Tu cuenta</div></div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
+
+<!-- ============ 01 · Gancho C (TikTok, a los 21 días) ============ -->
+<div class="frame d" data-name="01_gancho_C">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h1>Hay dinero.<br><span class="gold">Mira dónde se queda.</span></h1>
+  </div>
+  <div class="cl"><div class="in"><div class="n sm">€ ?</div><div class="w">¿Dónde está<br>tu dinero?</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl">
+    <div class="nd ok"><div class="i">✓</div><div class="t">Trabajo terminado</div></div>
+    <div class="ar"></div>
+    <div class="nd"><div class="i">2</div><div class="t">Factura</div></div>
+    <div class="ar bad"><span class="stop">Atasco</span></div>
+    <div class="nd dim"><div class="i">3</div><div class="t">Cobro</div></div>
+    <div class="ar dim"></div>
+    <div class="nd dim"><div class="i">4</div><div class="t">Tu cuenta</div></div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
+
+<!-- ============ 02 · El camino ============ -->
+<div class="frame d" data-name="02_camino">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h2>Tu dinero sigue un camino.<br><span class="gold">Y se atasca en puntos concretos.</span></h2>
+  </div>
+  <div class="cl"><div class="in"><div class="n">4</div><div class="w">pasos hasta<br>tu cuenta</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl">
+    <div class="nd"><div class="i">1</div><div class="t">Trabajo terminado</div></div>
+    <div class="ar"></div>
+    <div class="nd"><div class="i">2</div><div class="t">Factura</div></div>
+    <div class="ar"></div>
+    <div class="nd"><div class="i">3</div><div class="t">Cobro</div></div>
+    <div class="ar"></div>
+    <div class="nd"><div class="i">4</div><div class="t">Tu cuenta</div></div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
+
+<!-- ============ 03 · Atasco 1 ============ -->
+<div class="frame d" data-name="03_sin-facturar">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h2>Trabajo terminado<br><span class="gold">que aún no has facturado.</span></h2>
+    <div class="sub">Faltan <b>trámites o vistos buenos</b>.</div>
+  </div>
+  <div class="cl"><div class="in"><div class="n">1</div><div class="w">primer<br>atasco</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl">
+    <div class="nd ok"><div class="i">✓</div><div class="t">Trabajo terminado</div></div>
+    <div class="ar bad"><span class="stop">Sin facturar</span></div>
+    <div class="nd dim"><div class="i">2</div><div class="t">Factura</div></div>
+    <div class="ar dim"></div>
+    <div class="nd dim"><div class="i">3</div><div class="t">Cobro</div></div>
+    <div class="ar dim"></div>
+    <div class="nd dim"><div class="i">4</div><div class="t">Tu cuenta</div></div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
+
+<!-- ============ 04 · Atasco 2 ============ -->
+<div class="frame d" data-name="04_anticipos">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h2>Anticipos que aún no son<br><span class="gold">trabajo cobrado.</span></h2>
+    <div class="sub">El trabajo <b>va con retraso</b>.</div>
+  </div>
+  <div class="cl"><div class="in"><div class="n">2</div><div class="w">segundo<br>atasco</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl">
+    <div class="nd bad"><div class="i">!</div><div class="t">Trabajo terminado</div><span class="stop">Con retraso</span></div>
+    <div class="ar dim"></div>
+    <div class="nd dim"><div class="i">2</div><div class="t">Factura</div></div>
+    <div class="ar dim"></div>
+    <div class="nd dim"><div class="i">3</div><div class="t">Cobro</div></div>
+    <div class="ar dim"></div>
+    <div class="nd dim"><div class="i">4</div><div class="t">Tu cuenta</div></div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
+
+<!-- ============ 05 · Atasco 3 ============ -->
+<div class="frame d" data-name="05_tardan">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h2>Clientes que tardan<br><span class="gold">meses en pagar.</span></h2>
+  </div>
+  <div class="cl"><div class="in"><div class="n">3</div><div class="w">tercer<br>atasco</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl">
+    <div class="nd ok"><div class="i">✓</div><div class="t">Trabajo terminado</div></div>
+    <div class="ar"></div>
+    <div class="nd ok"><div class="i">✓</div><div class="t">Factura</div></div>
+    <div class="ar bad"><span class="stop">Meses</span></div>
+    <div class="nd dim"><div class="i">3</div><div class="t">Cobro</div></div>
+    <div class="ar dim"></div>
+    <div class="nd dim"><div class="i">4</div><div class="t">Tu cuenta</div></div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
+
+<!-- ============ 06 · La cuenta ============ -->
+<div class="frame d" data-name="06_cuenta">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h2>Haz la cuenta:<br><span class="gold">tus días de caja.</span></h2>
+  </div>
+  <div class="cl"><div class="in"><div class="n">30</div><div class="w">días:<br>la línea roja</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl" style="justify-content:flex-start;gap:0">
+    <div class="fr"><div class="a">Saldo de tu cuenta</div><div class="l"></div><div class="b">Gastos fijos de un mes</div></div>
+    <div class="x30">× 30</div>
+    <div class="lv"><b>Menos de 30 días</b>Vendes por urgencia, no por estrategia.</div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
+
+<!-- ============ 07 · Cierre Instagram ============ -->
+<div class="frame d" data-name="07_cierre-ig">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h2>¿Cuántos días de caja<br><span class="gold">tiene tu asesoría?</span></h2>
+  </div>
+  <div class="cl"><div class="in"><div class="n sm">10</div><div class="w">minutos<br>y es gratis</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl" style="justify-content:center;gap:28px">
+    <div class="esc">Escáner de Salud<br>Empresarial</div>
+    <div class="go">masesora.es</div>
+    <div class="pill2">Gratis · 10 minutos</div>
+    <div class="pill2">Enlace en el perfil</div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
+
+<!-- ============ 07 · Cierre TikTok ============ -->
+<div class="frame d" data-name="07_cierre-tt">
+  <div class="safe">
+    <div class="tag"><span class="pill">UCI</span><span class="txt">Caja · Asesoría</span></div>
+    <h2>¿Cuántos días de caja<br><span class="gold">tiene tu asesoría?</span></h2>
+  </div>
+  <div class="cl"><div class="in"><div class="n sm">10</div><div class="w">minutos<br>y es gratis</div></div><div class="who"><b>MAITE</b><span>La Clínica de Empresas</span></div></div>
+  <div class="fl" style="justify-content:center;gap:28px">
+    <div class="esc">Escáner de Salud<br>Empresarial</div>
+    <div class="go">masesora.es</div>
+    <div class="pill2">Gratis · 10 minutos</div>
+    <div class="pill2">Enlace en mi perfil</div>
+  </div>
+  <div class="brand"><div class="wm">MASESORA<small>DINAMISMO EMPRESARIAL</small></div><div class="hd">@laclinicadempresas</div></div>
+</div>
