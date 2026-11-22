@@ -1,0 +1,6 @@
+{
+  "frames": ["01_gancho", "02_ejemplo", "03_margen", "04_carta", "05_tratamiento", "06_cuenta"],
+  "segundos": [3.5, 5, 4.5, 4, 6, 6, 5],
+  "plataforma_final": {"instagram": "07_cierre-ig", "tiktok": "07_cierre-tt"},
+  "ganchos": {"B": "01_gancho_B", "C": "01_gancho_C"}
+}
