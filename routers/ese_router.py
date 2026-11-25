@@ -381,7 +381,7 @@ async def submit_ese(data: EseSubmitRequest):
         return {
             "status":  "existente",
             "message": "Este email ya tiene expediente en La Clínica de Empresas. "
-                       "Le hemos enviado su código de acceso.",
+                       "Le hemos enviado su MAS-CODE.",
         }
     return {
         "status":  "ok",
