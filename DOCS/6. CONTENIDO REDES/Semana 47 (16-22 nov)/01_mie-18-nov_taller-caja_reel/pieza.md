@@ -64,6 +64,7 @@ En La Clínica de Empresas te hacemos ver el verdadero valor de tu negocio. Empi
 -
 
 ## Estado del agente
+- 25 nov · Gancho B (`reel_tiktok_B.mp4`, mismo pie de TikTok) programado en TikTok para el jue 3 dic, 19:00 (Madrid); comprobado en TikTok Studio → Contenido. El C (jue 10 dic, 19:00) entra en la ventana de 10 días a partir del 30 nov.
 - 15 nov · Programada en Instagram y TikTok: mié 18, 13:00.
 - 15 nov · Montado con la voz de Maite (limpia, música nueva en La mayor 122 BPM); pantalla y pie alineados con su audio; ya no es solo para talleres.
 - 15 nov · Maite pide voz: locución preparada, a la espera de su audio.
