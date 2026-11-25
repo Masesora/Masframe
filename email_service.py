@@ -143,7 +143,7 @@ def generar_html_email(
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Tu diagnóstico clínico · MAS@FRAME®</title>
+<title>Tu diagnóstico clínico · MASFRAME®</title>
 </head>
 <body style="margin:0;padding:0;background:#F9F7F2;
   font-family:'DM Sans',Helvetica,Arial,sans-serif">
@@ -185,7 +185,7 @@ def generar_html_email(
         </h1>
         <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;
           color:#C8A84B;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 20px">
-          MAS@FRAME®
+          MASFRAME®
         </p>
 
         <!-- Ola MASESORA -->
@@ -259,7 +259,7 @@ def generar_html_email(
         </h2>
         <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;
           color:rgba(200,168,75,.6);letter-spacing:0.16em;text-transform:uppercase;
-          margin:0 0 20px">Protocolo MAS@FRAME® · C0–C6</p>
+          margin:0 0 20px">Protocolo MASFRAME® · C0–C6</p>
         {esp_html}
       </td>
     </tr>
@@ -281,7 +281,7 @@ def generar_html_email(
         padding:40px;text-align:center">
         <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;
           color:rgba(200,168,75,.7);letter-spacing:0.2em;text-transform:uppercase;
-          margin:0 0 14px;font-weight:600">Tu código de acceso exclusivo</p>
+          margin:0 0 14px;font-weight:600">Tu MAS-CODE</p>
         <div style="background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.3);
           border-radius:12px;padding:20px 32px;display:inline-block;margin-bottom:20px">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:32px;
@@ -289,7 +289,7 @@ def generar_html_email(
         </div>
         <p style="font-size:13px;color:rgba(249,247,242,.5);margin:0 0 24px;
           font-family:Georgia,serif">
-          Usa este código para acceder a La Clínica y comenzar tu tratamiento clínico
+          Usa este MAS-CODE para acceder a La Clínica y comenzar tu tratamiento clínico
         </p>
         <a href="{CLINICA_URL}" style="display:inline-block;
           background:linear-gradient(135deg,#D4B96A,#B89D52);
@@ -388,13 +388,13 @@ def _html_ya_registrado(empresa: str, codigo: str) -> str:
         '<h2 style="margin:0 0 12px;">Ya tienes expediente en La Clínica de Empresas</h2>'
         f'<p>Hemos recibido un nuevo escáner con este email{(" para " + empresa) if empresa else ""}. '
         'Tu expediente ya existe, así que no hemos creado otro: tus datos siguen como estaban.</p>'
-        '<p style="margin:20px 0 6px;font-size:13px;color:#6b7280;">Tu código de acceso</p>'
+        '<p style="margin:20px 0 6px;font-size:13px;color:#6b7280;">Tu MAS-CODE</p>'
         f'<p style="font-size:24px;letter-spacing:3px;font-weight:700;margin:0 0 20px;">{codigo}</p>'
         f'<p><a href="{CLINICA_URL}/login?codigo={codigo}" style="background:#c9a84c;color:#0d1b2e;'
         'padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;">'
         'Entrar a La Clínica de Empresas</a></p>'
         '<p style="font-size:12px;color:#6b7280;margin-top:24px;">Si no has sido tú, no tienes que '
-        'hacer nada: tu código solo se envía a este email.</p></div>'
+        'hacer nada: tu MAS-CODE solo se envía a este email.</p></div>'
     )
 
 
@@ -500,7 +500,7 @@ async def send_pago_email(
 
     html = f"""<!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"/><title>Tu tratamiento ha comenzado · MAS@FRAME®</title></head>
+<head><meta charset="UTF-8"/><title>Tu tratamiento ha comenzado · MASFRAME®</title></head>
 <body style="margin:0;padding:0;background:#F9F7F2;font-family:'DM Sans',Helvetica,sans-serif">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#F9F7F2">
 <tr><td align="center" style="padding:32px 16px">
@@ -509,7 +509,7 @@ async def send_pago_email(
     <!-- CABECERA -->
     <tr>
       <td style="background:#0F1A35;padding:40px;text-align:center;border-bottom:3px solid #21ae52">
-        <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#F9F7F2;margin-bottom:6px">MAS@FRAME®</div>
+        <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#F9F7F2;margin-bottom:6px">MASFRAME®</div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#C8A84B;letter-spacing:.2em;text-transform:uppercase">La Clínica de Empresas</div>
       </td>
     </tr>
@@ -520,13 +520,13 @@ async def send_pago_email(
         <div style="width:60px;height:60px;border-radius:50%;background:rgba(33,174,82,.1);border:2px solid rgba(33,174,82,.3);display:inline-flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px">✓</div>
         <h1 style="font-family:Georgia,serif;font-size:28px;font-weight:700;color:#0F1A35;margin:0 0 10px">Tu tratamiento ha comenzado</h1>
         <p style="font-size:15px;color:#4A4540;line-height:1.7;margin:0 0 28px">
-          <strong>{empresa}</strong>, tu plan clínico ha quedado registrado en el sistema MAS@FRAME®.<br/>
+          <strong>{empresa}</strong>, tu plan clínico ha quedado registrado en el sistema MASFRAME®.<br/>
           Tu Consultor Clínico revisará tu expediente y comenzará el protocolo en las próximas horas.
         </p>
 
         <!-- Código -->
         <div style="background:rgba(15,26,53,.04);border:1px solid rgba(184,157,82,.2);border-radius:12px;padding:16px 24px;margin-bottom:24px;display:inline-block">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(184,157,82,.7);letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px">Tu código de acceso</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(184,157,82,.7);letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px">Tu MAS-CODE</div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:700;color:#0F1A35;letter-spacing:.1em">{codigo}</div>
         </div>
 
